@@ -1,0 +1,36 @@
+# dependencies
+node_modules/
+
+# builds
+.next/
+.medusa/
+dist/
+build/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# env files (commit only the .env.template / .env.example files)
+.env
+.env.*
+!.env.template
+!.env.example
+
+# uploads stored by Medusa's local file provider
+apps/backend/static/
+apps/backend/uploads/
+
+# logs & OS
+npm-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+
+# editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# deployment tooling
+.vercel
+.railway
