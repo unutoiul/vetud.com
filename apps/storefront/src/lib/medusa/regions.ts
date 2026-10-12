@@ -15,7 +15,7 @@ export async function listRegions(): Promise<HttpTypes.StoreRegion[]> {
   cacheLife("hours")
   cacheTag("regions")
 
-  const { regions } = await sdk.store.region.list({ fields: "id,name,currency_code,*countries" })
+  const { regions } = await sdk.store.region.list({ fields: "id,name,currency_code,metadata,*countries" })
   return regions
 }
 

@@ -9,6 +9,7 @@
     "dev": "medusa develop",
     "lint": "medusa lint",
     "seed": "medusa exec ./src/scripts/seed.ts",
+    "markets:setup": "medusa exec ./src/scripts/setup-european-markets.ts",
     "db:migrate": "medusa db:migrate",
     "predeploy": "medusa db:migrate",
     "email:dev": "email dev --dir ./src/modules/resend/emails --port 3030",
@@ -18,6 +19,7 @@
     "start:railway": "cd .medusa/server && npm install && if [ \"$MEDUSA_WORKER_MODE\" = \"worker\" ]; then npm run start; else npm run predeploy && npm run start; fi"
   },
   "dependencies": {
+    "@kb0912/currency-exchange-plugin": "^0.0.4",
     "@medusajs/admin-sdk": "2.21.2",
     "@medusajs/admin-shared": "2.21.2",
     "@medusajs/caching": "2.21.2",
@@ -69,6 +71,13 @@
     },
     "@eslint/eslintrc": {
       "ajv": "^6.12.4"
+    },
+    "@kb0912/currency-exchange-plugin": {
+      "@mikro-orm/cli": "6.6.14",
+      "@mikro-orm/core": "6.6.14",
+      "@mikro-orm/knex": "6.6.14",
+      "@mikro-orm/migrations": "6.6.14",
+      "@mikro-orm/postgresql": "6.6.14"
     }
   }
 }

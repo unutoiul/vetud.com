@@ -17,7 +17,7 @@ import { useCallback, useEffect, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { parseLots, readProductMeta, type ProductLot } from "@/lib/product"
 import { AppLink } from "../common/links"
-import ProductArt from "../product/ProductArt"
+import ProductThumb from "../product/ProductThumb"
 
 type Match = { product: HttpTypes.StoreProduct; lot: ProductLot }
 
@@ -25,7 +25,7 @@ type Match = { product: HttpTypes.StoreProduct; lot: ProductLot }
 async function findLot(lot: string): Promise<Match[]> {
   const { products } = await sdk.client.fetch<{ products: HttpTypes.StoreProduct[] }>(
     "/store/meilisearch/products",
-    { query: { query: lot, limit: 10, fields: "id,title,handle,+metadata,*categories" } }
+    { query: { query: lot, limit: 10, fields: "id,title,handle,thumbnail,+metadata,*categories" } }
   )
   return products.flatMap((product) =>
     parseLots(product.metadata?.lots)
@@ -120,7 +120,7 @@ export default function LotLookup() {
               <Grid key={`${product.id}-${lot.lot}`} size={{ xs: 12, md: 8 }}>
                 <Paper variant="outlined" sx={{ p: 2.5, display: "flex", gap: 2.5, alignItems: "center" }}>
                   <Box sx={{ width: 120, flexShrink: 0, display: { xs: "none", sm: "block" } }}>
-                    <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} />
+                    <ProductThumb image={product.thumbnail} meta={meta} sizes="120px" />
                   </Box>
                   <Box sx={{ flex: 1 }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", color: "success.main" }}>

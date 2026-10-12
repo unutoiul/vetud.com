@@ -1,13 +1,12 @@
 "use client"
 
 import Box from "@mui/material/Box"
-import { FREE_SHIPPING_THRESHOLD } from "@/lib/config"
 import { formatMoney } from "@/lib/product"
 import { useStore } from "../store/StoreProvider"
 
 export default function AnnouncementBar() {
   const { region } = useStore()
-  const threshold = FREE_SHIPPING_THRESHOLD[region.currencyCode]
+  const threshold = region.freeShippingThreshold
 
   return (
     <Box
@@ -33,7 +32,7 @@ export default function AnnouncementBar() {
         </Box>
       </Box>
       {threshold
-        ? `Free standard shipping over ${formatMoney(threshold, region.currencyCode).replace(/\.00$/, "")}`
+        ? `Free standard shipping over ${formatMoney(threshold, region.currencyCode, { whole: true })}`
         : "Shipping to the US and Europe"}
     </Box>
   )

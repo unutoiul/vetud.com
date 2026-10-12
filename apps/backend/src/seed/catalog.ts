@@ -31,7 +31,7 @@ export const FEATURED_COLLECTION = { title: "Featured", handle: "featured" }
 /** Shared product option. Each product links the subset of values it sells. */
 export const AMOUNT_OPTION = {
   title: "Amount",
-  values: ["5 mg", "10 mg", "20 mg", "10 ml", "30 ml"],
+  values: ["5 mg", "10 mg", "20 mg", "40 mg", "10 ml", "30 ml"],
 }
 
 type SeedVariant = {
@@ -49,6 +49,8 @@ export type SeedProduct = {
   category: (typeof CATEGORIES)[number]["handle"]
   featured: boolean
   weight: number
+  /** File in assets/products/, uploaded as the product photo. */
+  image?: string
   metadata: {
     code: string
     accent: string
@@ -100,8 +102,27 @@ function peptide(
   }
 }
 
+/** Product 1, with its own photo. Prices are placeholders: edit them in Medusa Admin. */
+export const RETATRUTIDE: SeedProduct = {
+  title: "Retatrutide",
+  handle: "retatrutide",
+  subtitle: "Research peptide · 40 mg vial",
+  description: PEPTIDE_DESCRIPTION,
+  category: "peptide-series",
+  featured: true,
+  weight: 40,
+  image: "retatrutide-40mg.png",
+  metadata: {
+    code: "VTD-01",
+    accent: "#3cc7c2",
+    ...PEPTIDE_SPECS,
+    lots: "VTD01-2609A|2026-09|99.4%; VTD01-2607B|2026-07|99.2%",
+  },
+  variants: [{ amount: "40 mg", usd: 159, eur: 149, stock: 100 }],
+}
+
 export const PRODUCTS: SeedProduct[] = [
-  peptide(1, "#3cc7c2", { small: [49, 45], large: [89, 82] }, true),
+  RETATRUTIDE,
   peptide(2, "#23618a", { small: [54, 50], large: [96, 88] }, true),
   peptide(3, "#5ba79b", { small: [59, 54], large: [104, 96] }, true),
   peptide(4, "#6f86c9", { small: [45, 42], large: [82, 76] }),

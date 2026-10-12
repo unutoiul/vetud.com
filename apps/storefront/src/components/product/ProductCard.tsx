@@ -6,6 +6,7 @@ import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
+import Image from "next/image"
 import { cheapestPrice, formatMoney, isProductInStock, readProductMeta } from "@/lib/product"
 import { LocalizedNextLink } from "../common/links"
 import ProductArt from "./ProductArt"
@@ -55,11 +56,23 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
         "&:focus-within": { borderColor: "secondary.main" },
       }}
     >
-      <ArtStage>
-        <Box sx={{ width: "74%", position: "relative", zIndex: 1, transform: "perspective(600px) rotateY(-7deg) rotateZ(-2deg)" }}>
-          <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} />
+      {product.thumbnail ? (
+        <Box sx={{ position: "relative", height: 210, bgcolor: "#fff", borderBottom: "1px solid", borderColor: "divider" }}>
+          <Image
+            src={product.thumbnail}
+            alt=""
+            fill
+            sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw"
+            style={{ objectFit: "contain", padding: 12 }}
+          />
         </Box>
-      </ArtStage>
+      ) : (
+        <ArtStage>
+          <Box sx={{ width: "74%", position: "relative", zIndex: 1, transform: "perspective(600px) rotateY(-7deg) rotateZ(-2deg)" }}>
+            <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} />
+          </Box>
+        </ArtStage>
+      )}
       <Stack sx={{ p: 2.75, flex: 1 }}>
         <Stack direction="row" spacing={1} sx={{ justifyContent: "space-between", color: "#55807c" }}>
           <Typography variant="eyebrow" noWrap sx={{ fontSize: 11, minWidth: 0 }}>

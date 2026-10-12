@@ -12,7 +12,7 @@ import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
-import { FREE_SHIPPING_THRESHOLD, SITE } from "@/lib/config"
+import { SITE } from "@/lib/config"
 import { formatMoney, isVariantInStock, sortedVariants, variantPrice } from "@/lib/product"
 import { useStore } from "../store/StoreProvider"
 import QuantityStepper from "./QuantityStepper"
@@ -33,7 +33,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
       ? Math.max(1, Math.min(99, variant.inventory_quantity ?? 1))
       : 99
   const optionTitle = variant?.options?.[0]?.option?.title ?? "Amount"
-  const threshold = FREE_SHIPPING_THRESHOLD[region.currencyCode]
+  const threshold = region.freeShippingThreshold
 
   const onAdd = async () => {
     if (!variant) return
@@ -61,7 +61,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
         )}
         {threshold ? (
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-            Free standard shipping on orders over {formatMoney(threshold, region.currencyCode).replace(/\.00$/, "")}
+            Free standard shipping on orders over {formatMoney(threshold, region.currencyCode, { whole: true })}
           </Typography>
         ) : null}
       </Box>

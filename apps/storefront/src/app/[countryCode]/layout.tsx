@@ -64,7 +64,15 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
         <ThemeRegistry>
           <StoreProvider
             countryCode={code}
-            region={{ id: region.id, name: region.name, currencyCode: region.currency_code }}
+            region={{
+              id: region.id,
+              name: region.name,
+              currencyCode: region.currency_code,
+              freeShippingThreshold:
+                typeof region.metadata?.free_shipping_threshold === "number"
+                  ? region.metadata.free_shipping_threshold
+                  : undefined,
+            }}
             countries={countries}
           >
             <Box

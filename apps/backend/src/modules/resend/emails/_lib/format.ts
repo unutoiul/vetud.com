@@ -1,11 +1,9 @@
+import { formatCurrency } from "../../../../lib/currencies"
 import type { EmailAddress, EmailOrder } from "./types"
 
 export function formatMoney(amount: number | string | null | undefined, currencyCode: string) {
   const value = Number(amount ?? 0)
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: currencyCode.toUpperCase(),
-  }).format(Number.isFinite(value) ? value : 0)
+  return formatCurrency(Number.isFinite(value) ? value : 0, currencyCode)
 }
 
 /** Matches the order number shown in Medusa Admin, so payment references are easy to reconcile. */

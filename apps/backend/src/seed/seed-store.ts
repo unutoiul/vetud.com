@@ -30,10 +30,11 @@ import {
   REGIONS,
   SHIPPING,
 } from "./catalog"
+import { ensureEuropeanMarkets } from "./european-markets"
+import { uploadProductImage } from "./product-images"
 
 const STORE_NAME = "Vetud Peptides"
 const SALES_CHANNEL_NAME = "Vetud Storefront"
-const GUARD_HANDLE = PRODUCTS[0].handle
 
 /**
  * Creates the Vetud store: currencies, regions, taxes, warehouse, shipping options,
@@ -50,7 +51,7 @@ export async function seedVetudStore(container: MedusaContainer) {
   const { data: existingProducts } = await query.graph({
     entity: "product",
     fields: ["id"],
-    filters: { handle: GUARD_HANDLE },
+    pagination: { take: 1 },
   })
   if (existingProducts.length) {
     logger.info("Vetud catalog already exists, skipping seed.")
@@ -266,6 +267,11 @@ export async function seedVetudStore(container: MedusaContainer) {
   )
 
   logger.info("Seeding products...")
+  const imageUrls = new Map<string, string>()
+  for (const product of PRODUCTS) {
+    const url = product.image ? await uploadProductImage(container, product.image) : null
+    if (url) imageUrls.set(product.handle, url)
+  }
   await createProductsWorkflow(container).run({
     input: {
       products: PRODUCTS.map((product) => ({
@@ -280,6 +286,9 @@ export async function seedVetudStore(container: MedusaContainer) {
         shipping_profile_id: shippingProfileId,
         sales_channels: [{ id: salesChannel.id }],
         metadata: product.metadata,
+        ...(imageUrls.has(product.handle)
+          ? { thumbnail: imageUrls.get(product.handle), images: [{ url: imageUrls.get(product.handle)! }] }
+          : {}),
         options: [
           {
             id: amountOption.id,
@@ -327,4 +336,7 @@ export async function seedVetudStore(container: MedusaContainer) {
     `Vetud store seeded. Storefront publishable key: ${publishableKey.token} ` +
       `(regions: ${regions.map((region) => region.name).join(", ")})`
   )
+
+  // All eurozone countries plus GBP, CHF, SEK, NOK, DKK, PLN, CZK, HUF, RON and ISK regions.
+  await ensureEuropeanMarkets(container)
 }

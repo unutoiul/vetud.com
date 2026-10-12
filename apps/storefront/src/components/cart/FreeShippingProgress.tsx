@@ -5,8 +5,8 @@ import Box from "@mui/material/Box"
 import LinearProgress from "@mui/material/LinearProgress"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import { FREE_SHIPPING_THRESHOLD } from "@/lib/config"
 import { formatMoney } from "@/lib/product"
+import { useStore } from "../store/StoreProvider"
 
 export default function FreeShippingProgress({
   itemTotal,
@@ -15,7 +15,9 @@ export default function FreeShippingProgress({
   itemTotal: number
   currencyCode: string
 }) {
-  const threshold = FREE_SHIPPING_THRESHOLD[currencyCode]
+  const { region } = useStore()
+  // The threshold belongs to the visitor's region; the cart is always in that region's currency.
+  const threshold = region.currencyCode === currencyCode ? region.freeShippingThreshold : undefined
   if (!threshold) {
     return null
   }

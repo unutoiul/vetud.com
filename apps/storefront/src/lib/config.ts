@@ -14,10 +14,14 @@ export const DEFAULT_COUNTRY = (process.env.NEXT_PUBLIC_DEFAULT_COUNTRY || "us")
  * Used before Medusa answers (proxy fallback, build-time params). Keep in sync with the
  * regions in Medusa Admin; the live region list always wins when the backend is reachable.
  */
-export const FALLBACK_COUNTRIES = ["us", "de", "fr", "nl", "be", "at", "ie", "it", "es"]
-
-/** Mirrors the free-shipping price rule seeded on the Standard shipping option. */
-export const FREE_SHIPPING_THRESHOLD: Record<string, number> = { usd: 200, eur: 200 }
+export const FALLBACK_COUNTRIES = [
+  "us",
+  // Eurozone
+  "at", "be", "bg", "cy", "de", "ee", "es", "fi", "fr", "gr", "hr",
+  "ie", "it", "lt", "lu", "lv", "mt", "nl", "pt", "si", "sk",
+  // Other European currencies
+  "gb", "ch", "li", "se", "no", "dk", "pl", "cz", "hu", "ro", "is",
+]
 
 export const PAYMENT_BANK_DETAILS = process.env.NEXT_PUBLIC_PAYMENT_BANK_DETAILS || ""
 
@@ -25,7 +29,6 @@ export const SITE = {
   name: "Vetud Peptides",
   shortName: "Vetud",
   email: "hello@vetud.example",
-  announcement: "Lot-documented research materials · Free standard shipping over 200",
   description:
     "Research-grade peptides with lot-level documentation. Precise information, traceable batches and responsive support for laboratory research.",
   ruoNotice:

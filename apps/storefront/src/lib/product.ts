@@ -123,10 +123,36 @@ export function isProductInStock(product: HttpTypes.StoreProduct) {
   return (product.variants ?? []).some((variant) => isVariantInStock(variant))
 }
 
-export function formatMoney(amount: number | null | undefined, currencyCode: string) {
-  return new Intl.NumberFormat(currencyCode.toLowerCase() === "eur" ? "en-IE" : "en-US", {
+/** Locale per currency, so each region sees its familiar symbol position and separators. */
+const CURRENCY_LOCALES: Record<string, string> = {
+  usd: "en-US",
+  eur: "en-IE",
+  gbp: "en-GB",
+  chf: "de-CH",
+  sek: "sv-SE",
+  nok: "nb-NO",
+  dkk: "da-DK",
+  pln: "pl-PL",
+  czk: "cs-CZ",
+  huf: "hu-HU",
+  ron: "ro-RO",
+  isk: "is-IS",
+}
+const ZERO_DECIMAL_CURRENCIES = new Set(["huf", "isk"])
+
+/** `whole` drops the decimals, e.g. for "free shipping over £170". */
+export function formatMoney(
+  amount: number | null | undefined,
+  currencyCode: string,
+  { whole = false }: { whole?: boolean } = {}
+) {
+  const code = currencyCode.toLowerCase()
+  const digits = whole || ZERO_DECIMAL_CURRENCIES.has(code) ? 0 : 2
+  return new Intl.NumberFormat(CURRENCY_LOCALES[code] ?? "en-US", {
     style: "currency",
-    currency: currencyCode.toUpperCase(),
+    currency: code.toUpperCase(),
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
   }).format(Number(amount ?? 0))
 }
 

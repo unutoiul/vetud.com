@@ -10,7 +10,23 @@ type ModuleConfig = {
   options?: Record<string, unknown>
 }
 
+const BACKEND_URL = (process.env.MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")
+
 const modules: ModuleConfig[] = [
+  // Product images and other uploads. Files are written to `<server dir>/static` and served at
+  // /static; on Railway that folder is a persistent volume (see README).
+  {
+    resolve: "@medusajs/medusa/file",
+    options: {
+      providers: [
+        {
+          resolve: "@medusajs/medusa/file-local",
+          id: "local",
+          options: { backend_url: `${BACKEND_URL}/static` },
+        },
+      ],
+    },
+  },
   // Medusa's Search Module, backed by Meilisearch. Index declarations live in src/search.
   {
     resolve: "@medusajs/medusa/search",
@@ -121,6 +137,12 @@ module.exports = defineConfig({
     {
       // Registers the Meilisearch admin page and /store/meilisearch/* routes.
       resolve: "@rokmohar/medusa-plugin-meilisearch",
+      options: {},
+    },
+    {
+      // Converts product prices from the store's default currency (EUR) into every enabled
+      // currency, nightly and on demand (Admin > Currency Exchange Settings).
+      resolve: "@kb0912/currency-exchange-plugin",
       options: {},
     },
   ],

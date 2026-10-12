@@ -12,7 +12,6 @@ import TableRow from "@mui/material/TableRow"
 import Tabs from "@mui/material/Tabs"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
-import { FREE_SHIPPING_THRESHOLD } from "@/lib/config"
 import { formatMoney, type ProductLot } from "@/lib/product"
 import { AppLink } from "../common/links"
 import { useStore } from "../store/StoreProvider"
@@ -72,7 +71,7 @@ export function LotTable({ lots, productTitle }: { lots: ProductLot[]; productTi
 export default function ProductTabs({ description, specs, lots, productTitle }: ProductTabsProps) {
   const [tab, setTab] = useState(0)
   const { region } = useStore()
-  const threshold = FREE_SHIPPING_THRESHOLD[region.currencyCode]
+  const threshold = region.freeShippingThreshold
 
   return (
     <Box>
@@ -111,7 +110,7 @@ export default function ProductTabs({ description, specs, lots, productTitle }: 
           <li>
             <Typography>
               <strong>Standard</strong>: 3–5 business days, tracked.
-              {threshold ? ` Free on orders over ${formatMoney(threshold, region.currencyCode).replace(/\.00$/, "")}.` : ""}
+              {threshold ? ` Free on orders over ${formatMoney(threshold, region.currencyCode, { whole: true })}.` : ""}
             </Typography>
           </li>
           <li>

@@ -55,6 +55,8 @@ export type RegionSummary = {
   id: string
   name: string
   currencyCode: string
+  /** Cart total from which standard shipping is free (region metadata, set by the backend). */
+  freeShippingThreshold?: number
 }
 
 type StoreContextValue = {

@@ -8,7 +8,7 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { formatMoney, readProductMeta } from "@/lib/product"
 import { LocalizedNextLink } from "../common/links"
-import ProductArt from "../product/ProductArt"
+import ProductThumb from "../product/ProductThumb"
 import QuantityStepper from "../product/QuantityStepper"
 import { useStore } from "../store/StoreProvider"
 
@@ -34,11 +34,20 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
         component={LocalizedNextLink}
         href={`/products/${item.product_handle}`}
         onClick={onNavigate}
-        sx={{ width: 92, flexShrink: 0, bgcolor: "brand.mintWash", borderRadius: 1, p: 1 }}
+        sx={{
+          width: 92,
+          flexShrink: 0,
+          bgcolor: item.thumbnail ? "#fff" : "brand.mintWash",
+          border: item.thumbnail ? "1px solid" : "none",
+          borderColor: "divider",
+          borderRadius: 1,
+          p: item.thumbnail ? 0.5 : 1,
+          alignSelf: "flex-start",
+        }}
         aria-hidden
         tabIndex={-1}
       >
-        <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} />
+        <ProductThumb image={item.thumbnail} meta={meta} sizes="92px" />
       </Box>
       <Box sx={{ flex: 1, minWidth: 0 }}>
         <Stack direction="row" spacing={1} sx={{ justifyContent: "space-between" }}>
