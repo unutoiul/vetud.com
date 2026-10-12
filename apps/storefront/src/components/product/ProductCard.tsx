@@ -63,7 +63,7 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
             alt=""
             fill
             sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            style={{ objectFit: "contain", padding: 12 }}
+            style={{ objectFit: "cover" }}
           />
         </Box>
       ) : (

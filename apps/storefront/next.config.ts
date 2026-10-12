@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   poweredByHeader: false,
   images: {
-    // Product images uploaded in Medusa Admin (local file provider in dev, S3/R2 in production).
+    // Locally, product photos come from the Medusa dev server on localhost, which Next blocks by
+    // default (SSRF protection). Allowed in development only; production keeps the protection.
+    dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
+    // Product photos uploaded to Medusa (served by the Medusa server under /static).
     remotePatterns: [
       { protocol: "http", hostname: "localhost", port: "9000" },
       { protocol: "https", hostname: "**" },
