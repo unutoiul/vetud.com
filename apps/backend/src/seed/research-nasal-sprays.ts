@@ -51,8 +51,8 @@ export const NASAL_SPRAYS = [
       `Ingredient information: ${ingredients} The peptide concentration and total peptide content are not yet confirmed. ` +
       `Supplied for laboratory research only; not for human or veterinary use.\n\n${PRODUCT_CARE_DESCRIPTION}`,
     images: [
-      `vetud_${product.handle}_studio_01.png`,
-      `vetud_${product.handle}_studio_02.png`,
+      `vetud_${product.handle}_landscape_01.png`,
+      `vetud_${product.handle}_landscape_02.png`,
     ],
     metadata: {
       code: product.code,

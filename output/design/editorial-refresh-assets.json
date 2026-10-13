@@ -1,0 +1,47 @@
+{
+  "mode": "built-in image_gen",
+  "assets": [
+    {
+      "path": "apps/backend/assets/products/vetud_selank_landscape_01.png",
+      "source": "C:\\Users\\lucas\\.codex\\generated_images\\01a1335f-5c89-7bf0-877c-e6200f028cab\\exec-ba8d94c9-20e9-40c8-94b8-cc76d045c0e9.png",
+      "prompt": "Use case: compositing. Asset type: 4:3 landscape ecommerce product photograph. Recompose the supplied VETUD SELANK nasal spray photo into a genuinely wide landscape scene, not a portrait photo pasted into a wide canvas. Keep the same identifiable VETUD silver bottle, white nasal spray nozzle, matching alpine-printed white box, navy logo, SELANK name, sage green accents and 10 ml label. Preserve the research-use-only label. Both the COMPLETE box and COMPLETE bottle must be visible with generous safe margins and clean readable labels. Box on the left and bottle on the right, close together in a broad three-quarter composition. Product pair should occupy about 65% of the canvas width and 80% of its height. Rebuild the surrounding environment continuously across the entire landscape photograph: pale silver stone by a blue alpine lake, snow mountains, small muted green leaves at an outer edge, a few clear ice crystals, cool natural morning light, soft realistic shadows. Palette porcelain white, navy, glacial blue, sage. Premium restrained editorial photography, crisp products with softly detailed scenery. Landscape 4:3 composition. No blurred sidebar panels, no letterboxing, no graphic borders, no fake reflections, no people or hands, no extra bottles, no extra brands, no new health, purity, storage or regulatory claims, no overlay text or watermark.",
+      "references": [
+        "C:/projects/vetud-peptides/apps/backend/assets/products/vetud_selank_alpine_01.png"
+      ]
+    },
+    {
+      "path": "apps/backend/assets/products/vetud_selank_landscape_02.png",
+      "source": "C:\\Users\\lucas\\.codex\\generated_images\\01a1335f-5c89-7bf0-877c-e6200f028cab\\exec-ce09c433-7958-4611-a494-25fc4e623ee1.png",
+      "prompt": "Use case: compositing. Asset type: 4:3 landscape ecommerce product photograph. Recompose the supplied VETUD SELANK nasal spray photo into a genuinely wide landscape scene, not a portrait photo pasted into a wide canvas. Keep the same identifiable VETUD silver bottle, white nasal spray nozzle, matching alpine-printed white box, navy logo, SELANK name, sage green accents and 10 ml label. Preserve the research-use-only label. Both the COMPLETE box and COMPLETE bottle must be visible with generous safe margins and clean readable labels. Bottle in the left foreground and box to the right, with a slightly lower three-quarter camera angle and a distinct view of the side of the box. Product pair should occupy about 65% of the canvas width and 80% of its height. Rebuild the surrounding environment continuously across the entire landscape photograph: pale silver stone by a blue alpine lake, snow mountains, small muted green leaves at an outer edge, a few clear ice crystals, cool natural morning light, soft realistic shadows. Palette porcelain white, navy, glacial blue, sage. Premium restrained editorial photography, crisp products with softly detailed scenery. Landscape 4:3 composition. No blurred sidebar panels, no letterboxing, no graphic borders, no fake reflections, no people or hands, no extra bottles, no extra brands, no new health, purity, storage or regulatory claims, no overlay text or watermark.",
+      "references": [
+        "C:/projects/vetud-peptides/apps/backend/assets/products/vetud_selank_alpine_02.png"
+      ]
+    },
+    {
+      "path": "apps/backend/assets/products/vetud_semax_landscape_01.png",
+      "source": "C:\\Users\\lucas\\.codex\\generated_images\\01a1335f-5c89-7bf0-877c-e6200f028cab\\exec-6d5b973c-ebbd-4e7c-95f9-d133db6c405a.png",
+      "prompt": "Use case: compositing. Asset type: 4:3 landscape ecommerce product photograph. Recompose the supplied VETUD SEMAX nasal spray photo into a genuinely wide landscape scene, not a portrait photo pasted into a wide canvas. Keep the same identifiable VETUD silver bottle, white nasal spray nozzle, matching alpine-printed white box, navy logo, SEMAX name, ice blue accents and 10 ml label. Preserve the research-use-only label. Both the COMPLETE box and COMPLETE bottle must be visible with generous safe margins and clean readable labels. Box on the left and bottle on the right, close together in a broad three-quarter composition. Product pair should occupy about 65% of the canvas width and 80% of its height. Rebuild the surrounding environment continuously across the entire landscape photograph: pale silver stone by a blue alpine lake, snow mountains, small muted green leaves at an outer edge, a few clear ice crystals, cool natural morning light, soft realistic shadows. Palette porcelain white, navy, glacial blue, sage. Premium restrained editorial photography, crisp products with softly detailed scenery. Landscape 4:3 composition. No blurred sidebar panels, no letterboxing, no graphic borders, no fake reflections, no people or hands, no extra bottles, no extra brands, no new health, purity, storage or regulatory claims, no overlay text or watermark.",
+      "references": [
+        "C:/projects/vetud-peptides/apps/backend/assets/products/vetud_semax_alpine_01.png"
+      ]
+    },
+    {
+      "path": "apps/backend/assets/products/vetud_semax_landscape_02.png",
+      "source": "C:\\Users\\lucas\\.codex\\generated_images\\01a1335f-5c89-7bf0-877c-e6200f028cab\\exec-5380677f-edef-44bb-9950-441bb240c230.png",
+      "prompt": "Use case: compositing. Asset type: 4:3 landscape ecommerce product photograph. Recompose the supplied VETUD SEMAX nasal spray photo into a genuinely wide landscape scene, not a portrait photo pasted into a wide canvas. Keep the same identifiable VETUD silver bottle, white nasal spray nozzle, matching alpine-printed white box, navy logo, SEMAX name, ice blue accents and 10 ml label. Preserve the research-use-only label. Both the COMPLETE box and COMPLETE bottle must be visible with generous safe margins and clean readable labels. Bottle in the left foreground and box to the right, with a slightly lower three-quarter camera angle and a distinct view of the side of the box. Product pair should occupy about 65% of the canvas width and 80% of its height. Rebuild the surrounding environment continuously across the entire landscape photograph: pale silver stone by a blue alpine lake, snow mountains, small muted green leaves at an outer edge, a few clear ice crystals, cool natural morning light, soft realistic shadows. Palette porcelain white, navy, glacial blue, sage. Premium restrained editorial photography, crisp products with softly detailed scenery. Landscape 4:3 composition. No blurred sidebar panels, no letterboxing, no graphic borders, no fake reflections, no people or hands, no extra bottles, no extra brands, no new health, purity, storage or regulatory claims, no overlay text or watermark.",
+      "references": [
+        "C:/projects/vetud-peptides/apps/backend/assets/products/vetud_semax_alpine_02.png"
+      ]
+    },
+    {
+      "path": "apps/storefront/public/images/vetud-complete-collection-alpine.png",
+      "source": "C:\\Users\\lucas\\.codex\\generated_images\\01a1335f-5c89-7bf0-877c-e6200f028cab\\exec-2fd3011a-0b1e-4c55-8df9-2912ac8588b9.png",
+      "prompt": "Use case: compositing. Asset type: cohesive landscape brand hero photograph. Create one premium VETUD still life in a continuous alpine landscape using all supplied images as product identity references. Image 1 contains the three flat pen kit boxes: Retatrutide, Semaglutide and Tirzepatide, all 40 mg. Images 2 and 3 are the Selank and Semax 10 ml sprays with their upright white boxes and silver bottles. Show all FIVE distinct named products, with the three horizontal pen boxes arranged as a tasteful stepped group at the back and the two spray boxes/bottles in the foreground to the right. One matching silver pen may rest on the pale stone in front. Keep all product silhouettes complete and authentic, preserve the navy VETUD logos, alpine package artwork, product names and strengths; do not substitute vials for pens or spray nozzles. Preserve pen package badges \"99% Purity\" and \"Lab tested for purity\", and research-use-only labeling. The products should be in the central/right 75% of a 4:3 frame, with the left 20% left as pale softly lit lake/stone scenery, suitable for feathering into the website background. Cool white stone, clear glacial lake, snow mountains, restrained sage foliage at the far edge, natural soft daylight, premium tactile photographic detail. A cohesive single shot, no card collage, no panels, no frames, no added copy or watermark, no people, no invented medical or stability claims. Make the scene airy and elegant with separation between the named products and generous safe margins. Landscape 4:3, high resolution.",
+      "references": [
+        "C:/projects/vetud-peptides/apps/storefront/public/images/vetud-pen-collection-alpine.png",
+        "C:/projects/vetud-peptides/apps/backend/assets/products/vetud_selank_alpine_01.png",
+        "C:/projects/vetud-peptides/apps/backend/assets/products/vetud_semax_alpine_01.png"
+      ]
+    }
+  ]
+}

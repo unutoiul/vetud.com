@@ -1,53 +1,39 @@
-﻿import Box from "@mui/material/Box"
-import Grid from "@mui/material/Grid"
+import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import Icon, { type IconName } from "@/components/brand/Icon"
-import { ButtonLink, LocalizedNextLink } from "@/components/common/links"
+import Icon from "@/components/brand/Icon"
+import { ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import Hero from "@/components/home/Hero"
-import LotLookupBand from "@/components/home/LotLookupBand"
-import Manifesto from "@/components/home/Manifesto"
-import StandardsAccordion from "@/components/home/StandardsAccordion"
+import SpraySpotlight from "@/components/home/SpraySpotlight"
 import ProductGrid from "@/components/product/ProductGrid"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
-import { getCollectionByHandle, listProducts } from "@/lib/medusa/products"
-import { sortProducts } from "@/lib/product"
-import { motion } from "@/theme/tokens"
+import { listCategories, listProducts } from "@/lib/medusa/products"
 
-const CATEGORIES: { name: string; description: string; href: string; icon: IconName }[] = [
-  { name: "Peptide Series", description: "A focused research collection", href: "/shop?category=peptide-series", icon: "molecule" },
+const PEN_ORDER = ["retatrutide", "tirzepatide", "semaglutide"]
+const DETAILS = [
+  { icon: "flask" as const, title: "99% purity", text: "Lab tested for purity." },
+  { icon: "document" as const, title: "Details, made clear", text: "Amounts, formats and ingredient information in one place." },
+  { icon: "support" as const, title: "A real conversation", text: "Contact the team with product and order questions." },
 ]
 
 export default async function HomePage() {
   const { region } = await getCurrentRegion()
-  const featured = await getCollectionByHandle("featured")
-  const products = await listProducts({ regionId: region.id, collectionId: featured?.id, limit: 4 })
+  const category = (await listCategories()).find((item) => item.handle === "peptide-series")
+  const products = category ? await listProducts({ regionId: region.id, categoryId: category.id }) : []
+  const pens = products.filter((product) => PEN_ORDER.includes(product.handle ?? "")).sort((a, b) => PEN_ORDER.indexOf(a.handle ?? "") - PEN_ORDER.indexOf(b.handle ?? ""))
+  const sprays = ["selank", "semax"].flatMap((handle) => products.filter((product) => product.handle === handle))
   return <>
     <Hero />
-    <Section tone="white" id="catalog">
-      <SectionHeading eyebrow="The VETUD collection" title="Considered down to the molecule." description="Explore research materials with the details that matter, clearly presented." action={<ButtonLink href="/shop" variant="outlined" endIcon={<Icon name="arrowUpRight" />}>Shop all products</ButtonLink>} />
-      {products.length ? <ProductGrid products={sortProducts(products, "featured")} density="four" /> : <Box sx={{ p: 5, bgcolor: "brand.mintWash", borderRadius: 3 }}><Typography>Our collection is being updated.</Typography><ButtonLink href="/shop" sx={{ mt: 2 }} endIcon={<Icon name="arrowRight" />}>Explore the catalog</ButtonLink></Box>}
-      <Box sx={{ mt: { xs: 5, md: 7 }, display: "grid", gridTemplateColumns: "1fr", gap: { xs: 1, md: 4 } }}>
-        {CATEGORIES.map((category) => <Box key={category.name} component={LocalizedNextLink} href={category.href} sx={{ display: "flex", gap: 2, alignItems: "center", py: 2.5, textDecoration: "none", borderTop: "1px solid rgba(23,53,75,.08)", transition: `color .3s ${motion}`, "&:hover": { color: "brand.blue" }, "&:hover .category-arrow": { transform: "translate(3px,-3px)" } }}>
-          <Icon name={category.icon} sx={{ fontSize: 29, color: "brand.blue" }} /><Box sx={{ flex: 1 }}><Typography sx={{ fontSize: 16, fontWeight: 600 }}>{category.name}</Typography><Typography sx={{ fontSize: 12, color: "text.secondary", mt: .25 }}>{category.description}</Typography></Box><Icon name="arrowUpRight" className="category-arrow" sx={{ fontSize: 19, transition: `transform .3s ${motion}` }} />
-        </Box>)}
-      </Box>
+    <Section tone="white" id="catalog" sx={{ pt: { xs: 6, md: 9 }, pb: { xs: 7, md: 10 } }}>
+      <SectionHeading eyebrow="01 / The pen collection" title="Precision, in a pen." description="Freeze-dried peptide powder and BAC water, held separately in a dual-chamber pen. Choose 10 mg, 20 mg or 40 mg." action={<ButtonLink href="/shop" variant="outlined" endIcon={<Icon name="arrowUpRight" />}>View the collection</ButtonLink>} />
+      {pens.length ? <ProductGrid products={pens} /> : <Box sx={{ p: 5, bgcolor: "brand.mintWash", borderRadius: 3 }}><Typography>Our collection is being updated.</Typography><ButtonLink href="/shop" sx={{ mt: 2 }} endIcon={<Icon name="arrowRight" />}>Explore the catalog</ButtonLink></Box>}
     </Section>
-    <Section tone="wash" id="standards">
-      <Grid container spacing={{ xs: 5, md: 10 }} sx={{ alignItems: "center" }}>
-        <Grid size={{ xs: 12, md: 5 }}>
-          <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 2.5 }}><Icon name="shield" sx={{ fontSize: 19, color: "brand.teal" }} /><Typography variant="eyebrow" sx={{ color: "secondary.main" }}>The VETUD standard</Typography></Stack>
-          <Typography variant="h2" sx={{ mb: 3, maxWidth: 460 }}>Good science deserves a clear foundation.</Typography>
-          <Typography sx={{ color: "text.secondary", maxWidth: 420 }}>From material specifications to the record behind a batch, we put the information your research needs within reach.</Typography>
-          <ButtonLink href="/standards" variant="outlined" endIcon={<Icon name="arrowUpRight" />} sx={{ mt: 4 }}>Explore our standards</ButtonLink>
-          <Stack direction="row" spacing={4} sx={{ mt: 5 }}><Box><Icon name="leaf" sx={{ fontSize: 26, color: "brand.teal", mb: .75 }} /><Typography sx={{ fontSize: 11.5, color: "text.secondary" }}>Thoughtfully handled</Typography></Box><Box><Icon name="snowflake" sx={{ fontSize: 26, color: "brand.blue", mb: .75 }} /><Typography sx={{ fontSize: 11.5, color: "text.secondary" }}>Storage guidance</Typography></Box></Stack>
-        </Grid>
-        <Grid size={{ xs: 12, md: 7 }}><StandardsAccordion /></Grid>
-      </Grid>
+    <SpraySpotlight products={sprays} />
+    <Section tone="wash" sx={{ py: { xs: 6, md: 8 } }}>
+      <Stack direction={{ xs: "column", md: "row" }} sx={{ justifyContent: "space-between", alignItems: { md: "center" }, gap: 3, mb: { xs: 4, md: 5 } }}><Typography variant="h3" component="h2">Clarity comes first.</Typography><ButtonLink href="/standards" variant="text" endIcon={<Icon name="arrowUpRight" />}>Our standards</ButtonLink></Stack>
+      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3,1fr)" }, gap: { xs: 3, md: 5 } }}>{DETAILS.map((detail) => <Stack key={detail.title} direction="row" spacing={2} sx={{ alignItems: "flex-start" }}><Icon name={detail.icon} sx={{ color: "brand.blue", fontSize: 25, mt: .25 }} /><Box><Typography sx={{ fontSize: 14, fontWeight: 600 }}>{detail.title}</Typography><Typography sx={{ fontSize: 12.5, color: "text.secondary", mt: .75, maxWidth: 300 }}>{detail.text}</Typography></Box></Stack>)}</Box>
     </Section>
-    <Section tone="white" tight><LotLookupBand /></Section>
-    <Manifesto />
   </>
 }

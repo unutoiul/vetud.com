@@ -53,7 +53,7 @@ const prepareNasalSprayImagesStep = createStep(
         if (!file) {
           throw new MedusaError(
             MedusaError.Types.NOT_FOUND,
-            `Missing studio image: ${filename}`,
+            `Missing spray image: ${filename}`,
           )
         }
         return {
