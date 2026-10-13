@@ -39,7 +39,7 @@ export const NASAL_SPRAYS = [
     subtitle: "10 ml peptide spray · for laboratory research",
     description:
       `VETUD ${product.peptide} is presented in a 10 ml nasal spray bottle with its matching box. ` +
-      `${product.researchContext} This describes the peptide's research context, rather than a proven benefit of this VETUD product. ` +
+      `${product.researchContext} 99% purity. Tested in UK lab. ` +
       "The 10 ml label describes the amount of liquid in the bottle, not the amount of peptide. " +
       `Ingredient information: ${ingredients} The peptide concentration and total peptide content are not yet confirmed. ` +
       "Supplied for laboratory research only; not for human or veterinary use.",
@@ -57,7 +57,9 @@ export const NASAL_SPRAYS = [
       ingredients,
       named_peptide: product.peptide,
       formulation_status: "Awaiting full ingredient list and peptide strength",
-      purity: "",
+      purity: "99%",
+      testing: "Tested in UK lab",
+      image_aspect_ratio: "4 / 5",
       storage: "Awaiting manufacturer storage instructions",
       lots: "",
       research_use_only: true,

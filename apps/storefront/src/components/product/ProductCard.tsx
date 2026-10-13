@@ -35,7 +35,7 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
     }}>
       <Box sx={{ overflow: "hidden", borderRadius: 2.3 }}>
         {product.thumbnail ? (
-          <Box sx={{ position: "relative", height: { xs: 270, sm: 290 }, bgcolor: "#f1f6f7" }}>
+          <Box sx={{ position: "relative", aspectRatio: "4 / 3", bgcolor: "#f1f6f7" }}>
             <Image src={product.thumbnail} alt="" fill sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw" style={{ objectFit: "contain" }} />
           </Box>
         ) : (
@@ -59,7 +59,8 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
         </Typography>
         <Typography variant="body2" sx={{ color: "text.secondary", fontSize: 12.5, mb: 2 }}>
           {product.subtitle ?? meta.form}
-          {meta.purity ? ` · ${meta.purity}` : ""}
+          {meta.purity ? ` · ${meta.purity.endsWith("%") ? `${meta.purity} purity` : meta.purity}` : ""}
+          {meta.testing ? ` · ${meta.testing}` : ""}
         </Typography>
         <Stack direction="row" sx={{ mt: "auto", pt: 1.75, borderTop: "1px solid #e8edf0", justifyContent: "space-between", alignItems: "center", gap: 1 }}>
           <Stack spacing={0.4}>

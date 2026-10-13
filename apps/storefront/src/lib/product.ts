@@ -14,6 +14,8 @@ export type ProductMeta = {
   code: string
   accent: string
   purity?: string
+  testing?: string
+  imageAspectRatio?: string
   form?: string
   storage?: string
   ingredients?: string
@@ -74,6 +76,8 @@ export function readProductMeta(
     code: str(metadata.code) ?? "VTD",
     accent: /^#[0-9a-f]{6}$/i.test(String(metadata.accent)) ? String(metadata.accent) : DEFAULT_ACCENT,
     purity: str(metadata.purity),
+    testing: str(metadata.testing),
+    imageAspectRatio: ["4 / 3", "4 / 5", "1 / 1"].includes(String(metadata.image_aspect_ratio)) ? String(metadata.image_aspect_ratio) : undefined,
     form: str(metadata.form),
     storage: str(metadata.storage),
     ingredients: str(metadata.ingredients),

@@ -6,7 +6,6 @@ import Skeleton from "@mui/material/Skeleton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import type { Metadata } from "next"
-import Image from "next/image"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { AppLink } from "@/components/common/links"
@@ -15,6 +14,7 @@ import SectionHeading from "@/components/common/SectionHeading"
 import ProductArt from "@/components/product/ProductArt"
 import { ArtStage } from "@/components/product/ProductCard"
 import ProductGrid from "@/components/product/ProductGrid"
+import ProductGallery from "@/components/product/ProductGallery"
 import ProductTabs from "@/components/product/ProductTabs"
 import PurchasePanel from "@/components/product/PurchasePanel"
 import { BASE_URL } from "@/lib/config"
@@ -102,6 +102,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     ...(meta.concentration ? [{ label: "Peptide strength", value: meta.concentration }] : []),
     ...(meta.ingredients ? [{ label: "Ingredient information", value: meta.ingredients }] : []),
     { label: "Purity", value: meta.purity ?? "—" },
+    ...(meta.testing ? [{ label: "Testing", value: meta.testing }] : []),
     { label: "Storage", value: meta.storage ?? "—" },
     { label: "Available amounts", value: sortedVariants(product).map((variant) => variant.title).join(", ") },
     ...(skus ? [{ label: "SKU", value: skus }] : []),
@@ -128,7 +129,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         }
       : {}),
   }
-  const image = product.images?.[0]?.url ?? product.thumbnail
+  const images = product.images?.length ? product.images : product.thumbnail ? [{ url: product.thumbnail }] : []
 
   return (
     <>
@@ -154,10 +155,8 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 6 }}>
             <Box sx={{ position: { md: "sticky" }, top: { md: 110 }, border: "1px solid", borderColor: "divider", borderRadius: 2.5, overflow: "hidden" }}>
-              {image ? (
-                <Box sx={{ position: "relative", aspectRatio: "1 / 1", bgcolor: "brand.mintWash" }}>
-                  <Image src={image} alt={product.title} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "contain" }} priority />
-                </Box>
+              {images.length ? (
+                <ProductGallery title={product.title} images={images} aspectRatio={meta.imageAspectRatio ?? "4 / 3"} />
               ) : (
                 <ArtStage height={{ xs: 320, sm: 420, md: 520 }}>
                   <Box sx={{ width: "90%", maxWidth: 500, position: "relative", zIndex: 1 }}>
@@ -166,7 +165,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
                 </ArtStage>
               )}
               <Stack direction="row" spacing={1} useFlexGap sx={{ p: 2, flexWrap: "wrap", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
-                {[meta.purity, meta.form, meta.lots.length ? `${meta.lots.length} documented lot${meta.lots.length > 1 ? "s" : ""}` : null]
+                {[meta.purity?.endsWith("%") ? `${meta.purity} purity` : meta.purity, meta.testing, meta.lots.length ? `${meta.lots.length} documented lot${meta.lots.length > 1 ? "s" : ""}` : null]
                   .filter(Boolean)
                   .map((label) => (
                     <Chip key={label} label={label} size="small" variant="outlined" />

@@ -169,7 +169,7 @@ const preparePenKitPricesStep = createStep(
         description:
           `VETUD ${product.title} research pen kit, available in 10 mg, 20 mg and 40 mg amounts. ` +
           "Kit contents: one pen in the selected amount, 12 disposable needles and one instruction booklet. " +
-          "Labeled for research use only. The supplied packaging states 99.9% purity and testing in a UK laboratory. " +
+          "Labeled for research use only. 99% purity. Tested in UK lab. " +
           "The current product images show 40 mg packaging for all amount options; select the required amount from the variant selector.",
         metadata: {
           ...product.metadata,

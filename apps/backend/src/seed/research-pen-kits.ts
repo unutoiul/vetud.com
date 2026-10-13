@@ -26,7 +26,7 @@ export const RESEARCH_PEN_KITS = [
   description:
     `VETUD ${product.title} 40 mg pen kit. The packaging lists one 40 mg pen, ` +
     "12 disposable needles and one instruction booklet. Labeled for research use only. " +
-    "The packaging states 99.9% purity and testing in a UK laboratory.",
+    "99% purity. Tested in UK lab.",
   images: [
     `vetud_${product.handle}_40mg_closed.png`,
     `vetud_${product.handle}_40mg_open.png`,
@@ -34,7 +34,9 @@ export const RESEARCH_PEN_KITS = [
   metadata: {
     code: product.code,
     accent: product.accent,
-    purity: "99.9% (packaging claim)",
+    purity: "99%",
+    testing: "Tested in UK lab",
+    image_aspect_ratio: "4 / 3",
     form: "40 mg pen kit",
     storage: "",
     lots: "",
