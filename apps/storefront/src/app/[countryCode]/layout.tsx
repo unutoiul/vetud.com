@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next"
 import { DM_Mono, Manrope } from "next/font/google"
 import { countryCode } from "next/root-params"
 import CartDrawer from "@/components/cart/CartDrawer"
-import AnnouncementBar from "@/components/layout/AnnouncementBar"
 import Footer from "@/components/layout/Footer"
 import Header from "@/components/layout/Header"
 import StoreProvider from "@/components/store/StoreProvider"
@@ -86,7 +85,6 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
             >
               Skip to content
             </Box>
-            <AnnouncementBar />
             <Header />
             <Box component="main" id="main" sx={{ minHeight: "60vh" }}>
               {children}

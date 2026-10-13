@@ -10,7 +10,7 @@ import Stack from "@mui/material/Stack"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import { usePathname } from "next/navigation"
-import { Suspense, useState } from "react"
+import { Suspense, useRef, useState } from "react"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { LocalizedNextLink } from "../common/links"
@@ -36,9 +36,10 @@ export default function Header() {
   const { itemCount, openDrawer } = useStore()
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const searchInput = useRef<HTMLInputElement>(null)
   return <>
     <AppBar position="sticky" sx={{ top: 12, mt: 2, mx: "auto", width: { xs: "calc(100% - 24px)", md: "calc(100% - 64px)" }, maxWidth: 1440, borderRadius: 999, bgcolor: "rgba(255,255,255,.94)", backdropFilter: "blur(18px)", border: "1px solid rgba(23,53,75,.06)", boxShadow: "0 8px 40px rgba(18,51,76,.045)" }}>
-      <Toolbar sx={{ minHeight: { xs: 72, md: 80 }, px: { xs: 1.5, md: 3.5 }, gap: { xs: .25, md: 1.5 }, "& > .MuiIconButton-root": { minWidth: { xs: 40, md: 44 }, width: { xs: 40, md: 44 } } }}>
+      <Toolbar sx={{ minHeight: { xs: 72, md: 80 }, px: { xs: 1, md: 3.5 }, gap: { xs: .25, md: 1.5 }, "& > .MuiIconButton-root": { minWidth: 44, width: 44, height: 44 } }}>
         <Box component={LocalizedNextLink} href="/" aria-label="Vetud Peptides home" sx={{ textDecoration: "none", display: "inline-flex", mr: { xs: "auto", lg: 4 }, "& strong": { fontSize: { xs: 19, md: 23 } }, "& small": { fontSize: { xs: 7.5, md: 9 } }, "& svg": { width: { xs: 35, md: 44 } } }}><Logo /></Box>
         <Suspense fallback={<MainNav />}><ActiveMainNav /></Suspense>
         <Box sx={{ display: { xs: "none", md: "block" }, ml: { md: "auto", lg: 1 } }}><CountrySelect /></Box>
@@ -57,9 +58,9 @@ export default function Header() {
         <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 3 }}>Peptide science. A clearer perspective.</Typography>
       </Box>
     </Drawer>
-    <Dialog open={searchOpen} onClose={() => setSearchOpen(false)} fullWidth maxWidth="sm" aria-labelledby="search-title" slotProps={{ paper: { sx: { alignSelf: "flex-start", mt: 10, p: { xs: 2.5, sm: 4 } } } }}>
+    <Dialog open={searchOpen} onClose={() => setSearchOpen(false)} fullWidth maxWidth="sm" aria-labelledby="search-title" slotProps={{ paper: { sx: { alignSelf: "flex-start", mt: 10, p: { xs: 2.5, sm: 4 } } }, transition: { onEntered: () => searchInput.current?.focus() } }}>
       <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", mb: 2 }}><Typography component="h2" variant="h4" id="search-title">Find your research materials</Typography><IconButton aria-label="Close search" onClick={() => setSearchOpen(false)}><Icon name="close" /></IconButton></Stack>
-      <SearchBox onNavigate={() => setSearchOpen(false)} />
+      <SearchBox autoFocus inputRef={searchInput} onNavigate={() => setSearchOpen(false)} />
       <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>Search by product name, code, or lot number.</Typography>
     </Dialog>
   </>

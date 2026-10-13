@@ -9,7 +9,7 @@ import InputAdornment from "@mui/material/InputAdornment"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type Ref } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { cheapestPrice, formatMoney, readProductMeta } from "@/lib/product"
 import { useStore } from "../store/StoreProvider"
@@ -18,11 +18,12 @@ const SEARCH_FIELDS = "id,title,handle,+metadata,*categories,*variants.calculate
 
 type SearchBoxProps = {
   autoFocus?: boolean
+  inputRef?: Ref<HTMLInputElement>
   onNavigate?: () => void
   dense?: boolean
 }
 
-export default function SearchBox({ autoFocus, onNavigate, dense }: SearchBoxProps) {
+export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: SearchBoxProps) {
   const router = useRouter()
   const { countryCode, region } = useStore()
   const [input, setInput] = useState("")
@@ -113,6 +114,7 @@ export default function SearchBox({ autoFocus, onNavigate, dense }: SearchBoxPro
         <TextField
           {...params}
           autoFocus={autoFocus}
+          inputRef={inputRef}
           placeholder="Search products, codes, lots…"
           size={dense ? "small" : "medium"}
           slotProps={{
