@@ -1,10 +1,11 @@
 "use client"
 
 import { GlobeIcon as PublicIcon } from "@/components/brand/Icon"
+import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import ListSubheader from "@mui/material/ListSubheader"
 import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
+import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useStore } from "../store/StoreProvider"
@@ -14,8 +15,6 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
   const router = useRouter()
   const { countryCode, countries, region } = useStore()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
-
-  const currencies = Array.from(new Set(countries.map((country) => country.currencyCode)))
 
   const select = (code: string) => {
     setAnchor(null)
@@ -51,24 +50,26 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
         anchorEl={anchor}
         open={Boolean(anchor)}
         onClose={() => setAnchor(null)}
-        slotProps={{ paper: { sx: { maxHeight: 420, minWidth: 240, borderRadius: 2.5, overscrollBehavior: "contain" } } }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        slotProps={{
+          paper: { sx: { maxHeight: 320, width: 260, maxWidth: "calc(100vw - 32px)", borderRadius: 2.5, overscrollBehavior: "contain" } },
+          list: { dense: true, "aria-label": "Shipping country", sx: { py: 0.5 } },
+        }}
       >
-        {currencies.flatMap((currency) => [
-          <ListSubheader key={`h-${currency}`} sx={{ lineHeight: "36px", fontSize: 11, letterSpacing: "0.12em" }}>
-            {currency.toUpperCase()}
-          </ListSubheader>,
-          ...countries
-            .filter((country) => country.currencyCode === currency)
-            .map((country) => (
-              <MenuItem
-                key={country.code}
-                selected={country.code === countryCode}
-                onClick={() => select(country.code)}
-              >
-                {country.name}
-              </MenuItem>
-            )),
-        ])}
+        {countries.map((country) => (
+          <MenuItem
+            key={country.code}
+            selected={country.code === countryCode}
+            onClick={() => select(country.code)}
+            sx={{ minHeight: 40, gap: 2, fontSize: 13 }}
+          >
+            <Box component="span" sx={{ flex: 1 }}>{country.name}</Box>
+            <Typography component="span" sx={{ color: "text.secondary", fontSize: 11 }}>
+              {country.currencyCode.toUpperCase()}
+            </Typography>
+          </MenuItem>
+        ))}
       </Menu>
     </>
   )
