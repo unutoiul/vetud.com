@@ -15,6 +15,7 @@ import ProductArt from "@/components/product/ProductArt"
 import { ArtStage } from "@/components/product/ProductCard"
 import ProductGrid from "@/components/product/ProductGrid"
 import ProductGallery from "@/components/product/ProductGallery"
+import ProductCarousel from "@/components/product/ProductCarousel"
 import ProductTabs from "@/components/product/ProductTabs"
 import PurchasePanel from "@/components/product/PurchasePanel"
 import { BASE_URL } from "@/lib/config"
@@ -23,6 +24,10 @@ import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medu
 import { cheapestPrice, isProductInStock, readProductMeta, sortedVariants, sortProducts } from "@/lib/product"
 
 const PLACEHOLDER = "__placeholder__"
+const SELANK_ALPINE_PHOTOS = [
+  { url: "/images/vetud-selank-alpine-01.png", alt: "Selank nasal spray and box beside an alpine lake, box on the left" },
+  { url: "/images/vetud-selank-alpine-02.png", alt: "Selank nasal spray and box beside an alpine lake, bottle on the left" },
+]
 
 export async function generateStaticParams() {
   try {
@@ -155,7 +160,9 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 6 }}>
             <Box sx={{ position: { md: "sticky" }, top: { md: 110 }, border: "1px solid", borderColor: "divider", borderRadius: 2.5, overflow: "hidden" }}>
-              {images.length ? (
+              {handle === "selank" ? (
+                <ProductCarousel title={product.title} images={SELANK_ALPINE_PHOTOS} />
+              ) : images.length ? (
                 <ProductGallery title={product.title} images={images} aspectRatio={meta.imageAspectRatio ?? "4 / 3"} />
               ) : (
                 <ArtStage height={{ xs: 320, sm: 420, md: 520 }}>
