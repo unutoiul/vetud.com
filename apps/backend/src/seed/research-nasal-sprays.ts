@@ -1,4 +1,11 @@
 /** Volume and peptide names come from the supplied photos; concentration and full formula remain unconfirmed. */
+import {
+  PRODUCT_CARE_DESCRIPTION,
+  PRODUCT_HANDLING_GUIDANCE,
+  PRODUCT_STABILITY_GUIDANCE,
+  PRODUCT_STORAGE_GUIDANCE,
+  PRODUCT_TESTING_LABEL,
+} from "./product-care"
 export const NASAL_SPRAY_RESEARCH_DATE = "2026-10-13"
 export const NASAL_SPRAYS = [
   {
@@ -39,10 +46,10 @@ export const NASAL_SPRAYS = [
     subtitle: "10 ml peptide spray · for laboratory research",
     description:
       `VETUD ${product.peptide} is presented in a 10 ml nasal spray bottle with its matching box. ` +
-      `${product.researchContext} 99% purity. Tested in UK lab. ` +
+      `${product.researchContext} 99% purity. ${PRODUCT_TESTING_LABEL}. ` +
       "The 10 ml label describes the amount of liquid in the bottle, not the amount of peptide. " +
       `Ingredient information: ${ingredients} The peptide concentration and total peptide content are not yet confirmed. ` +
-      "Supplied for laboratory research only; not for human or veterinary use.",
+      `Supplied for laboratory research only; not for human or veterinary use.\n\n${PRODUCT_CARE_DESCRIPTION}`,
     images: [
       `vetud_${product.handle}_studio_01.png`,
       `vetud_${product.handle}_studio_02.png`,
@@ -58,9 +65,11 @@ export const NASAL_SPRAYS = [
       named_peptide: product.peptide,
       formulation_status: "Awaiting full ingredient list and peptide strength",
       purity: "99%",
-      testing: "Tested in UK lab",
+      testing: PRODUCT_TESTING_LABEL,
       image_aspect_ratio: "4 / 3",
-      storage: "Awaiting manufacturer storage instructions",
+      storage: PRODUCT_STORAGE_GUIDANCE,
+      stability: PRODUCT_STABILITY_GUIDANCE,
+      handling: PRODUCT_HANDLING_GUIDANCE,
       lots: "",
       research_use_only: true,
       research_sources: product.literature,

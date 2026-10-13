@@ -6,9 +6,7 @@ import Typography from "@mui/material/Typography"
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import { ButtonLink } from "@/components/common/links"
-import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
-import { SerifAccent } from "@/components/common/SectionHeading"
 import ProductGrid from "@/components/product/ProductGrid"
 import ShopToolbar from "@/components/shop/ShopToolbar"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
@@ -98,16 +96,8 @@ function ResultsSkeleton() {
 export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/shop">) {
   return (
     <>
-      <PageHeader
-        eyebrow="The collection"
-        title={
-          <>
-            Every sequence, <SerifAccent>documented.</SerifAccent>
-          </>
-        }
-        description="Explore our Peptide Series. Every listing shows its specifications and lot history."
-      />
       <Section tone="white" tight>
+        <Typography component="h1" variant="h3" sx={{ mb: 3 }}>Peptide Series</Typography>
         <Suspense fallback={<ResultsSkeleton />}>
           <ShopResults searchParams={searchParams} />
         </Suspense>

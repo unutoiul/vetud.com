@@ -26,7 +26,7 @@ export const STANDARD_STEPS: StandardStep[] = [
     title: "Transparent specifications",
     summary: "Technical details shown clearly, with no unsupported performance promises.",
     detail:
-      "Each product page lists form, purity target, storage conditions and available amounts. We describe materials, not outcomes: there are no claims about effects in humans or animals.",
+      "Each product page lists form, purity, available amounts and storage guidance. We describe materials, not outcomes: there are no claims about effects in humans or animals.",
   },
   {
     title: "Handled with care",

@@ -1,4 +1,14 @@
 /** Product details transcribed from the supplied packaging, without placeholder prices or lots. */
+import {
+  penDescription,
+  penIngredients,
+  PEN_FEATURES,
+  PEN_FORM,
+  PEN_STABILITY_GUIDANCE,
+  PRODUCT_HANDLING_GUIDANCE,
+  PRODUCT_STORAGE_GUIDANCE,
+  PRODUCT_TESTING_LABEL,
+} from "./product-care"
 export const RESEARCH_PEN_KIT_REVISION = "40mg-pen-kits-v1"
 
 export const RESEARCH_PEN_KITS = [
@@ -22,23 +32,24 @@ export const RESEARCH_PEN_KITS = [
   },
 ].map((product) => ({
   ...product,
-  subtitle: "Research peptide · 40 mg pen kit",
-  description:
-    `VETUD ${product.title} 40 mg pen kit. The packaging lists one 40 mg pen, ` +
-    "12 disposable needles and one instruction booklet. Labeled for research use only. " +
-    "99% purity. Tested in UK lab.",
+  subtitle: "Freeze-dried peptide · dual-chamber pen · 10 mg / 20 mg / 40 mg",
+  description: penDescription(product.title),
   images: [
-    `vetud_${product.handle}_40mg_closed.png`,
-    `vetud_${product.handle}_40mg_open.png`,
+    `vetud_${product.handle}_40mg_closed_lab.png`,
+    `vetud_${product.handle}_40mg_open_lab.png`,
   ],
   metadata: {
     code: product.code,
     accent: product.accent,
     purity: "99%",
-    testing: "Tested in UK lab",
+    testing: PRODUCT_TESTING_LABEL,
     image_aspect_ratio: "4 / 3",
-    form: "40 mg pen kit",
-    storage: "",
+    form: PEN_FORM,
+    features: PEN_FEATURES,
+    ingredients: penIngredients(product.title),
+    storage: PRODUCT_STORAGE_GUIDANCE,
+    stability: PEN_STABILITY_GUIDANCE,
+    handling: PRODUCT_HANDLING_GUIDANCE,
     lots: "",
     brand: "VETUD",
     research_use_only: true,

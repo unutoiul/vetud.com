@@ -82,7 +82,7 @@ export default function ProductTabs({ description, specs, lots, productTitle }: 
       </Tabs>
 
       <Box role="tabpanel" id="tabpanel-0" aria-labelledby="tab-0" hidden={tab !== 0} tabIndex={0} sx={{ py: 4 }}>
-        {description ? <Typography sx={{ mb: 3, maxWidth: 720 }}>{description}</Typography> : null}
+        {description ? <Typography sx={{ mb: 3, maxWidth: 720, whiteSpace: "pre-line" }}>{description}</Typography> : null}
         <Table size="small" aria-label="Specifications" sx={{ maxWidth: 760 }}>
           <TableBody>
             {specs.map((spec) => (

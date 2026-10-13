@@ -75,7 +75,7 @@ const FAQ: FaqItem[] = [
   {
     question: "How should materials be stored?",
     answer:
-      "Storage conditions are listed on every product page. Most lyophilized materials should be kept at -20 °C, desiccated and protected from light.",
+      "Storage and stability depend on the formulation. Follow the manufacturer's batch-specific temperature instructions and expiry date. Confirm whether freezing is permitted before placing a pen or spray in a freezer.",
   },
   {
     question: "Can I return an order?",

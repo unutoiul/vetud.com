@@ -5,8 +5,6 @@ export const PREMIUM_PRICE_HANDLES = [
   "retatrutide",
   "semaglutide",
   "tirzepatide",
-  "selank",
-  "semax",
 ]
 export const PREMIUM_FX_DATE = "2026-10-13"
 export const PREMIUM_FX_SOURCE =

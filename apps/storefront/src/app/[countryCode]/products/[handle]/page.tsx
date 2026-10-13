@@ -107,8 +107,10 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     ...(meta.concentration ? [{ label: "Peptide strength", value: meta.concentration }] : []),
     ...(meta.ingredients ? [{ label: "Ingredient information", value: meta.ingredients }] : []),
     { label: "Purity", value: meta.purity ?? "—" },
-    ...(meta.testing ? [{ label: "Testing", value: meta.testing }] : []),
+    ...(meta.testing ? [{ label: "Purity testing", value: meta.testing }] : []),
     { label: "Storage", value: meta.storage ?? "—" },
+    ...(meta.stability ? [{ label: "Stability", value: meta.stability }] : []),
+    ...(meta.handling ? [{ label: "Handling", value: meta.handling }] : []),
     { label: "Available amounts", value: sortedVariants(product).map((variant) => variant.title).join(", ") },
     ...(skus ? [{ label: "SKU", value: skus }] : []),
     { label: "Intended use", value: "Laboratory research only" },
@@ -172,7 +174,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
                 </ArtStage>
               )}
               <Stack direction="row" spacing={1} useFlexGap sx={{ p: 2, flexWrap: "wrap", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
-                {[meta.purity?.endsWith("%") ? `${meta.purity} purity` : meta.purity, meta.testing, meta.lots.length ? `${meta.lots.length} documented lot${meta.lots.length > 1 ? "s" : ""}` : null]
+                {[meta.purity?.endsWith("%") ? `${meta.purity} purity` : meta.purity, meta.testing, ...meta.features, meta.lots.length ? `${meta.lots.length} documented lot${meta.lots.length > 1 ? "s" : ""}` : null]
                   .filter(Boolean)
                   .map((label) => (
                     <Chip key={label} label={label} size="small" variant="outlined" />

@@ -18,6 +18,9 @@ export type ProductMeta = {
   imageAspectRatio?: string
   form?: string
   storage?: string
+  stability?: string
+  handling?: string
+  features: string[]
   ingredients?: string
   volume?: string
   concentration?: string
@@ -80,6 +83,9 @@ export function readProductMeta(
     imageAspectRatio: ["4 / 3", "4 / 5", "1 / 1"].includes(String(metadata.image_aspect_ratio)) ? String(metadata.image_aspect_ratio) : undefined,
     form: str(metadata.form),
     storage: str(metadata.storage),
+    stability: str(metadata.stability),
+    handling: str(metadata.handling),
+    features: Array.isArray(metadata.features) ? metadata.features.filter((value): value is string => typeof value === "string" && Boolean(value.trim())) : [],
     ingredients: str(metadata.ingredients),
     volume: str(metadata.volume),
     concentration: str(metadata.concentration),
