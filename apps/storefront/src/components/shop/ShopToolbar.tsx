@@ -101,14 +101,16 @@ export default function ShopToolbar({ categories, category, sort, query, count }
       </Stack>
 
       <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: "wrap" }} role="group" aria-label="Filter by category">
-        <Chip
-          label="All"
-          clickable
-          color={!category ? "primary" : "default"}
-          variant={!category ? "filled" : "outlined"}
-          onClick={() => navigate({ category: undefined })}
-          aria-pressed={!category}
-        />
+        {categories.length > 1 ? (
+          <Chip
+            label="All"
+            clickable
+            color={!category ? "primary" : "default"}
+            variant={!category ? "filled" : "outlined"}
+            onClick={() => navigate({ category: undefined })}
+            aria-pressed={!category}
+          />
+        ) : null}
         {categories.map((item) => (
           <Chip
             key={item.handle}

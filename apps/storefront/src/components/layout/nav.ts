@@ -9,8 +9,6 @@ export const FOOTER_LINKS = {
   explore: [
     { label: "All products", href: "/shop" },
     { label: "Peptide Series", href: "/shop?category=peptide-series" },
-    { label: "Blends", href: "/shop?category=blends" },
-    { label: "Lab Supplies", href: "/shop?category=lab-supplies" },
   ],
   information: [
     { label: "Our standards", href: "/standards" },

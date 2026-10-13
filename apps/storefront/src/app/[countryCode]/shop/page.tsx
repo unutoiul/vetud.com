@@ -22,7 +22,7 @@ import { sortProducts } from "@/lib/product"
 
 export const metadata: Metadata = {
   title: "Shop the collection",
-  description: "Research peptides, blends and lab supplies with lot-level documentation.",
+  description: "Explore the Peptide Series with clear specifications and lot-level documentation.",
 }
 
 const SORT_VALUES: ProductSort[] = ["featured", "price-asc", "price-desc", "name"]
@@ -34,17 +34,18 @@ function first(value: string | string[] | undefined) {
 async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countryCode]/shop">["searchParams"] }) {
   const params = await searchParams
   const query = first(params.q)?.trim() || undefined
-  const categoryHandle = first(params.category)
   const sortParam = first(params.sort) as ProductSort | undefined
   const sort = sortParam && SORT_VALUES.includes(sortParam) ? sortParam : "featured"
 
   const { region } = await getCurrentRegion()
-  const categories = await listCategories()
-  const category = categories.find((item) => item.handle === categoryHandle)
+  const categories = (await listCategories()).filter((item) => item.handle === "peptide-series")
+  const category = categories[0]
 
-  let products = query
-    ? await searchProducts(query, region.id)
-    : await listProducts({ regionId: region.id, categoryId: category?.id })
+  let products = !category
+    ? []
+    : query
+      ? await searchProducts(query, region.id)
+      : await listProducts({ regionId: region.id, categoryId: category.id })
   if (query && category) {
     products = products.filter((product) => product.categories?.some((item) => item.id === category.id))
   }
@@ -104,7 +105,7 @@ export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/sho
             Every sequence, <SerifAccent>documented.</SerifAccent>
           </>
         }
-        description="Browse research peptides, multi-sequence blends and lab supplies. Every listing shows its specifications and lot history."
+        description="Explore our Peptide Series. Every listing shows its specifications and lot history."
       />
       <Section tone="white" tight>
         <Suspense fallback={<ResultsSkeleton />}>

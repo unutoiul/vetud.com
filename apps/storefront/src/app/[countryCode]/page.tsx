@@ -18,9 +18,7 @@ import { sortProducts } from "@/lib/product"
 import { motion } from "@/theme/tokens"
 
 const CATEGORIES: { name: string; description: string; href: string; icon: IconName }[] = [
-  { name: "Peptide series", description: "A focused research collection", href: "/shop?category=peptide-series", icon: "molecule" },
-  { name: "Research blends", description: "Considered combinations", href: "/shop?category=blends", icon: "flask" },
-  { name: "Lab essentials", description: "Complete your workflow", href: "/shop?category=lab-supplies", icon: "package" },
+  { name: "Peptide Series", description: "A focused research collection", href: "/shop?category=peptide-series", icon: "molecule" },
 ]
 
 export default async function HomePage() {
@@ -33,7 +31,7 @@ export default async function HomePage() {
     <Section tone="white" id="catalog">
       <SectionHeading eyebrow="The VETUD collection" title="Considered down to the molecule." description="Explore research materials with the details that matter, clearly presented." action={<ButtonLink href="/shop" variant="outlined" endIcon={<Icon name="arrowUpRight" />}>Shop all products</ButtonLink>} />
       {products.length ? <ProductGrid products={sortProducts(products, "featured")} density="four" /> : <Box sx={{ p: 5, bgcolor: "brand.mintWash", borderRadius: 3 }}><Typography>Our collection is being updated.</Typography><ButtonLink href="/shop" sx={{ mt: 2 }} endIcon={<Icon name="arrowRight" />}>Explore the catalog</ButtonLink></Box>}
-      <Box sx={{ mt: { xs: 5, md: 7 }, display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3,1fr)" }, gap: { xs: 1, md: 4 } }}>
+      <Box sx={{ mt: { xs: 5, md: 7 }, display: "grid", gridTemplateColumns: "1fr", gap: { xs: 1, md: 4 } }}>
         {CATEGORIES.map((category) => <Box key={category.name} component={LocalizedNextLink} href={category.href} sx={{ display: "flex", gap: 2, alignItems: "center", py: 2.5, textDecoration: "none", borderTop: "1px solid rgba(23,53,75,.08)", transition: `color .3s ${motion}`, "&:hover": { color: "brand.blue" }, "&:hover .category-arrow": { transform: "translate(3px,-3px)" } }}>
           <Icon name={category.icon} sx={{ fontSize: 29, color: "brand.blue" }} /><Box sx={{ flex: 1 }}><Typography sx={{ fontSize: 16, fontWeight: 600 }}>{category.name}</Typography><Typography sx={{ fontSize: 12, color: "text.secondary", mt: .25 }}>{category.description}</Typography></Box><Icon name="arrowUpRight" className="category-arrow" sx={{ fontSize: 19, transition: `transform .3s ${motion}` }} />
         </Box>)}

@@ -48,7 +48,7 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
       </Box>
       <Stack sx={{ px: { xs: 1.8, sm: 2.1 }, pt: 2.5, pb: 1.8, flex: 1 }}>
         <Typography variant="eyebrow" noWrap sx={{ color: "text.secondary", fontSize: 9.5, letterSpacing: ".11em", mb: 1 }}>
-          {category ?? (meta.artKind === "supply" ? "Lab essentials" : meta.artKind === "blend" ? "Blends" : "Research peptides")}
+          {category ?? "Peptide Series"}
           {` · ${meta.code}`}
         </Typography>
         <Typography variant="h4" component="h3" sx={{ mb: 0.6, fontSize: "1.2rem", lineHeight: 1.3 }}>
