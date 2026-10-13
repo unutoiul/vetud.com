@@ -90,7 +90,7 @@ export default function HeroCarousel() {
       <Box
         sx={{ position: "relative", aspectRatio: "4 / 3", borderRadius: { xs: 3, md: 4 }, overflow: "hidden", bgcolor: "#e1ecf1", touchAction: "pan-y", boxShadow: "0 24px 60px rgba(23,53,75,.09)" }}
         onPointerDown={(event) => {
-          if (event.pointerType === "mouse") return
+          if (event.pointerType === "mouse" || (event.target as Element).closest("button, a")) return
           gesture.current = { x: event.clientX, y: event.clientY }
           event.currentTarget.setPointerCapture(event.pointerId)
         }}
