@@ -38,7 +38,10 @@ export default function Hero() {
             <Typography sx={{ maxWidth: 430, color: "text.secondary", fontSize: { xs: 15.5, md: 17 }, lineHeight: 1.85, mb: 3.5 }}>
               A focused collection, thoughtfully presented. Discover freeze-dried, dual-chamber pen kits and Selank and Semax in 10 ml spray formats.
             </Typography>
-            <ButtonLink href="/shop" variant="contained" size="large" endIcon={<Icon name="arrowUpRight" />}>Explore the Peptide Series</ButtonLink>
+            <Stack direction="row" spacing={1.5} useFlexGap sx={{ flexWrap: "wrap" }}>
+              <ButtonLink href="/shop" variant="contained" size="large" endIcon={<Icon name="arrowUpRight" />}>Shop the collection</ButtonLink>
+              <ButtonLink href="#peptide-videos" variant="outlined" size="large" startIcon={<Icon name="play" sx={{ fontSize: 18 }} />}>Watch peptide basics</ButtonLink>
+            </Stack>
             <Stack direction="row" spacing={2.5} useFlexGap sx={{ flexWrap: "wrap", mt: 3, alignItems: "center", color: "brand.navySoft" }}>
               <Stack direction="row" spacing={.75} sx={{ alignItems: "center" }}><Icon name="flask" sx={{ fontSize: 18, color: "brand.blue" }} /><Typography sx={{ fontSize: 11.5 }}>99% purity</Typography></Stack>
               <Stack direction="row" spacing={.75} sx={{ alignItems: "center" }}><Icon name="shield" sx={{ fontSize: 18, color: "brand.teal" }} /><Typography sx={{ fontSize: 11.5 }}>Lab tested for purity</Typography></Stack>

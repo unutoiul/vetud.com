@@ -16,7 +16,7 @@ import Logo from "../brand/Logo"
 import { LocalizedNextLink } from "../common/links"
 import { useStore } from "../store/StoreProvider"
 import CountrySelect from "./CountrySelect"
-import { NAV_LINKS } from "./nav"
+import { NAV_LINKS, SECONDARY_LINKS } from "./nav"
 import SearchBox from "./SearchBox"
 import { motion } from "@/theme/tokens"
 
@@ -54,7 +54,10 @@ export default function Header() {
       <Box id="mobile-navigation" component="nav" aria-label="Mobile" sx={{ p: 3.5, pt: 4, pb: "max(28px, env(safe-area-inset-bottom))" }}>
         <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 6 }}><Logo /><IconButton aria-label="Close menu" onClick={() => setMenuOpen(false)}><Icon name="close" /></IconButton></Stack>
         {NAV_LINKS.map((link, index) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", py: 2.5, borderBottom: "1px solid rgba(23,53,75,.08)", fontSize: 23, letterSpacing: "-.03em", animation: `vetud-enter .5s ${motion} ${index * .06}s both`, "&:hover": { color: "brand.blue" } }}>{link.label}<Icon name="arrowUpRight" sx={{ fontSize: 20 }} /></Box>)}
-        <Box sx={{ mt: 4 }}><CountrySelect fullWidth /></Box>
+        <Stack direction="row" spacing={3} sx={{ mt: 3 }}>
+          {SECONDARY_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 13, color: "text.secondary", textDecoration: "none", "&:hover": { color: "brand.blue" } }}>{link.label}</Box>)}
+        </Stack>
+        <Box sx={{ mt: 3 }}><CountrySelect fullWidth /></Box>
         <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 3 }}>Peptide science. A clearer perspective.</Typography>
       </Box>
     </Drawer>

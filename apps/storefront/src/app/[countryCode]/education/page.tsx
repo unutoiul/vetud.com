@@ -5,6 +5,7 @@ import Icon, { type IconName } from "@/components/brand/Icon"
 import { AppLink, ButtonLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
+import PeptideVideos from "@/components/education/PeptideVideos"
 
 export const metadata: Metadata = { title: "Education", description: "A plain-language guide to peptides, mg and ml, product formats and purity information." }
 
@@ -18,6 +19,7 @@ const TOPICS: { title: string; icon: IconName; paragraphs: string[]; source?: { 
 export default function EducationPage() {
   return <>
     <PageHeader eyebrow="Education" title="Peptide science, made clear." description="A guide to the terms behind the collection—from amounts and formats to purity information." />
+    <PeptideVideos />
     <Section tone="white" sx={{ py: { xs: 5, md: 8 } }}><Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: { xs: 5, md: 7 } }}>{TOPICS.map((topic, index) => <Box component="article" key={topic.title} sx={{ borderTop: "1px solid", borderColor: "divider", pt: 3 }}><Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}><Icon name={topic.icon} sx={{ color: "brand.blue", fontSize: 28 }} /><Typography variant="mono" sx={{ color: "text.secondary" }}>{String(index + 1).padStart(2, "0")}</Typography></Box><Typography component="h2" variant="h4" sx={{ mb: 2 }}>{topic.title}</Typography>{topic.paragraphs.map((paragraph) => <Typography key={paragraph} sx={{ color: "text.secondary", mb: 2, lineHeight: 1.9 }}>{paragraph}</Typography>)}{topic.source && <AppLink href={topic.source.href} target="_blank" rel="noopener noreferrer" sx={{ fontSize: 12 }}>{topic.source.label}</AppLink>}</Box>)}</Box><Box sx={{ mt: 7 }}><ButtonLink href="/shop" variant="contained" endIcon={<Icon name="arrowUpRight" />}>Browse the Peptide Series</ButtonLink></Box></Section>
   </>
 }

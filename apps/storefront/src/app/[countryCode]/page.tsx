@@ -6,6 +6,7 @@ import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import Hero from "@/components/home/Hero"
 import SpraySpotlight from "@/components/home/SpraySpotlight"
+import PeptideVideos from "@/components/education/PeptideVideos"
 import ProductGrid from "@/components/product/ProductGrid"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { listCategories, listProducts } from "@/lib/medusa/products"
@@ -26,5 +27,6 @@ export default async function HomePage() {
       {collection.length ? <ProductGrid products={collection} /> : <Box sx={{ p: 5, bgcolor: "brand.mintWash", borderRadius: 3 }}><Typography>Our collection is being updated.</Typography><ButtonLink href="/shop" sx={{ mt: 2 }} endIcon={<Icon name="arrowRight" />}>Explore the catalog</ButtonLink></Box>}
     </Section>
     <SpraySpotlight products={sprays} />
+    <PeptideVideos />
   </>
 }

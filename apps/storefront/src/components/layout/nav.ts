@@ -1,13 +1,17 @@
 export const NAV_LINKS = [
   { label: "Shop", href: "/shop" },
-  { label: "Tracking", href: "/tracking" },
   { label: "Discover", href: "/discover" },
+]
+
+export const SECONDARY_LINKS = [
   { label: "Education", href: "/education" },
+  { label: "Tracking", href: "/tracking" },
 ]
 
 export const FOOTER_LINKS = {
   explore: [
     ...NAV_LINKS,
+    ...SECONDARY_LINKS,
   ],
   information: [
     { label: "Shipping & returns", href: "/legal/shipping-returns" },
