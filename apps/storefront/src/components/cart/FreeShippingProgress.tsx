@@ -1,6 +1,6 @@
 "use client"
 
-import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined"
+import { TruckIcon as LocalShippingOutlinedIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import LinearProgress from "@mui/material/LinearProgress"
 import Stack from "@mui/material/Stack"
@@ -25,7 +25,7 @@ export default function FreeShippingProgress({
   const progress = Math.min(100, (itemTotal / threshold) * 100)
 
   return (
-    <Box sx={{ bgcolor: "brand.mintWash", border: "1px solid", borderColor: "brand.line", borderRadius: 1, p: 1.75 }}>
+    <Box sx={{ bgcolor: "brand.mintWash", border: "1px solid", borderColor: "brand.line", borderRadius: 2.5, p: 1.75 }}>
       <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1 }}>
         <LocalShippingOutlinedIcon fontSize="small" sx={{ color: "secondary.main" }} />
         <Typography variant="body2" sx={{ fontWeight: 600 }}>

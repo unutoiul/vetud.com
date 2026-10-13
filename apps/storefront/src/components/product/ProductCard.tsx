@@ -1,40 +1,22 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import NorthEastIcon from "@mui/icons-material/NorthEast"
 import Box from "@mui/material/Box"
 import Card from "@mui/material/Card"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
+import Icon from "@/components/brand/Icon"
 import { cheapestPrice, formatMoney, isProductInStock, readProductMeta } from "@/lib/product"
 import { LocalizedNextLink } from "../common/links"
 import ProductArt from "./ProductArt"
 
-export function ArtStage({ children, height = 210 }: { children: React.ReactNode; height?: number | object }) {
+export function ArtStage({ children, height = 290 }: { children: React.ReactNode; height?: number | object }) {
   return (
-    <Box
-      sx={{
-        position: "relative",
-        height,
-        overflow: "hidden",
-        display: "grid",
-        placeItems: "center",
-        background: "linear-gradient(145deg,#eaf4f0,#f7faf7)",
-        "&::before, &::after": {
-          content: '""',
-          position: "absolute",
-          border: "1px solid #b4d9d2",
-          borderRadius: "50%",
-          width: "78%",
-          height: "48%",
-          transform: "rotate(-23deg)",
-        },
-        "&::after": { width: "92%", height: "66%", transform: "rotate(37deg)", borderColor: "#d1e5df" },
-      }}
-    >
-      {children}
-    </Box>
+    <Box sx={{ position: "relative", height, overflow: "hidden", display: "grid", placeItems: "center",
+      background: "radial-gradient(ellipse at 42% 18%, #fff 0%, #f1f6f7 64%, #e9f0f2 100%)",
+      "&::after": { content: '\"\"', position: "absolute", left: 0, right: 0, bottom: 0, height: "18%", background: "linear-gradient(180deg, #ffffff00, #dce8eb55)", pointerEvents: "none" },
+    }}>{children}</Box>
   )
 }
 
@@ -45,84 +27,53 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
   const category = product.categories?.[0]?.name
 
   return (
-    <Card
-      component="article"
-      sx={{
-        position: "relative",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        "&:hover": { transform: "translateY(-5px)", boxShadow: "0 15px 32px #1c405414", borderColor: "#a6d0c8" },
-        "&:focus-within": { borderColor: "secondary.main" },
-      }}
-    >
-      {product.thumbnail ? (
-        <Box sx={{ position: "relative", height: 210, bgcolor: "#fff", borderBottom: "1px solid", borderColor: "divider" }}>
-          <Image
-            src={product.thumbnail}
-            alt=""
-            fill
-            sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            style={{ objectFit: "cover" }}
-          />
-        </Box>
-      ) : (
-        <ArtStage>
-          <Box sx={{ width: "74%", position: "relative", zIndex: 1, transform: "perspective(600px) rotateY(-7deg) rotateZ(-2deg)" }}>
-            <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} />
+    <Card component="article" sx={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", p: 0.8,
+      borderRadius: 3, bgcolor: "#fff", borderColor: "#e0e8eb", boxShadow: "0 5px 20px #17344b04",
+      "&:hover": { transform: "translateY(-3px)", boxShadow: "0 14px 35px #17344b0a", borderColor: "#c3d3da" },
+      "&:focus-within": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: 3 },
+      "@media (prefers-reduced-motion: reduce)": { transition: "none", "&:hover": { transform: "none" } },
+    }}>
+      <Box sx={{ overflow: "hidden", borderRadius: 2.3 }}>
+        {product.thumbnail ? (
+          <Box sx={{ position: "relative", height: { xs: 270, sm: 290 }, bgcolor: "#f1f6f7" }}>
+            <Image src={product.thumbnail} alt="" fill sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 25vw" style={{ objectFit: "contain" }} />
           </Box>
-        </ArtStage>
-      )}
-      <Stack sx={{ p: 2.75, flex: 1 }}>
-        <Stack direction="row" spacing={1} sx={{ justifyContent: "space-between", color: "#55807c" }}>
-          <Typography variant="eyebrow" noWrap sx={{ fontSize: 11, minWidth: 0 }}>
-            {meta.code}
-            {category ? ` · ${category}` : ""}
-          </Typography>
-          <Typography variant="eyebrow" sx={{ fontSize: 11, flexShrink: 0, color: inStock ? "secondary.main" : "error.main" }}>
-            {inStock ? "In stock" : "Sold out"}
-          </Typography>
-        </Stack>
-        <Typography variant="h4" component="h3" sx={{ mt: 1.75, mb: 0.75 }}>
-          <Box
-            component={LocalizedNextLink}
-            href={`/products/${product.handle}`}
-            sx={{
-              color: "inherit",
-              textDecoration: "none",
-              "&::after": { content: '""', position: "absolute", inset: 0, zIndex: 2 },
-              "&:focus-visible": { outline: "none" },
-            }}
-          >
-            {product.title}
-          </Box>
+        ) : (
+          <ArtStage height={{ xs: 270, sm: 290 }}>
+            <Box sx={{ width: "100%", maxWidth: 330, position: "relative", zIndex: 1 }}>
+              <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} />
+            </Box>
+          </ArtStage>
+        )}
+      </Box>
+      <Stack sx={{ px: { xs: 1.8, sm: 2.1 }, pt: 2.5, pb: 1.8, flex: 1 }}>
+        <Typography variant="eyebrow" noWrap sx={{ color: "text.secondary", fontSize: 9.5, letterSpacing: ".11em", mb: 1 }}>
+          {category ?? (meta.artKind === "supply" ? "Lab essentials" : meta.artKind === "blend" ? "Blends" : "Research peptides")}
+          {` · ${meta.code}`}
         </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary", mb: 2.5 }}>
+        <Typography variant="h4" component="h3" sx={{ mb: 0.6, fontSize: "1.2rem", lineHeight: 1.3 }}>
+          <Box component={LocalizedNextLink} href={`/products/${product.handle}`} sx={{ color: "inherit", textDecoration: "none",
+            "&::after": { content: '\"\"', position: "absolute", inset: 0, zIndex: 2, borderRadius: 3 },
+            "&:focus-visible": { outline: "none" },
+          }}>{product.title}</Box>
+        </Typography>
+        <Typography variant="body2" sx={{ color: "text.secondary", fontSize: 12.5, mb: 2 }}>
           {product.subtitle ?? meta.form}
           {meta.purity ? ` · ${meta.purity}` : ""}
         </Typography>
-        <Stack
-          direction="row"
-          sx={{ mt: "auto", pt: 1.75, borderTop: "1px solid", borderColor: "divider", justifyContent: "space-between", alignItems: "center" }}
-        >
-          <Typography sx={{ fontWeight: 700 }}>
-            {price ? (
-              <>
-                {price.hasRange ? (
-                  <Box component="span" sx={{ color: "text.secondary", fontWeight: 500, fontSize: 13, mr: 0.5 }}>
-                    from
-                  </Box>
-                ) : null}
-                {formatMoney(price.amount, price.currencyCode)}
-              </>
-            ) : (
-              "Price on request"
-            )}
-          </Typography>
-          <Stack direction="row" spacing={0.5} sx={{ alignItems: "center", color: "secondary.main", fontWeight: 700, fontSize: 13 }}>
-            <span>View details</span>
-            <NorthEastIcon sx={{ fontSize: 16 }} />
+        <Stack direction="row" sx={{ mt: "auto", pt: 1.75, borderTop: "1px solid #e8edf0", justifyContent: "space-between", alignItems: "center", gap: 1 }}>
+          <Stack spacing={0.4}>
+            <Typography sx={{ fontWeight: 650, fontSize: 15, color: "text.primary" }}>
+              {price ? <>{price.hasRange ? <Box component="span" sx={{ color: "text.secondary", fontWeight: 400, fontSize: 11, mr: 0.5 }}>from</Box> : null}{formatMoney(price.amount, price.currencyCode)}</> : "Price on request"}
+            </Typography>
+            <Stack direction="row" spacing={0.65} sx={{ alignItems: "center" }}>
+              <Box component="span" sx={{ width: 4, height: 4, borderRadius: "50%", bgcolor: inStock ? "secondary.main" : "text.secondary" }} />
+              <Typography sx={{ fontSize: 10.5, color: "text.secondary" }}>{inStock ? "In stock" : "Sold out"}</Typography>
+            </Stack>
           </Stack>
+          <Box aria-hidden="true" sx={{ width: 34, height: 34, display: "grid", placeItems: "center", borderRadius: "50%", border: "1px solid #dbe5e9", color: "primary.main" }}>
+            <Icon name="arrowUpRight" sx={{ fontSize: 16 }} />
+          </Box>
         </Stack>
       </Stack>
     </Card>

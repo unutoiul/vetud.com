@@ -34,3 +34,9 @@ Thumbs.db
 # deployment tooling
 .vercel
 .railway
+
+# Claude Code personal settings
+.claude/settings.local.json
+
+.vercel
+.env*

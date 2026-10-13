@@ -1,9 +1,7 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutlined"
-import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined"
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined"
+import { CheckCircleIcon as CheckCircleOutlineIcon, FlaskIcon as ScienceOutlinedIcon, BagIcon as ShoppingBagOutlinedIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -47,7 +45,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
       <Box>
         {price ? (
           <Stack direction="row" spacing={1.5} sx={{ alignItems: "baseline" }}>
-            <Typography sx={{ fontSize: 30, fontWeight: 600, letterSpacing: "-0.03em" }}>
+            <Typography sx={{ fontSize: 34, fontWeight: 600, letterSpacing: "-0.03em", fontVariantNumeric: "tabular-nums" }}>
               {formatMoney(price.amount, price.currencyCode)}
             </Typography>
             {price.original > price.amount ? (
@@ -97,7 +95,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
                     fontWeight: 700,
                     border: "1px solid !important",
                     borderColor: "brand.lineStrong !important",
-                    borderRadius: "4px !important",
+                    borderRadius: "10px !important",
                     bgcolor: "#fff",
                     "&.Mui-selected": {
                       bgcolor: "brand.mintLight",
@@ -148,7 +146,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
       </Stack>
 
       {added ? (
-        <Alert severity="success" onClose={() => setAdded(false)}>
+        <Alert severity="success" role="status" onClose={() => setAdded(false)}>
           Added to your cart.
         </Alert>
       ) : null}
@@ -161,7 +159,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
       <Stack
         direction="row"
         spacing={1.5}
-        sx={{ bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: 1, p: 2 }}
+        sx={{ bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: 2.5, p: 2 }}
       >
         <ScienceOutlinedIcon fontSize="small" sx={{ color: "secondary.main", mt: "2px" }} />
         <Typography variant="body2" sx={{ color: "text.secondary" }}>

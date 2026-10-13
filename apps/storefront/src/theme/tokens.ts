@@ -1,29 +1,30 @@
-/** Pep Lab design tokens, taken from the Vetud concept and tuned for AA contrast. */
+/** VETUD Alpine: cool porcelain, mineral blue and botanical green. */
 export const brand = {
-  navy: "#082b3b",
-  navyDeep: "#06212e",
-  navySoft: "#0d3546",
-  ink: "#112c3d",
-  blue: "#23618a",
-  cyan: "#3cc7c2",
-  teal: "#1f7f7b",
-  tealBright: "#4ac4bb",
-  mint: "#a4ddd1",
-  mintLight: "#d9f4eb",
-  mintWash: "#eef5f2",
-  paper: "#f7f8f5",
-  line: "#dce5e4",
-  lineStrong: "#c7d8d3",
-  muted: "#55707a",
-  onNavy: "#f6fbf8",
-  onNavyMuted: "#a9c3c8",
+  navy: "#12334c",
+  navyDeep: "#0b263b",
+  navySoft: "#20475e",
+  ink: "#17354b",
+  blue: "#367dab",
+  cyan: "#8fc6dd",
+  teal: "#315f50",
+  tealBright: "#a5c6b5",
+  mint: "#d1e5da",
+  mintLight: "#e7f1eb",
+  mintWash: "#eff5f6",
+  paper: "#f7f9fa",
+  line: "#e3ebee",
+  lineStrong: "#cbdbe2",
+  muted: "#637684",
+  onNavy: "#f5f9fb",
+  onNavyMuted: "#b4c9d5",
 } as const
 
 export const fonts = {
-  sans: "var(--font-manrope), 'Helvetica Neue', Arial, sans-serif",
-  mono: "var(--font-dm-mono), 'SFMono-Regular', Menlo, monospace",
+  sans: "var(--font-manrope), sans-serif",
+  mono: "var(--font-dm-mono), monospace",
   serif: "var(--font-instrument-serif), Georgia, serif",
 } as const
 
 /** Page gutters shared by every section. */
-export const gutter = { xs: 2, sm: 4, md: 6, lg: 10 } as const
+export const gutter = { xs: 2.5, sm: 4, md: 6, lg: 8 } as const
+export const motion = "cubic-bezier(.22,.68,0,1.05)"

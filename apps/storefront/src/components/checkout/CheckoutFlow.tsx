@@ -1,9 +1,7 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
-import NorthEastIcon from "@mui/icons-material/NorthEast"
+import { BankIcon as AccountBalanceOutlinedIcon, LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -161,7 +159,7 @@ export default function CheckoutFlow() {
           </Alert>
         ) : null}
 
-        <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 } }}>
+        <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3 }}>
           {activeStep === 0 ? (
             <DetailsStep
               cart={cart}
@@ -220,7 +218,7 @@ export default function CheckoutFlow() {
       </Grid>
 
       <Grid size={{ xs: 12, md: 5 }}>
-        <Paper variant="outlined" sx={{ p: 3, position: { md: "sticky" }, top: { md: 110 } }}>
+        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#f7f9fa", borderRadius: 3, position: { md: "sticky" }, top: { md: 110 } }}>
           <Typography variant="h5" component="h2" sx={{ mb: 1 }}>
             Order summary
           </Typography>
@@ -283,7 +281,17 @@ function DetailsStep({
       onSubmit={(event) => {
         event.preventDefault()
         setShowErrors(true)
-        if (!valid) return
+        if (!valid) {
+          const field = emailError
+            ? "email"
+            : Object.keys(shippingErrors).length
+              ? `shipping-${Object.keys(shippingErrors)[0]}`
+              : `billing-${Object.keys(billingErrors)[0]}`
+          const control = event.currentTarget.querySelector<HTMLElement>(`[id="${field}"]`)
+            ?? event.currentTarget.querySelector<HTMLInputElement>(`[name="${field}"]`)
+          control?.focus()
+          return
+        }
         onSubmit({ email: email.trim(), shipping_address: shipping, billing_address: billingSame ? shipping : billing })
       }}
     >
@@ -295,13 +303,14 @@ function DetailsStep({
       </Typography>
       <TextField
         label="Email"
+        name="email"
         type="email"
         required
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         error={showErrors && Boolean(emailError)}
         helperText={showErrors ? emailError : undefined}
-        slotProps={{ htmlInput: { autoComplete: "email" } }}
+        slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }}
       />
 
       <Typography variant="h5" component="h2" sx={{ mt: 4, mb: 2 }}>
@@ -394,7 +403,7 @@ function DeliveryStep({
           <Skeleton variant="rounded" height={72} />
         </Stack>
       ) : options.length ? (
-        <RadioGroup value={selected} onChange={(event) => setSelected(event.target.value)} aria-label="Delivery method">
+        <RadioGroup name="delivery_method" value={selected} onChange={(event) => setSelected(event.target.value)} aria-label="Delivery method">
           <Stack spacing={1.5}>
             {options.map((option) => {
               const amount = Number(option.amount ?? 0)
@@ -409,10 +418,11 @@ function DeliveryStep({
                     gap: 1,
                     border: "1px solid",
                     borderColor: selected === option.id ? "secondary.main" : "brand.lineStrong",
-                    bgcolor: selected === option.id ? "brand.mintWash" : "#fff",
-                    borderRadius: 1,
-                    p: 1.5,
+                    bgcolor: selected === option.id ? "#eff5f6" : "#fff",
+                    borderRadius: 2.5,
+                    p: 2,
                     cursor: "pointer",
+                    "&:focus-within": { outline: "2px solid", outlineColor: "secondary.main", outlineOffset: 2 },
                   }}
                 >
                   <Radio value={option.id} />
@@ -486,7 +496,7 @@ function PaymentStep({
       {providers === null ? (
         <Skeleton variant="rounded" height={110} />
       ) : (
-        <RadioGroup value={selected} onChange={(event) => setSelected(event.target.value)} aria-label="Payment method">
+        <RadioGroup name="payment_method" value={selected} onChange={(event) => setSelected(event.target.value)} aria-label="Payment method">
           <Stack spacing={1.5}>
             {providers.map((provider) => {
               const label = PAYMENT_LABELS[provider.id] ?? { title: provider.id, description: "" }
@@ -499,10 +509,11 @@ function PaymentStep({
                     gap: 1,
                     border: "1px solid",
                     borderColor: selected === provider.id ? "secondary.main" : "brand.lineStrong",
-                    bgcolor: selected === provider.id ? "brand.mintWash" : "#fff",
-                    borderRadius: 1,
-                    p: 1.5,
+                    bgcolor: selected === provider.id ? "#eff5f6" : "#fff",
+                    borderRadius: 2.5,
+                    p: 2,
                     cursor: "pointer",
+                    "&:focus-within": { outline: "2px solid", outlineColor: "secondary.main", outlineOffset: 2 },
                   }}
                 >
                   <Radio value={provider.id} />
@@ -584,19 +595,19 @@ function ReviewStep({
         {blocks.map((block) => (
           <Stack
             key={block.title}
-            direction="row"
+            direction={{ xs: "column", sm: "row" }}
             spacing={2}
             sx={{ py: 1.75, borderBottom: "1px solid", borderColor: "divider", alignItems: "flex-start" }}
           >
-            <Typography variant="eyebrow" sx={{ width: 90, flexShrink: 0, color: "text.secondary", pt: "3px" }}>
+            <Typography variant="eyebrow" sx={{ width: { xs: "auto", sm: 90 }, flexShrink: 0, color: "text.secondary", pt: "3px" }}>
               {block.title}
             </Typography>
-            <Box sx={{ flex: 1 }}>
+            <Box sx={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>
               {block.lines.map((line) => (
                 <Typography key={line}>{line}</Typography>
               ))}
             </Box>
-            <Button size="small" variant="text" color="secondary" onClick={() => onEdit(block.step)} disabled={busy}>
+            <Button size="small" variant="text" color="secondary" aria-label={`Edit ${block.title.toLowerCase()}`} onClick={() => onEdit(block.step)} disabled={busy} sx={{ alignSelf: "flex-start" }}>
               Edit
             </Button>
           </Stack>
@@ -613,7 +624,7 @@ function ReviewStep({
         onClick={onPlaceOrder}
         disabled={busy}
         startIcon={busy ? <CircularProgress size={16} color="inherit" /> : <LockOutlinedIcon />}
-        sx={{ mt: 3, minWidth: 260 }}
+        sx={{ mt: 3, minWidth: { xs: 0, sm: 260 }, width: { xs: "100%", sm: "auto" } }}
       >
         {busy ? "Placing order…" : `Place order · ${formatMoney(Number(cart.total ?? 0), cart.currency_code)}`}
       </Button>

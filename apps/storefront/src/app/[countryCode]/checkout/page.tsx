@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function CheckoutPage() {
   return (
     <>
-      <PageHeader eyebrow="Secure checkout" title="Almost there." />
+      <PageHeader eyebrow="Secure checkout" title="Complete your order." description="Confirm your details and delivery. Bank transfer instructions follow by email." />
       <Section tone="white" tight>
         <CheckoutFlow />
       </Section>

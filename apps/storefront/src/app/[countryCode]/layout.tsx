@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box"
 import type { Metadata, Viewport } from "next"
-import { DM_Mono, Instrument_Serif, Manrope } from "next/font/google"
+import { DM_Mono, Manrope } from "next/font/google"
 import { countryCode } from "next/root-params"
 import CartDrawer from "@/components/cart/CartDrawer"
 import AnnouncementBar from "@/components/layout/AnnouncementBar"
@@ -23,18 +23,11 @@ const dmMono = DM_Mono({
   variable: "--font-dm-mono",
   display: "swap",
 })
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
-  display: "swap",
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: `${SITE.name}: precision begins at the sequence`,
+    default: `${SITE.name}: a clearer perspective on peptide science`,
     template: `%s · ${SITE.name}`,
   },
   description: SITE.description,
@@ -42,7 +35,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#082b3b",
+  themeColor: "#f7f9fa",
 }
 
 export async function generateStaticParams() {
@@ -59,7 +52,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
   const countries = await listCountryOptions()
 
   return (
-    <html lang="en" className={`${manrope.variable} ${dmMono.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" className={`${manrope.variable} ${dmMono.variable}`}>
       <body>
         <ThemeRegistry>
           <StoreProvider

@@ -14,7 +14,7 @@ const MIME_TYPES: Record<string, string> = {
  * Finds a file in `apps/backend/assets/products`. Migrations run from the app root locally and
  * from `.medusa/server` in production, so both locations are checked.
  */
-function findProductAsset(filename: string) {
+export function findProductAsset(filename: string) {
   const roots = [process.cwd(), path.resolve(process.cwd(), "..", "..")]
   for (const root of roots) {
     const candidate = path.join(root, "assets", "products", filename)

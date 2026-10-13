@@ -1,58 +1,21 @@
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined"
-import ScienceOutlinedIcon from "@mui/icons-material/ScienceOutlined"
-import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined"
-import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
-import Box from "@mui/material/Box"
-import Grid from "@mui/material/Grid"
-import Stack from "@mui/material/Stack"
+﻿import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
+import Icon, { type IconName } from "../brand/Icon"
 import { gutter } from "@/theme/tokens"
 
-const ITEMS = [
-  { icon: DescriptionOutlinedIcon, title: "Lot-level documentation", text: "Clear records, easy to find" },
-  { icon: VerifiedOutlinedIcon, title: "Quality-minded sourcing", text: "Standards made visible" },
-  { icon: ScienceOutlinedIcon, title: "Research-first catalog", text: "Designed for professionals" },
-  { icon: SupportAgentOutlinedIcon, title: "Responsive support", text: "People behind the science" },
+const ITEMS: { icon: IconName; title: string; text: string }[] = [
+  { icon: "document", title: "Every lot has a record", text: "Documentation within reach" },
+  { icon: "shield", title: "Details, made clear", text: "Transparent specifications" },
+  { icon: "package", title: "Care in every shipment", text: "Protected, tracked delivery" },
+  { icon: "support", title: "People behind the science", text: "Direct, responsive support" },
 ]
-
 export default function TrustBar() {
-  return (
-    <Box sx={{ bgcolor: "#eff4f1", borderBottom: "1px solid #e0e9e6", px: gutter, py: { xs: 2.5, md: 3 } }}>
-      <Grid container spacing={{ xs: 2, md: 0 }} sx={{ maxWidth: 1240, mx: "auto" }} component="ul" role="list" style={{ listStyle: "none", padding: 0, margin: "0 auto" }}>
-        {ITEMS.map(({ icon: Icon, title, text }, index) => (
-          <Grid
-            key={title}
-            size={{ xs: 6, md: 3 }}
-            component="li"
-            sx={{
-              borderRight: { md: index < ITEMS.length - 1 ? "1px solid #d7e3df" : "none" },
-              px: { md: 2.5 },
-              "&:first-of-type": { pl: { md: 0 } },
-            }}
-          >
-            <Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
-              <Box
-                sx={{
-                  width: 38,
-                  height: 38,
-                  flexShrink: 0,
-                  border: "1px solid #9bbeb7",
-                  borderRadius: "50%",
-                  display: "grid",
-                  placeItems: "center",
-                  color: "#2f7f7b",
-                }}
-              >
-                <Icon sx={{ fontSize: 19 }} />
-              </Box>
-              <Box>
-                <Typography sx={{ fontSize: 13.5, fontWeight: 700, color: "#153a4b", lineHeight: 1.35 }}>{title}</Typography>
-                <Typography sx={{ fontSize: 13, color: "#3c5b62", lineHeight: 1.4 }}>{text}</Typography>
-              </Box>
-            </Stack>
-          </Grid>
-        ))}
-      </Grid>
+  return <Box sx={{ px: gutter, pb: { xs: 6, md: 8 } }}>
+    <Box component="ul" sx={{ listStyle: "none", p: 0, m: "0 auto", maxWidth: 1360, display: "grid", gridTemplateColumns: { xs: "repeat(2,1fr)", md: "repeat(4,1fr)" }, gap: { xs: 3, md: 4 }, pt: 4, borderTop: "1px solid rgba(23,53,75,.08)" }}>
+      {ITEMS.map((item) => <Box component="li" key={item.title} sx={{ display: "flex", gap: 1.5, alignItems: "center" }}>
+        <Icon name={item.icon} sx={{ fontSize: 28, color: "brand.blue", flexShrink: 0 }} />
+        <Box><Typography sx={{ fontSize: { xs: 12, md: 13 }, fontWeight: 650, lineHeight: 1.5 }}>{item.title}</Typography><Typography sx={{ color: "text.secondary", fontSize: 11.5, mt: .25 }}>{item.text}</Typography></Box>
+      </Box>)}
     </Box>
-  )
+  </Box>
 }

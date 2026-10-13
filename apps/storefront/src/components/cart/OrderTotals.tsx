@@ -22,9 +22,9 @@ type OrderTotalsProps = {
 
 function Row({ label, value, strong }: { label: string; value: string; strong?: boolean }) {
   return (
-    <Stack direction="row" sx={{ justifyContent: "space-between", py: 0.5 }}>
+    <Stack direction="row" spacing={2} sx={{ justifyContent: "space-between", py: 0.75 }}>
       <Typography sx={{ color: strong ? "text.primary" : "text.secondary", fontWeight: strong ? 700 : 500 }}>{label}</Typography>
-      <Typography sx={{ fontWeight: strong ? 700 : 600, fontSize: strong ? 18 : undefined }}>{value}</Typography>
+      <Typography sx={{ fontWeight: strong ? 700 : 600, fontSize: strong ? 18 : undefined, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>{value}</Typography>
     </Stack>
   )
 }

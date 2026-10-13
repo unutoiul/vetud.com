@@ -40,7 +40,7 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
       <Section tone="white">
         <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 3 }}>
-            <Stack component="nav" aria-label="Legal documents" spacing={1} sx={{ position: { md: "sticky" }, top: { md: 110 } }}>
+            <Stack component="nav" aria-label="Legal documents" spacing={0.5} sx={{ bgcolor: "#f7f9fa", border: "1px solid", borderColor: "divider", borderRadius: 3, p: 2.5, position: { md: "sticky" }, top: { md: 110 } }}>
               {LEGAL_DOCUMENTS.map((item) => (
                 <AppLink
                   key={item.slug}
@@ -50,6 +50,10 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
                     color: item.slug === document.slug ? "secondary.main" : "text.secondary",
                     fontWeight: item.slug === document.slug ? 700 : 500,
                     fontSize: 15,
+                    py: 1,
+                    px: 1.5,
+                    borderRadius: 1.5,
+                    bgcolor: item.slug === document.slug ? "#eff5f6" : "transparent",
                   }}
                 >
                   {item.title}
@@ -58,7 +62,7 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
             </Stack>
           </Grid>
           <Grid size={{ xs: 12, md: 9 }}>
-            <Box component="article" sx={{ maxWidth: 760 }}>
+            <Box component="article" sx={{ maxWidth: 760, overflowWrap: "anywhere" }}>
               {document.sections.map((section) => (
                 <Box key={section.heading} component="section" sx={{ mb: 4 }}>
                   <Typography variant="h5" component="h2" sx={{ mb: 1.5 }}>

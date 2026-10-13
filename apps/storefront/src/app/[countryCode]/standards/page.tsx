@@ -1,8 +1,4 @@
-import CheckIcon from "@mui/icons-material/Check"
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined"
-import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined"
-import SupportAgentOutlinedIcon from "@mui/icons-material/SupportAgentOutlined"
-import TuneOutlinedIcon from "@mui/icons-material/TuneOutlined"
+import { CheckIcon, DocumentIcon as DescriptionOutlinedIcon, PackageIcon as Inventory2OutlinedIcon, SupportIcon as SupportAgentOutlinedIcon, SlidersIcon as TuneOutlinedIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
@@ -12,7 +8,7 @@ import type { Metadata } from "next"
 import FaqAccordion, { type FaqItem } from "@/components/standards/FaqAccordion"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
-import SectionHeading, { SerifAccent } from "@/components/common/SectionHeading"
+import SectionHeading from "@/components/common/SectionHeading"
 import Manifesto from "@/components/home/Manifesto"
 import StandardsAccordion from "@/components/home/StandardsAccordion"
 
@@ -93,11 +89,7 @@ export default function StandardsPage() {
     <>
       <PageHeader
         eyebrow="Our standards"
-        title={
-          <>
-            Precision is a <SerifAccent>practice.</SerifAccent>
-          </>
-        }
+        title="Precision is a practice."
         description="Clear information is part of the material. These are the commitments behind every product we list."
       />
 
@@ -105,9 +97,9 @@ export default function StandardsPage() {
         <Grid container spacing={2}>
           {PRINCIPLES.map(({ icon: Icon, title, text }, index) => (
             <Grid key={title} size={{ xs: 12, sm: 6, md: 3 }}>
-              <Paper variant="outlined" sx={{ p: 3, height: "100%", bgcolor: "#fbfcfa" }}>
+              <Paper variant="outlined" sx={{ p: { xs: 3, md: 3.5 }, height: "100%", bgcolor: "#f7f9fa", borderRadius: 3 }}>
                 <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                  <Box sx={{ width: 42, height: 42, border: "1px solid #9bbeb7", borderRadius: "50%", display: "grid", placeItems: "center", color: "secondary.main" }}>
+                  <Box sx={{ width: 48, height: 48, bgcolor: "#fff", border: "1px solid", borderColor: "divider", borderRadius: 2.5, display: "grid", placeItems: "center", color: "secondary.main" }}>
                     <Icon fontSize="small" />
                   </Box>
                   <Typography variant="mono" sx={{ color: "text.secondary" }}>

@@ -1,7 +1,6 @@
 "use client"
 
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
-import NorthEastIcon from "@mui/icons-material/NorthEast"
+import { LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
@@ -71,7 +70,7 @@ export default function CartView() {
         </ButtonLink>
       </Grid>
       <Grid size={{ xs: 12, md: 4.5 }}>
-        <Paper variant="outlined" sx={{ p: 3, position: { md: "sticky" }, top: { md: 110 } }}>
+        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#f7f9fa", borderRadius: 3, position: { md: "sticky" }, top: { md: 110 } }}>
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
             Order summary
           </Typography>

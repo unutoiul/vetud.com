@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function CartPage() {
   return (
     <>
-      <PageHeader eyebrow="Your cart" title="Review your selection." />
+      <PageHeader eyebrow="Your cart" title="Review your selection." description="Your research materials, quantities and regional pricing in one place." />
       <Section tone="white" tight>
         <CartView />
       </Section>

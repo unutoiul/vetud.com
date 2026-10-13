@@ -1,3 +1,4 @@
+import { useId } from "react"
 import type { ArtKind } from "@/lib/product"
 
 type ProductArtProps = {
@@ -9,149 +10,129 @@ type ProductArtProps = {
   title?: string
 }
 
-/** Mixes a hex colour with white. amount=0 keeps the colour, 1 returns white. */
 function tint(hex: string, amount: number) {
   const value = parseInt(hex.slice(1), 16)
-  const channels = [(value >> 16) & 255, (value >> 8) & 255, value & 255].map((channel) =>
-    Math.round(channel + (255 - channel) * amount)
-  )
-  return `rgb(${channels.join(",")})`
+  return `rgb(${[(value >> 16) & 255, (value >> 8) & 255, value & 255]
+    .map((channel) => Math.round(channel + (255 - channel) * amount))
+    .join(",")})`
 }
 
-function shade(hex: string, amount: number) {
-  const value = parseInt(hex.slice(1), 16)
-  const channels = [(value >> 16) & 255, (value >> 8) & 255, value & 255].map((channel) =>
-    Math.round(channel * (1 - amount))
-  )
-  return `rgb(${channels.join(",")})`
-}
-
-function Vial({ x, y, accent, idPrefix }: { x: number; y: number; accent: string; idPrefix: string }) {
+function AlpineMark({ x, y, color, scale = 1 }: { x: number; y: number; color: string; scale?: number }) {
   return (
-    <g transform={`translate(${x} ${y})`}>
-      <rect x="0" y="16" width="34" height="62" rx="7" fill={`url(#${idPrefix}-glass)`} stroke="#9fbdb5" />
-      <rect x="2" y="44" width="30" height="32" rx="6" fill={tint(accent, 0.35)} opacity="0.9" />
-      <rect x="5" y="0" width="24" height="18" rx="3" fill={shade(accent, 0.25)} />
-      <rect x="3" y="14" width="28" height="6" rx="2" fill="#dfeae5" stroke="#b5ccc4" />
-      <rect x="6" y="50" width="22" height="14" rx="2" fill="#fff" opacity="0.85" />
-      <rect x="9" y="54" width="16" height="2" rx="1" fill={shade(accent, 0.3)} />
-      <rect x="9" y="58" width="10" height="2" rx="1" fill="#9fbdb5" />
-      <rect x="6" y="22" width="4" height="40" rx="2" fill="#fff" opacity="0.7" />
+    <g transform={`translate(${x} ${y}) scale(${scale})`} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m3 4.5 9 15.5 9-15.5" />
+      <path d="m5.5 14.5 5-8.5 4.5 7.5 3.5-6" strokeWidth="1" />
+      <circle cx="3" cy="4.5" r="1.5" fill={color} stroke="none" />
+      <circle cx="10.5" cy="6" r="1.3" fill={color} stroke="none" />
+      <circle cx="21" cy="4.5" r="1.5" fill={color} stroke="none" />
     </g>
   )
 }
 
-function Bottle({ x, y, accent, idPrefix }: { x: number; y: number; accent: string; idPrefix: string }) {
+function AlpinePrint({ color }: { color: string }) {
   return (
-    <g transform={`translate(${x} ${y})`}>
-      <rect x="8" y="0" width="30" height="12" rx="3" fill={shade(accent, 0.25)} />
-      <path d="M10 12h26v8l8 10v52a6 6 0 0 1-6 6H8a6 6 0 0 1-6-6V30l8-10z" fill={`url(#${idPrefix}-glass)`} stroke="#9fbdb5" />
-      <rect x="6" y="46" width="34" height="26" rx="2" fill="#fff" opacity="0.88" />
-      <rect x="10" y="52" width="22" height="2.5" rx="1" fill={shade(accent, 0.3)} />
-      <rect x="10" y="58" width="14" height="2.5" rx="1" fill="#9fbdb5" />
-      <rect x="8" y="32" width="4" height="40" rx="2" fill="#fff" opacity="0.7" />
+    <g>
+      <path d="M0 170 22 149l14 9 25-40 21 29 24-9v70H0Z" fill={tint(color, 0.88)} />
+      <path d="m0 193 29-25 16 11 22-28 21 26 18-10v41H0Z" fill={tint(color, 0.73)} opacity=".6" />
+      <g fill="none" stroke={color} strokeWidth=".65" opacity=".65">
+        <path d="m0 170 22-21 14 9 25-40 21 29 24-9M46 142l15-24 21 29M61 118l-2 26 9-8 14 11" />
+        <path d="m0 193 29-25 16 11 22-28 21 26 18-10M29 168l4 15 12-4M67 151l-4 19 9-8 16 15" />
+        <path d="M0 205c28-13 49-3 65-8s22-9 41-6M0 199c21-9 47-2 64-6s27-9 42-8" opacity=".5" />
+      </g>
     </g>
   )
 }
 
-/**
- * The Vetud kit box from the concept, drawn as SVG and tinted per product via `accent`.
- * Peptides show a single vial, blends two, supplies a bottle.
- */
+function ResearchVial({ x, y, accent, id, code, scale = 1, supply = false }: {
+  x: number; y: number; accent: string; id: string; code: string; scale?: number; supply?: boolean
+}) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${scale})`}>
+      <ellipse cx="37" cy="173" rx="37" ry="7" fill="#254257" opacity=".06" />
+      <path d="M15 27h44v13c0 9 11 14 11 25v93c0 10-8 15-33 15S4 168 4 158V65c0-11 11-16 11-25Z" fill={`url(#${id}-${supply ? "glass" : "silver"})`} stroke="#bcc9cd" strokeWidth=".65" />
+      <path d="M12 65v85c0 7 2 12 6 14" fill="none" stroke="#fff" strokeWidth="4" opacity=".55" />
+      {supply ? <path d="M5 140h64v18c0 10-8 15-32 15S5 168 5 158Z" fill={tint(accent, 0.62)} opacity=".34" /> : null}
+      <rect x="12" y="0" width="50" height="29" rx="4" fill={`url(#${id}-cap)`} stroke="#c5d1d4" strokeWidth=".6" />
+      <g stroke="#7e939d" strokeWidth=".7" opacity=".32">
+        {[17, 22, 27, 32, 37, 42, 47, 52, 57].map((line) => <path key={line} d={`M${line} 4v20`} />)}
+      </g>
+      <rect x="10" y="27" width="54" height="6" rx="2" fill={`url(#${id}-silver)`} stroke="#aabac1" strokeWidth=".6" />
+      <rect x="5" y="64" width="64" height="82" rx="1" fill={`url(#${id}-label)`} />
+      <AlpineMark x={28} y={74} color={accent} scale={0.68} />
+      <text x="37" y="106" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontWeight="700" fontSize="9.7" letterSpacing="2.1" fill="#12334c">VETUD</text>
+      <text x="37" y="118" textAnchor="middle" fontFamily="var(--font-dm-mono), monospace" fontSize="5.7" letterSpacing=".7" fill={accent}>{code}</text>
+      <path d="M27 126h20" stroke={accent} strokeWidth=".65" opacity=".7" />
+      <text x="37" y="135" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="4.5" letterSpacing=".65" fill="#506875">RESEARCH USE ONLY</text>
+      <path d="M5 145h64v9c-22 4-43 4-64 0Z" fill={tint(accent, 0.77)} />
+      <g fill="none" stroke={accent} strokeWidth=".7" opacity=".65">
+        <path d="m5 151 13-7 8 4 15-11 14 12 14-5M35 143l6-6 8 8M41 137l-2 9 5-4" />
+      </g>
+      <path d="M17 164c11 3 27 3 40 0" fill="none" stroke="#fff" strokeWidth="1" opacity=".85" />
+    </g>
+  )
+}
+
+/** Upright alpine packaging and laboratory vials, with a distinct material finish per range. */
 export default function ProductArt({ code, accent, kind = "series", label, title }: ProductArtProps) {
-  const idPrefix = `art-${code.replace(/[^a-z0-9]/gi, "")}-${kind}`
-  const series = label ?? (kind === "supply" ? "LAB SUPPLY" : kind === "blend" ? "BLEND SERIES" : "PEPTIDE SERIES")
+  const instance = useId().replace(/[^a-z0-9]/gi, "")
+  const id = `vetud-art-${instance}`
+  const series = label ?? (kind === "supply" ? "LAB ESSENTIALS" : kind === "blend" ? "BLEND COLLECTION" : "PEPTIDE COLLECTION")
 
   return (
-    <svg
-      viewBox="0 0 340 214"
-      role={title ? "img" : undefined}
-      aria-hidden={title ? undefined : true}
-      aria-label={title}
-      style={{ width: "100%", height: "auto", display: "block", overflow: "visible" }}
-    >
+    <svg viewBox="0 0 340 300" role={title ? "img" : undefined} aria-hidden={title ? undefined : true} aria-label={title}
+      style={{ width: "100%", height: "auto", display: "block", overflow: "visible" }}>
+      {title ? <title>{title}</title> : null}
       <defs>
-        <linearGradient id={`${idPrefix}-box`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#ffffff" />
-          <stop offset="0.42" stopColor={tint(accent, 0.94)} />
-          <stop offset="1" stopColor={tint(accent, 0.78)} />
+        <linearGradient id={`${id}-box`} x1="0" y1="0" x2="1" y2="0">
+          <stop stopColor="#f0f4f4" /><stop offset=".12" stopColor="#fff" /><stop offset=".8" stopColor="#fbfcfc" /><stop offset="1" stopColor="#e8eff0" />
         </linearGradient>
-        <linearGradient id={`${idPrefix}-ribbon`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor={accent} />
-          <stop offset="0.55" stopColor={tint(accent, 0.75)} />
-          <stop offset="1" stopColor={accent} />
+        <linearGradient id={`${id}-side`} x1="0" y1="0" x2="1" y2="1">
+          <stop stopColor="#e7edef" /><stop offset="1" stopColor="#cbd9de" />
         </linearGradient>
-        <linearGradient id={`${idPrefix}-window`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor={tint(accent, 0.9)} />
-          <stop offset="1" stopColor={tint(accent, 0.72)} />
+        <linearGradient id={`${id}-silver`} x1="0" y1="0" x2="1" y2="0">
+          <stop stopColor="#a9b7c0" /><stop offset=".13" stopColor="#eaf0f2" /><stop offset=".3" stopColor="#fff" /><stop offset=".54" stopColor="#dbe3e7" /><stop offset=".82" stopColor="#c0ccd3" /><stop offset="1" stopColor="#8d9ea8" />
         </linearGradient>
-        <linearGradient id={`${idPrefix}-glass`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#ffffff" />
-          <stop offset="0.7" stopColor="#eef5f1" />
-          <stop offset="1" stopColor="#cfe0d9" />
+        <linearGradient id={`${id}-glass`} x1="0" y1="0" x2="1" y2="0">
+          <stop stopColor="#c5d6dc" stopOpacity=".85" /><stop offset=".2" stopColor="#fff" stopOpacity=".8" /><stop offset=".65" stopColor="#e2edf0" stopOpacity=".68" /><stop offset="1" stopColor="#a8c3cd" stopOpacity=".8" />
         </linearGradient>
-        <filter id={`${idPrefix}-shadow`} x="-20%" y="-20%" width="140%" height="160%">
-          <feDropShadow dx="0" dy="14" stdDeviation="12" floodColor="#0b3a44" floodOpacity="0.2" />
+        <linearGradient id={`${id}-cap`} x1="0" y1="0" x2="1" y2="0">
+          <stop stopColor="#c5d0d5" /><stop offset=".24" stopColor="#fff" /><stop offset=".5" stopColor="#edf1f2" /><stop offset="1" stopColor="#b5c3ca" />
+        </linearGradient>
+        <linearGradient id={`${id}-label`} x1="0" y1="0" x2="1" y2="0">
+          <stop stopColor="#e9eff1" /><stop offset=".25" stopColor="#fff" /><stop offset=".75" stopColor="#fbfcfc" /><stop offset="1" stopColor="#e8eff1" />
+        </linearGradient>
+        <filter id={`${id}-shadow`} x="-25%" y="-15%" width="160%" height="145%">
+          <feDropShadow dx="5" dy="9" stdDeviation="7" floodColor="#12334c" floodOpacity=".1" />
         </filter>
       </defs>
 
-      {title ? <title>{title}</title> : null}
-
-      <g filter={`url(#${idPrefix}-shadow)`}>
-        {/* side edge for depth */}
-        <path d="M322 14 334 6v192l-12 8z" fill={tint(accent, 0.7)} stroke="#c7ddd5" />
-        <path d="M18 14 30 6h304l-12 8z" fill={tint(accent, 0.86)} stroke="#d6e6e0" />
-        <rect x="18" y="14" width="304" height="192" rx="4" fill={`url(#${idPrefix}-box)`} stroke="#b7d1c8" />
+      <ellipse cx="179" cy="277" rx="115" ry="9" fill="#345364" opacity=".045" />
+      <g filter={`url(#${id}-shadow)`}>
+        <path d="m83 55 18-9h105l-18 9Z" fill="#fcfdfd" stroke="#d5dfe3" strokeWidth=".65" />
+        <path d="m188 55 18-9v208l-18 9Z" fill={`url(#${id}-side)`} stroke="#c8d5db" strokeWidth=".65" />
+        <rect x="83" y="55" width="105" height="208" rx="1" fill={`url(#${id}-box)`} stroke="#d2dee2" strokeWidth=".7" />
+        <g transform="translate(83 55)">
+          <AlpinePrint color={accent} />
+          <AlpineMark x={42} y={20} color={accent} scale={0.85} />
+          <text x="53" y="65" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontWeight="650" fontSize="13.4" letterSpacing="3" fill="#12334c">VETUD</text>
+          <text x="53" y="79" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="5.4" letterSpacing="1.2" fill="#617784">{series}</text>
+          <path d="M42 91h22" stroke={accent} strokeWidth=".7" />
+          <text x="53" y="107" textAnchor="middle" fontFamily="var(--font-dm-mono), monospace" fontSize="7.4" letterSpacing="1" fill={accent}>{code}</text>
+          <text x="53" y="197" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="4.8" letterSpacing=".75" fill="#365566">FOR LABORATORY RESEARCH</text>
+        </g>
+        <path d="M86 59v198" stroke="#fff" strokeWidth="1.5" opacity=".8" />
+        <text x="198" y="157" transform="rotate(-90 198 157)" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="4.5" letterSpacing="2.2" fill="#607887">SCIENCE. WITH CLARITY.</text>
       </g>
-      <rect x="18" y="14" width="304" height="5" rx="2" fill={`url(#${idPrefix}-ribbon)`} />
-      <rect x="23" y="19" width="294" height="182" rx="3" fill="none" stroke="#ffffff" strokeOpacity="0.6" strokeWidth="4" />
-
-      <text x="36" y="46" fontFamily="var(--font-manrope), Arial, sans-serif" fontWeight="800" fontSize="15" letterSpacing="1.4" fill="#174d63">
-        VETUD
-      </text>
-      <text x="36" y="64" fontFamily="var(--font-manrope), Arial, sans-serif" fontWeight="700" fontSize="10.5" letterSpacing="1.2" fill="#2c6377">
-        {series}
-      </text>
-      <text x="36" y="86" fontFamily="var(--font-dm-mono), monospace" fontSize="8" letterSpacing="1" fill="#5f8a88">
-        {code}
-      </text>
-
-      {/* sequence linework */}
-      <g fill="none" stroke={shade(accent, 0.2)} strokeWidth="0.9" opacity="0.6">
-        <path d="M30 150c34-38 56-38 91-6s57 17 99-30" />
-        <path d="M30 156c32-32 58-35 91-7s58 16 99-26" />
-        <path d="m69 132 8-5 8 5v9l-8 5-8-5zM121 140l7-4 7 4v8l-7 4-7-4z" />
+      <g filter={`url(#${id}-shadow)`}>
+        {kind === "blend" ? (
+          <>
+            <ResearchVial x={167} y={118} accent={accent} id={id} code={code} scale={0.83} />
+            <ResearchVial x={216} y={110} accent={accent} id={id} code={code} scale={0.92} />
+          </>
+        ) : (
+          <ResearchVial x={186} y={94} accent={accent} id={id} code={code} scale={1.03} supply={kind === "supply"} />
+        )}
       </g>
-      <g fill={accent}>
-        <circle cx="77" cy="132" r="1.8" />
-        <circle cx="128" cy="140" r="1.8" />
-      </g>
-
-      {/* lot seal */}
-      <circle cx="170" cy="178" r="16" fill={tint(accent, 0.85)} stroke={tint(accent, 0.45)} />
-      <text x="170" y="176" textAnchor="middle" fontFamily="var(--font-dm-mono), monospace" fontSize="6" letterSpacing="0.6" fill={shade(accent, 0.35)}>
-        LOT
-      </text>
-      <text x="170" y="184" textAnchor="middle" fontFamily="var(--font-dm-mono), monospace" fontSize="6" letterSpacing="0.6" fill={shade(accent, 0.35)}>
-        TRACE
-      </text>
-      <text x="36" y="190" fontFamily="var(--font-dm-mono), monospace" fontSize="6.5" letterSpacing="0.9" fill="#5f8a88">
-        RESEARCH USE ONLY
-      </text>
-
-      {/* product window */}
-      <rect x="204" y="40" width="102" height="140" rx="3" fill={`url(#${idPrefix}-window)`} stroke="#9fbdb5" />
-      <rect x="208" y="44" width="94" height="132" rx="2" fill="none" stroke="#ffffff" strokeOpacity="0.55" strokeWidth="4" />
-      {kind === "blend" ? (
-        <>
-          <Vial x={220} y={66} accent={accent} idPrefix={idPrefix} />
-          <Vial x={258} y={74} accent={shade(accent, 0.15)} idPrefix={idPrefix} />
-        </>
-      ) : kind === "supply" ? (
-        <Bottle x={232} y={62} accent={accent} idPrefix={idPrefix} />
-      ) : (
-        <Vial x={238} y={68} accent={accent} idPrefix={idPrefix} />
-      )}
     </svg>
   )
 }

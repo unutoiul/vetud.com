@@ -12,7 +12,7 @@ type SectionHeadingProps = {
   as?: "h1" | "h2"
 }
 
-/** Mono eyebrow + large heading + optional side copy, as used across the concept. */
+/** A clear section title with supporting copy and an optional adjacent action. */
 export default function SectionHeading({
   eyebrow,
   title,
@@ -25,42 +25,41 @@ export default function SectionHeading({
   return (
     <Stack
       direction={{ xs: "column", md: "row" }}
-      spacing={{ xs: 2, md: 6 }}
-      sx={{ justifyContent: "space-between", alignItems: { md: "flex-end" }, mb: { xs: 4, md: 5 } }}
+      spacing={{ xs: 3, md: 6 }}
+      sx={{ justifyContent: "space-between", alignItems: { md: "flex-end" }, mb: { xs: 4, md: 6 } }}
     >
-      <Box sx={{ maxWidth: 720 }}>
-        <Typography variant="eyebrow" sx={{ color: light ? "brand.tealBright" : "secondary.main" }}>
+      <Box sx={{ maxWidth: 820 }}>
+        <Typography variant="eyebrow" sx={{ color: light ? "brand.onNavyMuted" : "brand.blue", letterSpacing: ".06em" }}>
           {eyebrow}
         </Typography>
         <Typography
           variant="h2"
           component={as}
-          sx={{ mt: 1.5, color: light ? "brand.onNavy" : "text.primary" }}
+          sx={{ mt: 2, color: light ? "brand.onNavy" : "text.primary", textWrap: "balance", maxWidth: 780 }}
         >
           {title}
         </Typography>
+        {description ? (
+          <Typography sx={{ mt: 2, maxWidth: 640, color: light ? "brand.onNavyMuted" : "text.secondary", lineHeight: 1.8 }}>
+            {description}
+          </Typography>
+        ) : null}
       </Box>
-      {description || action ? (
-        <Stack spacing={2} sx={{ maxWidth: 360, alignItems: "flex-start" }}>
-          {description ? (
-            <Typography sx={{ color: light ? "brand.onNavyMuted" : "text.secondary" }}>
-              {description}
-            </Typography>
-          ) : null}
+      {action ? (
+        <Box sx={{ flexShrink: 0, pb: { md: 0.5 } }}>
           {action}
-        </Stack>
+        </Box>
       ) : null}
     </Stack>
   )
 }
 
-/** Italic serif accent word inside headings, e.g. "Precision begins at the *sequence.*" */
-export function SerifAccent({ children, color }: { children: ReactNode; color?: string }) {
+/** Preserve the legacy helper's API while keeping heading typography consistent. */
+export function SerifAccent({ children }: { children: ReactNode; color?: string }) {
   return (
     <Typography
-      variant="serifAccent"
       component="span"
-      sx={{ fontSize: "1.08em", color: color ?? "secondary.main", lineHeight: "inherit" }}
+      sx={{ font: "inherit", color: "inherit", letterSpacing: "inherit" }}
     >
       {children}
     </Typography>

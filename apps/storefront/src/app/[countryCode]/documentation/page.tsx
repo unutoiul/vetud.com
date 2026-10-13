@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box"
+import { DownloadIcon } from "@/components/brand/Icon"
 import Skeleton from "@mui/material/Skeleton"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
@@ -12,7 +13,7 @@ import LotLookup from "@/components/documentation/LotLookup"
 import { AppLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
-import SectionHeading, { SerifAccent } from "@/components/common/SectionHeading"
+import SectionHeading from "@/components/common/SectionHeading"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { listProducts } from "@/lib/medusa/products"
 import { readProductMeta } from "@/lib/product"
@@ -36,11 +37,7 @@ export default async function DocumentationPage() {
     <>
       <PageHeader
         eyebrow="Documentation"
-        title={
-          <>
-            Every lot, <SerifAccent>on the record.</SerifAccent>
-          </>
-        }
+        title="Every lot, on the record."
         description="Enter the lot number printed on your vial label to see its batch record. Certificates of analysis are available for every lot."
       />
       <Section tone="white" tight>
@@ -58,11 +55,11 @@ export default async function DocumentationPage() {
           <Table aria-label="Lot register">
             <TableHead>
               <TableRow>
-                <TableCell>Lot</TableCell>
-                <TableCell>Product</TableCell>
-                <TableCell>Batch date</TableCell>
-                <TableCell>Purity</TableCell>
-                <TableCell align="right">Certificate</TableCell>
+                <TableCell scope="col">Lot</TableCell>
+                <TableCell scope="col">Product</TableCell>
+                <TableCell scope="col">Batch date</TableCell>
+                <TableCell scope="col">Purity</TableCell>
+                <TableCell scope="col" align="right">Certificate</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -78,18 +75,25 @@ export default async function DocumentationPage() {
                     </Typography>
                   </TableCell>
                   <TableCell>{lot.date ?? "—"}</TableCell>
-                  <TableCell>{lot.purity ?? "—"}</TableCell>
+                  <TableCell sx={{ fontVariantNumeric: "tabular-nums" }}>{lot.purity ?? "—"}</TableCell>
                   <TableCell align="right">
                     {lot.coaUrl ? (
-                      <a href={lot.coaUrl} target="_blank" rel="noopener">
-                        Download
-                      </a>
+                      <Box component="a" href={lot.coaUrl} target="_blank" rel="noopener" sx={{ display: "inline-flex", gap: 0.75, alignItems: "center", color: "secondary.main", fontWeight: 600 }}>
+                        <DownloadIcon sx={{ fontSize: 17 }} /> Download
+                      </Box>
                     ) : (
                       <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>Request</AppLink>
                     )}
                   </TableCell>
                 </TableRow>
               ))}
+              {!rows.length ? (
+                <TableRow>
+                  <TableCell colSpan={5} sx={{ py: 5, color: "text.secondary", textAlign: "center" }}>
+                    No lot records are published yet. <AppLink href="/contact">Contact the team</AppLink> for documentation.
+                  </TableCell>
+                </TableRow>
+              ) : null}
             </TableBody>
           </Table>
         </Box>

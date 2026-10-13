@@ -23,13 +23,13 @@ export default function Section({ tone = "paper", tight, children, sx, ...props 
           bgcolor: backgrounds[tone],
           color: tone === "navy" ? "brand.onNavy" : "text.primary",
           px: gutter,
-          py: tight ? { xs: 5, md: 7 } : { xs: 8, md: 12 },
+          py: tight ? { xs: 5, md: 8 } : { xs: 7, md: 13 },
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
       {...props}
     >
-      <Box sx={{ maxWidth: 1240, mx: "auto" }}>{children}</Box>
+      <Box sx={{ maxWidth: 1360, mx: "auto" }}>{children}</Box>
     </Box>
   )
 }

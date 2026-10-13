@@ -16,6 +16,9 @@ export type ProductMeta = {
   purity?: string
   form?: string
   storage?: string
+  ingredients?: string
+  volume?: string
+  concentration?: string
   lots: ProductLot[]
   artKind: ArtKind
 }
@@ -73,6 +76,9 @@ export function readProductMeta(
     purity: str(metadata.purity),
     form: str(metadata.form),
     storage: str(metadata.storage),
+    ingredients: str(metadata.ingredients),
+    volume: str(metadata.volume),
+    concentration: str(metadata.concentration),
     lots: parseLots(metadata.lots),
     artKind,
   }

@@ -1,9 +1,8 @@
-import NorthEastIcon from "@mui/icons-material/NorthEast"
+import { ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
-import { SerifAccent } from "@/components/common/SectionHeading"
 
 export default function NotFound() {
   return (
@@ -13,7 +12,7 @@ export default function NotFound() {
           Error 404
         </Typography>
         <Typography variant="h2" component="h1">
-          This sequence is <SerifAccent>not on file.</SerifAccent>
+          This sequence is not on file.
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
           The page you were looking for has moved or never existed. Try the catalog, or search

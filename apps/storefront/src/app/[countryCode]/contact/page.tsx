@@ -1,6 +1,4 @@
-import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined"
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined"
-import MailOutlineIcon from "@mui/icons-material/MailOutlined"
+import { ClockIcon as AccessTimeOutlinedIcon, DocumentIcon as DescriptionOutlinedIcon, MailIcon as MailOutlineIcon } from "@/components/brand/Icon"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Skeleton from "@mui/material/Skeleton"
@@ -12,7 +10,6 @@ import ContactForm from "@/components/contact/ContactForm"
 import { AppLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
-import { SerifAccent } from "@/components/common/SectionHeading"
 import { SITE } from "@/lib/config"
 
 export const metadata: Metadata = {
@@ -39,16 +36,14 @@ export default function ContactPage() {
     <>
       <PageHeader
         eyebrow="Contact"
-        title={
-          <>
-            People behind <SerifAccent>the science.</SerifAccent>
-          </>
-        }
+        title="People behind the science."
         description="Questions about a product, a lot or an order reach a real person. Include your order or lot number for the fastest answer."
       />
       <Section tone="white">
         <Grid container spacing={{ xs: 5, md: 8 }}>
           <Grid size={{ xs: 12, md: 7.5 }}>
+            <Typography variant="h4" component="h2" sx={{ mb: 1 }}>Write to the team.</Typography>
+            <Typography sx={{ color: "text.secondary", mb: 3 }}>Include a lot or order number so we can help you quickly.</Typography>
             <Suspense fallback={<Skeleton variant="rounded" height={420} />}>
               <ContactForm />
             </Suspense>
@@ -56,9 +51,9 @@ export default function ContactPage() {
           <Grid size={{ xs: 12, md: 4.5 }}>
             <Stack spacing={2}>
               {details.map(({ icon: Icon, title, body }) => (
-                <Paper key={title} variant="outlined" sx={{ p: 2.5, display: "flex", gap: 2, bgcolor: "#fbfcfa" }}>
-                  <Icon sx={{ color: "secondary.main", mt: "2px" }} />
-                  <div>
+                <Paper key={title} variant="outlined" sx={{ p: 3, display: "flex", gap: 2, bgcolor: "#f7f9fa", borderRadius: 3 }}>
+                  <Icon sx={{ color: "secondary.main", mt: "2px", flexShrink: 0 }} />
+                  <div style={{ minWidth: 0, overflowWrap: "anywhere" }}>
                     <Typography sx={{ fontWeight: 700 }}>{title}</Typography>
                     <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
                       {body}

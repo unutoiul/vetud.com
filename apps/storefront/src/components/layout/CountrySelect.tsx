@@ -1,6 +1,6 @@
 "use client"
 
-import PublicIcon from "@mui/icons-material/Public"
+import { GlobeIcon as PublicIcon } from "@/components/brand/Icon"
 import Button from "@mui/material/Button"
 import ListSubheader from "@mui/material/ListSubheader"
 import Menu from "@mui/material/Menu"
@@ -32,7 +32,9 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
         size="small"
         startIcon={<PublicIcon fontSize="small" />}
         onClick={(event) => setAnchor(event.currentTarget)}
-        aria-haspopup="listbox"
+        aria-haspopup="menu"
+        aria-expanded={Boolean(anchor)}
+        aria-controls={anchor ? "country-menu" : undefined}
         aria-label={`Shipping country: ${countryCode.toUpperCase()}, currency ${region.currencyCode.toUpperCase()}. Change`}
         fullWidth={fullWidth}
         sx={{
@@ -45,10 +47,11 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
         {countryCode.toUpperCase()} · {region.currencyCode.toUpperCase()}
       </Button>
       <Menu
+        id="country-menu"
         anchorEl={anchor}
         open={Boolean(anchor)}
         onClose={() => setAnchor(null)}
-        slotProps={{ paper: { sx: { maxHeight: 420, minWidth: 240 } } }}
+        slotProps={{ paper: { sx: { maxHeight: 420, minWidth: 240, borderRadius: 2.5, overscrollBehavior: "contain" } } }}
       >
         {currencies.flatMap((currency) => [
           <ListSubheader key={`h-${currency}`} sx={{ lineHeight: "36px", fontSize: 11, letterSpacing: "0.12em" }}>

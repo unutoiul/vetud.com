@@ -1,12 +1,13 @@
 "use client"
 
-import AddIcon from "@mui/icons-material/Add"
+import { PlusIcon as AddIcon } from "@/components/brand/Icon"
 import Accordion from "@mui/material/Accordion"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import AccordionSummary from "@mui/material/AccordionSummary"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
+import Icon, { type IconName } from "../brand/Icon"
 
 export type StandardStep = {
   title: string
@@ -42,6 +43,7 @@ export const STANDARD_STEPS: StandardStep[] = [
 ]
 
 export default function StandardsAccordion({ steps = STANDARD_STEPS }: { steps?: StandardStep[] }) {
+  const stepIcons: IconName[] = ["document", "flask", "package", "support"]
   const [expanded, setExpanded] = useState<number | false>(0)
 
   return (
@@ -53,12 +55,10 @@ export default function StandardsAccordion({ steps = STANDARD_STEPS }: { steps?:
           onChange={(_, isOpen) => setExpanded(isOpen ? index : false)}
         >
           <AccordionSummary
-            expandIcon={<AddIcon sx={{ color: "#4d8e8a", transition: "transform .2s" }} />}
+            expandIcon={<AddIcon sx={{ color: "#4d8e8a", transition: "transform .3s cubic-bezier(.22,.68,0,1.05)" }} />}
             sx={{ "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": { transform: "rotate(45deg)" } }}
           >
-            <Typography variant="mono" sx={{ color: "secondary.main", minWidth: 36 }}>
-              {String(index + 1).padStart(2, "0")}
-            </Typography>
+            <Icon name={stepIcons[index] ?? "shield"} sx={{ color: "brand.blue", fontSize: 28, flexShrink: 0 }} />
             <Box>
               <Typography variant="h6" component="h3" sx={{ mb: 0.5 }}>
                 {step.title}
@@ -68,7 +68,7 @@ export default function StandardsAccordion({ steps = STANDARD_STEPS }: { steps?:
               </Typography>
             </Box>
           </AccordionSummary>
-          <AccordionDetails sx={{ pl: { xs: 0, sm: "56px" } }}>
+          <AccordionDetails sx={{ pl: { xs: 0, sm: "48px" } }}>
             <Typography variant="body2" sx={{ color: "text.primary", maxWidth: 560 }}>
               {step.detail}
             </Typography>

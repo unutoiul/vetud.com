@@ -1,6 +1,6 @@
 "use client"
 
-import SendOutlinedIcon from "@mui/icons-material/SendOutlined"
+import { SendIcon as SendOutlinedIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -46,7 +46,12 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
   const submit = async (event: React.FormEvent) => {
     event.preventDefault()
     setShowErrors(true)
-    if (!valid) return
+    if (!valid) {
+      const field = Object.keys(errors).find((key) => errors[key as keyof typeof errors])
+      const input = field ? event.currentTarget.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${field}"]`) : null
+      input?.focus()
+      return
+    }
     setSending(true)
     setError(null)
     try {
@@ -72,7 +77,7 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
   }
 
   return (
-    <Box component="form" noValidate onSubmit={submit}>
+    <Box component="form" noValidate onSubmit={submit} aria-busy={sending}>
       {error ? (
         <Alert severity="error" sx={{ mb: 3 }} onClose={() => setError(null)}>
           {error}
@@ -83,16 +88,16 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
           <TextField label="Name" required {...bind("name")} slotProps={{ htmlInput: { autoComplete: "name" } }} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField label="Email" type="email" required {...bind("email")} slotProps={{ htmlInput: { autoComplete: "email" } }} />
+          <TextField label="Email" type="email" required {...bind("email")} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField label="Subject (optional)" {...bind("subject")} />
+          <TextField label="Subject (optional)" {...bind("subject")} autoComplete="off" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField label="Order or lot number (optional)" {...bind("order_number")} />
+          <TextField label="Order or lot number (optional)" {...bind("order_number")} slotProps={{ htmlInput: { autoComplete: "off", spellCheck: false } }} />
         </Grid>
         <Grid size={12}>
-          <TextField label="Message" required multiline minRows={6} {...bind("message")} />
+          <TextField label="Message" required multiline minRows={6} {...bind("message")} autoComplete="off" />
         </Grid>
         {/* Honeypot for bots: hidden from people and assistive tech. */}
         <Box aria-hidden sx={{ position: "absolute", left: -10000, width: 1, height: 1, overflow: "hidden" }}>

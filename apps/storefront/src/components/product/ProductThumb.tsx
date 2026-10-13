@@ -9,7 +9,7 @@ type ProductThumbProps = {
   sizes: string
 }
 
-/** The product photo when one is uploaded in Medusa, otherwise the drawn kit-box art. */
+/** Uploaded product photography takes precedence over the alpine packaging artwork. */
 export default function ProductThumb({ image, meta, sizes }: ProductThumbProps) {
   if (!image) {
     return <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} />

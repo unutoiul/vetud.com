@@ -1,8 +1,7 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import CheckCircleIcon from "@mui/icons-material/CheckCircle"
-import NorthEastIcon from "@mui/icons-material/NorthEast"
+import { CheckCircleIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
@@ -83,7 +82,7 @@ export default function OrderConfirmation() {
           Your items are held for you; we ship as soon as your payment arrives.
         </Typography>
 
-        <Paper variant="outlined" sx={{ p: 3, bgcolor: "brand.mintWash", borderColor: "brand.mint", mb: 4 }}>
+        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#eff5f6", borderRadius: 3, borderColor: "divider", mb: 4 }}>
           <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
             How to pay
           </Typography>
@@ -141,7 +140,7 @@ export default function OrderConfirmation() {
             </Stack>
           ))}
         </Stack>
-        <Stack direction="row" spacing={1.5} sx={{ mt: 4 }}>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 4 }}>
           <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>
             Continue shopping
           </ButtonLink>
@@ -152,7 +151,7 @@ export default function OrderConfirmation() {
       </Grid>
 
       <Grid size={{ xs: 12, md: 5 }}>
-        <Paper variant="outlined" sx={{ p: 3 }}>
+        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#f7f9fa", borderRadius: 3 }}>
           <Typography variant="h5" component="h3" sx={{ mb: 1 }}>
             Order {number}
           </Typography>

@@ -1,7 +1,7 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import SearchIcon from "@mui/icons-material/Search"
+import { SearchIcon } from "@/components/brand/Icon"
 import Autocomplete from "@mui/material/Autocomplete"
 import Box from "@mui/material/Box"
 import CircularProgress from "@mui/material/CircularProgress"
@@ -113,11 +113,18 @@ export default function SearchBox({ autoFocus, onNavigate, dense }: SearchBoxPro
         <TextField
           {...params}
           autoFocus={autoFocus}
-          placeholder="Search products, codes, lots"
+          placeholder="Search products, codes, lots…"
           size={dense ? "small" : "medium"}
           slotProps={{
             ...params.slotProps,
-            htmlInput: { ...params.slotProps.htmlInput, "aria-label": "Search products" },
+            htmlInput: {
+              ...params.slotProps.htmlInput,
+              "aria-label": "Search products",
+              name: "search",
+              type: "search",
+              autoComplete: "off",
+              spellCheck: false,
+            },
             input: {
               ...params.slotProps.input,
               startAdornment: (

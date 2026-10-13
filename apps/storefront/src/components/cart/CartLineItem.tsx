@@ -1,7 +1,7 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
+import { TrashIcon as DeleteOutlinedIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
@@ -35,12 +35,12 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
         href={`/products/${item.product_handle}`}
         onClick={onNavigate}
         sx={{
-          width: 92,
+          width: { xs: 72, sm: 92 },
           flexShrink: 0,
           bgcolor: item.thumbnail ? "#fff" : "brand.mintWash",
           border: item.thumbnail ? "1px solid" : "none",
           borderColor: "divider",
-          borderRadius: 1,
+          borderRadius: 2.5,
           p: item.thumbnail ? 0.5 : 1,
           alignSelf: "flex-start",
         }}
@@ -56,7 +56,7 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
               component={LocalizedNextLink}
               href={`/products/${item.product_handle}`}
               onClick={onNavigate}
-              sx={{ fontWeight: 600, textDecoration: "none", "&:hover": { color: "secondary.main" } }}
+              sx={{ fontWeight: 600, textDecoration: "none", overflowWrap: "anywhere", "&:hover": { color: "secondary.main" } }}
             >
               {item.product_title}
             </Typography>
@@ -67,7 +67,7 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
               {item.variant_sku ?? meta.code}
             </Typography>
           </Box>
-          <Typography sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+          <Typography sx={{ fontWeight: 700, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
             {formatMoney(lineTotal, currencyCode)}
           </Typography>
         </Stack>

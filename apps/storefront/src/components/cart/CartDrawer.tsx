@@ -1,7 +1,6 @@
 "use client"
 
-import CloseIcon from "@mui/icons-material/Close"
-import NorthEastIcon from "@mui/icons-material/NorthEast"
+import { CloseIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Drawer from "@mui/material/Drawer"
@@ -27,7 +26,7 @@ export default function CartDrawer() {
       anchor="right"
       open={drawerOpen}
       onClose={closeDrawer}
-      slotProps={{ paper: { sx: { width: { xs: "100%", sm: 440 } } } }}
+      slotProps={{ paper: { sx: { width: { xs: "100%", sm: 460 }, bgcolor: "#f7f9fa", overscrollBehavior: "contain" } } }}
     >
       <Stack sx={{ height: "100%" }}>
         <Stack
@@ -42,7 +41,7 @@ export default function CartDrawer() {
           </IconButton>
         </Stack>
 
-        <Box sx={{ flex: 1, overflowY: "auto", px: 3 }}>
+        <Box sx={{ flex: 1, overflowY: "auto", overscrollBehavior: "contain", px: 3 }}>
           {error ? (
             <Alert severity="error" onClose={clearError} sx={{ mt: 2 }}>
               {error}
@@ -73,7 +72,7 @@ export default function CartDrawer() {
         </Box>
 
         {items.length ? (
-          <Box sx={{ px: 3, py: 2.5, borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
+          <Box sx={{ px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
             <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
               <Typography sx={{ fontWeight: 600 }}>Subtotal</Typography>
               <Typography sx={{ fontWeight: 700 }}>{formatMoney(itemTotal, currency)}</Typography>

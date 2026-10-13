@@ -98,6 +98,9 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     { label: "Product code", value: meta.code },
     { label: "Category", value: category?.name ?? "Research material" },
     { label: "Form", value: meta.form ?? "—" },
+    ...(meta.volume ? [{ label: "Bottle volume", value: meta.volume }] : []),
+    ...(meta.concentration ? [{ label: "Peptide strength", value: meta.concentration }] : []),
+    ...(meta.ingredients ? [{ label: "Ingredient information", value: meta.ingredients }] : []),
     { label: "Purity", value: meta.purity ?? "—" },
     { label: "Storage", value: meta.storage ?? "—" },
     { label: "Available amounts", value: sortedVariants(product).map((variant) => variant.title).join(", ") },
@@ -150,14 +153,14 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
 
         <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ position: { md: "sticky" }, top: { md: 110 }, border: "1px solid", borderColor: "divider", borderRadius: 1, overflow: "hidden" }}>
+            <Box sx={{ position: { md: "sticky" }, top: { md: 110 }, border: "1px solid", borderColor: "divider", borderRadius: 2.5, overflow: "hidden" }}>
               {image ? (
                 <Box sx={{ position: "relative", aspectRatio: "1 / 1", bgcolor: "brand.mintWash" }}>
                   <Image src={image} alt={product.title} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "contain" }} priority />
                 </Box>
               ) : (
                 <ArtStage height={{ xs: 320, sm: 420, md: 520 }}>
-                  <Box sx={{ width: "78%", position: "relative", zIndex: 1, transform: "rotate(-5deg)" }}>
+                  <Box sx={{ width: "90%", maxWidth: 500, position: "relative", zIndex: 1 }}>
                     <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} title={`${product.title} kit box`} />
                   </Box>
                 </ArtStage>

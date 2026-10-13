@@ -1,11 +1,11 @@
 "use client"
 
-import CloseIcon from "@mui/icons-material/Close"
-import SearchIcon from "@mui/icons-material/Search"
+import { CloseIcon, SearchIcon } from "@/components/brand/Icon"
 import Chip from "@mui/material/Chip"
 import FormControl from "@mui/material/FormControl"
 import InputAdornment from "@mui/material/InputAdornment"
 import InputLabel from "@mui/material/InputLabel"
+import IconButton from "@mui/material/IconButton"
 import MenuItem from "@mui/material/MenuItem"
 import Select from "@mui/material/Select"
 import Stack from "@mui/material/Stack"
@@ -51,7 +51,7 @@ export default function ShopToolbar({ categories, category, sort, query, count }
         <Stack
           component="form"
           direction="row"
-          sx={{ flex: 1, maxWidth: { md: 420 } }}
+          sx={{ flex: 1, maxWidth: { md: 440 }, alignItems: "center", gap: 1 }}
           onSubmit={(event) => {
             event.preventDefault()
             navigate({ q: search.trim() || undefined })
@@ -60,10 +60,10 @@ export default function ShopToolbar({ categories, category, sort, query, count }
           <TextField
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search by name, code or lot"
+            placeholder="Search by name, code or lot…"
             size="small"
             slotProps={{
-              htmlInput: { "aria-label": "Search the catalog" },
+              htmlInput: { "aria-label": "Search the catalog", name: "q", type: "search", autoComplete: "off", spellCheck: false },
               input: {
                 startAdornment: (
                   <InputAdornment position="start">
@@ -73,16 +73,20 @@ export default function ShopToolbar({ categories, category, sort, query, count }
               },
             }}
           />
+          <IconButton type="submit" aria-label="Search the catalog" sx={{ width: 42, height: 42, border: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
+            <SearchIcon fontSize="small" />
+          </IconButton>
         </Stack>
-        <Stack direction="row" spacing={2} sx={{ alignItems: "center", ml: { md: "auto" } }}>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ alignItems: { xs: "stretch", sm: "center" }, ml: { md: "auto" } }}>
           <Typography variant="body2" sx={{ color: "text.secondary", whiteSpace: "nowrap" }} aria-live="polite">
             {count} {count === 1 ? "product" : "products"}
           </Typography>
-          <FormControl size="small" sx={{ minWidth: 200 }}>
+          <FormControl size="small" sx={{ minWidth: { xs: 0, sm: 200 } }}>
             <InputLabel id="sort-label">Sort by</InputLabel>
             <Select
               labelId="sort-label"
               label="Sort by"
+              name="sort"
               value={sort}
               onChange={(event) => navigate({ sort: event.target.value === "featured" ? undefined : event.target.value })}
             >

@@ -1,37 +1,21 @@
-import NorthEastIcon from "@mui/icons-material/NorthEast"
+﻿import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
+import Icon from "../brand/Icon"
+import { LogoMark } from "../brand/Logo"
 import { ButtonLink } from "../common/links"
 import Section from "../common/Section"
-import { SerifAccent } from "../common/SectionHeading"
 
 export default function Manifesto() {
-  return (
-    <Section tone="navy" tight sx={{ bgcolor: "#0d3546" }}>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={{ xs: 3, md: 6 }}
-        sx={{ alignItems: { md: "center" }, justifyContent: "space-between" }}
-      >
-        <Typography variant="eyebrow" sx={{ color: "#84d6cd", whiteSpace: "nowrap" }}>
-          A note from Vetud
-        </Typography>
-        <Typography
-          component="blockquote"
-          sx={{ m: 0, fontSize: { xs: 26, md: 34 }, letterSpacing: "-0.035em", lineHeight: 1.25, maxWidth: 680, color: "#eaf8f1" }}
-        >
-          “Clarity is not an extra step. It is part of the <SerifAccent color="#75d0c4">science.</SerifAccent>”
-        </Typography>
-        <ButtonLink
-          href="/standards"
-          variant="outlined"
-          size="small"
-          endIcon={<NorthEastIcon />}
-          sx={{ color: "#a6c2c5", borderColor: "#376271", borderRadius: 999, whiteSpace: "nowrap", alignSelf: { xs: "flex-start", md: "center" } }}
-        >
-          Meet Vetud
-        </ButtonLink>
+  return <Section tone="paper" tight>
+    <Box sx={{ bgcolor: "#e7eef2", p: .75, borderRadius: 5 }}>
+      <Stack direction={{ xs: "column", md: "row" }} spacing={4} sx={{ borderRadius: 4.25, bgcolor: "brand.navy", color: "brand.onNavy", p: { xs: 4, md: 6 }, justifyContent: "space-between", alignItems: { md: "center" } }}>
+        <Stack direction="row" spacing={3} sx={{ alignItems: "center", maxWidth: 750 }}>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}><LogoMark size={68} tone="light" /></Box>
+          <Box><Typography sx={{ fontSize: 12, color: "brand.onNavyMuted", mb: 1.5 }}>The VETUD philosophy</Typography><Typography component="h2" sx={{ fontSize: { xs: 29, md: 36 }, fontWeight: 450, letterSpacing: "-.045em", lineHeight: 1.25 }}>Clarity is part of the science.</Typography><Typography sx={{ mt: 1.5, color: "brand.onNavyMuted", fontSize: 14 }}>Better information. Thoughtful materials. A more considered standard.</Typography></Box>
+        </Stack>
+        <ButtonLink href="/standards" variant="contained" color="mint" endIcon={<Icon name="arrowUpRight" />} sx={{ flexShrink: 0, alignSelf: { xs: "flex-start", md: "center" } }}>Discover our approach</ButtonLink>
       </Stack>
-    </Section>
-  )
+    </Box>
+  </Section>
 }

@@ -1,7 +1,6 @@
 "use client"
 
-import AddIcon from "@mui/icons-material/Add"
-import RemoveIcon from "@mui/icons-material/Remove"
+import { PlusIcon as AddIcon, MinusIcon as RemoveIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 
@@ -34,9 +33,9 @@ export default function QuantityStepper({
         alignItems: "center",
         border: "1px solid",
         borderColor: "brand.lineStrong",
-        borderRadius: 1,
+        borderRadius: 2.5,
         bgcolor: "#fff",
-        height: small ? 36 : 48,
+        height: small ? 44 : 52,
       }}
     >
       <IconButton
@@ -51,7 +50,7 @@ export default function QuantityStepper({
       <Box
         component="output"
         aria-live="polite"
-        sx={{ minWidth: small ? 24 : 32, textAlign: "center", fontWeight: 700, fontSize: small ? 14 : 15 }}
+        sx={{ minWidth: small ? 24 : 32, textAlign: "center", fontWeight: 600, fontSize: small ? 14 : 15, fontVariantNumeric: "tabular-nums" }}
       >
         {value}
       </Box>

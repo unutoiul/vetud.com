@@ -1,8 +1,7 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import ManageSearchIcon from "@mui/icons-material/ManageSearch"
-import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined"
+import { SearchIcon as ManageSearchIcon, ShieldIcon as VerifiedOutlinedIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -89,10 +88,11 @@ export default function LotLookup() {
       >
         <TextField
           label="Lot number"
-          placeholder="e.g. VTD01-2609A"
+          placeholder="e.g. VTD01-2609A…"
+          name="lot"
           value={value}
           onChange={(event) => setValue(event.target.value)}
-          slotProps={{ htmlInput: { autoCapitalize: "characters", spellCheck: false } }}
+          slotProps={{ htmlInput: { autoComplete: "off", autoCapitalize: "characters", spellCheck: false } }}
         />
         <Button
           type="submit"
@@ -118,11 +118,11 @@ export default function LotLookup() {
             const meta = readProductMeta(product)
             return (
               <Grid key={`${product.id}-${lot.lot}`} size={{ xs: 12, md: 8 }}>
-                <Paper variant="outlined" sx={{ p: 2.5, display: "flex", gap: 2.5, alignItems: "center" }}>
+                <Paper variant="outlined" sx={{ p: 3, display: "flex", gap: 2.5, alignItems: "center", bgcolor: "#f7f9fa", borderRadius: 3 }}>
                   <Box sx={{ width: 120, flexShrink: 0, display: { xs: "none", sm: "block" } }}>
                     <ProductThumb image={product.thumbnail} meta={meta} sizes="120px" />
                   </Box>
-                  <Box sx={{ flex: 1 }}>
+                  <Box sx={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", color: "success.main" }}>
                       <VerifiedOutlinedIcon fontSize="small" />
                       <Typography variant="eyebrow">Documented lot</Typography>
