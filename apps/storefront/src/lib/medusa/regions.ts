@@ -12,7 +12,7 @@ export type CountryOption = {
 
 export async function listRegions(): Promise<HttpTypes.StoreRegion[]> {
   "use cache"
-  cacheLife("hours")
+  cacheLife("minutes")
   cacheTag("regions")
 
   const { regions } = await sdk.store.region.list({ fields: "id,name,currency_code,metadata,*countries" })

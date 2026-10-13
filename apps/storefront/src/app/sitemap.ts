@@ -5,7 +5,7 @@ import { BASE_URL } from "@/lib/config"
 import { listProductHandles } from "@/lib/medusa/products"
 import { listCountryCodes } from "@/lib/medusa/regions"
 
-const STATIC_PATHS = ["", "/shop", "/standards", "/documentation", "/contact"]
+const STATIC_PATHS = ["", "/shop", "/tracking", "/discover", "/education", "/standards", "/documentation", "/contact"]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   "use cache"

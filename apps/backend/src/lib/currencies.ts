@@ -10,8 +10,27 @@ export const BASE_CURRENCY = "eur"
 
 /** Eurozone members as of 2026 (Bulgaria joined on 1 January 2026). */
 export const EUROZONE_COUNTRIES = [
-  "at", "be", "bg", "cy", "de", "ee", "es", "fi", "fr", "gr", "hr",
-  "ie", "it", "lt", "lu", "lv", "mt", "nl", "pt", "si", "sk",
+  "at",
+  "be",
+  "bg",
+  "cy",
+  "de",
+  "ee",
+  "es",
+  "fi",
+  "fr",
+  "gr",
+  "hr",
+  "ie",
+  "it",
+  "lt",
+  "lu",
+  "lv",
+  "mt",
+  "nl",
+  "pt",
+  "si",
+  "sk",
 ]
 
 export type ConvertedMarket = {
@@ -34,7 +53,9 @@ export const CONVERTED_MARKETS: ConvertedMarket[] = [
   { currency: "isk", region: "Iceland", countries: ["is"] },
 ]
 
-export const CONVERTED_CURRENCIES = CONVERTED_MARKETS.map((market) => market.currency)
+export const CONVERTED_CURRENCIES = CONVERTED_MARKETS.map(
+  (market) => market.currency,
+)
 
 /** Locale used to format each currency (symbol position, separators). */
 const CURRENCY_LOCALES: Record<string, string> = {
@@ -50,10 +71,17 @@ const CURRENCY_LOCALES: Record<string, string> = {
   huf: "hu-HU",
   ron: "ro-RO",
   isk: "is-IS",
+  cad: "en-CA",
+  aud: "en-AU",
+  jpy: "ja-JP",
+  cny: "zh-CN",
+  sgd: "en-SG",
+  hkd: "en-HK",
+  aed: "en-AE",
 }
 
 /** HUF and ISK are priced in whole units. */
-const ZERO_DECIMAL_CURRENCIES = new Set(["huf", "isk"])
+const ZERO_DECIMAL_CURRENCIES = new Set(["huf", "isk", "jpy"])
 
 export function formatCurrency(amount: number, currencyCode: string) {
   const code = currencyCode.toLowerCase()

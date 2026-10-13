@@ -153,8 +153,15 @@ const CURRENCY_LOCALES: Record<string, string> = {
   huf: "hu-HU",
   ron: "ro-RO",
   isk: "is-IS",
+  cad: "en-CA",
+  aud: "en-AU",
+  jpy: "ja-JP",
+  cny: "zh-CN",
+  sgd: "en-SG",
+  hkd: "en-HK",
+  aed: "en-AE",
 }
-const ZERO_DECIMAL_CURRENCIES = new Set(["huf", "isk"])
+const ZERO_DECIMAL_CURRENCIES = new Set(["huf", "isk", "jpy"])
 
 /** `whole` drops the decimals, e.g. for "free shipping over £170". */
 export function formatMoney(

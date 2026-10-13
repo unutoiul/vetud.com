@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography"
 import { cacheLife } from "next/cache"
 import { SITE } from "@/lib/config"
 import { gutter } from "@/theme/tokens"
-import Icon, { type IconName } from "../brand/Icon"
+import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { AppLink, ButtonLink } from "../common/links"
 import { FOOTER_LINKS } from "./nav"
@@ -38,30 +38,15 @@ function LinkColumn({ title, links }: { title: string; links: { label: string; h
   )
 }
 
-const assurances: { icon: IconName; title: string }[] = [
-  { icon: "molecule", title: "Research-grade materials" },
-  { icon: "document", title: "Lot-level documentation" },
-  { icon: "support", title: "People behind the science" },
-]
-
 export default function Footer() {
   return (
     <Box component="footer" sx={{ bgcolor: "background.paper", color: "text.primary", borderTop: "1px solid", borderColor: "divider", px: gutter, pt: { xs: 6, md: 8 }, pb: 4 }}>
       <Box sx={{ maxWidth: 1360, mx: "auto" }}>
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={{ xs: 2.5, sm: 4 }} sx={{ justifyContent: "space-between", borderBottom: "1px solid", borderColor: "divider", pb: { xs: 4, md: 5 }, mb: { xs: 5, md: 7 } }}>
-          {assurances.map((item) => (
-            <Stack key={item.title} direction="row" spacing={1.75} sx={{ alignItems: "center" }}>
-              <Icon name={item.icon} sx={{ color: "brand.teal", fontSize: 26 }} />
-              <Typography sx={{ fontSize: { xs: 13, md: 14 }, fontWeight: 550, color: "brand.navySoft" }}>{item.title}</Typography>
-            </Stack>
-          ))}
-        </Stack>
         <Grid container spacing={{ xs: 5, md: 5 }} sx={{ pb: { xs: 6, md: 7 } }}>
           <Grid size={{ xs: 12, md: 4 }}>
             <Logo tone="dark" />
             <Typography sx={{ mt: 2.5, maxWidth: 330, color: "text.secondary", fontSize: 13.5, lineHeight: 1.9 }}>
-              Research-grade materials with lot-level documentation, clear specifications and
-              people behind the science.
+              Peptide pens and sprays, presented with clear product details.
             </Typography>
             <Box sx={{ mt: 3, maxWidth: 330, bgcolor: "brand.navy", borderRadius: 3, p: 2.5 }}>
               <Typography sx={{ color: "brand.onNavyMuted", fontSize: 12.5, mb: 1.25 }}>A question about your research order?</Typography>

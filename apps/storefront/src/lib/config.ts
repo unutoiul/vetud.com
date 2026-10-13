@@ -19,8 +19,10 @@ export const FALLBACK_COUNTRIES = [
   // Eurozone
   "at", "be", "bg", "cy", "de", "ee", "es", "fi", "fr", "gr", "hr",
   "ie", "it", "lt", "lu", "lv", "mt", "nl", "pt", "si", "sk",
-  // Other European currencies
+  // Other European destinations (all priced in EUR)
   "gb", "ch", "li", "se", "no", "dk", "pl", "cz", "hu", "ro", "is",
+  // Main global currency markets
+  "ca", "au", "jp", "cn", "sg", "hk", "ae",
 ]
 
 export const PAYMENT_BANK_DETAILS = process.env.NEXT_PUBLIC_PAYMENT_BANK_DETAILS || ""

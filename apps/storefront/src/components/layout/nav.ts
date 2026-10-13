@@ -1,18 +1,15 @@
 export const NAV_LINKS = [
   { label: "Shop", href: "/shop" },
-  { label: "Our standards", href: "/standards" },
-  { label: "Documentation", href: "/documentation" },
-  { label: "Contact", href: "/contact" },
+  { label: "Tracking", href: "/tracking" },
+  { label: "Discover", href: "/discover" },
+  { label: "Education", href: "/education" },
 ]
 
 export const FOOTER_LINKS = {
   explore: [
-    { label: "All products", href: "/shop" },
-    { label: "Peptide Series", href: "/shop?category=peptide-series" },
+    ...NAV_LINKS,
   ],
   information: [
-    { label: "Our standards", href: "/standards" },
-    { label: "Lot documentation", href: "/documentation" },
     { label: "Shipping & returns", href: "/legal/shipping-returns" },
     { label: "Contact support", href: "/contact" },
   ],

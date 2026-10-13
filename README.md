@@ -51,7 +51,7 @@ Without `RESEND_API_KEY`, emails are not sent; they are logged in the backend co
 
 ## What's in the store
 
-- **Regions**: United States (USD) and Europe (EUR: DE, FR, NL, BE, AT, IE, IT, ES). URLs are prefixed with the country (`/us/shop`, `/de/shop`), and the header has a country selector. Visitors on `/` are sent to their own country when it's sold to (Vercel geo header), otherwise to `NEXT_PUBLIC_DEFAULT_COUNTRY`.
+- **Currencies**: EUR for all 32 existing European destinations, including the UK and Switzerland; USD, CAD, AUD, JPY, CNY, SGD, HKD and AED for the main global markets. The header groups destinations by currency, with a second step for choosing a European country. Country URLs (`/us/shop`, `/de/shop`, `/jp/shop`) select the Medusa region. New global currency prices convert from EUR using the store's exchange-rate feed; existing USD/EUR prices and historical regions are preserved. The migration adds pricing markets without extending delivery zones; configure delivery methods for the seven new global destinations in Medusa before accepting shipping orders there. Re-run the idempotent setup with `npx medusa exec ./src/scripts/setup-major-markets.ts` from `apps/backend`.
 - **Catalog**: 9 placeholder products (Peptide Series 01–06, Research Blends A/B, Bacteriostatic Water) in 3 categories. A "Featured" collection drives the home page.
 - **Shipping**: Standard ($9.95 / €12, **free over 200**) and Express ($24.95 / €29).
 - **Payment**: manual bank transfer. The order is placed and stock is reserved, then the customer is emailed payment instructions. You mark the order paid in Admin.
