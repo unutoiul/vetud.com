@@ -11,7 +11,7 @@ import { ButtonLink, LocalizedNextLink } from "../common/links"
 import { gutter } from "@/theme/tokens"
 
 const FORMATS = [
-  { number: "01", title: "Peptide pens", detail: "10 mg / 20 mg / 40 mg", href: "#catalog", icon: "molecule" as const },
+  { number: "01", title: "All products", detail: "Peptide pens & nasal sprays", href: "#catalog", icon: "molecule" as const },
   { number: "02", title: "Nasal sprays", detail: "Selank & Semax · 10 ml", href: "#sprays", icon: "leaf" as const },
 ]
 

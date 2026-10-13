@@ -23,12 +23,13 @@ export default async function HomePage() {
   const category = (await listCategories()).find((item) => item.handle === "peptide-series")
   const products = category ? await listProducts({ regionId: region.id, categoryId: category.id }) : []
   const pens = products.filter((product) => PEN_ORDER.includes(product.handle ?? "")).sort((a, b) => PEN_ORDER.indexOf(a.handle ?? "") - PEN_ORDER.indexOf(b.handle ?? ""))
+  const collection = [...pens, ...products.filter((product) => !PEN_ORDER.includes(product.handle ?? ""))]
   const sprays = ["selank", "semax"].flatMap((handle) => products.filter((product) => product.handle === handle))
   return <>
     <Hero />
     <Section tone="white" id="catalog" sx={{ pt: { xs: 6, md: 9 }, pb: { xs: 7, md: 10 } }}>
-      <SectionHeading eyebrow="01 / The pen collection" title="Precision, in a pen." description="Freeze-dried peptide powder and BAC water, held separately in a dual-chamber pen. Choose 10 mg, 20 mg or 40 mg." action={<ButtonLink href="/shop" variant="outlined" endIcon={<Icon name="arrowUpRight" />}>View the collection</ButtonLink>} />
-      {pens.length ? <ProductGrid products={pens} /> : <Box sx={{ p: 5, bgcolor: "brand.mintWash", borderRadius: 3 }}><Typography>Our collection is being updated.</Typography><ButtonLink href="/shop" sx={{ mt: 2 }} endIcon={<Icon name="arrowRight" />}>Explore the catalog</ButtonLink></Box>}
+      <SectionHeading eyebrow="01 / The complete collection" title="Discover the Peptide Series." description="Explore our full collection: Retatrutide, Tirzepatide and Semaglutide pen kits in 10 mg, 20 mg and 40 mg, alongside Selank and Semax in 10 ml spray formats." action={<ButtonLink href="/shop" variant="outlined" endIcon={<Icon name="arrowUpRight" />}>View the collection</ButtonLink>} />
+      {collection.length ? <ProductGrid products={collection} /> : <Box sx={{ p: 5, bgcolor: "brand.mintWash", borderRadius: 3 }}><Typography>Our collection is being updated.</Typography><ButtonLink href="/shop" sx={{ mt: 2 }} endIcon={<Icon name="arrowRight" />}>Explore the catalog</ButtonLink></Box>}
     </Section>
     <SpraySpotlight products={sprays} />
     <Section tone="wash" sx={{ py: { xs: 6, md: 8 } }}>
