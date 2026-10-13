@@ -44,8 +44,8 @@ export const NASAL_SPRAYS = [
       `Ingredient information: ${ingredients} The peptide concentration and total peptide content are not yet confirmed. ` +
       "Supplied for laboratory research only; not for human or veterinary use.",
     images: [
-      `vetud_${product.handle}_alpine_01.png`,
-      `vetud_${product.handle}_alpine_02.png`,
+      `vetud_${product.handle}_studio_01.png`,
+      `vetud_${product.handle}_studio_02.png`,
     ],
     metadata: {
       code: product.code,
@@ -59,7 +59,7 @@ export const NASAL_SPRAYS = [
       formulation_status: "Awaiting full ingredient list and peptide strength",
       purity: "99%",
       testing: "Tested in UK lab",
-      image_aspect_ratio: "4 / 5",
+      image_aspect_ratio: "4 / 3",
       storage: "Awaiting manufacturer storage instructions",
       lots: "",
       research_use_only: true,

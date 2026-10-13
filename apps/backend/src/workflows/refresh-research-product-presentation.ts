@@ -76,7 +76,7 @@ const prepareResearchPresentationStep = createStep(
           ...current.metadata,
           purity: "99%",
           testing: "Tested in UK lab",
-          image_aspect_ratio: isPen ? "4 / 3" : "4 / 5",
+          image_aspect_ratio: "4 / 3",
         },
       }
     })
