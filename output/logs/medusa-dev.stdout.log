@@ -1,0 +1,919 @@
+[32minfo[39m:    Linting project...
+[32minfo[39m:    [Watcher] Using standard dev server (restart on file change)
+[32minfo[39m:    [Watcher] Watching filesystem to reload dev server on file change
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32mhttp[39m:    GET /store/regions ← - (200) - 80.954 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Chandle%2C%2Bmetadata%2C*images%2C*variants%2C*variants.calculated_price%2C%2Bvariants.inventory_quantity%2C*variants.options ← - (200) - 732.400 ms
+[32mhttp[39m:    GET /store/regions?fields=*countries ← - (200) - 95.998 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 60.519 ms
+[32mhttp[39m:    GET /store/product-categories?fields=id%2Cname%2Chandle%2Cdescription%2Crank&limit=100 ← - (200) - 33.886 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=100&order=created_at ← - (200) - 150.761 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 109.081 ms
+[32mhttp[39m:    GET /store/products?handle=retatrutide&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 254.002 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=100&order=created_at&category_id%5B0%5D=pcat_01M4MC38ZGJR5JKGFGH0G6H0DJ ← - (200) - 347.700 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 33.091 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 33.640 ms
+[32mhttp[39m:    GET /store/products?handle=semaglutide&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 130.246 ms
+[32mhttp[39m:    GET /store/collections?handle=featured&limit=1 ← - (200) - 57.131 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=4&order=created_at&collection_id%5B0%5D=pcol_01M4MC3909EJ4VHJ4D2WSJXTC4 ← - (200) - 340.955 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 160.926 ms
+[32mhttp[39m:    GET /store/products?handle=tirzepatide&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 566.645 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 63.143 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 81.284 ms
+[32mhttp[39m:    GET /store/products?handle=selank&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 460.710 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 49.598 ms
+[32mhttp[39m:    GET /static/1791864826388-vetud_retatrutide_40mg_closed.png ← - (200) - 18.485 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 53.793 ms
+[32mhttp[39m:    GET /store/products?handle=semax&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 243.477 ms
+[32mhttp[39m:    GET /static/1791864826388-vetud_retatrutide_40mg_closed.png ← - (200) - 7.483 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 46.319 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 37.158 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=100&order=created_at&category_id%5B0%5D=pcat_01M4MC38ZGJR5JKGFGH0G6H0DJ ← - (200) - 1107.026 ms
+[32mhttp[39m:    GET /store/products?handle=retatrutide&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 1152.365 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 92.680 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 56.180 ms
+[32minfo[39m:    [Watcher] modified src\seed\research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1114.82ms
+[32minfo[39m:    [Watcher] modified src\workflows\price-research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1000.48ms
+[32minfo[39m:    [Watcher] modified src\seed\research-nasal-sprays.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1198.93ms
+[32minfo[39m:    [Watcher] modified src\workflows\price-research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1018.14ms
+[32minfo[39m:    [Watcher] created src\workflows\refresh-research-product-presentation.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1239.84ms
+[32minfo[39m:    [Watcher] created src\scripts\refresh-research-product-presentation.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1128.57ms
+[32minfo[39m:    [Watcher] created src\migration-scripts\vetud-product-06-research-presentation.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 922.12ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 938.26ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 957.05ms
+[32minfo[39m:    [Watcher] modified src\scripts\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 752.86ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-06-research-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 634.38ms
+[32minfo[39m:    [Watcher] modified src\scripts\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 644.62ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-06-research-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 727.36ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32mhttp[39m:    GET /static/1791864826396-vetud_retatrutide_40mg_open.png ← - (200) - 7.735 ms
+[32mhttp[39m:    GET /static/1791864826388-vetud_retatrutide_40mg_closed.png ← - (200) - 13.322 ms
+[32mhttp[39m:    GET /store/products?handle=retatrutide&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 649.373 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=100&order=created_at&category_id%5B0%5D=pcat_01M4MC38ZGJR5JKGFGH0G6H0DJ ← - (200) - 635.253 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 52.953 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 46.841 ms
+[32mhttp[39m:    GET /store/collections?handle=featured&limit=1 ← - (200) - 64.857 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=4&order=created_at&collection_id%5B0%5D=pcol_01M4MC3909EJ4VHJ4D2WSJXTC4 ← - (200) - 346.208 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 41.742 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 29.746 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 28.521 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 27.704 ms
+[32mhttp[39m:    GET /static/1791864826396-vetud_retatrutide_40mg_open.png ← - (200) - 2.381 ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 900.68ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1080.16ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 805.70ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 828.50ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32mhttp[39m:    GET /store/products?handle=retatrutide&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 572.003 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=100&order=created_at&category_id%5B0%5D=pcat_01M4MC38ZGJR5JKGFGH0G6H0DJ ← - (200) - 571.014 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 59.262 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 37.718 ms
+[32mhttp[39m:    GET /store/products?handle=selank&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 204.845 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=100&order=created_at&category_id%5B0%5D=pcat_01M4MC38ZGJR5JKGFGH0G6H0DJ ← - (200) - 287.513 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 40.765 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 36.108 ms
+[32mhttp[39m:    GET /static/1791867150216-vetud_selank_alpine_01.png ← - (200) - 13.403 ms
+[32mhttp[39m:    GET /static/1791867150216-vetud_selank_alpine_01.png ← - (200) - 3.558 ms
+[32mhttp[39m:    GET /static/1791867150235-vetud_selank_alpine_02.png ← - (200) - 38.090 ms
+[32mhttp[39m:    GET /static/1791864826394-vetud_semaglutide_40mg_closed.png ← - (200) - 29.074 ms
+[32mhttp[39m:    GET /static/1791867150216-vetud_selank_alpine_01.png ← - (200) - 12.279 ms
+[32mhttp[39m:    GET /static/1791867150227-vetud_semax_alpine_01.png ← - (200) - 24.671 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 75.560 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 64.714 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=4&order=created_at&collection_id%5B0%5D=pcol_01M4MC3909EJ4VHJ4D2WSJXTC4 ← - (200) - 209.657 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 34.969 ms
+[32mhttp[39m:    GET /static/1791867150235-vetud_selank_alpine_02.png ← - (200) - 3.811 ms
+[32minfo[39m:    [Watcher] modified src\seed\research-nasal-sprays.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1127.46ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 965.91ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 915.33ms
+[32minfo[39m:    [Watcher] created src\workflows\refresh-nasal-spray-images.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 823.77ms
+[32minfo[39m:    [Watcher] created src\scripts\refresh-nasal-spray-images.ts created: restarting dev server
+Error: Command failed: taskkill /PID 26900 /F /T
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at checkExecSyncError (node:child_process:916:11)
+    at execSync (node:child_process:988:15)
+    at Object.restart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\develop.ts:185:19)
+    at Object.handleFileChange (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\develop.ts:236:20)
+    at FSWatcher.<anonymous> (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\develop.ts:243:26)
+    at FSWatcher.emit (node:events:519:28)
+    at FSWatcher.emit (node:domain:489:12)
+    at FSWatcher.emitWithAll (C:\projects\vetud-peptides\apps\backend\node_modules\chokidar\index.js:436:14) {
+  status: 1,
+  signal: null,
+  output: [ null, <Buffer >, <Buffer > ],
+  pid: 40428,
+  stdout: <Buffer >,
+  stderr: <Buffer >
+}
+[32minfo[39m:    [Watcher] created src\migration-scripts\vetud-product-07-spray-studio-images.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 843.93ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-nasal-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1412.46ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-nasal-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1373.10ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-nasal-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1023.24ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-nasal-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1044.12ms
+[32minfo[39m:    [Watcher] modified src\scripts\refresh-nasal-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1234.62ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-07-spray-studio-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 903.43ms
+[32minfo[39m:    [Watcher] modified src\scripts\refresh-nasal-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 857.90ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-07-spray-studio-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 966.51ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+Error: listen EADDRINUSE: address already in use :::9000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at internalStart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:327:15)
+    at async start (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:426:12) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[32minfo[39m:    [Watcher] created assets\products\vetud_selank_studio_01.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1069.09ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_selank_studio_02.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1200.34ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_semax_studio_01.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1382.18ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_semax_studio_02.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1136.67ms
+[32minfo[39m:    [Watcher] created assets\products\studio-image-notes.md created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 977.44ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+Error: listen EADDRINUSE: address already in use :::9000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at internalStart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:327:15)
+    at async start (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:426:12) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[32minfo[39m:    [Watcher] created src\seed\premium-product-prices.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1075.35ms
+[32minfo[39m:    [Watcher] created src\workflows\price-premium-products.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1189.90ms
+[32minfo[39m:    [Watcher] created src\scripts\price-premium-products.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 903.45ms
+[32minfo[39m:    [Watcher] created src\migration-scripts\vetud-product-08-premium-prices.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 833.11ms
+[32minfo[39m:    [Watcher] modified src\seed\premium-product-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1427.44ms
+[32minfo[39m:    [Watcher] modified src\seed\premium-product-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1156.35ms
+[32minfo[39m:    [Watcher] modified src\workflows\price-premium-products.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1026.22ms
+[32minfo[39m:    [Watcher] modified src\scripts\price-premium-products.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 995.54ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-08-premium-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1027.63ms
+[32minfo[39m:    [Watcher] modified src\workflows\price-premium-products.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1392.99ms
+[32minfo[39m:    [Watcher] modified src\scripts\price-premium-products.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1449.50ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-08-premium-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1446.31ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+Error: listen EADDRINUSE: address already in use :::9000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at internalStart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:327:15)
+    at async start (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:426:12) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[32minfo[39m:    [Watcher] created src\seed\product-care.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1079.71ms
+[32minfo[39m:    [Watcher] modified src\seed\research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1820.94ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2072.93ms
+[32minfo[39m:    [Watcher] modified src\seed\research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1976.77ms
+[32minfo[39m:    [Watcher] modified src\seed\research-nasal-sprays.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1815.56ms
+[32minfo[39m:    [Watcher] modified src\workflows\price-research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1637.16ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32minfo[39m:    [Watcher] created src\workflows\refresh-product-quality.ts created: restarting dev server
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=4&order=created_at&collection_id%5B0%5D=pcol_01M4MC3909EJ4VHJ4D2WSJXTC4 ← - (200) - 826.155 ms
+[32minfo[39m:    [Watcher] Reloaded in 2263.50ms
+[32minfo[39m:    [Watcher] created src\scripts\refresh-product-quality.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2488.73ms
+[32minfo[39m:    [Watcher] created src\migration-scripts\vetud-product-09-lab-purity-and-care.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2248.01ms
+[32minfo[39m:    [Watcher] modified src\seed\product-care.ts modified: restarting dev server
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    [Watcher] Reloaded in 1604.56ms
+[32minfo[39m:    [Watcher] modified src\seed\product-care.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 840.37ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-product-quality.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 833.59ms
+[32minfo[39m:    [Watcher] modified src\scripts\refresh-product-quality.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 863.04ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-09-lab-purity-and-care.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1264.55ms
+[32minfo[39m:    [Watcher] modified src\seed\research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1214.44ms
+[32minfo[39m:    [Watcher] modified src\seed\research-nasal-sprays.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1261.23ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-product-quality.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 836.84ms
+[32minfo[39m:    [Watcher] modified src\scripts\refresh-product-quality.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 990.42ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-09-lab-purity-and-care.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1018.44ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+Error: listen EADDRINUSE: address already in use :::9000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at internalStart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:327:15)
+    at async start (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:426:12) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[32minfo[39m:    [Watcher] created assets\products\vetud_retatrutide_40mg_closed_lab.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 972.31ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_retatrutide_40mg_open_lab.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1599.86ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_semaglutide_40mg_closed_lab.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1008.59ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_semaglutide_40mg_open_lab.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1478.39ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_tirzepatide_40mg_closed_lab.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1060.12ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_tirzepatide_40mg_open_lab.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1251.47ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+Error: listen EADDRINUSE: address already in use :::9000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at internalStart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:327:15)
+    at async start (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:426:12) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[32minfo[39m:    [Watcher] modified src\seed\product-care.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1113.86ms
+[32minfo[39m:    [Watcher] modified src\seed\product-care.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1956.57ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-product-quality.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2467.79ms
+[32minfo[39m:    [Watcher] modified src\seed\research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2332.37ms
+[32minfo[39m:    [Watcher] modified src\seed\premium-product-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1392.78ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-product-quality.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1088.93ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32mhttp[39m:    GET /store/regions?fields=*countries ← - (200) - 97.503 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 123.080 ms
+[32minfo[39m:    [Watcher] created src\workflows\restore-nasal-spray-prices.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2167.97ms
+[32minfo[39m:    [Watcher] created src\migration-scripts\vetud-product-10-original-nasal-prices.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2202.78ms
+[32minfo[39m:    [Watcher] created src\scripts\restore-nasal-spray-prices.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2109.06ms
+[32minfo[39m:    [Watcher] modified src\seed\product-care.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2041.39ms
+[32minfo[39m:    [Watcher] modified src\seed\product-care.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2215.95ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-product-quality.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2037.90ms
+[32minfo[39m:    [Watcher] modified src\scripts\restore-nasal-spray-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1869.11ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-10-original-nasal-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1981.60ms
+[32minfo[39m:    [Watcher] modified src\seed\research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2038.18ms
+[32minfo[39m:    [Watcher] modified src\seed\research-nasal-sprays.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2001.84ms
+[32minfo[39m:    [Watcher] modified src\seed\premium-product-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2238.46ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-product-quality.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2204.78ms
+[32minfo[39m:    [Watcher] modified src\workflows\restore-nasal-spray-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2190.35ms
+[32minfo[39m:    [Watcher] modified src\scripts\restore-nasal-spray-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2210.25ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-10-original-nasal-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2247.89ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=4&order=created_at&collection_id%5B0%5D=pcol_01M4MC3909EJ4VHJ4D2WSJXTC4 ← - (200) - 1172.435 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 193.477 ms
+[32mhttp[39m:    GET /store/products?handle=selank&region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=1 ← - (200) - 322.230 ms
+[32mhttp[39m:    GET /store/products?region_id=reg_01M4MC38HRBAWZXWRFZ4XMB5WX&fields=id%2Ctitle%2Csubtitle%2Chandle%2Cdescription%2Cthumbnail%2Ccreated_at%2C%2Bmetadata%2C%2Aimages%2C%2Acategories%2C%2Acollection%2C%2Avariants%2C%2Avariants.calculated_price%2C%2Bvariants.inventory_quantity%2C%2Avariants.options&limit=100&order=created_at&category_id%5B0%5D=pcat_01M4MC38ZGJR5JKGFGH0G6H0DJ ← - (200) - 225.401 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 34.742 ms
+[32mhttp[39m:    GET /store/products?fields=handle&limit=500 ← - (200) - 36.167 ms
+[32mhttp[39m:    GET /store/product-categories?fields=id%2Cname%2Chandle%2Cdescription%2Crank&limit=100 ← - (200) - 130.605 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 34.334 ms
+[32mhttp[39m:    GET /store/regions?fields=id%2Cname%2Ccurrency_code%2Cmetadata%2C%2Acountries ← - (200) - 181.982 ms
+[32minfo[39m:    [Watcher] modified src\workflows\restore-nasal-spray-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2374.41ms
+[32minfo[39m:    [Watcher] modified src\workflows\restore-nasal-spray-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2143.76ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1388.65ms
+[32minfo[39m:    [Watcher] modified src\seed\premium-product-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1628.37ms
+[32minfo[39m:    [Watcher] modified src\seed\premium-product-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1323.95ms
+[32minfo[39m:    [Watcher] modified src\workflows\price-research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2119.37ms
+[32minfo[39m:    [Watcher] modified src\scripts\restore-nasal-spray-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1831.70ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-10-original-nasal-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1628.34ms
+[32minfo[39m:    [Watcher] modified src\seed\research-nasal-sprays.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1168.42ms
+[32minfo[39m:    [Watcher] modified src\seed\research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1246.00ms
+[32minfo[39m:    [Watcher] modified src\seed\product-care.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1291.02ms
+[32minfo[39m:    [Watcher] modified src\workflows\price-research-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 966.10ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1046.74ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-product-quality.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1295.07ms
+[32minfo[39m:    [Watcher] modified src\workflows\restore-nasal-spray-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1392.40ms
+[32minfo[39m:    [Watcher] modified src\scripts\restore-nasal-spray-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1380.01ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-10-original-nasal-prices.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2109.89ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    [Watcher] Reloaded in 1085.06ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-research-product-presentation.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1221.69ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+Error: listen EADDRINUSE: address already in use :::9000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at internalStart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:327:15)
+    at async start (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:426:12) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[32minfo[39m:    [Watcher] created src\seed\approved-pen-prices.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1757.88ms
+[32minfo[39m:    [Watcher] created src\workflows\price-approved-pen-kits.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1904.39ms
+[32minfo[39m:    [Watcher] created src\scripts\price-approved-pen-kits.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1765.29ms
+[32minfo[39m:    [Watcher] created src\migration-scripts\vetud-product-11-approved-pen-prices.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1728.03ms
+[32minfo[39m:    [Watcher] modified src\workflows\price-approved-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1394.23ms
+[32minfo[39m:    [Watcher] modified src\workflows\price-approved-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1579.06ms
+[32minfo[39m:    [Watcher] modified src\scripts\price-approved-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1546.62ms
+[32minfo[39m:    [Watcher] modified src\scripts\price-approved-pen-kits.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1555.17ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+Error: listen EADDRINUSE: address already in use :::9000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at internalStart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:327:15)
+    at async start (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:426:12) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[32minfo[39m:    [Watcher] created assets\products\vetud_selank_landscape_01.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2758.70ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_selank_landscape_02.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2334.16ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_semax_landscape_01.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2487.10ms
+[32minfo[39m:    [Watcher] created assets\products\vetud_semax_landscape_02.png created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 3758.61ms
+[32minfo[39m:    [Watcher] modified src\seed\research-nasal-sprays.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2063.50ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-nasal-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1867.78ms
+[32minfo[39m:    [Watcher] modified src\seed\research-nasal-sprays.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2431.97ms
+[32minfo[39m:    [Watcher] modified src\workflows\refresh-nasal-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2547.64ms
+[32minfo[39m:    [Watcher] created src\migration-scripts\vetud-product-12-landscape-spray-images.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2357.63ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-12-landscape-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1476.41ms
+[32minfo[39m:    [Watcher] modified src\migration-scripts\vetud-product-12-landscape-spray-images.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1054.42ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+Error: listen EADDRINUSE: address already in use :::9000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at internalStart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:327:15)
+    at async start (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:426:12) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[32minfo[39m:    [Watcher] created src\lib\major-markets.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 796.14ms
+[32minfo[39m:    [Watcher] created src\workflows\configure-major-markets.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 712.87ms
+[32minfo[39m:    [Watcher] created src\migration-scripts\vetud-product-13-major-world-currencies.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 563.73ms
+[32minfo[39m:    [Watcher] created src\scripts\setup-major-markets.ts created: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 674.51ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32minfo[39m:    [Watcher] modified src\workflows\configure-major-markets.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 942.85ms
+[32minfo[39m:    [Watcher] modified src\workflows\configure-major-markets.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1106.94ms
+[32minfo[39m:    [Watcher] modified src\lib\currencies.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1047.28ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    [Watcher] modified src\lib\major-markets.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 879.89ms
+[32minfo[39m:    [Watcher] modified src\lib\major-markets.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 760.01ms
+[32minfo[39m:    [Watcher] modified src\workflows\configure-major-markets.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 736.22ms
+[32minfo[39m:    [Watcher] modified src\lib\currencies.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 735.35ms
+[32minfo[39m:    [Watcher] modified src\workflows\configure-major-markets.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 684.48ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    Admin URL → http://localhost:9000/app
+[32minfo[39m:    [Watcher] modified src\workflows\configure-major-markets.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1230.75ms
+[32minfo[39m:    [Watcher] modified src\workflows\configure-major-markets.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 2186.91ms
+[32minfo[39m:    [Watcher] modified src\workflows\configure-major-markets.ts modified: restarting dev server
+[32minfo[39m:    [Watcher] Reloaded in 1536.27ms
+[32minfo[39m:    Skipping instrumentation registration. No register function found.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\links. skipped.
+[32minfo[39m:    No link to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\links. skipped.
+[32minfo[39m:    Redis cache connection established successfully
+[32minfo[39m:    Connection to Redis in module 'event-bus-redis' established
+[32minfo[39m:    Connection to Redis in "locking-redis" provider established
+[32minfo[39m:    Redis cache is ready to accept commands
+[32minfo[39m:    Redis cache connection test successful
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis in module 'workflow-engine-redis' established
+[32minfo[39m:    [Workflow-engine-redis] Connection to Redis PubSub in module 'workflow-engine-redis' established
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No workflow to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\workflows. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@kb0912\currency-exchange-plugin\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No subscriber to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\subscribers. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\draft-order\.medusa\server\src\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\dist\jobs. skipped.
+[32minfo[39m:    No job to load from C:\projects\vetud-peptides\apps\backend\node_modules\@rokmohar\medusa-plugin-meilisearch\.medusa\server\src\jobs. skipped.
+Error: listen EADDRINUSE: address already in use :::9000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at internalStart (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:327:15)
+    at async start (C:\projects\vetud-peptides\apps\backend\node_modules\@medusajs\medusa\src\commands\start.ts:426:12) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 9000
+}
+[32minfo[39m:    Processing region.updated (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing region.updated (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing region.created (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing region.created (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing region.created (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing region.created (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing region.created (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing cart.created (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing cart.updated (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing cart.region_updated (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing cart.region_updated (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing cart.updated (priority: 100) which has 0 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers
+[32minfo[39m:    Processing product-variant.updated (priority: 100) which has 1 subscribers

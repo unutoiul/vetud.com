@@ -1,0 +1,207 @@
+{
+  "products": [
+    {
+      "id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "handle": "retatrutide",
+      "status": "published",
+      "thumbnail": "http://localhost:9000/static/1791864826388-vetud_retatrutide_40mg_closed.png"
+    },
+    {
+      "id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "handle": "semaglutide",
+      "status": "draft",
+      "thumbnail": "http://localhost:9000/static/1791864826394-vetud_semaglutide_40mg_closed.png"
+    },
+    {
+      "id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "handle": "tirzepatide",
+      "status": "draft",
+      "thumbnail": "http://localhost:9000/static/1791864826398-vetud_tirzepatide_40mg_closed.png"
+    }
+  ],
+  "variants": [
+    {
+      "id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "product_id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "title": "40 mg",
+      "sku": "VTD-01-40MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SQETSBG511WD8YAZN5AW6A",
+      "product_id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "title": "40 mg",
+      "sku": "VTD-SEMA-40MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SQETSBZX76M4CGKMNJ2XTV",
+      "product_id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "title": "40 mg",
+      "sku": "VTD-TIRZ-40MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    }
+  ],
+  "prices": [
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD23G0WN0Z3Y8VN29W995",
+      "currency_code": "eur",
+      "amount": "149",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD23G24CEDF6AHZQDBG5Y",
+      "currency_code": "usd",
+      "amount": "159",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M57JGN9V7PB8KTMWQJ",
+      "currency_code": "gbp",
+      "amount": "126",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5FPKX2KT538ZR1F0F",
+      "currency_code": "dkk",
+      "amount": "1114",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5JQBHYA4Y4SVPR645",
+      "currency_code": "pln",
+      "amount": "654",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5KN21Z9YGWRRD4HA5",
+      "currency_code": "sek",
+      "amount": "1670",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5NA7G0SNFMF9DV870",
+      "currency_code": "nok",
+      "amount": "1597",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5YZP2DXKMGJTH01W2",
+      "currency_code": "chf",
+      "amount": "139",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M6JNHVWG9T24VPQS4C",
+      "currency_code": "huf",
+      "amount": "54386",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M6K2J8WHWDWT52G4MM",
+      "currency_code": "czk",
+      "amount": "3632",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M6ND03RZ988SSJK3ZW",
+      "currency_code": "isk",
+      "amount": "20384",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M6YAMX0AWJCBTM9XSM",
+      "currency_code": "ron",
+      "amount": "795",
+      "price_list_id": null,
+      "rules_count": 0
+    }
+  ],
+  "images": [
+    {
+      "id": "img_01M4SQETHWR9HQBWTEDJJMBG47",
+      "product_id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "url": "http://localhost:9000/static/1791864826392-vetud_semaglutide_40mg_open.png",
+      "rank": 1
+    },
+    {
+      "id": "img_01M4SQETHWYMS0Y9HCQWC877NA",
+      "product_id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "url": "http://localhost:9000/static/1791864826394-vetud_semaglutide_40mg_closed.png",
+      "rank": 0
+    },
+    {
+      "id": "img_01M4SQETHYEHTD3XWGY4HDZZTZ",
+      "product_id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "url": "http://localhost:9000/static/1791864826401-vetud_tirzepatide_40mg_open.png",
+      "rank": 1
+    },
+    {
+      "id": "img_01M4SQETHYM51G5AZYHKKP9TEV",
+      "product_id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "url": "http://localhost:9000/static/1791864826398-vetud_tirzepatide_40mg_closed.png",
+      "rank": 0
+    },
+    {
+      "id": "img_01M4SQETYC55P9YR4WJMG8X1DY",
+      "product_id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "url": "http://localhost:9000/static/1791864826388-vetud_retatrutide_40mg_closed.png",
+      "rank": 0
+    },
+    {
+      "id": "img_01M4SQETYCAWESMC93D65TA97H",
+      "product_id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "url": "http://localhost:9000/static/1791864826396-vetud_retatrutide_40mg_open.png",
+      "rank": 1
+    }
+  ],
+  "inventory": [
+    {
+      "id": "iitem_01M4RXD22AAX5JKRF7DT48CYS9",
+      "sku": "VTD-01-40MG",
+      "level_id": "ilev_01M4RXD26FMAD1GAMK8QG448XM",
+      "stocked_quantity": "100",
+      "reserved_quantity": "0"
+    },
+    {
+      "id": "iitem_01M4SQETT13DVD6H3M1MJB37E4",
+      "sku": "VTD-SEMA-40MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    },
+    {
+      "id": "iitem_01M4SQETT1YP34SR5YYP4S20XC",
+      "sku": "VTD-TIRZ-40MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    }
+  ]
+}

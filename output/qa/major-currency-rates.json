@@ -1,0 +1,15 @@
+{
+  "source": "https://latest.currency-api.pages.dev/v1/currencies/eur.json",
+  "date": "2026-10-13",
+  "rates": {
+    "eur": 1,
+    "usd": 1.11751153,
+    "cad": 1.59468036,
+    "aud": 1.60526262,
+    "jpy": 176.90591659,
+    "cny": 7.48258698,
+    "sgd": 1.43113015,
+    "hkd": 8.76992332,
+    "aed": 4.10406111
+  }
+}

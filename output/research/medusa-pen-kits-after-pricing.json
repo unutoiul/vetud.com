@@ -1,0 +1,361 @@
+{
+  "products": [
+    {
+      "id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "handle": "retatrutide",
+      "status": "published",
+      "thumbnail": "http://localhost:9000/static/1791864826388-vetud_retatrutide_40mg_closed.png"
+    },
+    {
+      "id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "handle": "semaglutide",
+      "status": "draft",
+      "thumbnail": "http://localhost:9000/static/1791864826394-vetud_semaglutide_40mg_closed.png"
+    },
+    {
+      "id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "handle": "tirzepatide",
+      "status": "draft",
+      "thumbnail": "http://localhost:9000/static/1791864826398-vetud_tirzepatide_40mg_closed.png"
+    }
+  ],
+  "variants": [
+    {
+      "id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "product_id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "title": "40 mg",
+      "sku": "VTD-01-40MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SQETSBG511WD8YAZN5AW6A",
+      "product_id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "title": "40 mg",
+      "sku": "VTD-SEMA-40MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SQETSBZX76M4CGKMNJ2XTV",
+      "product_id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "title": "40 mg",
+      "sku": "VTD-TIRZ-40MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SS3WPCWRSRMAZHWV5HYGB2",
+      "product_id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "title": "10 mg",
+      "sku": "VTD-SEMA-10MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SS3WPDJNT4K5DNXZ7KDB21",
+      "product_id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "title": "20 mg",
+      "sku": "VTD-SEMA-20MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SS3WPEXEGGN5JZGYV5XHQJ",
+      "product_id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "title": "10 mg",
+      "sku": "VTD-TIRZ-10MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SS3WPFBBSAMDRAZJM3C0YS",
+      "product_id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "title": "20 mg",
+      "sku": "VTD-TIRZ-20MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SS3WPH35QR810PB7S0VA1R",
+      "product_id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "title": "20 mg",
+      "sku": "VTD-RETA-20MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    },
+    {
+      "id": "variant_01M4SS3WPHC4BDFNE3B2G9PS0J",
+      "product_id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "title": "10 mg",
+      "sku": "VTD-RETA-10MG",
+      "manage_inventory": true,
+      "allow_backorder": false
+    }
+  ],
+  "prices": [
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD23G0WN0Z3Y8VN29W995",
+      "currency_code": "eur",
+      "amount": "149",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD23G24CEDF6AHZQDBG5Y",
+      "currency_code": "usd",
+      "amount": "229",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M57JGN9V7PB8KTMWQJ",
+      "currency_code": "gbp",
+      "amount": "126",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5FPKX2KT538ZR1F0F",
+      "currency_code": "dkk",
+      "amount": "1114",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5JQBHYA4Y4SVPR645",
+      "currency_code": "pln",
+      "amount": "654",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5KN21Z9YGWRRD4HA5",
+      "currency_code": "sek",
+      "amount": "1670",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5NA7G0SNFMF9DV870",
+      "currency_code": "nok",
+      "amount": "1597",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M5YZP2DXKMGJTH01W2",
+      "currency_code": "chf",
+      "amount": "139",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M6JNHVWG9T24VPQS4C",
+      "currency_code": "huf",
+      "amount": "54386",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M6K2J8WHWDWT52G4MM",
+      "currency_code": "czk",
+      "amount": "3632",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M6ND03RZ988SSJK3ZW",
+      "currency_code": "isk",
+      "amount": "20384",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4RXD21NPD6DFX5DCQJQ7JY1",
+      "id": "price_01M4RXD2M6YAMX0AWJCBTM9XSM",
+      "currency_code": "ron",
+      "amount": "795",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4SQETSBG511WD8YAZN5AW6A",
+      "id": "price_01M4SS3WVX2648F7RYS4P47TD5",
+      "currency_code": "usd",
+      "amount": "169",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4SQETSBZX76M4CGKMNJ2XTV",
+      "id": "price_01M4SS3WVYX8MR92AAQKNY73G4",
+      "currency_code": "usd",
+      "amount": "179",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4SS3WPCWRSRMAZHWV5HYGB2",
+      "id": "price_01M4SS3X0NV52MY9K0NCN7YEAF",
+      "currency_code": "usd",
+      "amount": "69",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4SS3WPEXEGGN5JZGYV5XHQJ",
+      "id": "price_01M4SS3X0PKNZ51WDD7DEBQN46",
+      "currency_code": "usd",
+      "amount": "79",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4SS3WPDJNT4K5DNXZ7KDB21",
+      "id": "price_01M4SS3X0PXCMY0YN2EX4E55XV",
+      "currency_code": "usd",
+      "amount": "99",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4SS3WPHC4BDFNE3B2G9PS0J",
+      "id": "price_01M4SS3X0Q3FGZWC93Y1KZNA1B",
+      "currency_code": "usd",
+      "amount": "99",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4SS3WPFBBSAMDRAZJM3C0YS",
+      "id": "price_01M4SS3X0Q42FGBEACX3W29JV7",
+      "currency_code": "usd",
+      "amount": "119",
+      "price_list_id": null,
+      "rules_count": 0
+    },
+    {
+      "variant_id": "variant_01M4SS3WPH35QR810PB7S0VA1R",
+      "id": "price_01M4SS3X0REV8W2JSS1M645AVV",
+      "currency_code": "usd",
+      "amount": "159",
+      "price_list_id": null,
+      "rules_count": 0
+    }
+  ],
+  "images": [
+    {
+      "id": "img_01M4SQETHWR9HQBWTEDJJMBG47",
+      "product_id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "url": "http://localhost:9000/static/1791864826392-vetud_semaglutide_40mg_open.png",
+      "rank": 1
+    },
+    {
+      "id": "img_01M4SQETHWYMS0Y9HCQWC877NA",
+      "product_id": "prod_01M4SQETHSTSZCZDVPX3AXATC0",
+      "url": "http://localhost:9000/static/1791864826394-vetud_semaglutide_40mg_closed.png",
+      "rank": 0
+    },
+    {
+      "id": "img_01M4SQETHYEHTD3XWGY4HDZZTZ",
+      "product_id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "url": "http://localhost:9000/static/1791864826401-vetud_tirzepatide_40mg_open.png",
+      "rank": 1
+    },
+    {
+      "id": "img_01M4SQETHYM51G5AZYHKKP9TEV",
+      "product_id": "prod_01M4SQETHSRFS9PVJRJY3QSMKG",
+      "url": "http://localhost:9000/static/1791864826398-vetud_tirzepatide_40mg_closed.png",
+      "rank": 0
+    },
+    {
+      "id": "img_01M4SQETYC55P9YR4WJMG8X1DY",
+      "product_id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "url": "http://localhost:9000/static/1791864826388-vetud_retatrutide_40mg_closed.png",
+      "rank": 0
+    },
+    {
+      "id": "img_01M4SQETYCAWESMC93D65TA97H",
+      "product_id": "prod_01M4RXD1XEN801AHJ9YFK6RDEA",
+      "url": "http://localhost:9000/static/1791864826396-vetud_retatrutide_40mg_open.png",
+      "rank": 1
+    }
+  ],
+  "inventory": [
+    {
+      "id": "iitem_01M4RXD22AAX5JKRF7DT48CYS9",
+      "sku": "VTD-01-40MG",
+      "level_id": "ilev_01M4RXD26FMAD1GAMK8QG448XM",
+      "stocked_quantity": "100",
+      "reserved_quantity": "0"
+    },
+    {
+      "id": "iitem_01M4SQETT13DVD6H3M1MJB37E4",
+      "sku": "VTD-SEMA-40MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    },
+    {
+      "id": "iitem_01M4SQETT1YP34SR5YYP4S20XC",
+      "sku": "VTD-TIRZ-40MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    },
+    {
+      "id": "iitem_01M4SS845W1NQW0ANKHRY6ZFAW",
+      "sku": "VTD-SEMA-10MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    },
+    {
+      "id": "iitem_01M4SS845W784H8PZMPQAMW5SB",
+      "sku": "VTD-TIRZ-20MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    },
+    {
+      "id": "iitem_01M4SS845W93GZDF7MV97XEKBH",
+      "sku": "VTD-RETA-20MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    },
+    {
+      "id": "iitem_01M4SS845WW0QRQXK52GP9D12C",
+      "sku": "VTD-TIRZ-10MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    },
+    {
+      "id": "iitem_01M4SS845WWPQZK66ABE3T1S0X",
+      "sku": "VTD-SEMA-20MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    },
+    {
+      "id": "iitem_01M4SS845XJPQNHCF1J5SZAT4E",
+      "sku": "VTD-RETA-10MG",
+      "level_id": null,
+      "stocked_quantity": null,
+      "reserved_quantity": null
+    }
+  ]
+}
