@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
   // Vercel needs nothing extra. For a VPS or Docker host, build with NEXT_OUTPUT=standalone.
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   poweredByHeader: false,
+  // The Medusa Admin lives on the backend under /app. This makes vetud.com/admin a shortcut to it.
+  async redirects() {
+    const adminUrl = `${(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")}/app`
+    return [
+      { source: "/admin", destination: adminUrl, permanent: false },
+      { source: "/admin/:path*", destination: adminUrl, permanent: false },
+    ]
+  },
   images: {
     // Locally, product photos come from the Medusa dev server on localhost, which Next blocks by
     // default (SSRF protection). Allowed in development only; production keeps the protection.
