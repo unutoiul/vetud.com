@@ -6,9 +6,11 @@ import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import Script from "next/script"
+import { useSearchParams } from "next/navigation"
 import { useRef, useState, type FormEvent } from "react"
 import Icon from "../brand/Icon"
 import { AppLink } from "../common/links"
+import { normalizeTrackingNumber } from "@/lib/orders"
 
 declare global {
   interface Window {
@@ -17,7 +19,12 @@ declare global {
 }
 
 export default function TrackingForm() {
-  const [number, setNumber] = useState("")
+  const initialNumber = normalizeTrackingNumber(useSearchParams().get("number") ?? "")
+  return <ParcelTrackingForm key={initialNumber} initialNumber={initialNumber} />
+}
+
+function ParcelTrackingForm({ initialNumber }: { initialNumber: string }) {
+  const [number, setNumber] = useState(initialNumber)
   const [error, setError] = useState("")
   const [requested, setRequested] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -34,8 +41,8 @@ export default function TrackingForm() {
   }
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const cleaned = number.replace(/\s/g, "")
-    if (!/^[A-Za-z0-9-]{5,50}$/.test(cleaned)) { setError("Enter a valid parcel tracking number using letters and numbers."); return }
+    const cleaned = normalizeTrackingNumber(number)
+    if (!cleaned) { setError("Enter a valid parcel tracking number using letters and numbers."); return }
     setError("")
     submitted.current = cleaned
     setRequested(true)

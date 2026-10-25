@@ -6,6 +6,7 @@ const paths = {
   play: "m9 5 11 7-11 7V5Z",
   youtube: "M22 12c0 3-.4 5.5-1.2 6.2-.8.8-5.4.8-8.8.8s-8 0-8.8-.8C2.4 17.5 2 15 2 12s.4-5.5 1.2-6.2C4 5 8.6 5 12 5s8 0 8.8.8C21.6 6.5 22 9 22 12Zm-12-3 5 3-5 3V9Z",
   search: "M20 20l-5-5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z",
+  account: "M20 21a8 8 0 0 0-16 0M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z",
   bag: "M5 7h14l1 14H4L5 7ZM8 8V6a4 4 0 0 1 8 0v2",
   menu: "M4 7h16M4 12h16M4 17h16",
   close: "m6 6 12 12M6 18 18 6",
@@ -46,6 +47,7 @@ const named = (name: IconName) => function LineIcon(props: SvgIconProps) { retur
 export const ArrowUpRightIcon = named("arrowUpRight")
 export const ArrowRightIcon = named("arrowRight")
 export const SearchIcon = named("search")
+export const AccountIcon = named("account")
 export const BagIcon = named("bag")
 export const MenuIcon = named("menu")
 export const CloseIcon = named("close")

@@ -19,6 +19,7 @@ import CountrySelect from "./CountrySelect"
 import { NAV_LINKS, SECONDARY_LINKS } from "./nav"
 import SearchBox from "./SearchBox"
 import { motion } from "@/theme/tokens"
+import { useAccount } from "../account/AccountProvider"
 
 function MainNav({ activeHref }: { activeHref?: string }) {
   return <Stack component="nav" aria-label="Main" direction="row" spacing={3.5} sx={{ display: { xs: "none", lg: "flex" }, mx: "auto" }}>
@@ -34,6 +35,7 @@ function ActiveMainNav() {
 
 export default function Header() {
   const { itemCount, openDrawer } = useStore()
+  const { customer } = useAccount()
   const [menuOpen, setMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const searchInput = useRef<HTMLInputElement>(null)
@@ -43,6 +45,15 @@ export default function Header() {
         <Box component={LocalizedNextLink} href="/" aria-label="Vetud Peptides home" sx={{ textDecoration: "none", display: "inline-flex", mr: { xs: "auto", lg: 4 }, "& strong": { fontSize: { xs: 19, md: 23 } }, "& small": { fontSize: { xs: 7.5, md: 9 } }, "& svg": { width: { xs: 35, md: 44 } } }}><Logo /></Box>
         <Suspense fallback={<MainNav />}><ActiveMainNav /></Suspense>
         <Box sx={{ display: { xs: "none", md: "block" }, ml: { md: "auto", lg: 1 } }}><CountrySelect /></Box>
+        <IconButton
+          component={LocalizedNextLink}
+          href="/account"
+          aria-label={customer ? "Open your account" : "Sign in or create an account"}
+          sx={{ display: { xs: "none", sm: "inline-flex" } }}
+        >
+          <Icon name="account" sx={{ fontSize: 22 }} />
+        </IconButton>
+        {customer ? <IconButton component={LocalizedNextLink} href="/account/orders" aria-label="Your orders and tracking" sx={{ display: { xs: "none", sm: "inline-flex" } }}><Icon name="package" sx={{ fontSize: 22 }} /></IconButton> : null}
         <IconButton aria-label="Search products" onClick={() => setSearchOpen(true)}><Icon name="search" sx={{ fontSize: 22 }} /></IconButton>
         <IconButton aria-label={`Open cart, ${itemCount} item${itemCount === 1 ? "" : "s"}`} onClick={openDrawer} sx={{ bgcolor: "#edf3f6" }}><Badge badgeContent={itemCount} color="primary" max={99}><Icon name="bag" sx={{ fontSize: 22 }} /></Badge></IconButton>
         <IconButton aria-label="Open menu" aria-expanded={menuOpen} aria-controls={menuOpen ? "mobile-navigation" : undefined} onClick={() => setMenuOpen(true)} sx={{ display: { xs: "inline-flex", lg: "none" } }}>
@@ -57,6 +68,18 @@ export default function Header() {
         <Stack direction="row" spacing={3} sx={{ mt: 3 }}>
           {SECONDARY_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 13, color: "text.secondary", textDecoration: "none", "&:hover": { color: "brand.blue" } }}>{link.label}</Box>)}
         </Stack>
+        <Box
+          component={LocalizedNextLink}
+          href="/account"
+          onClick={() => setMenuOpen(false)}
+          sx={{ display: "flex", alignItems: "center", gap: 1.5, mt: 4, color: "brand.navy", textDecoration: "none", fontWeight: 700 }}
+        >
+          <Icon name="account" sx={{ fontSize: 20 }} />
+          {customer ? "Your account" : "Sign in / create account"}
+        </Box>
+        <Box component={LocalizedNextLink} href="/account/orders" onClick={() => setMenuOpen(false)} sx={{ display: "flex", alignItems: "center", gap: 1.5, mt: 2.5, minHeight: 44, color: "brand.navy", textDecoration: "none", fontWeight: 700 }}>
+          <Icon name="package" sx={{ fontSize: 20 }} />Orders & tracking
+        </Box>
         <Box sx={{ mt: 3 }}><CountrySelect fullWidth /></Box>
         <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 3 }}>Peptide science. A clearer perspective.</Typography>
       </Box>

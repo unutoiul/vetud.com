@@ -7,6 +7,7 @@ import {
 } from "./lib/config"
 
 const CACHE_MS = 60 * 60 * 1000
+const COUNTRY_COOKIE = "vetud_country"
 let countryCache: { codes: string[]; fetchedAt: number } | null = null
 
 /** Countries the store sells to, from Medusa's regions (cached in memory for an hour). */
@@ -32,6 +33,29 @@ async function sellableCountries(): Promise<string[]> {
   return countryCache.codes
 }
 
+function languageCountry(request: NextRequest) {
+  const language = request.headers.get("accept-language") ?? ""
+  const candidates = language
+    .split(",")
+    .map((part) => part.split(";")[0]?.trim().toLowerCase())
+    .filter(Boolean)
+
+  for (const candidate of candidates) {
+    const regional = candidate?.split("-")[1]
+    if (regional) return regional
+    if (candidate === "en") return "us"
+    if (candidate === "de") return "de"
+    if (candidate === "fr") return "fr"
+    if (candidate === "es") return "es"
+    if (candidate === "it") return "it"
+    if (candidate === "pt") return "pt"
+    if (candidate === "nl") return "nl"
+    if (candidate === "ja") return "jp"
+    if (candidate === "zh" || candidate === "ko") return "cn"
+  }
+  return ""
+}
+
 /**
  * Every page lives under a country segment (/us/shop, /de/shop) that selects the Medusa region
  * and currency. Requests without a valid segment are redirected, using the visitor's country
@@ -44,25 +68,49 @@ export async function proxy(request: NextRequest) {
   const countries = await sellableCountries()
 
   if (countries.includes(first)) {
-    return NextResponse.next()
+    const response = NextResponse.next()
+    if (!request.cookies.get(COUNTRY_COOKIE)?.value) {
+      response.cookies.set(COUNTRY_COOKIE, first, {
+        maxAge: 60 * 60 * 24 * 365,
+        httpOnly: false,
+        sameSite: "lax",
+        secure: request.nextUrl.protocol === "https:",
+        path: "/",
+      })
+    }
+    return response
   }
 
+  const saved = request.cookies.get(COUNTRY_COOKIE)?.value?.toLowerCase() ?? ""
   const geo = (
     request.headers.get("x-vercel-ip-country") ??
     request.headers.get("cf-ipcountry") ??
     ""
   ).toLowerCase()
-  const target = countries.includes(geo)
-    ? geo
-    : countries.includes(DEFAULT_COUNTRY)
-      ? DEFAULT_COUNTRY
-      : countries[0]
+  const language = languageCountry(request)
+  const target = countries.includes(saved)
+    ? saved
+    : countries.includes(geo)
+      ? geo
+      : countries.includes(language)
+        ? language
+        : countries.includes(DEFAULT_COUNTRY)
+          ? DEFAULT_COUNTRY
+          : countries[0]
 
   // Replace an unsupported country segment (e.g. /gb/shop) instead of nesting it.
   const rest = /^[a-z]{2}$/.test(first) ? segments.slice(2).join("/") : segments.slice(1).join("/")
   const url = request.nextUrl.clone()
   url.pathname = `/${target}${rest ? `/${rest}` : ""}`
-  return NextResponse.redirect(url, 307)
+  const response = NextResponse.redirect(url, 307)
+  response.cookies.set(COUNTRY_COOKIE, target, {
+    maxAge: 60 * 60 * 24 * 365,
+    httpOnly: false,
+    sameSite: "lax",
+    secure: request.nextUrl.protocol === "https:",
+    path: "/",
+  })
+  return response
 }
 
 export const config = {

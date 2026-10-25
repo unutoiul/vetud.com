@@ -20,16 +20,17 @@ import Stepper from "@mui/material/Stepper"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib/makepay"
 import { sdk } from "@/lib/medusa/sdk"
 import { PAYPAL_PROVIDER_ID, readPayPalRedirect } from "@/lib/paypal"
 import { formatMoney } from "@/lib/product"
+import { useAccount } from "../account/AccountProvider"
 import CartLineItem from "../cart/CartLineItem"
 import OrderTotals from "../cart/OrderTotals"
 import { ButtonLink } from "../common/links"
 import { CART_FIELDS, useStore } from "../store/StoreProvider"
-import AddressFields, { toAddressValues, validateAddress, type AddressValues } from "./AddressFields"
+import AddressFields, { EMPTY_ADDRESS, toAddressValues, validateAddress, type AddressValues } from "./AddressFields"
 
 const STEPS = ["Details", "Delivery", "Payment", "Review"]
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -85,7 +86,8 @@ function SubmitButton({ busy, children }: { busy: boolean; children: React.React
 
 export default function CheckoutFlow() {
   const router = useRouter()
-  const { cart, cartReady, setCart, clearCart, region, countries, countryCode } = useStore()
+  const { cart, cartReady, setCart, clearCart, linkCustomerCart, region, countries, countryCode } = useStore()
+  const { customer, loading: accountLoading, createAddress } = useAccount()
   const [step, setStep] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -102,7 +104,7 @@ export default function CheckoutFlow() {
     )
   }
 
-  if (!cartReady) {
+  if (!cartReady || accountLoading) {
     return <Skeleton variant="rounded" height={420} />
   }
 
@@ -138,16 +140,21 @@ export default function CheckoutFlow() {
 
   const placeOrder = () =>
     guard(async () => {
+      const checkoutCart = customer ? await linkCustomerCart() : cart
+      if (Number(checkoutCart.total) !== Number(cart.total)) {
+        setStep(2)
+        throw new Error("Your account pricing has been applied. Please review the updated total and choose payment again.")
+      }
       // PayPal: the shopper approves the payment first; the order is created when they come back
       // (see the PayPal return page), so the cart is deliberately not completed here.
-      if (cart.payment_collection?.payment_sessions?.some((session) => session.provider_id === PAYPAL_PROVIDER_ID)) {
-        window.location.assign(readPayPalRedirect(cart).url)
+      if (checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === PAYPAL_PROVIDER_ID)) {
+        window.location.assign(readPayPalRedirect(checkoutCart).url)
         return
       }
       // Crypto: validate the hosted-checkout redirect first, create the order, then leave for MakePay.
-      const isMakePay = cart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
-      const redirect = isMakePay ? readMakePayRedirect(cart) : null
-      const result = await sdk.store.cart.complete(cart.id)
+      const isMakePay = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
+      const redirect = isMakePay ? readMakePayRedirect(checkoutCart) : null
+      const result = await sdk.store.cart.complete(checkoutCart.id)
       if (result.type !== "order") {
         throw new Error(result.error?.message ?? "We couldn't place your order. Please review your details.")
       }
@@ -196,14 +203,25 @@ export default function CheckoutFlow() {
         <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3 }}>
           {activeStep === 0 ? (
             <DetailsStep
+              key={`${cart.id}:${customer?.id ?? "guest"}`}
               cart={cart}
               countries={regionCountries}
+              customer={customer}
               defaultCountry={regionCountries.some((country) => country.code === countryCode) ? countryCode : regionCountries[0]?.code ?? ""}
               busy={busy}
               onSubmit={(body) =>
                 guard(async () => {
-                  const { cart: updated } = await sdk.store.cart.update(cart.id, body, { fields: CART_FIELDS })
+                  if (customer) await linkCustomerCart()
+                  const { saveAddress, ...cartBody } = body
+                  const { cart: updated } = await sdk.store.cart.update(cart.id, cartBody, { fields: CART_FIELDS })
                   setCart(updated)
+                  if (saveAddress && customer) {
+                    await createAddress({
+                      ...body.shipping_address,
+                      address_name: "Primary shipping",
+                      is_default_shipping: true,
+                    })
+                  }
                   setStep(1)
                 })
               }
@@ -234,17 +252,18 @@ export default function CheckoutFlow() {
               onError={setError}
               onSubmit={(providerId) =>
                 guard(async () => {
-                  const existing = cart.payment_collection?.payment_sessions?.find(
+                  const checkoutCart = customer ? await linkCustomerCart() : cart
+                  const existing = checkoutCart.payment_collection?.payment_sessions?.find(
                     (session) => session.provider_id === providerId
                   )
                   if (providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID) {
                     // A MakePay link or PayPal order is bound to one amount, so always create a fresh session.
-                    await sdk.store.payment.initiatePaymentSession(cart, {
+                    await sdk.store.payment.initiatePaymentSession(checkoutCart, {
                       provider_id: providerId,
-                      data: providerId === MAKEPAY_PROVIDER_ID && cart.email ? { customer_email: cart.email } : undefined,
+                      data: providerId === MAKEPAY_PROVIDER_ID && checkoutCart.email ? { customer_email: checkoutCart.email } : undefined,
                     })
                   } else if (!existing) {
-                    await sdk.store.payment.initiatePaymentSession(cart, { provider_id: providerId })
+                    await sdk.store.payment.initiatePaymentSession(checkoutCart, { provider_id: providerId })
                   }
                   const { cart: updated } = await sdk.store.cart.retrieve(cart.id, { fields: CART_FIELDS })
                   setCart(updated)
@@ -282,29 +301,47 @@ type DetailsBody = {
   email: string
   shipping_address: AddressValues
   billing_address: AddressValues
+  saveAddress: boolean
 }
 
 function DetailsStep({
   cart,
   countries,
+  customer,
   defaultCountry,
   busy,
   onSubmit,
 }: {
   cart: HttpTypes.StoreCart
   countries: { code: string; name: string }[]
+  customer: HttpTypes.StoreCustomer | null
   defaultCountry: string
   busy: boolean
   onSubmit: (body: DetailsBody) => void
 }) {
-  const [email, setEmail] = useState(cart.email ?? "")
+  const savedAddresses = useMemo(() => {
+    const allowed = new Set(countries.map((country) => country.code))
+    return (customer?.addresses ?? []).filter((address) => address.country_code && allowed.has(address.country_code))
+  }, [countries, customer?.addresses])
+  const preferredAddress = savedAddresses.find((address) => address.id === customer?.default_shipping_address_id)
+    ?? savedAddresses.find((address) => address.is_default_shipping)
+    ?? savedAddresses[0]
+  const [email, setEmail] = useState(cart.email ?? customer?.email ?? "")
   const [shipping, setShipping] = useState<AddressValues>(() => {
-    const values = toAddressValues(cart.shipping_address)
-    return { ...values, country_code: values.country_code || defaultCountry }
+    const values = toAddressValues(cart.shipping_address ?? preferredAddress)
+    return {
+      ...values,
+      first_name: values.first_name || customer?.first_name || "",
+      last_name: values.last_name || customer?.last_name || "",
+      phone: values.phone || customer?.phone || "",
+      country_code: values.country_code || defaultCountry,
+    }
   })
+  const [selectedAddressId, setSelectedAddressId] = useState<string>(cart.shipping_address?.address_1 ? "custom" : preferredAddress?.id ?? "new")
+  const [saveAddress, setSaveAddress] = useState(Boolean(customer && !preferredAddress))
   const [billingSame, setBillingSame] = useState(true)
   const [billing, setBilling] = useState<AddressValues>(() => {
-    const values = toAddressValues(cart.billing_address)
+    const values = toAddressValues(cart.billing_address ?? cart.shipping_address ?? preferredAddress)
     return { ...values, country_code: values.country_code || defaultCountry }
   })
   const [showErrors, setShowErrors] = useState(false)
@@ -332,7 +369,7 @@ function DetailsStep({
           control?.focus()
           return
         }
-        onSubmit({ email: email.trim(), shipping_address: shipping, billing_address: billingSame ? shipping : billing })
+        onSubmit({ email: email.trim(), shipping_address: shipping, billing_address: billingSame ? shipping : billing, saveAddress: Boolean(customer && saveAddress && selectedAddressId === "new") })
       }}
     >
       <Typography variant="h5" component="h2" sx={{ mb: 0.5 }}>
@@ -356,6 +393,26 @@ function DetailsStep({
       <Typography variant="h5" component="h2" sx={{ mt: 4, mb: 2 }}>
         Shipping address
       </Typography>
+      {customer && savedAddresses.length ? (
+        <Stack spacing={1.25} sx={{ mb: 2.5 }}>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>Use a saved address</Typography>
+          {savedAddresses.map((address) => (
+            <Box
+              key={address.id}
+              component="button"
+              type="button"
+              onClick={() => { setSelectedAddressId(address.id); setShipping(toAddressValues(address)); setSaveAddress(false) }}
+              sx={{ display: "block", width: "100%", textAlign: "left", border: "1px solid", borderColor: selectedAddressId === address.id ? "secondary.main" : "divider", bgcolor: selectedAddressId === address.id ? "#eff5f6" : "#fff", borderRadius: 2, p: 1.75, cursor: "pointer", font: "inherit", color: "inherit" }}
+            >
+              <Typography sx={{ fontWeight: 700, fontSize: 14 }}>{address.address_name || "Saved address"}</Typography>
+              <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.25 }}>{[address.address_1, address.city, address.postal_code].filter(Boolean).join(" · ")}</Typography>
+            </Box>
+          ))}
+          <Button type="button" size="small" onClick={() => { setSelectedAddressId("new"); setShipping({ ...EMPTY_ADDRESS, first_name: customer.first_name ?? "", last_name: customer.last_name ?? "", phone: customer.phone ?? "", country_code: defaultCountry }); setSaveAddress(true) }} sx={{ alignSelf: "flex-start" }}>
+            Use a new address
+          </Button>
+        </Stack>
+      ) : null}
       <AddressFields
         prefix="shipping"
         values={shipping}
@@ -366,6 +423,13 @@ function DetailsStep({
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 1.5 }}>
         Shipping somewhere else? Change the country in the header to see that region&apos;s prices.
       </Typography>
+      {customer && selectedAddressId === "new" ? (
+        <FormControlLabel
+          sx={{ mt: 1 }}
+          control={<Checkbox checked={saveAddress} onChange={(event) => setSaveAddress(event.target.checked)} />}
+          label="Save this address for faster checkout next time"
+        />
+      ) : null}
 
       <FormControlLabel
         sx={{ mt: 2 }}

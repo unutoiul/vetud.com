@@ -14,6 +14,7 @@ export const FOOTER_LINKS = {
     ...SECONDARY_LINKS,
   ],
   information: [
+    { label: "My orders & tracking", href: "/account/orders" },
     { label: "Shipping & returns", href: "/legal/shipping-returns" },
     { label: "Contact support", href: "/contact" },
   ],

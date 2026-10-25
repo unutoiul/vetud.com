@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { DM_Mono, Manrope } from "next/font/google"
 import { countryCode } from "next/root-params"
 import CartDrawer from "@/components/cart/CartDrawer"
+import AccountProvider from "@/components/account/AccountProvider"
 import Footer from "@/components/layout/Footer"
 import Header from "@/components/layout/Header"
 import StoreProvider from "@/components/store/StoreProvider"
@@ -67,30 +68,32 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
             }}
             countries={countries}
           >
-            <Box
-              component="a"
-              href="#main"
-              sx={{
-                position: "absolute",
-                left: 8,
-                top: -48,
-                zIndex: 2000,
-                bgcolor: "brand.navy",
-                color: "#fff",
-                px: 2,
-                py: 1,
-                borderRadius: 1,
-                "&:focus": { top: 8 },
-              }}
-            >
-              Skip to content
-            </Box>
-            <Header />
-            <Box component="main" id="main" sx={{ minHeight: "60vh" }}>
-              {children}
-            </Box>
-            <Footer />
-            <CartDrawer />
+            <AccountProvider>
+              <Box
+                component="a"
+                href="#main"
+                sx={{
+                  position: "absolute",
+                  left: 8,
+                  top: -48,
+                  zIndex: 2000,
+                  bgcolor: "brand.navy",
+                  color: "#fff",
+                  px: 2,
+                  py: 1,
+                  borderRadius: 1,
+                  "&:focus": { top: 8 },
+                }}
+              >
+                Skip to content
+              </Box>
+              <Header />
+              <Box component="main" id="main" sx={{ minHeight: "60vh" }}>
+                {children}
+              </Box>
+              <Footer />
+              <CartDrawer />
+            </AccountProvider>
           </StoreProvider>
         </ThemeRegistry>
       </body>

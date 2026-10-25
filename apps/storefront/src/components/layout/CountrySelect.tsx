@@ -23,6 +23,10 @@ const CURRENCIES = [
   { code: "aed", name: "UAE dirham", place: "United Arab Emirates" },
 ]
 
+function persistCountryCookie(code: string) {
+  document.cookie = `vetud_country=${encodeURIComponent(code)}; Max-Age=31536000; Path=/; SameSite=Lax${window.location.protocol === "https:" ? "; Secure" : ""}`
+}
+
 /** A compact currency list; destinations sharing EUR are selected in a second step. */
 export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
   const router = useRouter()
@@ -35,6 +39,7 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
 
   const select = (code: string) => {
     close()
+    persistCountryCookie(code)
     if (code === countryCode) return
     const { pathname, search, hash } = window.location
     const rest = pathname.split("/").slice(2).join("/")

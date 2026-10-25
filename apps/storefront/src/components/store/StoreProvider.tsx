@@ -75,6 +75,7 @@ type StoreContextValue = {
   updateItem: (lineId: string, quantity: number) => Promise<void>
   removeItem: (lineId: string) => Promise<void>
   refreshCart: () => Promise<HttpTypes.StoreCart | null>
+  linkCustomerCart: () => Promise<HttpTypes.StoreCart>
   setCart: (cart: HttpTypes.StoreCart | null) => void
   clearCart: () => void
   clearError: () => void
@@ -103,12 +104,19 @@ export default function StoreProvider({ countryCode, region, countries, children
   const [error, setError] = useState<string | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const cartRef = useRef<HttpTypes.StoreCart | null>(null)
+  const cartVersion = useRef(0)
 
   const setCart = useCallback((next: HttpTypes.StoreCart | null) => {
+    if (!next) cartVersion.current += 1
     cartRef.current = next
     setCartState(next)
     writeCartId(next?.id ?? null)
   }, [])
+
+  const clearCart = useCallback(() => {
+    setCart(null)
+    setDrawerOpen(false)
+  }, [setCart])
 
   const retrieve = useCallback(async (id: string) => {
     const { cart: fetched } = await sdk.store.cart.retrieve(id, { fields: CART_FIELDS })
@@ -118,6 +126,7 @@ export default function StoreProvider({ countryCode, region, countries, children
   // Load the saved cart, dropping it if it was completed, and move it to the current region.
   useEffect(() => {
     let cancelled = false
+    const version = cartVersion.current
     async function load() {
       const id = readCartId()
       if (!id) {
@@ -127,7 +136,7 @@ export default function StoreProvider({ countryCode, region, countries, children
       try {
         let saved = await retrieve(id)
         if (saved.completed_at) {
-          if (!cancelled) setCart(null)
+          if (!cancelled && version === cartVersion.current) setCart(null)
           return
         }
         if (saved.region_id !== region.id) {
@@ -138,9 +147,9 @@ export default function StoreProvider({ countryCode, region, countries, children
           )
           saved = moved
         }
-        if (!cancelled) setCart(saved)
+        if (!cancelled && version === cartVersion.current) setCart(saved)
       } catch {
-        if (!cancelled) setCart(null)
+        if (!cancelled && version === cartVersion.current) setCart(null)
       } finally {
         if (!cancelled) setCartReady(true)
       }
@@ -168,10 +177,12 @@ export default function StoreProvider({ countryCode, region, countries, children
     if (cartRef.current) {
       return cartRef.current
     }
+    const version = cartVersion.current
     const { cart: created } = await sdk.store.cart.create(
       { region_id: region.id },
       { fields: CART_FIELDS }
     )
+    if (version !== cartVersion.current) throw new Error("Your session changed. Please try again.")
     setCart(created)
     return created
   }, [region.id, setCart])
@@ -185,6 +196,7 @@ export default function StoreProvider({ countryCode, region, countries, children
           { variant_id: variantId, quantity },
           { fields: CART_FIELDS }
         )
+        if (cartRef.current?.id !== current.id) return false
         setCart(updated)
         setDrawerOpen(true)
         return true
@@ -205,7 +217,7 @@ export default function StoreProvider({ countryCode, region, countries, children
           { quantity },
           { fields: CART_FIELDS }
         )
-        setCart(updated)
+        if (cartRef.current?.id === current.id) setCart(updated)
       })
     },
     [run, setCart]
@@ -217,7 +229,8 @@ export default function StoreProvider({ countryCode, region, countries, children
         const current = cartRef.current
         if (!current) return
         await sdk.store.cart.deleteLineItem(current.id, lineId)
-        setCart(await retrieve(current.id))
+        const fresh = await retrieve(current.id)
+        if (cartRef.current?.id === current.id) setCart(fresh)
       })
     },
     [retrieve, run, setCart]
@@ -227,9 +240,21 @@ export default function StoreProvider({ countryCode, region, countries, children
     const current = cartRef.current
     if (!current) return null
     const fresh = await retrieve(current.id)
+    if (cartRef.current?.id !== current.id) return null
     setCart(fresh)
     return fresh
   }, [retrieve, setCart])
+
+  const linkCustomerCart = useCallback(async () => {
+    const current = cartRef.current
+    if (!current) throw new Error("Your cart is no longer available. Please refresh checkout.")
+    // Identity comes from the SDK's customer token, never from the typed email.
+    // Medusa also recalculates customer-specific prices when transferring a guest cart.
+    const { cart: linked } = await sdk.store.cart.transferCart(current.id, { fields: CART_FIELDS })
+    if (cartRef.current?.id !== current.id) throw new Error("Your session changed. Please return to checkout.")
+    setCart(linked)
+    return linked
+  }, [setCart])
 
   const value = useMemo<StoreContextValue>(
     () => ({
@@ -248,11 +273,12 @@ export default function StoreProvider({ countryCode, region, countries, children
       updateItem,
       removeItem,
       refreshCart,
+      linkCustomerCart,
       setCart,
-      clearCart: () => setCart(null),
+      clearCart,
       clearError: () => setError(null),
     }),
-    [countryCode, region, countries, cart, cartReady, pending, error, drawerOpen, addItem, updateItem, removeItem, refreshCart, setCart]
+    [countryCode, region, countries, cart, cartReady, pending, error, drawerOpen, addItem, updateItem, removeItem, refreshCart, linkCustomerCart, setCart, clearCart]
   )
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

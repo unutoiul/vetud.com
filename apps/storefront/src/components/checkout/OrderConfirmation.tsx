@@ -16,6 +16,7 @@ import { sdk } from "@/lib/medusa/sdk"
 import { formatMoney } from "@/lib/product"
 import OrderTotals from "../cart/OrderTotals"
 import { ButtonLink } from "../common/links"
+import { useAccount } from "../account/AccountProvider"
 
 const ORDER_FIELDS =
   "id,display_id,email,currency_code,created_at,item_total,shipping_total,tax_total,discount_total,total,*items,*shipping_address,*shipping_methods"
@@ -30,6 +31,7 @@ function readStoredOrder(id: string): HttpTypes.StoreOrder | null {
 }
 
 export default function OrderConfirmation() {
+  const { customer } = useAccount()
   const params = useSearchParams()
   const id = params.get("id") ?? ""
   const paid = params.get("paid") === "1"
@@ -159,6 +161,9 @@ export default function OrderConfirmation() {
           ))}
         </Stack>
         <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 4 }}>
+          <ButtonLink href={customer ? "/account/orders" : "/tracking"} variant="outlined">
+            {customer ? "View my orders & tracking" : "Track a shipment"}
+          </ButtonLink>
           <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>
             Continue shopping
           </ButtonLink>
