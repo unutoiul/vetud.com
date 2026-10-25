@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@kb0912/currency-exchange-plugin": "^0.0.4",
+    "@makecrypto/medusa-plugin-makepay": "1.0.1",
     "@medusajs/admin-sdk": "2.21.2",
     "@medusajs/admin-shared": "2.21.2",
     "@medusajs/caching": "2.21.2",
@@ -78,6 +79,9 @@
       "@mikro-orm/knex": "6.6.14",
       "@mikro-orm/migrations": "6.6.14",
       "@mikro-orm/postgresql": "6.6.14"
+    },
+    "@makecrypto/medusa-plugin-makepay": {
+      "react-router-dom": "$react-router-dom"
     }
   }
 }

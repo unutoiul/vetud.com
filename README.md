@@ -55,6 +55,7 @@ Without `RESEND_API_KEY`, emails are not sent; they are logged in the backend co
 - **Catalog**: 9 placeholder products (Peptide Series 01–06, Research Blends A/B, Bacteriostatic Water) in 3 categories. A "Featured" collection drives the home page.
 - **Shipping**: Standard ($9.95 / €12, **free over 200**) and Express ($24.95 / €29).
 - **Payment**: manual bank transfer. The order is placed and stock is reserved, then the customer is emailed payment instructions. You mark the order paid in Admin.
+- **Crypto (optional)**: hosted checkout through [MakePay](https://makepay.io). Off until `MAKEPAY_ENCRYPTION_KEY` is set on the backend. See [Crypto payments (MakePay)](#crypto-payments-makepay).
 - **Search**: the header search, the shop page and the lot lookup all use Meilisearch. Lot numbers are indexed, so typing `VTD01-2609A` finds the product.
 - **Pages**: home, shop, product, cart, 4-step checkout, order confirmation, lot documentation, standards and FAQ, contact form, legal pages (terms, privacy, shipping & returns, research use), 404, sitemap.xml and robots.txt.
 
@@ -103,6 +104,17 @@ To preview the templates in a browser, run `npm run email:dev` in `apps/backend`
 ---
 
 ## Deploy
+
+### Crypto payments (MakePay)
+
+Uses the `@makecrypto/medusa-plugin-makepay` plugin (pinned) and needs a MakePay merchant account. Nothing changes for shoppers until all of these are done:
+
+1. On **both** Railway Medusa services set `MAKEPAY_ENCRYPTION_KEY` (`openssl rand -base64 32`, never rotate it) and optionally `MAKEPAY_SETTLEMENT_CURRENCY`. `MEDUSA_BACKEND_URL` and `STOREFRONT_URL` must be the public HTTPS URLs. The first deploy runs the plugin's migration.
+2. Admin → **Settings → MakePay → Connect MakePay**, choose the company and approve.
+3. Admin → **Settings → Regions**: edit **every** region, enable the `pp_makepay_makepay` payment provider and save.
+4. Redeploy the storefront (it caches the provider list). Optional `NEXT_PUBLIC_MAKEPAY_CHECKOUT_ORIGIN` (default `https://www.makepay.io`, only change it for sandbox testing).
+
+Checkout then offers "Pay with cryptocurrency": the order is created, the shopper pays on MakePay's hosted page, and returns to `/order/makepay-return`, which waits for the backend's confirmed-paid status before showing the confirmation. The plugin does not support automated refunds; refund crypto payments manually in MakePay.
 
 ### Backend on Railway
 
@@ -177,7 +189,7 @@ The build fetches regions and products from the backend, so deploy the backend f
 
 - **Product image storage**: configure Medusa's S3 file provider (e.g. Cloudflare R2). Railway disks are wiped on redeploy, so uploads need external storage.
 - **Customer accounts**: login and order history (the Medusa store API supports it).
-- **Card or crypto payments**: add a Medusa payment provider. The checkout's payment step already lists whatever providers the region has.
+- **Card payments**: add a Medusa payment provider. The checkout's payment step already lists whatever providers the region has.
 - **Instant catalog updates**: a Medusa subscriber that calls a storefront revalidation route on product changes.
 
 ## Useful commands

@@ -21,6 +21,7 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib/makepay"
 import { sdk } from "@/lib/medusa/sdk"
 import { formatMoney } from "@/lib/product"
 import CartLineItem from "../cart/CartLineItem"
@@ -37,6 +38,11 @@ const PAYMENT_LABELS: Record<string, { title: string; description: string }> = {
     title: "Bank transfer / invoice",
     description:
       "Place your order now and pay by bank transfer. Payment instructions and your reference are emailed right after you order. Stock is reserved while we wait for your payment.",
+  },
+  [MAKEPAY_PROVIDER_ID]: {
+    title: "Pay with cryptocurrency",
+    description:
+      "Place your order, then pay on MakePay's secure hosted page. Your order is confirmed as soon as the network confirms your payment.",
   },
 }
 
@@ -126,6 +132,9 @@ export default function CheckoutFlow() {
 
   const placeOrder = () =>
     guard(async () => {
+      // Crypto: validate the hosted-checkout redirect first, create the order, then leave for MakePay.
+      const isMakePay = cart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
+      const redirect = isMakePay ? readMakePayRedirect(cart) : null
       const result = await sdk.store.cart.complete(cart.id)
       if (result.type !== "order") {
         throw new Error(result.error?.message ?? "We couldn't place your order. Please review your details.")
@@ -134,6 +143,19 @@ export default function CheckoutFlow() {
         window.sessionStorage.setItem(`vetud_order_${result.order.id}`, JSON.stringify(result.order))
       } catch {
         // The confirmation page fetches the order when storage is unavailable.
+      }
+      if (redirect) {
+        try {
+          window.sessionStorage.setItem(MAKEPAY_STORAGE.orderId, result.order.id)
+          window.sessionStorage.setItem(MAKEPAY_STORAGE.returnState, redirect.returnState)
+          window.sessionStorage.setItem(MAKEPAY_STORAGE.countryCode, countryCode)
+        } catch {
+          // The return page still verifies payment from the state in its URL.
+        }
+        setCompletedOrderId(result.order.id)
+        clearCart()
+        window.location.assign(redirect.url)
+        return
       }
       setCompletedOrderId(result.order.id)
       clearCart()
@@ -203,7 +225,13 @@ export default function CheckoutFlow() {
                   const existing = cart.payment_collection?.payment_sessions?.find(
                     (session) => session.provider_id === providerId
                   )
-                  if (!existing) {
+                  if (providerId === MAKEPAY_PROVIDER_ID) {
+                    // A MakePay link is bound to one amount, so always create a fresh session.
+                    await sdk.store.payment.initiatePaymentSession(cart, {
+                      provider_id: providerId,
+                      data: cart.email ? { customer_email: cart.email } : undefined,
+                    })
+                  } else if (!existing) {
                     await sdk.store.payment.initiatePaymentSession(cart, { provider_id: providerId })
                   }
                   const { cart: updated } = await sdk.store.cart.retrieve(cart.id, { fields: CART_FIELDS })
@@ -614,9 +642,9 @@ function ReviewStep({
         ))}
       </Stack>
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
-        By placing your order you agree to our terms of sale and confirm the products are for
-        laboratory research use only. You will receive payment instructions by email; we ship as
-        soon as payment is received.
+        {provider === MAKEPAY_PROVIDER_ID
+          ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to MakePay to complete your payment; we ship as soon as it is confirmed."
+          : "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will receive payment instructions by email; we ship as soon as payment is received."}
       </Typography>
       <Button
         variant="contained"

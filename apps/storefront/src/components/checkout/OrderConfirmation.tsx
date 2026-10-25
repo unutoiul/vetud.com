@@ -30,7 +30,9 @@ function readStoredOrder(id: string): HttpTypes.StoreOrder | null {
 }
 
 export default function OrderConfirmation() {
-  const id = useSearchParams().get("id") ?? ""
+  const params = useSearchParams()
+  const id = params.get("id") ?? ""
+  const paid = params.get("paid") === "1"
   const [order, setOrder] = useState<HttpTypes.StoreOrder | null>(null)
   const [failed, setFailed] = useState(false)
 
@@ -74,14 +76,23 @@ export default function OrderConfirmation() {
         <Stack direction="row" spacing={1.5} sx={{ alignItems: "center", mb: 2 }}>
           <CheckCircleIcon sx={{ color: "success.main", fontSize: 32 }} />
           <Typography variant="h3" component="h2">
-            Order {number} is reserved.
+            {paid ? `Payment received for order ${number}.` : `Order ${number} is reserved.`}
           </Typography>
         </Stack>
         <Typography sx={{ color: "text.secondary", mb: 4 }}>
-          A confirmation with payment instructions is on its way to <strong>{order.email}</strong>.
-          Your items are held for you; we ship as soon as your payment arrives.
+          {paid ? (
+            <>
+              A confirmation is on its way to <strong>{order.email}</strong>. We confirm and pack your order next.
+            </>
+          ) : (
+            <>
+              A confirmation with payment instructions is on its way to <strong>{order.email}</strong>.
+              Your items are held for you; we ship as soon as your payment arrives.
+            </>
+          )}
         </Typography>
 
+        {paid ? null : (
         <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#eff5f6", borderRadius: 3, borderColor: "divider", mb: 4 }}>
           <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
             How to pay
@@ -117,14 +128,21 @@ export default function OrderConfirmation() {
             Please include the payment reference so we can match your transfer.
           </Typography>
         </Paper>
+        )}
 
         <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
           What happens next
         </Typography>
         <Stack spacing={2}>
           {[
-            ["01", "Send payment", "Transfer the amount due using your order number as reference."],
-            ["02", "We confirm and pack", "Once the payment arrives we confirm by email and pack your order with lot documentation."],
+            ...(paid ? [] : [["01", "Send payment", "Transfer the amount due using your order number as reference."]]),
+            [
+              "02",
+              "We confirm and pack",
+              paid
+                ? "We confirm your order by email and pack it with lot documentation."
+                : "Once the payment arrives we confirm by email and pack your order with lot documentation.",
+            ],
             ["03", "Tracked delivery", "You receive a tracking link as soon as the parcel ships."],
           ].map(([step, title, text]) => (
             <Stack key={step} direction="row" spacing={2}>

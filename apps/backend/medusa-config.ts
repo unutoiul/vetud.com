@@ -12,6 +12,21 @@ type ModuleConfig = {
 
 const BACKEND_URL = (process.env.MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")
 
+// MakePay hosted crypto checkout. Fully off unless MAKEPAY_ENCRYPTION_KEY is set (generate one with
+// `openssl rand -base64 32`); then connect the store in Admin > Settings > MakePay and enable
+// `pp_makepay_makepay` on each region (see README).
+const MAKEPAY_ENABLED = Boolean(process.env.MAKEPAY_ENCRYPTION_KEY)
+const makePayOptions = {
+  authMode: "oauth" as const,
+  backendUrl: BACKEND_URL,
+  storefrontReturnUrl: `${(process.env.STOREFRONT_URL || "http://localhost:8000").replace(/\/$/, "")}/order/makepay-return`,
+  encryptionKey: process.env.MAKEPAY_ENCRYPTION_KEY,
+  lockingProvider: "makepay-postgres",
+  settlementCurrency: process.env.MAKEPAY_SETTLEMENT_CURRENCY || "USDT",
+  expirationTime: "12h",
+  siteName: "Vetud Peptides",
+}
+
 const modules: ModuleConfig[] = [
   // Product images and other uploads. Files are written to `<server dir>/static` and served at
   // /static; on Railway that folder is a persistent volume (see README).
@@ -107,10 +122,42 @@ if (REDIS_URL) {
             is_default: true,
             options: { redisUrl: process.env.LOCKING_REDIS_URL || REDIS_URL },
           },
+          // MakePay serialises OAuth token refresh and payment effects with a Postgres lock.
+          ...(MAKEPAY_ENABLED
+            ? [{ resolve: "@medusajs/medusa/locking-postgres", id: "makepay-postgres" }]
+            : []),
         ],
       },
     }
   )
+} else if (MAKEPAY_ENABLED) {
+  modules.push({
+    resolve: "@medusajs/medusa/locking",
+    options: {
+      providers: [
+        {
+          resolve: "@medusajs/medusa/locking-postgres",
+          id: "makepay-postgres",
+          is_default: true,
+        },
+      ],
+    },
+  })
+}
+
+if (MAKEPAY_ENABLED) {
+  modules.push({
+    resolve: "@medusajs/medusa/payment",
+    options: {
+      providers: [
+        {
+          resolve: "@makecrypto/medusa-plugin-makepay/providers/makepay",
+          id: "makepay",
+          options: makePayOptions,
+        },
+      ],
+    },
+  })
 }
 
 module.exports = defineConfig({
@@ -145,6 +192,9 @@ module.exports = defineConfig({
       resolve: "@kb0912/currency-exchange-plugin",
       options: {},
     },
+    ...(MAKEPAY_ENABLED
+      ? [{ resolve: "@makecrypto/medusa-plugin-makepay", options: makePayOptions }]
+      : []),
   ],
   modules,
 })
