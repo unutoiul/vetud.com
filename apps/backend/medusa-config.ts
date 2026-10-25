@@ -145,18 +145,34 @@ if (REDIS_URL) {
   })
 }
 
+// Payment providers besides the built-in manual/bank-transfer one. The Payment Module takes a single
+// providers list, so every optional provider is added here. Enable each one on a region in Admin
+// (Settings > Regions) as `pp_<resolve id>_<id>`, e.g. pp_paypal_paypal.
+const paymentProviders: ModuleConfig[] = []
 if (MAKEPAY_ENABLED) {
+  paymentProviders.push({
+    resolve: "@makecrypto/medusa-plugin-makepay/providers/makepay",
+    id: "makepay",
+    options: makePayOptions,
+  } as ModuleConfig)
+}
+if (process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET) {
+  paymentProviders.push({
+    resolve: "./src/modules/paypal",
+    id: "paypal",
+    options: {
+      client_id: process.env.PAYPAL_CLIENT_ID,
+      client_secret: process.env.PAYPAL_CLIENT_SECRET,
+      environment: process.env.PAYPAL_ENVIRONMENT === "live" ? "live" : "sandbox",
+      storefront_url: (process.env.STOREFRONT_URL || "http://localhost:8000").replace(/\/$/, ""),
+      brand_name: "Vetud Peptides",
+    },
+  } as ModuleConfig)
+}
+if (paymentProviders.length) {
   modules.push({
     resolve: "@medusajs/medusa/payment",
-    options: {
-      providers: [
-        {
-          resolve: "@makecrypto/medusa-plugin-makepay/providers/makepay",
-          id: "makepay",
-          options: makePayOptions,
-        },
-      ],
-    },
+    options: { providers: paymentProviders },
   })
 }
 

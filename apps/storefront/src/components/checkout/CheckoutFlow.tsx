@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib/makepay"
 import { sdk } from "@/lib/medusa/sdk"
+import { PAYPAL_PROVIDER_ID, readPayPalRedirect } from "@/lib/paypal"
 import { formatMoney } from "@/lib/product"
 import CartLineItem from "../cart/CartLineItem"
 import OrderTotals from "../cart/OrderTotals"
@@ -43,6 +44,11 @@ const PAYMENT_LABELS: Record<string, { title: string; description: string }> = {
     title: "Pay with cryptocurrency",
     description:
       "Place your order, then pay on MakePay's secure hosted page. Your order is confirmed as soon as the network confirms your payment.",
+  },
+  [PAYPAL_PROVIDER_ID]: {
+    title: "PayPal",
+    description:
+      "You'll be taken to PayPal to pay. Your order is placed as soon as the payment is confirmed.",
   },
 }
 
@@ -132,6 +138,12 @@ export default function CheckoutFlow() {
 
   const placeOrder = () =>
     guard(async () => {
+      // PayPal: the shopper approves the payment first; the order is created when they come back
+      // (see the PayPal return page), so the cart is deliberately not completed here.
+      if (cart.payment_collection?.payment_sessions?.some((session) => session.provider_id === PAYPAL_PROVIDER_ID)) {
+        window.location.assign(readPayPalRedirect(cart).url)
+        return
+      }
       // Crypto: validate the hosted-checkout redirect first, create the order, then leave for MakePay.
       const isMakePay = cart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
       const redirect = isMakePay ? readMakePayRedirect(cart) : null
@@ -225,11 +237,11 @@ export default function CheckoutFlow() {
                   const existing = cart.payment_collection?.payment_sessions?.find(
                     (session) => session.provider_id === providerId
                   )
-                  if (providerId === MAKEPAY_PROVIDER_ID) {
-                    // A MakePay link is bound to one amount, so always create a fresh session.
+                  if (providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID) {
+                    // A MakePay link or PayPal order is bound to one amount, so always create a fresh session.
                     await sdk.store.payment.initiatePaymentSession(cart, {
                       provider_id: providerId,
-                      data: cart.email ? { customer_email: cart.email } : undefined,
+                      data: providerId === MAKEPAY_PROVIDER_ID && cart.email ? { customer_email: cart.email } : undefined,
                     })
                   } else if (!existing) {
                     await sdk.store.payment.initiatePaymentSession(cart, { provider_id: providerId })
@@ -642,7 +654,9 @@ function ReviewStep({
         ))}
       </Stack>
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
-        {provider === MAKEPAY_PROVIDER_ID
+        {provider === PAYPAL_PROVIDER_ID
+          ? "By continuing you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to PayPal to pay; your order is placed once the payment is confirmed, and we ship right after."
+          : provider === MAKEPAY_PROVIDER_ID
           ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to MakePay to complete your payment; we ship as soon as it is confirmed."
           : "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will receive payment instructions by email; we ship as soon as payment is received."}
       </Typography>
@@ -654,7 +668,11 @@ function ReviewStep({
         startIcon={busy ? <CircularProgress size={16} color="inherit" /> : <LockOutlinedIcon />}
         sx={{ mt: 3, minWidth: { xs: 0, sm: 260 }, width: { xs: "100%", sm: "auto" } }}
       >
-        {busy ? "Placing order…" : `Place order · ${formatMoney(Number(cart.total ?? 0), cart.currency_code)}`}
+        {busy
+          ? provider === PAYPAL_PROVIDER_ID
+            ? "Opening PayPal…"
+            : "Placing order…"
+          : `${provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${formatMoney(Number(cart.total ?? 0), cart.currency_code)}`}
       </Button>
     </Box>
   )

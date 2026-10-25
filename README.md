@@ -116,6 +116,17 @@ Uses the `@makecrypto/medusa-plugin-makepay` plugin (pinned) and needs a MakePay
 
 Checkout then offers "Pay with cryptocurrency": the order is created, the shopper pays on MakePay's hosted page, and returns to `/order/makepay-return`, which waits for the backend's confirmed-paid status before showing the confirmation. The plugin does not support automated refunds; refund crypto payments manually in MakePay.
 
+### PayPal
+
+A custom Medusa payment provider (`apps/backend/src/modules/paypal`) using PayPal's Orders API. It stays off until `PAYPAL_CLIENT_ID` and `PAYPAL_CLIENT_SECRET` are set on the backend.
+
+1. Create a REST app at developer.paypal.com (sandbox first). On **both** Railway Medusa services set `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` and `PAYPAL_ENVIRONMENT` (`sandbox` or `live`). `STOREFRONT_URL` must be the public storefront URL; PayPal sends shoppers back to `<STOREFRONT_URL>/order/paypal-return`.
+2. Deploy the backend (`railway up --service medusa-server`, then `medusa-worker`).
+3. Admin → **Settings → Regions**: edit every region PayPal should serve, enable `pp_paypal_paypal` and save. PayPal only supports AUD, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, ILS, JPY, MXN, MYR, NOK, NZD, PHP, PLN, SEK, SGD, THB, TWD and USD, so leave it off regions in other currencies (for example AED, ISK, RON).
+4. Test in sandbox with a sandbox buyer account, then switch the variables to live credentials.
+
+Flow: the shopper approves the payment on PayPal first. On return, the storefront completes the cart; the backend checks the order with PayPal and captures the payment, so the order is created already paid. Refunds from Admin refund the PayPal capture. PayPal disputes and reviews are handled in your PayPal account.
+
 ### Backend on Railway
 
 Create one Railway project with these services:
