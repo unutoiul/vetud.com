@@ -35,6 +35,9 @@ export const SITE = {
   email: "contact@vetud.com",
   description:
     "Research-grade peptides with lot-level documentation. Precise information, traceable batches and responsive support for laboratory research.",
+  // Footer disclaimer (also shown on each product page). Keep this wording exact.
   ruoNotice:
-    "All products are sold for laboratory research use only. Not for human or veterinary use, and not for use as food, drugs, cosmetics or household chemicals.",
+    "All products sold on this website are intended for research and identification purposes only. These products are not intended for human dosing, injection, or ingestion.",
+  // Shown on every product page and product card. Keep this wording exact.
+  productDisclaimer: "All Products listed on this site are for research purposes only",
 }

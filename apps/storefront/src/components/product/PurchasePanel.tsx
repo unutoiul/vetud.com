@@ -163,7 +163,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
       >
         <ScienceOutlinedIcon fontSize="small" sx={{ color: "secondary.main", mt: "2px" }} />
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {SITE.ruoNotice}
+          <strong>{SITE.productDisclaimer}.</strong> {SITE.ruoNotice}
         </Typography>
       </Stack>
     </Stack>

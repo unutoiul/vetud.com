@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
 import Icon from "@/components/brand/Icon"
+import { SITE } from "@/lib/config"
 import { cheapestPrice, formatMoney, isProductInStock, readProductMeta } from "@/lib/product"
 import { LocalizedNextLink } from "../common/links"
 import ProductArt from "./ProductArt"
@@ -61,6 +62,9 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
           {product.subtitle ?? meta.form}
           {meta.purity ? ` · ${meta.purity.endsWith("%") ? `${meta.purity} purity` : meta.purity}` : ""}
           {meta.testing ? ` · ${meta.testing}` : ""}
+        </Typography>
+        <Typography sx={{ color: "text.secondary", fontSize: 10.5, lineHeight: 1.45, mb: 1.5 }}>
+          {SITE.productDisclaimer}
         </Typography>
         <Stack direction="row" sx={{ mt: "auto", pt: 1.75, borderTop: "1px solid #e8edf0", justifyContent: "space-between", alignItems: "center", gap: 1 }}>
           <Stack spacing={0.4}>
