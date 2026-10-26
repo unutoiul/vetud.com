@@ -3,6 +3,8 @@
 import Grid from "@mui/material/Grid"
 import MenuItem from "@mui/material/MenuItem"
 import TextField from "@mui/material/TextField"
+import { PLACES_ENABLED } from "@/lib/places"
+import AddressAutocomplete from "./AddressAutocomplete"
 
 export type AddressValues = {
   first_name: string
@@ -30,7 +32,7 @@ export const EMPTY_ADDRESS: AddressValues = {
   phone: "",
 }
 
-const REQUIRED: (keyof AddressValues)[] = ["first_name", "last_name", "company", "address_1", "city", "postal_code", "country_code"]
+const REQUIRED: (keyof AddressValues)[] = ["first_name", "last_name", "address_1", "city", "postal_code", "country_code"]
 
 export function validateAddress(values: AddressValues) {
   const errors: Partial<Record<keyof AddressValues, string>> = {}
@@ -83,10 +85,26 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
         <TextField {...field("last_name", "Last name", { autoComplete: "family-name", required: true })} />
       </Grid>
       <Grid size={12}>
-        <TextField {...field("company", "Company or institution", { autoComplete: "organization", required: true })} />
-      </Grid>
-      <Grid size={12}>
-        <TextField {...field("address_1", "Address", { autoComplete: "address-line1", required: true })} />
+        {PLACES_ENABLED ? (
+          <AddressAutocomplete
+            id={`${prefix}-address_1`}
+            name={`${prefix}-address_1`}
+            label="Address"
+            value={values.address_1}
+            required
+            error={Boolean(errors.address_1)}
+            helperText={errors.address_1}
+            autoComplete="address-line1"
+            countryCodes={countries.map((country) => country.code)}
+            onTextChange={(text) => onChange({ ...values, address_1: text })}
+            onPick={(picked) => {
+              const known = countries.some((country) => country.code === picked.country_code)
+              onChange({ ...values, ...picked, country_code: known ? picked.country_code ?? values.country_code : values.country_code })
+            }}
+          />
+        ) : (
+          <TextField {...field("address_1", "Address", { autoComplete: "address-line1", required: true })} />
+        )}
       </Grid>
       <Grid size={12}>
         <TextField {...field("address_2", "Apartment, suite, building (optional)", { autoComplete: "address-line2" })} />

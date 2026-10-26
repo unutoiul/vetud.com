@@ -99,7 +99,7 @@ function SubmitButton({ busy, children }: { busy: boolean; children: React.React
 export default function CheckoutFlow() {
   const router = useRouter()
   const { cart, cartReady, setCart, clearCart, linkCustomerCart, isCurrentCart, region, countries, countryCode } = useStore()
-  const { customer, loading: accountLoading, createAddress, captureSession } = useAccount()
+  const { customer, loading: accountLoading, createAddress, updateProfile, captureSession } = useAccount()
   const [step, setStep] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
   const busyRef = useRef(false)
@@ -267,20 +267,27 @@ export default function CheckoutFlow() {
                 guard(async (assertCurrent) => {
                   if (customer) await linkCustomerCart()
                   assertCurrent()
-                  const { saveAddress, research_field, ...addressBody } = body
+                  const { saveAddress, research_field, company_name, ...addressBody } = body
                   const cartBody = {
                     ...addressBody,
-                    metadata: researchMetadata({ research_field, company_name: body.shipping_address.company }),
+                    metadata: researchMetadata({ research_field, company_name }),
                   }
                   const { cart: updated } = await sdk.store.cart.update(cart.id, cartBody, { fields: CART_FIELDS })
                   assertCurrent()
                   setCart(updated)
                   if (saveAddress && customer) {
+                    // The company belongs to the order and your profile, not to each saved address.
                     await createAddress({
                       ...body.shipping_address,
+                      company: "",
                       address_name: "Primary shipping",
                       is_default_shipping: true,
                     })
+                    assertCurrent()
+                  }
+                  if (customer && customer.company_name !== company_name) {
+                    // Remember it for next time; a failure here must not block the order.
+                    await updateProfile({ company_name }).catch(() => undefined)
                     assertCurrent()
                   }
                   setStep(1)
@@ -368,6 +375,7 @@ type DetailsBody = {
   billing_address: AddressValues
   saveAddress: boolean
   research_field: string
+  company_name: string
 }
 
 function DetailsStep({
@@ -413,15 +421,22 @@ function DetailsStep({
   const [researchField, setResearchField] = useState<string>(
     typeof cart.metadata?.research_field === "string" ? cart.metadata.research_field : ""
   )
+  const [companyName, setCompanyName] = useState<string>(
+    (typeof cart.metadata?.company_name === "string" ? cart.metadata.company_name : "") ||
+      cart.shipping_address?.company ||
+      customer?.company_name ||
+      ""
+  )
   const [acknowledged, setAcknowledged] = useState(hasResearchProfile(cart))
   const [showErrors, setShowErrors] = useState(false)
 
+  const companyError = !companyName.trim() ? "Enter your company or institution" : undefined
   const researchError = !researchField ? "Choose your field of research" : undefined
   const ackError = !acknowledged ? "You must confirm this to place an order" : undefined
   const emailError = !EMAIL_PATTERN.test(email.trim()) ? "Enter a valid email address" : undefined
   const shippingErrors = validateAddress(shipping)
   const billingErrors = billingSame ? {} : validateAddress(billing)
-  const valid = !emailError && !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length && !researchError && !ackError
+  const valid = !emailError && !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length && !companyError && !researchError && !ackError
 
   return (
     <Box
@@ -437,15 +452,26 @@ function DetailsStep({
               ? `shipping-${Object.keys(shippingErrors)[0]}`
               : Object.keys(billingErrors).length
                 ? `billing-${Object.keys(billingErrors)[0]}`
-                : researchError
-                  ? "research_field"
-                  : "ruo_acknowledged"
+                : companyError
+                  ? "company_name"
+                  : researchError
+                    ? "research_field"
+                    : "ruo_acknowledged"
           const control = event.currentTarget.querySelector<HTMLElement>(`[id="${field}"]`)
             ?? event.currentTarget.querySelector<HTMLInputElement>(`[name="${field}"]`)
           control?.focus()
           return
         }
-        onSubmit({ email: email.trim(), shipping_address: shipping, billing_address: billingSame ? shipping : billing, saveAddress: Boolean(customer && saveAddress && selectedAddressId === "new"), research_field: researchField })
+        const company = companyName.trim()
+        const shippingWithCompany = { ...shipping, company }
+        onSubmit({
+          email: email.trim(),
+          shipping_address: shippingWithCompany,
+          billing_address: billingSame ? shippingWithCompany : { ...billing, company },
+          saveAddress: Boolean(customer && saveAddress && selectedAddressId === "new"),
+          research_field: researchField,
+          company_name: company,
+        })
       }}
     >
       <Typography variant="h5" component="h2" sx={{ mb: 0.5 }}>
@@ -533,6 +559,18 @@ function DetailsStep({
       <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
         Our products are supplied to qualified researchers and institutions for laboratory research only.
       </Typography>
+      <TextField
+        label="Company or institution"
+        name="company_name"
+        id="company_name"
+        required
+        value={companyName}
+        onChange={(event) => setCompanyName(event.target.value)}
+        error={showErrors && Boolean(companyError)}
+        helperText={showErrors ? companyError : "The organization you are ordering for."}
+        slotProps={{ htmlInput: { autoComplete: "organization" } }}
+        sx={{ mb: 2 }}
+      />
       <TextField
         select
         label="Field of research"

@@ -177,6 +177,16 @@ A custom Medusa payment provider (`apps/backend/src/modules/paypal`) using PayPa
 
 Flow: the shopper approves the payment on PayPal first. On return, the storefront completes the cart; the backend checks the order with PayPal and captures the payment, so the order is created already paid. Refunds from Admin refund the PayPal capture. PayPal disputes and reviews are handled in your PayPal account.
 
+### Address suggestions (optional)
+
+Checkout and the account address book can suggest addresses as the shopper types and fill in the street, city, state, postal code and country, using Google's Places API (New). It stays off until a key is set.
+
+1. In Google Cloud, create a project with billing, enable **Places API (New)**, and create an API key. Restrict it to **HTTP referrers** (`https://www.vetud.com/*`, plus `http://localhost:8000/*` for development) and to the Places API only.
+2. In Vercel, set `NEXT_PUBLIC_GOOGLE_PLACES_API_KEY` for Production (and Preview if you want it there), then redeploy.
+3. Add Google Maps Platform to the processors listed in your Privacy policy, since the address a shopper types is sent to Google.
+
+Without the key, the address field is a normal text input. Suggestions are limited to the countries the shopper's region ships to. Parsing of Google's response is covered by `node --test tests/places.test.mjs` in `apps/storefront`.
+
 ### Backend on Railway
 
 Create one Railway project with these services:
