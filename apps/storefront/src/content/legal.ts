@@ -14,7 +14,7 @@ export type LegalDocument = {
 }
 
 const COMPANY = "Vetud LTD"
-const ADDRESS = "[Registered address]"
+const ADDRESS = "390 Fulham Road, London"
 const EMAIL = "contact@vetud.com"
 
 export const LEGAL_DOCUMENTS: LegalDocument[] = [
@@ -22,7 +22,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     slug: "terms",
     title: "Terms of sale",
     summary: "The terms that apply when you order from Vetud Peptides.",
-    updated: "[Date]",
+    updated: "1 January 2026",
     sections: [
       {
         heading: "1. Who we are",
@@ -47,7 +47,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         heading: "4. Prices and payment",
         paragraphs: [
           "Prices are shown in the currency of your selected region. Taxes and duties are shown at checkout where applicable; import duties for your country may be charged by the carrier.",
-          "Orders are paid by bank transfer. Stock is reserved for [3] business days after the order is placed. Orders not paid within that time may be cancelled.",
+          "Orders are paid by bank transfer. Stock is reserved for 3 business days after the order is placed. Orders not paid within that time may be cancelled.",
         ],
       },
       {
@@ -70,7 +70,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: "8. Governing law",
-        paragraphs: ["These terms are governed by the laws of [jurisdiction]. The courts of [jurisdiction] have jurisdiction."],
+        paragraphs: ["These terms are governed by the laws of England and Wales. The courts of England and Wales have jurisdiction."],
       },
     ],
   },
@@ -78,7 +78,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     slug: "privacy",
     title: "Privacy policy",
     summary: "What personal data we collect, why, and your rights.",
-    updated: "[Date]",
+    updated: "1 January 2026",
     sections: [
       {
         heading: "Controller",
@@ -99,12 +99,12 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       {
         heading: "Service providers",
         paragraphs: [
-          "We use providers that process data on our behalf: website hosting ([Vercel / your host]), commerce backend hosting ([Railway]), transactional email ([Resend]) and our bank. They may process data outside your country under appropriate safeguards.",
+          "We use providers that process data on our behalf: website hosting (Vercel), commerce backend hosting (Railway), transactional email (Resend) and our bank. They may process data outside your country under appropriate safeguards.",
         ],
       },
       {
         heading: "Retention",
-        paragraphs: ["Order records are kept for [X] years for accounting purposes. Contact messages are kept for [X] months."],
+        paragraphs: ["Order records are kept for 6 years for accounting and tax purposes. Contact messages are kept for 30 days."],
       },
       {
         heading: "Your rights",
@@ -124,7 +124,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     slug: "shipping-returns",
     title: "Shipping & returns",
     summary: "Delivery options, times, costs and how returns work.",
-    updated: "[Date]",
+    updated: "1 January 2026",
     sections: [
       {
         heading: "Where we ship",
