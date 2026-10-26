@@ -7,9 +7,11 @@ import {
 } from "@medusajs/framework/http"
 import { StoreContactSchema } from "./store/contact/validators"
 import { CustomerOrdersQuery } from "./store/account/orders/validators"
+import { ruoGuardRoutes } from "./ruo-guards"
 
 export default defineMiddlewares({
   routes: [
+    ...ruoGuardRoutes,
     {
       method: ["GET"],
       matcher: "/store/account/orders",

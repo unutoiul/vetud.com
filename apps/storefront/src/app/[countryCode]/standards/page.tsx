@@ -60,7 +60,7 @@ const FAQ: FaqItem[] = [
   {
     question: "How do I pay?",
     answer:
-      "Checkout places your order and reserves the stock. You then receive an email with bank transfer details and your order number as the payment reference. We ship as soon as the payment arrives.",
+      "You need an account to order. At checkout you choose from the payment methods offered for your region. For bank transfer, we reserve the stock and email the transfer details and your order number as the payment reference. We ship once payment is confirmed.",
   },
   {
     question: "When will my order ship?",
@@ -75,12 +75,12 @@ const FAQ: FaqItem[] = [
   {
     question: "How should materials be stored?",
     answer:
-      "Storage and stability depend on the formulation. Follow the manufacturer's batch-specific temperature instructions and expiry date. Confirm whether freezing is permitted before placing a pen or spray in a freezer.",
+      "Storage and stability depend on the material. Follow the storage conditions and expiry date shown on the label and in the lot documentation.",
   },
   {
     question: "Can I return an order?",
     answer:
-      "Sealed, unopened items can be returned within 14 days of delivery. For quality concerns, contact us with your order and lot number. See shipping & returns for details.",
+      "Sealed, unopened items can be returned within 14 days of delivery. For quality concerns, contact us with your order and lot number. See the returns and refund policies for details.",
   },
 ]
 

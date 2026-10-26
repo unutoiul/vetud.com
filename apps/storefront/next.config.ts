@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     const adminUrl = `${(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")}/app`
     return [
+      { source: "/:countryCode/legal/shipping-returns", destination: "/:countryCode/legal/shipping", permanent: true },
+      { source: "/legal/shipping-returns", destination: "/legal/shipping", permanent: true },
       { source: "/admin", destination: adminUrl, permanent: false },
       { source: "/admin/:path*", destination: adminUrl, permanent: false },
     ]

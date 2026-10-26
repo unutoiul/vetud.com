@@ -23,6 +23,7 @@ export const CART_FIELDS = [
   "*shipping_methods",
   "*shipping_address",
   "*billing_address",
+  "+metadata",
   "*payment_collection",
   "*payment_collection.payment_sessions",
   "*region",

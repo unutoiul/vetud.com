@@ -74,8 +74,10 @@ export default function Footer() {
             {SITE.ruoNotice} Nothing on this site is medical advice. Product availability varies by
             region.
           </Typography>
-          <Typography sx={{ fontSize: "inherit", whiteSpace: "nowrap" }}>
-            © <CopyrightYear /> {SITE.name}
+          <Typography sx={{ fontSize: "inherit", lineHeight: 1.7 }}>
+            © <CopyrightYear /> {SITE.legalName}
+            <br />
+            {SITE.address} · <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
           </Typography>
         </Stack>
       </Box>

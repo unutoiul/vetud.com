@@ -8,7 +8,9 @@ import Button from "@mui/material/Button"
 import Checkbox from "@mui/material/Checkbox"
 import CircularProgress from "@mui/material/CircularProgress"
 import FormControlLabel from "@mui/material/FormControlLabel"
+import FormHelperText from "@mui/material/FormHelperText"
 import Grid from "@mui/material/Grid"
+import MenuItem from "@mui/material/MenuItem"
 import Paper from "@mui/material/Paper"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
@@ -25,6 +27,8 @@ import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib
 import { sdk } from "@/lib/medusa/sdk"
 import { PAYPAL_PROVIDER_ID, readPayPalRedirect } from "@/lib/paypal"
 import { formatMoney } from "@/lib/product"
+import { hasResearchProfile, researchMetadata, RESEARCH_FIELDS, RUO_ACK_TEXT } from "@/lib/research"
+import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
 import CartLineItem from "../cart/CartLineItem"
 import OrderTotals from "../cart/OrderTotals"
@@ -58,7 +62,7 @@ function hasPaymentSession(cart: HttpTypes.StoreCart) {
 }
 
 function initialStep(cart: HttpTypes.StoreCart) {
-  if (!cart.email || !cart.shipping_address?.address_1) return 0
+  if (!cart.email || !cart.shipping_address?.address_1 || !hasResearchProfile(cart)) return 0
   if (!cart.shipping_methods?.length) return 1
   if (!hasPaymentSession(cart)) return 2
   return 3
@@ -121,6 +125,11 @@ export default function CheckoutFlow() {
     )
   }
 
+  // An account is required to order: there is no guest checkout.
+  if (!customer) {
+    return <AuthPanel context="checkout" />
+  }
+
   // Until the visitor picks a step, resume where the saved cart left off.
   const maxReachable = initialStep(cart)
   const activeStep = step ?? maxReachable
@@ -148,6 +157,10 @@ export default function CheckoutFlow() {
     guard(async (assertCurrent) => {
       const checkoutCart = customer ? await linkCustomerCart() : cart
       assertCurrent()
+      if (!hasResearchProfile(checkoutCart)) {
+        setStep(0)
+        throw new Error("Please confirm your research details before placing your order.")
+      }
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         setStep(2)
         throw new Error("Your account pricing has been applied. Please review the updated total and choose payment again.")
@@ -221,7 +234,11 @@ export default function CheckoutFlow() {
                 guard(async (assertCurrent) => {
                   if (customer) await linkCustomerCart()
                   assertCurrent()
-                  const { saveAddress, ...cartBody } = body
+                  const { saveAddress, research_field, ...addressBody } = body
+                  const cartBody = {
+                    ...addressBody,
+                    metadata: researchMetadata({ research_field, company_name: body.shipping_address.company }),
+                  }
                   const { cart: updated } = await sdk.store.cart.update(cart.id, cartBody, { fields: CART_FIELDS })
                   assertCurrent()
                   setCart(updated)
@@ -317,6 +334,7 @@ type DetailsBody = {
   shipping_address: AddressValues
   billing_address: AddressValues
   saveAddress: boolean
+  research_field: string
 }
 
 function DetailsStep({
@@ -359,12 +377,18 @@ function DetailsStep({
     const values = toAddressValues(cart.billing_address ?? cart.shipping_address ?? preferredAddress)
     return { ...values, country_code: values.country_code || defaultCountry }
   })
+  const [researchField, setResearchField] = useState<string>(
+    typeof cart.metadata?.research_field === "string" ? cart.metadata.research_field : ""
+  )
+  const [acknowledged, setAcknowledged] = useState(hasResearchProfile(cart))
   const [showErrors, setShowErrors] = useState(false)
 
+  const researchError = !researchField ? "Choose your field of research" : undefined
+  const ackError = !acknowledged ? "You must confirm this to place an order" : undefined
   const emailError = !EMAIL_PATTERN.test(email.trim()) ? "Enter a valid email address" : undefined
   const shippingErrors = validateAddress(shipping)
   const billingErrors = billingSame ? {} : validateAddress(billing)
-  const valid = !emailError && !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length
+  const valid = !emailError && !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length && !researchError && !ackError
 
   return (
     <Box
@@ -378,13 +402,17 @@ function DetailsStep({
             ? "email"
             : Object.keys(shippingErrors).length
               ? `shipping-${Object.keys(shippingErrors)[0]}`
-              : `billing-${Object.keys(billingErrors)[0]}`
+              : Object.keys(billingErrors).length
+                ? `billing-${Object.keys(billingErrors)[0]}`
+                : researchError
+                  ? "research_field"
+                  : "ruo_acknowledged"
           const control = event.currentTarget.querySelector<HTMLElement>(`[id="${field}"]`)
             ?? event.currentTarget.querySelector<HTMLInputElement>(`[name="${field}"]`)
           control?.focus()
           return
         }
-        onSubmit({ email: email.trim(), shipping_address: shipping, billing_address: billingSame ? shipping : billing, saveAddress: Boolean(customer && saveAddress && selectedAddressId === "new") })
+        onSubmit({ email: email.trim(), shipping_address: shipping, billing_address: billingSame ? shipping : billing, saveAddress: Boolean(customer && saveAddress && selectedAddressId === "new"), research_field: researchField })
       }}
     >
       <Typography variant="h5" component="h2" sx={{ mb: 0.5 }}>
@@ -465,6 +493,44 @@ function DetailsStep({
           />
         </Box>
       ) : null}
+
+      <Typography variant="h5" component="h2" sx={{ mt: 4, mb: 0.5 }}>
+        Research details
+      </Typography>
+      <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
+        Our products are supplied to qualified researchers and institutions for laboratory research only.
+      </Typography>
+      <TextField
+        select
+        label="Field of research"
+        name="research_field"
+        id="research_field"
+        required
+        value={researchField}
+        onChange={(event) => setResearchField(event.target.value)}
+        error={showErrors && Boolean(researchError)}
+        helperText={showErrors ? researchError : undefined}
+      >
+        {RESEARCH_FIELDS.map((field) => (
+          <MenuItem key={field} value={field}>
+            {field}
+          </MenuItem>
+        ))}
+      </TextField>
+      <FormControlLabel
+        sx={{ mt: 2, alignItems: "flex-start" }}
+        control={
+          <Checkbox
+            name="ruo_acknowledged"
+            id="ruo_acknowledged"
+            checked={acknowledged}
+            onChange={(event) => setAcknowledged(event.target.checked)}
+            sx={{ pt: 0.5 }}
+          />
+        }
+        label={<Typography variant="body2">{RUO_ACK_TEXT}</Typography>}
+      />
+      {showErrors && ackError ? <FormHelperText error>{ackError}</FormHelperText> : null}
 
       <SubmitButton busy={busy}>Continue to delivery</SubmitButton>
     </Box>
@@ -689,6 +755,15 @@ function ReviewStep({
         address?.address_2,
         [address?.postal_code, address?.city, address?.province].filter(Boolean).join(" "),
         address?.country_code?.toUpperCase(),
+      ].filter(Boolean) as string[],
+    },
+    {
+      title: "Research",
+      step: 0,
+      lines: [
+        typeof cart.metadata?.company_name === "string" ? cart.metadata.company_name : "",
+        typeof cart.metadata?.research_field === "string" ? cart.metadata.research_field : "",
+        "Research use confirmed",
       ].filter(Boolean) as string[],
     },
     {

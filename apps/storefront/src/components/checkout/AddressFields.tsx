@@ -30,7 +30,7 @@ export const EMPTY_ADDRESS: AddressValues = {
   phone: "",
 }
 
-const REQUIRED: (keyof AddressValues)[] = ["first_name", "last_name", "address_1", "city", "postal_code", "country_code"]
+const REQUIRED: (keyof AddressValues)[] = ["first_name", "last_name", "company", "address_1", "city", "postal_code", "country_code"]
 
 export function validateAddress(values: AddressValues) {
   const errors: Partial<Record<keyof AddressValues, string>> = {}
@@ -83,7 +83,7 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
         <TextField {...field("last_name", "Last name", { autoComplete: "family-name", required: true })} />
       </Grid>
       <Grid size={12}>
-        <TextField {...field("company", "Institution or company (optional)", { autoComplete: "organization" })} />
+        <TextField {...field("company", "Company or institution", { autoComplete: "organization", required: true })} />
       </Grid>
       <Grid size={12}>
         <TextField {...field("address_1", "Address", { autoComplete: "address-line1", required: true })} />

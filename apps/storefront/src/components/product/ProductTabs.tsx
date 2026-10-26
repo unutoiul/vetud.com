@@ -125,7 +125,7 @@ export default function ProductTabs({ description, specs, lots, productTitle }: 
           </li>
           <li>
             <Typography>
-              Orders ship once payment is confirmed. See <AppLink href="/legal/shipping-returns">shipping & returns</AppLink>.
+              Orders ship once payment is confirmed. See <AppLink href="/legal/shipping">shipping policy</AppLink> and <AppLink href="/legal/returns">returns policy</AppLink>.
             </Typography>
           </li>
         </Box>

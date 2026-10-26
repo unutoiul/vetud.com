@@ -1,4 +1,4 @@
-import { ClockIcon as AccessTimeOutlinedIcon, DocumentIcon as DescriptionOutlinedIcon, MailIcon as MailOutlineIcon } from "@/components/brand/Icon"
+import { ClockIcon as AccessTimeOutlinedIcon, DocumentIcon as DescriptionOutlinedIcon, GlobeIcon as PlaceOutlinedIcon, MailIcon as MailOutlineIcon } from "@/components/brand/Icon"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Skeleton from "@mui/material/Skeleton"
@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   const details = [
     { icon: MailOutlineIcon, title: "Email", body: <a href={`mailto:${SITE.email}`}>{SITE.email}</a> },
+    { icon: PlaceOutlinedIcon, title: "Registered address", body: `${SITE.legalName}, ${SITE.address}` },
     { icon: AccessTimeOutlinedIcon, title: "Response time", body: "Within one business day, Monday to Friday." },
     {
       icon: DescriptionOutlinedIcon,

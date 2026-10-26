@@ -34,7 +34,8 @@ export default function AccountPage({ view = "profile" }: { view?: "profile" | "
   return <AccountDashboard key={customer.id} view={view} />
 }
 
-function AuthPanel() {
+export function AuthPanel({ context = "account" }: { context?: "account" | "checkout" }) {
+  const atCheckout = context === "checkout"
   const { signIn, signUp, pending, error, clearError } = useAccount()
   const [mode, setMode] = useState<"signin" | "signup">("signin")
   const [email, setEmail] = useState("")
@@ -75,16 +76,21 @@ function AuthPanel() {
     <Grid container spacing={{ xs: 3, md: 6 }}>
       <Grid size={{ xs: 12, md: 5 }}>
         <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
-          {mode === "signin" ? "Welcome back" : "Your Vetud account"}
+          {atCheckout ? "Account required" : mode === "signin" ? "Welcome back" : "Your Vetud account"}
         </Typography>
         <Typography variant="h3" component="h2" sx={{ mt: 1.5, mb: 2 }}>
-          {mode === "signin" ? "Order faster next time." : "Make every order simpler."}
+          {atCheckout ? "Sign in to place your order." : mode === "signin" ? "Order faster next time." : "Make every order simpler."}
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          Save your delivery details, review past orders and follow shipments from one private account.
+          {atCheckout
+            ? "Our products are supplied to qualified researchers and institutions, so an account is required to order. Sign in, or create an account in a minute."
+            : "An account is required to place orders. It also saves your delivery details and lets you review past orders and follow shipments."}
         </Typography>
         <Stack spacing={1.5} sx={{ mt: 4 }}>
-          {["Saved shipping addresses", "One-click checkout details", "Order history and tracking"].map((item) => (
+          {(atCheckout
+            ? ["An account is required to order", "Research use confirmed and recorded with each order", "Order history and tracking"]
+            : ["Saved shipping addresses", "One-click checkout details", "Order history and tracking"]
+          ).map((item) => (
             <Stack key={item} direction="row" spacing={1.25} sx={{ alignItems: "center" }}>
               <Icon name="checkCircle" sx={{ color: "secondary.main", fontSize: 19 }} />
               <Typography variant="body2">{item}</Typography>
@@ -126,7 +132,7 @@ function AuthPanel() {
             </Button>
           </Box>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
-            You can always order as a guest. An account simply remembers the details you choose to save.
+            An account is required to place an order. We use these details to support order verification, tracking and customer service.
           </Typography>
         </Paper>
       </Grid>
