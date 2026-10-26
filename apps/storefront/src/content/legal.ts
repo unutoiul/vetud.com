@@ -13,9 +13,9 @@ export type LegalDocument = {
   sections: LegalSection[]
 }
 
-const COMPANY = "[Company legal name]"
+const COMPANY = "Vetud LTD"
 const ADDRESS = "[Registered address]"
-const EMAIL = "[support email]"
+const EMAIL = "contact@vetud.com"
 
 export const LEGAL_DOCUMENTS: LegalDocument[] = [
   {

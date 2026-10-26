@@ -30,7 +30,7 @@ export const PAYMENT_BANK_DETAILS = process.env.NEXT_PUBLIC_PAYMENT_BANK_DETAILS
 export const SITE = {
   name: "Vetud Peptides",
   shortName: "Vetud",
-  email: "hello@vetud.example",
+  email: "contact@vetud.com",
   description:
     "Research-grade peptides with lot-level documentation. Precise information, traceable batches and responsive support for laboratory research.",
   ruoNotice:
