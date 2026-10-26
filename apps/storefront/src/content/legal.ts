@@ -163,31 +163,47 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
   {
     slug: "research-use",
     title: "Research use policy",
-    summary: "The conditions under which we supply research materials.",
-    updated: "[Date]",
+    summary: "Research Use Only (RUO) notice: the conditions under which we supply research materials.",
+    updated: "26 October 2026",
     sections: [
       {
-        heading: "Laboratory research only",
+        heading: "Research Use Only",
         paragraphs: [
-          "All Vetud products are supplied strictly for in-vitro laboratory research and development. They are not drugs, food, dietary supplements or cosmetics, and are not intended to diagnose, treat, cure or prevent any disease.",
+          "All products sold by Vetud Peptides are supplied strictly for laboratory research and in-vitro analytical use by qualified professionals.",
+          "They are not drugs, medicines, dietary supplements, foods, cosmetics or medical devices, and they have not been evaluated or approved by the FDA, the EMA or any other regulatory authority for any diagnostic, preventive or therapeutic purpose.",
         ],
       },
       {
-        heading: "No human or veterinary use",
+        heading: "Not for human or veterinary use",
         paragraphs: [
-          "Products must not be administered to humans or animals in any form. We do not provide dosing information, protocols for personal use or medical advice, and our team will not answer such questions.",
+          "Products are not for human or veterinary consumption, injection, ingestion, inhalation or topical application, and must not be used in humans or animals or for any clinical purpose.",
+          "We do not provide dosing, administration or protocols for personal use, and we do not give medical advice. Our team will not answer such questions.",
         ],
       },
       {
         heading: "Qualified purchasers",
         paragraphs: [
-          "Purchasers must be at least 21 years old and handle materials in an appropriate laboratory setting in accordance with all applicable laws and safety practices.",
+          "By purchasing, you confirm that you are at least 21 years old and a qualified researcher or institution, or acting on behalf of one, with the training and facilities to handle research materials safely.",
+          "You confirm that you will use the materials only for lawful laboratory research under appropriate safeguards, and that you will not resell or pass them on for human or animal use.",
+        ],
+      },
+      {
+        heading: "Your responsibility for compliance",
+        paragraphs: [
+          "You are responsible for complying with all laws and import regulations that apply to you and to the destination country, including any permits, licences or customs requirements for research materials.",
+        ],
+      },
+      {
+        heading: "Product documentation",
+        paragraphs: [
+          "Each product is identified by its lot number and a certificate of analysis for that lot. Information on this site is provided for research reference only and is not medical advice.",
         ],
       },
       {
         heading: "Our right to refuse",
         paragraphs: [
-          "We may decline or cancel orders that indicate an intended use outside these conditions, or that cannot lawfully be shipped to the destination.",
+          "We may decline or cancel any order, request verification of the intended use, and report suspected misuse, where an order indicates a use outside this policy or cannot lawfully be shipped to the destination.",
+          "All sales are subject to our Terms of sale.",
         ],
       },
     ],
