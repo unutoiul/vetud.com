@@ -19,7 +19,7 @@ export default function ProductGallery({ title, images, aspectRatio }: ProductGa
   if (!active) return null
 
   const photoLabel = (url: string, index: number) =>
-    url.includes("_closed") ? `${title} closed kit` : url.includes("_open") ? `${title} open kit` : `${title} product photo ${index + 1}`
+    url.includes("_closed") ? `${title} closed packaging` : url.includes("_open") ? `${title} open packaging` : `${title} product photo ${index + 1}`
 
   return (
     <Box>

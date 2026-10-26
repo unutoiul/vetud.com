@@ -46,7 +46,7 @@ export default function Footer() {
           <Grid size={{ xs: 12, md: 4 }}>
             <Logo tone="dark" />
             <Typography sx={{ mt: 2.5, maxWidth: 330, color: "text.secondary", fontSize: 13.5, lineHeight: 1.9 }}>
-              Peptide pens and sprays, presented with clear product details.
+              Research peptides, presented with clear product details and lot documentation.
             </Typography>
             <Box sx={{ mt: 3, maxWidth: 330, bgcolor: "brand.navy", borderRadius: 3, p: 2.5 }}>
               <Typography sx={{ color: "brand.onNavyMuted", fontSize: 12.5, mb: 1.25 }}>A question about your research order?</Typography>

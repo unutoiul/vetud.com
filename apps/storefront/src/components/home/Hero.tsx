@@ -4,14 +4,14 @@ import { motion, MotionConfig } from "motion/react"
 import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import HeroCarousel from "./HeroCarousel"
+import HeroImage from "./HeroImage"
 import Icon from "../brand/Icon"
 import { ButtonLink, LocalizedNextLink } from "../common/links"
 import { gutter } from "@/theme/tokens"
 
 const FORMATS = [
-  { number: "01", title: "All products", detail: "Peptide pens & nasal sprays", href: "#catalog", icon: "molecule" as const },
-  { number: "02", title: "Nasal sprays", detail: "Selank & Semax · 10 ml", href: "#sprays", icon: "leaf" as const },
+  { number: "01", title: "Lot documentation", detail: "Look up a lot and its certificate of analysis", href: "/documentation", icon: "flask" as const },
+  { number: "02", title: "Our standards", detail: "How every product is documented", href: "/standards", icon: "shield" as const },
 ]
 
 export default function Hero() {
@@ -23,13 +23,13 @@ export default function Hero() {
           <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8 }}>
             <Stack direction="row" spacing={1.25} sx={{ alignItems: "center", mb: { xs: 2.5, md: 3.5 } }}>
               <Box sx={{ width: 7, height: 7, borderRadius: "50%", bgcolor: "brand.teal" }} />
-              <Typography variant="eyebrow" sx={{ fontSize: 11, letterSpacing: ".14em", color: "brand.navySoft", textTransform: "uppercase" }}>VETUD / Peptide Series</Typography>
+              <Typography variant="eyebrow" sx={{ fontSize: 11, letterSpacing: ".14em", color: "brand.navySoft", textTransform: "uppercase" }}>VETUD / Research peptides</Typography>
             </Stack>
             <Typography id="hero-title" component="h1" sx={{ fontSize: { xs: 48, sm: 64, md: 68, lg: 82 }, lineHeight: 1.04, letterSpacing: "-.055em", fontWeight: 500, mb: { xs: 2.5, md: 3 }, maxWidth: 570 }}>
               Pure science.<br /><Box component="span" sx={{ color: "brand.blue" }}>Clear perspective.</Box>
             </Typography>
             <Typography sx={{ maxWidth: 430, color: "text.secondary", fontSize: { xs: 15.5, md: 17 }, lineHeight: 1.85, mb: 3.5 }}>
-              A focused collection, thoughtfully presented. Discover freeze-dried, dual-chamber pen kits and Selank and Semax in 10 ml spray formats.
+              Research-grade peptides for qualified laboratories, supplied with lot-level documentation and a certificate of analysis.
             </Typography>
             <Stack direction="row" spacing={1.5} useFlexGap sx={{ flexWrap: "wrap" }}>
               <ButtonLink href="/shop" variant="contained" size="large" endIcon={<Icon name="arrowUpRight" />}>Shop the collection</ButtonLink>
@@ -41,7 +41,7 @@ export default function Hero() {
             </Stack>
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: .97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: .1 }} style={{ minWidth: 0 }}>
-            <HeroCarousel />
+            <HeroImage />
           </motion.div>
         </Box>
         <Box sx={{ maxWidth: 1440, mx: "auto", mt: { xs: 4, md: 5 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: { xs: 0, sm: 5 }, borderTop: "1px solid", borderColor: "divider" }}>

@@ -63,15 +63,31 @@ async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countr
         <ProductGrid products={sorted} />
       ) : (
         <Stack spacing={2} sx={{ py: 8, alignItems: "center", textAlign: "center" }}>
-          <Typography variant="h4" component="p">
-            No products match{query ? ` “${query}”` : " this filter"}.
-          </Typography>
-          <Typography sx={{ color: "text.secondary" }}>
-            Try a product code like VTD-01 or a lot number like VTD01-2609A.
-          </Typography>
-          <ButtonLink href="/shop" variant="outlined">
-            Clear filters
-          </ButtonLink>
+          {query ? (
+            <>
+              <Typography variant="h4" component="p">
+                No products match “{query}”.
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                Try a product code or a lot number.
+              </Typography>
+              <ButtonLink href="/shop" variant="outlined">
+                Clear filters
+              </ButtonLink>
+            </>
+          ) : (
+            <>
+              <Typography variant="h4" component="p">
+                Our catalog is being updated.
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                Contact us for availability of research materials.
+              </Typography>
+              <ButtonLink href="/contact" variant="outlined">
+                Contact us
+              </ButtonLink>
+            </>
+          )}
         </Stack>
       )}
     </>

@@ -162,7 +162,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
               ) : (
                 <ArtStage height={{ xs: 320, sm: 420, md: 520 }}>
                   <Box sx={{ width: "90%", maxWidth: 500, position: "relative", zIndex: 1 }}>
-                    <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} title={`${product.title} kit box`} />
+                    <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} title={`${product.title} product image`} />
                   </Box>
                 </ArtStage>
               )}

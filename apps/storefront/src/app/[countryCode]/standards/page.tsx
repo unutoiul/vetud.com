@@ -31,7 +31,7 @@ const PRINCIPLES = [
   {
     icon: Inventory2OutlinedIcon,
     title: "Careful handling",
-    text: "Sealed vials, desiccant, protective kit boxes and tracked shipping in every region we serve.",
+    text: "Sealed vials, desiccant, protective packaging and tracked shipping in every region we serve.",
   },
   {
     icon: SupportAgentOutlinedIcon,

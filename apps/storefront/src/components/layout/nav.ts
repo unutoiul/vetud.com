@@ -1,6 +1,5 @@
 export const NAV_LINKS = [
   { label: "Shop", href: "/shop" },
-  { label: "Discover", href: "/discover" },
 ]
 
 export const SECONDARY_LINKS = [

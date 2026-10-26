@@ -32,7 +32,7 @@ export const STANDARD_STEPS: StandardStep[] = [
     title: "Handled with care",
     summary: "Sealed, desiccated packing and tracked, region-aware shipping.",
     detail:
-      "Orders are packed with desiccant in protective kit boxes and shipped from our warehouse with tracking. Standard shipping is free above the threshold in your region.",
+      "Orders are packed with desiccant in protective packaging and shipped from our warehouse with tracking. Standard shipping is free above the threshold in your region.",
   },
   {
     title: "Thoughtful support",

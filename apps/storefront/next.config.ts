@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/:countryCode/legal/shipping-returns", destination: "/:countryCode/legal/shipping", permanent: true },
       { source: "/legal/shipping-returns", destination: "/legal/shipping", permanent: true },
+      { source: "/:countryCode/discover", destination: "/:countryCode/shop", permanent: true },
+      { source: "/discover", destination: "/shop", permanent: true },
       { source: "/admin", destination: adminUrl, permanent: false },
       { source: "/admin/:path*", destination: adminUrl, permanent: false },
     ]
