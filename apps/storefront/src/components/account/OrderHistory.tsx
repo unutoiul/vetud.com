@@ -15,7 +15,7 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { useEffect, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
-import { activeShipments, deliveryLabel, orderNumber, paymentLabel, shipmentLabel, trackingLink, type CustomerOrder, type CustomerOrdersResponse } from "@/lib/orders"
+import { activeShipments, deliveryLabel, orderNumber, orderPaymentLabel, orderPaymentNotice, shipmentLabel, trackingLink, type CustomerOrder, type CustomerOrdersResponse } from "@/lib/orders"
 import { formatMoney } from "@/lib/product"
 import Icon from "../brand/Icon"
 import { ButtonLink } from "../common/links"
@@ -111,6 +111,7 @@ function OrderCard({ order }: { order: CustomerOrder }) {
   const number = orderNumber(order)
   const shipments = activeShipments(order)
   const address = order.shipping_address
+  const paymentNotice = orderPaymentNotice(order)
   const money = (amount: number | null | undefined) => formatMoney(Number(amount ?? 0), order.currency_code)
 
   return (
@@ -125,11 +126,12 @@ function OrderCard({ order }: { order: CustomerOrder }) {
         </Stack>
         <Stack direction="row" sx={{ gap: 1, flexWrap: "wrap", mt: 2 }}>
           <Chip label={deliveryLabel(order)} size="small" color={order.fulfillment_status === "delivered" && order.status !== "canceled" ? "success" : "default"} />
-          <Chip label={paymentLabel(order.payment_status)} size="small" variant="outlined" />
+          <Chip label={orderPaymentLabel(order)} size="small" variant="outlined" />
         </Stack>
       </Box>
 
       <Stack spacing={2} sx={{ px: { xs: 2.5, md: 3.5 }, py: 2.5 }}>
+        {paymentNotice ? <Alert severity={order.payment_summary?.review === "pending_settlement" ? "info" : "warning"}>{paymentNotice}</Alert> : null}
         {shipments.length ? shipments.map((shipment, index) => (
           <Box key={shipment.id}>
             <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>

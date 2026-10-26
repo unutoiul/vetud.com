@@ -42,6 +42,9 @@ export type OrderPlacedEmailData = {
   storefront_url: string
   payment_instructions?: string
   bank_details?: string
+  manual_payment?: boolean
+  payment_summary?: string
+  admin_payment_action?: string
 }
 
 export type ShipmentCreatedEmailData = {

@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
+import { serializeOrderReceipt } from "@/lib/order-receipt"
 import { ButtonLink } from "../common/links"
 import { useStore } from "../store/StoreProvider"
 import { useAccount } from "../account/AccountProvider"
@@ -20,7 +21,7 @@ export default function PayPalReturn() {
   const router = useRouter()
   const cancelled = useSearchParams().get("cancelled") === "1"
   const { cart, cartReady, clearCart, isCurrentCart, countryCode } = useStore()
-  const { captureSession } = useAccount()
+  const { captureSession, customer } = useAccount()
   const [error, setError] = useState<string | null>(null)
   const started = useRef(false)
   const cartId = cart?.id
@@ -39,7 +40,8 @@ export default function PayPalReturn() {
           return
         }
         try {
-          window.sessionStorage.setItem(`vetud_order_${result.order.id}`, JSON.stringify(result.order))
+          const receipt = serializeOrderReceipt(result.order, customer?.id)
+          if (receipt) window.sessionStorage.setItem(`vetud_order_${result.order.id}`, receipt)
         } catch {
           // The confirmation page fetches the order when storage is unavailable.
         }
@@ -49,7 +51,7 @@ export default function PayPalReturn() {
       .catch(() => {
         setError("We couldn't confirm the payment result yet. Check your order history or confirmation email before trying again.")
       })
-  }, [cartReady, cancelled, cartId, clearCart, isCurrentCart, captureSession, router, countryCode])
+  }, [cartReady, cancelled, cartId, clearCart, isCurrentCart, captureSession, customer?.id, router, countryCode])
 
   const message = cancelled
     ? { severity: "info" as const, text: "You cancelled the PayPal payment. Nothing was charged." }

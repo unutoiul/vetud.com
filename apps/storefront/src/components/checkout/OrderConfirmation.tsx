@@ -1,6 +1,5 @@
 "use client"
 
-import type { HttpTypes } from "@medusajs/types"
 import { CheckCircleIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -14,17 +13,17 @@ import { useEffect, useState } from "react"
 import { PAYMENT_BANK_DETAILS } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { formatMoney } from "@/lib/product"
+import { confirmationPayment } from "@/lib/nmi"
+import { orderNumber, type CustomerOrder } from "@/lib/orders"
+import { parseOrderReceipt } from "@/lib/order-receipt"
 import OrderTotals from "../cart/OrderTotals"
 import { ButtonLink } from "../common/links"
 import { useAccount } from "../account/AccountProvider"
 
-const ORDER_FIELDS =
-  "id,display_id,email,currency_code,created_at,item_total,shipping_total,tax_total,discount_total,total,*items,*shipping_address,*shipping_methods"
-
-function readStoredOrder(id: string): HttpTypes.StoreOrder | null {
+function readStoredOrder(id: string, customerId?: string): CustomerOrder | null {
   try {
     const stored = window.sessionStorage.getItem(`vetud_order_${id}`)
-    return stored ? JSON.parse(stored) : null
+    return parseOrderReceipt(stored, id, customerId)
   } catch {
     return null
   }
@@ -34,41 +33,43 @@ export default function OrderConfirmation() {
   const { customer } = useAccount()
   const params = useSearchParams()
   const id = params.get("id") ?? ""
-  const paid = params.get("paid") === "1"
-  const [order, setOrder] = useState<HttpTypes.StoreOrder | null>(null)
-  const [failed, setFailed] = useState(false)
+  const [result, setResult] = useState<{ id: string; customerId?: string; order: CustomerOrder | null; authoritative: boolean }>({ id: "", order: null, authoritative: false })
 
   useEffect(() => {
     let cancelled = false
     if (!id) return
-    sdk.store.order
-      .retrieve(id, { fields: ORDER_FIELDS })
+    sdk.client.fetch<{ order: CustomerOrder }>(`/store/account/orders/${encodeURIComponent(id)}`, { cache: "no-store" })
       .then(({ order: fetched }) => {
-        if (!cancelled) setOrder(fetched)
+        if (!cancelled) setResult({ id, customerId: customer?.id, order: fetched, authoritative: true })
       })
       .catch(() => {
         if (cancelled) return
         // Fall back to the copy saved at checkout (same browser tab).
-        const stored = readStoredOrder(id)
-        if (stored) setOrder(stored)
-        else setFailed(true)
+        const stored = readStoredOrder(id, customer?.id)
+        setResult({ id, customerId: customer?.id, order: stored, authoritative: false })
       })
     return () => {
       cancelled = true
     }
-  }, [id])
+  }, [id, customer?.id])
+
+  // A changed URL/account must never temporarily display the previous order.
+  const current = result.id === id && result.customerId === customer?.id
+  const order = current ? result.order : null
+  const authoritative = current && result.authoritative
 
   if (!order) {
-    return failed || !id ? (
+    return current || !id ? (
       <Alert severity="warning">
-        We couldn&apos;t load this order. If you just placed it, check your email for the confirmation.
+        We couldn&apos;t load this order. Sign in to the account used at checkout, or check your confirmation email.
       </Alert>
     ) : (
       <Skeleton variant="rounded" height={360} />
     )
   }
 
-  const number = order.display_id ? `#${order.display_id}` : order.id
+  const number = orderNumber(order)
+  const { paid, manual, message } = confirmationPayment(order, authoritative)
   const address = order.shipping_address
   const bankLines = PAYMENT_BANK_DETAILS ? PAYMENT_BANK_DETAILS.split("|").map((line) => line.trim()) : []
 
@@ -78,23 +79,14 @@ export default function OrderConfirmation() {
         <Stack direction="row" spacing={1.5} sx={{ alignItems: "center", mb: 2 }}>
           <CheckCircleIcon sx={{ color: "success.main", fontSize: 32 }} />
           <Typography variant="h3" component="h2">
-            {paid ? `Payment received for order ${number}.` : `Order ${number} is reserved.`}
+            {paid ? `Payment received for order ${number}.` : `Order ${number} received.`}
           </Typography>
         </Stack>
         <Typography sx={{ color: "text.secondary", mb: 4 }}>
-          {paid ? (
-            <>
-              A confirmation is on its way to <strong>{order.email}</strong>. We confirm and pack your order next.
-            </>
-          ) : (
-            <>
-              A confirmation with payment instructions is on its way to <strong>{order.email}</strong>.
-              Your items are held for you; we ship as soon as your payment arrives.
-            </>
-          )}
+          A confirmation is on its way to <strong>{order.email}</strong>. {message}
         </Typography>
 
-        {paid ? null : (
+        {manual ? (
         <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#eff5f6", borderRadius: 3, borderColor: "divider", mb: 4 }}>
           <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
             How to pay
@@ -130,14 +122,14 @@ export default function OrderConfirmation() {
             Please include the payment reference so we can match your transfer.
           </Typography>
         </Paper>
-        )}
+        ) : null}
 
         <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
           What happens next
         </Typography>
         <Stack spacing={2}>
           {[
-            ...(paid ? [] : [["01", "Send payment", "Transfer the amount due using your order number as reference."]]),
+            ...(manual ? [["01", "Send payment", "Transfer the amount due using your order number as reference."]] : []),
             [
               "02",
               "We confirm and pack",

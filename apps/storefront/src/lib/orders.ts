@@ -9,7 +9,14 @@ export type OrderShipment = {
   canceled_at?: string | Date | null
   labels?: ShipmentLabel[] | null
 }
-export type CustomerOrder = Omit<HttpTypes.StoreOrder, "fulfillments"> & { fulfillments?: OrderShipment[] }
+export type CustomerPaymentSummary = {
+  method: "nmi_card" | "nmi_ach" | "manual" | "online" | "unknown"
+  review?: "pending_settlement" | "returned" | "requires_review" | "canceled"
+}
+export type CustomerOrder = Omit<HttpTypes.StoreOrder, "fulfillments"> & {
+  fulfillments?: OrderShipment[]
+  payment_summary?: CustomerPaymentSummary
+}
 export type CustomerOrdersResponse = { orders: CustomerOrder[]; count: number; offset: number; limit: number }
 
 export function orderNumber(order: Pick<CustomerOrder, "id" | "display_id" | "custom_display_id">) {
@@ -24,6 +31,25 @@ export function paymentLabel(status: string) {
     requires_action: "Payment needs attention",
   }
   return labels[status] ?? "Payment processing"
+}
+
+export function orderPaymentLabel(order: Pick<CustomerOrder, "payment_status" | "payment_summary">) {
+  const review = order.payment_summary?.review
+  if (review === "pending_settlement") return "Bank payment processing"
+  if (review === "returned") return "Bank payment returned"
+  if (review === "requires_review") return "Payment needs review"
+  if (review === "canceled") return "Payment canceled"
+  return paymentLabel(order.payment_status)
+}
+
+export function orderPaymentNotice(order: Pick<CustomerOrder, "payment_summary">) {
+  switch (order.payment_summary?.review) {
+    case "pending_settlement": return "Your bank debit is processing. Unshipped items stay on hold until settlement is confirmed. No separate transfer is needed."
+    case "returned": return "Your bank payment was returned and needs review. Any unshipped items are on hold. Contact us before paying again; tracking for an already dispatched parcel remains available below."
+    case "requires_review": return "We need to verify this payment. Please contact us before submitting another payment."
+    case "canceled": return "This payment was canceled. Contact us if you still want to proceed with the order."
+    default: return null
+  }
 }
 
 export function deliveryLabel(order: Pick<CustomerOrder, "status" | "fulfillment_status">) {

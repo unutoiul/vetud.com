@@ -1,4 +1,5 @@
 import { loadEnv, defineConfig } from "@medusajs/framework/utils"
+import { getNmiConfig } from "./src/lib/nmi-config"
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd())
 
@@ -149,6 +150,25 @@ if (REDIS_URL) {
 // providers list, so every optional provider is added here. Enable each one on a region in Admin
 // (Settings > Regions) as `pp_<resolve id>_<id>`, e.g. pp_paypal_paypal.
 const paymentProviders: ModuleConfig[] = []
+const nmi = getNmiConfig()
+if (nmi.enabled) {
+  paymentProviders.push({
+    resolve: "./src/modules/nmi",
+    id: "primary",
+    options: {
+      securityKey: process.env.NMI_SECURITY_KEY,
+      tokenizationKey: process.env.NMI_TOKENIZATION_KEY,
+      webhookSecret: process.env.NMI_WEBHOOK_SECRET,
+      captureMethod: "auth",
+      secCode: "WEB",
+      sandbox: nmi.sandbox,
+      accountCurrency: nmi.currency_code,
+      merchantCountry: nmi.merchant_country,
+      achEnabled: nmi.ach_enabled,
+      walletsEnabled: nmi.wallets_enabled,
+    },
+  } as ModuleConfig)
+}
 if (MAKEPAY_ENABLED) {
   paymentProviders.push({
     resolve: "@makecrypto/medusa-plugin-makepay/providers/makepay",

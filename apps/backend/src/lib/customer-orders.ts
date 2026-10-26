@@ -5,6 +5,7 @@ export type CustomerOrdersInput = {
   customer_id: string
   offset: number
   limit: number
+  order_id?: string
 }
 
 // Deliberately fixed: callers cannot expand payment data, internal metadata or
@@ -35,9 +36,11 @@ export function customerOrderQuery(input: CustomerOrdersInput) {
   }
 
   return {
-    fields: CUSTOMER_ORDER_FIELDS,
+    // Only payment IDs/provider IDs enter the order graph. A workflow step
+    // reads fresh settlement metadata separately and emits a safe display hint.
+    fields: [...CUSTOMER_ORDER_FIELDS, "payment_collections.payments.id", "payment_collections.payments.provider_id"],
     variables: {
-      filters: { customer_id: input.customer_id, is_draft_order: false },
+      filters: { customer_id: input.customer_id, is_draft_order: false, ...(input.order_id ? { id: input.order_id } : {}) },
       skip: input.offset,
       take: input.limit,
       order: { created_at: "DESC", id: "DESC" },

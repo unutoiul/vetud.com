@@ -22,11 +22,14 @@ import Stepper from "@mui/material/Stepper"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
-import { useEffect, useMemo, useState } from "react"
+import dynamic from "next/dynamic"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib/makepay"
 import { sdk } from "@/lib/medusa/sdk"
 import { PAYPAL_PROVIDER_ID, readPayPalRedirect } from "@/lib/paypal"
 import { formatMoney } from "@/lib/product"
+import { serializeOrderReceipt } from "@/lib/order-receipt"
+import { NMI_PROVIDER_ID, nmiAvailable, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
 import { hasResearchProfile, researchMetadata, RESEARCH_FIELDS, RUO_ACK_TEXT } from "@/lib/research"
 import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
@@ -38,8 +41,13 @@ import AddressFields, { EMPTY_ADDRESS, toAddressValues, validateAddress, type Ad
 
 const STEPS = ["Details", "Delivery", "Payment", "Review"]
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
 
 const PAYMENT_LABELS: Record<string, { title: string; description: string }> = {
+  [NMI_PROVIDER_ID]: {
+    title: "Credit / debit card or eligible bank account",
+    description: "Enter payment details securely on the next step. Cards are authorized now and captured when ready to ship. Bank debit is available only when enabled and must settle before shipment.",
+  },
   pp_system_default: {
     title: "Bank transfer / invoice",
     description:
@@ -94,6 +102,7 @@ export default function CheckoutFlow() {
   const { customer, loading: accountLoading, createAddress, captureSession } = useAccount()
   const [step, setStep] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
+  const busyRef = useRef(false)
   const [error, setError] = useState<string | null>(null)
   const [completedOrderId, setCompletedOrderId] = useState<string | null>(null)
 
@@ -136,6 +145,8 @@ export default function CheckoutFlow() {
   const currency = cart.currency_code
 
   const guard = async (task: (assertCurrent: () => void) => Promise<void>) => {
+    if (busyRef.current) return
+    busyRef.current = true
     const assertSession = captureSession()
     const assertCurrent = () => {
       assertSession()
@@ -149,13 +160,14 @@ export default function CheckoutFlow() {
     } catch (err) {
       setError(errorMessage(err))
     } finally {
+      busyRef.current = false
       setBusy(false)
     }
   }
 
-  const placeOrder = () =>
+  const placeOrder = (nmiToken?: NmiToken) =>
     guard(async (assertCurrent) => {
-      const checkoutCart = customer ? await linkCustomerCart() : cart
+      let checkoutCart = customer ? await linkCustomerCart() : cart
       assertCurrent()
       if (!hasResearchProfile(checkoutCart)) {
         setStep(0)
@@ -164,6 +176,26 @@ export default function CheckoutFlow() {
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         setStep(2)
         throw new Error("Your account pricing has been applied. Please review the updated total and choose payment again.")
+      }
+      const isNmi = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === NMI_PROVIDER_ID)
+      if (isNmi || nmiToken) {
+        if (!isNmi || !nmiToken || nmiCartFingerprint(checkoutCart) !== nmiCartFingerprint(cart)) {
+          setCart(checkoutCart)
+          setStep(2)
+          throw new Error("Your checkout changed. Review your order and re-enter your secure payment details.")
+        }
+        // Send only the one-use token and consent; never echo signed session
+        // state, billing, amounts, card numbers or bank numbers to this route.
+        await sdk.store.payment.initiatePaymentSession(checkoutCart, { provider_id: NMI_PROVIDER_ID, data: nmiToken })
+        assertCurrent()
+        const { cart: refreshed } = await sdk.store.cart.retrieve(checkoutCart.id, { fields: CART_FIELDS })
+        assertCurrent()
+        if (nmiCartFingerprint(refreshed) !== nmiCartFingerprint(checkoutCart)) {
+          setCart(refreshed)
+          setStep(2)
+          throw new Error("Your total or delivery details changed. Review the order before paying.")
+        }
+        checkoutCart = refreshed
       }
       // PayPal: the shopper approves the payment first; the order is created when they come back
       // (see the PayPal return page), so the cart is deliberately not completed here.
@@ -180,7 +212,8 @@ export default function CheckoutFlow() {
         throw new Error(result.error?.message ?? "We couldn't place your order. Please review your details.")
       }
       try {
-        window.sessionStorage.setItem(`vetud_order_${result.order.id}`, JSON.stringify(result.order))
+        const receipt = serializeOrderReceipt(result.order, customer?.id)
+        if (receipt) window.sessionStorage.setItem(`vetud_order_${result.order.id}`, receipt)
       } catch {
         // The confirmation page fetches the order when storage is unavailable.
       }
@@ -286,7 +319,7 @@ export default function CheckoutFlow() {
                   const existing = checkoutCart.payment_collection?.payment_sessions?.find(
                     (session) => session.provider_id === providerId
                   )
-                  if (providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID) {
+                  if (providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID) {
                     // A MakePay link or PayPal order is bound to one amount, so always create a fresh session.
                     await sdk.store.payment.initiatePaymentSession(checkoutCart, {
                       provider_id: providerId,
@@ -304,7 +337,7 @@ export default function CheckoutFlow() {
               }
             />
           ) : null}
-          {activeStep === 3 ? <ReviewStep cart={cart} busy={busy} onEdit={setStep} onPlaceOrder={placeOrder} /> : null}
+          {activeStep === 3 ? <ReviewStep cart={cart} busy={busy} onEdit={setStep} onPlaceOrder={() => void placeOrder()} onNmiToken={placeOrder} /> : null}
         </Paper>
       </Grid>
 
@@ -649,12 +682,15 @@ function PaymentStep({
 
   useEffect(() => {
     let cancelled = false
-    sdk.store.payment
-      .listPaymentProviders({ region_id: cart.region_id ?? "" })
-      .then(({ payment_providers }) => {
+    Promise.all([
+      sdk.store.payment.listPaymentProviders({ region_id: cart.region_id ?? "" }),
+      sdk.client.fetch<NmiConfig>("/store/nmi/config", { method: "GET", cache: "no-store" }).catch(() => null),
+    ])
+      .then(([{ payment_providers }, config]) => {
         if (cancelled) return
-        setProviders(payment_providers)
-        setSelected((current) => current || payment_providers[0]?.id || "")
+        const available = payment_providers.filter((provider) => provider.id !== NMI_PROVIDER_ID || nmiAvailable(config, cart.currency_code))
+        setProviders(available)
+        setSelected((current) => available.some((provider) => provider.id === current) ? current : available[0]?.id ?? "")
       })
       .catch((err) => {
         if (!cancelled) {
@@ -665,7 +701,7 @@ function PaymentStep({
     return () => {
       cancelled = true
     }
-  }, [cart.region_id, onError])
+  }, [cart.region_id, cart.currency_code, onError])
 
   return (
     <Box
@@ -729,15 +765,18 @@ function ReviewStep({
   busy,
   onEdit,
   onPlaceOrder,
+  onNmiToken,
 }: {
   cart: HttpTypes.StoreCart
   busy: boolean
   onEdit: (step: number) => void
   onPlaceOrder: () => void
+  onNmiToken: (token: NmiToken) => Promise<void>
 }) {
   const address = cart.shipping_address
   const method = cart.shipping_methods?.[0]
   const provider = cart.payment_collection?.payment_sessions?.[0]?.provider_id ?? ""
+  const nmiSession = provider === NMI_PROVIDER_ID ? readNmiSession(cart) : null
 
   const blocks = [
     {
@@ -808,13 +847,18 @@ function ReviewStep({
         ))}
       </Stack>
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
-        {provider === PAYPAL_PROVIDER_ID
+        {provider === NMI_PROVIDER_ID
+          ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
+          : provider === PAYPAL_PROVIDER_ID
           ? "By continuing you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to PayPal to pay; your order is placed once the payment is confirmed, and we ship right after."
           : provider === MAKEPAY_PROVIDER_ID
           ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to MakePay to complete your payment; we ship as soon as it is confirmed."
           : "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will receive payment instructions by email; we ship as soon as payment is received."}
       </Typography>
-      <Button
+      {provider === NMI_PROVIDER_ID ? (
+        nmiSession ? <NmiPaymentForm key={`${nmiSession.id}:${nmiCartFingerprint(cart)}`} session={nmiSession} busy={busy} onToken={onNmiToken} />
+          : <Alert severity="warning" sx={{ mt: 3 }} action={<Button onClick={() => onEdit(2)}>Choose payment</Button>}>Your secure payment session needs refreshing. Return to Payment to review the current currency and total.</Alert>
+      ) : <Button
         variant="contained"
         size="large"
         onClick={onPlaceOrder}
@@ -827,7 +871,7 @@ function ReviewStep({
             ? "Opening PayPal…"
             : "Placing order…"
           : `${provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${formatMoney(Number(cart.total ?? 0), cart.currency_code)}`}
-      </Button>
+      </Button>}
     </Box>
   )
 }
