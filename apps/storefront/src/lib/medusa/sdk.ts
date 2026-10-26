@@ -1,6 +1,8 @@
 import Medusa from "@medusajs/js-sdk"
 import { MEDUSA_BACKEND_URL, MEDUSA_PUBLISHABLE_KEY } from "../config"
 
+export const CUSTOMER_TOKEN_KEY = "vetud_customer_token"
+
 /**
  * One SDK instance for server components and the browser. Customer JWTs are kept
  * in localStorage so returning shoppers can reuse their
@@ -15,6 +17,6 @@ export const sdk = new Medusa({
   auth: {
     type: "jwt",
     jwtTokenStorageMethod: typeof window === "undefined" ? "nostore" : "local",
-    jwtTokenStorageKey: "vetud_customer_token",
+    jwtTokenStorageKey: CUSTOMER_TOKEN_KEY,
   },
 })

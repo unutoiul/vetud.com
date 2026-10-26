@@ -86,8 +86,8 @@ function SubmitButton({ busy, children }: { busy: boolean; children: React.React
 
 export default function CheckoutFlow() {
   const router = useRouter()
-  const { cart, cartReady, setCart, clearCart, linkCustomerCart, region, countries, countryCode } = useStore()
-  const { customer, loading: accountLoading, createAddress } = useAccount()
+  const { cart, cartReady, setCart, clearCart, linkCustomerCart, isCurrentCart, region, countries, countryCode } = useStore()
+  const { customer, loading: accountLoading, createAddress, captureSession } = useAccount()
   const [step, setStep] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -126,11 +126,17 @@ export default function CheckoutFlow() {
   const activeStep = step ?? maxReachable
   const currency = cart.currency_code
 
-  const guard = async (task: () => Promise<void>) => {
+  const guard = async (task: (assertCurrent: () => void) => Promise<void>) => {
+    const assertSession = captureSession()
+    const assertCurrent = () => {
+      assertSession()
+      if (!isCurrentCart(cart.id)) throw new Error("Your cart changed. Please return to checkout.")
+    }
     setBusy(true)
     setError(null)
     try {
-      await task()
+      assertCurrent()
+      await task(assertCurrent)
     } catch (err) {
       setError(errorMessage(err))
     } finally {
@@ -139,8 +145,9 @@ export default function CheckoutFlow() {
   }
 
   const placeOrder = () =>
-    guard(async () => {
+    guard(async (assertCurrent) => {
       const checkoutCart = customer ? await linkCustomerCart() : cart
+      assertCurrent()
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         setStep(2)
         throw new Error("Your account pricing has been applied. Please review the updated total and choose payment again.")
@@ -155,6 +162,7 @@ export default function CheckoutFlow() {
       const isMakePay = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
       const redirect = isMakePay ? readMakePayRedirect(checkoutCart) : null
       const result = await sdk.store.cart.complete(checkoutCart.id)
+      assertCurrent()
       if (result.type !== "order") {
         throw new Error(result.error?.message ?? "We couldn't place your order. Please review your details.")
       }
@@ -210,10 +218,12 @@ export default function CheckoutFlow() {
               defaultCountry={regionCountries.some((country) => country.code === countryCode) ? countryCode : regionCountries[0]?.code ?? ""}
               busy={busy}
               onSubmit={(body) =>
-                guard(async () => {
+                guard(async (assertCurrent) => {
                   if (customer) await linkCustomerCart()
+                  assertCurrent()
                   const { saveAddress, ...cartBody } = body
                   const { cart: updated } = await sdk.store.cart.update(cart.id, cartBody, { fields: CART_FIELDS })
+                  assertCurrent()
                   setCart(updated)
                   if (saveAddress && customer) {
                     await createAddress({
@@ -221,6 +231,7 @@ export default function CheckoutFlow() {
                       address_name: "Primary shipping",
                       is_default_shipping: true,
                     })
+                    assertCurrent()
                   }
                   setStep(1)
                 })
@@ -233,12 +244,13 @@ export default function CheckoutFlow() {
               busy={busy}
               onError={setError}
               onSubmit={(optionId) =>
-                guard(async () => {
+                guard(async (assertCurrent) => {
                   const { cart: updated } = await sdk.store.cart.addShippingMethod(
                     cart.id,
                     { option_id: optionId },
                     { fields: CART_FIELDS }
                   )
+                  assertCurrent()
                   setCart(updated)
                   setStep(2)
                 })
@@ -251,8 +263,9 @@ export default function CheckoutFlow() {
               busy={busy}
               onError={setError}
               onSubmit={(providerId) =>
-                guard(async () => {
+                guard(async (assertCurrent) => {
                   const checkoutCart = customer ? await linkCustomerCart() : cart
+                  assertCurrent()
                   const existing = checkoutCart.payment_collection?.payment_sessions?.find(
                     (session) => session.provider_id === providerId
                   )
@@ -265,7 +278,9 @@ export default function CheckoutFlow() {
                   } else if (!existing) {
                     await sdk.store.payment.initiatePaymentSession(checkoutCart, { provider_id: providerId })
                   }
+                  assertCurrent()
                   const { cart: updated } = await sdk.store.cart.retrieve(cart.id, { fields: CART_FIELDS })
+                  assertCurrent()
                   setCart(updated)
                   setStep(3)
                 })

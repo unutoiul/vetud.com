@@ -76,6 +76,7 @@ type StoreContextValue = {
   removeItem: (lineId: string) => Promise<void>
   refreshCart: () => Promise<HttpTypes.StoreCart | null>
   linkCustomerCart: () => Promise<HttpTypes.StoreCart>
+  isCurrentCart: (id: string) => boolean
   setCart: (cart: HttpTypes.StoreCart | null) => void
   clearCart: () => void
   clearError: () => void
@@ -256,6 +257,8 @@ export default function StoreProvider({ countryCode, region, countries, children
     return linked
   }, [setCart])
 
+  const isCurrentCart = useCallback((id: string) => cartRef.current?.id === id, [])
+
   const value = useMemo<StoreContextValue>(
     () => ({
       countryCode,
@@ -274,11 +277,12 @@ export default function StoreProvider({ countryCode, region, countries, children
       removeItem,
       refreshCart,
       linkCustomerCart,
+      isCurrentCart,
       setCart,
       clearCart,
       clearError: () => setError(null),
     }),
-    [countryCode, region, countries, cart, cartReady, pending, error, drawerOpen, addItem, updateItem, removeItem, refreshCart, linkCustomerCart, setCart, clearCart]
+    [countryCode, region, countries, cart, cartReady, pending, error, drawerOpen, addItem, updateItem, removeItem, refreshCart, linkCustomerCart, isCurrentCart, setCart, clearCart]
   )
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

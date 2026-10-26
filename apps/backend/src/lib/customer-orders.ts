@@ -1,4 +1,5 @@
-import { MedusaError } from "@medusajs/framework/utils"
+import type { OrderDTO } from "@medusajs/framework/types"
+import { MedusaError, pickDeep } from "@medusajs/framework/utils"
 
 export type CustomerOrdersInput = {
   customer_id: string
@@ -42,4 +43,10 @@ export function customerOrderQuery(input: CustomerOrdersInput) {
       order: { created_at: "DESC", id: "DESC" },
     },
   }
+}
+
+export function publicCustomerOrder(order: OrderDTO) {
+  // The core workflow adds items.* for calculating aggregate statuses. Project
+  // the result too, so those extra internal fields never reach the browser.
+  return pickDeep(order, [...CUSTOMER_ORDER_FIELDS, "payment_status", "fulfillment_status"])
 }

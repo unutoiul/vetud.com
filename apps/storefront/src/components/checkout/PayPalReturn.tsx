@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { ButtonLink } from "../common/links"
 import { useStore } from "../store/StoreProvider"
+import { useAccount } from "../account/AccountProvider"
 
 /**
  * Landing page after PayPal. The query string is ignored on purpose: the PayPal order lives on the
@@ -18,7 +19,8 @@ import { useStore } from "../store/StoreProvider"
 export default function PayPalReturn() {
   const router = useRouter()
   const cancelled = useSearchParams().get("cancelled") === "1"
-  const { cart, cartReady, clearCart, countryCode } = useStore()
+  const { cart, cartReady, clearCart, isCurrentCart, countryCode } = useStore()
+  const { captureSession } = useAccount()
   const [error, setError] = useState<string | null>(null)
   const started = useRef(false)
   const cartId = cart?.id
@@ -26,11 +28,14 @@ export default function PayPalReturn() {
   useEffect(() => {
     if (!cartReady || cancelled || !cartId || started.current) return
     started.current = true
+    const assertSession = captureSession()
     sdk.store.cart
       .complete(cartId)
       .then((result) => {
+        assertSession()
+        if (!isCurrentCart(cartId)) return
         if (result.type !== "order") {
-          setError("We couldn't confirm your PayPal payment, so no order was placed. You haven't been charged.")
+          setError("We couldn't confirm the payment result yet. Check your order history or confirmation email before trying again.")
           return
         }
         try {
@@ -42,9 +47,9 @@ export default function PayPalReturn() {
         router.replace(`/${countryCode}/order/confirmed?id=${encodeURIComponent(result.order.id)}&paid=1`)
       })
       .catch(() => {
-        setError("We couldn't confirm your PayPal payment, so no order was placed. You haven't been charged.")
+        setError("We couldn't confirm the payment result yet. Check your order history or confirmation email before trying again.")
       })
-  }, [cartReady, cancelled, cartId, clearCart, router, countryCode])
+  }, [cartReady, cancelled, cartId, clearCart, isCurrentCart, captureSession, router, countryCode])
 
   const message = cancelled
     ? { severity: "info" as const, text: "You cancelled the PayPal payment. Nothing was charged." }
@@ -76,6 +81,7 @@ export default function PayPalReturn() {
         <ButtonLink href="/contact" variant="outlined">
           Contact us
         </ButtonLink>
+        <ButtonLink href="/account/orders" variant="outlined">Check my orders</ButtonLink>
       </Stack>
     </Stack>
   )

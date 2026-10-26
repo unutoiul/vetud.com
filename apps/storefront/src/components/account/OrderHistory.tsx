@@ -169,7 +169,7 @@ function OrderCard({ order }: { order: CustomerOrder }) {
           <Divider sx={{ mb: 3 }} />
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, sm: 6 }}>
-              <Typography variant="eyebrow" sx={{ color: "text.secondary" }}>Delivered to</Typography>
+              <Typography variant="eyebrow" sx={{ color: "text.secondary" }}>Shipping address</Typography>
               <Typography sx={{ whiteSpace: "pre-line", mt: 1 }}>{address ? [
                 [address.first_name, address.last_name].filter(Boolean).join(" "), address.company,
                 address.address_1, address.address_2, [address.postal_code, address.city, address.province].filter(Boolean).join(" "), address.country_code?.toUpperCase(),

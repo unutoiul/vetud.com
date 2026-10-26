@@ -11,7 +11,7 @@ import {
   useState,
   type ReactNode,
 } from "react"
-import { sdk } from "@/lib/medusa/sdk"
+import { CUSTOMER_TOKEN_KEY, sdk } from "@/lib/medusa/sdk"
 import { useStore } from "../store/StoreProvider"
 
 const CUSTOMER_FIELDS =
@@ -38,6 +38,7 @@ type AccountContextValue = {
   updateAddress: (id: string, address: HttpTypes.StoreUpdateCustomerAddress) => Promise<void>
   deleteAddress: (id: string) => Promise<void>
   refreshCustomer: () => Promise<HttpTypes.StoreCustomer | null>
+  captureSession: () => () => void
   clearError: () => void
 }
 
@@ -61,16 +62,21 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const authVersion = useRef(0)
+  const authenticatedCustomerId = useRef<string | null>(null)
 
   const refreshCustomer = useCallback(async () => {
     const version = authVersion.current
     try {
       const response = await sdk.store.customer.retrieve({ fields: CUSTOMER_FIELDS })
       if (version !== authVersion.current) return null
+      authenticatedCustomerId.current = response.customer.id
       setCustomer(response.customer)
       return response.customer
     } catch {
-      if (version === authVersion.current) setCustomer(null)
+      if (version === authVersion.current) {
+        authenticatedCustomerId.current = null
+        setCustomer(null)
+      }
       return null
     }
   }, [])
@@ -78,8 +84,9 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false
     async function load() {
+      const version = authVersion.current
       const result = await refreshCustomer()
-      if (!cancelled) setLoading(false)
+      if (!cancelled && version === authVersion.current) setLoading(false)
       return result
     }
     void load()
@@ -88,24 +95,57 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
     }
   }, [refreshCustomer])
 
-  const run = useCallback(async <T,>(task: () => Promise<T>) => {
-    setPending(true)
-    setError(null)
-    try {
-      return await task()
-    } catch (error) {
-      setError(errorMessage(error))
-      throw error
-    } finally {
+  useEffect(() => {
+    const syncSession = (event: StorageEvent) => {
+      if (event.storageArea !== window.localStorage || (event.key !== null && event.key !== CUSTOMER_TOKEN_KEY)) return
+      const previousCustomerId = authenticatedCustomerId.current
+      authVersion.current += 1
+      const version = authVersion.current
+      setCustomer(null)
+      setError(null)
       setPending(false)
+      if (!event.newValue) clearCart()
+      setLoading(true)
+      void refreshCustomer().then((next) => {
+        if (version !== authVersion.current) return
+        // A guest signing in (or the same account refreshing its token) must
+        // keep their basket. Only discard a previous account's private cart.
+        if (previousCustomerId && previousCustomerId !== next?.id) clearCart()
+        setLoading(false)
+      })
+    }
+    window.addEventListener("storage", syncSession)
+    return () => window.removeEventListener("storage", syncSession)
+  }, [clearCart, refreshCustomer])
+
+  const captureSession = useCallback(() => {
+    const version = authVersion.current
+    return () => {
+      if (version !== authVersion.current) throw new Error("Your account changed. Please try again.")
     }
   }, [])
 
+  const run = useCallback(async <T,>(task: (assertCurrent: () => void) => Promise<T>) => {
+    const version = authVersion.current
+    const assertCurrent = captureSession()
+    setPending(true)
+    setError(null)
+    try {
+      return await task(assertCurrent)
+    } catch (error) {
+      if (version === authVersion.current) setError(errorMessage(error))
+      throw error
+    } finally {
+      if (version === authVersion.current) setPending(false)
+    }
+  }, [captureSession])
+
   const signIn = useCallback(
     async (email: string, password: string) => {
-      await run(async () => {
-        authVersion.current += 1
+      authVersion.current += 1
+      await run(async (assertCurrent) => {
         const result = await sdk.auth.login("customer", "emailpass", { email, password })
+        assertCurrent()
         if (!isToken(result)) {
           throw new Error("This sign-in needs an additional verification step. Please contact support.")
         }
@@ -117,14 +157,17 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
 
   const signUp = useCallback(
     async ({ email, password, first_name, last_name, phone }: Parameters<AccountContextValue["signUp"]>[0]) => {
-      await run(async () => {
-        authVersion.current += 1
+      authVersion.current += 1
+      await run(async (assertCurrent) => {
         await sdk.auth.register("customer", "emailpass", { email, password })
+        assertCurrent()
         await sdk.store.customer.create(
           { email, first_name, last_name, phone: phone || undefined },
           { fields: CUSTOMER_FIELDS }
         )
+        assertCurrent()
         const result = await sdk.auth.login("customer", "emailpass", { email, password })
+        assertCurrent()
         if (!isToken(result)) {
           throw new Error("Your account was created, but sign-in needs an additional step. Please contact support.")
         }
@@ -135,9 +178,10 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
   )
 
   const signOut = useCallback(async () => {
+    authVersion.current += 1
     await run(async () => {
-      authVersion.current += 1
       await sdk.auth.logout()
+      authenticatedCustomerId.current = null
       setCustomer(null)
       // Remove the previous shopper's delivery details from this browser's cart.
       // Order history is component-local and unmounts at the same time.
@@ -147,8 +191,9 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
 
   const updateProfile = useCallback(
     async (details: HttpTypes.StoreUpdateCustomer) => {
-      await run(async () => {
+      await run(async (assertCurrent) => {
         const response = await sdk.store.customer.update(details, { fields: CUSTOMER_FIELDS })
+        assertCurrent()
         setCustomer(response.customer)
       })
     },
@@ -157,8 +202,9 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
 
   const createAddress = useCallback(
     async (address: HttpTypes.StoreCreateCustomerAddress) => {
-      await run(async () => {
+      await run(async (assertCurrent) => {
         const response = await sdk.store.customer.createAddress(address, { fields: CUSTOMER_FIELDS })
+        assertCurrent()
         setCustomer(response.customer)
       })
     },
@@ -167,8 +213,9 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
 
   const updateAddress = useCallback(
     async (id: string, address: HttpTypes.StoreUpdateCustomerAddress) => {
-      await run(async () => {
+      await run(async (assertCurrent) => {
         const response = await sdk.store.customer.updateAddress(id, address, { fields: CUSTOMER_FIELDS })
+        assertCurrent()
         setCustomer(response.customer)
       })
     },
@@ -177,12 +224,14 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
 
   const deleteAddress = useCallback(
     async (id: string) => {
-      await run(async () => {
+      await run(async (assertCurrent) => {
         const response = await sdk.store.customer.deleteAddress(id)
-        setCustomer(response.parent ?? null)
+        assertCurrent()
+        if (response.parent) setCustomer(response.parent)
+        else await refreshCustomer()
       })
     },
-    [run]
+    [run, refreshCustomer]
   )
 
   const value = useMemo<AccountContextValue>(
@@ -199,6 +248,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       updateAddress,
       deleteAddress,
       refreshCustomer,
+      captureSession,
       clearError: () => setError(null),
     }),
     [
@@ -214,6 +264,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       updateAddress,
       deleteAddress,
       refreshCustomer,
+      captureSession,
     ]
   )
 
