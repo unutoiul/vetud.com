@@ -10,6 +10,8 @@ export const PLACES_ENABLED = PLACES_API_KEY.length > 0
 
 export type PlaceComponent = { longText?: string; shortText?: string; types?: string[] }
 export type PlaceSuggestion = { placeId: string; main: string; secondary: string }
+export type PlaceLocation = { latitude: number; longitude: number }
+export type PlaceDetails = { address: Partial<AddressValues>; location?: PlaceLocation }
 
 /** Countries where the house number is written after the street name ("Musterstraße 12"). */
 const NUMBER_AFTER_STREET = new Set([
@@ -17,8 +19,8 @@ const NUMBER_AFTER_STREET = new Set([
   "gr", "hr", "si", "sk", "lt", "lv", "ee", "bg",
 ])
 
-/** Countries where the state or province is a normal part of the address. */
-const USES_PROVINCE = new Set(["us", "ca", "au"])
+/** Countries whose addresses have a state or province. Everywhere else the field is hidden. */
+export const STATE_COUNTRIES = new Set(["us", "ca", "au"])
 
 const CITY_TYPES = ["postal_town", "locality", "sublocality_level_1", "sublocality", "administrative_area_level_3", "administrative_area_level_2"]
 
@@ -43,7 +45,7 @@ export function parsePlace(components: PlaceComponent[]): Partial<AddressValues>
     address_1: street.filter(Boolean).join(" "),
     address_2: find(components, "subpremise")?.longText ?? "",
     city,
-    province: USES_PROVINCE.has(country) ? (find(components, "administrative_area_level_1")?.shortText ?? "") : "",
+    province: STATE_COUNTRIES.has(country) ? (find(components, "administrative_area_level_1")?.shortText ?? "") : "",
     postal_code: find(components, "postal_code")?.longText ?? "",
     country_code: country,
   }
@@ -53,30 +55,20 @@ export function newSessionToken() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : String(Date.now()) + Math.random()
 }
 
-/** Suggestions for what the visitor has typed so far, limited to the countries we ship to. */
-export async function suggestAddresses(
-  input: string,
-  sessionToken: string,
-  countryCodes: string[],
-  signal?: AbortSignal
-): Promise<PlaceSuggestion[]> {
+type AutocompleteBody = {
+  suggestions?: { placePrediction?: { placeId: string; text?: { text?: string }; structuredFormat?: { mainText?: { text?: string }; secondaryText?: { text?: string } } } }[]
+}
+
+async function autocomplete(body: Record<string, unknown>, signal?: AbortSignal): Promise<PlaceSuggestion[]> {
   const response = await fetch("https://places.googleapis.com/v1/places:autocomplete", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Goog-Api-Key": PLACES_API_KEY },
-    body: JSON.stringify({
-      input,
-      sessionToken,
-      languageCode: "en",
-      // The API accepts at most 15 region codes.
-      ...(countryCodes.length ? { includedRegionCodes: countryCodes.slice(0, 15) } : {}),
-    }),
+    body: JSON.stringify({ languageCode: "en", ...body }),
     signal,
   })
   if (!response.ok) throw new Error(`Address suggestions failed (${response.status})`)
-  const body = (await response.json()) as {
-    suggestions?: { placePrediction?: { placeId: string; text?: { text?: string }; structuredFormat?: { mainText?: { text?: string }; secondaryText?: { text?: string } } } }[]
-  }
-  return (body.suggestions ?? []).flatMap((item) => {
+  const json = (await response.json()) as AutocompleteBody
+  return (json.suggestions ?? []).flatMap((item) => {
     const prediction = item.placePrediction
     if (!prediction?.placeId) return []
     const main = prediction.structuredFormat?.mainText?.text ?? prediction.text?.text ?? ""
@@ -84,12 +76,71 @@ export async function suggestAddresses(
   })
 }
 
-/** The address fields for a chosen suggestion. Using the same session token ends the billing session. */
-export async function addressForPlace(placeId: string, sessionToken: string): Promise<Partial<AddressValues>> {
+/**
+ * Street-address suggestions for what the visitor has typed, limited to the one country they
+ * selected. A location (from a chosen postal code) narrows the results to that area.
+ */
+export function suggestAddresses(
+  input: string,
+  sessionToken: string,
+  countryCode: string,
+  signal?: AbortSignal,
+  near?: PlaceLocation
+) {
+  return autocomplete(
+    {
+      input,
+      sessionToken,
+      ...(countryCode ? { includedRegionCodes: [countryCode] } : {}),
+      ...(near ? { locationBias: { circle: { center: near, radius: 5000 } } } : {}),
+    },
+    signal
+  )
+}
+
+/** Postal-code suggestions in the selected country, each with its city. */
+export function suggestPostalCodes(input: string, sessionToken: string, countryCode: string, signal?: AbortSignal) {
+  return autocomplete(
+    {
+      input,
+      sessionToken,
+      includedPrimaryTypes: ["postal_code"],
+      ...(countryCode ? { includedRegionCodes: [countryCode] } : {}),
+    },
+    signal
+  )
+}
+
+type DetailsBody = { addressComponents?: PlaceComponent[]; location?: PlaceLocation }
+
+/** The address fields and map position of a chosen suggestion. Reusing the session token ends its billing session. */
+export async function placeDetails(placeId: string, sessionToken: string): Promise<PlaceDetails> {
   const response = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?sessionToken=${encodeURIComponent(sessionToken)}`, {
-    headers: { "X-Goog-Api-Key": PLACES_API_KEY, "X-Goog-FieldMask": "addressComponents" },
+    headers: { "X-Goog-Api-Key": PLACES_API_KEY, "X-Goog-FieldMask": "addressComponents,location" },
   })
   if (!response.ok) throw new Error(`Address details failed (${response.status})`)
-  const body = (await response.json()) as { addressComponents?: PlaceComponent[] }
-  return parsePlace(body.addressComponents ?? [])
+  const body = (await response.json()) as DetailsBody
+  return { address: parsePlace(body.addressComponents ?? []), location: body.location }
+}
+
+/**
+ * Google often matches a street without a postal code. Look the exact address up to find it.
+ * Returns an empty string when there is no confident match, so the visitor types it in.
+ */
+export async function findPostalCode(address: Partial<AddressValues>, signal?: AbortSignal): Promise<string> {
+  const query = [address.address_1, address.city].filter(Boolean).join(", ")
+  if (!query || !address.country_code) return ""
+  const response = await fetch("https://places.googleapis.com/v1/places:searchText", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Goog-Api-Key": PLACES_API_KEY, "X-Goog-FieldMask": "places.addressComponents" },
+    body: JSON.stringify({ textQuery: query, regionCode: address.country_code, maxResultCount: 1, languageCode: "en" }),
+    signal,
+  })
+  if (!response.ok) return ""
+  const body = (await response.json()) as { places?: { addressComponents?: PlaceComponent[] }[] }
+  const found = parsePlace(body.places?.[0]?.addressComponents ?? [])
+  // Only trust a result for the same street and house number, in the same country and city.
+  const same = (a?: string, b?: string) => (a ?? "").trim().toLowerCase() === (b ?? "").trim().toLowerCase()
+  if (found.country_code !== address.country_code || !same(found.city, address.city) || !same(found.address_1, address.address_1)) return ""
+  return found.postal_code ?? ""
 }

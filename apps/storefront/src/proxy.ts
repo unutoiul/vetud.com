@@ -4,6 +4,7 @@ import {
   FALLBACK_COUNTRIES,
   MEDUSA_BACKEND_URL,
   MEDUSA_PUBLISHABLE_KEY,
+  SUPPORTED_COUNTRIES,
 } from "./lib/config"
 
 const CACHE_MS = 60 * 60 * 1000
@@ -25,7 +26,7 @@ async function sellableCountries(): Promise<string[]> {
     }
     const codes = regions.flatMap((region) =>
       (region.countries ?? []).map((country) => country.iso_2?.toLowerCase()).filter(Boolean)
-    ) as string[]
+    ).filter((code) => SUPPORTED_COUNTRIES.includes(code as string)) as string[]
     countryCache = { codes: codes.length ? codes : FALLBACK_COUNTRIES, fetchedAt: Date.now() }
   } catch {
     return countryCache?.codes ?? FALLBACK_COUNTRIES

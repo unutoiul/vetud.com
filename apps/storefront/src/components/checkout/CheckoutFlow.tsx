@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib/makepay"
+import { persistCountryCookie } from "@/lib/country-cookie"
 import { sdk } from "@/lib/medusa/sdk"
 import { PAYPAL_PROVIDER_ID, readPayPalRedirect } from "@/lib/paypal"
 import { formatMoney } from "@/lib/product"
@@ -105,8 +106,6 @@ export default function CheckoutFlow() {
   const busyRef = useRef(false)
   const [error, setError] = useState<string | null>(null)
   const [completedOrderId, setCompletedOrderId] = useState<string | null>(null)
-
-  const regionCountries = countries.filter((country) => country.regionId === region.id)
 
   if (completedOrderId) {
     return (
@@ -259,17 +258,22 @@ export default function CheckoutFlow() {
             <DetailsStep
               key={`${cart.id}:${customer?.id ?? "guest"}`}
               cart={cart}
-              countries={regionCountries}
+              countries={countries}
+              regionId={region.id}
               customer={customer}
-              defaultCountry={regionCountries.some((country) => country.code === countryCode) ? countryCode : regionCountries[0]?.code ?? ""}
+              defaultCountry={countries.some((country) => country.code === countryCode) ? countryCode : countries[0]?.code ?? ""}
               busy={busy}
               onSubmit={(body) =>
                 guard(async (assertCurrent) => {
                   if (customer) await linkCustomerCart()
                   assertCurrent()
                   const { saveAddress, research_field, company_name, ...addressBody } = body
+                  // Shipping to a country in another region changes the currency and prices.
+                  const destination = countries.find((country) => country.code === body.shipping_address.country_code)
+                  const switchRegion = destination && destination.regionId !== region.id ? destination : null
                   const cartBody = {
                     ...addressBody,
+                    ...(switchRegion ? { region_id: switchRegion.regionId } : {}),
                     metadata: researchMetadata({ research_field, company_name }),
                   }
                   const { cart: updated } = await sdk.store.cart.update(cart.id, cartBody, { fields: CART_FIELDS })
@@ -289,6 +293,12 @@ export default function CheckoutFlow() {
                     // Remember it for next time; a failure here must not block the order.
                     await updateProfile({ company_name }).catch(() => undefined)
                     assertCurrent()
+                  }
+                  if (switchRegion) {
+                    // Open the checkout in the new country so the page shows its currency.
+                    persistCountryCookie(switchRegion.code)
+                    router.push(`/${switchRegion.code}/checkout`)
+                    return
                   }
                   setStep(1)
                 })
@@ -381,13 +391,15 @@ type DetailsBody = {
 function DetailsStep({
   cart,
   countries,
+  regionId,
   customer,
   defaultCountry,
   busy,
   onSubmit,
 }: {
   cart: HttpTypes.StoreCart
-  countries: { code: string; name: string }[]
+  countries: { code: string; name: string; regionId: string; currencyCode: string }[]
+  regionId: string
   customer: HttpTypes.StoreCustomer | null
   defaultCountry: string
   busy: boolean
@@ -400,6 +412,7 @@ function DetailsStep({
   const preferredAddress = savedAddresses.find((address) => address.id === customer?.default_shipping_address_id)
     ?? savedAddresses.find((address) => address.is_default_shipping)
     ?? savedAddresses[0]
+  const profileDefaults = { first_name: customer?.first_name, last_name: customer?.last_name, phone: customer?.phone }
   const [email, setEmail] = useState(cart.email ?? customer?.email ?? "")
   const [shipping, setShipping] = useState<AddressValues>(() => {
     const values = toAddressValues(cart.shipping_address ?? preferredAddress)
@@ -429,6 +442,7 @@ function DetailsStep({
   )
   const [acknowledged, setAcknowledged] = useState(hasResearchProfile(cart))
   const [showErrors, setShowErrors] = useState(false)
+  const destination = countries.find((country) => country.code === shipping.country_code)
 
   const companyError = !companyName.trim() ? "Enter your company or institution" : undefined
   const researchError = !researchField ? "Choose your field of research" : undefined
@@ -521,10 +535,13 @@ function DetailsStep({
         errors={showErrors ? shippingErrors : {}}
         countries={countries}
         onChange={setShipping}
+        defaults={profileDefaults}
       />
-      <Typography variant="body2" sx={{ color: "text.secondary", mt: 1.5 }}>
-        Shipping somewhere else? Change the country in the header to see that region&apos;s prices.
-      </Typography>
+      {destination && destination.regionId !== regionId ? (
+        <Typography variant="body2" sx={{ color: "text.secondary", mt: 1.5 }}>
+          Prices switch to {destination.currencyCode.toUpperCase()} for delivery to {destination.name} when you continue.
+        </Typography>
+      ) : null}
       {customer && selectedAddressId === "new" ? (
         <FormControlLabel
           sx={{ mt: 1 }}
@@ -549,6 +566,7 @@ function DetailsStep({
             errors={showErrors ? billingErrors : {}}
             countries={countries}
             onChange={setBilling}
+            defaults={profileDefaults}
           />
         </Box>
       ) : null}

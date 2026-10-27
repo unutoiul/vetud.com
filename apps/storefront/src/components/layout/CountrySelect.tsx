@@ -9,23 +9,14 @@ import MenuItem from "@mui/material/MenuItem"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { persistCountryCookie } from "@/lib/country-cookie"
 import { useStore } from "../store/StoreProvider"
 
 const CURRENCIES = [
-  { code: "eur", name: "Euro", place: "Europe" },
   { code: "usd", name: "US dollar", place: "United States" },
-  { code: "cad", name: "Canadian dollar", place: "Canada" },
-  { code: "aud", name: "Australian dollar", place: "Australia" },
-  { code: "jpy", name: "Japanese yen", place: "Japan" },
-  { code: "cny", name: "Chinese yuan", place: "China" },
-  { code: "sgd", name: "Singapore dollar", place: "Singapore" },
-  { code: "hkd", name: "Hong Kong dollar", place: "Hong Kong" },
-  { code: "aed", name: "UAE dirham", place: "United Arab Emirates" },
+  { code: "eur", name: "Euro", place: "Germany, France, Netherlands" },
+  { code: "gbp", name: "British pound", place: "United Kingdom" },
 ]
-
-function persistCountryCookie(code: string) {
-  document.cookie = `vetud_country=${encodeURIComponent(code)}; Max-Age=31536000; Path=/; SameSite=Lax${window.location.protocol === "https:" ? "; Secure" : ""}`
-}
 
 /** A compact currency list; destinations sharing EUR are selected in a second step. */
 export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {

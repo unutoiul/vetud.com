@@ -177,6 +177,15 @@ A custom Medusa payment provider (`apps/backend/src/modules/paypal`) using PayPa
 
 Flow: the shopper approves the payment on PayPal first. On return, the storefront completes the cart; the backend checks the order with PayPal and captures the payment, so the order is created already paid. Refunds from Admin refund the PayPal capture. PayPal disputes and reviews are handled in your PayPal account.
 
+### Countries and currencies
+
+The storefront sells to a short list of countries for now: the United States (USD), the United Kingdom (GBP) and Germany, France and the Netherlands (EUR). The list is `SUPPORTED_COUNTRIES` in `apps/storefront/src/lib/config.ts` (override with `NEXT_PUBLIC_SUPPORTED_COUNTRIES`, comma-separated ISO codes). Every other country and region in Medusa is hidden from the country menu, checkout, URLs and the geo redirect. To add a country, add it there, and make sure it belongs to a Medusa region with prices, shipping options and legal pages ready.
+
+- **Where a visitor lands:** `/` redirects to their saved country, else the country from Vercel's geo header, else the browser language, else `NEXT_PUBLIC_DEFAULT_COUNTRY`. Each country has its own currency, shown in the currency menu (currency first, then the countries that use it).
+- **Shipping to another country:** checkout offers every supported country. Choosing a country in another region switches the cart to that region's currency.
+- **The UK is its own pound region.** An earlier change had put the UK in the euro region. Migration `vetud-markets-01-uk-pounds` moves `gb` into the GBP region (run `npx medusa exec ./src/scripts/uk-pound-region.ts` to apply only that).
+- **Not translated yet.** The site is in English. Per-country languages need the interface, product pages and legal pages translated and reviewed.
+
 ### Address suggestions (optional)
 
 Checkout and the account address book can suggest addresses as the shopper types and fill in the street, city, state, postal code and country, using Google's Places API (New). It stays off until a key is set.

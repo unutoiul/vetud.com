@@ -220,8 +220,14 @@ function AddressBook() {
 
   const openNew = () => {
     setEditingId(null)
-    setAddressName("Home")
-    setValues({ ...EMPTY_ADDRESS, country_code: countryCode })
+    setAddressName("")
+    setValues({
+      ...EMPTY_ADDRESS,
+      country_code: countryCode,
+      first_name: customer?.first_name ?? "",
+      last_name: customer?.last_name ?? "",
+      phone: customer?.phone ?? "",
+    })
     setShowErrors(false)
     setShowForm(true)
   }
@@ -238,7 +244,12 @@ function AddressBook() {
     event.preventDefault()
     setShowErrors(true)
     if (Object.keys(errors).length) return
-    const payload = { ...values, address_name: addressName.trim() || "Saved address", is_default_shipping: !customer?.default_shipping_address_id }
+    const generatedName = customer?.addresses?.length ? values.address_1.trim() : "Primary shipping"
+    const payload = {
+      ...values,
+      address_name: editingId ? addressName.trim() || generatedName : generatedName,
+      is_default_shipping: !customer?.default_shipping_address_id,
+    }
     try {
       if (editingId) await account.updateAddress(editingId, payload)
       else await account.createAddress(payload)
@@ -258,8 +269,14 @@ function AddressBook() {
       {showForm ? (
         <Box component="form" onSubmit={save} sx={{ mt: 3 }}>
           <Stack spacing={2}>
-            <TextField label="Address name" value={addressName} onChange={(event) => setAddressName(event.target.value)} helperText="For example, Home or Lab." />
-            <AddressFields prefix="account-address" values={values} errors={showErrors ? errors : {}} countries={addressOptions} onChange={setValues} />
+            <AddressFields
+              prefix="account-address"
+              values={values}
+              errors={showErrors ? errors : {}}
+              countries={addressOptions}
+              onChange={setValues}
+              defaults={{ first_name: customer?.first_name, last_name: customer?.last_name, phone: customer?.phone }}
+            />
           </Stack>
           <Stack direction="row" spacing={1.5} sx={{ mt: 2.5 }}>
             <Button type="submit" variant="contained" disabled={account.pending}>{account.pending ? "Saving…" : "Save address"}</Button>

@@ -1,6 +1,6 @@
 import type { HttpTypes } from "@medusajs/types"
 import { cacheLife, cacheTag } from "next/cache"
-import { FALLBACK_COUNTRIES } from "../config"
+import { FALLBACK_COUNTRIES, SUPPORTED_COUNTRIES } from "../config"
 import { sdk } from "./sdk"
 
 export type CountryOption = {
@@ -16,7 +16,13 @@ export async function listRegions(): Promise<HttpTypes.StoreRegion[]> {
   cacheTag("regions")
 
   const { regions } = await sdk.store.region.list({ fields: "id,name,currency_code,metadata,*countries" })
+  // Only the countries we sell to for now; regions left with no country disappear.
   return regions
+    .map((region) => ({
+      ...region,
+      countries: (region.countries ?? []).filter((country) => SUPPORTED_COUNTRIES.includes((country.iso_2 ?? "").toLowerCase())),
+    }))
+    .filter((region) => region.countries.length > 0)
 }
 
 export async function getRegionForCountry(

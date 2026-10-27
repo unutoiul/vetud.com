@@ -11,19 +11,18 @@ export const BASE_URL = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8
 export const DEFAULT_COUNTRY = (process.env.NEXT_PUBLIC_DEFAULT_COUNTRY || "us").toLowerCase()
 
 /**
- * Used before Medusa answers (proxy fallback, build-time params). Keep in sync with the
- * regions in Medusa Admin; the live region list always wins when the backend is reachable.
+ * The countries we sell to for now. Every other country and region in Medusa is hidden from the
+ * storefront (country selector, checkout, URLs and the geo redirect). Add a country here once its
+ * pricing, shipping and legal pages are ready. Override with NEXT_PUBLIC_SUPPORTED_COUNTRIES
+ * (comma-separated ISO codes). Each country must belong to a Medusa region.
  */
-export const FALLBACK_COUNTRIES = [
-  "us",
-  // Eurozone
-  "at", "be", "bg", "cy", "de", "ee", "es", "fi", "fr", "gr", "hr",
-  "ie", "it", "lt", "lu", "lv", "mt", "nl", "pt", "si", "sk",
-  // Other European destinations (all priced in EUR)
-  "gb", "ch", "li", "se", "no", "dk", "pl", "cz", "hu", "ro", "is",
-  // Main global currency markets
-  "ca", "au", "jp", "cn", "sg", "hk", "ae",
-]
+export const SUPPORTED_COUNTRIES = (process.env.NEXT_PUBLIC_SUPPORTED_COUNTRIES || "us,gb,de,fr,nl")
+  .split(",")
+  .map((code) => code.trim().toLowerCase())
+  .filter(Boolean)
+
+/** Used before Medusa answers (proxy fallback, build-time params). */
+export const FALLBACK_COUNTRIES = SUPPORTED_COUNTRIES
 
 export const PAYMENT_BANK_DETAILS = process.env.NEXT_PUBLIC_PAYMENT_BANK_DETAILS || ""
 
