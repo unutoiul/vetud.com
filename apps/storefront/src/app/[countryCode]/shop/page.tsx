@@ -20,7 +20,7 @@ import { sortProducts } from "@/lib/product"
 
 export const metadata: Metadata = {
   title: "Shop the collection",
-  description: "Explore the Peptide Series with clear specifications and lot-level documentation.",
+  description: "Explore the complete collection with clear specifications and lot-level documentation.",
 }
 
 const SORT_VALUES: ProductSort[] = ["featured", "price-asc", "price-desc", "name"]
@@ -32,18 +32,17 @@ function first(value: string | string[] | undefined) {
 async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countryCode]/shop">["searchParams"] }) {
   const params = await searchParams
   const query = first(params.q)?.trim() || undefined
+  const categoryHandle = first(params.category)
   const sortParam = first(params.sort) as ProductSort | undefined
   const sort = sortParam && SORT_VALUES.includes(sortParam) ? sortParam : "featured"
 
   const { region } = await getCurrentRegion()
-  const categories = (await listCategories()).filter((item) => item.handle === "peptide-series")
-  const category = categories[0]
+  const categories = await listCategories()
+  const category = categories.find((item) => item.handle === categoryHandle)
 
-  let products = !category
-    ? []
-    : query
-      ? await searchProducts(query, region.id)
-      : await listProducts({ regionId: region.id, categoryId: category.id })
+  let products = query
+    ? await searchProducts(query, region.id)
+    : await listProducts({ regionId: region.id, categoryId: category?.id })
   if (query && category) {
     products = products.filter((product) => product.categories?.some((item) => item.id === category.id))
   }
@@ -113,7 +112,7 @@ export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/sho
   return (
     <>
       <Section tone="white" tight>
-        <Typography component="h1" variant="h3" sx={{ mb: 3 }}>Peptide Series</Typography>
+        <Typography component="h1" variant="h3" sx={{ mb: 3 }}>Shop the collection</Typography>
         <Suspense fallback={<ResultsSkeleton />}>
           <ShopResults searchParams={searchParams} />
         </Suspense>
