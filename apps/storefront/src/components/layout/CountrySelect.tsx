@@ -1,40 +1,60 @@
 "use client"
 
 import Icon from "@/components/brand/Icon"
-import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import ListSubheader from "@mui/material/ListSubheader"
-import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
+import Popover from "@mui/material/Popover"
+import Stack from "@mui/material/Stack"
+import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { persistCountryCookie } from "@/lib/country-cookie"
 import { useStore } from "../store/StoreProvider"
 
-const CURRENCIES = [
-  { code: "usd", name: "US dollar", place: "United States" },
-  { code: "eur", name: "Euro", place: "Germany, France, Netherlands" },
-  { code: "gbp", name: "British pound", place: "United Kingdom" },
-]
+const CURRENCY_NAMES: Record<string, string> = {
+  usd: "US dollar",
+  eur: "Euro",
+  gbp: "British pound",
+}
 
-/** A compact currency list; destinations sharing EUR are selected in a second step. */
+/**
+ * Two dropdowns: the currency, and the country. Prices, shipping and tax are set per region and a
+ * country belongs to exactly one region, so each currency only offers the countries that use it
+ * (Euro lists Germany, France and the Netherlands, not the UK). Changing the currency moves the
+ * country to one that uses it; Apply opens the site for that country.
+ */
 export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
   const router = useRouter()
   const { countryCode, countries, region } = useStore()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
-  const [destinationCurrency, setDestinationCurrency] = useState<string | null>(null)
-  const options = CURRENCIES.map((currency) => ({ ...currency, countries: countries.filter((country) => country.currencyCode === currency.code) })).filter((currency) => currency.countries.length)
-  const destination = options.find((currency) => currency.code === destinationCurrency)
-  const close = () => { setAnchor(null); setDestinationCurrency(null) }
+  const [currency, setCurrency] = useState(region.currencyCode)
+  const [country, setCountry] = useState(countryCode)
 
-  const select = (code: string) => {
-    close()
-    persistCountryCookie(code)
-    if (code === countryCode) return
+  // Only currencies that have at least one country we sell to.
+  const currencies = Object.keys(CURRENCY_NAMES).filter((code) => countries.some((item) => item.currencyCode === code))
+  const countriesForCurrency = countries.filter((item) => item.currencyCode === currency)
+
+  const open = (target: HTMLElement) => {
+    // Start from where the visitor is now.
+    setCurrency(region.currencyCode)
+    setCountry(countryCode)
+    setAnchor(target)
+  }
+
+  const changeCurrency = (next: string) => {
+    setCurrency(next)
+    const options = countries.filter((item) => item.currencyCode === next)
+    if (!options.some((item) => item.code === country)) setCountry(options[0]?.code ?? country)
+  }
+
+  const apply = () => {
+    setAnchor(null)
+    persistCountryCookie(country)
+    if (country === countryCode) return
     const { pathname, search, hash } = window.location
     const rest = pathname.split("/").slice(2).join("/")
-    router.push(`/${code}${rest ? `/${rest}` : ""}${search}${hash}`)
+    router.push(`/${country}${rest ? `/${rest}` : ""}${search}${hash}`)
   }
 
   return (
@@ -44,11 +64,11 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
         size="small"
         startIcon={<Icon name="globe" fontSize="small" />}
         endIcon={<Icon name="chevronDown" sx={{ fontSize: 13 }} />}
-        onClick={(event) => { setDestinationCurrency(null); setAnchor(event.currentTarget) }}
-        aria-haspopup="menu"
+        onClick={(event) => open(event.currentTarget)}
+        aria-haspopup="dialog"
         aria-expanded={Boolean(anchor)}
-        aria-controls={anchor ? "currency-menu" : undefined}
-        aria-label={`Currency ${region.currencyCode.toUpperCase()}. Change currency and destination`}
+        aria-controls={anchor ? "currency-country-panel" : undefined}
+        aria-label={`Currency ${region.currencyCode.toUpperCase()}. Change currency and country`}
         fullWidth={fullWidth}
         sx={{
           minHeight: 44,
@@ -58,30 +78,40 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
           "&:hover": { transform: "none" },
         }}
       >
-        {region.currencyCode.toUpperCase()}
+        {region.currencyCode.toUpperCase()} · {countryCode.toUpperCase()}
       </Button>
-      <Menu
-        key={destinationCurrency ?? "currencies"}
-        id="currency-menu"
-        anchorEl={anchor}
+      <Popover
+        id="currency-country-panel"
         open={Boolean(anchor)}
-        onClose={close}
+        anchorEl={anchor}
+        onClose={() => setAnchor(null)}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
-        slotProps={{
-          paper: { sx: { maxHeight: "min(500px, calc(100dvh - 140px))", width: 300, maxWidth: "calc(100vw - 32px)", borderRadius: 2.5, overscrollBehavior: "contain" } },
-          list: { dense: true, "aria-label": destination ? `${destination.place} destinations in ${destination.code.toUpperCase()}` : "Choose currency", sx: { py: 0.75 } },
-        }}
+        slotProps={{ paper: { role: "dialog", "aria-label": "Currency and country", sx: { width: 320, maxWidth: "calc(100vw - 32px)", borderRadius: 2.5, p: 2.5 } } }}
       >
-        {destination ? [
-          <MenuItem key="back" onClick={() => setDestinationCurrency(null)} sx={{ minHeight: 44, gap: 1.5, fontSize: 12, color: "text.secondary", borderBottom: "1px solid", borderColor: "divider", mb: 0.5 }}><Icon name="arrowRight" sx={{ fontSize: 16, transform: "rotate(180deg)" }} />Back to currencies</MenuItem>,
-          <ListSubheader key="heading" sx={{ lineHeight: "36px", fontSize: 11, color: "text.secondary", bgcolor: "background.paper" }}>Choose a country · {destination.code.toUpperCase()}</ListSubheader>,
-          ...destination.countries.map((country) => <MenuItem key={country.code} selected={country.code === countryCode} onClick={() => select(country.code)} sx={{ minHeight: 44, gap: 2, fontSize: 13 }}><Box component="span" sx={{ flex: 1 }}>{country.name}</Box>{country.code === countryCode && <Icon name="check" sx={{ fontSize: 16 }} />}</MenuItem>),
-        ] : [
-          <ListSubheader key="heading" sx={{ lineHeight: "36px", fontSize: 11, color: "text.secondary", bgcolor: "background.paper" }}>Choose your currency</ListSubheader>,
-          ...options.map((currency) => <MenuItem key={currency.code} selected={currency.code === region.currencyCode} onClick={() => currency.countries.length > 1 ? setDestinationCurrency(currency.code) : select(currency.countries[0].code)} sx={{ minHeight: 48, gap: 2 }}><Typography component="span" variant="mono" sx={{ width: 36, fontSize: 12, fontWeight: 600 }}>{currency.code.toUpperCase()}</Typography><Box sx={{ flex: 1 }}><Typography sx={{ fontSize: 13 }}>{currency.name}</Typography><Typography sx={{ fontSize: 10.5, color: "text.secondary", mt: 0.1 }}>{currency.place}</Typography></Box><Icon name={currency.countries.length > 1 ? "arrowRight" : currency.code === region.currencyCode ? "check" : "arrowUpRight"} sx={{ fontSize: 15, color: "text.secondary" }} /></MenuItem>),
-        ]}
-      </Menu>
+        <Stack spacing={2}>
+          <Typography variant="eyebrow" sx={{ color: "text.secondary" }}>
+            Currency and country
+          </Typography>
+          <TextField select size="small" label="Currency" value={currency} onChange={(event) => changeCurrency(event.target.value)}>
+            {currencies.map((code) => (
+              <MenuItem key={code} value={code}>
+                {code.toUpperCase()} · {CURRENCY_NAMES[code]}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField select size="small" label="Country" value={country} onChange={(event) => setCountry(event.target.value)}>
+            {countriesForCurrency.map((item) => (
+              <MenuItem key={item.code} value={item.code}>
+                {item.name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Button variant="contained" onClick={apply} disabled={country === countryCode}>
+            Apply
+          </Button>
+        </Stack>
+      </Popover>
     </>
   )
 }
