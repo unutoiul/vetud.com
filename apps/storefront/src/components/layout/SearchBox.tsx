@@ -9,6 +9,7 @@ import InputAdornment from "@mui/material/InputAdornment"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
+import { useLocale } from "next-intl"
 import { useEffect, useRef, useState, type Ref } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { cheapestPrice, formatMoney, readProductMeta } from "@/lib/product"
@@ -25,6 +26,7 @@ type SearchBoxProps = {
 
 export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: SearchBoxProps) {
   const router = useRouter()
+  const locale = useLocale()
   const { countryCode, region } = useStore()
   const [input, setInput] = useState("")
   const [options, setOptions] = useState<HttpTypes.StoreProduct[]>([])
@@ -104,7 +106,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
             {price ? (
               <Typography sx={{ fontSize: 13, color: "text.secondary" }}>
                 {price.hasRange ? "from " : ""}
-                {formatMoney(price.amount, price.currencyCode)}
+                {formatMoney(price.amount, price.currencyCode, { locale })}
               </Typography>
             ) : null}
           </Box>

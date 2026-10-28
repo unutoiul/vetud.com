@@ -3,13 +3,13 @@ import { authenticate } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { validateResearchProfile, type CartForResearchCheck } from "../lib/research-profile"
 
-/** Runs before a cart becomes an order: signed-in customer plus a complete research profile. */
+/** Runs before a cart becomes an order: signed-in owner plus research-use acknowledgment. */
 export async function requireResearchProfile(req: AuthenticatedMedusaRequest, _res: MedusaResponse, next: MedusaNextFunction) {
   try {
     const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
     const { data } = await query.graph({
       entity: "cart",
-      fields: ["id", "customer_id", "metadata", "shipping_address.company"],
+      fields: ["id", "customer_id", "metadata"],
       filters: { id: req.params.id },
     })
     const cart = data[0] as CartForResearchCheck | undefined

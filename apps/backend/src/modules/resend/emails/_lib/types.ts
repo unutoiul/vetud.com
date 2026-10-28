@@ -53,6 +53,10 @@ export type ShipmentCreatedEmailData = {
   tracking: { tracking_number?: string | null; tracking_url?: string | null }[]
 }
 
+export type PasswordResetEmailData = {
+  reset_url: string
+}
+
 export type ContactMessageEmailData = {
   name: string
   email: string

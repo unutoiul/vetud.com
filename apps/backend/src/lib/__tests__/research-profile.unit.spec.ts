@@ -2,17 +2,14 @@ import { RUO_ACK_VERSION, validateResearchProfile } from "../research-profile"
 
 const goodCart = () => ({
   customer_id: "cus_1",
-  shipping_address: { company: "Acme Labs Ltd" },
   metadata: {
-    research_field: "Peptide Chemistry",
-    company_name: "Acme Labs Ltd",
     ruo_acknowledged: true,
     ruo_ack_version: RUO_ACK_VERSION,
   },
 })
 
 describe("validateResearchProfile", () => {
-  it("accepts a signed-in customer with a complete research profile", () => {
+  it("accepts the cart owner with current consent and no company or field of research", () => {
     expect(() => validateResearchProfile(goodCart(), "cus_1")).not.toThrow()
   })
 
@@ -26,21 +23,15 @@ describe("validateResearchProfile", () => {
     expect(() => validateResearchProfile({ ...goodCart(), customer_id: null }, "cus_1")).toThrow(/does not belong/)
   })
 
-  it("requires a company name in both the profile and the shipping address", () => {
-    const noMeta = goodCart()
-    noMeta.metadata.company_name = "  "
-    expect(() => validateResearchProfile(noMeta, "cus_1")).toThrow(/company or institution/)
-    expect(() => validateResearchProfile({ ...goodCart(), shipping_address: { company: "" } }, "cus_1")).toThrow(/company or institution/)
-    expect(() => validateResearchProfile({ ...goodCart(), shipping_address: null }, "cus_1")).toThrow(/company or institution/)
+  it("accepts an existing cart carrying legacy research details", () => {
+    const cart = goodCart()
+    Object.assign(cart.metadata, { company_name: "Acme Labs Ltd", research_field: "Peptide Chemistry" })
+    expect(() => validateResearchProfile(cart, "cus_1")).not.toThrow()
   })
 
-  it("requires a field of research from the list", () => {
-    const missing = goodCart()
-    delete (missing.metadata as Record<string, unknown>).research_field
-    expect(() => validateResearchProfile(missing, "cus_1")).toThrow(/field of research/)
-    const invented = goodCart()
-    invented.metadata.research_field = "Bodybuilding"
-    expect(() => validateResearchProfile(invented, "cus_1")).toThrow(/field of research/)
+  it("rejects missing consent metadata", () => {
+    expect(() => validateResearchProfile({ customer_id: "cus_1" }, "cus_1")).toThrow(/laboratory research purposes only/)
+    expect(() => validateResearchProfile({ customer_id: "cus_1", metadata: null }, "cus_1")).toThrow(/laboratory research purposes only/)
   })
 
   it("requires the current research-use acknowledgment", () => {

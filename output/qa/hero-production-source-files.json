@@ -1,0 +1,602 @@
+[
+  {
+    "path": ".vercelignore",
+    "uid": "7d779f4bc900eaa73a40cdb0a4a579d58fa89e6f"
+  },
+  {
+    "path": "CLAUDE.md",
+    "uid": "237a1dceea1c49ea5d5cd53bfc899e19a4f8c8d3"
+  },
+  {
+    "path": "README.md",
+    "uid": "e1feb36098805e26c90e595b03193601fae37b82"
+  },
+  {
+    "path": "apps/storefront/.vercelignore",
+    "uid": "ea2242d3eede0eb47325095f240b668b7909da14"
+  },
+  {
+    "path": "apps/storefront/AGENTS.md",
+    "uid": "5ec4789692f7fa325f3c83427e98e934987d1bac"
+  },
+  {
+    "path": "apps/storefront/Dockerfile",
+    "uid": "ed09de5acec7eeebf061a03ed35d1158f44951eb"
+  },
+  {
+    "path": "apps/storefront/README.md",
+    "uid": "94b845291a63eceba4cada19ee1c66cc327787d3"
+  },
+  {
+    "path": "apps/storefront/eslint.config.mjs",
+    "uid": "44d5bed565a8dd284af3e17f3b16a1c752008d0e"
+  },
+  {
+    "path": "apps/storefront/next-env.d.ts",
+    "uid": "915946e261450f4fb6aab2ca862c8b440b748240"
+  },
+  {
+    "path": "apps/storefront/next.config.ts",
+    "uid": "ce23eb599a7660440a71b0d264a70d1ccbed4ec9"
+  },
+  {
+    "path": "apps/storefront/package-lock.json",
+    "uid": "03a13c8bcd2528d9483b0100344353bca7161a50"
+  },
+  {
+    "path": "apps/storefront/package.json",
+    "uid": "fdc28fc69eea2d5996faf688e896a46db19e8bbd"
+  },
+  {
+    "path": "apps/storefront/public/.gitkeep",
+    "uid": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/colors.json",
+    "uid": "8c55785631eef7719ebfcd735cdb074293a5be5a"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-inverted-transparent.png",
+    "uid": "887503a542b12fc7fe15024cc50c7ef13a2ee240"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-inverted-transparent.svg",
+    "uid": "34f417fe250b2b052ca573bc79c13d1d3bc0bb8c"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-on-blue.png",
+    "uid": "39eab5a912020f6aa2ec252b796aef287b504eaa"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-on-blue.svg",
+    "uid": "a9b73be3ea55cd865b5f6da3e21fb23b5809c6cd"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-on-navy.png",
+    "uid": "7c8d73a594747595d8f8ee7bd5fe1687ac5f9170"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-on-navy.svg",
+    "uid": "977be099603485e7a100706988019611aec4a971"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-on-sage.png",
+    "uid": "2e64bbc6a0b5404fc34b5c8c3aa80036bc9353ca"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-on-sage.svg",
+    "uid": "bbf7cd0965f84aa0d30722cb636d320ea2e4bc9b"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-on-white.png",
+    "uid": "f1df6d1b2579594c669ced66a1113c13293571af"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-logo-on-white.svg",
+    "uid": "23bf983ab32393b6592e8d9df45711eafe90db5d"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-inverted-transparent.png",
+    "uid": "1de4333105bc76e8999344c3e5843795f265369a"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-inverted-transparent.svg",
+    "uid": "6b973ad80a32bb99ee512f1d06cabb9c21d6a1de"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-on-blue.png",
+    "uid": "eb67310e2b1cecfc28ae6a487d78f42d0c024f1b"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-on-blue.svg",
+    "uid": "9122ac162b8d7fff3e7cc803bfd6eb95bfe1e241"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-on-navy.png",
+    "uid": "84fcb6f06176f47fb8acb23a5c6bca45cedab1b3"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-on-navy.svg",
+    "uid": "a3b96a80a3c116636f18ad65184db061706facd7"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-on-sage.png",
+    "uid": "a2643ecdb758085b7161e505f952b72dea86e4e3"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-on-sage.svg",
+    "uid": "da56b0b40445d01e1b373c46a5dbabea5ef602a8"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-on-white.png",
+    "uid": "4ad5969fe43f0bd31163b1d3dd9815cc444cc3de"
+  },
+  {
+    "path": "apps/storefront/public/brand/variants/vetud-mark-on-white.svg",
+    "uid": "b0cfafb8faa5dd4daf0f4dcfbc70b4b4c6f0d975"
+  },
+  {
+    "path": "apps/storefront/public/brand/vetud-logo-white.svg",
+    "uid": "4f1dc8edf3ebd072e9488cb7ce492c1564d87b0e"
+  },
+  {
+    "path": "apps/storefront/public/brand/vetud-logo.svg",
+    "uid": "fb6e5a42be59738006a7fd13bde283370f8f6922"
+  },
+  {
+    "path": "apps/storefront/public/brand/vetud-mark.svg",
+    "uid": "4434302d2c820ab0644297a1d5942838e5adb878"
+  },
+  {
+    "path": "apps/storefront/public/images/vetud-alpine-hero-v2.png",
+    "uid": "78ac9eb88210f614f59a596faa9237cad31437c2"
+  },
+  {
+    "path": "apps/storefront/public/images/vetud-alpine-hero.png",
+    "uid": "a2c3cbe05e4abcc1056de19a286760ee0705e857"
+  },
+  {
+    "path": "apps/storefront/public/images/vetud-alpine-landscape.webp",
+    "uid": "81ba8dc293be1185f1ecbb74861fe9a0b14ccaea"
+  },
+  {
+    "path": "apps/storefront/public/images/vetud-glacial-detail.png",
+    "uid": "5176dc04fe8a9ca65345cc19ebd60a49b4cce585"
+  },
+  {
+    "path": "apps/storefront/src/app/icon.svg",
+    "uid": "4434302d2c820ab0644297a1d5942838e5adb878"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/account/orders/page.tsx",
+    "uid": "6a7b49faf969b91b707974286d0cc05d66d77b48"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/account/page.tsx",
+    "uid": "8c7f527aeb67c70db7f5912e5653f088959bd049"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/cart/page.tsx",
+    "uid": "21c46a41d0fd83d5e8c48f15e69ca2524d67b9b6"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/checkout/page.tsx",
+    "uid": "a74c0423c6e593d7ba5150f4dd301ddbf7505e24"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/contact/page.tsx",
+    "uid": "8c326df594fe486885344291334c47dc46d0bb54"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/documentation/page.tsx",
+    "uid": "c14982383e17fd193801c5d182398e9b4b6715a7"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/education/page.tsx",
+    "uid": "9a1e804a8a5c97b5abf013cae74f954e463c2281"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/layout.tsx",
+    "uid": "32e2e02c547f57494b8a11caa91552ff0f5bc9f4"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/legal/[slug]/page.tsx",
+    "uid": "23bb8b6fcaf3e0346d27db5b7f7fcc21ff0925f4"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/not-found.tsx",
+    "uid": "c305d2fe851b33d9ace955492b77a8eb78e3456e"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/order/confirmed/page.tsx",
+    "uid": "93bbf4de2caaf7b4d961abcd0990a21380b732af"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/order/makepay-return/page.tsx",
+    "uid": "36a12ef19fcb7e05061a16ad5f1e84bf418c0789"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/order/paypal-return/page.tsx",
+    "uid": "3440de40e74ef5d009a392fdcc12c1194ffece0f"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/page.tsx",
+    "uid": "1dea0770ccd4b256611783f1a45f954158e347e9"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/products/[handle]/page.tsx",
+    "uid": "bee7687a43ee38aa8f8858d01bc79d1f1aa1bc50"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/shop/page.tsx",
+    "uid": "7747071905d39e7c73c83daa9634508bf45b3d62"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/standards/page.tsx",
+    "uid": "1e91d532afb0530ae6b892f85dcc6c4343073098"
+  },
+  {
+    "path": "apps/storefront/src/app/[countryCode]/tracking/page.tsx",
+    "uid": "e47cc3c171c63b01bec4117facaf4d9548b53807"
+  },
+  {
+    "path": "apps/storefront/src/app/robots.ts",
+    "uid": "a430b748169c37c82dfd5db14cf122feb7838078"
+  },
+  {
+    "path": "apps/storefront/src/app/sitemap.ts",
+    "uid": "6b0dd2cd0292ba562f9238d74276ca0005e6fe5d"
+  },
+  {
+    "path": "apps/storefront/src/components/account/AccountPage.tsx",
+    "uid": "bc9479b268f3aab424bcb7019576d9031f6608ba"
+  },
+  {
+    "path": "apps/storefront/src/components/account/AccountProvider.tsx",
+    "uid": "9261f69b6f4de7a86dd369e28643db9ac2c6ae85"
+  },
+  {
+    "path": "apps/storefront/src/components/account/OrderHistory.tsx",
+    "uid": "2c7cb5accaa05ca4f48fdc2fc5cfcad2b2c2c2d5"
+  },
+  {
+    "path": "apps/storefront/src/components/brand/Icon.tsx",
+    "uid": "77e5a4c11dca5600815a5dbea20b6d046c8866e9"
+  },
+  {
+    "path": "apps/storefront/src/components/brand/Logo.tsx",
+    "uid": "4fad271a6a7d7d62380e53bae0ba7db68a30aade"
+  },
+  {
+    "path": "apps/storefront/src/components/cart/CartDrawer.tsx",
+    "uid": "99f1b0f8eecb80611a8a39b1549c6c1cc23e5e77"
+  },
+  {
+    "path": "apps/storefront/src/components/cart/CartLineItem.tsx",
+    "uid": "05fb131b8a4441a5705e12daaeaff81457f8721a"
+  },
+  {
+    "path": "apps/storefront/src/components/cart/CartView.tsx",
+    "uid": "8a3fc3237d58244be9ad00f37ebe6bb526bcf93d"
+  },
+  {
+    "path": "apps/storefront/src/components/cart/FreeShippingProgress.tsx",
+    "uid": "191964cc10d5a77ca9d34e958559dabf00e4fde6"
+  },
+  {
+    "path": "apps/storefront/src/components/cart/OrderTotals.tsx",
+    "uid": "4dc6ac007793218fbcec179971e2008544c5b6d0"
+  },
+  {
+    "path": "apps/storefront/src/components/checkout/AddressFields.tsx",
+    "uid": "5be20f81b26bd049447aef91cf95452c7ed045c5"
+  },
+  {
+    "path": "apps/storefront/src/components/checkout/CheckoutFlow.tsx",
+    "uid": "914b60206e1a1c47480356061b3ba3c8e0f488f2"
+  },
+  {
+    "path": "apps/storefront/src/components/checkout/MakePayReturn.tsx",
+    "uid": "1407b75d95802c77549a34ea301c4fa6f1a37826"
+  },
+  {
+    "path": "apps/storefront/src/components/checkout/NmiPaymentForm.tsx",
+    "uid": "91b08bd93a77c8f6bd8c324dcfc77a87d0db1840"
+  },
+  {
+    "path": "apps/storefront/src/components/checkout/OrderConfirmation.tsx",
+    "uid": "ff22cff20d6c59ee8f2f95cd391da519990c509d"
+  },
+  {
+    "path": "apps/storefront/src/components/checkout/PayPalReturn.tsx",
+    "uid": "aa74b2ceb07f1e8913ac1f9ac6bb7c1758383d2d"
+  },
+  {
+    "path": "apps/storefront/src/components/checkout/PlaceAutocomplete.tsx",
+    "uid": "e991a31d6f6db1a0ef527b6404efe8b1fa743ddb"
+  },
+  {
+    "path": "apps/storefront/src/components/common/PageHeader.tsx",
+    "uid": "f020fcccbf9a5022e8f4325f736c6a96c0b757f9"
+  },
+  {
+    "path": "apps/storefront/src/components/common/PhoneField.tsx",
+    "uid": "09c603d4914ea2e57aede6392f592d08d6f8336f"
+  },
+  {
+    "path": "apps/storefront/src/components/common/Section.tsx",
+    "uid": "872e5c9026f0bbd25036647cdb8d0389e3dfefa2"
+  },
+  {
+    "path": "apps/storefront/src/components/common/SectionHeading.tsx",
+    "uid": "ef0ee4500047f799a1f6efe0ba2cd76addb07ad1"
+  },
+  {
+    "path": "apps/storefront/src/components/common/links.tsx",
+    "uid": "c2d57d26b5b399df3c881807b78d296c7359a962"
+  },
+  {
+    "path": "apps/storefront/src/components/contact/ContactForm.tsx",
+    "uid": "654870d84ef22738d30593d57496636ea1fde787"
+  },
+  {
+    "path": "apps/storefront/src/components/documentation/LotLookup.tsx",
+    "uid": "ecf7756fb6219e8ea8633e0072f6c129bfef89ba"
+  },
+  {
+    "path": "apps/storefront/src/components/education/PeptideVideos.tsx",
+    "uid": "4082e26e825b90cc353adc50aa5b39b80fe8d34d"
+  },
+  {
+    "path": "apps/storefront/src/components/home/CollectionCarousel.tsx",
+    "uid": "b6d1b39887f24745c465f657e4c93955d0dd9c09"
+  },
+  {
+    "path": "apps/storefront/src/components/home/Hero.tsx",
+    "uid": "b5a0752af38a841c26760be5738ab69c383a2612"
+  },
+  {
+    "path": "apps/storefront/src/components/home/Manifesto.tsx",
+    "uid": "fa1405c60968ddef49219fd8e2209505fe932f23"
+  },
+  {
+    "path": "apps/storefront/src/components/home/ResearchStandard.tsx",
+    "uid": "07def3ed2a939022291eb2779a1c3168f7a03083"
+  },
+  {
+    "path": "apps/storefront/src/components/home/StandardsAccordion.tsx",
+    "uid": "2bff637725eee9139dd3a9d51c4cd70704b077be"
+  },
+  {
+    "path": "apps/storefront/src/components/layout/CountrySelect.tsx",
+    "uid": "a476f7bf0141bfc55b698a277e3f96a719dc9d77"
+  },
+  {
+    "path": "apps/storefront/src/components/layout/Footer.tsx",
+    "uid": "6b50c5d0c9e7cd527548b81873aa24fb7d0fed08"
+  },
+  {
+    "path": "apps/storefront/src/components/layout/Header.tsx",
+    "uid": "36946df85bdf5fa56f94d03c5bfa8b1adbb2692b"
+  },
+  {
+    "path": "apps/storefront/src/components/layout/SearchBox.tsx",
+    "uid": "87e237cc9572d614fe90dfd002f62828d37fe26e"
+  },
+  {
+    "path": "apps/storefront/src/components/layout/nav.ts",
+    "uid": "84f867ee251957421aedd16dac86f4409a0965c9"
+  },
+  {
+    "path": "apps/storefront/src/components/product/LotTable.tsx",
+    "uid": "bf8a622c1de27f566ddd9f2fe5c7bec1d7f78c17"
+  },
+  {
+    "path": "apps/storefront/src/components/product/ProductArt.tsx",
+    "uid": "8668e677db5f878c176c97b1a25eef68e8ec0d1a"
+  },
+  {
+    "path": "apps/storefront/src/components/product/ProductCard.tsx",
+    "uid": "9911c5e5c3f0646e411cf63bf4e5da9c586926e8"
+  },
+  {
+    "path": "apps/storefront/src/components/product/ProductDossier.tsx",
+    "uid": "bdbbd2ba253454c42bad8e9e039a190409a8643a"
+  },
+  {
+    "path": "apps/storefront/src/components/product/ProductGallery.tsx",
+    "uid": "3316ee8ac3a99f8f7b2f89f356c2365c868c98d8"
+  },
+  {
+    "path": "apps/storefront/src/components/product/ProductGrid.tsx",
+    "uid": "4bfd0049a9e568ad6a032f3630475a6fe21d7682"
+  },
+  {
+    "path": "apps/storefront/src/components/product/ProductThumb.tsx",
+    "uid": "725034981febec2e511eb64fe616d50c9edbc0e1"
+  },
+  {
+    "path": "apps/storefront/src/components/product/PurchasePanel.tsx",
+    "uid": "978e396f2af3b553dc2e3c3350e81d14b1683aed"
+  },
+  {
+    "path": "apps/storefront/src/components/product/QuantityStepper.tsx",
+    "uid": "2e488e01f1f624af27cfd38e18e3b34869c2bf86"
+  },
+  {
+    "path": "apps/storefront/src/components/shop/ShopToolbar.tsx",
+    "uid": "75584bdc262499d1415d80909e30b09041bf3d9a"
+  },
+  {
+    "path": "apps/storefront/src/components/standards/FaqAccordion.tsx",
+    "uid": "8417b627b5a8a433beb2617ea42a9d6fd6f69b75"
+  },
+  {
+    "path": "apps/storefront/src/components/store/StoreProvider.tsx",
+    "uid": "6b4d84cef9d7417d482812e26ddb1b932301d9a1"
+  },
+  {
+    "path": "apps/storefront/src/components/tracking/TrackingForm.tsx",
+    "uid": "93a4f04509758fe9b52e3cde13e41a7116d20e9b"
+  },
+  {
+    "path": "apps/storefront/src/content/legal.ts",
+    "uid": "37804ec41fac7be938fe196c6b7f3433c2091049"
+  },
+  {
+    "path": "apps/storefront/src/content/peptide-videos.ts",
+    "uid": "7c95a301db3b34daa6dc8651b4f98ae41d680bd5"
+  },
+  {
+    "path": "apps/storefront/src/content/product-research.ts",
+    "uid": "2007b6522f491c3ffed9c9640be06089840b3e04"
+  },
+  {
+    "path": "apps/storefront/src/i18n/config.ts",
+    "uid": "c843288b953549be75e08f9954ab79844d72737b"
+  },
+  {
+    "path": "apps/storefront/src/i18n/countries.json",
+    "uid": "77cbc79bfafc7f7c9fb2c5b17d80960fe082bd21"
+  },
+  {
+    "path": "apps/storefront/src/i18n/messages/de.json",
+    "uid": "bcd6071bc50f0beabfef76f3d994fcaaf2e01149"
+  },
+  {
+    "path": "apps/storefront/src/i18n/messages/en-GB.json",
+    "uid": "a0b92f4bc292919036f485dfec247d66a80ec7c7"
+  },
+  {
+    "path": "apps/storefront/src/i18n/messages/en-US.json",
+    "uid": "a0b92f4bc292919036f485dfec247d66a80ec7c7"
+  },
+  {
+    "path": "apps/storefront/src/i18n/messages/fr.json",
+    "uid": "441f455309c9bdcd1a1b39b3ef4f5f727b7b5d94"
+  },
+  {
+    "path": "apps/storefront/src/i18n/messages/nl.json",
+    "uid": "7e3526d2b177e9391d0919ebbd007631ce34fc7b"
+  },
+  {
+    "path": "apps/storefront/src/i18n/request.ts",
+    "uid": "e8b21ca89c72a14481c2ebccaeae9cf7c7dd8835"
+  },
+  {
+    "path": "apps/storefront/src/i18n/types.d.ts",
+    "uid": "e06857a72b54f5e76b6e4ac567e3b20cc6ecf7d1"
+  },
+  {
+    "path": "apps/storefront/src/i18n/us-states.json",
+    "uid": "af03c207b5ce938b5dbb891da8e88f132d48ba63"
+  },
+  {
+    "path": "apps/storefront/src/lib/address.ts",
+    "uid": "fcb9dff20ee0d59f4ada605060078e3aa99f1b8c"
+  },
+  {
+    "path": "apps/storefront/src/lib/config.ts",
+    "uid": "5d13212e46057dfabb85961690938e2198c8b6be"
+  },
+  {
+    "path": "apps/storefront/src/lib/country-cookie.ts",
+    "uid": "86d0db015c4bc0974fdecbdbe4b728dcd50e5b4e"
+  },
+  {
+    "path": "apps/storefront/src/lib/makepay.ts",
+    "uid": "bed07edd14cc3828ee1caa17a72fbab466e75918"
+  },
+  {
+    "path": "apps/storefront/src/lib/medusa/current-region.ts",
+    "uid": "cb8eeaacf27329189c4e281c575ab0e71946d8cf"
+  },
+  {
+    "path": "apps/storefront/src/lib/medusa/products.ts",
+    "uid": "33531833965a17ba45896e02040b81ced328abd4"
+  },
+  {
+    "path": "apps/storefront/src/lib/medusa/regions.ts",
+    "uid": "d83501f7944b1382f1a085bcc65d2dc19d097bdc"
+  },
+  {
+    "path": "apps/storefront/src/lib/medusa/sdk.ts",
+    "uid": "7cb56720e43757093c9467824ffe02328b1de4df"
+  },
+  {
+    "path": "apps/storefront/src/lib/nmi.ts",
+    "uid": "c2d0930a46350ce7d68c214e4150ed8e17a5c10e"
+  },
+  {
+    "path": "apps/storefront/src/lib/order-receipt.ts",
+    "uid": "c0ea3589a0aed2ab96a29db2a5418805cd353894"
+  },
+  {
+    "path": "apps/storefront/src/lib/orders.ts",
+    "uid": "5fa07ba14d776718ae12b13aec5694976a6a14d5"
+  },
+  {
+    "path": "apps/storefront/src/lib/paypal.ts",
+    "uid": "6fa08234bd08e45bc9209b185b559d1ee3167391"
+  },
+  {
+    "path": "apps/storefront/src/lib/places.ts",
+    "uid": "46fa635a7e1e0d212ec292e0a9f340806916c147"
+  },
+  {
+    "path": "apps/storefront/src/lib/product.ts",
+    "uid": "160468776321a820df4f23c5ab16f1d53776139d"
+  },
+  {
+    "path": "apps/storefront/src/lib/research.ts",
+    "uid": "9dad42f7621aa69008c8173c6a2864f6f7860ab8"
+  },
+  {
+    "path": "apps/storefront/src/proxy.ts",
+    "uid": "5b54b07a6671bca16c6bd8572f9cf906655175e2"
+  },
+  {
+    "path": "apps/storefront/src/theme/ThemeRegistry.tsx",
+    "uid": "00e870d2401c5ba515e51c85b9ff1ef7b303a226"
+  },
+  {
+    "path": "apps/storefront/src/theme/pep-lab.ts",
+    "uid": "10cffd3c57372bd3975eef32a633c2ee957970d1"
+  },
+  {
+    "path": "apps/storefront/src/theme/tokens.ts",
+    "uid": "8b0bf346ec284e99cc470cbff9fc2f8f5c03b77f"
+  },
+  {
+    "path": "apps/storefront/scripts/check-addresses.mjs",
+    "uid": "c0f91658dd93e19a312a4d7ce7792db085a32191"
+  },
+  {
+    "path": "apps/storefront/tests/nmi.test.mjs",
+    "uid": "89b6dfb42b54b1e6bfa677a6db61796b14229738"
+  },
+  {
+    "path": "apps/storefront/tests/orders.test.mjs",
+    "uid": "e0955bd65f1035d2bbe87d0a1c3c4b5823828672"
+  },
+  {
+    "path": "apps/storefront/tests/places.test.mjs",
+    "uid": "332c4b2244ccbaac60ff1434d1f0bb36cf3c420c"
+  },
+  {
+    "path": "apps/storefront/tsconfig.json",
+    "uid": "27dded29dc880f958ee67c9ed276fb2b1412f515"
+  },
+  {
+    "path": "apps/storefront/vercel.json",
+    "uid": "cc4ad9b6daf691e993e24d957478b6f13f34e682"
+  },
+  {
+    "path": "docker-compose.yml",
+    "uid": "0b88d68cc08590d8e217bf43ca0a68af5dc4c41a"
+  },
+  {
+    "path": "skills-lock.json",
+    "uid": "5bcc9176bab149739f768bc3e845bfb0185e07f8"
+  }
+]

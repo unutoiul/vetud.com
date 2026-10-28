@@ -7,13 +7,16 @@ import Drawer from "@mui/material/Drawer"
 import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
+import { useLocale } from "next-intl"
 import { formatMoney } from "@/lib/product"
 import { ButtonLink } from "../common/links"
 import { useStore } from "../store/StoreProvider"
+import CartAnnouncer from "./CartAnnouncer"
 import CartLineItem from "./CartLineItem"
 import FreeShippingProgress from "./FreeShippingProgress"
 
 export default function CartDrawer() {
+  const locale = useLocale()
   const { cart, drawerOpen, closeDrawer, itemCount, error, clearError, region } = useStore()
   const items = [...(cart?.items ?? [])].sort((a, b) =>
     String(a.created_at ?? "").localeCompare(String(b.created_at ?? ""))
@@ -26,14 +29,15 @@ export default function CartDrawer() {
       anchor="right"
       open={drawerOpen}
       onClose={closeDrawer}
-      slotProps={{ paper: { sx: { width: { xs: "100%", sm: 460 }, bgcolor: "#f7f9fa", overscrollBehavior: "contain" } } }}
+      slotProps={{ paper: { role: "dialog", "aria-modal": true, "aria-labelledby": "cart-drawer-title", sx: { width: { xs: "100%", sm: 460 }, bgcolor: "#f7f9fa", overscrollBehavior: "contain" } } }}
     >
+      <CartAnnouncer />
       <Stack sx={{ height: "100%" }}>
         <Stack
           direction="row"
           sx={{ alignItems: "center", justifyContent: "space-between", px: 3, py: 2, borderBottom: "1px solid", borderColor: "divider" }}
         >
-          <Typography variant="h5" component="h2">
+          <Typography variant="h5" component="h2" id="cart-drawer-title">
             Your cart{itemCount ? ` (${itemCount})` : ""}
           </Typography>
           <IconButton aria-label="Close cart" onClick={closeDrawer}>
@@ -75,7 +79,7 @@ export default function CartDrawer() {
           <Box sx={{ px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
             <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
               <Typography sx={{ fontWeight: 600 }}>Subtotal</Typography>
-              <Typography sx={{ fontWeight: 700 }}>{formatMoney(itemTotal, currency)}</Typography>
+              <Typography sx={{ fontWeight: 700 }}>{formatMoney(itemTotal, currency, { locale })}</Typography>
             </Stack>
             <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
               Shipping and taxes are calculated at checkout.

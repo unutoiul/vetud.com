@@ -23,7 +23,9 @@
     "slide": "Product {current} of {total}",
     "research": "For laboratory research only",
     "available": "Available",
-    "soldOut": "Sold out"
+    "soldOut": "Sold out",
+    "collection": "The peptide collection",
+    "from": "From"
   },
   "Address": {
     "country": "Country",
@@ -88,7 +90,30 @@
     "primary": "Primary shipping",
     "confirmRemove": "Remove this saved address?",
     "greeting": "Good to see you, {name}.",
-    "privacy": "Your details support order verification, tracking and customer service."
+    "privacy": "Your details support order verification, tracking and customer service.",
+    "forgot": "Forgot your password?",
+    "resetTitle": "Choose a new password.",
+    "resetIntro": "Enter the email you use for your account and we'll send you a link to choose a new password.",
+    "resetPageIntro": "Set a new password for your VETUD account. Reset links work once and expire after 15 minutes.",
+    "sendLink": "Send reset link",
+    "resendLink": "Send another link",
+    "resetSent": "If an account exists for {email}, a reset link is on its way. It expires in 15 minutes.",
+    "backToSignin": "Back to sign in",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordsMismatch": "The passwords don't match.",
+    "savePassword": "Save new password",
+    "resetFor": "For {email}",
+    "resetDone": "Your password has been updated.",
+    "resetDoneSignin": "Your password has been updated. Sign in with your new password.",
+    "resetExpired": "This reset link has expired or has already been used. Request a new one below.",
+    "resetMissing": "This reset link is incomplete. Request a new one below.",
+    "showPassword": "Show password",
+    "changePassword": "Email me a reset link",
+    "changePasswordHelp": "To change your password, we'll email you a secure link. It expires in 15 minutes.",
+    "resetSentAccount": "Reset link sent to {email}.",
+    "continueCheckout": "Continue to checkout",
+    "goToAccount": "Go to your account"
   },
   "Checkout": {
     "contact": "Contact",
@@ -106,7 +131,6 @@
     "currencyChange": "Prices switch to {currency} for delivery to {country} when you continue.",
     "title": "Complete your order.",
     "description": "Confirm your details, choose delivery and select an available payment method.",
-    "research": "Research details",
     "continue": "Continue to delivery"
   },
   "Pages": {

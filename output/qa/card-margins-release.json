@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-10-28T10:08:02.422Z",
+  "deployment": "dpl_57d6YKXAzzsEMvkaJ2nwjEgTGz66",
+  "changedSourceFiles": [
+    "apps/storefront/src/components/home/CollectionCarousel.tsx"
+  ],
+  "desktop": {
+    "cards": [
+      {
+        "contentFits": true,
+        "height": 405,
+        "padding": "16px",
+        "product": "Retatrutide"
+      },
+      {
+        "contentFits": true,
+        "height": 405,
+        "padding": "16px",
+        "product": "Semaglutide"
+      },
+      {
+        "contentFits": true,
+        "height": 405,
+        "padding": "16px",
+        "product": "Tirzepatide"
+      },
+      {
+        "contentFits": true,
+        "height": 405,
+        "padding": "16px",
+        "product": "Selank Nasal Spray"
+      },
+      {
+        "contentFits": true,
+        "height": 405,
+        "padding": "16px",
+        "product": "Semax Nasal Spray"
+      }
+    ],
+    "overflow": false,
+    "width": 1868
+  },
+  "mobile": {
+    "width": 390,
+    "cardHeight": 340,
+    "padding": 14,
+    "allFiveCardsFit": true
+  },
+  "lint": "passed",
+  "typecheck": "passed",
+  "productionBuild": "passed"
+}

@@ -33,6 +33,8 @@ type AccountContextValue = {
     phone?: string
   }) => Promise<void>
   signOut: () => Promise<void>
+  requestPasswordReset: (email: string, countryCode: string) => Promise<void>
+  resetPassword: (password: string, token: string) => Promise<void>
   updateProfile: (details: HttpTypes.StoreUpdateCustomer) => Promise<void>
   createAddress: (address: HttpTypes.StoreCreateCustomerAddress) => Promise<void>
   updateAddress: (id: string, address: HttpTypes.StoreUpdateCustomerAddress) => Promise<void>
@@ -189,6 +191,29 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
     })
   }, [clearCart, run])
 
+  const requestPasswordReset = useCallback(
+    async (email: string, countryCode: string) => {
+      await run(async () => {
+        // Medusa answers the same way whether or not the account exists. The country
+        // lets the emailed link open the storefront in the shopper's region.
+        await sdk.auth.resetPassword("customer", "emailpass", {
+          identifier: email,
+          metadata: { country_code: countryCode },
+        })
+      })
+    },
+    [run]
+  )
+
+  const resetPassword = useCallback(
+    async (password: string, token: string) => {
+      await run(async () => {
+        await sdk.auth.updateProvider("customer", "emailpass", { password }, token)
+      })
+    },
+    [run]
+  )
+
   const updateProfile = useCallback(
     async (details: HttpTypes.StoreUpdateCustomer) => {
       await run(async (assertCurrent) => {
@@ -243,6 +268,8 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       signIn,
       signUp,
       signOut,
+      requestPasswordReset,
+      resetPassword,
       updateProfile,
       createAddress,
       updateAddress,
@@ -259,6 +286,8 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       signIn,
       signUp,
       signOut,
+      requestPasswordReset,
+      resetPassword,
       updateProfile,
       createAddress,
       updateAddress,

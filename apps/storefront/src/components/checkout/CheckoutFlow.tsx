@@ -1,10 +1,13 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { getCountryRules } from "@/i18n/config"
 import { normalizeAddress, formatAddressLines } from "@/lib/address"
-import { BankIcon as AccountBalanceOutlinedIcon, LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
+import Icon, { type IconName, LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
+import Accordion from "@mui/material/Accordion"
+import AccordionDetails from "@mui/material/AccordionDetails"
+import AccordionSummary from "@mui/material/AccordionSummary"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -13,7 +16,6 @@ import CircularProgress from "@mui/material/CircularProgress"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormHelperText from "@mui/material/FormHelperText"
 import Grid from "@mui/material/Grid"
-import MenuItem from "@mui/material/MenuItem"
 import Paper from "@mui/material/Paper"
 import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
@@ -34,7 +36,7 @@ import { PAYPAL_PROVIDER_ID, readPayPalRedirect } from "@/lib/paypal"
 import { formatMoney } from "@/lib/product"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
 import { NMI_PROVIDER_ID, nmiAvailable, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
-import { hasResearchProfile, researchMetadata, RESEARCH_FIELDS, RUO_ACK_TEXT } from "@/lib/research"
+import { hasResearchAcknowledgment, researchAcknowledgmentMetadata, RUO_ACK_TEXT } from "@/lib/research"
 import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
 import CartLineItem from "../cart/CartLineItem"
@@ -46,22 +48,26 @@ import AddressFields, { EMPTY_ADDRESS, toAddressValues, validateAddress, type Ad
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
 
-const PAYMENT_LABELS: Record<string, { title: string; description: string }> = {
+const PAYMENT_LABELS: Record<string, { title: string; description: string; icon?: IconName }> = {
   [NMI_PROVIDER_ID]: {
+    icon: "card",
     title: "Credit / debit card or eligible bank account",
     description: "Enter payment details securely on the next step. Cards are authorized now and captured when ready to ship. Bank debit is available only when enabled and must settle before shipment.",
   },
   pp_system_default: {
+    icon: "bank",
     title: "Bank transfer / invoice",
     description:
       "Place your order now and pay by bank transfer. Payment instructions and your reference are emailed right after you order. Stock is reserved while we wait for your payment.",
   },
   [MAKEPAY_PROVIDER_ID]: {
+    icon: "coin",
     title: "Pay with cryptocurrency",
     description:
       "Place your order, then pay on MakePay's secure hosted page. Your order is confirmed as soon as the network confirms your payment.",
   },
   [PAYPAL_PROVIDER_ID]: {
+    icon: "wallet",
     title: "PayPal",
     description:
       "You'll be taken to PayPal to pay. Your order is placed as soon as the payment is confirmed.",
@@ -73,7 +79,7 @@ function hasPaymentSession(cart: HttpTypes.StoreCart) {
 }
 
 function initialStep(cart: HttpTypes.StoreCart) {
-  if (!cart.email || !cart.shipping_address?.address_1 || !hasResearchProfile(cart)) return 0
+  if (!cart.email || !cart.shipping_address?.address_1 || !hasResearchAcknowledgment(cart)) return 0
   if (!cart.shipping_methods?.length) return 1
   if (!hasPaymentSession(cart)) return 2
   return 3
@@ -104,12 +110,25 @@ export default function CheckoutFlow() {
   const steps = [checkoutText("details"), checkoutText("delivery"), checkoutText("payment"), checkoutText("review")]
   const router = useRouter()
   const { cart, cartReady, setCart, clearCart, linkCustomerCart, isCurrentCart, region, countries, countryCode } = useStore()
-  const { customer, loading: accountLoading, createAddress, updateProfile, captureSession } = useAccount()
+  const { customer, loading: accountLoading, createAddress, captureSession } = useAccount()
   const [step, setStep] = useState<number | null>(null)
   const [busy, setBusy] = useState(false)
   const busyRef = useRef(false)
   const [error, setError] = useState<string | null>(null)
   const [completedOrderId, setCompletedOrderId] = useState<string | null>(null)
+  const locale = useLocale()
+  const stepperRef = useRef<HTMLDivElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+
+  // When the shopper moves between steps, bring the progress bar into view and focus the
+  // new step's heading, so nobody is left at the bottom of the previous, longer step.
+  useEffect(() => {
+    if (step === null) return
+    const heading = panelRef.current?.querySelector<HTMLElement>("h2")
+    heading?.setAttribute("tabindex", "-1")
+    heading?.focus({ preventScroll: true })
+    stepperRef.current?.scrollIntoView({ block: "start" })
+  }, [step])
 
   if (completedOrderId) {
     return (
@@ -172,9 +191,9 @@ export default function CheckoutFlow() {
     guard(async (assertCurrent) => {
       let checkoutCart = customer ? await linkCustomerCart() : cart
       assertCurrent()
-      if (!hasResearchProfile(checkoutCart)) {
+      if (!hasResearchAcknowledgment(checkoutCart)) {
         setStep(0)
-        throw new Error("Please confirm your research details before placing your order.")
+        throw new Error("Please confirm the research-use acknowledgment before placing your order.")
       }
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         setStep(2)
@@ -238,10 +257,34 @@ export default function CheckoutFlow() {
       router.push(`/${countryCode}/order/confirmed?id=${encodeURIComponent(result.order.id)}`)
     })
 
+  const summary = (
+    <>
+      <Box sx={{ mb: 2 }}>
+        {(cart.items ?? []).map((item) => (
+          <CartLineItem key={item.id} item={item} currencyCode={currency} readOnly />
+        ))}
+      </Box>
+      <OrderTotals totals={cart} shippingKnown={Boolean(cart.shipping_methods?.length)} />
+      <Stack direction="row" spacing={1} sx={{ mt: 2, alignItems: "center", color: "text.secondary" }}>
+        <LockOutlinedIcon sx={{ fontSize: 16 }} />
+        <Typography variant="body2">Your details are sent over an encrypted connection.</Typography>
+      </Stack>
+    </>
+  )
+
   return (
     <Grid container spacing={{ xs: 4, md: 6 }}>
       <Grid size={{ xs: 12, md: 7 }}>
-        <Stepper nonLinear activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
+        {/* On small screens the summary sidebar would sit below the form, so the total stays visible up top. */}
+        <Accordion sx={{ display: { md: "none" }, mb: 3, px: 2, bgcolor: "#f7f9fa", border: "1px solid", borderColor: "divider", borderRadius: 3 }}>
+          <AccordionSummary expandIcon={<Icon name="chevronDown" />} aria-controls="checkout-summary-content" id="checkout-summary-header" sx={{ minHeight: 64, "& .MuiAccordionSummary-content": { my: 2 } }}>
+            <Typography sx={{ fontWeight: 600, flex: 1 }}>Order summary</Typography>
+            <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{formatMoney(Number(cart.total ?? 0), currency, { locale })}</Typography>
+          </AccordionSummary>
+          <AccordionDetails>{summary}</AccordionDetails>
+        </Accordion>
+
+        <Stepper ref={stepperRef} nonLinear activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
           {steps.map((label, index) => (
             <Step key={label} completed={index < maxReachable && index !== activeStep}>
               <StepButton onClick={() => setStep(index)} disabled={index > maxReachable || busy}>
@@ -257,7 +300,7 @@ export default function CheckoutFlow() {
           </Alert>
         ) : null}
 
-        <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3 }}>
+        <Paper ref={panelRef} variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3, "& h2[tabindex='-1']:focus": { outline: "none" } }}>
           {activeStep === 0 ? (
             <DetailsStep
               key={`${cart.id}:${customer?.id ?? "guest"}`}
@@ -271,31 +314,24 @@ export default function CheckoutFlow() {
                 guard(async (assertCurrent) => {
                   if (customer) await linkCustomerCart()
                   assertCurrent()
-                  const { saveAddress, research_field, company_name, ...addressBody } = body
+                  const { saveAddress, ...addressBody } = body
                   // Shipping to a country in another region changes the currency and prices.
                   const destination = countries.find((country) => country.code === body.shipping_address.country_code)
                   const switchRegion = destination && destination.regionId !== region.id ? destination : null
                   const cartBody = {
                     ...addressBody,
                     ...(switchRegion ? { region_id: switchRegion.regionId } : {}),
-                    metadata: researchMetadata({ research_field, company_name }),
+                    metadata: researchAcknowledgmentMetadata(),
                   }
                   const { cart: updated } = await sdk.store.cart.update(cart.id, cartBody, { fields: CART_FIELDS })
                   assertCurrent()
                   setCart(updated)
                   if (saveAddress && customer) {
-                    // The company belongs to the order and your profile, not to each saved address.
                     await createAddress({
                       ...body.shipping_address,
-                      company: "",
                       address_name: "Primary shipping",
                       is_default_shipping: true,
                     })
-                    assertCurrent()
-                  }
-                  if (customer && customer.company_name !== company_name) {
-                    // Remember it for next time; a failure here must not block the order.
-                    await updateProfile({ company_name }).catch(() => undefined)
                     assertCurrent()
                   }
                   if (switchRegion) {
@@ -362,21 +398,12 @@ export default function CheckoutFlow() {
         </Paper>
       </Grid>
 
-      <Grid size={{ xs: 12, md: 5 }}>
+      <Grid size={{ xs: 12, md: 5 }} sx={{ display: { xs: "none", md: "block" } }}>
         <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#f7f9fa", borderRadius: 3, position: { md: "sticky" }, top: { md: 110 } }}>
           <Typography variant="h5" component="h2" sx={{ mb: 1 }}>
             Order summary
           </Typography>
-          <Box sx={{ mb: 2 }}>
-            {(cart.items ?? []).map((item) => (
-              <CartLineItem key={item.id} item={item} currencyCode={currency} readOnly />
-            ))}
-          </Box>
-          <OrderTotals totals={cart} shippingKnown={Boolean(cart.shipping_methods?.length)} />
-          <Stack direction="row" spacing={1} sx={{ mt: 2, alignItems: "center", color: "text.secondary" }}>
-            <LockOutlinedIcon sx={{ fontSize: 16 }} />
-            <Typography variant="body2">Your details are sent over an encrypted connection.</Typography>
-          </Stack>
+          {summary}
         </Paper>
       </Grid>
     </Grid>
@@ -388,8 +415,6 @@ type DetailsBody = {
   shipping_address: AddressValues
   billing_address: AddressValues
   saveAddress: boolean
-  research_field: string
-  company_name: string
 }
 
 function DetailsStep({
@@ -437,26 +462,15 @@ function DetailsStep({
     const values = toAddressValues(cart.billing_address ?? cart.shipping_address ?? preferredAddress)
     return { ...values, first_name: values.first_name || customer?.first_name || "", last_name: values.last_name || customer?.last_name || "", phone: values.phone || customer?.phone || "", country_code: values.country_code || defaultCountry }
   })
-  const [researchField, setResearchField] = useState<string>(
-    typeof cart.metadata?.research_field === "string" ? cart.metadata.research_field : ""
-  )
-  const [companyName, setCompanyName] = useState<string>(
-    (typeof cart.metadata?.company_name === "string" ? cart.metadata.company_name : "") ||
-      cart.shipping_address?.company ||
-      customer?.company_name ||
-      ""
-  )
-  const [acknowledged, setAcknowledged] = useState(hasResearchProfile(cart))
+  const [acknowledged, setAcknowledged] = useState(hasResearchAcknowledgment(cart))
   const [showErrors, setShowErrors] = useState(false)
   const destination = countries.find((country) => country.code === shipping.country_code)
 
-  const companyError = !companyName.trim() ? "Enter your company or institution" : undefined
-  const researchError = !researchField ? "Choose your field of research" : undefined
   const ackError = !acknowledged ? "You must confirm this to place an order" : undefined
   const emailError = !EMAIL_PATTERN.test(email.trim()) ? "Enter a valid email address" : undefined
   const shippingErrors = validateAddress(shipping, (key, args) => ta(key, args), ta(getCountryRules(shipping.country_code).postalLabel as "postal" | "zip" | "postcode"))
   const billingErrors = billingSame ? {} : validateAddress(billing, (key, args) => ta(key, args), ta(getCountryRules(billing.country_code).postalLabel as "postal" | "zip" | "postcode"))
-  const valid = !emailError && !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length && !companyError && !researchError && !ackError
+  const valid = !emailError && !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length && !ackError
 
   return (
     <Box
@@ -472,25 +486,18 @@ function DetailsStep({
               ? `shipping-${Object.keys(shippingErrors)[0]}`
               : Object.keys(billingErrors).length
                 ? `billing-${Object.keys(billingErrors)[0]}`
-                : companyError
-                  ? "company_name"
-                  : researchError
-                    ? "research_field"
-                    : "ruo_acknowledged"
+                : "ruo_acknowledged"
           const control = event.currentTarget.querySelector<HTMLElement>(`[id="${field}"]`)
             ?? event.currentTarget.querySelector<HTMLInputElement>(`[name="${field}"]`)
           control?.focus()
           return
         }
-        const company = companyName.trim()
-        const shippingWithCompany = { ...normalizeAddress(shipping), company }
+        const shippingAddress = normalizeAddress(shipping)
         onSubmit({
           email: email.trim(),
-          shipping_address: shippingWithCompany,
-          billing_address: billingSame ? shippingWithCompany : { ...normalizeAddress(billing), company },
+          shipping_address: shippingAddress,
+          billing_address: billingSame ? shippingAddress : normalizeAddress(billing),
           saveAddress: Boolean(customer && saveAddress && selectedAddressId === "new"),
-          research_field: researchField,
-          company_name: company,
         })
       }}
     >
@@ -577,43 +584,8 @@ function DetailsStep({
         </Box>
       ) : null}
 
-      <Typography variant="h5" component="h2" sx={{ mt: 4, mb: 0.5 }}>
-        {t("research")}
-      </Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
-        Our products are supplied to qualified researchers and institutions for laboratory research only.
-      </Typography>
-      <TextField
-        label="Company or institution"
-        name="company_name"
-        id="company_name"
-        required
-        value={companyName}
-        onChange={(event) => setCompanyName(event.target.value)}
-        error={showErrors && Boolean(companyError)}
-        helperText={showErrors ? companyError : "The organization you are ordering for."}
-        slotProps={{ htmlInput: { autoComplete: "organization" } }}
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        select
-        label="Field of research"
-        name="research_field"
-        id="research_field"
-        required
-        value={researchField}
-        onChange={(event) => setResearchField(event.target.value)}
-        error={showErrors && Boolean(researchError)}
-        helperText={showErrors ? researchError : undefined}
-      >
-        {RESEARCH_FIELDS.map((field) => (
-          <MenuItem key={field} value={field}>
-            {field}
-          </MenuItem>
-        ))}
-      </TextField>
       <FormControlLabel
-        sx={{ mt: 2, alignItems: "flex-start" }}
+        sx={{ mt: 3, alignItems: "flex-start" }}
         control={
           <Checkbox
             name="ruo_acknowledged"
@@ -643,6 +615,7 @@ function DeliveryStep({
   onError: (message: string) => void
   onSubmit: (optionId: string) => void
 }) {
+  const locale = useLocale()
   const [options, setOptions] = useState<HttpTypes.StoreCartShippingOption[] | null>(null)
   const [selected, setSelected] = useState(cart.shipping_methods?.[0]?.shipping_option_id ?? "")
 
@@ -714,7 +687,7 @@ function DeliveryStep({
                       </Typography>
                     ) : null}
                   </Box>
-                  <Typography sx={{ fontWeight: 700 }}>{amount === 0 ? "Free" : formatMoney(amount, cart.currency_code)}</Typography>
+                  <Typography sx={{ fontWeight: 700 }}>{amount === 0 ? "Free" : formatMoney(amount, cart.currency_code, { locale })}</Typography>
                 </Box>
               )
             })}
@@ -802,7 +775,7 @@ function PaymentStep({
                   <Radio value={provider.id} />
                   <Box sx={{ flex: 1, py: 1 }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-                      <AccountBalanceOutlinedIcon fontSize="small" sx={{ color: "secondary.main" }} />
+                      <Icon name={label.icon ?? "lock"} fontSize="small" sx={{ color: "secondary.main" }} />
                       <Typography sx={{ fontWeight: 600 }}>{label.title}</Typography>
                     </Stack>
                     {label.description ? (
@@ -835,6 +808,7 @@ function ReviewStep({
   onPlaceOrder: () => void
   onNmiToken: (token: NmiToken) => Promise<void>
 }) {
+  const locale = useLocale()
   const address = cart.shipping_address
   const method = cart.shipping_methods?.[0]
   const provider = cart.payment_collection?.payment_sessions?.[0]?.provider_id ?? ""
@@ -858,8 +832,6 @@ function ReviewStep({
       title: "Research",
       step: 0,
       lines: [
-        typeof cart.metadata?.company_name === "string" ? cart.metadata.company_name : "",
-        typeof cart.metadata?.research_field === "string" ? cart.metadata.research_field : "",
         "Research use confirmed",
       ].filter(Boolean) as string[],
     },
@@ -867,7 +839,7 @@ function ReviewStep({
       title: "Delivery",
       step: 1,
       lines: [
-        `${method?.name ?? "—"} · ${Number(method?.amount ?? 0) === 0 ? "Free" : formatMoney(Number(method?.amount ?? 0), cart.currency_code)}`,
+        `${method?.name ?? "—"} · ${Number(method?.amount ?? 0) === 0 ? "Free" : formatMoney(Number(method?.amount ?? 0), cart.currency_code, { locale })}`,
       ],
     },
     {
@@ -928,7 +900,7 @@ function ReviewStep({
           ? provider === PAYPAL_PROVIDER_ID
             ? "Opening PayPal…"
             : "Placing order…"
-          : `${provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${formatMoney(Number(cart.total ?? 0), cart.currency_code)}`}
+          : `${provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${formatMoney(Number(cart.total ?? 0), cart.currency_code, { locale })}`}
       </Button>}
     </Box>
   )

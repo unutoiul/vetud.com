@@ -5,7 +5,10 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Chip from "@mui/material/Chip"
 import CircularProgress from "@mui/material/CircularProgress"
+import Divider from "@mui/material/Divider"
 import Grid from "@mui/material/Grid"
+import IconButton from "@mui/material/IconButton"
+import InputAdornment from "@mui/material/InputAdornment"
 import Paper from "@mui/material/Paper"
 import Skeleton from "@mui/material/Skeleton"
 import Stack from "@mui/material/Stack"
@@ -38,19 +41,100 @@ export default function AccountPage({ view = "profile" }: { view?: "profile" | "
   return <AccountDashboard key={customer.id} view={view} />
 }
 
+export function PasswordField({ label, value, onChange, autoComplete, helperText, error }: {
+  label: string
+  value: string
+  onChange: (value: string) => void
+  autoComplete: "current-password" | "new-password"
+  helperText?: string
+  error?: boolean
+}) {
+  const t = useTranslations("Account")
+  const [visible, setVisible] = useState(false)
+  return (
+    <TextField
+      label={label}
+      type={visible ? "text" : "password"}
+      required
+      value={value}
+      onChange={(event) => onChange(event.target.value)}
+      helperText={helperText}
+      error={error}
+      slotProps={{
+        htmlInput: { autoComplete, minLength: 8, spellCheck: false, autoCapitalize: "none" },
+        input: {
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton aria-label={t("showPassword")} aria-pressed={visible} onClick={() => setVisible(!visible)} edge="end">
+                <Icon name={visible ? "eyeOff" : "eye"} sx={{ fontSize: 20 }} />
+              </IconButton>
+            </InputAdornment>
+          ),
+        },
+      }}
+    />
+  )
+}
+
+/** Emails a one-time reset link. Medusa replies the same way whether or not the account exists. */
+export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?: string; onBack?: () => void }) {
+  const t = useTranslations("Account")
+  const { countryCode } = useStore()
+  const { requestPasswordReset, pending } = useAccount()
+  const [email, setEmail] = useState(initialEmail)
+  const [sentTo, setSentTo] = useState<string | null>(null)
+  const [formError, setFormError] = useState<string | null>(null)
+
+  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setFormError(null)
+    const trimmed = email.trim()
+    if (!EMAIL_PATTERN.test(trimmed)) {
+      setFormError(t("invalidEmail"))
+      return
+    }
+    try {
+      await requestPasswordReset(trimmed, countryCode)
+      setSentTo(trimmed)
+    } catch (caught) {
+      setFormError(errorText(caught))
+    }
+  }
+
+  return (
+    <Box component="form" onSubmit={submit} noValidate>
+      {sentTo ? <Alert severity="success" role="status" sx={{ mb: 2 }}>{t("resetSent", { email: sentTo })}</Alert> : null}
+      {formError ? <Alert severity="error" sx={{ mb: 2 }}>{formError}</Alert> : null}
+      <TextField label="Email" type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" } }}>
+        <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" sx={{ fontSize: 17 }} />}>
+          {sentTo ? t("resendLink") : t("sendLink")}
+        </Button>
+        {onBack ? <Button type="button" onClick={onBack}>{t("backToSignin")}</Button> : null}
+      </Stack>
+    </Box>
+  )
+}
+
 export function AuthPanel({ context = "account" }: { context?: "account" | "checkout" }) {
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
   const { countryCode } = useStore()
   const atCheckout = context === "checkout"
   const { signIn, signUp, pending, error, clearError } = useAccount()
-  const [mode, setMode] = useState<"signin" | "signup">("signin")
+  const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [phone, setPhone] = useState("")
   const [formError, setFormError] = useState<string | null>(null)
+
+  const switchMode = (next: typeof mode) => {
+    setMode(next)
+    setFormError(null)
+    clearError()
+  }
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -87,10 +171,12 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
           {atCheckout ? t("required") : mode === "signin" ? t("welcome") : t("account")}
         </Typography>
         <Typography variant="h3" component="h2" sx={{ mt: 1.5, mb: 2 }}>
-          {atCheckout ? t("checkoutTitle") : mode === "signin" ? t("signinTitle") : t("signupTitle")}
+          {mode === "reset" ? t("resetTitle") : atCheckout ? t("checkoutTitle") : mode === "signin" ? t("signinTitle") : t("signupTitle")}
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          {atCheckout
+          {mode === "reset"
+            ? t("resetIntro")
+            : atCheckout
             ? t("checkoutIntro")
             : t("intro")}
         </Typography>
@@ -108,16 +194,19 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
       </Grid>
       <Grid size={{ xs: 12, md: 7 }}>
         <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3 }}>
+          {mode === "reset" ? <ResetRequestForm initialEmail={email} onBack={() => switchMode("signin")} /> : <>
           <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
             <Button
               variant={mode === "signin" ? "contained" : "text"}
-              onClick={() => { setMode("signin"); setFormError(null); clearError() }}
+              aria-pressed={mode === "signin"}
+              onClick={() => switchMode("signin")}
             >
               {t("signin")}
             </Button>
             <Button
               variant={mode === "signup" ? "contained" : "text"}
-              onClick={() => { setMode("signup"); setFormError(null); clearError() }}
+              aria-pressed={mode === "signup"}
+              onClick={() => switchMode("signup")}
             >
               {t("signup")}
             </Button>
@@ -133,15 +222,19 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
             <Stack spacing={2}>
               <TextField label="Email" type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
               {mode === "signup" ? <PhoneField country={countryCode} value={phone} onChange={setPhone} /> : null}
-              <TextField label={t("password")} type="password" required value={password} onChange={(event) => setPassword(event.target.value)} helperText={mode === "signup" ? t("passwordHelp") : undefined} slotProps={{ htmlInput: { autoComplete: mode === "signin" ? "current-password" : "new-password", minLength: 8 } }} />
+              <PasswordField label={t("password")} value={password} onChange={setPassword} helperText={mode === "signup" ? t("passwordHelp") : undefined} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
             </Stack>
-            <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}>
-              {mode === "signin" ? t("signin") : t("signup")}
-            </Button>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
+              <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ width: { xs: "100%", sm: "auto" } }}>
+                {mode === "signin" ? t("signin") : t("signup")}
+              </Button>
+              {mode === "signin" ? <Button type="button" onClick={() => switchMode("reset")} sx={{ alignSelf: { xs: "center", sm: "auto" } }}>{t("forgot")}</Button> : null}
+            </Stack>
           </Box>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
             {t("privacy")}
           </Typography>
+          </>}
         </Paper>
       </Grid>
     </Grid>
@@ -182,9 +275,22 @@ function ProfileSection() {
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
   const { countryCode } = useStore()
-  const { customer, updateProfile, pending, error, clearError } = useAccount()
+  const { customer, updateProfile, requestPasswordReset, pending, error, clearError } = useAccount()
   const [values, setValues] = useState({ first_name: customer?.first_name ?? "", last_name: customer?.last_name ?? "", phone: customer?.phone ?? "", company_name: customer?.company_name ?? "" })
   const [saved, setSaved] = useState(false)
+  const [resetSent, setResetSent] = useState(false)
+
+  const sendReset = async () => {
+    if (!customer?.email) return
+    clearError()
+    setResetSent(false)
+    try {
+      await requestPasswordReset(customer.email, countryCode)
+      setResetSent(true)
+    } catch {
+      // The provider displays the API error.
+    }
+  }
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -215,6 +321,11 @@ function ProfileSection() {
         </Stack>
         <Button type="submit" variant="contained" disabled={pending} sx={{ mt: 2.5 }}>{pending ? t("saving") : t("saveProfile")}</Button>
       </Box>
+      <Divider sx={{ my: 3 }} />
+      <Typography variant="h6" component="h3">{t("password")}</Typography>
+      <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5, mb: 2 }}>{t("changePasswordHelp")}</Typography>
+      {resetSent ? <Alert severity="success" role="status" sx={{ mb: 2 }}>{t("resetSentAccount", { email: customer?.email ?? "" })}</Alert> : null}
+      <Button variant="outlined" disabled={pending} onClick={() => void sendReset()} startIcon={<Icon name="mail" sx={{ fontSize: 17 }} />}>{t("changePassword")}</Button>
     </Paper>
   )
 }

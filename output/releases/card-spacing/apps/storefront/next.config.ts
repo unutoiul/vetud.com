@@ -1,0 +1,34 @@
+import type { NextConfig } from "next"
+import createNextIntlPlugin from "next-intl/plugin"
+
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+  partialPrefetching: true,
+  // Vercel needs nothing extra. For a VPS or Docker host, build with NEXT_OUTPUT=standalone.
+  output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
+  poweredByHeader: false,
+  // The Medusa Admin lives on the backend under /app. This makes vetud.com/admin a shortcut to it.
+  async redirects() {
+    const adminUrl = `${(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")}/app`
+    return [
+      { source: "/:countryCode/legal/shipping-returns", destination: "/:countryCode/legal/shipping", permanent: true },
+      { source: "/legal/shipping-returns", destination: "/legal/shipping", permanent: true },
+      { source: "/:countryCode/discover", destination: "/:countryCode/shop", permanent: true },
+      { source: "/discover", destination: "/shop", permanent: true },
+      { source: "/admin", destination: adminUrl, permanent: false },
+      { source: "/admin/:path*", destination: adminUrl, permanent: false },
+    ]
+  },
+  images: {
+    // Locally, product photos come from the Medusa dev server on localhost, which Next blocks by
+    // default (SSRF protection). Allowed in development only; production keeps the protection.
+    dangerouslyAllowLocalIP: process.env.NODE_ENV === "development",
+    // Product photos uploaded to Medusa (served by the Medusa server under /static).
+    remotePatterns: [
+      { protocol: "http", hostname: "localhost", port: "9000" },
+      { protocol: "https", hostname: "**" },
+    ],
+  },
+}
+
+export default createNextIntlPlugin()(nextConfig)

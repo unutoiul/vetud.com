@@ -6,6 +6,7 @@ import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
+import { useLocale } from "next-intl"
 import { formatMoney, readProductMeta } from "@/lib/product"
 import { LocalizedNextLink } from "../common/links"
 import ProductThumb from "../product/ProductThumb"
@@ -20,6 +21,7 @@ type CartLineItemProps = {
 }
 
 export default function CartLineItem({ item, currencyCode, readOnly, onNavigate }: CartLineItemProps) {
+  const locale = useLocale()
   const { updateItem, removeItem, pending } = useStore()
   const meta = readProductMeta({
     title: item.product_title ?? item.title,
@@ -61,14 +63,14 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
               {item.product_title}
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              {item.variant_title} · {formatMoney(Number(item.unit_price), currencyCode)}
+              {item.variant_title} · {formatMoney(Number(item.unit_price), currencyCode, { locale })}
             </Typography>
             <Typography variant="mono" sx={{ color: "text.secondary", fontSize: 11 }}>
               {item.variant_sku ?? meta.code}
             </Typography>
           </Box>
           <Typography sx={{ fontWeight: 700, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
-            {formatMoney(lineTotal, currencyCode)}
+            {formatMoney(lineTotal, currencyCode, { locale })}
           </Typography>
         </Stack>
         {readOnly ? (

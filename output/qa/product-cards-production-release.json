@@ -1,0 +1,66 @@
+{
+  "checkedAt": "2026-10-28T09:27:42.801Z",
+  "site": "https://www.vetud.com",
+  "vercelDeployment": "dpl_BPqAaLpf8KSdwHMmeeaaxh9eJFgQ",
+  "medusaServerDeployment": "4b3a7b9d-2054-41f9-a4ec-2f5b3df65ffe",
+  "medusaWorkerDeployment": "53ec75a1-0a6e-41ac-9823-3a5878cf7616",
+  "desktop": {
+    "autoPlaying": true,
+    "hovered": false,
+    "images": [
+      {
+        "alt": "Retatrutide — VETUD Peptide Series",
+        "loaded": true
+      },
+      {
+        "alt": "Semaglutide — VETUD Peptide Series",
+        "loaded": true
+      },
+      {
+        "alt": "Tirzepatide — VETUD Peptide Series",
+        "loaded": true
+      },
+      {
+        "alt": "Selank Nasal Spray — VETUD Peptide Series",
+        "loaded": true
+      },
+      {
+        "alt": "Semax Nasal Spray — VETUD Peptide Series",
+        "loaded": true
+      }
+    ],
+    "overflow": false,
+    "scrollLeft": 4,
+    "url": "https://www.vetud.com/gb",
+    "visibleCards": 3,
+    "width": 1868
+  },
+  "automaticRotation": {
+    "before": 4,
+    "after": 464,
+    "advanced": true
+  },
+  "checkout": {
+    "hasCompanyField": false,
+    "hasConsent": true,
+    "hasEmailField": true,
+    "hasFieldOfResearch": false,
+    "hasResearchHeading": false,
+    "hasShippingAddress": true
+  },
+  "mobile": {
+    "cardWidth": 281.59375,
+    "images": true,
+    "overflow": false,
+    "width": 375
+  },
+  "checks": {
+    "storefrontLint": "passed",
+    "storefrontTypecheck": "passed",
+    "productionBuild": "passed",
+    "backendLint": "passed",
+    "backendTypecheck": "passed",
+    "checkoutGuardTests": 6,
+    "addressPhoneTests": 28
+  }
+}

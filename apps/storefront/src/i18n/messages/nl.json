@@ -23,7 +23,9 @@
     "slide": "Product {current} van {total}",
     "research": "Uitsluitend voor laboratoriumonderzoek",
     "available": "Beschikbaar",
-    "soldOut": "Uitverkocht"
+    "soldOut": "Uitverkocht",
+    "collection": "De peptidecollectie",
+    "from": "Vanaf"
   },
   "Address": {
     "country": "Land",
@@ -88,7 +90,30 @@
     "primary": "Primair bezorgadres",
     "confirmRemove": "Dit adres verwijderen?",
     "greeting": "Welkom, {name}.",
-    "privacy": "Uw gegevens worden gebruikt voor bestelcontrole, tracking en klantenservice."
+    "privacy": "Uw gegevens worden gebruikt voor bestelcontrole, tracking en klantenservice.",
+    "forgot": "Wachtwoord vergeten?",
+    "resetTitle": "Kies een nieuw wachtwoord.",
+    "resetIntro": "Vul het e-mailadres van uw account in. We sturen u een link om een nieuw wachtwoord te kiezen.",
+    "resetPageIntro": "Stel een nieuw wachtwoord in voor uw VETUD-account. Resetlinks werken één keer en verlopen na 15 minuten.",
+    "sendLink": "Link versturen",
+    "resendLink": "Nieuwe link versturen",
+    "resetSent": "Als er een account bestaat voor {email}, is er een link onderweg. Deze verloopt over 15 minuten.",
+    "backToSignin": "Terug naar inloggen",
+    "newPassword": "Nieuw wachtwoord",
+    "confirmPassword": "Bevestig nieuw wachtwoord",
+    "passwordsMismatch": "De wachtwoorden komen niet overeen.",
+    "savePassword": "Nieuw wachtwoord opslaan",
+    "resetFor": "Voor {email}",
+    "resetDone": "Uw wachtwoord is bijgewerkt.",
+    "resetDoneSignin": "Uw wachtwoord is bijgewerkt. Log in met uw nieuwe wachtwoord.",
+    "resetExpired": "Deze link is verlopen of al gebruikt. Vraag hieronder een nieuwe aan.",
+    "resetMissing": "Deze link is onvolledig. Vraag hieronder een nieuwe aan.",
+    "showPassword": "Wachtwoord tonen",
+    "changePassword": "Stuur mij een resetlink",
+    "changePasswordHelp": "Om uw wachtwoord te wijzigen, sturen we u een beveiligde link per e-mail. Deze verloopt over 15 minuten.",
+    "resetSentAccount": "Link verstuurd naar {email}.",
+    "continueCheckout": "Verder naar afrekenen",
+    "goToAccount": "Naar uw account"
   },
   "Checkout": {
     "contact": "Contact",
@@ -106,7 +131,6 @@
     "currencyChange": "Voor bezorging in {country} worden prijzen in {currency} weergegeven.",
     "title": "Rond uw bestelling af.",
     "description": "Controleer uw gegevens en kies bezorging en betaling.",
-    "research": "Onderzoeksgegevens",
     "continue": "Verder naar bezorging"
   },
   "Pages": {

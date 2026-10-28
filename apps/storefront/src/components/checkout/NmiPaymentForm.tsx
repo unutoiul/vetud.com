@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useEffectEvent, useRef, useState } from "react"
+import { useLocale } from "next-intl"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -49,7 +50,8 @@ function HostedFields({ session, method, busy, onToken }: { session: NmiSession;
   const requestTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const { tokenizationKey, sandbox, amount, currency, country } = session
   const fields = FIELDS[method]
-  const amountLabel = formatMoney(amount, currency)
+  const locale = useLocale()
+  const amountLabel = formatMoney(amount, currency, { locale })
   const receiveToken = useEffectEvent(async (response: { token?: unknown }) => {
     if (!activeRequest.current) return
     activeRequest.current = false

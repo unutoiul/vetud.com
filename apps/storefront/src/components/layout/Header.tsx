@@ -16,6 +16,7 @@ import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { LocalizedNextLink } from "../common/links"
 import { useStore } from "../store/StoreProvider"
+import CartAnnouncer from "../cart/CartAnnouncer"
 import CountrySelect from "./CountrySelect"
 import { NAV_LINKS, SECONDARY_LINKS } from "./nav"
 import SearchBox from "./SearchBox"
@@ -59,6 +60,7 @@ export default function Header() {
         {customer ? <IconButton component={LocalizedNextLink} href="/account/orders" aria-label="Your orders and tracking" sx={{ display: { xs: "none", sm: "inline-flex" } }}><Icon name="package" sx={{ fontSize: 22 }} /></IconButton> : null}
         <IconButton aria-label={t("search")} onClick={() => setSearchOpen(true)}><Icon name="search" sx={{ fontSize: 22 }} /></IconButton>
         <IconButton aria-label={`Open cart, ${itemCount} item${itemCount === 1 ? "" : "s"}`} onClick={openDrawer} sx={{ bgcolor: "#edf3f6" }}><Badge badgeContent={itemCount} color="primary" max={99}><Icon name="bag" sx={{ fontSize: 22 }} /></Badge></IconButton>
+        <CartAnnouncer />
         <IconButton aria-label="Open menu" aria-expanded={menuOpen} aria-controls={menuOpen ? "mobile-navigation" : undefined} onClick={() => setMenuOpen(true)} sx={{ display: { xs: "inline-flex", lg: "none" } }}>
           <Box aria-hidden sx={{ position: "relative", width: 20, height: 18 }}><Box sx={{ position: "absolute", left: 0, right: 0, top: 5, height: 1.5, bgcolor: "currentColor", transition: `transform .4s ${motion}`, transform: menuOpen ? "translateY(3px) rotate(45deg)" : "none" }} /><Box sx={{ position: "absolute", left: 0, right: 0, top: 11, height: 1.5, bgcolor: "currentColor", transition: `transform .4s ${motion}`, transform: menuOpen ? "translateY(-3px) rotate(-45deg)" : "none" }} /></Box>
         </IconButton>

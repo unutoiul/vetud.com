@@ -23,7 +23,9 @@
     "slide": "Produit {current} sur {total}",
     "research": "Réservé à la recherche en laboratoire",
     "available": "Disponible",
-    "soldOut": "Épuisé"
+    "soldOut": "Épuisé",
+    "collection": "La collection de peptides",
+    "from": "Dès"
   },
   "Address": {
     "country": "Pays",
@@ -88,7 +90,30 @@
     "primary": "Adresse principale",
     "confirmRemove": "Supprimer cette adresse ?",
     "greeting": "Bonjour, {name}.",
-    "privacy": "Vos coordonnées servent à la vérification, au suivi des commandes et au service client."
+    "privacy": "Vos coordonnées servent à la vérification, au suivi des commandes et au service client.",
+    "forgot": "Mot de passe oublié ?",
+    "resetTitle": "Choisissez un nouveau mot de passe.",
+    "resetIntro": "Saisissez l'adresse e-mail de votre compte. Nous vous enverrons un lien pour choisir un nouveau mot de passe.",
+    "resetPageIntro": "Définissez un nouveau mot de passe pour votre compte VETUD. Les liens de réinitialisation ne fonctionnent qu'une fois et expirent après 15 minutes.",
+    "sendLink": "Envoyer le lien",
+    "resendLink": "Envoyer un nouveau lien",
+    "resetSent": "Si un compte existe pour {email}, un lien vous a été envoyé. Il expire dans 15 minutes.",
+    "backToSignin": "Retour à la connexion",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "passwordsMismatch": "Les mots de passe ne correspondent pas.",
+    "savePassword": "Enregistrer le mot de passe",
+    "resetFor": "Pour {email}",
+    "resetDone": "Votre mot de passe a été mis à jour.",
+    "resetDoneSignin": "Votre mot de passe a été mis à jour. Connectez-vous avec votre nouveau mot de passe.",
+    "resetExpired": "Ce lien a expiré ou a déjà été utilisé. Demandez-en un nouveau ci-dessous.",
+    "resetMissing": "Ce lien est incomplet. Demandez-en un nouveau ci-dessous.",
+    "showPassword": "Afficher le mot de passe",
+    "changePassword": "Recevoir un lien de réinitialisation",
+    "changePasswordHelp": "Pour changer votre mot de passe, nous vous envoyons un lien sécurisé par e-mail. Il expire dans 15 minutes.",
+    "resetSentAccount": "Lien envoyé à {email}.",
+    "continueCheckout": "Continuer vers le paiement",
+    "goToAccount": "Accéder à votre compte"
   },
   "Checkout": {
     "contact": "Contact",
@@ -106,7 +131,6 @@
     "currencyChange": "Les prix passent en {currency} pour une livraison en {country}.",
     "title": "Finalisez votre commande.",
     "description": "Vérifiez vos coordonnées et choisissez la livraison et le paiement.",
-    "research": "Informations de recherche",
     "continue": "Continuer vers la livraison"
   },
   "Pages": {

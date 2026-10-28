@@ -1,5 +1,6 @@
 .git
 .claude
+.agents
 assets
 output
 apps/backend

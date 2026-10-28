@@ -1,0 +1,30 @@
+{
+  "navy": {
+    "bg": "#12334c",
+    "main": "#f5f9fb",
+    "accent": "#a5c6b5",
+    "dot": "#a5c6b5",
+    "sub": "#b4c9d5"
+  },
+  "blue": {
+    "bg": "#367dab",
+    "main": "#ffffff",
+    "accent": "#d1e5da",
+    "dot": "#d1e5da",
+    "sub": "#ffffff"
+  },
+  "sage": {
+    "bg": "#d1e5da",
+    "main": "#12334c",
+    "accent": "#367dab",
+    "dot": "#315f50",
+    "sub": "#20475e"
+  },
+  "white": {
+    "bg": "#ffffff",
+    "main": "#12334c",
+    "accent": "#367dab",
+    "dot": "#315f50",
+    "sub": "#637684"
+  }
+}

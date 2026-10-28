@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-28T09:41:52.589Z",
+  "site": "https://www.vetud.com/gb",
+  "deployment": "dpl_BzjT5t9HroMw1JUDjmHsh1cN4SzJ",
+  "active": "Retatrutide",
+  "insideHero": true,
+  "loadedImages": 5,
+  "overflow": false,
+  "separateCarousel": false,
+  "automaticRotationVerified": true,
+  "lint": "passed",
+  "typecheck": "passed",
+  "productionBuild": "passed",
+  "mobileViewport": 390,
+  "narrowDesktopViewport": 1024
+}

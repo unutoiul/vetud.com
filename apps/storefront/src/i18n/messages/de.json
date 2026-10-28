@@ -23,7 +23,9 @@
     "slide": "Produkt {current} von {total}",
     "research": "Nur für die Laborforschung",
     "available": "Verfügbar",
-    "soldOut": "Ausverkauft"
+    "soldOut": "Ausverkauft",
+    "collection": "Die Peptidkollektion",
+    "from": "Ab"
   },
   "Address": {
     "country": "Land",
@@ -88,7 +90,30 @@
     "primary": "Hauptlieferadresse",
     "confirmRemove": "Diese Adresse entfernen?",
     "greeting": "Willkommen, {name}.",
-    "privacy": "Ihre Angaben dienen der Bestellprüfung, Sendungsverfolgung und dem Kundenservice."
+    "privacy": "Ihre Angaben dienen der Bestellprüfung, Sendungsverfolgung und dem Kundenservice.",
+    "forgot": "Passwort vergessen?",
+    "resetTitle": "Neues Passwort festlegen.",
+    "resetIntro": "Geben Sie die E-Mail-Adresse Ihres Kontos ein. Wir senden Ihnen einen Link, mit dem Sie ein neues Passwort festlegen können.",
+    "resetPageIntro": "Legen Sie ein neues Passwort für Ihr VETUD-Konto fest. Links zum Zurücksetzen funktionieren einmal und laufen nach 15 Minuten ab.",
+    "sendLink": "Link senden",
+    "resendLink": "Neuen Link senden",
+    "resetSent": "Falls ein Konto für {email} besteht, ist ein Link unterwegs. Er läuft in 15 Minuten ab.",
+    "backToSignin": "Zurück zur Anmeldung",
+    "newPassword": "Neues Passwort",
+    "confirmPassword": "Neues Passwort bestätigen",
+    "passwordsMismatch": "Die Passwörter stimmen nicht überein.",
+    "savePassword": "Neues Passwort speichern",
+    "resetFor": "Für {email}",
+    "resetDone": "Ihr Passwort wurde aktualisiert.",
+    "resetDoneSignin": "Ihr Passwort wurde aktualisiert. Melden Sie sich mit dem neuen Passwort an.",
+    "resetExpired": "Dieser Link ist abgelaufen oder wurde bereits verwendet. Fordern Sie unten einen neuen an.",
+    "resetMissing": "Dieser Link ist unvollständig. Fordern Sie unten einen neuen an.",
+    "showPassword": "Passwort anzeigen",
+    "changePassword": "Link zum Zurücksetzen senden",
+    "changePasswordHelp": "Um Ihr Passwort zu ändern, senden wir Ihnen einen sicheren Link per E-Mail. Er läuft in 15 Minuten ab.",
+    "resetSentAccount": "Link an {email} gesendet.",
+    "continueCheckout": "Weiter zur Kasse",
+    "goToAccount": "Zu Ihrem Konto"
   },
   "Checkout": {
     "contact": "Kontakt",
@@ -106,7 +131,6 @@
     "currencyChange": "Für Lieferungen nach {country} werden die Preise in {currency} angezeigt.",
     "title": "Bestellung abschließen.",
     "description": "Prüfen Sie Ihre Angaben und wählen Sie Versand und Zahlung.",
-    "research": "Forschungsangaben",
     "continue": "Weiter zum Versand"
   },
   "Pages": {

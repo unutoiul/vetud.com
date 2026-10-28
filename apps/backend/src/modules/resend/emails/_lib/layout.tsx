@@ -10,16 +10,17 @@ import {
 } from "@react-email/components"
 import type { CSSProperties, ReactNode } from "react"
 
-// Pep Lab palette, shared with the storefront theme.
+// Navy-and-glacier palette, shared with the storefront theme (src/theme/tokens.ts).
 export const colors = {
-  navy: "#082b3b",
-  ink: "#112c3d",
-  teal: "#1f8f8a",
-  mint: "#a4ddd1",
-  mintLight: "#d9f4eb",
-  paper: "#f7f8f5",
-  line: "#dce5e4",
-  muted: "#60757d",
+  navy: "#15265e",
+  ink: "#192b4a",
+  teal: "#3268aa",
+  mint: "#cbd6e6",
+  mintLight: "#edf3fb",
+  paper: "#fbfcfe",
+  line: "#e2e8f0",
+  muted: "#67758b",
+  onNavyMuted: "#abcce3",
 }
 
 const fontFamily = "Manrope, 'Helvetica Neue', Arial, sans-serif"
@@ -89,11 +90,11 @@ export function EmailLayout({ preview, children }: EmailLayoutProps) {
       <Body style={{ backgroundColor: colors.paper, fontFamily, margin: 0, padding: "24px 0" }}>
         <Container style={{ maxWidth: "600px", margin: "0 auto", backgroundColor: "#ffffff", border: `1px solid ${colors.line}` }}>
           <Section style={{ backgroundColor: colors.navy, padding: "22px 32px" }}>
-            <Text style={{ margin: 0, color: "#f3fbf7", fontSize: "17px", fontWeight: 800, letterSpacing: "0.13em" }}>
+            <Text style={{ margin: 0, color: "#f5f9fb", fontSize: "17px", fontWeight: 800, letterSpacing: "0.13em" }}>
               VETUD
             </Text>
-            <Text style={{ margin: "2px 0 0", color: "#82c7bc", fontFamily: monoFamily, fontSize: "10px", letterSpacing: "0.22em" }}>
-              PEPTIDES
+            <Text style={{ margin: "2px 0 0", color: colors.onNavyMuted, fontFamily: monoFamily, fontSize: "10px", letterSpacing: "0.22em" }}>
+              PEPTIDE SERIES
             </Text>
           </Section>
           <Section style={{ padding: "32px" }}>{children}</Section>
