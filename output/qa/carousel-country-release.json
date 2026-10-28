@@ -1,0 +1,46 @@
+{
+  "deployment": {
+    "id": "dpl_AVkU9YmKxGNJpVn52CmXh86PRGEN",
+    "url": "https://vetud.com",
+    "status": "READY"
+  },
+  "productsPublished": [
+    "retatrutide",
+    "tirzepatide",
+    "semaglutide",
+    "selank",
+    "semax"
+  ],
+  "images": "All five photographed product cards verified loaded in production",
+  "locales": [
+    "en-US",
+    "en-GB",
+    "de",
+    "fr",
+    "nl"
+  ],
+  "checks": {
+    "addressPhoneAndAutocomplete": 28,
+    "countryRoutes": 120,
+    "typecheck": "passed",
+    "lint": "passed",
+    "productionBuild": "passed",
+    "liveAddressForm": [
+      "saved name prefilled",
+      "phone visible and editable",
+      "sectioned autofill attributes",
+      "US state selector",
+      "UK state hidden",
+      "UK postcode helper",
+      "UK +44 calling-code hint",
+      "test address cancelled without saving"
+    ],
+    "carousel": [
+      "product selection",
+      "images loaded",
+      "mobile no horizontal overflow"
+    ]
+  },
+  "localizationFiles": "apps/storefront/src/i18n/messages/*.json",
+  "countryRules": "apps/storefront/src/i18n/countries.json"
+}

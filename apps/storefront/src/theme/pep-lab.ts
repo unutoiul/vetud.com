@@ -4,11 +4,11 @@ import { brand, fonts, motion } from "./tokens"
 declare module "@mui/material/styles" {
   interface Palette { brand: typeof brand; mint: Palette["primary"] }
   interface PaletteOptions { brand?: typeof brand; mint?: PaletteOptions["primary"] }
-  interface TypographyVariants { eyebrow: CSSObject; mono: CSSObject; serifAccent: CSSObject; lead: CSSObject }
-  interface TypographyVariantsOptions { eyebrow?: CSSObject; mono?: CSSObject; serifAccent?: CSSObject; lead?: CSSObject }
+  interface TypographyVariants { eyebrow: CSSObject; mono: CSSObject; lead: CSSObject }
+  interface TypographyVariantsOptions { eyebrow?: CSSObject; mono?: CSSObject; lead?: CSSObject }
 }
 declare module "@mui/material/Typography" {
-  interface TypographyPropsVariantOverrides { eyebrow: true; mono: true; serifAccent: true; lead: true }
+  interface TypographyPropsVariantOverrides { eyebrow: true; mono: true; lead: true }
 }
 declare module "@mui/material/Button" { interface ButtonPropsColorOverrides { mint: true } }
 declare module "@mui/material/Chip" { interface ChipPropsColorOverrides { mint: true } }
@@ -29,7 +29,7 @@ export const pepLabTheme = createTheme({
     divider: brand.line,
     brand,
   },
-  shape: { borderRadius: 10 },
+  shape: { borderRadius: 4 },
   typography: {
     fontFamily: fonts.sans,
     fontSize: 15,
@@ -45,7 +45,6 @@ export const pepLabTheme = createTheme({
     lead: { fontSize: "1.08rem", lineHeight: 1.85 },
     eyebrow: { fontFamily: fonts.sans, fontSize: ".78rem", fontWeight: 600, letterSpacing: ".025em", lineHeight: 1.6 },
     mono: { fontFamily: fonts.mono, fontSize: ".76rem", letterSpacing: ".015em" },
-    serifAccent: { fontFamily: fonts.sans, fontStyle: "normal", fontWeight: "inherit", letterSpacing: "inherit" },
   },
   components: {
     MuiCssBaseline: { styleOverrides: {
@@ -59,23 +58,23 @@ export const pepLabTheme = createTheme({
       "@keyframes vetud-enter": { from: { opacity: 0, transform: "translateY(18px)" }, to: { opacity: 1, transform: "translateY(0)" } },
       "@media (prefers-reduced-motion: reduce)": { "*, *::before, *::after": { animation: "none !important", transitionDuration: "0.01ms !important", scrollBehavior: "auto !important" } },
     } },
-    MuiTypography: { defaultProps: { variantMapping: { eyebrow: "p", mono: "span", serifAccent: "span", lead: "p" } } },
+    MuiTypography: { defaultProps: { variantMapping: { eyebrow: "p", mono: "span", lead: "p" } } },
     MuiButtonBase: { defaultProps: { disableRipple: true }, styleOverrides: { root: { "&.Mui-focusVisible": focusRing } } },
     MuiButton: { defaultProps: { disableElevation: true }, styleOverrides: {
-      root: { borderRadius: 999, fontSize: ".88rem", padding: "13px 24px", textTransform: "none", transition: `background-color .3s ${motion}, transform .3s ${motion}, border-color .3s ${motion}`, "&:hover": { transform: "translateY(-2px)" }, "&:active": { transform: "scale(.98)" } },
-      endIcon: { marginLeft: 16, width: 30, height: 30, borderRadius: "50%", backgroundColor: "rgba(140,170,185,.14)", display: "grid", placeItems: "center", transition: `transform .35s ${motion}`, "& svg": { fontSize: "18px !important" }, ".MuiButton-root:hover &": { transform: "translate(2px,-1px)" } },
+      root: { borderRadius: 5, fontSize: ".88rem", padding: "13px 24px", textTransform: "none", transition: `background-color .3s ${motion}, transform .3s ${motion}, border-color .3s ${motion}`, "&:hover": { transform: "translateY(-2px)" }, "&:active": { transform: "scale(.98)" } },
+      endIcon: { marginLeft: 16, width: 20, height: 24, borderRadius: 0, backgroundColor: "transparent", display: "grid", placeItems: "center", transition: `transform .35s ${motion}`, "& svg": { fontSize: "18px !important" }, ".MuiButton-root:hover &": { transform: "translate(2px,-1px)" } },
       sizeSmall: { padding: "9px 17px", fontSize: ".8rem" },
       sizeLarge: { padding: "13px 22px", fontSize: ".92rem" },
       outlined: { borderColor: brand.lineStrong, "&:hover": { borderColor: brand.blue, backgroundColor: "#edf4f7" } },
     } },
     MuiIconButton: { styleOverrides: { root: { borderRadius: "50%", minWidth: 44, minHeight: 44, transition: `background-color .3s ${motion}, transform .3s ${motion}`, "&:hover": { backgroundColor: "#e9f1f5" }, "&:active": { transform: "scale(.96)" } } } },
-    MuiCard: { defaultProps: { elevation: 0 }, styleOverrides: { root: { border: "1px solid rgba(23,53,75,.055)", backgroundColor: "#fff", borderRadius: 24, transition: `transform .45s ${motion}, box-shadow .45s ${motion}` } } },
-    MuiPaper: { styleOverrides: { outlined: { borderColor: "rgba(23,53,75,.08)", borderRadius: 20 }, elevation1: { boxShadow: "0 12px 50px rgba(18,51,76,.06)" } } },
+    MuiCard: { defaultProps: { elevation: 0 }, styleOverrides: { root: { border: "1px solid rgba(23,53,75,.055)", backgroundColor: "#fff", borderRadius: 6, transition: `transform .45s ${motion}, box-shadow .45s ${motion}` } } },
+    MuiPaper: { styleOverrides: { outlined: { borderColor: "rgba(23,53,75,.08)", borderRadius: 6 }, elevation1: { boxShadow: "0 12px 50px rgba(18,51,76,.06)" } } },
     MuiChip: { styleOverrides: { root: { borderRadius: 999, fontWeight: 550, fontSize: ".75rem" }, label: { paddingInline: 12 } } },
     MuiAccordion: { defaultProps: { disableGutters: true, elevation: 0, square: true }, styleOverrides: { root: { backgroundColor: "transparent", borderBottom: `1px solid ${brand.line}`, "&::before": { display: "none" } } } },
     MuiAccordionSummary: { styleOverrides: { root: { paddingInline: 0, minHeight: 80 }, content: { margin: "22px 0", gap: 20, alignItems: "center" } } },
     MuiAccordionDetails: { styleOverrides: { root: { padding: "0 0 26px" } } },
-    MuiOutlinedInput: { styleOverrides: { root: { borderRadius: 14, backgroundColor: "#fff", "& .MuiOutlinedInput-notchedOutline": { borderColor: brand.lineStrong }, "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: brand.blue } } } },
+    MuiOutlinedInput: { styleOverrides: { root: { borderRadius: 5, backgroundColor: "#fff", "& .MuiOutlinedInput-notchedOutline": { borderColor: brand.lineStrong }, "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: brand.blue } } } },
     MuiTextField: { defaultProps: { fullWidth: true } },
     MuiAppBar: { defaultProps: { elevation: 0, color: "inherit" } },
     MuiTab: { styleOverrides: { root: { textTransform: "none", fontWeight: 600, fontSize: ".95rem", minHeight: 58, paddingInline: 4, marginRight: 24, minWidth: 0 } } },
@@ -86,6 +85,6 @@ export const pepLabTheme = createTheme({
     MuiTooltip: { styleOverrides: { tooltip: { backgroundColor: brand.navy, fontSize: ".75rem", borderRadius: 8 } } },
     MuiLink: { defaultProps: { underline: "hover" }, styleOverrides: { root: { fontWeight: 550 } } },
     MuiTableCell: { styleOverrides: { root: { fontVariantNumeric: "tabular-nums", borderBottomColor: brand.line, padding: "18px 16px" }, head: { fontWeight: 650, backgroundColor: "#f2f6f8" } } },
-    MuiAlert: { styleOverrides: { root: { borderRadius: 16 } } },
+    MuiAlert: { styleOverrides: { root: { borderRadius: 5 } } },
   },
 })

@@ -13,6 +13,7 @@ import { useEffect, useState } from "react"
 import { PAYMENT_BANK_DETAILS } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { formatMoney } from "@/lib/product"
+import { formatAddressLines } from "@/lib/address"
 import { confirmationPayment } from "@/lib/nmi"
 import { orderNumber, type CustomerOrder } from "@/lib/orders"
 import { parseOrderReceipt } from "@/lib/order-receipt"
@@ -195,14 +196,8 @@ export default function OrderConfirmation() {
               <Typography variant="eyebrow" sx={{ color: "text.secondary" }}>
                 Shipping to
               </Typography>
-              <Typography sx={{ mt: 0.5 }}>
-                {[address.first_name, address.last_name].filter(Boolean).join(" ")}
-                <br />
-                {address.address_1}
-                {address.address_2 ? `, ${address.address_2}` : ""}
-                <br />
-                {[address.postal_code, address.city, address.province].filter(Boolean).join(" ")},{" "}
-                {address.country_code?.toUpperCase()}
+              <Typography sx={{ mt: 0.5, whiteSpace: "pre-line" }}>
+                {formatAddressLines(address).join("\n")}
               </Typography>
               {order.shipping_methods?.[0]?.name ? (
                 <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>

@@ -1,16 +1,19 @@
 export const NAV_LINKS = [
   { label: "Shop", href: "/shop" },
+  { label: "Our standards", href: "/standards" },
+  { label: "Lab documentation", href: "/documentation" },
+  { label: "Learn", href: "/education" },
 ]
 
 export const SECONDARY_LINKS = [
-  { label: "Education", href: "/education" },
   { label: "Tracking", href: "/tracking" },
+  { label: "Contact", href: "/contact" },
 ]
 
 export const FOOTER_LINKS = {
   explore: [
     ...NAV_LINKS,
-    ...SECONDARY_LINKS,
+    { label: "Order tracking", href: "/tracking" },
   ],
   information: [
     { label: "My orders & tracking", href: "/account/orders" },

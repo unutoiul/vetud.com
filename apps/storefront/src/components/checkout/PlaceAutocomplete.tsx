@@ -5,6 +5,7 @@ import Box from "@mui/material/Box"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useEffect, useRef, useState } from "react"
+import { useTranslations } from "next-intl"
 import { newSessionToken, type PlaceSuggestion } from "@/lib/places"
 
 type Props = {
@@ -33,6 +34,7 @@ const DEBOUNCE_MS = 250
  * field keeps working as a normal text input.
  */
 export default function PlaceAutocomplete({ id, name, label, value, required, error, helperText, autoComplete, suggest, onTextChange, onPick, minCharacters = 3 }: Props) {
+  const t = useTranslations("Address")
   const [options, setOptions] = useState<PlaceSuggestion[]>([])
   const [open, setOpen] = useState(false)
   const session = useRef(newSessionToken())
@@ -86,6 +88,7 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
           setOptions([])
           const token = session.current
           session.current = newSessionToken()
+          onTextChange(picked.main)
           onPick(picked, token)
         }}
         renderOption={(props, option) => {
@@ -112,13 +115,13 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
               ...params.slotProps,
               // MUI gives the input its own generated id; ours is what the label, the focus-on-error
               // logic and the tests use.
-              htmlInput: { ...params.slotProps.htmlInput, id, autoComplete: autoComplete ? `${name.split("-")[0]} ${autoComplete}` : undefined },
+              htmlInput: { ...params.slotProps.htmlInput, id, autoComplete: autoComplete },
             }}
           />
         )}
       />
       <Typography variant="caption" sx={{ display: "block", color: "text.secondary", mt: 0.5, ml: 1.75 }}>
-        Suggestions powered by Google
+        {t("google")}
       </Typography>
     </Box>
   )

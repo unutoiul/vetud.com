@@ -53,15 +53,3 @@ export default function SectionHeading({
     </Stack>
   )
 }
-
-/** Preserve the legacy helper's API while keeping heading typography consistent. */
-export function SerifAccent({ children }: { children: ReactNode; color?: string }) {
-  return (
-    <Typography
-      component="span"
-      sx={{ font: "inherit", color: "inherit", letterSpacing: "inherit" }}
-    >
-      {children}
-    </Typography>
-  )
-}

@@ -1,0 +1,34 @@
+{
+  "deployment": {
+    "id": "dpl_3vETk2kxkarbv6fCB77xkgfb3YnP",
+    "url": "https://vetud.com",
+    "deploymentUrl": "https://vetud-storefront-r6ps01c3n-gold-structure-engine.vercel.app",
+    "status": "READY"
+  },
+  "verification": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "routeChecks": 24,
+    "mobileOverflow": "none on homepage and product dossier at 390px viewport",
+    "browserChecks": [
+      "mobile navigation",
+      "product gallery",
+      "variant stock state",
+      "add to cart",
+      "checkout account gate",
+      "remove test item",
+      "live homepage"
+    ]
+  },
+  "catalog": {
+    "production": "Research Blend A only; preserved",
+    "researchProfiles": [
+      "retatrutide",
+      "tirzepatide",
+      "semaglutide",
+      "selank",
+      "semax"
+    ]
+  }
+}

@@ -5,6 +5,7 @@ import Skeleton from "@mui/material/Skeleton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import type { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
 import ContactForm from "@/components/contact/ContactForm"
 import { AppLink } from "@/components/common/links"
@@ -17,11 +18,12 @@ export const metadata: Metadata = {
   description: "Questions about a product, a lot or an order? Write to the Vetud team.",
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const t = await getTranslations("Pages")
   const details = [
     { icon: MailOutlineIcon, title: "Email", body: <a href={`mailto:${SITE.email}`}>{SITE.email}</a> },
-    { icon: PlaceOutlinedIcon, title: "Registered address", body: `${SITE.legalName}, ${SITE.address}` },
-    { icon: AccessTimeOutlinedIcon, title: "Response time", body: "Within one business day, Monday to Friday." },
+    { icon: PlaceOutlinedIcon, title: t("registered"), body: `${SITE.legalName}, ${SITE.address}` },
+    { icon: AccessTimeOutlinedIcon, title: t("response"), body: t("responseText") },
     {
       icon: DescriptionOutlinedIcon,
       title: "Looking for a COA?",
@@ -43,8 +45,8 @@ export default function ContactPage() {
       <Section tone="white">
         <Grid container spacing={{ xs: 5, md: 8 }}>
           <Grid size={{ xs: 12, md: 7.5 }}>
-            <Typography variant="h4" component="h2" sx={{ mb: 1 }}>Write to the team.</Typography>
-            <Typography sx={{ color: "text.secondary", mb: 3 }}>Include a lot or order number so we can help you quickly.</Typography>
+            <Typography variant="h4" component="h2" sx={{ mb: 1 }}>{t("write")}</Typography>
+            <Typography sx={{ color: "text.secondary", mb: 3 }}>{t("writeHelp")}</Typography>
             <Suspense fallback={<Skeleton variant="rounded" height={420} />}>
               <ContactForm />
             </Suspense>

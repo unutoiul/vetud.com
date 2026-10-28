@@ -38,7 +38,7 @@ export default async function DocumentationPage() {
       <PageHeader
         eyebrow="Documentation"
         title="Every lot, on the record."
-        description="Enter the lot number printed on your vial label to see its batch record. Certificates of analysis are available for every lot."
+        description="Enter the lot number printed on your packaging to find a published batch record. Request any additional analytical documentation from our team."
       />
       <Section tone="white" tight>
         <Suspense fallback={<Skeleton variant="rounded" height={56} sx={{ maxWidth: 640 }} />}>

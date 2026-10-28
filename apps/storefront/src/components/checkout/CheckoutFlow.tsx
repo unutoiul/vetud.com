@@ -1,6 +1,9 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
+import { useTranslations } from "next-intl"
+import { getCountryRules } from "@/i18n/config"
+import { normalizeAddress, formatAddressLines } from "@/lib/address"
 import { BankIcon as AccountBalanceOutlinedIcon, LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -40,7 +43,6 @@ import { ButtonLink } from "../common/links"
 import { CART_FIELDS, useStore } from "../store/StoreProvider"
 import AddressFields, { EMPTY_ADDRESS, toAddressValues, validateAddress, type AddressValues } from "./AddressFields"
 
-const STEPS = ["Details", "Delivery", "Payment", "Review"]
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
 
@@ -98,6 +100,8 @@ function SubmitButton({ busy, children }: { busy: boolean; children: React.React
 }
 
 export default function CheckoutFlow() {
+  const checkoutText = useTranslations("Checkout")
+  const steps = [checkoutText("details"), checkoutText("delivery"), checkoutText("payment"), checkoutText("review")]
   const router = useRouter()
   const { cart, cartReady, setCart, clearCart, linkCustomerCart, isCurrentCart, region, countries, countryCode } = useStore()
   const { customer, loading: accountLoading, createAddress, updateProfile, captureSession } = useAccount()
@@ -238,7 +242,7 @@ export default function CheckoutFlow() {
     <Grid container spacing={{ xs: 4, md: 6 }}>
       <Grid size={{ xs: 12, md: 7 }}>
         <Stepper nonLinear activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
-          {STEPS.map((label, index) => (
+          {steps.map((label, index) => (
             <Step key={label} completed={index < maxReachable && index !== activeStep}>
               <StepButton onClick={() => setStep(index)} disabled={index > maxReachable || busy}>
                 {label}
@@ -405,6 +409,8 @@ function DetailsStep({
   busy: boolean
   onSubmit: (body: DetailsBody) => void
 }) {
+  const t = useTranslations("Checkout")
+  const ta = useTranslations("Address")
   const savedAddresses = useMemo(() => {
     const allowed = new Set(countries.map((country) => country.code))
     return (customer?.addresses ?? []).filter((address) => address.country_code && allowed.has(address.country_code))
@@ -429,7 +435,7 @@ function DetailsStep({
   const [billingSame, setBillingSame] = useState(true)
   const [billing, setBilling] = useState<AddressValues>(() => {
     const values = toAddressValues(cart.billing_address ?? cart.shipping_address ?? preferredAddress)
-    return { ...values, country_code: values.country_code || defaultCountry }
+    return { ...values, first_name: values.first_name || customer?.first_name || "", last_name: values.last_name || customer?.last_name || "", phone: values.phone || customer?.phone || "", country_code: values.country_code || defaultCountry }
   })
   const [researchField, setResearchField] = useState<string>(
     typeof cart.metadata?.research_field === "string" ? cart.metadata.research_field : ""
@@ -448,8 +454,8 @@ function DetailsStep({
   const researchError = !researchField ? "Choose your field of research" : undefined
   const ackError = !acknowledged ? "You must confirm this to place an order" : undefined
   const emailError = !EMAIL_PATTERN.test(email.trim()) ? "Enter a valid email address" : undefined
-  const shippingErrors = validateAddress(shipping)
-  const billingErrors = billingSame ? {} : validateAddress(billing)
+  const shippingErrors = validateAddress(shipping, (key, args) => ta(key, args), ta(getCountryRules(shipping.country_code).postalLabel as "postal" | "zip" | "postcode"))
+  const billingErrors = billingSame ? {} : validateAddress(billing, (key, args) => ta(key, args), ta(getCountryRules(billing.country_code).postalLabel as "postal" | "zip" | "postcode"))
   const valid = !emailError && !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length && !companyError && !researchError && !ackError
 
   return (
@@ -477,11 +483,11 @@ function DetailsStep({
           return
         }
         const company = companyName.trim()
-        const shippingWithCompany = { ...shipping, company }
+        const shippingWithCompany = { ...normalizeAddress(shipping), company }
         onSubmit({
           email: email.trim(),
           shipping_address: shippingWithCompany,
-          billing_address: billingSame ? shippingWithCompany : { ...billing, company },
+          billing_address: billingSame ? shippingWithCompany : { ...normalizeAddress(billing), company },
           saveAddress: Boolean(customer && saveAddress && selectedAddressId === "new"),
           research_field: researchField,
           company_name: company,
@@ -489,10 +495,10 @@ function DetailsStep({
       }}
     >
       <Typography variant="h5" component="h2" sx={{ mb: 0.5 }}>
-        Contact
+        {t("contact")}
       </Typography>
       <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
-        Your order confirmation and payment instructions are sent here.
+        {t("contactHelp")}
       </Typography>
       <TextField
         label="Email"
@@ -507,17 +513,17 @@ function DetailsStep({
       />
 
       <Typography variant="h5" component="h2" sx={{ mt: 4, mb: 2 }}>
-        Shipping address
+        {t("shipping")}
       </Typography>
       {customer && savedAddresses.length ? (
         <Stack spacing={1.25} sx={{ mb: 2.5 }}>
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>Use a saved address</Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>{t("savedAddress")}</Typography>
           {savedAddresses.map((address) => (
             <Box
               key={address.id}
               component="button"
               type="button"
-              onClick={() => { setSelectedAddressId(address.id); setShipping(toAddressValues(address)); setSaveAddress(false) }}
+              onClick={() => { setSelectedAddressId(address.id); setShipping({ ...toAddressValues(address), phone: address.phone || customer.phone || "" }); setSaveAddress(false) }}
               sx={{ display: "block", width: "100%", textAlign: "left", border: "1px solid", borderColor: selectedAddressId === address.id ? "secondary.main" : "divider", bgcolor: selectedAddressId === address.id ? "#eff5f6" : "#fff", borderRadius: 2, p: 1.75, cursor: "pointer", font: "inherit", color: "inherit" }}
             >
               <Typography sx={{ fontWeight: 700, fontSize: 14 }}>{address.address_name || "Saved address"}</Typography>
@@ -525,7 +531,7 @@ function DetailsStep({
             </Box>
           ))}
           <Button type="button" size="small" onClick={() => { setSelectedAddressId("new"); setShipping({ ...EMPTY_ADDRESS, first_name: customer.first_name ?? "", last_name: customer.last_name ?? "", phone: customer.phone ?? "", country_code: defaultCountry }); setSaveAddress(true) }} sx={{ alignSelf: "flex-start" }}>
-            Use a new address
+            {t("newAddress")}
           </Button>
         </Stack>
       ) : null}
@@ -539,26 +545,26 @@ function DetailsStep({
       />
       {destination && destination.regionId !== regionId ? (
         <Typography variant="body2" sx={{ color: "text.secondary", mt: 1.5 }}>
-          Prices switch to {destination.currencyCode.toUpperCase()} for delivery to {destination.name} when you continue.
+          {t("currencyChange", { currency: destination.currencyCode.toUpperCase(), country: destination.name })}
         </Typography>
       ) : null}
       {customer && selectedAddressId === "new" ? (
         <FormControlLabel
           sx={{ mt: 1 }}
           control={<Checkbox checked={saveAddress} onChange={(event) => setSaveAddress(event.target.checked)} />}
-          label="Save this address for faster checkout next time"
+          label={t("save")}
         />
       ) : null}
 
       <FormControlLabel
         sx={{ mt: 2 }}
         control={<Checkbox checked={billingSame} onChange={(event) => setBillingSame(event.target.checked)} />}
-        label="Billing address is the same as shipping"
+        label={t("billingSame")}
       />
       {!billingSame ? (
         <Box sx={{ mt: 2 }}>
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
-            Billing address
+            {t("billing")}
           </Typography>
           <AddressFields
             prefix="billing"
@@ -572,7 +578,7 @@ function DetailsStep({
       ) : null}
 
       <Typography variant="h5" component="h2" sx={{ mt: 4, mb: 0.5 }}>
-        Research details
+        {t("research")}
       </Typography>
       <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
         Our products are supplied to qualified researchers and institutions for laboratory research only.
@@ -621,7 +627,7 @@ function DetailsStep({
       />
       {showErrors && ackError ? <FormHelperText error>{ackError}</FormHelperText> : null}
 
-      <SubmitButton busy={busy}>Continue to delivery</SubmitButton>
+      <SubmitButton busy={busy}>{t("continue")}</SubmitButton>
     </Box>
   )
 }
@@ -844,12 +850,8 @@ function ReviewStep({
       title: "Ship to",
       step: 0,
       lines: [
-        [address?.first_name, address?.last_name].filter(Boolean).join(" "),
-        address?.company,
-        address?.address_1,
-        address?.address_2,
-        [address?.postal_code, address?.city, address?.province].filter(Boolean).join(" "),
-        address?.country_code?.toUpperCase(),
+        ...formatAddressLines(address ?? {}),
+        address?.phone,
       ].filter(Boolean) as string[],
     },
     {

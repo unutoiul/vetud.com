@@ -20,7 +20,7 @@ export const STANDARD_STEPS: StandardStep[] = [
     title: "Traceable by lot",
     summary: "Lot identifiers and supporting documents presented alongside each listing.",
     detail:
-      "Every vial carries a lot number that maps to its batch record: synthesis date, HPLC purity and identity confirmation. Look up any lot on the documentation page or request the full certificate of analysis.",
+      "Match the lot number on your packaging to its published batch record. Consult the lot-specific certificate for reported purity, identity and test methods. Where a certificate is not published, request available documentation from the team.",
   },
   {
     title: "Transparent specifications",
@@ -30,9 +30,9 @@ export const STANDARD_STEPS: StandardStep[] = [
   },
   {
     title: "Handled with care",
-    summary: "Sealed, desiccated packing and tracked, region-aware shipping.",
+    summary: "Protective packaging and tracked, region-aware shipping.",
     detail:
-      "Orders are packed with desiccant in protective packaging and shipped from our warehouse with tracking. Standard shipping is free above the threshold in your region.",
+      "Orders are packed in protective packaging and shipped with tracking. Standard shipping is free above the threshold in your region.",
   },
   {
     title: "Thoughtful support",
@@ -55,7 +55,7 @@ export default function StandardsAccordion({ steps = STANDARD_STEPS }: { steps?:
           onChange={(_, isOpen) => setExpanded(isOpen ? index : false)}
         >
           <AccordionSummary
-            expandIcon={<AddIcon sx={{ color: "#4d8e8a", transition: "transform .3s cubic-bezier(.22,.68,0,1.05)" }} />}
+            expandIcon={<AddIcon sx={{ color: "brand.blue", transition: "transform .3s cubic-bezier(.22,.68,0,1.05)" }} />}
             sx={{ "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": { transform: "rotate(45deg)" } }}
           >
             <Icon name={stepIcons[index] ?? "shield"} sx={{ color: "brand.blue", fontSize: 28, flexShrink: 0 }} />

@@ -61,6 +61,12 @@ Without `RESEND_API_KEY`, emails are not sent; they are logged in the backend co
 
 ### Editing products in Medusa Admin
 
+The storefront uses the supplied **VETUD Peptide Series** molecular logo and alpine artwork. The shared navy-and-glacier design applies to catalog, account, checkout, documentation and information pages. The homepage features the named pen kits when they are published in the connected catalog, with a fallback to the available products.
+
+Product pages include a linked dossier covering research background, specifications, lot records, storage and delivery. Original research profiles for Retatrutide, Tirzepatide, Semaglutide, Selank and Semax live in `apps/storefront/src/content/product-research.ts`, with primary-publication links. Product amounts, prices, stock, formulation and batch documentation continue to come from Medusa. A missing certificate displays a request link. The five photographed VETUD products were published in production through the existing `publish-research-products` workflow, preserving their commercial data. The homepage carousel uses all catalog products with photographs, pauses during interaction and respects reduced motion.
+
+Country URLs determine the `next-intl` locale through `apps/storefront/src/i18n/request.ts`. Customer-interface messages are stored in `src/i18n/messages/{en-US,en-GB,de,fr,nl}.json`; address rules and US subdivisions are in `src/i18n/countries.json` and `src/i18n/us-states.json`. Research literature and legal policy bodies remain in their source language. Checkout, account addresses and profile/registration phone fields share country-aware handling. Saved details remain editable, browser autofill uses separate address sections, Google suggestions use the selected country and locale, and manual entry works when suggestions are unavailable. `libphonenumber-js` validates and normalizes supplied phone numbers to E.164; it never invents a personal number. Postal rules and address display order follow the destination country. Verify the pure address, phone and autocomplete behavior with `node scripts/check-addresses.mjs` from `apps/storefront`.
+
 Everything is editable in **Admin → Products**. The storefront also reads these **metadata** keys on each product:
 
 | Key | Example | Used for |

@@ -1,0 +1,11 @@
+.git
+.claude
+assets
+output
+apps/backend
+**/node_modules
+**/.next
+**/.vercel
+**/.env
+**/.env.*
+**/*.tsbuildinfo

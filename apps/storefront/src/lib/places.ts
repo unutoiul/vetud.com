@@ -1,4 +1,4 @@
-import type { AddressValues } from "../components/checkout/AddressFields"
+import type { AddressValues } from "./address"
 
 /**
  * Address suggestions through Google's Places API (New), called from the browser with a
@@ -59,11 +59,11 @@ type AutocompleteBody = {
   suggestions?: { placePrediction?: { placeId: string; text?: { text?: string }; structuredFormat?: { mainText?: { text?: string }; secondaryText?: { text?: string } } } }[]
 }
 
-async function autocomplete(body: Record<string, unknown>, signal?: AbortSignal): Promise<PlaceSuggestion[]> {
+async function autocomplete(body: Record<string, unknown>, signal?: AbortSignal, locale = "en"): Promise<PlaceSuggestion[]> {
   const response = await fetch("https://places.googleapis.com/v1/places:autocomplete", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Goog-Api-Key": PLACES_API_KEY },
-    body: JSON.stringify({ languageCode: "en", ...body }),
+    body: JSON.stringify({ languageCode: locale, ...body }),
     signal,
   })
   if (!response.ok) throw new Error(`Address suggestions failed (${response.status})`)
@@ -85,7 +85,8 @@ export function suggestAddresses(
   sessionToken: string,
   countryCode: string,
   signal?: AbortSignal,
-  near?: PlaceLocation
+  near?: PlaceLocation,
+  locale = "en"
 ) {
   return autocomplete(
     {
@@ -94,12 +95,12 @@ export function suggestAddresses(
       ...(countryCode ? { includedRegionCodes: [countryCode] } : {}),
       ...(near ? { locationBias: { circle: { center: near, radius: 5000 } } } : {}),
     },
-    signal
+    signal, locale
   )
 }
 
 /** Postal-code suggestions in the selected country, each with its city. */
-export function suggestPostalCodes(input: string, sessionToken: string, countryCode: string, signal?: AbortSignal) {
+export function suggestPostalCodes(input: string, sessionToken: string, countryCode: string, signal?: AbortSignal, locale = "en") {
   return autocomplete(
     {
       input,
@@ -107,15 +108,15 @@ export function suggestPostalCodes(input: string, sessionToken: string, countryC
       includedPrimaryTypes: ["postal_code"],
       ...(countryCode ? { includedRegionCodes: [countryCode] } : {}),
     },
-    signal
+    signal, locale
   )
 }
 
 type DetailsBody = { addressComponents?: PlaceComponent[]; location?: PlaceLocation }
 
 /** The address fields and map position of a chosen suggestion. Reusing the session token ends its billing session. */
-export async function placeDetails(placeId: string, sessionToken: string): Promise<PlaceDetails> {
-  const response = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?sessionToken=${encodeURIComponent(sessionToken)}`, {
+export async function placeDetails(placeId: string, sessionToken: string, locale = "en"): Promise<PlaceDetails> {
+  const response = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?sessionToken=${encodeURIComponent(sessionToken)}&languageCode=${encodeURIComponent(locale)}`, {
     headers: { "X-Goog-Api-Key": PLACES_API_KEY, "X-Goog-FieldMask": "addressComponents,location" },
   })
   if (!response.ok) throw new Error(`Address details failed (${response.status})`)
@@ -127,13 +128,13 @@ export async function placeDetails(placeId: string, sessionToken: string): Promi
  * Google often matches a street without a postal code. Look the exact address up to find it.
  * Returns an empty string when there is no confident match, so the visitor types it in.
  */
-export async function findPostalCode(address: Partial<AddressValues>, signal?: AbortSignal): Promise<string> {
+export async function findPostalCode(address: Partial<AddressValues>, signal?: AbortSignal, locale = "en"): Promise<string> {
   const query = [address.address_1, address.city].filter(Boolean).join(", ")
   if (!query || !address.country_code) return ""
   const response = await fetch("https://places.googleapis.com/v1/places:searchText", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Goog-Api-Key": PLACES_API_KEY, "X-Goog-FieldMask": "places.addressComponents" },
-    body: JSON.stringify({ textQuery: query, regionCode: address.country_code, maxResultCount: 1, languageCode: "en" }),
+    body: JSON.stringify({ textQuery: query, regionCode: address.country_code, maxResultCount: 1, languageCode: locale }),
     signal,
   })
   if (!response.ok) return ""

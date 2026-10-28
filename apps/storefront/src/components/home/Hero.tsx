@@ -1,55 +1,43 @@
-"use client"
-
-import { motion, MotionConfig } from "motion/react"
 import Box from "@mui/material/Box"
+import { getTranslations } from "next-intl/server"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import HeroImage from "./HeroImage"
+import Image from "next/image"
 import Icon from "../brand/Icon"
 import { ButtonLink, LocalizedNextLink } from "../common/links"
 import { gutter } from "@/theme/tokens"
 
-const FORMATS = [
-  { number: "01", title: "Lot documentation", detail: "Look up a lot and its certificate of analysis", href: "/documentation", icon: "flask" as const },
-  { number: "02", title: "Our standards", detail: "How every product is documented", href: "/standards", icon: "shield" as const },
+const pathways = [
+  { icon: "flask" as const, title: "Explore the collection", detail: "Research materials, clearly specified", href: "/shop" },
+  { icon: "document" as const, title: "Know your material", detail: "Lot records & certificates of analysis", href: "/documentation" },
+  { icon: "shield" as const, title: "The VETUD standard", detail: "A considered approach to quality", href: "/standards" },
 ]
 
-export default function Hero() {
-  return (
-    <MotionConfig reducedMotion="user">
-      <Box component="section" aria-labelledby="hero-title" sx={{ px: gutter, pt: { xs: 4, md: 6 }, pb: { xs: 5, md: 7 }, position: "relative", overflow: "hidden", background: "radial-gradient(ellipse at 76% 45%, #e4eff2 0%, #f7f9fa 66%)" }}>
-        <Box aria-hidden sx={{ position: "absolute", width: "55vw", height: "55vw", maxWidth: 920, maxHeight: 920, top: "-18%", right: "-8%", border: "1px solid rgba(63,109,133,.09)", borderRadius: "50%", pointerEvents: "none" }} />
-        <Box sx={{ maxWidth: 1440, mx: "auto", display: "grid", gridTemplateColumns: { xs: "1fr", md: ".82fr 1.18fr" }, alignItems: "center", gap: { xs: 3.5, md: 1, lg: 3 }, position: "relative" }}>
-          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8 }}>
-            <Stack direction="row" spacing={1.25} sx={{ alignItems: "center", mb: { xs: 2.5, md: 3.5 } }}>
-              <Box sx={{ width: 7, height: 7, borderRadius: "50%", bgcolor: "brand.teal" }} />
-              <Typography variant="eyebrow" sx={{ fontSize: 11, letterSpacing: ".14em", color: "brand.navySoft", textTransform: "uppercase" }}>VETUD / Research peptides</Typography>
-            </Stack>
-            <Typography id="hero-title" component="h1" sx={{ fontSize: { xs: 48, sm: 64, md: 68, lg: 82 }, lineHeight: 1.04, letterSpacing: "-.055em", fontWeight: 500, mb: { xs: 2.5, md: 3 }, maxWidth: 570 }}>
-              Pure science.<br /><Box component="span" sx={{ color: "brand.blue" }}>Clear perspective.</Box>
-            </Typography>
-            <Typography sx={{ maxWidth: 430, color: "text.secondary", fontSize: { xs: 15.5, md: 17 }, lineHeight: 1.85, mb: 3.5 }}>
-              Research-grade peptides for qualified laboratories, supplied with lot-level documentation and a certificate of analysis.
-            </Typography>
-            <Stack direction="row" spacing={1.5} useFlexGap sx={{ flexWrap: "wrap" }}>
-              <ButtonLink href="/shop" variant="contained" size="large" endIcon={<Icon name="arrowUpRight" />}>Shop the collection</ButtonLink>
-              <ButtonLink href="#peptide-videos" variant="outlined" size="large" startIcon={<Icon name="play" sx={{ fontSize: 18 }} />}>Watch peptide basics</ButtonLink>
-            </Stack>
-            <Stack direction="row" spacing={2.5} useFlexGap sx={{ flexWrap: "wrap", mt: 3, alignItems: "center", color: "brand.navySoft" }}>
-              <Stack direction="row" spacing={.75} sx={{ alignItems: "center" }}><Icon name="flask" sx={{ fontSize: 18, color: "brand.blue" }} /><Typography sx={{ fontSize: 11.5 }}>99% purity</Typography></Stack>
-              <Stack direction="row" spacing={.75} sx={{ alignItems: "center" }}><Icon name="shield" sx={{ fontSize: 18, color: "brand.teal" }} /><Typography sx={{ fontSize: 11.5 }}>Lab tested for purity</Typography></Stack>
-            </Stack>
-          </motion.div>
-          <motion.div initial={{ opacity: 0, scale: .97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: .1 }} style={{ minWidth: 0 }}>
-            <HeroImage />
-          </motion.div>
-        </Box>
-        <Box sx={{ maxWidth: 1440, mx: "auto", mt: { xs: 4, md: 5 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: { xs: 0, sm: 5 }, borderTop: "1px solid", borderColor: "divider" }}>
-          {FORMATS.map((format) => <Box key={format.number} component={LocalizedNextLink} href={format.href} sx={{ display: "flex", alignItems: "center", gap: 2, py: 2.25, textDecoration: "none", borderBottom: { xs: "1px solid", sm: "none" }, borderColor: "divider", "&:hover .format-arrow": { transform: "translate(3px, -3px)" }, "&:hover": { color: "brand.blue" } }}>
-            <Typography variant="mono" sx={{ color: "text.secondary", fontSize: 10 }}>{format.number}</Typography><Icon name={format.icon} sx={{ fontSize: 24, color: "brand.blue" }} /><Box sx={{ flex: 1 }}><Typography sx={{ fontSize: 14, fontWeight: 600 }}>{format.title}</Typography><Typography sx={{ fontSize: 11.5, color: "text.secondary", mt: .25 }}>{format.detail}</Typography></Box><Icon name="arrowUpRight" className="format-arrow" sx={{ fontSize: 17, transition: "transform 250ms ease", "@media (prefers-reduced-motion: reduce)": { transition: "none" } }} />
-          </Box>)}
-        </Box>
+export default async function Hero() {
+  const t = await getTranslations("Hero")
+  return <Box component="section" aria-labelledby="hero-title" sx={{ position: "relative", overflow: "hidden", bgcolor: "#fbfcfe" }}>
+    <Box sx={{ textAlign: "center", px: gutter, pt: { xs: 6, md: 8.5 }, position: "relative", zIndex: 1 }}>
+      <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10.5, letterSpacing: ".2em", textTransform: "uppercase", mb: 2.75 }}>VETUD / Peptide Series</Typography>
+      <Typography component="h1" id="hero-title" sx={{ fontSize: { xs: 43, sm: 62, md: 76 }, fontWeight: 400, letterSpacing: "-.065em", lineHeight: 1.09, maxWidth: 980, mx: "auto" }}>
+        {t("first")}<br /><Box component="span" sx={{ color: "brand.blue" }}>{t("second")}</Box>
+      </Typography>
+      <Typography sx={{ maxWidth: 530, mx: "auto", color: "text.secondary", mt: 3, fontSize: { xs: 15, md: 16 }, lineHeight: 1.85 }}>{t("description")}<br />{t("detail")}</Typography>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ justifyContent: "center", alignItems: "center", mt: 3.5 }}>
+        <ButtonLink href="/shop" variant="contained" endIcon={<Icon name="arrowUpRight" />}>{t("explore")}</ButtonLink>
+        <ButtonLink href="/standards" variant="outlined">{t("standards")}</ButtonLink>
+      </Stack>
+    </Box>
+    <Box sx={{ position: "relative", height: { xs: 210, sm: 275, md: 320 }, mt: { xs: 0, md: -1 }, pointerEvents: "none" }}>
+      <Image src="/images/vetud-alpine-landscape.webp" alt="VETUD alpine landscape with molecular structures and flowing blue lines" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 80%", maskImage: "linear-gradient(to bottom, transparent, black 23%, black 88%, transparent)" }} />
+      <Typography variant="mono" sx={{ position: "absolute", left: 64, bottom: 28, fontSize: 9, color: "brand.navy", letterSpacing: ".12em", display: { xs: "none", md: "block" } }}>INSPIRED BY CLARITY. GROUNDED IN SCIENCE.</Typography>
+      <Typography variant="mono" sx={{ position: "absolute", right: 64, bottom: 28, fontSize: 9, color: "brand.navy", letterSpacing: ".12em", display: { xs: "none", md: "block" } }}>FOR LABORATORY RESEARCH ONLY</Typography>
+    </Box>
+    <Box sx={{ px: gutter, bgcolor: "#fff", borderBottom: "1px solid", borderColor: "divider" }}>
+      <Box sx={{ maxWidth: 1360, mx: "auto", display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" } }}>
+        {pathways.map((item, index) => <Box key={item.href} component={LocalizedNextLink} href={item.href} sx={{ display: "flex", alignItems: "center", gap: 2, py: { xs: 2.25, md: 3.5 }, px: { xs: 0, md: index ? 4 : 0 }, borderLeft: { md: index ? "1px solid" : "none" }, borderBottom: { xs: index < 2 ? "1px solid" : "none", md: "none" }, borderColor: "divider", textDecoration: "none", "&:hover": { color: "brand.blue" }, "&:hover .pathway-arrow": { transform: "translate(3px,-3px)" } }}>
+          <Icon name={item.icon} sx={{ color: "brand.blue", fontSize: 23 }} /><Box sx={{ flex: 1 }}><Typography sx={{ fontSize: 13, fontWeight: 600 }}>{item.title}</Typography><Typography sx={{ fontSize: 11.5, color: "text.secondary", mt: .3 }}>{item.detail}</Typography></Box><Icon name="arrowUpRight" className="pathway-arrow" sx={{ fontSize: 17, transition: "transform .2s" }} />
+        </Box>)}
       </Box>
-    </MotionConfig>
-  )
+    </Box>
+  </Box>
 }

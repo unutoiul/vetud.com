@@ -1,0 +1,149 @@
+{
+  "mode": "production build",
+  "results": [
+    {
+      "path": "/us",
+      "status": 200,
+      "h1": "A clearer standard.A new research perspective.",
+      "error": false
+    },
+    {
+      "path": "/us/shop",
+      "status": 200,
+      "h1": "A precise place to begin.",
+      "error": false
+    },
+    {
+      "path": "/us/standards",
+      "status": 200,
+      "h1": "Precision is a practice.",
+      "error": false
+    },
+    {
+      "path": "/us/documentation",
+      "status": 200,
+      "h1": "Every lot, on the record.",
+      "error": false
+    },
+    {
+      "path": "/us/education",
+      "status": 200,
+      "h1": "Peptide science, made clear.",
+      "error": false
+    },
+    {
+      "path": "/us/contact",
+      "status": 200,
+      "h1": "People behind the science.",
+      "error": false
+    },
+    {
+      "path": "/us/tracking",
+      "status": 200,
+      "h1": "Follow your parcel.",
+      "error": false
+    },
+    {
+      "path": "/us/account",
+      "status": 200,
+      "h1": "A simpler way to order.",
+      "error": false
+    },
+    {
+      "path": "/us/account/orders",
+      "status": 200,
+      "h1": "Every order. Every shipment.",
+      "error": false
+    },
+    {
+      "path": "/us/cart",
+      "status": 200,
+      "h1": "Review your selection.",
+      "error": false
+    },
+    {
+      "path": "/us/checkout",
+      "status": 200,
+      "h1": "Complete your order.",
+      "error": false
+    },
+    {
+      "path": "/us/legal/terms",
+      "status": 200,
+      "h1": "Terms of sale",
+      "error": false
+    },
+    {
+      "path": "/us/legal/privacy",
+      "status": 200,
+      "h1": "Privacy policy",
+      "error": false
+    },
+    {
+      "path": "/us/legal/research-use",
+      "status": 200,
+      "h1": "Research use policy",
+      "error": false
+    },
+    {
+      "path": "/us/legal/shipping",
+      "status": 200,
+      "h1": "Shipping policy",
+      "error": false
+    },
+    {
+      "path": "/us/legal/returns",
+      "status": 200,
+      "h1": "Returns policy",
+      "error": false
+    },
+    {
+      "path": "/us/legal/refunds",
+      "status": 200,
+      "h1": "Refund policy",
+      "error": false
+    },
+    {
+      "path": "/us/legal/chargebacks",
+      "status": 200,
+      "h1": "Chargeback policy",
+      "error": false
+    },
+    {
+      "path": "/us/products/retatrutide",
+      "status": 200,
+      "h1": "Retatrutide",
+      "error": false
+    },
+    {
+      "path": "/us/products/tirzepatide",
+      "status": 200,
+      "h1": "Tirzepatide",
+      "error": false
+    },
+    {
+      "path": "/us/products/semaglutide",
+      "status": 200,
+      "h1": "Semaglutide",
+      "error": false
+    },
+    {
+      "path": "/us/products/selank",
+      "status": 200,
+      "h1": "Selank Nasal Spray",
+      "error": false
+    },
+    {
+      "path": "/us/products/semax",
+      "status": 200,
+      "h1": "Semax Nasal Spray",
+      "error": false
+    },
+    {
+      "path": "/us/products/research-blend-a",
+      "status": 200,
+      "h1": "Research Blend A",
+      "error": false
+    }
+  ]
+}

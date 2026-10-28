@@ -15,6 +15,8 @@ import {
   listRegions,
 } from "@/lib/medusa/regions"
 import ThemeRegistry from "@/theme/ThemeRegistry"
+import { NextIntlClientProvider } from "next-intl"
+import { getCountryI18n } from "@/i18n/config"
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" })
 const dmMono = DM_Mono({
@@ -45,6 +47,7 @@ export async function generateStaticParams() {
 
 export default async function CountryLayout({ children }: LayoutProps<"/[countryCode]">) {
   const code = await countryCode()
+  const i18n = await getCountryI18n(code)
   const region = (await getRegionForCountry(code)) ?? (await listRegions())[0]
   if (!region) {
     throw new Error("No regions found. Is the Medusa backend running and seeded?")
@@ -52,8 +55,9 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
   const countries = await listCountryOptions()
 
   return (
-    <html lang="en" className={`${manrope.variable} ${dmMono.variable}`}>
+    <html lang={i18n.locale} className={`${manrope.variable} ${dmMono.variable}`}>
       <body>
+        <NextIntlClientProvider {...i18n}>
         <ThemeRegistry>
           <StoreProvider
             countryCode={code}
@@ -96,6 +100,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
             </AccountProvider>
           </StoreProvider>
         </ThemeRegistry>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

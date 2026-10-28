@@ -167,11 +167,11 @@ const ZERO_DECIMAL_CURRENCIES = new Set(["huf", "isk", "jpy"])
 export function formatMoney(
   amount: number | null | undefined,
   currencyCode: string,
-  { whole = false }: { whole?: boolean } = {}
+  { whole = false, locale }: { whole?: boolean; locale?: string } = {}
 ) {
   const code = currencyCode.toLowerCase()
   const digits = whole || ZERO_DECIMAL_CURRENCIES.has(code) ? 0 : 2
-  return new Intl.NumberFormat(CURRENCY_LOCALES[code] ?? "en-US", {
+  return new Intl.NumberFormat(locale ?? CURRENCY_LOCALES[code] ?? "en-US", {
     style: "currency",
     currency: code.toUpperCase(),
     minimumFractionDigits: digits,
@@ -190,8 +190,9 @@ export function sortProducts(products: HttpTypes.StoreProduct[], sort: ProductSo
     case "name":
       return sorted.sort((a, b) => a.title.localeCompare(b.title, "en", { numeric: true }))
     default:
-      // Catalog order follows the product code: VTD-01, VTD-02, ... VTD-B1, VTD-S1.
+      // Branded materials lead the collection; retain all other catalog entries.
       return sorted.sort((a, b) =>
+        Number(b.metadata?.brand === "VETUD") - Number(a.metadata?.brand === "VETUD") ||
         readProductMeta(a).code.localeCompare(readProductMeta(b).code, "en", { numeric: true })
       )
   }

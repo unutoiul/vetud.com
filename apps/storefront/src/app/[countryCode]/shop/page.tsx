@@ -7,6 +7,7 @@ import type { Metadata } from "next"
 import { Suspense } from "react"
 import { ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
+import PageHeader from "@/components/common/PageHeader"
 import ProductGrid from "@/components/product/ProductGrid"
 import ShopToolbar from "@/components/shop/ShopToolbar"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
@@ -111,8 +112,8 @@ function ResultsSkeleton() {
 export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/shop">) {
   return (
     <>
+      <PageHeader eyebrow="The collection" title="A precise place to begin." description="Explore research peptides by material, format and available amount. Every product brings its specifications and research context into focus." />
       <Section tone="white" tight>
-        <Typography component="h1" variant="h3" sx={{ mb: 3 }}>Shop the collection</Typography>
         <Suspense fallback={<ResultsSkeleton />}>
           <ShopResults searchParams={searchParams} />
         </Suspense>

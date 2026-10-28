@@ -1,94 +1,33 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
+import Image from "next/image"
 import type { ReactNode } from "react"
+import { getTranslations } from "next-intl/server"
 import { gutter } from "@/theme/tokens"
-import Icon, { type IconName } from "../brand/Icon"
 
-type PageHeaderProps = {
-  eyebrow: string
-  title: ReactNode
-  description?: ReactNode
-  children?: ReactNode
-}
+type PageHeaderProps = { eyebrow: string; title: ReactNode; description?: ReactNode; children?: ReactNode }
 
-function contextIcon(eyebrow: string): IconName {
-  const label = eyebrow.toLowerCase()
-  if (label.includes("collection") || label.includes("catalog")) return "flask"
-  if (label.includes("documentation") || label.includes("legal")) return "document"
-  if (label.includes("contact")) return "support"
-  if (label.includes("standards")) return "shield"
-  if (label.includes("cart")) return "bag"
-  if (label.includes("checkout")) return "lock"
-  return "molecule"
-}
+const titleKeys = {
+  "A precise place to begin.": "shopTitle", "People behind the science.": "contactTitle", "Precision is a practice.": "standardsTitle", "Every lot, on the record.": "documentationTitle", "Peptide science, made clear.": "educationTitle", "A simpler way to order.": "accountTitle", "Follow your parcel.": "trackingTitle", "Review your selection.": "cartTitle",
+} as const
 
-/** An airy, contained introduction that sets the rhythm for inner pages. */
-export default function PageHeader({ eyebrow, title, description, children }: PageHeaderProps) {
-  const icon = contextIcon(eyebrow)
-  return (
-    <Box
-      sx={{
-        bgcolor: "background.default",
-        px: gutter,
-        pt: { xs: 3, md: 5 },
-        pb: { xs: 2, md: 3 },
-      }}
-    >
-      <Box
-        sx={{
-          maxWidth: 1360,
-          mx: "auto",
-          bgcolor: "brand.mintWash",
-          border: "1px solid",
-          borderColor: "divider",
-          borderRadius: { xs: 3, md: 5 },
-          p: { xs: 3.5, sm: 5, md: 7 },
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 5,
-        }}
-      >
-        <Box sx={{ maxWidth: 930, minWidth: 0 }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
-            <Icon name={icon} sx={{ color: "brand.blue", fontSize: 21 }} />
-            <Typography variant="eyebrow" sx={{ color: "brand.navySoft", letterSpacing: ".06em" }}>
-              {eyebrow}
-            </Typography>
-          </Box>
-          <Typography
-            variant="h1"
-            component="h1"
-            sx={{ mt: { xs: 2.5, md: 3 }, fontSize: { xs: 36, sm: 48, md: 64 }, lineHeight: 1.1, letterSpacing: "-.045em", textWrap: "balance" }}
-          >
-            {title}
-          </Typography>
-          {description ? (
-            <Typography variant="lead" sx={{ color: "text.secondary", mt: 2.5, maxWidth: 660, fontSize: { xs: 16, md: 18 }, lineHeight: 1.8 }}>
-              {description}
-            </Typography>
-          ) : null}
-          {children ? <Box sx={{ mt: 3 }}>{children}</Box> : null}
-        </Box>
-        <Box
-          aria-hidden="true"
-          sx={{
-            display: { xs: "none", lg: "flex" },
-            flexShrink: 0,
-            alignItems: "center",
-            justifyContent: "center",
-            width: 152,
-            height: 152,
-            border: "1px solid",
-            borderColor: "#d9e6eb",
-            borderRadius: 4,
-            bgcolor: "rgba(255,255,255,.68)",
-            color: "brand.blue",
-          }}
-        >
-          <Icon name={icon} sx={{ fontSize: 68 }} />
-        </Box>
-      </Box>
+export default async function PageHeader({ eyebrow, title, description, children }: PageHeaderProps) {
+  const t = await getTranslations("Pages")
+  const checkout = await getTranslations("Checkout")
+  const common = await getTranslations("Common")
+  const titleKey = typeof title === "string" ? titleKeys[title as keyof typeof titleKeys] : undefined
+  const heading = title === "Complete your order." ? checkout("title") : titleKey ? t(titleKey) : title
+  const descriptionKeys = { accountTitle: "accountDescription", documentationTitle: "documentationDescription", educationTitle: "educationDescription", standardsTitle: "standardsDescription", trackingTitle: "trackingDescription", cartTitle: "cartDescription" } as const
+  const descriptionKey = titleKey ? descriptionKeys[titleKey as keyof typeof descriptionKeys] : undefined
+  const detail = descriptionKey ? t(descriptionKey) : titleKey === "shopTitle" ? t("shopDescription") : titleKey === "contactTitle" ? t("contactDescription") : title === "Complete your order." ? checkout("description") : description
+  const label = ({ "Contact": common("contact"), "Our standards": common("standards"), "Documentation": common("documentation"), "Education": common("learn"), "Tracking": common("tracking"), "Your cart": common("cart"), "Account": common("account"), "Secure checkout": checkout("title") } as Record<string, string>)[eyebrow] ?? eyebrow
+  return <Box component="header" sx={{ position: "relative", overflow: "hidden", bgcolor: "brand.paper", borderBottom: "1px solid", borderColor: "divider", px: gutter, pt: { xs: 5, md: 8 }, pb: { xs: 5, md: 7 } }}>
+    <Box aria-hidden sx={{ position: "absolute", right: 0, bottom: 0, width: { xs: "65%", md: "40%" }, height: "100%", opacity: { xs: .14, md: .4 }, maskImage: "linear-gradient(to right, transparent, black)" }}><Image src="/images/vetud-alpine-landscape.webp" alt="" fill sizes="40vw" style={{ objectFit: "cover", objectPosition: "bottom right" }} /></Box>
+    <Box sx={{ maxWidth: 1360, mx: "auto", position: "relative" }}>
+      <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase" }}>VETUD / {label}</Typography>
+      <Typography variant="h1" component="h1" sx={{ mt: 2.75, maxWidth: 920, fontSize: { xs: 39, sm: 52, md: 64 }, fontWeight: 400, lineHeight: 1.12, letterSpacing: "-.055em" }}>{heading}</Typography>
+      {description ? <Typography sx={{ color: "text.secondary", mt: 2.5, maxWidth: 640, fontSize: { xs: 15, md: 16 }, lineHeight: 1.85 }}>{detail}</Typography> : null}
+      {children ? <Box sx={{ mt: 3 }}>{children}</Box> : null}
     </Box>
-  )
+  </Box>
 }

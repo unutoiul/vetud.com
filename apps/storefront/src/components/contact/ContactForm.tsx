@@ -10,6 +10,7 @@ import Snackbar from "@mui/material/Snackbar"
 import TextField from "@mui/material/TextField"
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import { sdk } from "@/lib/medusa/sdk"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -22,6 +23,8 @@ export default function ContactForm() {
 }
 
 function ContactFormInner({ initialSubject }: { initialSubject: string }) {
+  const t = useTranslations("Contact")
+  const common = useTranslations("Common")
   const [values, setValues] = useState(() => ({ ...EMPTY, subject: initialSubject }))
   const [showErrors, setShowErrors] = useState(false)
   const [sending, setSending] = useState(false)
@@ -29,9 +32,9 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
   const [error, setError] = useState<string | null>(null)
 
   const errors = {
-    name: values.name.trim() ? undefined : "Required",
-    email: EMAIL_PATTERN.test(values.email.trim()) ? undefined : "Enter a valid email address",
-    message: values.message.trim().length >= 10 ? undefined : "Please write at least 10 characters",
+    name: values.name.trim() ? undefined : t("required"),
+    email: EMAIL_PATTERN.test(values.email.trim()) ? undefined : t("invalidEmail"),
+    message: values.message.trim().length >= 10 ? undefined : t("short"),
   }
   const valid = !errors.name && !errors.email && !errors.message
 
@@ -70,7 +73,7 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
       setShowErrors(false)
       setValues(EMPTY)
     } catch {
-      setError("We couldn't send your message. Please try again, or email us directly.")
+      setError(t("error"))
     } finally {
       setSending(false)
     }
@@ -85,19 +88,19 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
       ) : null}
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField label="Name" required {...bind("name")} slotProps={{ htmlInput: { autoComplete: "name" } }} />
+          <TextField label={t("name")} required {...bind("name")} slotProps={{ htmlInput: { autoComplete: "name" } }} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField label="Email" type="email" required {...bind("email")} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
+          <TextField label={common("email")} type="email" required {...bind("email")} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField label="Subject (optional)" {...bind("subject")} autoComplete="off" />
+          <TextField label={t("subject")} {...bind("subject")} autoComplete="off" />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField label="Order or lot number (optional)" {...bind("order_number")} slotProps={{ htmlInput: { autoComplete: "off", spellCheck: false } }} />
+          <TextField label={t("order")} {...bind("order_number")} slotProps={{ htmlInput: { autoComplete: "off", spellCheck: false } }} />
         </Grid>
         <Grid size={12}>
-          <TextField label="Message" required multiline minRows={6} {...bind("message")} autoComplete="off" />
+          <TextField label={t("message")} required multiline minRows={6} {...bind("message")} autoComplete="off" />
         </Grid>
         {/* Honeypot for bots: hidden from people and assistive tech. */}
         <Box aria-hidden sx={{ position: "absolute", left: -10000, width: 1, height: 1, overflow: "hidden" }}>
@@ -121,7 +124,7 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
         startIcon={sending ? <CircularProgress size={16} color="inherit" /> : <SendOutlinedIcon />}
         sx={{ mt: 3 }}
       >
-        {sending ? "Sending…" : "Send message"}
+        {sending ? t("sending") : t("send")}
       </Button>
       <Snackbar
         open={sent}
@@ -130,7 +133,7 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
         <Alert severity="success" variant="filled" onClose={() => setSent(false)}>
-          Message sent. We usually reply within one business day.
+          {t("success")}
         </Alert>
       </Snackbar>
     </Box>

@@ -21,7 +21,7 @@ const PRINCIPLES = [
   {
     icon: DescriptionOutlinedIcon,
     title: "Traceability",
-    text: "Each vial maps to a lot, and each lot to a batch record you can look up by number.",
+    text: "Match the lot number on your packaging to published records, or request the available analytical documentation.",
   },
   {
     icon: TuneOutlinedIcon,
@@ -31,7 +31,7 @@ const PRINCIPLES = [
   {
     icon: Inventory2OutlinedIcon,
     title: "Careful handling",
-    text: "Sealed vials, desiccant, protective packaging and tracked shipping in every region we serve.",
+    text: "Protective packaging, product-specific storage information and tracked shipping in the regions we serve.",
   },
   {
     icon: SupportAgentOutlinedIcon,

@@ -19,13 +19,7 @@ function tint(hex: string, amount: number) {
 
 function AlpineMark({ x, y, color, scale = 1 }: { x: number; y: number; color: string; scale?: number }) {
   return (
-    <g transform={`translate(${x} ${y}) scale(${scale})`} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m3 4.5 9 15.5 9-15.5" />
-      <path d="m5.5 14.5 5-8.5 4.5 7.5 3.5-6" strokeWidth="1" />
-      <circle cx="3" cy="4.5" r="1.5" fill={color} stroke="none" />
-      <circle cx="10.5" cy="6" r="1.3" fill={color} stroke="none" />
-      <circle cx="21" cy="4.5" r="1.5" fill={color} stroke="none" />
-    </g>
+    <image href="/brand/vetud-mark.svg" x={x} y={y} width={24 * scale} height={21 * scale} style={{ opacity: color === "#fff" ? .9 : 1 }} />
   )
 }
 

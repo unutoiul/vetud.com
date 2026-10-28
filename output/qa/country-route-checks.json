@@ -1,0 +1,966 @@
+{
+  "checked": 120,
+  "failed": [],
+  "results": [
+    {
+      "path": "/us",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/shop",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/standards",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/documentation",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/education",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/contact",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/tracking",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/account",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/account/orders",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/cart",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/checkout",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/legal/terms",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/legal/privacy",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/legal/research-use",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/legal/shipping",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/legal/returns",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/legal/refunds",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/legal/chargebacks",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/products/retatrutide",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/products/tirzepatide",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/products/semaglutide",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/products/selank",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/products/semax",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/us/products/research-blend-a",
+      "locale": "en-US",
+      "status": 200,
+      "lang": "en-US",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/shop",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/standards",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/documentation",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/education",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/contact",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/tracking",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/account",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/account/orders",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/cart",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/checkout",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/legal/terms",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/legal/privacy",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/legal/research-use",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/legal/shipping",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/legal/returns",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/legal/refunds",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/legal/chargebacks",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/products/retatrutide",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/products/tirzepatide",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/products/semaglutide",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/products/selank",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/products/semax",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/gb/products/research-blend-a",
+      "locale": "en-GB",
+      "status": 200,
+      "lang": "en-GB",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/shop",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/standards",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/documentation",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/education",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/contact",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/tracking",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/account",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/account/orders",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/cart",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/checkout",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/legal/terms",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/legal/privacy",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/legal/research-use",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/legal/shipping",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/legal/returns",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/legal/refunds",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/legal/chargebacks",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/products/retatrutide",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/products/tirzepatide",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/products/semaglutide",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/products/selank",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/products/semax",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/de/products/research-blend-a",
+      "locale": "de",
+      "status": 200,
+      "lang": "de",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/shop",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/standards",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/documentation",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/education",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/contact",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/tracking",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/account",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/account/orders",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/cart",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/checkout",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/legal/terms",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/legal/privacy",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/legal/research-use",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/legal/shipping",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/legal/returns",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/legal/refunds",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/legal/chargebacks",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/products/retatrutide",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/products/tirzepatide",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/products/semaglutide",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/products/selank",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/products/semax",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/fr/products/research-blend-a",
+      "locale": "fr",
+      "status": 200,
+      "lang": "fr",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/shop",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/standards",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/documentation",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/education",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/contact",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/tracking",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/account",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/account/orders",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/cart",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/checkout",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/legal/terms",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/legal/privacy",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/legal/research-use",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/legal/shipping",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/legal/returns",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/legal/refunds",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/legal/chargebacks",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/products/retatrutide",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/products/tirzepatide",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/products/semaglutide",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/products/selank",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/products/semax",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    },
+    {
+      "path": "/nl/products/research-blend-a",
+      "locale": "nl",
+      "status": 200,
+      "lang": "nl",
+      "h1": true,
+      "error": false
+    }
+  ]
+}

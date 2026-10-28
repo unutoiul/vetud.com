@@ -10,12 +10,14 @@ import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
+import { useLocale } from "next-intl"
 import { SITE } from "@/lib/config"
 import { formatMoney, isVariantInStock, sortedVariants, variantPrice } from "@/lib/product"
 import { useStore } from "../store/StoreProvider"
 import QuantityStepper from "./QuantityStepper"
 
 export default function PurchasePanel({ product }: { product: HttpTypes.StoreProduct }) {
+  const locale = useLocale()
   const { addItem, pending, error, clearError, region } = useStore()
   const variants = sortedVariants(product)
   const firstAvailable = variants.find((variant) => isVariantInStock(variant)) ?? variants[0]
@@ -46,11 +48,11 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
         {price ? (
           <Stack direction="row" spacing={1.5} sx={{ alignItems: "baseline" }}>
             <Typography sx={{ fontSize: 34, fontWeight: 600, letterSpacing: "-0.03em", fontVariantNumeric: "tabular-nums" }}>
-              {formatMoney(price.amount, price.currencyCode)}
+              {formatMoney(price.amount, price.currencyCode, { locale })}
             </Typography>
             {price.original > price.amount ? (
               <Typography sx={{ color: "text.secondary", textDecoration: "line-through" }}>
-                {formatMoney(price.original, price.currencyCode)}
+                {formatMoney(price.original, price.currencyCode, { locale })}
               </Typography>
             ) : null}
           </Stack>
@@ -59,7 +61,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
         )}
         {threshold ? (
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-            Free standard shipping on orders over {formatMoney(threshold, region.currencyCode, { whole: true })}
+            Free standard shipping on orders over {formatMoney(threshold, region.currencyCode, { whole: true, locale })}
           </Typography>
         ) : null}
       </Box>
@@ -95,11 +97,11 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
                     fontWeight: 700,
                     border: "1px solid !important",
                     borderColor: "brand.lineStrong !important",
-                    borderRadius: "10px !important",
+                    borderRadius: "5px !important",
                     bgcolor: "#fff",
                     "&.Mui-selected": {
                       bgcolor: "brand.mintLight",
-                      borderColor: "secondary.main !important",
+                      borderColor: "brand.blue !important",
                       color: "brand.ink",
                     },
                     ...(available ? {} : { color: "text.disabled", textDecoration: "line-through" }),
@@ -159,7 +161,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
       <Stack
         direction="row"
         spacing={1.5}
-        sx={{ bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: 2.5, p: 2 }}
+        sx={{ bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "5px", p: 2 }}
       >
         <ScienceOutlinedIcon fontSize="small" sx={{ color: "secondary.main", mt: "2px" }} />
         <Typography variant="body2" sx={{ color: "text.secondary" }}>

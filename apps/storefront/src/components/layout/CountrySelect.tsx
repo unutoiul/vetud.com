@@ -1,6 +1,7 @@
 "use client"
 
 import Icon from "@/components/brand/Icon"
+import { useLocale, useTranslations } from "next-intl"
 import Button from "@mui/material/Button"
 import MenuItem from "@mui/material/MenuItem"
 import Popover from "@mui/material/Popover"
@@ -25,6 +26,8 @@ const CURRENCY_NAMES: Record<string, string> = {
  * country to one that uses it; Apply opens the site for that country.
  */
 export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
+  const t = useTranslations("Common")
+  const locale = useLocale()
   const router = useRouter()
   const { countryCode, countries, region } = useStore()
   const [anchor, setAnchor] = useState<HTMLElement | null>(null)
@@ -93,22 +96,22 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
           <Typography variant="eyebrow" sx={{ color: "text.secondary" }}>
             Currency and country
           </Typography>
-          <TextField select size="small" label="Currency" value={currency} onChange={(event) => changeCurrency(event.target.value)}>
+          <TextField select size="small" label={t("currency")} value={currency} onChange={(event) => changeCurrency(event.target.value)}>
             {currencies.map((code) => (
               <MenuItem key={code} value={code}>
                 {code.toUpperCase()} · {CURRENCY_NAMES[code]}
               </MenuItem>
             ))}
           </TextField>
-          <TextField select size="small" label="Country" value={country} onChange={(event) => setCountry(event.target.value)}>
+          <TextField select size="small" label={t("country")} value={country} onChange={(event) => setCountry(event.target.value)}>
             {countriesForCurrency.map((item) => (
               <MenuItem key={item.code} value={item.code}>
-                {item.name}
+                {new Intl.DisplayNames([locale], { type: "region" }).of(item.code.toUpperCase()) ?? item.name}
               </MenuItem>
             ))}
           </TextField>
           <Button variant="contained" onClick={apply} disabled={country === countryCode}>
-            Apply
+            {t("apply")}
           </Button>
         </Stack>
       </Popover>

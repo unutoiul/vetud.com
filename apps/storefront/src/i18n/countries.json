@@ -1,0 +1,57 @@
+{
+  "us": {
+    "locale": "en-US",
+    "callingCode": "1",
+    "postalLabel": "zip",
+    "cityLabel": "city",
+    "postalPattern": "^\\d{5}(-\\d{4})?$",
+    "postalExample": "10001",
+    "postalBeforeCity": false,
+    "numberAfterStreet": false,
+    "provinceRequired": true
+  },
+  "gb": {
+    "locale": "en-GB",
+    "callingCode": "44",
+    "postalLabel": "postcode",
+    "cityLabel": "town",
+    "postalPattern": "^(GIR 0AA|[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2})$",
+    "postalExample": "SW10 9PR",
+    "postalBeforeCity": false,
+    "numberAfterStreet": false,
+    "provinceRequired": false
+  },
+  "de": {
+    "locale": "de",
+    "callingCode": "49",
+    "postalLabel": "postal",
+    "cityLabel": "city",
+    "postalPattern": "^\\d{5}$",
+    "postalExample": "10115",
+    "postalBeforeCity": true,
+    "numberAfterStreet": true,
+    "provinceRequired": false
+  },
+  "fr": {
+    "locale": "fr",
+    "callingCode": "33",
+    "postalLabel": "postal",
+    "cityLabel": "city",
+    "postalPattern": "^\\d{5}$",
+    "postalExample": "75001",
+    "postalBeforeCity": true,
+    "numberAfterStreet": false,
+    "provinceRequired": false
+  },
+  "nl": {
+    "locale": "nl",
+    "callingCode": "31",
+    "postalLabel": "postal",
+    "cityLabel": "city",
+    "postalPattern": "^[1-9]\\d{3} ?[A-Z]{2}$",
+    "postalExample": "1012 AB",
+    "postalBeforeCity": true,
+    "numberAfterStreet": true,
+    "provinceRequired": false
+  }
+}
