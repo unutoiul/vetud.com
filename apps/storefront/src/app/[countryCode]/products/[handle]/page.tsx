@@ -22,6 +22,7 @@ import { BASE_URL } from "@/lib/config"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
 import { cheapestPrice, isProductInStock, readProductMeta, sortedVariants, sortProducts } from "@/lib/product"
+import { getProductImages, getProductPhotography } from "@/lib/product-images"
 
 const PLACEHOLDER = "__placeholder__"
 
@@ -115,6 +116,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
   ]
 
   const price = cheapestPrice(product)
+  const images = getProductImages(product)
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -123,6 +125,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     description: product.description ?? undefined,
     brand: { "@type": "Brand", name: "Vetud Peptides" },
     url: `${BASE_URL}/${countryCode}/products/${product.handle}`,
+    image: images.map(image => new URL(image.url, BASE_URL).href),
     ...(price
       ? {
           offers: {
@@ -134,7 +137,6 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         }
       : {}),
   }
-  const images = product.images?.length ? product.images : product.thumbnail ? [{ url: product.thumbnail }] : []
 
   return (
     <>
@@ -161,7 +163,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
           <Grid size={{ xs: 12, md: 6 }}>
             <Box sx={{ position: { md: "sticky" }, top: { md: 110 }, border: "1px solid", borderColor: "divider", borderRadius: "5px", overflow: "hidden" }}>
               {images.length ? (
-                <ProductGallery title={product.title} images={images} aspectRatio={meta.imageAspectRatio ?? "4 / 3"} />
+                <ProductGallery title={product.title} images={images} aspectRatio={getProductPhotography(product.handle)?.aspectRatio ?? meta.imageAspectRatio ?? "4 / 3"} />
               ) : (
                 <ArtStage height={{ xs: 320, sm: 420, md: 520 }}>
                   <Box sx={{ width: "90%", maxWidth: 500, position: "relative", zIndex: 1 }}>

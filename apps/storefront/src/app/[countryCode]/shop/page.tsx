@@ -10,10 +10,12 @@ import Section from "@/components/common/Section"
 import PageHeader from "@/components/common/PageHeader"
 import ProductGrid from "@/components/product/ProductGrid"
 import ShopToolbar from "@/components/shop/ShopToolbar"
+import CategoryFilters from "@/components/shop/CategoryFilters"
+import { categoryFacets, filterByCategories } from "@/lib/catalog-filters"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import {
   listCategories,
-  listProducts,
+  listCatalogProducts,
   searchProducts,
   type ProductSort,
 } from "@/lib/medusa/products"
@@ -33,28 +35,27 @@ function first(value: string | string[] | undefined) {
 async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countryCode]/shop">["searchParams"] }) {
   const params = await searchParams
   const query = first(params.q)?.trim() || undefined
-  const categoryHandle = first(params.category)
+  const selectedCategories = [...new Set((Array.isArray(params.category) ? params.category : params.category ? [params.category] : []).filter(Boolean))]
   const sortParam = first(params.sort) as ProductSort | undefined
   const sort = sortParam && SORT_VALUES.includes(sortParam) ? sortParam : "featured"
 
   const { region } = await getCurrentRegion()
-  const categories = await listCategories()
-  const category = categories.find((item) => item.handle === categoryHandle)
-
-  let products = query
-    ? await searchProducts(query, region.id)
-    : await listProducts({ regionId: region.id, categoryId: category?.id })
-  if (query && category) {
-    products = products.filter((product) => product.categories?.some((item) => item.id === category.id))
-  }
-  const sorted = sortProducts(products, sort)
+  const [categories, catalog, matches] = await Promise.all([
+    listCategories(),
+    listCatalogProducts(region.id),
+    query ? searchProducts(query, region.id) : Promise.resolve(null),
+  ])
+  const facets = categoryFacets(categories, catalog)
+  const sorted = sortProducts(filterByCategories(matches ?? catalog, facets, selectedCategories), sort)
 
   return (
-    <>
+    <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "256px minmax(0, 1fr)" }, alignItems: "start", gap: { xs: 2.5, lg: 5 } }}>
+      <CategoryFilters categories={facets} selected={selectedCategories} query={query} sort={sort} />
+      <Box sx={{ minWidth: 0 }}>
       <ShopToolbar
         key={query ?? ""}
-        categories={categories.map((item) => ({ handle: item.handle, name: item.name }))}
-        category={category?.handle}
+        categories={facets}
+        selectedCategories={selectedCategories}
         sort={sort}
         query={query}
         count={sorted.length}
@@ -63,13 +64,13 @@ async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countr
         <ProductGrid products={sorted} />
       ) : (
         <Stack spacing={2} sx={{ py: 8, alignItems: "center", textAlign: "center" }}>
-          {query ? (
+          {query || selectedCategories.length ? (
             <>
               <Typography variant="h4" component="p">
-                No products match “{query}”.
+                {query ? `No products match “${query}”.` : "No products in these categories yet."}
               </Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                Try a product code or a lot number.
+                {query ? "Try another search or remove a category filter." : "Choose another research area or browse the full collection."}
               </Typography>
               <ButtonLink href="/shop" variant="outlined">
                 Clear filters
@@ -90,7 +91,8 @@ async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countr
           )}
         </Stack>
       )}
-    </>
+      </Box>
+    </Box>
   )
 }
 
@@ -112,8 +114,8 @@ function ResultsSkeleton() {
 export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/shop">) {
   return (
     <>
-      <PageHeader eyebrow="The collection" title="A precise place to begin." description="Explore research peptides by material, format and available amount. Every product brings its specifications and research context into focus." />
-      <Section tone="white" tight>
+      <PageHeader eyebrow="The collection" title="A precise place to begin." description="Explore research peptides by research area, product type and available amount. Every product brings its specifications and research context into focus." />
+      <Section tone="white" tight sx={{ pt: { xs: 3, md: 5 } }}>
         <Suspense fallback={<ResultsSkeleton />}>
           <ShopResults searchParams={searchParams} />
         </Suspense>

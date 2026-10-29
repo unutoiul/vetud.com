@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-29T20:10:42.459Z",
+  "draftProducts": 3,
+  "researchCategories": 9,
+  "beautyVisible": true,
+  "draftsExcludedFromStore": true,
+  "repeatImportCreatedNothing": true,
+  "existingProductsUnchanged": true,
+  "stockUnchanged": true,
+  "imageHashes": [
+    {
+      "asset": "nad-plus-closed.webp",
+      "bytes": 173592,
+      "sha256": "a0b79c6bdd7271f83630dffc40c8e272867daa2d400669cbf8c88446c90b9287"
+    },
+    {
+      "asset": "nad-plus-open.webp",
+      "bytes": 165790,
+      "sha256": "eb25344af5b68071ffcbca3249ffff9082ffbce215db58f4d307d02fafcdbe5d"
+    },
+    {
+      "asset": "melanotan-closed.webp",
+      "bytes": 168010,
+      "sha256": "c6dbd1ddfe9e51c573129c0f433d0d2ae4febb0ff03a5e60520f09517d06ad39"
+    },
+    {
+      "asset": "melanotan-open.webp",
+      "bytes": 139846,
+      "sha256": "56851892e7a5264a860e2a2402b7d8c272dce5d26e0fc60fe83c040faf87e003"
+    },
+    {
+      "asset": "ipamorelin-closed.webp",
+      "bytes": 157756,
+      "sha256": "7e411c1102b9ef27f6b0141c2b042853f95ec1e94fb62285b0f9e4e05208d331"
+    },
+    {
+      "asset": "ipamorelin-open.webp",
+      "bytes": 155342,
+      "sha256": "f4119097c31159955cbcbdd83adb1b2ee1040423e9a0578e9a263606650c0277"
+    }
+  ]
+}

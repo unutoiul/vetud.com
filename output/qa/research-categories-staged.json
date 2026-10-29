@@ -1,0 +1,101 @@
+{
+  "checkedAt": "2026-10-29T19:56:14.802Z",
+  "mode": "staged",
+  "deployment": "https://vetud-storefront-jjofc9b2f-gold-structure-engine.vercel.app",
+  "categories": [
+    {
+      "id": "pcat_01M64KHJHHZYWAJKZMPQXJ7TBN",
+      "handle": "healing-regeneration-research",
+      "name": "Healing and Regeneration Research",
+      "count": 0
+    },
+    {
+      "id": "pcat_01M64KHJHHQS6BHT0FCWDVZGKA",
+      "handle": "immunity-enhancement-research",
+      "name": "Immunity Enhancement Research",
+      "count": 0
+    },
+    {
+      "id": "pcat_01M64KHJHJ6HVGKEHPDFE25FBJ",
+      "handle": "longevity-anti-aging-research",
+      "name": "Longevity and Anti-aging Research",
+      "count": 0
+    },
+    {
+      "id": "pcat_01M64KHJHKSK5BFQKFCNFHJD5W",
+      "handle": "reproductive-health-research",
+      "name": "Reproductive Health Research",
+      "count": 0
+    },
+    {
+      "id": "pcat_01M64KHJHK3AP45KQTV2JDZ7G7",
+      "handle": "sleep-enhancement-research",
+      "name": "Sleep Enhancement Research",
+      "count": 0
+    },
+    {
+      "id": "pcat_01M64KHJHK82JSTBCAX86GTRMR",
+      "handle": "weight-loss-research",
+      "name": "Weight Loss Research",
+      "count": 3
+    },
+    {
+      "id": "pcat_01M64KHJHMDTFYWBCJRKYBFDSS",
+      "handle": "cognitive-enhancement-research",
+      "name": "Cognitive Enhancement Research",
+      "count": 2
+    },
+    {
+      "id": "pcat_01M64KHJHM819PYYH2RWW3HKH8",
+      "handle": "muscle-growth-research",
+      "name": "Muscle Growth Research",
+      "count": 0
+    }
+  ],
+  "productCount": 14,
+  "commercialDataUnchanged": true,
+  "originalCategoriesPreserved": true,
+  "routes": [
+    {
+      "route": "/gb/shop",
+      "products": 14
+    },
+    {
+      "route": "/gb/shop?category=weight-loss-research",
+      "products": 3
+    },
+    {
+      "route": "/gb/shop?category=cognitive-enhancement-research",
+      "products": 2
+    },
+    {
+      "route": "/gb/shop?category=weight-loss-research&category=cognitive-enhancement-research",
+      "products": 5
+    },
+    {
+      "route": "/gb/shop?category=weight-loss-research&category=lab-supplies",
+      "products": 0
+    },
+    {
+      "route": "/gb/shop?category=sleep-enhancement-research",
+      "products": 0
+    },
+    {
+      "route": "/gb/shop?category=peptide-series",
+      "products": 11
+    },
+    {
+      "route": "/gb/shop?category=missing-category",
+      "products": 0
+    },
+    {
+      "route": "/gb/shop?q=Semax&category=cognitive-enhancement-research&sort=name",
+      "products": 1
+    },
+    {
+      "route": "/gb/shop?category=weight-loss-research&sort=price-asc",
+      "products": 3
+    }
+  ],
+  "visualReview": "Unavailable: browser access host is unavailable."
+}

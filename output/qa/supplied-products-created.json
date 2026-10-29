@@ -1,0 +1,111 @@
+{
+  "checkedAt": "2026-10-29T20:09:22.947Z",
+  "bundleHash": "b8468660b49d288c",
+  "result": {
+    "created": [
+      {
+        "id": "prod_01M64MG20HN2NJ4ZNFDTK7J7ZV",
+        "handle": "nad-plus",
+        "status": "draft"
+      },
+      {
+        "id": "prod_01M64MG20HFQNK7G5HF4ZGRE4H",
+        "handle": "melanotan",
+        "status": "draft"
+      },
+      {
+        "id": "prod_01M64MG20HX9X0B9FXZN0PA65F",
+        "handle": "ipamorelin",
+        "status": "draft"
+      }
+    ],
+    "skipped": [],
+    "beautyCreated": true
+  },
+  "products": [
+    {
+      "id": "prod_01M64MG20HFQNK7G5HF4ZGRE4H",
+      "handle": "melanotan",
+      "title": "Melanotan",
+      "status": "draft",
+      "categories": [
+        "peptide-series",
+        "beauty"
+      ],
+      "amount": "10 mg",
+      "sku": "VTD-MEL-10MG",
+      "prices": [
+        {
+          "currency_code": "usd",
+          "amount": 98
+        },
+        {
+          "currency_code": "eur",
+          "amount": 88
+        }
+      ],
+      "images": [
+        "https://www.vetud.com/images/products/melanotan-closed.webp",
+        "https://www.vetud.com/images/products/melanotan-open.webp"
+      ],
+      "inventory": "No available stock assigned"
+    },
+    {
+      "id": "prod_01M64MG20HN2NJ4ZNFDTK7J7ZV",
+      "handle": "nad-plus",
+      "title": "NAD+",
+      "status": "draft",
+      "categories": [
+        "longevity-anti-aging-research"
+      ],
+      "amount": "1000 mg",
+      "sku": "VTD-NAD-1000MG",
+      "prices": [
+        {
+          "currency_code": "usd",
+          "amount": 298
+        },
+        {
+          "currency_code": "eur",
+          "amount": 268
+        }
+      ],
+      "images": [
+        "https://www.vetud.com/images/products/nad-plus-closed.webp",
+        "https://www.vetud.com/images/products/nad-plus-open.webp"
+      ],
+      "inventory": "No available stock assigned"
+    },
+    {
+      "id": "prod_01M64MG20HX9X0B9FXZN0PA65F",
+      "handle": "ipamorelin",
+      "title": "Ipamorelin",
+      "status": "draft",
+      "categories": [
+        "peptide-series",
+        "muscle-growth-research"
+      ],
+      "amount": "5 mg",
+      "sku": "VTD-IPA-5MG",
+      "prices": [
+        {
+          "currency_code": "usd",
+          "amount": 98
+        },
+        {
+          "currency_code": "eur",
+          "amount": 88
+        }
+      ],
+      "images": [
+        "https://www.vetud.com/images/products/ipamorelin-closed.webp",
+        "https://www.vetud.com/images/products/ipamorelin-open.webp"
+      ],
+      "inventory": "No available stock assigned"
+    }
+  ],
+  "totalProducts": 17,
+  "existingProductsUnchanged": true,
+  "stockUnchanged": true,
+  "specificationsUnspecified": true
+}

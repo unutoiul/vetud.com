@@ -1,0 +1,2558 @@
+{
+  "regionId": "reg_01M4RYCX5N9J1R10YRM3BTCA32",
+  "products": [
+    {
+      "id": "prod_01M4NA390XDQ9CNRSCHEVSEYRC",
+      "title": "Peptide Series 01",
+      "handle": "peptide-series-01",
+      "description": "A lyophilized research peptide supplied for in-vitro laboratory investigation. Each vial is filled under controlled conditions and documented by lot, with HPLC purity and mass-spectrometry identity data available for every batch.",
+      "thumbnail": null,
+      "metadata": {
+        "code": "VTD-01",
+        "form": "Lyophilized powder",
+        "lots": "VTD01-2609A|2026-09|99.4%; VTD01-2607B|2026-07|99.2%",
+        "accent": "#3cc7c2",
+        "purity": "≥ 99% (HPLC)",
+        "storage": "-20 °C, desiccated, protected from light"
+      },
+      "variants": [
+        {
+          "id": "variant_01M4NA395RCFP1V4QREQZD4ETZ",
+          "title": "5 mg",
+          "sku": "VTD-01-5MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390XDQ9CNRSCHEVSEYRC",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398DH4AF9QTRS6DMCX8R",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 38,
+            "raw_calculated_amount": {
+              "value": "38",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 38,
+            "raw_original_amount": {
+              "value": "38",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1F8HH61J05EA9SZYDF",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1F8HH61J05EA9SZYDF",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        },
+        {
+          "id": "variant_01M4NA395R4FPMVJQV1GX85RS1",
+          "title": "10 mg",
+          "sku": "VTD-01-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390XDQ9CNRSCHEVSEYRC",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398DABKXQ4ARANM517Q7",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 69,
+            "raw_calculated_amount": {
+              "value": "69",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 69,
+            "raw_original_amount": {
+              "value": "69",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1EZPCGN45RGY0QM0EH",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1EZPCGN45RGY0QM0EH",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "prod_01M4NA390Y32XP7AE3EYTF9S6V",
+      "title": "Bacteriostatic Water",
+      "handle": "bacteriostatic-water",
+      "description": "Sterile water with 0.9% benzyl alcohol, supplied in sealed multi-use vials for reconstituting lyophilized research materials.",
+      "thumbnail": null,
+      "metadata": {
+        "code": "VTD-S1",
+        "form": "Sterile solution",
+        "lots": "VTDS1-2609A|2026-09|USP",
+        "accent": "#8fb9b1",
+        "purity": "USP grade",
+        "storage": "Room temperature, out of direct light"
+      },
+      "variants": [
+        {
+          "id": "variant_01M4NA395V82ZGFFN7M80JDNW8",
+          "title": "10 ml",
+          "sku": "VTD-S1-10ML",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390Y32XP7AE3EYTF9S6V",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398HDQZS7409EYXQ2ZAW",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 9,
+            "raw_calculated_amount": {
+              "value": "9",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 9,
+            "raw_original_amount": {
+              "value": "9",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1Q13Q2GPAAYBBJ58Y6",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1Q13Q2GPAAYBBJ58Y6",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 500
+        },
+        {
+          "id": "variant_01M4NA395V0W2TFJ76YZB25H56",
+          "title": "30 ml",
+          "sku": "VTD-S1-30ML",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390Y32XP7AE3EYTF9S6V",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398H5HD6ASJ2K0GQG1DN",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 19,
+            "raw_calculated_amount": {
+              "value": "19",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 19,
+            "raw_original_amount": {
+              "value": "19",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1PRB95V62N0XAXDZGQ",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1PRB95V62N0XAXDZGQ",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 500
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YG21Q8XJBPJ2WPFS2N",
+          "name": "Lab Supplies",
+          "description": "Reconstitution and handling supplies.",
+          "handle": "lab-supplies",
+          "mpath": "pcat_01M4NA38YG21Q8XJBPJ2WPFS2N",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 2,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "prod_01M4NA390Y7YPYD2X70M57VA15",
+      "title": "Peptide Series 05",
+      "handle": "peptide-series-05",
+      "description": "A lyophilized research peptide supplied for in-vitro laboratory investigation. Each vial is filled under controlled conditions and documented by lot, with HPLC purity and mass-spectrometry identity data available for every batch.",
+      "thumbnail": null,
+      "metadata": {
+        "code": "VTD-05",
+        "form": "Lyophilized powder",
+        "lots": "VTD05-2609A|2026-09|99.4%; VTD05-2607B|2026-07|99.2%",
+        "accent": "#c39a52",
+        "purity": "≥ 99% (HPLC)",
+        "storage": "-20 °C, desiccated, protected from light"
+      },
+      "variants": [
+        {
+          "id": "variant_01M4NA395T0GGXTAGJ1YHAM8B1",
+          "title": "5 mg",
+          "sku": "VTD-05-5MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390Y7YPYD2X70M57VA15",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398FZ5K04WBTCSMT7EHB",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 50,
+            "raw_calculated_amount": {
+              "value": "50",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 50,
+            "raw_original_amount": {
+              "value": "50",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1JKK514FMPFY4TQ6KV",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1JKK514FMPFY4TQ6KV",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        },
+        {
+          "id": "variant_01M4NA395T83694KHG3V4FM5MF",
+          "title": "10 mg",
+          "sku": "VTD-05-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390Y7YPYD2X70M57VA15",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398GT675601J5NK5YV60",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 90,
+            "raw_calculated_amount": {
+              "value": "90",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 90,
+            "raw_original_amount": {
+              "value": "90",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1JG57RBJ087FD0XTVD",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1JG57RBJ087FD0XTVD",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "prod_01M4NA390YF5SKF3Y6CY074K9Y",
+      "title": "Peptide Series 04",
+      "handle": "peptide-series-04",
+      "description": "A lyophilized research peptide supplied for in-vitro laboratory investigation. Each vial is filled under controlled conditions and documented by lot, with HPLC purity and mass-spectrometry identity data available for every batch.",
+      "thumbnail": null,
+      "metadata": {
+        "code": "VTD-04",
+        "form": "Lyophilized powder",
+        "lots": "VTD04-2609A|2026-09|99.4%; VTD04-2607B|2026-07|99.2%",
+        "accent": "#6f86c9",
+        "purity": "≥ 99% (HPLC)",
+        "storage": "-20 °C, desiccated, protected from light"
+      },
+      "variants": [
+        {
+          "id": "variant_01M4NA395SC852J1XGYVFNR836",
+          "title": "5 mg",
+          "sku": "VTD-04-5MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YF5SKF3Y6CY074K9Y",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398FQBJR74F83965QKEN",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 36,
+            "raw_calculated_amount": {
+              "value": "36",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 36,
+            "raw_original_amount": {
+              "value": "36",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1FRJZFNR6AKDYQ3EQD",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1FRJZFNR6AKDYQ3EQD",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        },
+        {
+          "id": "variant_01M4NA395TRFN5Q4DQEDDJPK49",
+          "title": "10 mg",
+          "sku": "VTD-04-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YF5SKF3Y6CY074K9Y",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398FJFKX57SYAYGW822Q",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 64,
+            "raw_calculated_amount": {
+              "value": "64",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 64,
+            "raw_original_amount": {
+              "value": "64",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1N9SWY4KYB126Z6Z0G",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1N9SWY4KYB126Z6Z0G",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "prod_01M4NA390YGNR2M6VCM5NM3J61",
+      "title": "Research Blend B",
+      "handle": "research-blend-b",
+      "description": "A multi-sequence research preparation supplied as a single lyophilized vial for laboratory investigation. Every lot is documented with the purity and identity of each component.",
+      "thumbnail": null,
+      "metadata": {
+        "code": "VTD-B2",
+        "form": "Lyophilized powder",
+        "lots": "VTDB2-2608A|2026-08|99.0%",
+        "accent": "#3e7394",
+        "purity": "≥ 99% (HPLC)",
+        "storage": "-20 °C, desiccated, protected from light"
+      },
+      "variants": [
+        {
+          "id": "variant_01M4NA395VZD4ZMHWCAK3JDWJK",
+          "title": "10 mg",
+          "sku": "VTD-B2-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YGNR2M6VCM5NM3J61",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398HMM9HC2QFK5RFH6QP",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 101,
+            "raw_calculated_amount": {
+              "value": "101",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 101,
+            "raw_original_amount": {
+              "value": "101",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1RHKNP4R7BNDJKF54Q",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1RHKNP4R7BNDJKF54Q",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 60
+        },
+        {
+          "id": "variant_01M4NA395V3GTSTF65Y4ZS4ZJ0",
+          "title": "20 mg",
+          "sku": "VTD-B2-20MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YGNR2M6VCM5NM3J61",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398HAFRY9Y50DDHNWS6E",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 178,
+            "raw_calculated_amount": {
+              "value": "178",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 178,
+            "raw_original_amount": {
+              "value": "178",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1P2MCS2BGM0XFX5QYH",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1P2MCS2BGM0XFX5QYH",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 40
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YE4WEWQ544T9XB51BF",
+          "name": "Blends",
+          "description": "Multi-sequence research preparations.",
+          "handle": "blends",
+          "mpath": "pcat_01M4NA38YE4WEWQ544T9XB51BF",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 1,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "prod_01M4NA390YK9MNF3MPMHFT361D",
+      "title": "Research Blend A",
+      "handle": "research-blend-a",
+      "description": "A multi-sequence research preparation supplied as a single lyophilized vial for laboratory investigation. Every lot is documented with the purity and identity of each component.",
+      "thumbnail": null,
+      "metadata": {
+        "code": "VTD-B1",
+        "form": "Lyophilized powder",
+        "lots": "VTDB1-2608A|2026-08|99.1%",
+        "accent": "#4da9a0",
+        "purity": "≥ 99% (HPLC)",
+        "storage": "-20 °C, desiccated, protected from light"
+      },
+      "variants": [
+        {
+          "id": "variant_01M4NA395VTCDE0XQFE74PG4CV",
+          "title": "10 mg",
+          "sku": "VTD-B1-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YK9MNF3MPMHFT361D",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398G3RW82NWNHCAQYX3T",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 93,
+            "raw_calculated_amount": {
+              "value": "93",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 93,
+            "raw_original_amount": {
+              "value": "93",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1R98VPFP0ABYVFF3P5",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1R98VPFP0ABYVFF3P5",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 59
+        },
+        {
+          "id": "variant_01M4NA395VFESR9DMEVJT4WEJH",
+          "title": "20 mg",
+          "sku": "VTD-B1-20MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YK9MNF3MPMHFT361D",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398GJBJ7MSFCJ1N5GARJ",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 162,
+            "raw_calculated_amount": {
+              "value": "162",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 162,
+            "raw_original_amount": {
+              "value": "162",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1Q8GPG7GDMRAWV4APC",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1Q8GPG7GDMRAWV4APC",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 40
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YE4WEWQ544T9XB51BF",
+          "name": "Blends",
+          "description": "Multi-sequence research preparations.",
+          "handle": "blends",
+          "mpath": "pcat_01M4NA38YE4WEWQ544T9XB51BF",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 1,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "prod_01M4NA390YKVFEG4ZYSBFMSZTA",
+      "title": "Peptide Series 03",
+      "handle": "peptide-series-03",
+      "description": "A lyophilized research peptide supplied for in-vitro laboratory investigation. Each vial is filled under controlled conditions and documented by lot, with HPLC purity and mass-spectrometry identity data available for every batch.",
+      "thumbnail": null,
+      "metadata": {
+        "code": "VTD-03",
+        "form": "Lyophilized powder",
+        "lots": "VTD03-2609A|2026-09|99.4%; VTD03-2607B|2026-07|99.2%",
+        "accent": "#5ba79b",
+        "purity": "≥ 99% (HPLC)",
+        "storage": "-20 °C, desiccated, protected from light"
+      },
+      "variants": [
+        {
+          "id": "variant_01M4NA395SX87EMG9RXD2C970F",
+          "title": "5 mg",
+          "sku": "VTD-03-5MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YKVFEG4ZYSBFMSZTA",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398EEMKBZ5WE050S3W6X",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 46,
+            "raw_calculated_amount": {
+              "value": "46",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 46,
+            "raw_original_amount": {
+              "value": "46",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1H6BSEN8PS10B9VXWQ",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1H6BSEN8PS10B9VXWQ",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        },
+        {
+          "id": "variant_01M4NA395SWJRAKRYB522MB5KX",
+          "title": "10 mg",
+          "sku": "VTD-03-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YKVFEG4ZYSBFMSZTA",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398FE844Y2C3TAE0R6N3",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 81,
+            "raw_calculated_amount": {
+              "value": "81",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 81,
+            "raw_original_amount": {
+              "value": "81",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1H1429K8DMR7189W8K",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1H1429K8DMR7189W8K",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "prod_01M4NA390YMQMS261VDSJBEJEX",
+      "title": "Peptide Series 06",
+      "handle": "peptide-series-06",
+      "description": "A lyophilized research peptide supplied for in-vitro laboratory investigation. Each vial is filled under controlled conditions and documented by lot, with HPLC purity and mass-spectrometry identity data available for every batch.",
+      "thumbnail": null,
+      "metadata": {
+        "code": "VTD-06",
+        "form": "Lyophilized powder",
+        "lots": "VTD06-2609A|2026-09|99.4%; VTD06-2607B|2026-07|99.2%",
+        "accent": "#c97a72",
+        "purity": "≥ 99% (HPLC)",
+        "storage": "-20 °C, desiccated, protected from light"
+      },
+      "variants": [
+        {
+          "id": "variant_01M4NA395TVPVC1Z9DW9T7FFH2",
+          "title": "5 mg",
+          "sku": "VTD-06-5MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YMQMS261VDSJBEJEX",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398GTS9G24T29B0H0125",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 54,
+            "raw_calculated_amount": {
+              "value": "54",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 54,
+            "raw_original_amount": {
+              "value": "54",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1N7PK86D5THEBGYH1X",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1N7PK86D5THEBGYH1X",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        },
+        {
+          "id": "variant_01M4NA395TWK1F9HRMNNDGDBH4",
+          "title": "10 mg",
+          "sku": "VTD-06-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YMQMS261VDSJBEJEX",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398GNZACWXV07G95JS0B",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 96,
+            "raw_calculated_amount": {
+              "value": "96",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 96,
+            "raw_original_amount": {
+              "value": "96",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1P3FMDTE1KA9P4JBE1",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1P3FMDTE1KA9P4JBE1",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "prod_01M4NA390YSNNYAAA7SRFFWA60",
+      "title": "Peptide Series 02",
+      "handle": "peptide-series-02",
+      "description": "A lyophilized research peptide supplied for in-vitro laboratory investigation. Each vial is filled under controlled conditions and documented by lot, with HPLC purity and mass-spectrometry identity data available for every batch.",
+      "thumbnail": null,
+      "metadata": {
+        "code": "VTD-02",
+        "form": "Lyophilized powder",
+        "lots": "VTD02-2609A|2026-09|99.4%; VTD02-2607B|2026-07|99.2%",
+        "accent": "#23618a",
+        "purity": "≥ 99% (HPLC)",
+        "storage": "-20 °C, desiccated, protected from light"
+      },
+      "variants": [
+        {
+          "id": "variant_01M4NA395SWAXPZYGR8TRNZQA2",
+          "title": "5 mg",
+          "sku": "VTD-02-5MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YSNNYAAA7SRFFWA60",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398ENVX2801ES39DMQFE",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 42,
+            "raw_calculated_amount": {
+              "value": "42",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 42,
+            "raw_original_amount": {
+              "value": "42",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1HQKBBF7Z3V1TTBB72",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1HQKBBF7Z3V1TTBB72",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        },
+        {
+          "id": "variant_01M4NA395SGH5WR6MS7FPZKGFN",
+          "title": "10 mg",
+          "sku": "VTD-02-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4NA390YSNNYAAA7SRFFWA60",
+          "created_at": "2026-10-11T11:03:18.972Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4NA398EQPC8A8H5DFWHDTHN",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 74,
+            "raw_calculated_amount": {
+              "value": "74",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 74,
+            "raw_original_amount": {
+              "value": "74",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCY1F9MXJZ5G8BZTH1D8S",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCY1F9MXJZ5G8BZTH1D8S",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 100
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": []
+    },
+    {
+      "id": "prod_01M4RYCY8C8923YC0FAYXPYMA7",
+      "title": "Retatrutide",
+      "handle": "retatrutide",
+      "description": "VETUD Retatrutide is supplied as freeze-dried peptide powder in a dual-chamber pen. One chamber holds the powder and the other holds bacteriostatic water (BAC water), keeping them separate until preparation. Available in 10 mg, 20 mg and 40 mg total peptide amounts.\n\n99% purity. Lab tested for purity. Each kit includes one pen, 12 disposable needles and an instruction booklet. Photos show the 40 mg kit across all sizes.\n\nIngredients: Retatrutide peptide powder; bacteriostatic water (BAC water) in a separate chamber. Refer to the manufacturer's batch specification for the complete formulation.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat. Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life.\n\nFor research use only.",
+      "thumbnail": "https://medusa-server-production-833e.up.railway.app/static/1791882763850-vetud_retatrutide_40mg_closed_lab.png",
+      "metadata": {
+        "code": "VTD-01",
+        "form": "Dual-chamber pen kit",
+        "brand": "VETUD",
+        "accent": "#23618a",
+        "purity": "99%",
+        "storage": "Follow the manufacturer's batch-specific storage temperature and conditions.",
+        "testing": "Lab tested for purity",
+        "contents": "1 pen in the selected amount; 12 disposable needles; 1 instruction booklet",
+        "features": [
+          "Freeze-dried peptide",
+          "Dual-chamber pen",
+          "Separate BAC water"
+        ],
+        "handling": "Keep in original packaging, away from direct sunlight and excess heat.",
+        "stability": "Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life.",
+        "ingredients": "Retatrutide peptide powder; bacteriostatic water (BAC water) in a separate chamber. Refer to the manufacturer's batch specification for the complete formulation.",
+        "us_pricing_note": "USD retail tiers explicitly approved by the user on 2026-10-13.",
+        "catalog_revision": "40mg-pen-kits-v1",
+        "available_amounts": "10 mg; 20 mg; 40 mg",
+        "research_use_only": true,
+        "image_aspect_ratio": "4 / 3",
+        "us_pricing_sources": "https://nextdaypeptides.com/product/glp3-reta-research-compound; https://www.progressionlabs.org/compounds/retatrutide; https://uspeptidelabs.co/products/retatrutide; https://penpeptidesusa.com/",
+        "retail_pricing_note": "User-approved USD tiers; other currencies increased proportionally using each variant's existing USD price. HUF and ISK rounded to whole units; other currencies to two decimal places.",
+        "us_pricing_revision": "us-10-20-40mg-2026-10-13-v1",
+        "pen_tier_pricing_usd": {
+          "10": 298,
+          "20": 488,
+          "40": 688
+        },
+        "quality_copy_revision": "lab-purity-and-care-2026-10-13-v1",
+        "image_packaging_amount": "40 mg",
+        "retail_pricing_fx_date": "2026-10-13",
+        "us_pricing_provisional": false,
+        "retail_pricing_fx_rates": {
+          "chf": 0.93093866,
+          "czk": 24.37137217,
+          "dkk": 7.47515463,
+          "eur": 1,
+          "gbp": 0.84520585,
+          "huf": 364.882647,
+          "isk": 136.20036087,
+          "nok": 10.69683298,
+          "pln": 4.38666401,
+          "ron": 5.3344448,
+          "sek": 11.20040451,
+          "usd": 1.11751153
+        },
+        "retail_pricing_revision": "double-retail-all-markets-2026-10-13-v1",
+        "retail_pricing_fx_source": "https://latest.currency-api.pages.dev/v1/currencies/eur.json",
+        "us_pricing_researched_at": "2026-10-13",
+        "pen_tier_pricing_revision": "approved-pen-retail-2026-10-13-v1",
+        "retail_pricing_multiplier": 2,
+        "pen_tier_pricing_previous_usd": {
+          "10": 198,
+          "20": 318,
+          "40": 458
+        }
+      },
+      "variants": [
+        {
+          "id": "variant_01M4RYCYAEFTWDHR0NRGSBHCBK",
+          "title": "40 mg",
+          "sku": "VTD-01-40MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4RYCY8C8923YC0FAYXPYMA7",
+          "created_at": "2026-10-12T20:55:50.350Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4RYCYBQZEMY434KYCYE9XQR",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 378.55,
+            "raw_calculated_amount": {
+              "value": "378.55",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 378.55,
+            "raw_original_amount": {
+              "value": "378.55",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4RYCYKZVSW4BD8PMSA411PC",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4RYCYKZVSW4BD8PMSA411PC",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 92
+        },
+        {
+          "id": "variant_01M4SVRXDSFX7ZN0A7HGN8S0G4",
+          "title": "10 mg",
+          "sku": "VTD-RETA-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4RYCY8C8923YC0FAYXPYMA7",
+          "created_at": "2026-10-13T05:29:11.354Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRXFA4B0H7JE2D7XNPMN0",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 225.76,
+            "raw_calculated_amount": {
+              "value": "225.76",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 225.76,
+            "raw_original_amount": {
+              "value": "225.76",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQFZD3T2KG2841XN0JAC",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQFZD3T2KG2841XN0JAC",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        },
+        {
+          "id": "variant_01M4SVRXDSSZ3XA1VSTARS5K9D",
+          "title": "20 mg",
+          "sku": "VTD-RETA-20MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4RYCY8C8923YC0FAYXPYMA7",
+          "created_at": "2026-10-13T05:29:11.354Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRXFAXH5HG9YZ654AEDD9",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 369.84,
+            "raw_calculated_amount": {
+              "value": "369.84",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 369.84,
+            "raw_original_amount": {
+              "value": "369.84",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQG0MM9V8KY32P10C1J2",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQG0MM9V8KY32P10C1J2",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": [
+        {
+          "id": "img_01M4T8J7M2XFNS5QJHXFFRGZ3A",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791882763850-vetud_retatrutide_40mg_closed_lab.png",
+          "metadata": null,
+          "rank": 0,
+          "product_id": "prod_01M4RYCY8C8923YC0FAYXPYMA7",
+          "created_at": "2026-10-13T09:12:43.908Z",
+          "updated_at": "2026-10-13T09:12:43.908Z",
+          "deleted_at": null
+        },
+        {
+          "id": "img_01M4T8J7M2J3DGHQ66MYEADNHX",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791882763855-vetud_retatrutide_40mg_open_lab.png",
+          "metadata": null,
+          "rank": 1,
+          "product_id": "prod_01M4RYCY8C8923YC0FAYXPYMA7",
+          "created_at": "2026-10-13T09:12:43.908Z",
+          "updated_at": "2026-10-13T09:12:43.908Z",
+          "deleted_at": null
+        }
+      ]
+    },
+    {
+      "id": "prod_01M4SVRX21XQAFT85ADTPZW0SJ",
+      "title": "Semaglutide",
+      "handle": "semaglutide",
+      "description": "VETUD Semaglutide is supplied as freeze-dried peptide powder in a dual-chamber pen. One chamber holds the powder and the other holds bacteriostatic water (BAC water), keeping them separate until preparation. Available in 10 mg, 20 mg and 40 mg total peptide amounts.\n\n99% purity. Lab tested for purity. Each kit includes one pen, 12 disposable needles and an instruction booklet. Photos show the 40 mg kit across all sizes.\n\nIngredients: Semaglutide peptide powder; bacteriostatic water (BAC water) in a separate chamber. Refer to the manufacturer's batch specification for the complete formulation.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat. Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life.\n\nFor research use only.",
+      "thumbnail": "https://medusa-server-production-833e.up.railway.app/static/1791882763864-vetud_semaglutide_40mg_closed_lab.png",
+      "metadata": {
+        "code": "VTD-SEMA",
+        "form": "Dual-chamber pen kit",
+        "brand": "VETUD",
+        "accent": "#6f86c9",
+        "purity": "99%",
+        "storage": "Follow the manufacturer's batch-specific storage temperature and conditions.",
+        "testing": "Lab tested for purity",
+        "contents": "1 pen in the selected amount; 12 disposable needles; 1 instruction booklet",
+        "features": [
+          "Freeze-dried peptide",
+          "Dual-chamber pen",
+          "Separate BAC water"
+        ],
+        "handling": "Keep in original packaging, away from direct sunlight and excess heat.",
+        "stability": "Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life.",
+        "ingredients": "Semaglutide peptide powder; bacteriostatic water (BAC water) in a separate chamber. Refer to the manufacturer's batch specification for the complete formulation.",
+        "us_pricing_note": "USD retail tiers explicitly approved by the user on 2026-10-13.",
+        "catalog_revision": "40mg-pen-kits-v1",
+        "available_amounts": "10 mg; 20 mg; 40 mg",
+        "research_use_only": true,
+        "image_aspect_ratio": "4 / 3",
+        "us_pricing_sources": "https://nextdaypeptides.com/product/glp1-sema-research-compound; https://www.progressionlabs.org/compounds/semaglutide; https://www.jonezielabs.com/products/semaglutide.html",
+        "retail_pricing_note": "User-approved USD tiers; other currencies increased proportionally using each variant's existing USD price. HUF and ISK rounded to whole units; other currencies to two decimal places.",
+        "us_pricing_revision": "us-10-20-40mg-2026-10-13-v1",
+        "pen_tier_pricing_usd": {
+          "10": 198,
+          "20": 338,
+          "40": 488
+        },
+        "quality_copy_revision": "lab-purity-and-care-2026-10-13-v1",
+        "image_packaging_amount": "40 mg",
+        "retail_pricing_fx_date": "2026-10-13",
+        "us_pricing_provisional": false,
+        "retail_pricing_fx_rates": {
+          "chf": 0.93093866,
+          "czk": 24.37137217,
+          "dkk": 7.47515463,
+          "eur": 1,
+          "gbp": 0.84520585,
+          "huf": 364.882647,
+          "isk": 136.20036087,
+          "nok": 10.69683298,
+          "pln": 4.38666401,
+          "ron": 5.3344448,
+          "sek": 11.20040451,
+          "usd": 1.11751153
+        },
+        "retail_pricing_revision": "double-retail-all-markets-2026-10-13-v1",
+        "retail_pricing_fx_source": "https://latest.currency-api.pages.dev/v1/currencies/eur.json",
+        "us_pricing_researched_at": "2026-10-13",
+        "pen_tier_pricing_revision": "approved-pen-retail-2026-10-13-v1",
+        "retail_pricing_multiplier": 2,
+        "pen_tier_pricing_previous_usd": {
+          "10": 138,
+          "20": 198,
+          "40": 338
+        }
+      },
+      "variants": [
+        {
+          "id": "variant_01M4SVRX6NM47BKBFKV9APBWB8",
+          "title": "40 mg",
+          "sku": "VTD-SEMA-40MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4SVRX21XQAFT85ADTPZW0SJ",
+          "created_at": "2026-10-13T05:29:11.125Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRX7XYQRD7E0J7A23SG51",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 369.61,
+            "raw_calculated_amount": {
+              "value": "369.61",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 369.61,
+            "raw_original_amount": {
+              "value": "369.61",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQFX3SXNPYC6RPW330V7",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQFX3SXNPYC6RPW330V7",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        },
+        {
+          "id": "variant_01M4SVRXDR1C8V2E1EG282YY59",
+          "title": "10 mg",
+          "sku": "VTD-SEMA-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4SVRX21XQAFT85ADTPZW0SJ",
+          "created_at": "2026-10-13T05:29:11.354Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRXF9MFE4PB2QF8YQ2N8Y",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 150.65,
+            "raw_calculated_amount": {
+              "value": "150.65",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 150.65,
+            "raw_original_amount": {
+              "value": "150.65",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQFYYQHRSMA2DGG33ZWE",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQFYYQHRSMA2DGG33ZWE",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        },
+        {
+          "id": "variant_01M4SVRXDS49CWKBC4K65XX1N8",
+          "title": "20 mg",
+          "sku": "VTD-SEMA-20MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4SVRX21XQAFT85ADTPZW0SJ",
+          "created_at": "2026-10-13T05:29:11.354Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRXF9R2P9X5FP2D706YB4",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 256.06,
+            "raw_calculated_amount": {
+              "value": "256.06",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 256.06,
+            "raw_original_amount": {
+              "value": "256.06",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQFZANHBN87VJH0WE1CA",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQFZANHBN87VJH0WE1CA",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": [
+        {
+          "id": "img_01M4T8J7M3RBQFWV31GRRAHJDQ",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791882763864-vetud_semaglutide_40mg_closed_lab.png",
+          "metadata": null,
+          "rank": 0,
+          "product_id": "prod_01M4SVRX21XQAFT85ADTPZW0SJ",
+          "created_at": "2026-10-13T09:12:43.908Z",
+          "updated_at": "2026-10-13T09:12:43.908Z",
+          "deleted_at": null
+        },
+        {
+          "id": "img_01M4T8J7M3ENKRXGN2BJZ6K7G9",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791882763852-vetud_semaglutide_40mg_open_lab.png",
+          "metadata": null,
+          "rank": 1,
+          "product_id": "prod_01M4SVRX21XQAFT85ADTPZW0SJ",
+          "created_at": "2026-10-13T09:12:43.908Z",
+          "updated_at": "2026-10-13T09:12:43.908Z",
+          "deleted_at": null
+        }
+      ]
+    },
+    {
+      "id": "prod_01M4SVRX21ZND56CZ77WEERCCF",
+      "title": "Tirzepatide",
+      "handle": "tirzepatide",
+      "description": "VETUD Tirzepatide is supplied as freeze-dried peptide powder in a dual-chamber pen. One chamber holds the powder and the other holds bacteriostatic water (BAC water), keeping them separate until preparation. Available in 10 mg, 20 mg and 40 mg total peptide amounts.\n\n99% purity. Lab tested for purity. Each kit includes one pen, 12 disposable needles and an instruction booklet. Photos show the 40 mg kit across all sizes.\n\nIngredients: Tirzepatide peptide powder; bacteriostatic water (BAC water) in a separate chamber. Refer to the manufacturer's batch specification for the complete formulation.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat. Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life.\n\nFor research use only.",
+      "thumbnail": "https://medusa-server-production-833e.up.railway.app/static/1791882763861-vetud_tirzepatide_40mg_closed_lab.png",
+      "metadata": {
+        "code": "VTD-TIRZ",
+        "form": "Dual-chamber pen kit",
+        "brand": "VETUD",
+        "accent": "#287f75",
+        "purity": "99%",
+        "storage": "Follow the manufacturer's batch-specific storage temperature and conditions.",
+        "testing": "Lab tested for purity",
+        "contents": "1 pen in the selected amount; 12 disposable needles; 1 instruction booklet",
+        "features": [
+          "Freeze-dried peptide",
+          "Dual-chamber pen",
+          "Separate BAC water"
+        ],
+        "handling": "Keep in original packaging, away from direct sunlight and excess heat.",
+        "stability": "Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life.",
+        "ingredients": "Tirzepatide peptide powder; bacteriostatic water (BAC water) in a separate chamber. Refer to the manufacturer's batch specification for the complete formulation.",
+        "us_pricing_note": "USD retail tiers explicitly approved by the user on 2026-10-13.",
+        "catalog_revision": "40mg-pen-kits-v1",
+        "available_amounts": "10 mg; 20 mg; 40 mg",
+        "research_use_only": true,
+        "image_aspect_ratio": "4 / 3",
+        "us_pricing_sources": "https://nextdaypeptides.com/product/glp2-tirz-research-compound; https://www.progressionlabs.org/compounds/tirzepatide; https://uspeptidelabs.co/products/tirzepatide",
+        "retail_pricing_note": "User-approved USD tiers; other currencies increased proportionally using each variant's existing USD price. HUF and ISK rounded to whole units; other currencies to two decimal places.",
+        "us_pricing_revision": "us-10-20-40mg-2026-10-13-v1",
+        "pen_tier_pricing_usd": {
+          "10": 248,
+          "20": 398,
+          "40": 588
+        },
+        "quality_copy_revision": "lab-purity-and-care-2026-10-13-v1",
+        "image_packaging_amount": "40 mg",
+        "retail_pricing_fx_date": "2026-10-13",
+        "us_pricing_provisional": false,
+        "retail_pricing_fx_rates": {
+          "chf": 0.93093866,
+          "czk": 24.37137217,
+          "dkk": 7.47515463,
+          "eur": 1,
+          "gbp": 0.84520585,
+          "huf": 364.882647,
+          "isk": 136.20036087,
+          "nok": 10.69683298,
+          "pln": 4.38666401,
+          "ron": 5.3344448,
+          "sek": 11.20040451,
+          "usd": 1.11751153
+        },
+        "retail_pricing_revision": "double-retail-all-markets-2026-10-13-v1",
+        "retail_pricing_fx_source": "https://latest.currency-api.pages.dev/v1/currencies/eur.json",
+        "us_pricing_researched_at": "2026-10-13",
+        "pen_tier_pricing_revision": "approved-pen-retail-2026-10-13-v1",
+        "retail_pricing_multiplier": 2,
+        "pen_tier_pricing_previous_usd": {
+          "10": 158,
+          "20": 238,
+          "40": 358
+        }
+      },
+      "variants": [
+        {
+          "id": "variant_01M4SVRX6N7AGP2JDZY149TK92",
+          "title": "40 mg",
+          "sku": "VTD-TIRZ-40MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4SVRX21ZND56CZ77WEERCCF",
+          "created_at": "2026-10-13T05:29:11.125Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRX7XCPM0NYZH3JA397XY",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 445.11,
+            "raw_calculated_amount": {
+              "value": "445.11",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 445.11,
+            "raw_original_amount": {
+              "value": "445.11",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQFXJJ1XMVDMRYW3S9AC",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQFXJJ1XMVDMRYW3S9AC",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        },
+        {
+          "id": "variant_01M4SVRXDSNAQ7D19Y23DWEA71",
+          "title": "10 mg",
+          "sku": "VTD-TIRZ-10MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4SVRX21ZND56CZ77WEERCCF",
+          "created_at": "2026-10-13T05:29:11.354Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRXFAGYMX3RXK4TNGNH4C",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 188.35,
+            "raw_calculated_amount": {
+              "value": "188.35",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 188.35,
+            "raw_original_amount": {
+              "value": "188.35",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQFZC0WWVFFQ466S4J9T",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQFZC0WWVFFQ466S4J9T",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        },
+        {
+          "id": "variant_01M4SVRXDS2F3F8Y5XF5ZWH62Z",
+          "title": "20 mg",
+          "sku": "VTD-TIRZ-20MG",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4SVRX21ZND56CZ77WEERCCF",
+          "created_at": "2026-10-13T05:29:11.354Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRXFAVH4PVJW5HNTYCZ8M",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 301.01,
+            "raw_calculated_amount": {
+              "value": "301.01",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 301.01,
+            "raw_original_amount": {
+              "value": "301.01",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQFY7S3Q7PQ249NV6BF1",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQFY7S3Q7PQ249NV6BF1",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": [
+        {
+          "id": "img_01M4T8J7M38XSA5TGEKH2EMQ2N",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791882763861-vetud_tirzepatide_40mg_closed_lab.png",
+          "metadata": null,
+          "rank": 0,
+          "product_id": "prod_01M4SVRX21ZND56CZ77WEERCCF",
+          "created_at": "2026-10-13T09:12:43.908Z",
+          "updated_at": "2026-10-13T09:12:43.908Z",
+          "deleted_at": null
+        },
+        {
+          "id": "img_01M4T8J7M3CS2J6AG7KKJSCXXV",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791882763858-vetud_tirzepatide_40mg_open_lab.png",
+          "metadata": null,
+          "rank": 1,
+          "product_id": "prod_01M4SVRX21ZND56CZ77WEERCCF",
+          "created_at": "2026-10-13T09:12:43.908Z",
+          "updated_at": "2026-10-13T09:12:43.908Z",
+          "deleted_at": null
+        }
+      ]
+    },
+    {
+      "id": "prod_01M4SVRXJ8FBAXMRE995JJ0PQ0",
+      "title": "Selank Nasal Spray",
+      "handle": "selank",
+      "description": "VETUD Selank is presented in a 10 ml nasal spray bottle with its matching box. Selank is a synthetic peptide, a short chain of amino acids, studied for stress-related signaling and communication between nerve cells. 99% purity. Lab tested for purity. The 10 ml label describes the amount of liquid in the bottle, not the amount of peptide. Ingredient information: Selank peptide (named on the label). The liquid carrier, preservatives and any other ingredients await manufacturer confirmation. The peptide concentration and total peptide content are not yet confirmed. Supplied for laboratory research only; not for human or veterinary use.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat.",
+      "thumbnail": "https://medusa-server-production-833e.up.railway.app/static/1791890945199-vetud_selank_landscape_01.png",
+      "metadata": {
+        "code": "VTD-SELANK",
+        "form": "Nasal spray solution",
+        "brand": "VETUD",
+        "accent": "#287f75",
+        "purity": "99%",
+        "volume": "10 ml",
+        "storage": "Follow the manufacturer's batch-specific storage temperature and conditions.",
+        "testing": "Lab tested for purity",
+        "handling": "Keep in original packaging, away from direct sunlight and excess heat.",
+        "stability": "Refer to the batch expiry date and the manufacturer's stability data.",
+        "ingredients": "Selank peptide (named on the label). The liquid carrier, preservatives and any other ingredients await manufacturer confirmation.",
+        "concentration": "Awaiting manufacturer confirmation",
+        "named_peptide": "Selank",
+        "us_pricing_note": "Provisional USD price per 10 ml bottle, benchmarked against US spray listings. Reassess when total peptide content and formula are confirmed; bottle volume alone does not establish equivalent strength.",
+        "research_sources": "https://pubmed.ncbi.nlm.nih.gov/26924987/",
+        "research_use_only": true,
+        "formulation_status": "Awaiting full ingredient list and peptide strength",
+        "image_aspect_ratio": "4 / 3",
+        "us_pricing_sources": "https://www.elitepharmusa.com/shop/selank-nasal-spray-10mg; https://cenexalabs.com/product/peptides/selank-peptide-spray-10ml/; https://www.aminoresearchco.com/shop/product/selank",
+        "retail_pricing_note": "Nasal sprays excluded from the user-requested pen kit price increase; original retail prices restored.",
+        "quality_copy_revision": "lab-purity-and-care-2026-10-13-v1",
+        "nasal_pricing_revision": "nasal-original-retail-2026-10-13-v1",
+        "retail_pricing_fx_date": "2026-10-13",
+        "us_pricing_provisional": true,
+        "retail_pricing_fx_rates": {
+          "chf": 0.93093866,
+          "czk": 24.37137217,
+          "dkk": 7.47515463,
+          "eur": 1,
+          "gbp": 0.84520585,
+          "huf": 364.882647,
+          "isk": 136.20036087,
+          "nok": 10.69683298,
+          "pln": 4.38666401,
+          "ron": 5.3344448,
+          "sek": 11.20040451,
+          "usd": 1.11751153
+        },
+        "retail_pricing_revision": "double-retail-all-markets-2026-10-13-v1",
+        "retail_pricing_fx_source": "https://latest.currency-api.pages.dev/v1/currencies/eur.json",
+        "us_pricing_researched_at": "2026-10-13",
+        "retail_pricing_multiplier": 1
+      },
+      "variants": [
+        {
+          "id": "variant_01M4SVRXKQ81JGYRKR2BY3P9A2",
+          "title": "10 ml",
+          "sku": "VTD-SELANK-10ML",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4SVRXJ8FBAXMRE995JJ0PQ0",
+          "created_at": "2026-10-13T05:29:11.543Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRXMPV7KYQYDDD3K4P7S9",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 67.5,
+            "raw_calculated_amount": {
+              "value": "67.5",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 67.5,
+            "raw_original_amount": {
+              "value": "67.5",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQG0Y6ARAJ2XTCEWPNRZ",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQG0Y6ARAJ2XTCEWPNRZ",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": [
+        {
+          "id": "img_01M4TGBX6Z5VX68R84CFCWA8WJ",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791890945199-vetud_selank_landscape_01.png",
+          "metadata": null,
+          "rank": 0,
+          "product_id": "prod_01M4SVRXJ8FBAXMRE995JJ0PQ0",
+          "created_at": "2026-10-13T11:29:05.248Z",
+          "updated_at": "2026-10-13T11:29:05.248Z",
+          "deleted_at": null
+        },
+        {
+          "id": "img_01M4TGBX6Z13DPSF7DY9BYYSPG",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791890945206-vetud_selank_landscape_02.png",
+          "metadata": null,
+          "rank": 1,
+          "product_id": "prod_01M4SVRXJ8FBAXMRE995JJ0PQ0",
+          "created_at": "2026-10-13T11:29:05.248Z",
+          "updated_at": "2026-10-13T11:29:05.248Z",
+          "deleted_at": null
+        }
+      ]
+    },
+    {
+      "id": "prod_01M4SVRXJ8RY0QK2P0062G0P1C",
+      "title": "Semax Nasal Spray",
+      "handle": "semax",
+      "description": "VETUD Semax is presented in a 10 ml nasal spray bottle with its matching box. Semax is a synthetic peptide, a short chain of amino acids, studied for nerve-cell signaling and proteins involved in nerve-cell growth and maintenance. 99% purity. Lab tested for purity. The 10 ml label describes the amount of liquid in the bottle, not the amount of peptide. Ingredient information: Semax peptide (named on the label). The liquid carrier, preservatives and any other ingredients await manufacturer confirmation. The peptide concentration and total peptide content are not yet confirmed. Supplied for laboratory research only; not for human or veterinary use.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat.",
+      "thumbnail": "https://medusa-server-production-833e.up.railway.app/static/1791890945210-vetud_semax_landscape_01.png",
+      "metadata": {
+        "code": "VTD-SEMAX",
+        "form": "Nasal spray solution",
+        "brand": "VETUD",
+        "accent": "#23618a",
+        "purity": "99%",
+        "volume": "10 ml",
+        "storage": "Follow the manufacturer's batch-specific storage temperature and conditions.",
+        "testing": "Lab tested for purity",
+        "handling": "Keep in original packaging, away from direct sunlight and excess heat.",
+        "stability": "Refer to the batch expiry date and the manufacturer's stability data.",
+        "ingredients": "Semax peptide (named on the label). The liquid carrier, preservatives and any other ingredients await manufacturer confirmation.",
+        "concentration": "Awaiting manufacturer confirmation",
+        "named_peptide": "Semax",
+        "us_pricing_note": "Provisional USD price per 10 ml bottle, benchmarked against US spray listings. Reassess when total peptide content and formula are confirmed; bottle volume alone does not establish equivalent strength.",
+        "research_sources": "https://pubmed.ncbi.nlm.nih.gov/19662538/",
+        "research_use_only": true,
+        "formulation_status": "Awaiting full ingredient list and peptide strength",
+        "image_aspect_ratio": "4 / 3",
+        "us_pricing_sources": "https://www.elitepharmusa.com/shop/selank-nasal-spray-10mg; https://www.aminoresearchco.com/shop/product/semax",
+        "retail_pricing_note": "Nasal sprays excluded from the user-requested pen kit price increase; original retail prices restored.",
+        "quality_copy_revision": "lab-purity-and-care-2026-10-13-v1",
+        "nasal_pricing_revision": "nasal-original-retail-2026-10-13-v1",
+        "retail_pricing_fx_date": "2026-10-13",
+        "us_pricing_provisional": true,
+        "retail_pricing_fx_rates": {
+          "chf": 0.93093866,
+          "czk": 24.37137217,
+          "dkk": 7.47515463,
+          "eur": 1,
+          "gbp": 0.84520585,
+          "huf": 364.882647,
+          "isk": 136.20036087,
+          "nok": 10.69683298,
+          "pln": 4.38666401,
+          "ron": 5.3344448,
+          "sek": 11.20040451,
+          "usd": 1.11751153
+        },
+        "retail_pricing_revision": "double-retail-all-markets-2026-10-13-v1",
+        "retail_pricing_fx_source": "https://latest.currency-api.pages.dev/v1/currencies/eur.json",
+        "us_pricing_researched_at": "2026-10-13",
+        "retail_pricing_multiplier": 1
+      },
+      "variants": [
+        {
+          "id": "variant_01M4SVRXKQQMSNXJP1BS9EVXCJ",
+          "title": "10 ml",
+          "sku": "VTD-SEMAX-10ML",
+          "barcode": null,
+          "ean": null,
+          "upc": null,
+          "allow_backorder": false,
+          "manage_inventory": true,
+          "hs_code": null,
+          "origin_country": null,
+          "mid_code": null,
+          "material": null,
+          "weight": null,
+          "length": null,
+          "height": null,
+          "width": null,
+          "metadata": null,
+          "variant_rank": 0,
+          "thumbnail": null,
+          "product_id": "prod_01M4SVRXJ8RY0QK2P0062G0P1C",
+          "created_at": "2026-10-13T05:29:11.543Z",
+          "updated_at": "2026-10-29T00:00:00.316Z",
+          "deleted_at": null,
+          "calculated_price": {
+            "id": "pset_01M4SVRXMQX8C7WTQCETMA2F4T",
+            "is_calculated_price_price_list": false,
+            "is_calculated_price_tax_inclusive": false,
+            "calculated_amount": 67.5,
+            "raw_calculated_amount": {
+              "value": "67.5",
+              "precision": 20
+            },
+            "is_original_price_price_list": false,
+            "is_original_price_tax_inclusive": false,
+            "original_amount": 67.5,
+            "raw_original_amount": {
+              "value": "67.5",
+              "precision": 20
+            },
+            "currency_code": "gbp",
+            "calculated_price": {
+              "id": "price_01M4T4XQG1JPJHPXKS1Y0VNB9Z",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            },
+            "original_price": {
+              "id": "price_01M4T4XQG1JPJHPXKS1Y0VNB9Z",
+              "price_list_id": null,
+              "price_list_type": null,
+              "min_quantity": null,
+              "max_quantity": null
+            }
+          },
+          "inventory_quantity": 0
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "name": "Peptide Series",
+          "description": "Single-sequence research peptides.",
+          "handle": "peptide-series",
+          "mpath": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+          "is_active": true,
+          "is_internal": false,
+          "rank": 0,
+          "external_id": null,
+          "metadata": null,
+          "parent_category_id": null,
+          "parent_category": null,
+          "created_at": "2026-10-11T11:03:18.736Z",
+          "updated_at": "2026-10-11T11:03:18.736Z",
+          "deleted_at": null
+        }
+      ],
+      "images": [
+        {
+          "id": "img_01M4TGBX6Z1V3VZ83TNKRZ1RHH",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791890945210-vetud_semax_landscape_01.png",
+          "metadata": null,
+          "rank": 0,
+          "product_id": "prod_01M4SVRXJ8RY0QK2P0062G0P1C",
+          "created_at": "2026-10-13T11:29:05.248Z",
+          "updated_at": "2026-10-13T11:29:05.248Z",
+          "deleted_at": null
+        },
+        {
+          "id": "img_01M4TGBX6ZMBK697S22QX5KWN1",
+          "url": "https://medusa-server-production-833e.up.railway.app/static/1791890945202-vetud_semax_landscape_02.png",
+          "metadata": null,
+          "rank": 1,
+          "product_id": "prod_01M4SVRXJ8RY0QK2P0062G0P1C",
+          "created_at": "2026-10-13T11:29:05.248Z",
+          "updated_at": "2026-10-13T11:29:05.248Z",
+          "deleted_at": null
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "pcat_01M4NA38YDYKQKVQNRYFVXWMFV",
+      "name": "Peptide Series",
+      "handle": "peptide-series",
+      "rank": 0,
+      "metadata": null
+    },
+    {
+      "id": "pcat_01M4NA38YE4WEWQ544T9XB51BF",
+      "name": "Blends",
+      "handle": "blends",
+      "rank": 1,
+      "metadata": null
+    },
+    {
+      "id": "pcat_01M4NA38YG21Q8XJBPJ2WPFS2N",
+      "name": "Lab Supplies",
+      "handle": "lab-supplies",
+      "rank": 2,
+      "metadata": null
+    }
+  ]
+}

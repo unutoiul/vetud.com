@@ -5,17 +5,13 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
 import Icon from "../brand/Icon"
-import { ButtonLink, LocalizedNextLink } from "../common/links"
+import { ButtonLink } from "../common/links"
 import { brand, gutter } from "@/theme/tokens"
 import CollectionCarousel from "./CollectionCarousel"
+import HomePathways from "./HomePathways"
+import type { CategoryFacet } from "@/lib/catalog-filters"
 
-const pathways = [
-  { icon: "flask" as const, title: "Explore the collection", detail: "Research materials, clearly specified", href: "/shop" },
-  { icon: "document" as const, title: "Know your material", detail: "Lot records & certificates of analysis", href: "/documentation" },
-  { icon: "shield" as const, title: "The VETUD standard", detail: "A considered approach to quality", href: "/standards" },
-]
-
-export default async function Hero({ products }: { products: HttpTypes.StoreProduct[] }) {
+export default async function Hero({ products, categories }: { products: HttpTypes.StoreProduct[]; categories: CategoryFacet[] }) {
   const t = await getTranslations("Hero")
   return <Box component="section" aria-labelledby="hero-title" sx={{ position: "relative", overflow: "hidden", bgcolor: brand.paper }}>
     <Box data-hero-stage sx={{ position: "relative", px: gutter, isolation: "isolate" }}>
@@ -38,12 +34,6 @@ export default async function Hero({ products }: { products: HttpTypes.StoreProd
         <CollectionCarousel products={products} />
       </Box>
     </Box>
-    <Box sx={{ px: gutter, bgcolor: "#fff", borderBottom: "1px solid", borderColor: "divider" }}>
-      <Box sx={{ maxWidth: 1360, mx: "auto", display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" } }}>
-        {pathways.map((item, index) => <Box key={item.href} component={LocalizedNextLink} href={item.href} sx={{ display: "flex", alignItems: "center", gap: 2, py: { xs: 2.25, md: 3.5 }, px: { xs: 0, md: index ? 4 : 0 }, borderLeft: { md: index ? "1px solid" : "none" }, borderBottom: { xs: index < 2 ? "1px solid" : "none", md: "none" }, borderColor: "divider", textDecoration: "none", "&:hover": { color: "brand.blue" }, "&:hover .pathway-arrow": { transform: "translate(3px,-3px)" } }}>
-          <Icon name={item.icon} sx={{ color: "brand.blue", fontSize: 23 }} /><Box sx={{ flex: 1 }}><Typography sx={{ fontSize: 13, fontWeight: 600 }}>{item.title}</Typography><Typography sx={{ fontSize: 11.5, color: "text.secondary", mt: .3 }}>{item.detail}</Typography></Box><Icon name="arrowUpRight" className="pathway-arrow" sx={{ fontSize: 17, transition: "transform .2s" }} />
-        </Box>)}
-      </Box>
-    </Box>
+    <HomePathways categories={categories} />
   </Box>
 }

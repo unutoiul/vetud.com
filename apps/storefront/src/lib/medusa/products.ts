@@ -67,6 +67,22 @@ export async function getProductByHandle(
   return products[0] ?? null
 }
 
+/** Complete regional catalog for category counts, including catalogs larger than one API page. */
+export async function listCatalogProducts(regionId: string): Promise<HttpTypes.StoreProduct[]> {
+  "use cache"
+  cacheLife("minutes")
+  cacheTag("products")
+  const products: HttpTypes.StoreProduct[] = []
+  let count = 0
+  do {
+    const page = await sdk.store.product.list({ region_id: regionId, fields: PRODUCT_FIELDS, limit: 100, offset: products.length, order: "created_at" })
+    products.push(...page.products)
+    count = page.count
+    if (!page.products.length) break
+  } while (products.length < count)
+  return products
+}
+
 export async function listProductHandles(): Promise<string[]> {
   "use cache"
   cacheLife("minutes")
@@ -98,12 +114,13 @@ export async function searchProducts(
 
 export async function listCategories(): Promise<HttpTypes.StoreProductCategory[]> {
   "use cache"
-  cacheLife("hours")
+  cacheLife("minutes")
   cacheTag("categories")
 
   const { product_categories } = await sdk.store.category.list({
-    fields: "id,name,handle,description,rank",
+    fields: "id,name,handle,description,rank,+metadata",
     limit: 100,
+    order: "rank",
   })
   return product_categories
 }

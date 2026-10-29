@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-29T19:21:30.222Z",
+  "mode": "local",
+  "products": 5,
+  "productPhotos": 10,
+  "routes": 7,
+  "checks": [
+    "two approved views per product",
+    "responsive image sizes",
+    "contained photography",
+    "selected thumbnail state",
+    "homepage and catalog images",
+    "all ten delivered file hashes",
+    "unchanged names, SKUs, descriptions, prices and availability"
+  ],
+  "visualReview": "Unavailable: Computer Use could not verify the current browser URL."
+}

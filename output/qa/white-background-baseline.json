@@ -1,0 +1,62 @@
+[
+  {
+    "handle": "retatrutide",
+    "name": "Retatrutide",
+    "sku": "VTD-01",
+    "description": "VETUD Retatrutide is supplied as freeze-dried peptide powder in a dual-chamber pen. One chamber holds the powder and the other holds bacteriostatic water (BAC water), keeping them separate until preparation. Available in 10 mg, 20 mg and 40 mg total peptide amounts.\n\n99% purity. Lab tested for purity. Each kit includes one pen, 12 disposable needles and an instruction booklet. Photos show the 40 mg kit across all sizes.\n\nIngredients: Retatrutide peptide powder; bacteriostatic water (BAC water) in a separate chamber. Refer to the manufacturer's batch specification for the complete formulation.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat. Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life.\n\nFor research use only.",
+    "offers": {
+      "@type": "Offer",
+      "price": 225.76,
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/InStock"
+    }
+  },
+  {
+    "handle": "tirzepatide",
+    "name": "Tirzepatide",
+    "sku": "VTD-TIRZ",
+    "description": "VETUD Tirzepatide is supplied as freeze-dried peptide powder in a dual-chamber pen. One chamber holds the powder and the other holds bacteriostatic water (BAC water), keeping them separate until preparation. Available in 10 mg, 20 mg and 40 mg total peptide amounts.\n\n99% purity. Lab tested for purity. Each kit includes one pen, 12 disposable needles and an instruction booklet. Photos show the 40 mg kit across all sizes.\n\nIngredients: Tirzepatide peptide powder; bacteriostatic water (BAC water) in a separate chamber. Refer to the manufacturer's batch specification for the complete formulation.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat. Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life.\n\nFor research use only.",
+    "offers": {
+      "@type": "Offer",
+      "price": 188.35,
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/OutOfStock"
+    }
+  },
+  {
+    "handle": "semaglutide",
+    "name": "Semaglutide",
+    "sku": "VTD-SEMA",
+    "description": "VETUD Semaglutide is supplied as freeze-dried peptide powder in a dual-chamber pen. One chamber holds the powder and the other holds bacteriostatic water (BAC water), keeping them separate until preparation. Available in 10 mg, 20 mg and 40 mg total peptide amounts.\n\n99% purity. Lab tested for purity. Each kit includes one pen, 12 disposable needles and an instruction booklet. Photos show the 40 mg kit across all sizes.\n\nIngredients: Semaglutide peptide powder; bacteriostatic water (BAC water) in a separate chamber. Refer to the manufacturer's batch specification for the complete formulation.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat. Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life.\n\nFor research use only.",
+    "offers": {
+      "@type": "Offer",
+      "price": 150.65,
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/OutOfStock"
+    }
+  },
+  {
+    "handle": "selank",
+    "name": "Selank Nasal Spray",
+    "sku": "VTD-SELANK",
+    "description": "VETUD Selank is presented in a 10 ml nasal spray bottle with its matching box. Selank is a synthetic peptide, a short chain of amino acids, studied for stress-related signaling and communication between nerve cells. 99% purity. Lab tested for purity. The 10 ml label describes the amount of liquid in the bottle, not the amount of peptide. Ingredient information: Selank peptide (named on the label). The liquid carrier, preservatives and any other ingredients await manufacturer confirmation. The peptide concentration and total peptide content are not yet confirmed. Supplied for laboratory research only; not for human or veterinary use.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat.",
+    "offers": {
+      "@type": "Offer",
+      "price": 67.5,
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/OutOfStock"
+    }
+  },
+  {
+    "handle": "semax",
+    "name": "Semax Nasal Spray",
+    "sku": "VTD-SEMAX",
+    "description": "VETUD Semax is presented in a 10 ml nasal spray bottle with its matching box. Semax is a synthetic peptide, a short chain of amino acids, studied for nerve-cell signaling and proteins involved in nerve-cell growth and maintenance. 99% purity. Lab tested for purity. The 10 ml label describes the amount of liquid in the bottle, not the amount of peptide. Ingredient information: Semax peptide (named on the label). The liquid carrier, preservatives and any other ingredients await manufacturer confirmation. The peptide concentration and total peptide content are not yet confirmed. Supplied for laboratory research only; not for human or veterinary use.\n\nStorage and stability: Follow the manufacturer's batch-specific temperature instructions and expiry date. Keep in original packaging, away from direct sunlight and excess heat.",
+    "offers": {
+      "@type": "Offer",
+      "price": 67.5,
+      "priceCurrency": "GBP",
+      "availability": "https://schema.org/OutOfStock"
+    }
+  }
+]

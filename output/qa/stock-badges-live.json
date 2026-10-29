@@ -1,0 +1,88 @@
+{
+  "checkedAt": "2026-10-29T20:44:53.408Z",
+  "deployment": "https://www.vetud.com",
+  "contrast": {
+    "success": 7.283284389015331,
+    "error": 4.979335708882375
+  },
+  "routes": [
+    {
+      "route": "/gb/shop",
+      "products": 14
+    },
+    {
+      "route": "/gb/products/retatrutide",
+      "status": "available"
+    },
+    {
+      "route": "/gb/products/selank",
+      "status": "sold-out"
+    },
+    {
+      "route": "/gb",
+      "products": 3
+    },
+    {
+      "route": "/us/shop",
+      "products": 14
+    }
+  ],
+  "products": [
+    {
+      "handle": "retatrutide",
+      "status": "available"
+    },
+    {
+      "handle": "selank",
+      "status": "sold-out"
+    },
+    {
+      "handle": "semaglutide",
+      "status": "sold-out"
+    },
+    {
+      "handle": "semax",
+      "status": "sold-out"
+    },
+    {
+      "handle": "tirzepatide",
+      "status": "sold-out"
+    },
+    {
+      "handle": "peptide-series-01",
+      "status": "available"
+    },
+    {
+      "handle": "peptide-series-02",
+      "status": "available"
+    },
+    {
+      "handle": "peptide-series-03",
+      "status": "available"
+    },
+    {
+      "handle": "peptide-series-04",
+      "status": "available"
+    },
+    {
+      "handle": "peptide-series-05",
+      "status": "available"
+    },
+    {
+      "handle": "peptide-series-06",
+      "status": "available"
+    },
+    {
+      "handle": "research-blend-a",
+      "status": "available"
+    },
+    {
+      "handle": "research-blend-b",
+      "status": "available"
+    },
+    {
+      "handle": "bacteriostatic-water",
+      "status": "available"
+    }
+  ]
+}

@@ -9,17 +9,21 @@ import ResearchStandard from "@/components/home/ResearchStandard"
 import PeptideVideos from "@/components/education/PeptideVideos"
 import ProductGrid from "@/components/product/ProductGrid"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
-import { listProducts } from "@/lib/medusa/products"
+import { listCategories, listCatalogProducts } from "@/lib/medusa/products"
+import { categoryFacets } from "@/lib/catalog-filters"
 
 export default async function HomePage() {
   const { region } = await getCurrentRegion()
-  const products = await listProducts({ regionId: region.id })
+  const [products, categories] = await Promise.all([
+    listCatalogProducts(region.id),
+    listCategories(),
+  ])
   const featured = ["retatrutide", "tirzepatide", "semaglutide"].flatMap(handle => products.filter(product => product.handle === handle))
   const collection = featured.length ? featured : products.slice(0, 3)
   return <>
-    <Hero products={products} />
-    <Section tone="white" id="catalog" sx={{ pt: { xs: 6, md: 9 }, pb: { xs: 7, md: 10 } }}>
-      <SectionHeading eyebrow="01 / The collection" title="The science. Clearly presented." description="Explore the VETUD Peptide Series. Considered packaging, clear product information and research at its core." action={<ButtonLink href="/shop" variant="outlined" endIcon={<Icon name="arrowUpRight" />}>View the collection</ButtonLink>} />
+    <Hero products={products} categories={categoryFacets(categories, products)} />
+    <Section tone="white" id="catalog" sx={{ pt: { xs: 5, md: 6 }, pb: { xs: 7, md: 10 } }}>
+      <SectionHeading eyebrow="The collection" title="The science. Clearly presented." description="Explore the VETUD Peptide Series. Considered packaging, clear product information and research at its core." action={<ButtonLink href="/shop" variant="outlined" endIcon={<Icon name="arrowUpRight" />}>View the collection</ButtonLink>} />
       {collection.length ? <ProductGrid products={collection} /> : <Box sx={{ p: 5, bgcolor: "brand.mintWash", borderRadius: 3 }}><Typography>Our catalog is being updated. Contact us for availability.</Typography><ButtonLink href="/contact" sx={{ mt: 2 }} endIcon={<Icon name="arrowRight" />}>Contact us</ButtonLink></Box>}
     </Section>
     <ResearchStandard />

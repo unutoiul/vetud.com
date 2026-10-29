@@ -1,7 +1,7 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import { CheckCircleIcon as CheckCircleOutlineIcon, FlaskIcon as ScienceOutlinedIcon, BagIcon as ShoppingBagOutlinedIcon } from "@/components/brand/Icon"
+import { FlaskIcon as ScienceOutlinedIcon, BagIcon as ShoppingBagOutlinedIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -15,6 +15,7 @@ import { SITE } from "@/lib/config"
 import { formatMoney, isVariantInStock, sortedVariants, variantPrice } from "@/lib/product"
 import { useStore } from "../store/StoreProvider"
 import QuantityStepper from "./QuantityStepper"
+import StockBadge from "./StockBadge"
 
 export default function PurchasePanel({ product }: { product: HttpTypes.StoreProduct }) {
   const locale = useLocale()
@@ -115,22 +116,15 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
         </Box>
       ) : null}
 
-      <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+      <Stack direction="row" spacing={1.5} useFlexGap role="status" aria-live="polite" aria-atomic="true" sx={{ alignItems: "center", flexWrap: "wrap" }}>
+        <StockBadge inStock={inStock} />
         {inStock ? (
-          <>
-            <CheckCircleOutlineIcon fontSize="small" sx={{ color: "success.main" }} />
-            <Typography variant="body2" sx={{ fontWeight: 600 }}>
-              In stock
-              {variant?.manage_inventory && (variant.inventory_quantity ?? 0) < 10
-                ? ` · only ${variant.inventory_quantity} left`
-                : " · ships within 1–2 business days"}
-            </Typography>
-          </>
-        ) : (
-          <Typography variant="body2" sx={{ fontWeight: 600, color: "error.main" }}>
-            Out of stock
+          <Typography variant="body2" sx={{ color: "text.secondary", fontSize: 13 }}>
+            {variant?.manage_inventory && (variant.inventory_quantity ?? 0) < 10
+              ? `Only ${variant.inventory_quantity} left`
+              : "Ships within 1–2 business days"}
           </Typography>
-        )}
+        ) : null}
       </Stack>
 
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>

@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-29T19:23:54.317Z",
+  "mode": "live",
+  "products": 5,
+  "productPhotos": 10,
+  "routes": 7,
+  "checks": [
+    "two approved views per product",
+    "responsive image sizes",
+    "contained photography",
+    "selected thumbnail state",
+    "homepage and catalog images",
+    "all ten delivered file hashes",
+    "unchanged names, SKUs, descriptions, prices and availability"
+  ],
+  "optimizedImages": [
+    {
+      "handle": "retatrutide",
+      "width": 384,
+      "height": 288,
+      "bytes": 9364,
+      "format": "webp"
+    },
+    {
+      "handle": "retatrutide",
+      "width": 1080,
+      "height": 810,
+      "bytes": 47074,
+      "format": "webp"
+    },
+    {
+      "handle": "selank",
+      "width": 384,
+      "height": 480,
+      "bytes": 11434,
+      "format": "webp"
+    },
+    {
+      "handle": "selank",
+      "width": 1080,
+      "height": 1350,
+      "bytes": 49796,
+      "format": "webp"
+    }
+  ],
+  "visualReview": "Unavailable: Computer Use could not verify the current browser URL."
+}

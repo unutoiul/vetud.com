@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-10-29T20:39:55.521Z",
+  "deployment": "https://www.vetud.com",
+  "routes": [
+    {
+      "route": "/gb/shop?category=weight-loss-research",
+      "products": 3
+    },
+    {
+      "route": "/gb/shop?category=sleep-enhancement-research",
+      "products": 0
+    },
+    {
+      "route": "/gb/shop?category=longevity-anti-aging-research",
+      "products": 0
+    },
+    {
+      "route": "/gb",
+      "categories": [
+        "weight-loss-research",
+        "sleep-enhancement-research",
+        "longevity-anti-aging-research"
+      ]
+    },
+    {
+      "route": "/us",
+      "categories": [
+        "weight-loss-research",
+        "sleep-enhancement-research",
+        "longevity-anti-aging-research"
+      ]
+    }
+  ]
+}

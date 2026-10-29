@@ -120,7 +120,7 @@ export default function LotLookup() {
               <Grid key={`${product.id}-${lot.lot}`} size={{ xs: 12, md: 8 }}>
                 <Paper variant="outlined" sx={{ p: 3, display: "flex", gap: 2.5, alignItems: "center", bgcolor: "#f7f9fa", borderRadius: 3 }}>
                   <Box sx={{ width: 120, flexShrink: 0, display: { xs: "none", sm: "block" } }}>
-                    <ProductThumb image={product.thumbnail} meta={meta} sizes="120px" />
+                    <ProductThumb image={product.thumbnail} handle={product.handle} meta={meta} sizes="120px" />
                   </Box>
                   <Box sx={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", color: "success.main" }}>

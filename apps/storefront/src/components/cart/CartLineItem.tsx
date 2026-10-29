@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { useLocale } from "next-intl"
 import { formatMoney, readProductMeta } from "@/lib/product"
+import { getProductThumbnail } from "@/lib/product-images"
 import { LocalizedNextLink } from "../common/links"
 import ProductThumb from "../product/ProductThumb"
 import QuantityStepper from "../product/QuantityStepper"
@@ -29,6 +30,7 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
     categories: item.product?.categories ?? [],
   })
   const lineTotal = Number(item.unit_price) * Number(item.quantity)
+  const image = getProductThumbnail(item.product_handle, item.thumbnail)
 
   return (
     <Stack direction="row" spacing={2} sx={{ py: 2, borderBottom: "1px solid", borderColor: "divider" }}>
@@ -39,17 +41,17 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
         sx={{
           width: { xs: 72, sm: 92 },
           flexShrink: 0,
-          bgcolor: item.thumbnail ? "#fff" : "brand.mintWash",
-          border: item.thumbnail ? "1px solid" : "none",
+          bgcolor: image ? "#fff" : "brand.mintWash",
+          border: image ? "1px solid" : "none",
           borderColor: "divider",
           borderRadius: 2.5,
-          p: item.thumbnail ? 0.5 : 1,
+          p: image ? 0.5 : 1,
           alignSelf: "flex-start",
         }}
         aria-hidden
         tabIndex={-1}
       >
-        <ProductThumb image={item.thumbnail} meta={meta} sizes="92px" />
+        <ProductThumb image={image} meta={meta} sizes="92px" />
       </Box>
       <Box sx={{ flex: 1, minWidth: 0 }}>
         <Stack direction="row" spacing={1} sx={{ justifyContent: "space-between" }}>

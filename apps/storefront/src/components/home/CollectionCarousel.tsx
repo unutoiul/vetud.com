@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { cheapestPrice, formatMoney, readProductMeta, sortedVariants } from "@/lib/product"
 import { brand } from "@/theme/tokens"
+import { getProductImages } from "@/lib/product-images"
 import Icon from "../brand/Icon"
 import { LocalizedNextLink } from "../common/links"
 
@@ -17,7 +18,7 @@ import { LocalizedNextLink } from "../common/links"
 export default function CollectionCarousel({ products }: { products: HttpTypes.StoreProduct[] }) {
   const t = useTranslations("Common")
   const locale = useLocale()
-  const photos = products.filter(product => Boolean(product.thumbnail || product.images?.length))
+  const photos = products.filter(product => getProductImages(product).length > 0)
   const count = photos.length
   const root = useRef<HTMLDivElement>(null)
   const touchStart = useRef<{ x: number; y: number } | null>(null)
@@ -84,11 +85,12 @@ export default function CollectionCarousel({ products }: { products: HttpTypes.S
         const hidden = Math.abs(position) > 1
         const meta = readProductMeta(product)
         const price = cheapestPrice(product)
+        const image = getProductImages(product)[0]
         return <Box key={product.id} role="group" aria-roledescription="slide" aria-label={t("slide", { current: productIndex + 1, total: count })} aria-hidden={hidden || undefined} inert={hidden} data-active={active} sx={{ position: "absolute", left: "50%", top: "50%", width: { xs: "70%", sm: "54%", md: "62%" }, maxWidth: 340, zIndex: active ? 3 : hidden ? 0 : 1, opacity: hidden ? 0 : 1, visibility: hidden ? "hidden" : "visible", transform: `translate(${-50 + position * 46}%, ${-50 + Math.abs(position) * 5}%) rotate(${position * 8}deg) scale(${active ? 1 : .83})`, transition: "transform .7s cubic-bezier(.22,.68,0,1), opacity .45s, visibility .45s", "@media (prefers-reduced-motion: reduce)": { transition: "none" } }}>
           <Box component={LocalizedNextLink} href={`/products/${product.handle}`} sx={{ display: "flex", flexDirection: "column", minHeight: { xs: 340, sm: 380, md: 395, lg: 405 }, p: { xs: 1.75, md: 2 }, gap: { xs: 1.75, md: 2 }, boxSizing: "border-box", overflow: "hidden", border: "1px solid", borderColor: active ? brand.lineStrong : brand.line, borderRadius: "14px", bgcolor: "#fff", color: "inherit", textDecoration: "none", boxShadow: active ? "0 24px 64px -20px rgba(21,38,94,.28), 0 4px 12px rgba(21,38,94,.04)" : "0 14px 40px -18px rgba(21,38,94,.2)", "&:focus-visible": { outline: `3px solid ${brand.blue}`, outlineOffset: 4 }, "&:hover .hero-product-arrow": { bgcolor: brand.navy, color: "#fff" } }}>
-            <Box sx={{ height: { xs: 150, sm: 185, md: 190, lg: 205 }, flexShrink: 0, p: 1, borderRadius: "8px", bgcolor: brand.mintWash }}>
+            <Box sx={{ height: { xs: 150, sm: 185, md: 190, lg: 205 }, flexShrink: 0, p: .5, borderRadius: "8px", bgcolor: "#fff" }}>
               <Box sx={{ position: "relative", height: "100%" }}>
-                <Image src={product.thumbnail || product.images![0].url} alt={`${product.title} — VETUD Peptide Series`} fill sizes="(max-width: 600px) 65vw, 340px" preload={productIndex === 0} draggable={false} style={{ objectFit: "contain" }} />
+                <Image src={image.url} alt={image.alt ?? `${product.title} — VETUD Peptide Series`} fill sizes="(max-width: 600px) 65vw, 340px" preload={productIndex === 0} draggable={false} style={{ objectFit: "contain" }} />
               </Box>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", flex: 1, px: .5, pb: .5 }}>

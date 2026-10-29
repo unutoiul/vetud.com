@@ -45,6 +45,10 @@ npm run dev                    # http://localhost:8000
 
 The publishable key can also be found in **Admin → Settings → Publishable API Keys**.
 
+`vercel dev` runs the storefront and needs the local Medusa backend running separately on port 9000. Run `vercel dev --listen 8000` from `apps/storefront` to match the local site URLs above. The backend also allows the default Vercel development origin, `http://localhost:3000`; if you use it, set the storefront's `NEXT_PUBLIC_BASE_URL` and the backend's `STOREFRONT_URL` to that origin for correct links and payment return URLs.
+
+If the storefront reports `ECONNREFUSED 127.0.0.1:9000`, start Docker Desktop, run `docker compose up -d` from the repository root, and start `npm run dev` in `apps/backend`. Check `http://localhost:9000/health` before restarting the storefront. The frontend's “Ready” message confirms that Next.js started; the commerce API must be running too.
+
 Without `RESEND_API_KEY`, emails are not sent; they are logged in the backend console instead.
 
 ---
@@ -80,9 +84,15 @@ Everything is editable in **Admin → Products**. The storefront also reads thes
 
 The `lots` format is one lot per entry, with entries separated by `;` and fields by `|`: `LOT|YYYY-MM|PURITY|COA_URL`. The COA URL is optional. Without it, the site shows a "Request COA" link that goes to the contact form.
 
-If a product has no images, the storefront draws its kit-box art from `code`, `accent` and its category (Blends show two vials, Lab Supplies a bottle). Uploaded product images replace the art automatically.
+The five photographed VETUD products use the approved images from `assets/vetud_product_white_background`, mapped by handle in `apps/storefront/src/lib/product-images.ts`. Each product has two views, shared across the homepage, catalog, galleries, cart/checkout and lot lookup. Full-resolution WebP versions live in `apps/storefront/public/images/products`; regenerate them with `node scripts/prepare-product-images.mjs` from `apps/storefront`. Pen galleries use landscape proportions; spray galleries use portrait proportions, with white backgrounds and contained images throughout. Other products continue to use their Medusa images, or the kit-box art drawn from `code`, `accent` and category when no photos exist.
 
 Catalog changes appear on the storefront within about a minute (cached with `cacheLife("minutes")`).
+
+The shop includes the eight requested research categories plus the owner's Beauty category, with a checkbox sidebar on desktop and a category drawer on mobile. Categories and published-product counts come from Medusa; zero-product categories remain visible. Multiple research areas are combined with OR, while research area and product type are combined with AND. Filters, search and sorting are retained in shareable URLs. Existing product-type category links continue to work.
+
+The supplied NAD+ 1000 mg, Melanotan 10 mg and Ipamorelin 5 mg kits are imported through `src/scripts/import-supplied-research-products.ts` in the backend. Each starts as a draft with one labelled-strength variant, two owner-supplied photos, provisional USD/EUR prices and managed inventory with no available stock assigned. The import creates only missing products and preserves subsequent Admin edits. NAD+ belongs to Longevity and Anti-aging Research; Melanotan to Beauty and Peptide Series; Ipamorelin to Muscle Growth Research and Peptide Series. Melanotan subtype, formulation, purity, concentration and batch documentation remain unspecified. Review pricing, stock and product specifications before publication. The script verifies the import and checks that existing products and stock levels are preserved. A bundled copy can run through the deployed Medusa CLI as a data-only import without a service restart.
+
+Migration `vetud-product-16-research-categories` creates the eight active/public categories once, marking them with `metadata.storefront_group = "research"`, and adds research assignments to the five identified VETUD products while retaining their original categories. Generic placeholder products are left in their existing product-type categories. Manage categories and assignments in Medusa Admin, or rerun the setup safely with `npx medusa exec ./src/scripts/setup-research-categories.ts` from `apps/backend`. The catalog filtering checks run with `node --experimental-strip-types --test tests/catalog-filters.test.mjs` from `apps/storefront`.
 
 ### Fulfilling an order
 

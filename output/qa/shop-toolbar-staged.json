@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-29T20:27:38.423Z",
+  "deployment": "https://vetud-storefront-9pia6iupo-gold-structure-engine.vercel.app",
+  "routes": [
+    {
+      "route": "/gb/shop",
+      "products": 14,
+      "sort": "Featured"
+    },
+    {
+      "route": "/gb/shop?category=weight-loss-research&sort=price-asc",
+      "products": 3,
+      "sort": "Price: low to high"
+    },
+    {
+      "route": "/gb/shop?q=Semax&category=cognitive-enhancement-research&sort=name",
+      "products": 1,
+      "sort": "Name"
+    },
+    {
+      "route": "/gb/shop?category=beauty",
+      "products": 0,
+      "sort": "Featured"
+    },
+    {
+      "route": "/us/shop",
+      "products": 14,
+      "sort": "Featured"
+    }
+  ],
+  "visualReview": "Browser access host unavailable; browser interaction and visual verification were not performed."
+}
