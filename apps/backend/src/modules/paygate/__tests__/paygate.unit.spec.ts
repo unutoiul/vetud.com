@@ -18,7 +18,7 @@ const keys = generateKeyPairSync("rsa", { modulusLength: 2048 })
 const env = {
   PAYGATE_ENABLED: "true", PAYGATE_CALLBACK_SECRET: "a".repeat(64),
   PAYGATE_CARD_WALLET: merchant, PAYGATE_CRYPTO_WALLETS: JSON.stringify({ evm: merchant }),
-  PAYGATE_API_DOMAIN: "api-vetudcom-d02e713a96aaf8526039b988.paygate.to", MEDUSA_BACKEND_URL: "https://api.shop.example",
+  PAYGATE_API_DOMAIN: "api-vetudcom-6a438e9ca8f87c5e13025476.paygate.to", MEDUSA_BACKEND_URL: "https://api.shop.example",
 }
 const config = () => getPaygateConfig(env)
 const provider = (mode: "card" | "crypto" = "card") => new PaygateProvider({}, { ...config(), mode })

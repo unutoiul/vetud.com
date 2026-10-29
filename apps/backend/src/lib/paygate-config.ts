@@ -31,7 +31,7 @@ export function getPaygateConfig(env: NodeJS.ProcessEnv = process.env) {
   if (cardWallet && !/^0x[0-9a-fA-F]{40}$/.test(cardWallet)) paygateError("PAYGATE_CARD_WALLET must be an EVM public address.")
   if (wallets.evm && !/^0x[0-9a-fA-F]{40}$/.test(wallets.evm)) paygateError("The evm payout wallet must be an EVM public address.")
   const secret = env.PAYGATE_CALLBACK_SECRET || ""
-  const apiDomain = domain(env.PAYGATE_API_DOMAIN || "api-vetudcom-d02e713a96aaf8526039b988.paygate.to", "PAYGATE_API_DOMAIN")
+  const apiDomain = domain(env.PAYGATE_API_DOMAIN || "api-vetudcom-6a438e9ca8f87c5e13025476.paygate.to", "PAYGATE_API_DOMAIN")
   const checkoutDomain = domain(env.PAYGATE_CHECKOUT_DOMAIN || "checkout.paygate.to", "PAYGATE_CHECKOUT_DOMAIN")
   const backendUrl = (env.MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")
   const ratio = env.PAYGATE_CARD_MIN_NET_RATIO || "1"

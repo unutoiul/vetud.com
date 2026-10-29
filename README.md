@@ -123,7 +123,7 @@ To preview the templates in a browser, run `npm run email:dev` in `apps/backend`
 
 ### PayGate.to cards and cryptocurrency
 
-The optional PayGate integration uses the pinned official `paygate-to` Node SDK. It is **disabled by default**. The dedicated API hostname is `api-vetudcom-d02e713a96aaf8526039b988.paygate.to`; no gateway account or API key is required. `PAYGATE_CALLBACK_SECRET` is our own signing secret, not an API credential.
+The optional PayGate integration uses the pinned official `paygate-to` Node SDK. It is **disabled by default**. The dedicated API hostname is `api-vetudcom-6a438e9ca8f87c5e13025476.paygate.to`; no gateway account or API key is required. `PAYGATE_CALLBACK_SECRET` is our own signing secret, not an API credential.
 
 Configure these on both Medusa services before enabling:
 
@@ -137,6 +137,8 @@ Configure these on both Medusa services before enabling:
 | `PAYGATE_CHECKOUT_DOMAIN` | Defaults to `checkout.paygate.to`. For your own domain, complete PayGate's Cloudflare setup first, then set the hostname here. |
 | `MEDUSA_BACKEND_URL` | The exact public HTTPS backend origin; signed callbacks use `/paygate/callback`. Localhost cannot receive provider callbacks. |
 | `PAYGATE_CARD_MIN_NET_RATIO` | Defaults to `1`: require the full quoted invoice USD value. An explicitly chosen policy from `0.90` to `1.00` can allow documented provider deductions. The policy is frozen per invoice. |
+
+The requested branded domains are `api.vetud.com` (PayGate API) and `checkout.vetud.com` (hosted payment pages). They must both be attached to the generated Cloudflare Worker under **Domains → Add Domain**; filling in the PayGate wizard does not publish DNS. Keep the Worker's `targetUrl` pointing to the dedicated PayGate endpoint above. Once HTTPS and a read-only provider-status request work through `api.vetud.com`, set `PAYGATE_API_DOMAIN=api.vetud.com` and `PAYGATE_CHECKOUT_DOMAIN=checkout.vetud.com` on both Medusa services. Until then, use the working dedicated endpoint directly and `checkout.paygate.to`. This API subdomain is a PayGate proxy; keep `MEDUSA_BACKEND_URL` pointing to the Medusa server. The wizard's optional error page must be a working absolute HTTPS URL; use `https://vetud.com/` until a custom error page exists, rather than an unimplemented `/error` path.
 
 Generate the local signing secret with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`. Do not supply private keys or wallet recovery phrases to the application. Supported hosted network names are `evm`, `btc`, `bitcoincash`, `ltc`, `doge`, `solana`, `trc20`, `xmr`, `zec`, and `ton`. An `evm` address enables the EVM chains/tokens supported by hosted checkout; configure a wallet you control on those networks.
 
