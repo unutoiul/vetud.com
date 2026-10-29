@@ -38,7 +38,7 @@ export function customerOrderQuery(input: CustomerOrdersInput) {
   return {
     // Only payment IDs/provider IDs enter the order graph. A workflow step
     // reads fresh settlement metadata separately and emits a safe display hint.
-    fields: [...CUSTOMER_ORDER_FIELDS, "payment_collections.payments.id", "payment_collections.payments.provider_id"],
+    fields: [...CUSTOMER_ORDER_FIELDS, "payment_collections.payments.id", "payment_collections.payments.provider_id", "payment_collections.payment_sessions.id", "payment_collections.payment_sessions.provider_id"],
     variables: {
       filters: { customer_id: input.customer_id, is_draft_order: false, ...(input.order_id ? { id: input.order_id } : {}) },
       skip: input.offset,

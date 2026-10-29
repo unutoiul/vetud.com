@@ -19,6 +19,7 @@ import { confirmationPayment } from "@/lib/nmi"
 import { orderNumber, type CustomerOrder } from "@/lib/orders"
 import { parseOrderReceipt } from "@/lib/order-receipt"
 import OrderTotals from "../cart/OrderTotals"
+import PaygateResume from "./PaygateResume"
 import { ButtonLink } from "../common/links"
 import { useAccount } from "../account/AccountProvider"
 
@@ -127,6 +128,7 @@ export default function OrderConfirmation() {
         </Paper>
         ) : null}
 
+        {authoritative ? <Box sx={{ mb: 3 }}><PaygateResume checkoutUrl={order.payment_summary?.checkout_url} /></Box> : null}
         <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
           What happens next
         </Typography>

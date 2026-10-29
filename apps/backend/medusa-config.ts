@@ -1,5 +1,6 @@
 import { loadEnv, defineConfig } from "@medusajs/framework/utils"
 import { getNmiConfig } from "./src/lib/nmi-config"
+import { getPaygateConfig } from "./src/lib/paygate-config"
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd())
 
@@ -8,6 +9,7 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY
 
 type ModuleConfig = {
   resolve: string
+  id?: string
   options?: Record<string, unknown>
 }
 
@@ -150,6 +152,11 @@ if (REDIS_URL) {
 // providers list, so every optional provider is added here. Enable each one on a region in Admin
 // (Settings > Regions) as `pp_<resolve id>_<id>`, e.g. pp_paypal_paypal.
 const paymentProviders: ModuleConfig[] = []
+const paygate = getPaygateConfig()
+if (paygate.enabled) {
+  if (paygate.cardWallet) paymentProviders.push({ resolve: "./src/modules/paygate", id: "card", options: { ...paygate, mode: "card" } })
+  if (Object.keys(paygate.wallets).length) paymentProviders.push({ resolve: "./src/modules/paygate", id: "crypto", options: { ...paygate, mode: "crypto" } })
+}
 const nmi = getNmiConfig()
 if (nmi.enabled) {
   paymentProviders.push({

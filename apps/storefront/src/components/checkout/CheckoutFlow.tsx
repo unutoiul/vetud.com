@@ -36,6 +36,7 @@ import { PAYPAL_PROVIDER_ID, readPayPalRedirect } from "@/lib/paypal"
 import { formatMoney } from "@/lib/product"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
 import { NMI_PROVIDER_ID, nmiAvailable, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
+import { PAYGATE_CARD, PAYGATE_CRYPTO, isPaygate, readPaygateRedirect, type PaygateConfig } from "@/lib/paygate"
 import { hasResearchAcknowledgment, researchAcknowledgmentMetadata, RUO_ACK_TEXT } from "@/lib/research"
 import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
@@ -49,6 +50,14 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
 
 const PAYMENT_LABELS: Record<string, { title: string; description: string; icon?: IconName }> = {
+  [PAYGATE_CARD]: {
+    icon: "card", title: "Card payment via PayGate.to",
+    description: "Reserve your order, then continue to hosted card checkout. Available providers, fees and any identity checks are shown before you pay. We ship after payment is confirmed.",
+  },
+  [PAYGATE_CRYPTO]: {
+    icon: "coin", title: "Cryptocurrency via PayGate.to",
+    description: "Reserve your order, then choose a coin and network on hosted checkout. Send the exact quoted amount above the displayed network minimum. Network fees are shown there.",
+  },
   [NMI_PROVIDER_ID]: {
     icon: "card",
     title: "Credit / debit card or eligible bank account",
@@ -227,6 +236,7 @@ export default function CheckoutFlow() {
       }
       // Crypto: validate the hosted-checkout redirect first, create the order, then leave for MakePay.
       const isMakePay = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
+      const paygateRedirect = checkoutCart.payment_collection?.payment_sessions?.some(session => isPaygate(session.provider_id)) ? readPaygateRedirect(checkoutCart) : null
       const redirect = isMakePay ? readMakePayRedirect(checkoutCart) : null
       const result = await sdk.store.cart.complete(checkoutCart.id)
       assertCurrent()
@@ -238,6 +248,12 @@ export default function CheckoutFlow() {
         if (receipt) window.sessionStorage.setItem(`vetud_order_${result.order.id}`, receipt)
       } catch {
         // The confirmation page fetches the order when storage is unavailable.
+      }
+      if (paygateRedirect) {
+        setCompletedOrderId(result.order.id)
+        clearCart()
+        window.location.assign(paygateRedirect.url)
+        return
       }
       if (redirect) {
         try {
@@ -376,7 +392,7 @@ export default function CheckoutFlow() {
                   const existing = checkoutCart.payment_collection?.payment_sessions?.find(
                     (session) => session.provider_id === providerId
                   )
-                  if (providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID) {
+                  if (providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID || isPaygate(providerId)) {
                     // A MakePay link or PayPal order is bound to one amount, so always create a fresh session.
                     await sdk.store.payment.initiatePaymentSession(checkoutCart, {
                       provider_id: providerId,
@@ -720,10 +736,15 @@ function PaymentStep({
     Promise.all([
       sdk.store.payment.listPaymentProviders({ region_id: cart.region_id ?? "" }),
       sdk.client.fetch<NmiConfig>("/store/nmi/config", { method: "GET", cache: "no-store" }).catch(() => null),
+      sdk.client.fetch<PaygateConfig>("/store/paygate/config", { method: "GET", cache: "no-store" }).catch(() => null),
     ])
-      .then(([{ payment_providers }, config]) => {
+      .then(([{ payment_providers }, config, paygate]) => {
         if (cancelled) return
-        const available = payment_providers.filter((provider) => provider.id !== NMI_PROVIDER_ID || nmiAvailable(config, cart.currency_code))
+        const available = payment_providers.filter(provider => {
+          if (provider.id === PAYGATE_CARD) return paygate?.card === true
+          if (provider.id === PAYGATE_CRYPTO) return paygate?.crypto === true
+          return provider.id !== NMI_PROVIDER_ID || nmiAvailable(config, cart.currency_code)
+        })
         setProviders(available)
         setSelected((current) => available.some((provider) => provider.id === current) ? current : available[0]?.id ?? "")
       })
@@ -879,6 +900,8 @@ function ReviewStep({
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
         {provider === NMI_PROVIDER_ID
           ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
+          : isPaygate(provider)
+          ? "By continuing you agree to our terms of sale and confirm the products are for laboratory research use only. Your order is reserved while you pay on PayGate's hosted checkout. Provider fees, network minimums and any identity checks are shown there. We ship after payment is verified."
           : provider === PAYPAL_PROVIDER_ID
           ? "By continuing you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to PayPal to pay; your order is placed once the payment is confirmed, and we ship right after."
           : provider === MAKEPAY_PROVIDER_ID
@@ -900,7 +923,7 @@ function ReviewStep({
           ? provider === PAYPAL_PROVIDER_ID
             ? "Opening PayPal…"
             : "Placing order…"
-          : `${provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${formatMoney(Number(cart.total ?? 0), cart.currency_code, { locale })}`}
+          : `${isPaygate(provider) ? "Continue to PayGate" : provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${formatMoney(Number(cart.total ?? 0), cart.currency_code, { locale })}`}
       </Button>}
     </Box>
   )

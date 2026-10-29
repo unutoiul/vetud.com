@@ -11,7 +11,7 @@ import { sendNotificationStep } from "./steps/send-notification"
 import { paymentNotice } from "../lib/payment-notice"
 
 type WorkflowInput = { id: string }
-const ORDER_PLACED_FIELDS = [...ORDER_EMAIL_FIELDS, "payment_collections.payments.provider_id", "payment_collections.payments.data", "payment_collections.payments.captured_at"]
+const ORDER_PLACED_FIELDS = [...ORDER_EMAIL_FIELDS, "payment_collections.payments.provider_id", "payment_collections.payments.data", "payment_collections.payments.captured_at", "payment_collections.payment_sessions.provider_id"]
 
 /**
  * Emails payment-method-appropriate confirmation and fulfillment instructions

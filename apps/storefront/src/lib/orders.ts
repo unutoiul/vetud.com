@@ -12,6 +12,7 @@ export type OrderShipment = {
 export type CustomerPaymentSummary = {
   method: "nmi_card" | "nmi_ach" | "manual" | "online" | "unknown"
   review?: "pending_settlement" | "returned" | "requires_review" | "canceled"
+  checkout_url?: string
 }
 export type CustomerOrder = Omit<HttpTypes.StoreOrder, "fulfillments"> & {
   fulfillments?: OrderShipment[]

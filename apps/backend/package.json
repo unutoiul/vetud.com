@@ -4,6 +4,7 @@
   "description": "Vetud Peptides commerce backend (Medusa)",
   "author": "Vetud Peptides",
   "scripts": {
+    "test:paygate:integration": "node scripts/test-paygate-integration.cjs",
     "build": "medusa build",
     "start": "medusa start",
     "dev": "medusa develop",

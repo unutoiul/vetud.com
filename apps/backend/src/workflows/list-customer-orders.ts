@@ -5,20 +5,36 @@ import { getOrdersListWorkflow } from "@medusajs/medusa/core-flows"
 import { customerOrderQuery, publicCustomerOrder, type CustomerOrdersInput } from "../lib/customer-orders"
 import { customerPaymentSummary, type CustomerPaymentReference } from "../lib/customer-payment-summary"
 import { NMI_PROVIDER_ID } from "../lib/nmi-settlement"
+import { getPaygateConfig, isPaygate } from "../lib/paygate-config"
+import { readPaygate } from "../lib/paygate-state"
 
-type CustomerOrderRecord = OrderDTO & { payment_collections?: { payments?: CustomerPaymentReference[] }[] }
+type CustomerOrderRecord = OrderDTO & { payment_collections?: { payments?: CustomerPaymentReference[]; payment_sessions?: CustomerPaymentReference[] }[] }
 
 /** Only called with the result of the customer-scoped, non-draft order query. */
 export async function projectCustomerOrders(orders: CustomerOrderRecord[], container: MedusaContainer) {
   const references = (order: CustomerOrderRecord): CustomerPaymentReference[] =>
-    order.payment_collections?.flatMap((collection) => collection.payments ?? []).map(({ id, provider_id }) => ({ id, provider_id })) ?? []
+    order.payment_collections?.flatMap((collection) => [...(collection.payments ?? []), ...(collection.payment_sessions ?? []).filter(session => isPaygate(session.provider_id))]).map(({ id, provider_id }) => ({ id, provider_id })) ?? []
   const ids = [...new Set(orders.flatMap(references).filter((payment) => payment.provider_id === NMI_PROVIDER_ID).map(({ id }) => id))]
   const payments = ids.length ? await container.resolve(Modules.PAYMENT).listPayments(
     { id: ids }, { relations: ["payment_session"], take: ids.length }
   ) : []
-  return orders.map((order) => ({
-    ...publicCustomerOrder(order),
-    payment_summary: customerPaymentSummary(references(order), payments),
+  return Promise.all(orders.map(async order => {
+    const summary = customerPaymentSummary(references(order), payments)
+    const sessions = order.payment_collections?.flatMap(collection => collection.payment_sessions ?? []).filter(session => isPaygate(session.provider_id)) ?? []
+    for (const reference of sessions) {
+      try {
+        const session = await container.resolve(Modules.PAYMENT).retrievePaymentSession(reference.id)
+        const state = readPaygate(session.data, getPaygateConfig().secret)
+        if (state.review) summary.review = "requires_review"
+        if (state.canceled) summary.review = "canceled"
+        if (!state.settled && !state.canceled && !state.review && !state.receipts.length && session.status === "pending_authorization" && order.status !== "canceled") {
+          const url = new URL(`/paygate/checkout/${encodeURIComponent(session.id)}`, getPaygateConfig().callbackUrl)
+          url.searchParams.set("token", state.redirect_token)
+          summary.checkout_url = url.href
+        }
+      } catch { summary.review = "requires_review" }
+    }
+    return { ...publicCustomerOrder(order), payment_summary: summary }
   }))
 }
 

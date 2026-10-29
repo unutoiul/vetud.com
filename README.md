@@ -121,6 +121,41 @@ To preview the templates in a browser, run `npm run email:dev` in `apps/backend`
 
 ## Deploy
 
+### PayGate.to cards and cryptocurrency
+
+The optional PayGate integration uses the pinned official `paygate-to` Node SDK. It is **disabled by default**. The dedicated API hostname is `api-vetudcom-d02e713a96aaf8526039b988.paygate.to`; no gateway account or API key is required. `PAYGATE_CALLBACK_SECRET` is our own signing secret, not an API credential.
+
+Configure these on both Medusa services before enabling:
+
+| Variable | Purpose |
+|---|---|
+| `PAYGATE_ENABLED` | Set `true` only after wallet configuration and testing. |
+| `PAYGATE_CARD_WALLET` | Your self-custodial EVM public payout address. An exchange deposit address is unsuitable. |
+| `PAYGATE_CRYPTO_WALLETS` | JSON mapping supported networks to public addresses, e.g. `{"evm":"<your EVM address>","btc":"<your Bitcoin address>"}`. Networks not configured are omitted from hosted checkout. |
+| `PAYGATE_CALLBACK_SECRET` | At least 64 random hex characters, generated once and kept server-side. Keep it identical on server and worker. |
+| `PAYGATE_API_DOMAIN` | The dedicated API hostname above. An HTTPS origin is also accepted. |
+| `PAYGATE_CHECKOUT_DOMAIN` | Defaults to `checkout.paygate.to`. For your own domain, complete PayGate's Cloudflare setup first, then set the hostname here. |
+| `MEDUSA_BACKEND_URL` | The exact public HTTPS backend origin; signed callbacks use `/paygate/callback`. Localhost cannot receive provider callbacks. |
+| `PAYGATE_CARD_MIN_NET_RATIO` | Defaults to `1`: require the full quoted invoice USD value. An explicitly chosen policy from `0.90` to `1.00` can allow documented provider deductions. The policy is frozen per invoice. |
+
+Generate the local signing secret with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`. Do not supply private keys or wallet recovery phrases to the application. Supported hosted network names are `evm`, `btc`, `bitcoincash`, `ltc`, `doge`, `solana`, `trc20`, `xmr`, `zec`, and `ton`. An `evm` address enables the EVM chains/tokens supported by hosted checkout; configure a wallet you control on those networks.
+
+Deploy backend and storefront, then enable `pp_paygate_card` and/or `pp_paygate_crypto` on the intended Medusa regions under **Settings → Regions**. The storefront displays each option only when backend configuration and the region both enable it. No database migration is needed for this integration.
+
+Each attempt has its own invoice reference, receiving wallet and signed callback token. Checkout reserves an order with deferred authorization, then redirects through a server-validated link to the hosted payment page. Customers can resume an unpaid checkout from their account's order history. The API never embeds checkout in an iframe and never trusts a browser `paid` flag. PayGate's published SDK has no merchant return-URL option; customers can return to their orders and refresh after payment. Callback reconciliation runs independently of their browser.
+
+Confirmed callbacks must pass the provider's RSA signature over the **raw query string**, our reference token, the saved invoice identity, coin minimum, deposit-address check where available, and merchant-payout verification. Exact decimal amounts are accumulated under a distributed lock; repeated transactions are credited once, including differently cased hexadecimal transaction IDs. Medusa captures the full invoice only after sufficient verified value arrives. Pending or short payments stay unpaid, and fulfillment/shipment are blocked until verified capture. Customer order responses expose only a safe status and, when nothing has been paid yet, a server-validated resume link.
+
+Card callbacks report crypto **net of provider fees**. The official sample's 60% acceptance threshold is deliberately not used. With the default full-value policy, a normal net payout can require manual review; choose an explicit fee allowance only after checking actual provider deductions. Crypto is valued in USD using the provider's coin price when the confirmed callback is processed; rate movements or unsupported valuations can also require review. Callback failures remain retryable, and partially received payments are not shown a fresh full-invoice payment button.
+
+Card-provider availability and minimums are checked when creating an invoice; hosted crypto checkout presents coin/network minimums and network fees. A confirmed crypto callback below that coin's minimum is rejected. PayGate advertises 1% plus provider/network fees; the actual hosted quote governs. Do not send below the displayed coin minimum.
+
+Before accepting real orders, make a small payment above the applicable minimum yourself, verify the payout in your wallet, and check the order becomes paid with shipping enabled. Test declined/canceled checkout and delayed callbacks too. Refunds are **not automated**: the provider rejects Medusa refund requests rather than claiming money was returned. Arrange and reconcile refunds separately. Unpaid reservations require the store's normal review/cancellation process.
+
+References: [official Node SDK](https://withoutkyc.to/docs/sdk/node/index.html), [card API](https://withoutkyc.to/docs/payment-gateway-api/index.html), [crypto API](https://withoutkyc.to/docs/crypto-payment-api/index.html), [custom domains](https://withoutkyc.to/white-label-api-custom-domain-guide/index.html), and [prohibited businesses](https://withoutkyc.to/instant-payment-gateway/index.html#prohibited). Provider eligibility must be checked for the actual products; implementing the API does not establish approval.
+
+Payment security tests: from `apps/backend`, set `TEST_TYPE=unit` and run `npx jest --runInBand`. Run `npm run test:paygate:integration` for the native Medusa capture/idempotency test; it uses a temporary localhost database and mocked gateway wallet calls. The runner refuses remote database credentials. From `apps/storefront`, run `node --test tests/paygate.test.mjs`.
+
 ### Crypto payments (MakePay)
 
 Uses the `@makecrypto/medusa-plugin-makepay` plugin (pinned) and needs a MakePay merchant account. Nothing changes for shoppers until all of these are done:

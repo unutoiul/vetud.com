@@ -7,7 +7,8 @@ import type {
 } from "@medusajs/framework/types"
 import { AbstractPaymentProvider, BigNumber } from "@medusajs/framework/utils"
 import { randomUUID } from "node:crypto"
-import { CallbackToken, PayGate } from "paygate-to"
+import { CallbackToken, type PayGate } from "paygate-to"
+import { createPaygateClient } from "../../lib/paygate-client"
 import { type PaygateConfig, paygateError } from "../../lib/paygate-config"
 import { decimal, readPaygate, sealPaygate, type PaygateState } from "../../lib/paygate-state"
 
@@ -21,7 +22,7 @@ export default class PaygateProvider extends AbstractPaymentProvider<Options> {
   constructor(cradle: Record<string, unknown>, options: Options) {
     super(cradle, options)
     this.settings = options
-    this.client = new PayGate({ apiDomain: options.apiDomain, checkoutDomain: options.checkoutDomain, timeoutMs: 15000, retries: 1 })
+    this.client = createPaygateClient(options)
   }
 
   async initiatePayment(input: InitiatePaymentInput): Promise<InitiatePaymentOutput> {
@@ -57,8 +58,9 @@ export default class PaygateProvider extends AbstractPaymentProvider<Options> {
     const state: PaygateState = {
       session_id: sessionId, reference, cart_id: cartId, mode: this.settings.mode,
       amount, currency, expected_usd: decimal(expected.value).toFixed(),
+      min_net_ratio: this.settings.mode === "card" ? this.settings.cardMinNetRatio : "1",
       payout_wallets: this.settings.mode === "card" ? [this.settings.cardWallet] : Object.values(this.settings.wallets).filter((value): value is string => !!value),
-      deposit_address: depositAddress, checkout_url: checkoutUrl, receipts: [], settled: false, canceled: false, review: "",
+      deposit_address: depositAddress, checkout_url: checkoutUrl, redirect_token: new CallbackToken(this.settings.secret).sign(`redirect:${reference}`), receipts: [], settled: false, canceled: false, review: "",
     }
     return { id: reference, status: "pending", data: { paygate: sealPaygate(state, this.settings.secret) } }
   }
@@ -80,7 +82,6 @@ export default class PaygateProvider extends AbstractPaymentProvider<Options> {
   async capturePayment(input: CapturePaymentInput): Promise<CapturePaymentOutput> {
     const state = readPaygate(input.data, this.settings.secret)
     if (!state.settled || state.canceled || state.review) paygateError("A verified full PayGate settlement is required before capture.")
-    if (!decimal(state.amount).eq(new BigNumber(input.amount).bigNumber!)) paygateError("Partial PayGate captures are not supported.")
     return { data: input.data }
   }
 
@@ -95,6 +96,9 @@ export default class PaygateProvider extends AbstractPaymentProvider<Options> {
   }
 
   async deletePayment(input: DeletePaymentInput): Promise<DeletePaymentOutput> {
+    // Core may clean up a failed creation with the original request data before
+    // provider state was persisted. No gateway cancellation API exists to call.
+    if (!input.data?.paygate) return { data: input.data }
     return this.cancelPayment(input)
   }
 

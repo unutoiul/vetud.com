@@ -1,0 +1,24 @@
+[
+  {
+    "country": "us",
+    "region": "reg_01M4NA38JK3B8YXDP3K9A42KY9",
+    "providers": [
+      "pp_makepay_makepay",
+      "pp_system_default"
+    ]
+  },
+  {
+    "country": "gb",
+    "region": "reg_01M4RYCX5N9J1R10YRM3BTCA32",
+    "providers": [
+      "pp_system_default"
+    ]
+  },
+  {
+    "country": "de",
+    "region": "reg_01M4NA38JKMA81K190X7GTHPTP",
+    "providers": [
+      "pp_system_default"
+    ]
+  }
+]

@@ -7,6 +7,7 @@ export type CustomerPaymentReview = "pending_settlement" | "returned" | "require
 export type CustomerPaymentSummary = {
   method: "nmi_card" | "nmi_ach" | "manual" | "online" | "unknown"
   review?: CustomerPaymentReview
+  checkout_url?: string
 }
 export type CustomerPaymentReference = { id: string; provider_id: string }
 

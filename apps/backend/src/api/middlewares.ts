@@ -10,17 +10,20 @@ import { CustomerOrderQuery, CustomerOrdersQuery } from "./store/account/orders/
 import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
 import { ruoGuardRoutes } from "./ruo-guards"
+import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
 
 export default defineMiddlewares({
   routes: [
     ...nmiGuardRoutes,
     ...ruoGuardRoutes,
+    ...paygateGuardRoutes,
     {
       method: ["POST"],
       matcher: "/store/payment-collections/:id/payment-sessions",
       middlewares: [
         authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
         prepareNmiSession,
+        preparePaygateSession,
       ],
     },
     {

@@ -1,19 +1,32 @@
 import { BigNumber } from "@medusajs/framework/utils"
+import type { PaymentDTO } from "@medusajs/framework/types"
 import { createHmac, timingSafeEqual } from "node:crypto"
 import { CallbackData, coinId } from "paygate-to"
-import { paygateError } from "./paygate-config"
+import { PAYGATE_CARD, PAYGATE_CRYPTO, paygateError } from "./paygate-config"
 
 export type PaygateReceipt = { transaction: string; coin: string; received: string; usd: string; payout: string }
 export type PaygateState = {
   session_id: string; reference: string; cart_id: string; mode: "card" | "crypto";
-  amount: string; currency: string; expected_usd: string; payout_wallets: string[];
-  deposit_address: string; checkout_url: string; receipts: PaygateReceipt[];
+  amount: string; currency: string; expected_usd: string; min_net_ratio: string; payout_wallets: string[];
+  deposit_address: string; checkout_url: string; redirect_token: string; receipts: PaygateReceipt[];
   settled: boolean; canceled: boolean; review: string; mac?: string;
 }
 
 export function decimal(value: string) {
-  if (!/^\d{1,40}(?:\.\d{1,30})?$/.test(value)) paygateError("Invalid payment amount.")
+  if (!/^\d{1,40}(?:\.\d{1,80})?$/.test(value)) paygateError("Invalid payment amount.")
   return new BigNumber(value).bigNumber!
+}
+
+export const paygateTransaction = (id: string) => /^(?:0x)?[\da-f]{64}$/i.test(id) ? id.toLowerCase() : id
+
+/** Session status remains authorized after native capture; inspect the payment ledger. */
+export function findPaygateCapture(state: PaygateState, payments: PaymentDTO[]) {
+  return payments.find(payment =>
+    payment.provider_id === (state.mode === "card" ? PAYGATE_CARD : PAYGATE_CRYPTO) &&
+    payment.payment_session?.id === state.session_id && !!payment.captured_at && !payment.canceled_at &&
+    payment.currency_code.toUpperCase() === state.currency &&
+    new BigNumber(payment.amount).bigNumber!.eq(decimal(state.amount)) &&
+    (payment.captures ?? []).reduce((sum, capture) => sum.plus(new BigNumber(capture.amount).bigNumber!), decimal("0")).eq(decimal(state.amount)))
 }
 
 function canonical(value: unknown): string {
@@ -47,5 +60,5 @@ export function paygateReceipt(state: PaygateState, data: CallbackData, usdPrice
   const normalize = (address: string) => address.startsWith("0x") ? address.toLowerCase() : address
   const payout = Object.entries(payouts).filter(([address]) => state.payout_wallets.some(wallet => normalize(wallet) === normalize(address))).reduce((sum, [, amount]) => sum.plus(decimal(amount)), decimal("0"))
   if (payout.lt(forwarded.times("0.98"))) paygateError("The configured merchant wallet did not receive the settlement.")
-  return { transaction: data.txidIn, coin: coinId(data.coin), received: received.toFixed(), payout: payout.toFixed(), usd: received.times(decimal(usdPrice)).toFixed() }
+  return { transaction: paygateTransaction(data.txidIn), coin: coinId(data.coin), received: received.toFixed(), payout: payout.toFixed(), usd: received.times(decimal(usdPrice)).toFixed() }
 }
