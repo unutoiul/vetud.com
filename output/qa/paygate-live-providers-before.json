@@ -1,0 +1,47 @@
+{
+  "countries": [
+    "us",
+    "gb",
+    "de",
+    "fr",
+    "nl"
+  ],
+  "regions": [
+    {
+      "id": "reg_01M4NA38JK3B8YXDP3K9A42KY9",
+      "name": "United States",
+      "currency": "usd",
+      "countries": [
+        "us"
+      ],
+      "providers": [
+        "pp_makepay_makepay",
+        "pp_system_default"
+      ]
+    },
+    {
+      "id": "reg_01M4NA38JKMA81K190X7GTHPTP",
+      "name": "Europe",
+      "currency": "eur",
+      "countries": [
+        "fr",
+        "de",
+        "nl"
+      ],
+      "providers": [
+        "pp_system_default"
+      ]
+    },
+    {
+      "id": "reg_01M4RYCX5N9J1R10YRM3BTCA32",
+      "name": "United Kingdom",
+      "currency": "gbp",
+      "countries": [
+        "gb"
+      ],
+      "providers": [
+        "pp_system_default"
+      ]
+    }
+  ]
+}
