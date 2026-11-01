@@ -35,7 +35,9 @@ function first(value: string | string[] | undefined) {
 async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countryCode]/shop">["searchParams"] }) {
   const params = await searchParams
   const query = first(params.q)?.trim() || undefined
-  const selectedCategories = [...new Set((Array.isArray(params.category) ? params.category : params.category ? [params.category] : []).filter(Boolean))]
+  // One category at a time; older links with several keep only the first.
+  const selectedCategory = first(params.category) || undefined
+  const selectedCategories = selectedCategory ? [selectedCategory] : []
   const sortParam = first(params.sort) as ProductSort | undefined
   const sort = sortParam && SORT_VALUES.includes(sortParam) ? sortParam : "featured"
 
@@ -49,8 +51,8 @@ async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countr
   const sorted = sortProducts(filterByCategories(matches ?? catalog, facets, selectedCategories), sort)
 
   return (
-    <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "256px minmax(0, 1fr)" }, alignItems: "start", gap: { xs: 2.5, lg: 5 } }}>
-      <CategoryFilters categories={facets} selected={selectedCategories} query={query} sort={sort} />
+    <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "300px minmax(0, 1fr)" }, alignItems: "start", gap: { xs: 2.5, lg: 5 } }}>
+      <CategoryFilters categories={facets} selected={selectedCategory} total={catalog.length} query={query} sort={sort} />
       <Box sx={{ minWidth: 0 }}>
       <ShopToolbar
         key={query ?? ""}

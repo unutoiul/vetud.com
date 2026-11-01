@@ -28,7 +28,7 @@ export default async function LearnHero() {
             <Typography component="h1" id="hero-title" sx={{ fontSize: { xs: 44, sm: 58, md: 58, lg: 70 }, fontWeight: 400, letterSpacing: "-.06em", lineHeight: 1.04, textWrap: "balance" }}>
               {t("first")}<br /><Box component="span" sx={{ color: "brand.blue" }}>{t("second")}</Box>
             </Typography>
-            <Typography sx={{ maxWidth: 520, color: "brand.navySoft", mt: 3, fontSize: { xs: 16, md: 18 }, lineHeight: 1.75 }}>{t("description", { count: PEPTIDES.length })}</Typography>
+            <Typography sx={{ maxWidth: 520, color: "brand.navySoft", mt: 3, fontSize: { xs: 16, md: 18 }, lineHeight: 1.75 }}>{t("description", { count: PEPTIDES.filter((peptide) => !peptide.notAPeptide).length })}</Typography>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3.5, alignItems: { xs: "stretch", sm: "center" } }}>
               <ButtonLink href="/learn" variant="contained" endIcon={<Icon name="arrowRight" />}>{t("library")}</ButtonLink>
               <ButtonLink href="/news" variant="outlined" sx={{ bgcolor: "#ffffffcc" }}>{t("news")}</ButtonLink>

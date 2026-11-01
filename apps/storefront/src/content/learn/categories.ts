@@ -1,21 +1,24 @@
 import type { IconName } from "@/components/brand/Icon"
 
 export type CategoryId =
-  | "weight" | "skin" | "pigmentation" | "recovery" | "energy" | "growth"
-  | "focus" | "calm" | "longevity" | "intimacy" | "immune" | "medicines"
+  | "weight" | "skin" | "pigmentation" | "hair" | "recovery" | "energy" | "growth"
+  | "focus" | "calm" | "sleep" | "longevity" | "intimacy" | "fertility" | "immune" | "medicines"
 
 /** Short, plain topic names, in the order readers browse them. */
 export const CATEGORIES: { id: CategoryId; name: string; blurb: string; icon: IconName }[] = [
   { id: "weight", name: "Weight management", blurb: "Copies of gut hormones that curb appetite and help control blood sugar.", icon: "scale" },
   { id: "skin", name: "Skin & copper peptides", blurb: "Peptides used in skin care, led by copper peptide GHK-Cu.", icon: "leaf" },
   { id: "pigmentation", name: "Pigmentation", blurb: "The tanning peptides, one approved and one that doctors warn about.", icon: "sun" },
+  { id: "hair", name: "Hair", blurb: "Copper peptides studied for hair growth.", icon: "leaf" },
   { id: "recovery", name: "Recovery & mobility", blurb: "Peptides studied for repairing tendons, muscles, skin and the gut.", icon: "plus" },
   { id: "energy", name: "Energy & metabolism", blurb: "Molecules studied for how cells make and use energy.", icon: "molecule" },
   { id: "growth", name: "Performance & growth", blurb: "Signals that tell the body to release more of its own growth hormone.", icon: "mountain" },
   { id: "focus", name: "Concentration & focus", blurb: "Nasal-spray peptides studied for memory, focus and stroke recovery.", icon: "brain" },
   { id: "calm", name: "Calm & balance", blurb: "Peptides studied for anxiety and stress.", icon: "wave" },
+  { id: "sleep", name: "Sleep", blurb: "Peptides studied for sleep.", icon: "clock" },
   { id: "longevity", name: "Longevity", blurb: "Peptides studied for how cells age.", icon: "clock" },
   { id: "intimacy", name: "Sexual health", blurb: "Peptides that act on desire in the brain.", icon: "heart" },
+  { id: "fertility", name: "Fertility & hormones", blurb: "Reproductive hormones, from approved fertility medicines to research.", icon: "molecule" },
   { id: "immune", name: "Immune support", blurb: "Signals that help switch on the body's defenses.", icon: "shield" },
   { id: "medicines", name: "Classic medicines", blurb: "Long-established peptide medicines, and a good reference for what “approved” means.", icon: "flask" },
 ]

@@ -16,9 +16,11 @@ import { ARTICLES } from "@/content/learn/articles"
 import { PEPTIDES } from "@/content/learn/peptides"
 import { getVideos } from "@/content/learn/videos"
 
+const PEPTIDE_COUNT = PEPTIDES.filter((peptide) => !peptide.notAPeptide).length
+
 export const metadata: Metadata = {
   title: "Learn: peptides explained simply",
-  description: `Plain-language guides to ${PEPTIDES.length} peptides, from approved medicines to early research: what they are, what studies found, approval status and known risks.`,
+  description: `Plain-language guides to ${PEPTIDE_COUNT} peptides and related compounds, from approved medicines to early research: what they are, what studies found, approval status and known risks.`,
 }
 
 const BASICS: { title: string; icon: IconName; text: string }[] = [
@@ -31,7 +33,7 @@ const BASICS: { title: string; icon: IconName; text: string }[] = [
 export default function LearnPage() {
   return (
     <>
-      <PageHeader eyebrow="Learn" title="Peptides, explained simply." description={`Plain-language guides to ${PEPTIDES.length} peptides, from approved medicines to early research. What they are, what studies found, how far they’ve got, and what’s still unknown.`} />
+      <PageHeader eyebrow="Learn" title="Peptides, explained simply." description={`Plain-language guides to ${PEPTIDE_COUNT} peptides and related compounds, from approved medicines to early research. What they are, what studies found, how far they’ve got, and what’s still unknown.`} />
 
       <Section tone="white" id="library" sx={{ py: { xs: 5, md: 8 } }}>
         <LearnLibrary />

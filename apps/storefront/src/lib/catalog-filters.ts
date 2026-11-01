@@ -5,9 +5,13 @@ export type CategoryFacet = {
   id: string
   handle: string
   name: string
-  group: "research" | "format"
+  /** "theme" categories are the shop sidebar; "format" ones (Peptide Series, Blends) stay in Medusa only. */
+  group: "theme" | "format"
   count: number
 }
+
+// "research" is the value used before the categories were simplified; treat it the same.
+const THEME_GROUPS = new Set(["theme", "research"])
 
 export function categoryFacets(categories: HttpTypes.StoreProductCategory[], products: HttpTypes.StoreProduct[]): CategoryFacet[] {
   const counts = new Map<string, number>()
@@ -18,21 +22,21 @@ export function categoryFacets(categories: HttpTypes.StoreProductCategory[], pro
     id: category.id,
     handle: category.handle,
     name: category.name,
-    group: category.metadata?.storefront_group === "research" ? "research" : "format",
+    group: THEME_GROUPS.has(String(category.metadata?.storefront_group)) ? "theme" : "format",
     count: counts.get(category.id) ?? 0,
   }))
 }
 
-/** OR within a group; research area and product type are combined with AND. */
+/** OR within a group; theme and product type are combined with AND. */
 export function filterByCategories(products: HttpTypes.StoreProduct[], categories: CategoryFacet[], selected: string[]) {
   if (!selected.length) return products
   const facets = categories.filter(category => selected.includes(category.handle))
   if (new Set(selected).size !== facets.length) return []
-  const research = facets.filter(category => category.group === "research")
+  const themes = facets.filter(category => category.group === "theme")
   const formats = facets.filter(category => category.group === "format")
   return products.filter(product => {
     const ids = new Set((product.categories ?? []).map(category => category.id))
-    return (!research.length || research.some(category => ids.has(category.id)))
+    return (!themes.length || themes.some(category => ids.has(category.id)))
       && (!formats.length || formats.some(category => ids.has(category.id)))
   })
 }

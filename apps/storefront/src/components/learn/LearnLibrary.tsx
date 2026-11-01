@@ -32,7 +32,9 @@ export default function LearnLibrary() {
     window.dispatchEvent(new HashChangeEvent("hashchange"))
   }
 
-  const shown = active ? PEPTIDES.filter((peptide) => peptide.category === active) : PEPTIDES
+  // "View all" follows the topic order, so related peptides sit together.
+  const ordered = [...PEPTIDES].sort((a, b) => CATEGORIES.findIndex((category) => category.id === a.category) - CATEGORIES.findIndex((category) => category.id === b.category))
+  const shown = active ? ordered.filter((peptide) => peptide.category === active) : ordered
   const options: { id: CategoryId | null; name: string; count: number }[] = [
     { id: null, name: "View all", count: PEPTIDES.length },
     ...CATEGORIES.map((category) => ({ id: category.id, name: category.name, count: PEPTIDES.filter((peptide) => peptide.category === category.id).length })).filter((option) => option.count),
@@ -43,7 +45,7 @@ export default function LearnLibrary() {
       <Box component="nav" aria-label="Topics" sx={{ minWidth: 0, position: { lg: "sticky" }, top: { lg: 112 }, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "16px", p: { xs: 2, md: 2.5 } }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", px: 1, mb: 1.5 }}>
           <Typography component="h2" sx={{ fontSize: 19, fontWeight: 700, letterSpacing: "-.02em" }}>Topic</Typography>
-          <Typography sx={{ fontSize: 13.5, color: "text.secondary" }}>{PEPTIDES.length} peptides</Typography>
+          <Typography sx={{ fontSize: 13.5, color: "text.secondary" }}>{PEPTIDES.length} guides</Typography>
         </Box>
         <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: { xs: "flex", lg: "grid" }, gap: { xs: 1, lg: .5 }, overflowX: { xs: "auto", lg: "visible" }, pb: { xs: .5, lg: 0 }, scrollbarWidth: "thin" }}>
           {options.map((option) => {
@@ -66,7 +68,7 @@ export default function LearnLibrary() {
 
       <Box>
         <Typography aria-live="polite" sx={{ fontSize: 14, color: "text.secondary", mb: 2.5 }}>
-          {active ? `${CATEGORIES.find((category) => category.id === active)?.name}: ${shown.length} ${shown.length === 1 ? "peptide" : "peptides"}` : `All ${shown.length} peptides`}
+          {active ? `${CATEGORIES.find((category) => category.id === active)?.name}: ${shown.length} ${shown.length === 1 ? "guide" : "guides"}` : `All ${shown.length} guides`}
         </Typography>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", xl: "repeat(3, 1fr)" }, gap: 2.5 }}>
           {shown.map((peptide) => <PeptideCard key={peptide.slug} peptide={peptide} />)}

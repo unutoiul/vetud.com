@@ -22,7 +22,7 @@ export const RESEARCH_CATEGORY_ASSIGNMENTS: Record<string, string[]> = {
   retatrutide: ["weight-loss-research"],
   tirzepatide: ["weight-loss-research"],
   semaglutide: ["weight-loss-research"],
-  selank: ["cognitive-enhancement-research"],
+  selank: ["sleep-enhancement-research"],
   semax: ["cognitive-enhancement-research"],
   "nad-plus": ["longevity-anti-aging-research"],
   melanotan: ["beauty"],

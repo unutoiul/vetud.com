@@ -2,7 +2,6 @@
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import Checkbox from "@mui/material/Checkbox"
 import Drawer from "@mui/material/Drawer"
 import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
@@ -13,75 +12,68 @@ import Icon from "@/components/brand/Icon"
 import { shopQuery, type CategoryFacet } from "@/lib/catalog-filters"
 import type { ProductSort } from "@/lib/medusa/products"
 
-type Props = { categories: CategoryFacet[]; selected: string[]; query?: string; sort: ProductSort }
+type Props = { categories: CategoryFacet[]; selected?: string; total: number; query?: string; sort: ProductSort }
 
-function CategoryOptions({ categories, selected, onToggle, disabled }: {
-  categories: CategoryFacet[]
-  selected: string[]
-  onToggle: (handle: string) => void
-  disabled: boolean
-}) {
-  return <Stack spacing={3.5}>
-    {(["research", "format"] as const).map(group => {
-      const items = categories.filter(category => category.group === group)
-      if (!items.length) return null
-      return <Box component="fieldset" key={group} sx={{ border: 0, p: 0, m: 0, minWidth: 0 }}>
-        <Typography component="legend" sx={{ fontSize: 12, fontWeight: 600, color: "text.secondary", mb: 1.25, p: 0 }}>{group === "research" ? "Research areas" : "Product type"}</Typography>
-        {items.map(category => <Box component="label" key={category.id} sx={{ display: "flex", alignItems: "center", gap: 1, minHeight: 48, py: .5, cursor: disabled ? "wait" : "pointer", color: selected.includes(category.handle) ? "text.primary" : "text.secondary", "&:hover": { color: "primary.main" } }}>
-          <Checkbox name="category" value={category.handle} checked={selected.includes(category.handle)} onChange={() => onToggle(category.handle)} disabled={disabled} size="small" slotProps={{ input: { "aria-label": `${category.name}, ${category.count} ${category.count === 1 ? "product" : "products"}` } }} sx={{ p: .5, ml: -.5 }} />
-          <Typography component="span" sx={{ flex: 1, minWidth: 0, fontSize: 13, lineHeight: 1.6 }}>{category.name}</Typography>
-          <Typography component="span" sx={{ flexShrink: 0, minWidth: 27, px: .75, py: .25, border: "1px solid", borderColor: "divider", borderRadius: 10, textAlign: "center", fontSize: 12, fontVariantNumeric: "tabular-nums", bgcolor: selected.includes(category.handle) ? "brand.mintLight" : "background.paper" }}>{category.count}</Typography>
-        </Box>)}
-      </Box>
-    })}
-  </Stack>
+const NOTE = "Themes make browsing easier; the products remain intended for laboratory research."
+
+/** One-pick category list: "View all" plus each theme that has products, with counts. */
+function CategoryList({ categories, selected, total, onPick, disabled }: Omit<Props, "query" | "sort"> & { onPick: (handle?: string) => void; disabled: boolean }) {
+  const options = [
+    { handle: undefined, name: "View all", count: total },
+    ...categories.filter((category) => category.group === "theme" && category.count > 0),
+  ]
+  return (
+    <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gap: .5 }}>
+      {options.map((option) => {
+        const active = option.handle === selected
+        return (
+          <Box component="li" key={option.handle ?? "all"}>
+            <Box component="button" type="button" onClick={() => onPick(option.handle)} disabled={disabled} aria-pressed={active} sx={{ width: "100%", minHeight: 46, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, px: 1.75, border: 0, borderRadius: "10px", font: "inherit", fontSize: 15, fontWeight: 600, textAlign: "left", cursor: disabled ? "wait" : "pointer", bgcolor: active ? "brand.navy" : "transparent", color: active ? "#fff" : "text.primary", transition: "background-color .15s ease", "&:hover": { bgcolor: active ? "brand.navy" : "rgba(21,38,94,.06)" }, "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
+              {option.name}
+              <Box component="span" sx={{ minWidth: 30, px: .75, py: .25, borderRadius: "6px", textAlign: "center", fontSize: 13, fontVariantNumeric: "tabular-nums", bgcolor: active ? "rgba(255,255,255,.16)" : "#fff", color: active ? "#fff" : "text.secondary" }}>{option.count}</Box>
+            </Box>
+          </Box>
+        )
+      })}
+    </Box>
+  )
 }
 
-export default function CategoryFilters({ categories, selected, query, sort }: Props) {
+export default function CategoryFilters({ categories, selected, total, query, sort }: Props) {
   const pathname = usePathname()
   const router = useRouter()
   const [open, setOpen] = useState(false)
-  const [draft, setDraft] = useState(selected)
   const [pending, startTransition] = useTransition()
-  const navigate = (selection: string[]) => {
-    const params = shopQuery({ query, sort, categories: selection })
+  const current = categories.find((category) => category.handle === selected)
+  const pick = (handle?: string) => {
+    const params = shopQuery({ query, sort, categories: handle ? [handle] : [] })
+    setOpen(false)
     startTransition(() => router.push(params ? `${pathname}?${params}` : pathname, { scroll: false }))
   }
-  const toggle = (selection: string[], handle: string) => selection.includes(handle) ? selection.filter(item => item !== handle) : [...selection, handle]
-  const hidden = <>
-    {query ? <input type="hidden" name="q" value={query} /> : null}
-    {sort !== "featured" ? <input type="hidden" name="sort" value={sort} /> : null}
-  </>
+  const reset = selected ? <Box component="button" type="button" onClick={() => pick()} sx={{ mt: 1.5, ml: 1, p: 0, border: 0, bgcolor: "transparent", font: "inherit", fontSize: 14, fontWeight: 600, color: "brand.blue", textDecoration: "underline", cursor: "pointer", minHeight: 32 }}>Reset filters</Box> : null
 
   return <>
-    <Box component="aside" aria-label="Product categories" sx={{ display: { xs: "none", lg: "block" }, position: "sticky", top: 112, alignSelf: "start" }}>
-      <Stack direction="row" sx={{ minHeight: 44, mb: 2, alignItems: "center", justifyContent: "space-between", gap: 1 }}>
-        <Typography component="h2" sx={{ fontSize: 18, lineHeight: 1.5, fontWeight: 600, letterSpacing: "-.02em" }}>Categories</Typography>
-        {selected.length ? <Button size="small" onClick={() => navigate([])} disabled={pending} sx={{ minHeight: 44 }}>Clear</Button> : null}
+    <Box component="aside" aria-label="Product categories" aria-busy={pending} sx={{ display: { xs: "none", lg: "block" }, position: "sticky", top: 112, alignSelf: "start", bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "16px", p: 2.5 }}>
+      <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "baseline", px: 1, mb: 1.5 }}>
+        <Typography component="h2" sx={{ fontSize: 19, fontWeight: 700, letterSpacing: "-.02em" }}>Category</Typography>
+        <Typography sx={{ fontSize: 13.5, color: "text.secondary" }}>{total} {total === 1 ? "product" : "products"}</Typography>
       </Stack>
-      <Box component="form" method="get" action={pathname} aria-busy={pending} onSubmit={event => { event.preventDefault(); navigate(selected) }}>
-        {hidden}
-        <CategoryOptions categories={categories} selected={selected} onToggle={handle => navigate(toggle(selected, handle))} disabled={pending} />
-        <Button type="submit" variant="outlined" fullWidth disabled={pending} sx={{ mt: 3 }}>Apply categories</Button>
-      </Box>
+      <CategoryList categories={categories} selected={selected} total={total} onPick={pick} disabled={pending} />
+      <Typography sx={{ mt: 2, pt: 2, borderTop: "1px solid", borderColor: "divider", px: 1, fontSize: 13, color: "text.secondary", lineHeight: 1.6 }}>{NOTE}</Typography>
+      {reset}
     </Box>
 
-    <Button variant="outlined" disabled={pending} startIcon={<Icon name="sliders" />} onClick={() => { setDraft(selected); setOpen(true) }} sx={{ display: { xs: "inline-flex", lg: "none" }, justifySelf: "start", minHeight: 44 }}>
-      Categories{selected.length ? ` (${selected.length})` : ""}
+    <Button variant="outlined" disabled={pending} startIcon={<Icon name="sliders" />} onClick={() => setOpen(true)} sx={{ display: { xs: "inline-flex", lg: "none" }, justifySelf: "start", minHeight: 44 }}>
+      {current ? `Category: ${current.name}` : "Category"}
     </Button>
-    <Drawer anchor="left" open={open} onClose={() => setOpen(false)} slotProps={{ paper: { "aria-labelledby": "category-filter-title", sx: { width: "min(92vw, 380px)", p: 3, pt: "max(24px, env(safe-area-inset-top))", pb: "max(24px, env(safe-area-inset-bottom))" } } }}>
-      <Box component="form" method="get" action={pathname} sx={{ minHeight: "100%", display: "flex", flexDirection: "column" }} onSubmit={event => { event.preventDefault(); navigate(draft); setOpen(false) }}>
-        {hidden}
-        <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 2 }}>
-          <Typography id="category-filter-title" component="h2" sx={{ fontSize: 24, fontWeight: 500 }}>Categories</Typography>
-          <IconButton aria-label="Close categories" onClick={() => setOpen(false)} sx={{ width: 44, height: 44 }}><Icon name="close" /></IconButton>
-        </Stack>
-        <CategoryOptions categories={categories} selected={draft} onToggle={handle => setDraft(value => toggle(value, handle))} disabled={pending} />
-        <Stack direction="row" spacing={1.5} sx={{ mt: "auto", pt: 3, pb: 1 }}>
-          <Button type="button" variant="outlined" onClick={() => setDraft([])} sx={{ minHeight: 48 }}>Clear</Button>
-          <Button type="submit" variant="contained" disabled={pending} sx={{ flex: 1, minHeight: 48 }}>Apply categories</Button>
-        </Stack>
-      </Box>
+    <Drawer anchor="left" open={open} onClose={() => setOpen(false)} slotProps={{ paper: { "aria-labelledby": "category-filter-title", sx: { width: "min(92vw, 380px)", p: 2.5, pt: "max(20px, env(safe-area-inset-top))", pb: "max(24px, env(safe-area-inset-bottom))", bgcolor: "brand.mintWash" } } }}>
+      <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", px: 1, mb: 1.5 }}>
+        <Typography id="category-filter-title" component="h2" sx={{ fontSize: 22, fontWeight: 700 }}>Category</Typography>
+        <IconButton aria-label="Close categories" onClick={() => setOpen(false)}><Icon name="close" /></IconButton>
+      </Stack>
+      <CategoryList categories={categories} selected={selected} total={total} onPick={pick} disabled={pending} />
+      <Typography sx={{ mt: 2, pt: 2, borderTop: "1px solid", borderColor: "divider", px: 1, fontSize: 13, color: "text.secondary", lineHeight: 1.6 }}>{NOTE}</Typography>
+      {reset}
     </Drawer>
   </>
 }
