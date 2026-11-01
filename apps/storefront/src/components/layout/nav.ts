@@ -1,11 +1,28 @@
-export const NAV_LINKS = [
+/** Message keys (Common namespace) for every navigation link, shared by the header and footer. */
+export const NAV_LABEL_KEYS = {
+  "/learn": "learn",
+  "/news": "news",
+  "/videos": "videos",
+  "/shop": "shop",
+  "/standards": "standards",
+  "/documentation": "documentation",
+  "/tracking": "tracking",
+  "/contact": "contact",
+} as const
+
+export type NavHref = keyof typeof NAV_LABEL_KEYS
+
+/** Learning comes first; the shop is one section of the site. */
+export const NAV_LINKS: { label: string; href: NavHref }[] = [
+  { label: "Learn", href: "/learn" },
+  { label: "News", href: "/news" },
+  { label: "Videos", href: "/videos" },
   { label: "Shop", href: "/shop" },
-  { label: "Our standards", href: "/standards" },
-  { label: "Lab documentation", href: "/documentation" },
-  { label: "Learn", href: "/education" },
 ]
 
-export const SECONDARY_LINKS = [
+export const SECONDARY_LINKS: { label: string; href: NavHref }[] = [
+  { label: "Our standards", href: "/standards" },
+  { label: "Lab documentation", href: "/documentation" },
   { label: "Tracking", href: "/tracking" },
   { label: "Contact", href: "/contact" },
 ]
@@ -13,6 +30,8 @@ export const SECONDARY_LINKS = [
 export const FOOTER_LINKS = {
   explore: [
     ...NAV_LINKS,
+    { label: "Our standards", href: "/standards" },
+    { label: "Lab documentation", href: "/documentation" },
     { label: "Order tracking", href: "/tracking" },
   ],
   information: [

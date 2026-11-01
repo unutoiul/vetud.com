@@ -1,0 +1,611 @@
+import type { CategoryId, StatusId } from "./categories"
+
+/**
+ * The peptide library: plain-language profiles for readers without a science background.
+ * Every number comes from the linked source (PubMed abstracts checked 2026-11-01).
+ * Profiles describe published research and approval status only. They never give doses,
+ * never suggest personal use, and never link to the shop.
+ */
+export type Source = { title: string; detail: string; url: string }
+export type KeyResult = { value: string; label: string; detail: string }
+
+export type PeptideProfile = {
+  slug: string
+  name: string
+  aka?: string
+  category: CategoryId
+  status: StatusId
+  statusNote: string
+  oneLiner: string
+  whatItIs: string
+  howItWorks: string
+  findings: string[]
+  keyResult?: KeyResult
+  risks: string[]
+  sources: Source[]
+  /** YouTube ids from content/learn/videos.ts */
+  videos?: string[]
+  /** PubChem compound id; the drawing lives at /images/learn/structures/<slug>.webp */
+  pubchem?: number
+  notAPeptide?: boolean
+}
+
+const pubmed = (id: number) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`
+const FDA_ADVISERS_2026 = { title: "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026", detail: "US Food and Drug Administration · meeting page", url: "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026" }
+const FDA_CATEGORY_2_2026 = { title: "FDA to remove 12 popular peptides from the Category 2 “do not compound” list", detail: "Frier Levitt (healthcare law firm) · April 16, 2026", url: "https://www.frierlevitt.com/articles/fda-peptides-do-not-compound-list-update-2026/" }
+const GLP1_RISKS = [
+  "Stomach side effects are common: nausea, diarrhea, vomiting and constipation, especially while the dose is being raised.",
+  "Less common but serious problems include inflammation of the pancreas (pancreatitis) and gallbladder problems.",
+  "In the US the label warns about a type of thyroid tumor seen in rodents, so people with a family history of medullary thyroid cancer are told not to use it.",
+  "Weight usually comes back after the medicine is stopped.",
+]
+
+export const PEPTIDES: PeptideProfile[] = [
+  {
+    slug: "semaglutide",
+    name: "Semaglutide",
+    aka: "Ozempic, Wegovy, Rybelsus",
+    category: "weight",
+    status: "approved",
+    statusNote: "Approved in the US, EU and many other countries. Ozempic and Rybelsus treat type 2 diabetes; Wegovy is for weight management. A daily Wegovy pill was approved in the US in December 2025.",
+    oneLiner: "A copy of a gut hormone that makes you feel full. One of the most studied weight-loss medicines in the world.",
+    whatItIs: "Semaglutide is a man-made version of GLP-1, a hormone your gut releases after you eat. The natural hormone is broken down within minutes. Semaglutide was changed slightly so it lasts about a week, which is why the injection is given once a week.",
+    howItWorks: "GLP-1 tells your brain you’re full, slows down how fast your stomach empties, and helps your body release insulin when blood sugar rises. Semaglutide does the same, for much longer.",
+    findings: [
+      "In the STEP 1 trial, 1,961 adults with obesity took weekly semaglutide for 68 weeks. They lost 14.9% of their body weight on average, compared with 2.4% on a placebo (a dummy injection).",
+      "About half of the people on semaglutide lost 15% or more of their body weight. On placebo, fewer than 1 in 20 did.",
+      "In the SELECT trial of 17,604 people with heart disease and overweight, semaglutide lowered the risk of a heart attack, stroke or heart-related death by 20%. Over about three years, 6.5% had one of these events, compared with 8.0% on placebo.",
+      "A once-a-day pill version led to 13.6% weight loss over 64 weeks in the OASIS 4 trial, compared with 2.2% on placebo.",
+    ],
+    keyResult: { value: "14.9%", label: "average weight lost in 68 weeks", detail: "STEP 1 trial, 1,961 adults · placebo: 2.4%" },
+    risks: GLP1_RISKS,
+    sources: [
+      { title: "Once-Weekly Semaglutide in Adults with Overweight or Obesity (STEP 1)", detail: "Wilding et al. · New England Journal of Medicine · 2021", url: pubmed(33567185) },
+      { title: "Semaglutide and Cardiovascular Outcomes in Obesity without Diabetes (SELECT)", detail: "Lincoff et al. · New England Journal of Medicine · 2023", url: pubmed(37952131) },
+      { title: "Oral Semaglutide at a Dose of 25 mg in Adults with Overweight or Obesity (OASIS 4)", detail: "Wharton et al. · New England Journal of Medicine · 2025", url: pubmed(40934115) },
+      { title: "Discovery of the Once-Weekly GLP-1 Analogue Semaglutide", detail: "Lau et al. · Journal of Medicinal Chemistry · 2015", url: pubmed(26308095) },
+    ],
+    videos: ["o8YMLTfNYtc", "QGIFdakceHM", "mm5zPW5offA"],
+    pubchem: 56843331,
+  },
+  {
+    slug: "tirzepatide",
+    name: "Tirzepatide",
+    aka: "Mounjaro, Zepbound",
+    category: "weight",
+    status: "approved",
+    statusNote: "Approved in the US, EU and other countries. Mounjaro treats type 2 diabetes (and, in the EU, is also used for weight management). Zepbound is approved in the US for weight management and for sleep apnea in adults with obesity.",
+    oneLiner: "Works on two gut hormones at once, GLP-1 and GIP. In trials it led to some of the biggest weight losses seen with an approved medicine.",
+    whatItIs: "Tirzepatide is a single molecule that acts like two hormones your gut releases after meals: GLP-1 and GIP. Both help control appetite and blood sugar.",
+    howItWorks: "Like semaglutide, it tells your brain you’re full, slows your stomach and helps insulin release when blood sugar is high. Adding the GIP signal appears to strengthen these effects.",
+    findings: [
+      "In the SURMOUNT-1 trial, 2,539 adults with obesity took tirzepatide for 72 weeks. On average they lost 15.0%, 19.5% and 20.9% of their body weight on the 5, 10 and 15 mg doses, compared with 3.1% on placebo.",
+      "On the two higher doses, about half or more lost at least 20% of their body weight (50% and 57%), compared with 3% on placebo.",
+      "In February 2026 a head-to-head trial reported that tirzepatide (Zepbound) led to more weight loss than Novo Nordisk’s experimental CagriSema: about 25% versus 23% over 84 weeks.",
+    ],
+    keyResult: { value: "20.9%", label: "average weight lost in 72 weeks (15 mg)", detail: "SURMOUNT-1 trial, 2,539 adults · placebo: 3.1%" },
+    risks: GLP1_RISKS,
+    sources: [
+      { title: "Tirzepatide Once Weekly for the Treatment of Obesity (SURMOUNT-1)", detail: "Jastreboff et al. · New England Journal of Medicine · 2022", url: pubmed(35658024) },
+      { title: "LY3298176, a novel dual GIP and GLP-1 receptor agonist: from discovery to clinical proof of concept", detail: "Coskun et al. · Molecular Metabolism · 2018", url: pubmed(30473097) },
+      { title: "What’s next for Novo Nordisk’s CagriSema after trial miss", detail: "CNBC · February 24, 2026", url: "https://www.cnbc.com/2026/02/24/healthy-returns-whats-next-for-novo-nordisks-obesity-drug-cagrisema.html" },
+    ],
+    videos: ["QGIFdakceHM", "o8YMLTfNYtc"],
+    pubchem: 166567236,
+  },
+  {
+    slug: "retatrutide",
+    name: "Retatrutide",
+    aka: "LY3437943, often called “triple G”",
+    category: "weight",
+    status: "trials",
+    statusNote: "Not approved anywhere yet. Eli Lilly has reported positive results from its large phase 3 trials and plans to apply for US approval by early 2027.",
+    oneLiner: "An experimental “triple” hormone medicine that has produced some of the largest weight losses ever seen in a drug trial.",
+    whatItIs: "Retatrutide is an experimental medicine made by Eli Lilly. It acts on three hormone targets at once: GLP-1, GIP and glucagon.",
+    howItWorks: "GLP-1 and GIP reduce appetite and help control blood sugar. Glucagon is thought to make the body burn more energy, including fat stored in the liver. Together they work on appetite and on energy use at the same time.",
+    findings: [
+      "In a 2023 phase 2 trial, 338 adults with obesity took retatrutide for 48 weeks. People on the highest dose (12 mg) lost 24.2% of their body weight on average, compared with 2.1% on placebo.",
+      "In May 2026 Lilly reported early results from the first big phase 3 trial, TRIUMPH-1, with 2,339 adults: 28.3% average weight loss after 80 weeks on 12 mg. These are company results and have not yet been published in a medical journal.",
+      "Two more phase 3 trials (July 2026) showed average weight loss of up to 20.8% in people with type 2 diabetes and up to 22.6% in people with heart disease, compared with 4.0% and 3.2% on placebo.",
+    ],
+    keyResult: { value: "24.2%", label: "average weight lost in 48 weeks (12 mg)", detail: "Phase 2 trial, 338 adults · placebo: 2.1%" },
+    risks: [
+      "Stomach side effects are common and increase with the dose. In TRIUMPH-1, 42% of people on the top dose had nausea, compared with 15% on placebo.",
+      "More people stopped the top dose because of side effects: 11.3%, compared with 4.9% on placebo.",
+      "The phase 2 trial also saw a dose-related rise in heart rate.",
+      "Long-term safety is still being studied, and it is not an approved medicine.",
+    ],
+    sources: [
+      { title: "Triple-Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial", detail: "Jastreboff et al. · New England Journal of Medicine · 2023", url: pubmed(37366315) },
+      { title: "Retatrutide achieves up to 30.3% average weight loss in phase 3 TRIUMPH-1 trial", detail: "AJMC · May 2026", url: "https://www.ajmc.com/view/retatrutide-achieves-up-to-30-3-average-weight-loss-in-phase-3-triumph-1-trial" },
+      { title: "Retatrutide delivers up to 22.6% weight loss in two new phase III trials", detail: "Pharmaceutical Executive · July 2026", url: "https://www.pharmexec.com/view/retatrutide-delivers-22-weight-loss-two-phase-iii-trials" },
+    ],
+    videos: ["w0A_VRT3rIE"],
+  },
+  {
+    slug: "liraglutide",
+    name: "Liraglutide",
+    aka: "Victoza, Saxenda",
+    category: "weight",
+    status: "approved",
+    statusNote: "Approved for type 2 diabetes (Victoza, US 2010) and for weight management (Saxenda, US 2014).",
+    oneLiner: "The older, once-a-day cousin of semaglutide, and the first GLP-1 medicine approved for weight management.",
+    whatItIs: "Liraglutide is an earlier copy of the gut hormone GLP-1. It lasts about a day in the body, so it is injected once daily.",
+    howItWorks: "Like other GLP-1 medicines, it makes you feel full sooner, slows your stomach and helps control blood sugar.",
+    findings: [
+      "In the SCALE trial, 3,731 adults without diabetes took liraglutide or a placebo for 56 weeks, alongside diet and exercise advice. People on liraglutide lost 8.4 kg on average, compared with 2.8 kg on placebo.",
+      "63% of people on liraglutide lost at least 5% of their body weight, compared with 27% on placebo.",
+      "In the LEADER trial in people with type 2 diabetes, liraglutide lowered the risk of heart attack, stroke or heart-related death.",
+    ],
+    keyResult: { value: "8.4 kg", label: "average weight lost in 56 weeks", detail: "SCALE trial, 3,731 adults · placebo: 2.8 kg" },
+    risks: GLP1_RISKS,
+    sources: [
+      { title: "A Randomized, Controlled Trial of 3.0 mg of Liraglutide in Weight Management (SCALE)", detail: "Pi-Sunyer et al. · New England Journal of Medicine · 2015", url: pubmed(26132939) },
+      { title: "Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes (LEADER)", detail: "Marso et al. · New England Journal of Medicine · 2016", url: pubmed(27295427) },
+    ],
+    videos: ["o8YMLTfNYtc"],
+    pubchem: 16134956,
+  },
+  {
+    slug: "bpc-157",
+    name: "BPC-157",
+    aka: "Body Protection Compound-157",
+    category: "recovery",
+    status: "early",
+    statusNote: "Not approved anywhere, and banned in sport by the World Anti-Doping Agency (WADA). In 2026 the FDA took it off a list of risky compounding ingredients, but that is not an approval.",
+    oneLiner: "A popular “healing” peptide with lots of animal research behind it, and almost no proper studies in people.",
+    whatItIs: "BPC-157 is a lab-made chain of 15 amino acids, based on a protein found in stomach juice. It became famous in sports and “biohacking” circles as a healing aid.",
+    howItWorks: "Animal studies suggest it may help new blood vessels grow and help tissues repair. How, or whether, it works in people is not known.",
+    findings: [
+      "Dozens of studies in rats and mice report faster healing of tendons, muscles, ligaments, bones and the gut.",
+      "A 2025 review for sports medicine found the animal results encouraging, but very little evidence in humans.",
+      "In July 2026 FDA advisers reviewed it (for the bowel disease ulcerative colitis) as a possible ingredient for compounding pharmacies. Reports say they voted 8 to 6 in favor. Their vote is advice only; the FDA has not made a final decision.",
+    ],
+    risks: [
+      "Because it hasn’t been properly tested in people, its side effects and long-term safety are unknown.",
+      "Products sold online are not regulated, so what’s in the vial and how pure it is can vary.",
+      "Some doctors raise a theoretical worry: if it encourages new blood vessels, it might also help existing tumors grow. This hasn’t been studied in people.",
+    ],
+    sources: [
+      { title: "Emerging Use of BPC-157 in Orthopaedic Sports Medicine: A Systematic Review", detail: "Vasireddi et al. · HSS Journal · 2025", url: pubmed(40756949) },
+      FDA_ADVISERS_2026,
+      FDA_CATEGORY_2_2026,
+    ],
+    videos: ["Y6smr1o-f9o", "8DVatJ9de90", "iM3TACEG-cQ"],
+    pubchem: 9941957,
+  },
+  {
+    slug: "tb-500",
+    name: "TB-500",
+    aka: "Thymosin beta-4 fragment",
+    category: "recovery",
+    status: "early",
+    statusNote: "Not approved, and banned in sport by WADA. In 2026 the FDA took it off its “do not compound” list, but that is not an approval.",
+    oneLiner: "A small piece of a natural repair protein. Popular for recovery, but barely tested in people.",
+    whatItIs: "TB-500 is a short, lab-made piece of thymosin beta-4, a protein found in almost every cell. Thymosin beta-4 helps cells move and build their inner “scaffolding”.",
+    howItWorks: "In lab and animal studies, thymosin beta-4 helps cells travel to wounds and supports new blood-vessel growth. Whether the small TB-500 fragment does the same in people hasn’t been shown.",
+    findings: [
+      "The full-length protein, thymosin beta-4, has been tested in small human trials, for example as eye drops for dry eye and as a gel for slow-healing leg ulcers, with early or mixed results.",
+      "There are no good human trials of the TB-500 fragment itself.",
+      "FDA advisers reviewed TB-500 for wound healing in July 2026 as a possible compounding ingredient.",
+    ],
+    risks: [
+      "Safety in people is unknown.",
+      "Products sold online are unregulated, so quality varies.",
+    ],
+    sources: [
+      { title: "Thymosin β4: a multi-functional regenerative peptide", detail: "Goldstein et al. · Expert Opinion on Biological Therapy · 2012", url: pubmed(22074294) },
+      { title: "Thymosin beta 4 ophthalmic solution for dry eye: a randomized, placebo-controlled, phase II clinical trial", detail: "Sosne et al. · Clinical Ophthalmology · 2015", url: pubmed(26056426) },
+      FDA_ADVISERS_2026,
+    ],
+    pubchem: 62707662,
+  },
+  {
+    slug: "kpv",
+    name: "KPV",
+    aka: "Lys-Pro-Val",
+    category: "recovery",
+    status: "early",
+    statusNote: "Not approved. Studied mainly in cells and mice.",
+    oneLiner: "A tiny peptide of three amino acids, studied for calming inflammation in the gut.",
+    whatItIs: "KPV is made of the last three building blocks (lysine, proline and valine) of a natural hormone called alpha-MSH, which helps control inflammation.",
+    howItWorks: "In lab studies, KPV gets into gut cells through a doorway called PepT1 and quiets the inflammation signals inside them.",
+    findings: [
+      "In a 2008 study, mice with colitis (inflamed bowels) that were given KPV by mouth had less inflammation.",
+      "It hasn’t been tested in proper human trials.",
+      "FDA advisers reviewed it in July 2026 as a possible compounding ingredient for wound healing and inflammation.",
+    ],
+    risks: ["Its effects and safety in people are unknown."],
+    sources: [
+      { title: "PepT1-mediated tripeptide KPV uptake reduces intestinal inflammation", detail: "Dalmasso et al. · Gastroenterology · 2008", url: pubmed(18061177) },
+      FDA_ADVISERS_2026,
+    ],
+    pubchem: 125672,
+  },
+  {
+    slug: "ipamorelin",
+    name: "Ipamorelin",
+    category: "growth",
+    status: "trials",
+    statusNote: "Tested in small human trials but not approved. Banned in sport by WADA, along with other growth-hormone-releasing peptides.",
+    oneLiner: "A peptide that nudges the body to release its own growth hormone.",
+    whatItIs: "Ipamorelin is a lab-made peptide that copies one job of ghrelin, the “hunger hormone”: telling the pituitary gland at the base of the brain to release growth hormone.",
+    howItWorks: "It switches on the ghrelin receptor. In early studies it caused bursts of growth hormone without also raising stress hormones such as cortisol, which earlier drugs of this type did.",
+    findings: [
+      "A 1998 study described it as the first “selective” growth-hormone releaser, based on lab and animal tests.",
+      "In a 2014 trial of 114 people recovering from bowel surgery, it did not clearly speed up recovery. The first meal they could keep down came at 25.3 hours on ipamorelin versus 32.6 hours on placebo, a difference that could have been down to chance.",
+    ],
+    risks: [
+      "The long-term effects of raising growth hormone this way haven’t been studied.",
+      "Products sold online are unregulated.",
+    ],
+    sources: [
+      { title: "Ipamorelin, the first selective growth hormone secretagogue", detail: "Raun et al. · European Journal of Endocrinology · 1998", url: pubmed(9849822) },
+      { title: "Prospective, randomized, controlled, proof-of-concept study of the ghrelin mimetic ipamorelin for postoperative ileus", detail: "Beck et al. · International Journal of Colorectal Disease · 2014", url: pubmed(25331030) },
+    ],
+    videos: ["xpdLs-_nl4g"],
+    pubchem: 9831659,
+  },
+  {
+    slug: "cjc-1295",
+    name: "CJC-1295",
+    category: "growth",
+    status: "trials",
+    statusNote: "Tested in small studies in healthy adults in 2006. Never approved.",
+    oneLiner: "A long-lasting version of the brain signal that triggers growth hormone.",
+    whatItIs: "CJC-1295 is a modified copy of growth-hormone-releasing hormone (GHRH), the signal your brain uses to tell the pituitary gland to release growth hormone. A chemical “hook” lets it cling to a protein in the blood, so it lasts for days.",
+    howItWorks: "Because it stays in the blood for about a week, it keeps prompting the pituitary to release more growth hormone.",
+    findings: [
+      "In healthy adults, a single injection raised growth hormone levels 2 to 10 times for 6 days or more, and IGF-1 (a marker of growth hormone activity) for 9 to 11 days.",
+      "It lasted 5.8 to 8.1 days in the body. No serious side effects were reported in these short studies.",
+    ],
+    risks: [
+      "It has only been studied briefly, in small groups. Long-term effects are unknown.",
+      "Banned in sport by WADA. Products sold online are unregulated.",
+    ],
+    sources: [
+      { title: "Prolonged stimulation of growth hormone and IGF-I secretion by CJC-1295, a long-acting analog of GHRH, in healthy adults", detail: "Teichman et al. · Journal of Clinical Endocrinology & Metabolism · 2006", url: pubmed(16352683) },
+    ],
+    pubchem: 91971820,
+  },
+  {
+    slug: "sermorelin",
+    name: "Sermorelin",
+    aka: "Geref",
+    category: "growth",
+    status: "former",
+    statusNote: "Once approved in the US (as Geref) for children with growth hormone deficiency. It is no longer sold there as an approved medicine.",
+    oneLiner: "A short copy of the brain’s growth-hormone signal that was once a prescription medicine for children.",
+    whatItIs: "Sermorelin is the first 29 building blocks of growth-hormone-releasing hormone (GHRH), the part of the hormone that does the work.",
+    howItWorks: "It tells the pituitary gland to release growth hormone in natural pulses, rather than replacing growth hormone directly.",
+    findings: [
+      "It was used to test for, and treat, growth hormone deficiency in some children (1999 review).",
+    ],
+    risks: [
+      "Outside an approved product, quality and strength can vary.",
+      "Common side effects in studies included reactions at the injection site.",
+    ],
+    sources: [
+      { title: "Sermorelin: a review of its use in the diagnosis and treatment of children with idiopathic growth hormone deficiency", detail: "Prakash & Goa · BioDrugs · 1999", url: pubmed(18031173) },
+    ],
+    pubchem: 16132413,
+  },
+  {
+    slug: "tesamorelin",
+    name: "Tesamorelin",
+    aka: "Egrifta",
+    category: "growth",
+    status: "approved",
+    statusNote: "Approved in the US (Egrifta) to reduce excess belly fat in people with HIV who have lipodystrophy, a condition that changes where the body stores fat.",
+    oneLiner: "An approved growth-hormone-releasing medicine that targets deep belly fat in people with HIV.",
+    whatItIs: "Tesamorelin is a stabilized copy of growth-hormone-releasing hormone (GHRH).",
+    howItWorks: "It raises the body’s own growth hormone, which helps break down visceral fat, the deep fat packed around the organs.",
+    findings: [
+      "In a 26-week trial of 412 people with HIV and extra belly fat, deep belly fat fell by 15.2% on tesamorelin and rose by 5.0% on placebo.",
+      "Triglycerides, a type of fat in the blood, also improved.",
+    ],
+    keyResult: { value: "−15.2%", label: "deep belly fat in 26 weeks", detail: "Trial of 412 people with HIV · placebo: +5.0%" },
+    risks: [
+      "More people on tesamorelin stopped because of side effects than on placebo.",
+      "Growth hormone can affect blood sugar, so this is monitored.",
+    ],
+    sources: [
+      { title: "Metabolic effects of a growth hormone-releasing factor in patients with HIV", detail: "Falutz et al. · New England Journal of Medicine · 2007", url: pubmed(18057338) },
+    ],
+    pubchem: 16137828,
+  },
+  {
+    slug: "selank",
+    name: "Selank",
+    category: "calm",
+    status: "approved-elsewhere",
+    statusNote: "Registered as a medicine in Russia, where it is used for anxiety. Not approved in the US, UK or EU.",
+    oneLiner: "A nasal-spray peptide developed in Russia and studied for anxiety.",
+    whatItIs: "Selank is a lab-made version of tuftsin, a tiny natural peptide involved in the immune system, with three extra building blocks added so it lasts longer.",
+    howItWorks: "Researchers think it affects brain chemicals involved in anxiety, such as GABA and serotonin, but this isn’t fully understood.",
+    findings: [
+      "Most studies come from Russia and are small.",
+      "In a 2017 study in rats under chronic stress, Selank strengthened the anti-anxiety effect of diazepam (Valium).",
+      "Small Russian clinical studies in people with anxiety report benefits, but there are no large international trials.",
+    ],
+    risks: ["It has not been well studied outside Russia, so side effects and long-term safety are unclear."],
+    sources: [
+      { title: "Peptide Selank Enhances the Effect of Diazepam in Reducing Anxiety in Unpredictable Chronic Mild Stress Conditions in Rats", detail: "Kasian et al. · Behavioural Neurology · 2017", url: pubmed(28280289) },
+      { title: "Optimization of the treatment of anxiety disorders with Selank (in Russian)", detail: "Medvedev et al. · Zhurnal Nevrologii i Psikhiatrii · 2015", url: pubmed(26356395) },
+    ],
+    pubchem: 11765600,
+  },
+  {
+    slug: "semax",
+    name: "Semax",
+    category: "focus",
+    status: "approved-elsewhere",
+    statusNote: "Registered as a medicine in Russia, where it is used after strokes and for some other brain conditions. Not approved in the US, UK or EU.",
+    oneLiner: "A Russian nasal-spray peptide used after strokes and studied as a “brain booster”.",
+    whatItIs: "Semax is a lab-made fragment of ACTH, a hormone from the pituitary gland, with a short tail added so it lasts longer. It doesn’t have ACTH’s hormone effects.",
+    howItWorks: "It is thought to raise levels of BDNF, a protein that helps brain cells survive and form new connections.",
+    findings: [
+      "Russian studies in stroke patients report better recovery when Semax is added to standard care, for example a 2018 study.",
+      "FDA advisers reviewed it in July 2026 as a possible compounding ingredient for stroke-related conditions and migraine.",
+    ],
+    risks: ["Most evidence comes from small studies in one country. Long-term safety and benefit are not established."],
+    sources: [
+      { title: "The efficacy of Semax in the treatment of patients at different stages of ischemic stroke (in Russian)", detail: "Gusev et al. · Zhurnal Nevrologii i Psikhiatrii · 2018", url: pubmed(29798983) },
+      FDA_ADVISERS_2026,
+    ],
+    pubchem: 9811102,
+  },
+  {
+    slug: "ghk-cu",
+    name: "GHK-Cu",
+    aka: "Copper peptide",
+    category: "skin",
+    status: "early",
+    statusNote: "Used in many skin creams and serums as a cosmetic ingredient. Not approved as a medicine; injected use is unregulated.",
+    oneLiner: "A copper-carrying peptide found in skin care for its anti-aging effects.",
+    whatItIs: "GHK is a tiny peptide made of three amino acids (glycine, histidine and lysine) that occurs naturally in blood and saliva. It grabs copper, and this copper-bound form is called GHK-Cu. Levels in the body fall as we age.",
+    howItWorks: "In lab studies it encourages skin cells to make collagen and other “scaffolding” proteins, and it affects many genes involved in repair.",
+    findings: [
+      "Lab studies and small cosmetic trials suggest creams with GHK-Cu can improve skin firmness and fine lines.",
+      "Much of the evidence comes from lab work and small studies, so the size of the benefit is uncertain.",
+    ],
+    risks: [
+      "Skin products are generally well tolerated, though some people get irritation.",
+      "Injected GHK-Cu hasn’t been properly studied in people.",
+    ],
+    sources: [
+      { title: "Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data", detail: "Pickart & Margolina · International Journal of Molecular Sciences · 2018", url: pubmed(29986520) },
+      { title: "Topically applied GHK as an anti-wrinkle peptide: advantages, problems and prospective", detail: "Mortazavi et al. · BioImpacts · 2025", url: pubmed(39963574) },
+    ],
+    videos: ["TH_ZDyMzhqM"],
+    pubchem: 71587328,
+  },
+  {
+    slug: "melanotan",
+    name: "Melanotan I & II",
+    aka: "Afamelanotide (Melanotan I)",
+    category: "pigmentation",
+    status: "early",
+    statusNote: "Melanotan I (afamelanotide) is approved as Scenesse for a rare light-sensitivity disease. Melanotan II is not approved anywhere, and health agencies warn against tanning injections.",
+    oneLiner: "The “tanning peptides”. One is an approved medicine for a rare disease; the other is an unapproved tanning injection that doctors warn about.",
+    whatItIs: "Both are lab-made versions of alpha-MSH, the hormone that tells skin to make melanin, the pigment that darkens skin.",
+    howItWorks: "They switch on receptors in the skin’s pigment cells, darkening skin without sunlight. Melanotan II also acts on receptors in the brain, which is why it can affect appetite and sexual arousal.",
+    findings: [
+      "Afamelanotide (Melanotan I) helps people with erythropoietic protoporphyria, a rare condition that makes sunlight painful. In a US trial they spent a median of 69 hours pain-free in daylight over 6 months, compared with 41 hours on placebo.",
+      "Melanotan II was only tested in tiny early studies in the 1990s, for example a safety study in three men.",
+    ],
+    keyResult: { value: "69 h", label: "pain-free time in daylight over 6 months (Melanotan I)", detail: "US trial in a rare light-sensitivity disease · placebo: 41 h" },
+    risks: [
+      "In the first small human study of Melanotan II, men reported nausea, tiredness, and spontaneous erections lasting up to five hours.",
+      "Doctors have reported serious problems in people using it, including melanoma (skin cancer) and kidney damage.",
+      "Tanning injections bought online are unregulated.",
+    ],
+    sources: [
+      { title: "Afamelanotide for Erythropoietic Protoporphyria", detail: "Langendonk et al. · New England Journal of Medicine · 2015", url: pubmed(26132941) },
+      { title: "Evaluation of melanotan-II in a pilot phase-I clinical study", detail: "Dorr et al. · Life Sciences · 1996", url: pubmed(8637402) },
+      { title: "Melanoma associated with the use of melanotan-II", detail: "Hjuler & Lorentzen · Dermatology · 2014", url: pubmed(24355990) },
+      { title: "Melanotan II: a possible cause of renal infarction", detail: "Peters et al. · CEN Case Reports · 2020", url: pubmed(31953620) },
+    ],
+    videos: ["DWL46HWhmgQ"],
+    pubchem: 92432,
+  },
+  {
+    slug: "epitalon",
+    name: "Epitalon",
+    aka: "Epithalon",
+    category: "longevity",
+    status: "early",
+    statusNote: "Not approved. Most research is lab and animal work.",
+    oneLiner: "A four-amino-acid peptide studied for aging and telomeres, mostly in cells and animals.",
+    whatItIs: "Epitalon is a lab-made peptide of four building blocks (alanine, glutamic acid, aspartic acid and glycine), based on an extract from the pineal gland. It was developed by Russian researchers.",
+    howItWorks: "Lab studies suggest it may switch on telomerase, an enzyme that rebuilds telomeres. Telomeres are the protective caps on the ends of our chromosomes, and they get shorter as we age.",
+    findings: [
+      "A 2025 study found it lengthened telomeres in human cells grown in the lab.",
+      "Much of the earlier research comes from one Russian group, and good human trials are lacking.",
+      "FDA advisers reviewed it for insomnia in July 2026 as a possible compounding ingredient.",
+    ],
+    risks: ["Its effects and safety in people are unknown."],
+    sources: [
+      { title: "Overview of Epitalon, a highly bioactive pineal tetrapeptide", detail: "Araj et al. · International Journal of Molecular Sciences · 2025", url: pubmed(40141333) },
+      { title: "Epitalon increases telomere length in human cell lines through telomerase upregulation or ALT activity", detail: "Al-Dulaimi et al. · Biogerontology · 2025", url: pubmed(40908429) },
+      FDA_ADVISERS_2026,
+    ],
+    pubchem: 219042,
+  },
+  {
+    slug: "mots-c",
+    name: "MOTS-c",
+    category: "energy",
+    status: "early",
+    statusNote: "Not approved. Studied mainly in mice.",
+    oneLiner: "A peptide made inside mitochondria, the cell’s power plants, and studied for metabolism.",
+    whatItIs: "MOTS-c is a 16-amino-acid peptide made from the DNA inside mitochondria, the tiny power plants in our cells. It was discovered in 2015.",
+    howItWorks: "In mice it helps muscles use sugar for energy, and it seems to act as a signal of exercise and energy balance.",
+    findings: [
+      "In the 2015 discovery study, MOTS-c protected mice on a high-fat diet from weight gain and insulin resistance.",
+      "Human trials are lacking. FDA advisers reviewed it in July 2026 (for obesity and osteoporosis) as a possible compounding ingredient.",
+    ],
+    risks: ["Its effects and safety in people are unknown."],
+    sources: [
+      { title: "The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance", detail: "Lee et al. · Cell Metabolism · 2015", url: pubmed(25738459) },
+      FDA_ADVISERS_2026,
+    ],
+    pubchem: 146675088,
+  },
+  {
+    slug: "nad",
+    name: "NAD+",
+    aka: "Nicotinamide adenine dinucleotide",
+    category: "energy",
+    status: "early",
+    statusNote: "NAD+ itself is not an approved medicine. Related vitamin B3 compounds, such as nicotinamide riboside, are sold as supplements.",
+    oneLiner: "Not a peptide, but often mentioned alongside them: a molecule every cell needs to make energy.",
+    whatItIs: "NAD+ is a coenzyme, a helper molecule found in every living cell. Your body makes it from vitamin B3.",
+    howItWorks: "Cells use NAD+ to turn food into energy and to run repair enzymes. Levels tend to fall with age, which is why researchers are interested in raising them.",
+    findings: [
+      "A 2024 review explains how NAD+ levels fall with age and in some diseases, and the ways researchers are trying to raise them.",
+      "Studies of NAD+ boosters in people are mostly small, with mixed results.",
+    ],
+    risks: ["NAD+ injections and drips are not approved, and their benefits and safety are not well studied."],
+    sources: [
+      { title: "Roles of NAD+ in Health and Aging", detail: "Lautrup et al. · Cold Spring Harbor Perspectives in Medicine · 2024", url: pubmed(37848251) },
+    ],
+    videos: ["l8BI_720Dfs"],
+    pubchem: 5892,
+    notAPeptide: true,
+  },
+  {
+    slug: "pt-141",
+    name: "PT-141",
+    aka: "Bremelanotide, Vyleesi",
+    category: "intimacy",
+    status: "approved",
+    statusNote: "Approved in the US (Vyleesi, 2019) for low sexual desire in premenopausal women.",
+    oneLiner: "An approved medicine that works in the brain to increase sexual desire.",
+    whatItIs: "Bremelanotide (PT-141) is a peptide closely related to Melanotan II. It was developed after researchers noticed effects on arousal in tanning studies.",
+    howItWorks: "It switches on melanocortin receptors in the brain that are involved in desire. It doesn’t work on blood flow the way Viagra does.",
+    findings: [
+      "In two trials of 1,267 women, bremelanotide modestly increased desire scores and reduced distress about low desire, compared with placebo.",
+    ],
+    risks: [
+      "Nausea, flushing and headache were common (10% or more of women in both trials).",
+      "It can cause a temporary rise in blood pressure after each dose.",
+    ],
+    sources: [
+      { title: "Bremelanotide for the Treatment of Hypoactive Sexual Desire Disorder: Two Randomized Phase 3 Trials", detail: "Kingsberg et al. · Obstetrics & Gynecology · 2019", url: pubmed(31599840) },
+    ],
+    pubchem: 9941379,
+  },
+  {
+    slug: "thymosin-alpha-1",
+    name: "Thymosin alpha-1",
+    aka: "Thymalfasin, Zadaxin",
+    category: "immune",
+    status: "approved-elsewhere",
+    statusNote: "Approved as a medicine (Zadaxin) in a number of countries, mainly for hepatitis B. Not approved in the US or EU.",
+    oneLiner: "A natural immune-signaling peptide from the thymus gland, used as a medicine in some countries.",
+    whatItIs: "Thymosin alpha-1 is a 28-amino-acid peptide first found in the thymus, the gland behind the breastbone where some immune cells mature.",
+    howItWorks: "It helps switch on T cells and other parts of the immune response.",
+    findings: [
+      "Reviews describe its use for hepatitis B and C, as an add-on to vaccines and cancer treatment, and in severe infections. The quality of the evidence varies.",
+    ],
+    risks: [
+      "Reviews of the human trials describe it as generally well tolerated.",
+      "Outside an approved product, quality and strength can vary.",
+    ],
+    sources: [
+      { title: "Thymosin alpha 1: a comprehensive review of the literature", detail: "Dominari et al. · World Journal of Virology · 2020", url: pubmed(33362999) },
+      { title: "Comprehensive Review of the Safety and Efficacy of Thymosin Alpha 1 in Human Clinical Trials", detail: "Dinetz et al. · Alternative Therapies in Health and Medicine · 2024", url: pubmed(38308608) },
+    ],
+    pubchem: 16130571,
+  },
+  {
+    slug: "insulin",
+    name: "Insulin",
+    category: "medicines",
+    status: "approved",
+    statusNote: "An approved, essential medicine used by millions of people with diabetes.",
+    oneLiner: "The most famous peptide medicine of all. It turned type 1 diabetes from a fatal disease into a manageable one.",
+    whatItIs: "Insulin is a hormone made by the pancreas. It is a small protein made of two chains, 51 amino acids in total.",
+    howItWorks: "After you eat, insulin lets your cells take sugar out of the blood to use for energy. People with type 1 diabetes can’t make it, so they inject it.",
+    findings: [
+      "It was first given to a patient in 1922 in Toronto: a 14-year-old boy named Leonard Thompson.",
+      "In 1982 human insulin made by bacteria became the first medicine produced through genetic engineering.",
+    ],
+    risks: ["Too much insulin causes low blood sugar (hypoglycemia), which can be dangerous."],
+    sources: [
+      { title: "Insulin’s centenary: the birth of an idea", detail: "Hegele & Maltman · Lancet Diabetes & Endocrinology · 2020", url: pubmed(33129375) },
+      { title: "100 years of insulin: celebrating the past, present and future of diabetes therapy", detail: "Sims et al. · Nature Medicine · 2021", url: pubmed(34267380) },
+    ],
+    videos: ["Gk1D4VgM8jY"],
+    pubchem: 118984375,
+  },
+  {
+    slug: "oxytocin",
+    name: "Oxytocin",
+    aka: "Pitocin, Syntocinon",
+    category: "medicines",
+    status: "approved",
+    statusNote: "Approved worldwide to start or strengthen labor and to reduce bleeding after birth.",
+    oneLiner: "The “bonding hormone”, and one of the most used medicines in childbirth.",
+    whatItIs: "Oxytocin is a hormone of nine amino acids, made in the brain and released by the pituitary gland.",
+    howItWorks: "It makes the womb contract during labor and helps milk flow during breastfeeding. It also plays a part in social bonding.",
+    findings: [
+      "Given through a drip, synthetic oxytocin is a standard way to start or speed up labor and to prevent heavy bleeding after delivery (2024 review).",
+    ],
+    risks: ["Too much can make contractions too strong, which can harm mother or baby, so it is only given under close medical supervision."],
+    sources: [
+      { title: "Oxytocin: physiology, pharmacology, and clinical application for labor management", detail: "Hermesch et al. · American Journal of Obstetrics & Gynecology · 2024", url: pubmed(37460365) },
+    ],
+    pubchem: 439302,
+  },
+  {
+    slug: "octreotide",
+    name: "Octreotide",
+    aka: "Sandostatin, Mycapssa",
+    category: "medicines",
+    status: "approved",
+    statusNote: "Approved for acromegaly (a growth hormone disorder) and for symptoms of some hormone-producing tumors. A capsule form, Mycapssa, is approved in the US for acromegaly.",
+    oneLiner: "A long-lasting copy of a natural “brake” hormone, used to control some hormone disorders and tumors.",
+    whatItIs: "Octreotide is an eight-amino-acid version of somatostatin, a hormone that switches off the release of many other hormones.",
+    howItWorks: "It blocks excess growth hormone in acromegaly and calms the floods of hormones from some gut tumors, easing symptoms such as severe diarrhea and flushing.",
+    findings: [
+      "Natural somatostatin lasts only minutes in the blood. Octreotide lasts hours, and long-acting injections last a month.",
+      "A capsule form now allows some people with acromegaly to take it by mouth (2022 review).",
+    ],
+    risks: ["Stomach upset and gallstones are among the common side effects."],
+    sources: [
+      { title: "Pharmacology of Octreotide: Clinical Implications for Anesthesiologists and Associated Risks", detail: "Borna et al. · Anesthesiology Clinics · 2017", url: pubmed(28526153) },
+      { title: "Oral Octreotide: A Review of Recent Clinical Trials and Practical Recommendations", detail: "Yuen et al. · Endocrine Practice · 2022", url: pubmed(35452815) },
+    ],
+    pubchem: 448601,
+  },
+  {
+    slug: "teriparatide",
+    name: "Teriparatide",
+    aka: "Forteo, Forsteo",
+    category: "medicines",
+    status: "approved",
+    statusNote: "Approved for osteoporosis in people at high risk of fractures.",
+    oneLiner: "A bone-building peptide that cuts the risk of spine fractures in osteoporosis.",
+    whatItIs: "Teriparatide is the active first part (34 amino acids) of parathyroid hormone, which controls calcium and how bone is renewed.",
+    howItWorks: "Given as a small daily injection, it switches on bone-building cells more than bone-removing cells, so bones become denser and stronger.",
+    findings: [
+      "In a trial of 1,637 women with osteoporosis who had already had a spine fracture, new spine fractures fell from 14% on placebo to 5% on the 20 µg dose: about 65% fewer.",
+      "Bone density in the spine rose by 9 percentage points more than on placebo.",
+    ],
+    keyResult: { value: "65%", label: "fewer new spine fractures", detail: "Trial of 1,637 women · 5% vs 14% on placebo" },
+    risks: [
+      "Dizziness, leg cramps and nausea are reported, and it can raise calcium levels.",
+      "High doses caused bone tumors in rats; this has not been clearly seen in people.",
+    ],
+    sources: [
+      { title: "Effect of parathyroid hormone (1-34) on fractures and bone mineral density in postmenopausal women with osteoporosis", detail: "Neer et al. · New England Journal of Medicine · 2001", url: pubmed(11346808) },
+    ],
+    pubchem: 16133850,
+  },
+]
+
+export function getPeptide(slug: string) {
+  return PEPTIDES.find((peptide) => peptide.slug === slug)
+}

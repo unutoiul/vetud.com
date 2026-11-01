@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
       { source: "/:countryCode/legal/shipping-returns", destination: "/:countryCode/legal/shipping", permanent: true },
       { source: "/legal/shipping-returns", destination: "/legal/shipping", permanent: true },
       { source: "/:countryCode/discover", destination: "/:countryCode/shop", permanent: true },
+      // The old single Learn page grew into the learning hub.
+      { source: "/:countryCode/education", destination: "/:countryCode/learn", permanent: true },
+      { source: "/education", destination: "/learn", permanent: true },
       { source: "/discover", destination: "/shop", permanent: true },
       { source: "/admin", destination: adminUrl, permanent: false },
       { source: "/admin/:path*", destination: adminUrl, permanent: false },

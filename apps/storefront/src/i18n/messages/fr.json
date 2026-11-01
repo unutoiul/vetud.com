@@ -4,6 +4,8 @@
     "standards": "Nos standards",
     "documentation": "Documentation",
     "learn": "Comprendre",
+    "news": "Actualités",
+    "videos": "Vidéos",
     "tracking": "Suivi",
     "contact": "Contact",
     "account": "Votre compte",
@@ -203,5 +205,14 @@
     "returns": "Retours",
     "refunds": "Remboursements",
     "chargebacks": "Contestations de paiement"
+  },
+  "LearnHero": {
+    "first": "La science des peptides,",
+    "second": "expliquée simplement.",
+    "description": "Des guides clairs sur {count} peptides, l’actualité de la recherche et des vidéos de médecins, pour distinguer ce qui est prouvé de ce qui ne l’est pas.",
+    "library": "Explorer la bibliothèque",
+    "news": "Dernières actualités",
+    "latest": "Dernier article",
+    "topics": "Explorer par thème"
   }
 }

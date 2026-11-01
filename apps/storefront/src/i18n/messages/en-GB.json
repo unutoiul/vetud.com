@@ -4,6 +4,8 @@
     "standards": "Our standards",
     "documentation": "Lab documentation",
     "learn": "Learn",
+    "news": "News",
+    "videos": "Videos",
     "tracking": "Tracking",
     "contact": "Contact",
     "account": "Your account",
@@ -203,5 +205,14 @@
     "returns": "Returns policy",
     "refunds": "Refund policy",
     "chargebacks": "Chargeback policy"
+  },
+  "LearnHero": {
+    "first": "Peptide science,",
+    "second": "explained simply.",
+    "description": "Clear guides to {count} peptides, the latest research news and doctors’ videos, so you can see what’s proven and what isn’t.",
+    "library": "Explore the library",
+    "news": "Latest news",
+    "latest": "Latest article",
+    "topics": "Browse by topic"
   }
 }

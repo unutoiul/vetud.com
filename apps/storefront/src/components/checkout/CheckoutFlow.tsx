@@ -14,7 +14,6 @@ import Button from "@mui/material/Button"
 import Checkbox from "@mui/material/Checkbox"
 import CircularProgress from "@mui/material/CircularProgress"
 import FormControlLabel from "@mui/material/FormControlLabel"
-import FormHelperText from "@mui/material/FormHelperText"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Radio from "@mui/material/Radio"
@@ -37,7 +36,6 @@ import { formatMoney } from "@/lib/product"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
 import { NMI_PROVIDER_ID, nmiAvailable, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
 import { PAYGATE_CARD, PAYGATE_CRYPTO, isPaygate, readPaygateRedirect, type PaygateConfig } from "@/lib/paygate"
-import { hasResearchAcknowledgment, researchAcknowledgmentMetadata, RUO_ACK_TEXT } from "@/lib/research"
 import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
 import CartLineItem from "../cart/CartLineItem"
@@ -88,7 +86,7 @@ function hasPaymentSession(cart: HttpTypes.StoreCart) {
 }
 
 function initialStep(cart: HttpTypes.StoreCart) {
-  if (!cart.email || !cart.shipping_address?.address_1 || !hasResearchAcknowledgment(cart)) return 0
+  if (!cart.email || !cart.shipping_address?.address_1) return 0
   if (!cart.shipping_methods?.length) return 1
   if (!hasPaymentSession(cart)) return 2
   return 3
@@ -200,10 +198,6 @@ export default function CheckoutFlow() {
     guard(async (assertCurrent) => {
       let checkoutCart = customer ? await linkCustomerCart() : cart
       assertCurrent()
-      if (!hasResearchAcknowledgment(checkoutCart)) {
-        setStep(0)
-        throw new Error("Please confirm the research-use acknowledgment before placing your order.")
-      }
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         setStep(2)
         throw new Error("Your account pricing has been applied. Please review the updated total and choose payment again.")
@@ -337,7 +331,6 @@ export default function CheckoutFlow() {
                   const cartBody = {
                     ...addressBody,
                     ...(switchRegion ? { region_id: switchRegion.regionId } : {}),
-                    metadata: researchAcknowledgmentMetadata(),
                   }
                   const { cart: updated } = await sdk.store.cart.update(cart.id, cartBody, { fields: CART_FIELDS })
                   assertCurrent()
@@ -478,15 +471,13 @@ function DetailsStep({
     const values = toAddressValues(cart.billing_address ?? cart.shipping_address ?? preferredAddress)
     return { ...values, first_name: values.first_name || customer?.first_name || "", last_name: values.last_name || customer?.last_name || "", phone: values.phone || customer?.phone || "", country_code: values.country_code || defaultCountry }
   })
-  const [acknowledged, setAcknowledged] = useState(hasResearchAcknowledgment(cart))
   const [showErrors, setShowErrors] = useState(false)
   const destination = countries.find((country) => country.code === shipping.country_code)
 
-  const ackError = !acknowledged ? "You must confirm this to place an order" : undefined
   const emailError = !EMAIL_PATTERN.test(email.trim()) ? "Enter a valid email address" : undefined
   const shippingErrors = validateAddress(shipping, (key, args) => ta(key, args), ta(getCountryRules(shipping.country_code).postalLabel as "postal" | "zip" | "postcode"))
   const billingErrors = billingSame ? {} : validateAddress(billing, (key, args) => ta(key, args), ta(getCountryRules(billing.country_code).postalLabel as "postal" | "zip" | "postcode"))
-  const valid = !emailError && !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length && !ackError
+  const valid = !emailError && !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length
 
   return (
     <Box
@@ -500,9 +491,7 @@ function DetailsStep({
             ? "email"
             : Object.keys(shippingErrors).length
               ? `shipping-${Object.keys(shippingErrors)[0]}`
-              : Object.keys(billingErrors).length
-                ? `billing-${Object.keys(billingErrors)[0]}`
-                : "ruo_acknowledged"
+              : `billing-${Object.keys(billingErrors)[0]}`
           const control = event.currentTarget.querySelector<HTMLElement>(`[id="${field}"]`)
             ?? event.currentTarget.querySelector<HTMLInputElement>(`[name="${field}"]`)
           control?.focus()
@@ -599,21 +588,6 @@ function DetailsStep({
           />
         </Box>
       ) : null}
-
-      <FormControlLabel
-        sx={{ mt: 3, alignItems: "flex-start" }}
-        control={
-          <Checkbox
-            name="ruo_acknowledged"
-            id="ruo_acknowledged"
-            checked={acknowledged}
-            onChange={(event) => setAcknowledged(event.target.checked)}
-            sx={{ pt: 0.5 }}
-          />
-        }
-        label={<Typography variant="body2">{RUO_ACK_TEXT}</Typography>}
-      />
-      {showErrors && ackError ? <FormHelperText error>{ackError}</FormHelperText> : null}
 
       <SubmitButton busy={busy}>{t("continue")}</SubmitButton>
     </Box>
@@ -847,13 +821,6 @@ function ReviewStep({
       lines: [
         ...formatAddressLines(address ?? {}),
         address?.phone,
-      ].filter(Boolean) as string[],
-    },
-    {
-      title: "Research",
-      step: 0,
-      lines: [
-        "Research use confirmed",
       ].filter(Boolean) as string[],
     },
     {

@@ -4,6 +4,8 @@
     "standards": "Unsere Standards",
     "documentation": "Labordokumentation",
     "learn": "Wissen",
+    "news": "Neuigkeiten",
+    "videos": "Videos",
     "tracking": "Sendungsverfolgung",
     "contact": "Kontakt",
     "account": "Ihr Konto",
@@ -203,5 +205,14 @@
     "returns": "Rückgaben",
     "refunds": "Erstattungen",
     "chargebacks": "Zahlungsreklamationen"
+  },
+  "LearnHero": {
+    "first": "Peptid-Wissenschaft,",
+    "second": "einfach erklärt.",
+    "description": "Verständliche Leitfäden zu {count} Peptiden, aktuelle Forschungsnews und Videos von Ärztinnen und Ärzten, damit Sie sehen, was belegt ist und was nicht.",
+    "library": "Zur Bibliothek",
+    "news": "Aktuelle News",
+    "latest": "Neuester Artikel",
+    "topics": "Nach Thema stöbern"
   }
 }

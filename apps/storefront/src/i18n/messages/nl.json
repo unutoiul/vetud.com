@@ -4,6 +4,8 @@
     "standards": "Onze standaarden",
     "documentation": "Labdocumentatie",
     "learn": "Kennis",
+    "news": "Nieuws",
+    "videos": "Video's",
     "tracking": "Volgen",
     "contact": "Contact",
     "account": "Uw account",
@@ -203,5 +205,14 @@
     "returns": "Retourbeleid",
     "refunds": "Terugbetalingen",
     "chargebacks": "Betalingsbetwistingen"
+  },
+  "LearnHero": {
+    "first": "Peptidewetenschap,",
+    "second": "eenvoudig uitgelegd.",
+    "description": "Heldere gidsen over {count} peptiden, het laatste onderzoeksnieuws en video’s van artsen, zodat u ziet wat bewezen is en wat niet.",
+    "library": "Naar de bibliotheek",
+    "news": "Laatste nieuws",
+    "latest": "Nieuwste artikel",
+    "topics": "Bladeren per onderwerp"
   }
 }

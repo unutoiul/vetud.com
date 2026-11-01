@@ -9,13 +9,13 @@ import { StoreContactSchema } from "./store/contact/validators"
 import { CustomerOrderQuery, CustomerOrdersQuery } from "./store/account/orders/validators"
 import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
-import { ruoGuardRoutes } from "./ruo-guards"
+import { cartOwnerGuardRoutes } from "./cart-owner-guards"
 import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
 
 export default defineMiddlewares({
   routes: [
     ...nmiGuardRoutes,
-    ...ruoGuardRoutes,
+    ...cartOwnerGuardRoutes,
     ...paygateGuardRoutes,
     {
       method: ["POST"],

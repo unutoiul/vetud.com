@@ -18,7 +18,7 @@ import { LocalizedNextLink } from "../common/links"
 import { useStore } from "../store/StoreProvider"
 import CartAnnouncer from "../cart/CartAnnouncer"
 import CountrySelect from "./CountrySelect"
-import { NAV_LINKS, SECONDARY_LINKS } from "./nav"
+import { NAV_LABEL_KEYS, NAV_LINKS, SECONDARY_LINKS } from "./nav"
 import SearchBox from "./SearchBox"
 import { motion } from "@/theme/tokens"
 import { useAccount } from "../account/AccountProvider"
@@ -26,7 +26,7 @@ import { useAccount } from "../account/AccountProvider"
 function MainNav({ activeHref }: { activeHref?: string }) {
   const t = useTranslations("Common")
   return <Stack component="nav" aria-label="Main" direction="row" spacing={3.5} sx={{ display: { xs: "none", lg: "flex" }, mx: "auto" }}>
-    {NAV_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} aria-current={link.href === activeHref ? "page" : undefined} sx={{ fontSize: 13, fontWeight: 600, textDecoration: "none", color: link.href === activeHref ? "brand.blue" : "brand.navySoft", py: 1.5, position: "relative", "&::after": { content: '""', position: "absolute", bottom: 6, left: 0, right: 0, height: 2, bgcolor: "brand.blue", transform: link.href === activeHref ? "scaleX(1)" : "scaleX(0)", transformOrigin: "left", transition: `transform .3s ${motion}` }, "&:hover::after": { transform: "scaleX(1)" } }}>{t(({ "/shop": "shop", "/standards": "standards", "/documentation": "documentation", "/education": "learn", "/tracking": "tracking", "/contact": "contact" } as const)[link.href as "/shop" | "/standards" | "/documentation" | "/education" | "/tracking" | "/contact"])}</Box>)}
+    {NAV_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} aria-current={link.href === activeHref ? "page" : undefined} sx={{ fontSize: 13, fontWeight: 600, textDecoration: "none", color: link.href === activeHref ? "brand.blue" : "brand.navySoft", py: 1.5, position: "relative", "&::after": { content: '""', position: "absolute", bottom: 6, left: 0, right: 0, height: 2, bgcolor: "brand.blue", transform: link.href === activeHref ? "scaleX(1)" : "scaleX(0)", transformOrigin: "left", transition: `transform .3s ${motion}` }, "&:hover::after": { transform: "scaleX(1)" } }}>{t(NAV_LABEL_KEYS[link.href])}</Box>)}
   </Stack>
 }
 function ActiveMainNav() {
@@ -69,9 +69,9 @@ export default function Header() {
     <Drawer anchor="right" open={menuOpen} onClose={() => setMenuOpen(false)} slotProps={{ paper: { sx: { width: { xs: "min(100vw, 420px)" }, borderRadius: 0, bgcolor: "#fbfcfe" } } }}>
       <Box id="mobile-navigation" component="nav" aria-label="Mobile" sx={{ p: 3.5, pt: 4, pb: "max(28px, env(safe-area-inset-bottom))" }}>
         <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 6 }}><Logo /><IconButton aria-label="Close menu" onClick={() => setMenuOpen(false)}><Icon name="close" /></IconButton></Stack>
-        {NAV_LINKS.map((link, index) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", py: 2.5, borderBottom: "1px solid rgba(23,53,75,.08)", fontSize: 23, letterSpacing: "-.03em", animation: `vetud-enter .5s ${motion} ${index * .06}s both`, "&:hover": { color: "brand.blue" } }}>{t(({ "/shop": "shop", "/standards": "standards", "/documentation": "documentation", "/education": "learn", "/tracking": "tracking", "/contact": "contact" } as const)[link.href as "/shop" | "/standards" | "/documentation" | "/education" | "/tracking" | "/contact"])}<Icon name="arrowUpRight" sx={{ fontSize: 20 }} /></Box>)}
+        {NAV_LINKS.map((link, index) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", py: 2.5, borderBottom: "1px solid rgba(23,53,75,.08)", fontSize: 23, letterSpacing: "-.03em", animation: `vetud-enter .5s ${motion} ${index * .06}s both`, "&:hover": { color: "brand.blue" } }}>{t(NAV_LABEL_KEYS[link.href])}<Icon name="arrowUpRight" sx={{ fontSize: 20 }} /></Box>)}
         <Stack direction="row" spacing={3} sx={{ mt: 3 }}>
-          {SECONDARY_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 13, color: "text.secondary", textDecoration: "none", "&:hover": { color: "brand.blue" } }}>{t(({ "/shop": "shop", "/standards": "standards", "/documentation": "documentation", "/education": "learn", "/tracking": "tracking", "/contact": "contact" } as const)[link.href as "/shop" | "/standards" | "/documentation" | "/education" | "/tracking" | "/contact"])}</Box>)}
+          {SECONDARY_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 13, color: "text.secondary", textDecoration: "none", "&:hover": { color: "brand.blue" } }}>{t(NAV_LABEL_KEYS[link.href])}</Box>)}
         </Stack>
         <Box
           component={LocalizedNextLink}

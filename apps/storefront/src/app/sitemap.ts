@@ -1,11 +1,13 @@
 import type { MetadataRoute } from "next"
 import { cacheLife } from "next/cache"
 import { LEGAL_DOCUMENTS } from "@/content/legal"
+import { ARTICLES } from "@/content/learn/articles"
+import { PEPTIDES } from "@/content/learn/peptides"
 import { BASE_URL } from "@/lib/config"
 import { listProductHandles } from "@/lib/medusa/products"
 import { listCountryCodes } from "@/lib/medusa/regions"
 
-const STATIC_PATHS = ["", "/shop", "/tracking", "/education", "/standards", "/documentation", "/contact"]
+const STATIC_PATHS = ["", "/learn", "/news", "/videos", "/shop", "/tracking", "/standards", "/documentation", "/contact"]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   "use cache"
@@ -22,6 +24,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const paths = [
     ...STATIC_PATHS,
     ...LEGAL_DOCUMENTS.map((document) => `/legal/${document.slug}`),
+    ...PEPTIDES.map((peptide) => `/learn/${peptide.slug}`),
+    ...ARTICLES.map((article) => `/news/${article.slug}`),
     ...handles.map((handle) => `/products/${handle}`),
   ]
 
