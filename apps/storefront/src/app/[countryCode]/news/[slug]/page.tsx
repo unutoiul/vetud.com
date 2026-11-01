@@ -10,11 +10,13 @@ import Section from "@/components/common/Section"
 import ArticleArt from "@/components/learn/ArticleArt"
 import ArticleCard, { ArticleHeadline } from "@/components/learn/ArticleCard"
 import ResearchCatalog from "@/components/learn/ResearchCatalog"
+import RichText from "@/components/learn/RichText"
 import SourceList, { LEARN_DISCLAIMER } from "@/components/learn/SourceList"
 import VideoResources from "@/components/learn/VideoResources"
 import { ARTICLES, formatArticleDate, getArticle } from "@/content/learn/articles"
 import { getPeptide } from "@/content/learn/peptides"
 import { getArticleVideoResources } from "@/content/learn/video-resources"
+import { getLearnShopLinks } from "@/lib/learn-shop"
 import { gutter } from "@/theme/tokens"
 
 export function generateStaticParams() {
@@ -49,6 +51,7 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
     Number(other.topic === article.topic) + other.peptides.filter((id) => article.peptides.includes(id)).length
   const more = ARTICLES.filter((other) => other.slug !== article.slug).sort((a, b) => relevance(b) - relevance(a)).slice(0, 3)
   const videos = getArticleVideoResources(article.slug, peptides)
+  const shop = await getLearnShopLinks()
 
   return (
     <>
@@ -87,17 +90,17 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
           </Box>
 
           <Box sx={{ mt: { xs: 4, md: 5 }, display: "grid", gap: 2.5 }}>
-            {article.body.map((paragraph, index) => <Typography key={index} sx={{ fontSize: { xs: 17, md: 18 }, lineHeight: 1.85, color: index === 0 ? "text.primary" : "text.secondary" }}>{paragraph}</Typography>)}
+            {article.body.map((paragraph, index) => <Typography key={index} sx={{ fontSize: { xs: 17, md: 18 }, lineHeight: 1.85, color: index === 0 ? "text.primary" : "text.secondary" }}><RichText text={paragraph} shop={shop} /></Typography>)}
           </Box>
 
           <Box sx={{ mt: { xs: 4, md: 5 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 2 }}>
             <Box sx={callout}>
               <Typography component="h2" sx={{ fontSize: 17, fontWeight: 700, mb: 1 }}>What it means</Typography>
-              <Typography sx={{ color: "text.secondary", lineHeight: 1.75 }}>{article.means}</Typography>
+              <Typography sx={{ color: "text.secondary", lineHeight: 1.75 }}><RichText text={article.means} shop={shop} /></Typography>
             </Box>
             <Box sx={{ ...callout, bgcolor: "#fbf6ec", borderColor: "#f0e2c4" }}>
               <Typography component="h2" sx={{ fontSize: 17, fontWeight: 700, mb: 1 }}>What we don’t know yet</Typography>
-              <Typography sx={{ color: "text.secondary", lineHeight: 1.75 }}>{article.unknowns}</Typography>
+              <Typography sx={{ color: "text.secondary", lineHeight: 1.75 }}><RichText text={article.unknowns} shop={shop} /></Typography>
             </Box>
           </Box>
 
@@ -110,6 +113,8 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
             </Box>
           ) : null}
 
+          <ResearchCatalog peptides={article.peptides} />
+
           <Box sx={{ mt: { xs: 4, md: 5 }, pt: { xs: 4, md: 5 }, borderTop: "1px solid", borderColor: "divider" }}>
             <Typography component="h2" sx={{ fontSize: 17, fontWeight: 700, mb: 2 }}>Sources</Typography>
             <SourceList sources={article.sources} />
@@ -121,8 +126,6 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
           <Typography component="h2" sx={{ fontSize: { xs: 24, md: 28 }, fontWeight: 600, mb: 2 }}>Watch: videos connected to this article</Typography>
           <VideoResources videos={videos.videos} connections={videos.connections} introduction={videos.introduction} currentArticle={article.slug} />
         </Box>
-
-        <ResearchCatalog peptides={article.peptides} />
 
         <Box sx={{ mt: { xs: 7, md: 10 }, pt: { xs: 5, md: 6 }, borderTop: "1px solid", borderColor: "divider" }}>
           <Typography component="h2" sx={{ fontSize: { xs: 24, md: 30 }, fontWeight: 600, letterSpacing: "-.03em", mb: 3 }}>More news & articles</Typography>

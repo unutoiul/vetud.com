@@ -99,8 +99,13 @@ const ARTICLE_SELECTIONS: Record<string, { specific: string[]; background: strin
 export function getArticleVideoResources(slug: string, peptides: PeptideProfile[]): Selection {
   const choice = ARTICLE_SELECTIONS[slug]
   const name = peptides.map(peptide => peptide.name).slice(0, 3).join(", ") || "this topic"
-  return choice ? select(choice.specific, choice.background, name, choice.context)
-    : select([], ["lJOQB_G15Jc", "BBTqkHQjUzg"], name, "Related lessons on understanding the evidence in this article.")
+  if (choice) return select(choice.specific, choice.background, name, choice.context)
+  // Without a hand-picked selection, use the compound videos and topic lessons of the article's peptides.
+  const direct = peptides.flatMap((peptide) => COMPOUND_VIDEOS[peptide.slug] ?? [])
+  const background = [...(peptides[0] ? BACKGROUND[peptides[0].category] : []), "lJOQB_G15Jc", "BBTqkHQjUzg"]
+  return select(direct, background, name, direct.length
+    ? "Videos discussing the compounds in this article, plus background on the biology or the research methods. Each card explains its connection; recordings may predate the findings described here."
+    : "Related lessons on the biology and on understanding the evidence in this article. None of them is a trial of the compound.")
 }
 
 /** Simple list for source audits and other consumers. */

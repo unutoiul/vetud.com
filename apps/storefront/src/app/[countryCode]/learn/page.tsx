@@ -2,6 +2,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import type { Metadata } from "next"
 import Image from "next/image"
+import { Suspense } from "react"
 import Icon, { type IconName } from "@/components/brand/Icon"
 import { ButtonLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
@@ -15,8 +16,13 @@ import WeightLossChart from "@/components/learn/WeightLossChart"
 import { ARTICLES, LEARNING_GUIDES } from "@/content/learn/articles"
 import { PEPTIDES } from "@/content/learn/peptides"
 import { getVideos, VIDEOS } from "@/content/learn/videos"
+import { getLearnShopLinks } from "@/lib/learn-shop"
 
 const PROFILE_COUNT = PEPTIDES.length
+
+async function LibraryWithShop() {
+  return <LearnLibrary shop={await getLearnShopLinks()} />
+}
 
 export const metadata: Metadata = {
   title: "Learn: peptides explained simply",
@@ -36,7 +42,9 @@ export default function LearnPage() {
       <PageHeader eyebrow="Learn" title="Peptides, explained simply." description={`Plain-language guides to ${PROFILE_COUNT} peptides and related compounds, from approved medicines to early research. What they are, what studies found, how far they’ve got, and what’s still unknown.`} />
 
       <Section tone="white" id="library" sx={{ py: { xs: 5, md: 8 } }}>
-        <LearnLibrary />
+        <Suspense fallback={<LearnLibrary />}>
+          <LibraryWithShop />
+        </Suspense>
       </Section>
 
       <Section tone="paper" sx={{ py: { xs: 6, md: 9 } }}>

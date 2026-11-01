@@ -8,8 +8,11 @@ import { AppLink } from "../common/links"
 import ArticleArt from "./ArticleArt"
 import StatusBadge from "./StatusBadge"
 
-/** A library entry: the molecule drawing, what it is in one line, and how far it has got. No prices, no shop links. */
-export default function PeptideCard({ peptide }: { peptide: PeptideProfile }) {
+/**
+ * A library entry: the molecule drawing, what it is in one line, and how far it has got.
+ * No prices; `shopHref` adds a link to the product when the shop carries it.
+ */
+export default function PeptideCard({ peptide, shopHref }: { peptide: PeptideProfile; shopHref?: string }) {
   const category = getCategory(peptide.category)
   return (
     <Box component="article" sx={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: "#fff", overflow: "hidden", transition: "border-color .2s ease, box-shadow .2s ease", "&:hover": { borderColor: "brand.lineStrong", boxShadow: "0 12px 30px rgba(21,38,94,.07)" }, "&:focus-within": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 3 } }}>
@@ -31,7 +34,10 @@ export default function PeptideCard({ peptide }: { peptide: PeptideProfile }) {
         <Typography sx={{ mt: 1.25, fontSize: 14, lineHeight: 1.65, color: "text.secondary", flex: 1 }}>{peptide.oneLiner}</Typography>
         <Box sx={{ mt: 2, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
           <StatusBadge status={peptide.status} size="small" />
-          <Icon name="arrowUpRight" aria-hidden sx={{ fontSize: 18, color: "brand.navy" }} />
+          {shopHref
+            // Sits above the card-wide profile link, so it opens the product instead.
+            ? <AppLink href={shopHref} aria-label={`${peptide.name} in the research shop`} sx={{ position: "relative", zIndex: 1, minHeight: 32, display: "inline-flex", alignItems: "center", gap: .5, fontSize: 13, fontWeight: 650 }}>In the shop<Icon name="arrowUpRight" aria-hidden sx={{ fontSize: 16 }} /></AppLink>
+            : <Icon name="arrowUpRight" aria-hidden sx={{ fontSize: 18, color: "brand.navy" }} />}
         </Box>
       </Box>
     </Box>

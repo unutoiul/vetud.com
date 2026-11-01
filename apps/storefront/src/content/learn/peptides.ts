@@ -127,7 +127,7 @@ export const PEPTIDES: PeptideProfile[] = [
     sources: [
       { title: "Tirzepatide Once Weekly for the Treatment of Obesity (SURMOUNT-1)", detail: "Jastreboff et al. · New England Journal of Medicine · 2022", url: pubmed(35658024) },
       { title: "LY3298176, a novel dual GIP and GLP-1 receptor agonist: from discovery to clinical proof of concept", detail: "Coskun et al. · Molecular Metabolism · 2018", url: pubmed(30473097) },
-      { title: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk ? original sponsor announcement ? February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
+      { title: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk · original sponsor announcement · February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
     ],
     videos: ["QGIFdakceHM", "o8YMLTfNYtc"],
     pubchem: 166567236,
@@ -156,8 +156,8 @@ export const PEPTIDES: PeptideProfile[] = [
     ],
     sources: [
       { title: "Triple-Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial", detail: "Jastreboff et al. · New England Journal of Medicine · 2023", url: pubmed(37366315) },
-      { title: "TRIUMPH-1: phase 3 retatrutide topline results", detail: "Eli Lilly and Company ? original sponsor announcement ? May 21, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss" },
-      { title: "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results", detail: "Eli Lilly and Company ? original sponsor announcement ? July 23, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional" },
+      { title: "TRIUMPH-1: phase 3 retatrutide topline results", detail: "Eli Lilly and Company · original sponsor announcement · May 21, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss" },
+      { title: "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results", detail: "Eli Lilly and Company · original sponsor announcement · July 23, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional" },
     ],
     videos: ["w0A_VRT3rIE"],
   },
@@ -668,7 +668,7 @@ export const PEPTIDES: PeptideProfile[] = [
     sources: [
       { title: "Once-weekly cagrilintide for weight management in people with overweight and obesity: a phase 2 trial", detail: "Lau et al. · The Lancet · 2021", url: pubmed(34798060) },
       { title: "Coadministered Cagrilintide and Semaglutide in Adults with Overweight or Obesity (REDEFINE 1)", detail: "Garvey et al. · New England Journal of Medicine · 2025", url: pubmed(40544433) },
-      { title: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk ? original sponsor announcement ? February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
+      { title: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk · original sponsor announcement · February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
     ],
     pubchem: 171397054,
   },

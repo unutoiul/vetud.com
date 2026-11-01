@@ -23,7 +23,7 @@ function readHash(): CategoryId | null {
  * The peptide library with a one-pick category list. The choice lives in the URL hash
  * (/learn#weight), so topic links from other pages land on the right shelf.
  */
-export default function LearnLibrary() {
+export default function LearnLibrary({ shop = {} }: { shop?: Record<string, string> }) {
   const active = useSyncExternalStore(subscribe, readHash, () => null)
 
   const choose = (id: CategoryId | null) => {
@@ -71,7 +71,7 @@ export default function LearnLibrary() {
           {active ? `${CATEGORIES.find((category) => category.id === active)?.name}: ${shown.length} ${shown.length === 1 ? "guide" : "guides"}` : `All ${shown.length} guides`}
         </Typography>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", xl: "repeat(3, 1fr)" }, gap: 2.5 }}>
-          {shown.map((peptide) => <PeptideCard key={peptide.slug} peptide={peptide} />)}
+          {shown.map((peptide) => <PeptideCard key={peptide.slug} peptide={peptide} shopHref={shop[peptide.slug]} />)}
         </Box>
       </Box>
     </Box>

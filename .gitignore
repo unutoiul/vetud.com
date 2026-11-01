@@ -40,3 +40,7 @@ Thumbs.db
 
 .vercel
 .env*
+
+# agent release snapshots and QA output (deploys upload from the working tree)
+output/releases/
+output/qa/

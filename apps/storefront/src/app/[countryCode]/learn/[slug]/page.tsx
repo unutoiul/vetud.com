@@ -8,7 +8,7 @@ import Image from "next/image"
 import { notFound } from "next/navigation"
 import { Suspense, type ReactNode } from "react"
 import Icon from "@/components/brand/Icon"
-import { AppLink } from "@/components/common/links"
+import { AppLink, ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 import ArticleArt from "@/components/learn/ArticleArt"
 import ArticleCard from "@/components/learn/ArticleCard"
@@ -24,6 +24,7 @@ import { getCategory, STATUSES } from "@/content/learn/categories"
 import { getPeptide, PEPTIDES } from "@/content/learn/peptides"
 import { getProfileVideoResources } from "@/content/learn/video-resources"
 import { WEIGHT_LOSS_TRIALS } from "@/content/learn/weight-loss-trials"
+import { getLearnShopLinks } from "@/lib/learn-shop"
 import { gutter } from "@/theme/tokens"
 
 export function generateStaticParams() {
@@ -69,6 +70,8 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
   const related = PEPTIDES.filter((other) => other.slug !== peptide.slug)
     .sort((a, b) => Number(b.category === peptide.category) - Number(a.category === peptide.category)).slice(0, 3)
   const videos = getProfileVideoResources(peptide)
+  const shop = await getLearnShopLinks()
+  const product = shop[peptide.slug]
 
   return (
     <>
@@ -87,6 +90,11 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
               {peptide.notAPeptide ? <Typography component="span" sx={{ fontSize: 13, color: "text.secondary" }}>Not a peptide, but often discussed with them</Typography> : null}
             </Box>
             <Typography sx={{ mt: 1.5, color: "text.secondary", fontSize: 14.5, lineHeight: 1.7, maxWidth: 640 }}>{peptide.statusNote}</Typography>
+            <Box sx={{ mt: 3 }}>
+              {product
+                ? <ButtonLink href={product} variant="contained" endIcon={<Icon name="arrowUpRight" />}>{peptide.name} in the research shop</ButtonLink>
+                : <ButtonLink href="/shop" variant="outlined" endIcon={<Icon name="arrowRight" />}>Browse the research shop</ButtonLink>}
+            </Box>
           </Box>
           <Box component="figure" sx={{ m: 0 }}>
             <Box sx={{ position: "relative", aspectRatio: "1 / 1", maxWidth: 440, mx: "auto", bgcolor: "#fff", border: "1px solid", borderColor: "divider", borderRadius: "14px", overflow: "hidden" }}>
@@ -132,6 +140,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5, alignItems: "center", mb: 1.5 }}><StatusBadge status={peptide.status} /><Typography sx={{ fontSize: 14.5, color: "text.secondary" }}>{status.explain}</Typography></Box>
             <Typography sx={prose}>{peptide.statusNote}</Typography>
           </Block>
+          <ResearchCatalog peptides={[peptide.slug]} />
         </Box>
 
         <Block title={`Watch: ${peptide.name} and related science`}>
@@ -151,12 +160,10 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
         {related.length ? (
           <Block title="Related peptide profiles">
             <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "repeat(3, 1fr)" }, gap: 2.5 }}>
-              {related.map((other) => <PeptideCard key={other.slug} peptide={other} />)}
+              {related.map((other) => <PeptideCard key={other.slug} peptide={other} shopHref={shop[other.slug]} />)}
             </Box>
           </Block>
         ) : null}
-
-        <ResearchCatalog peptides={[peptide.slug]} />
 
         <Box sx={{ mt: { xs: 5, md: 7 }, pt: 3, borderTop: "1px solid", borderColor: "divider", display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2, justifyContent: "space-between" }}>
           <Typography sx={{ fontSize: 13, color: "text.secondary", maxWidth: 760 }}>{LEARN_DISCLAIMER}</Typography>

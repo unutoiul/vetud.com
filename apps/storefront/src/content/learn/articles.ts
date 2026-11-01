@@ -1,4 +1,5 @@
 import { CBL_514_SOURCES, PTT_A_SOURCES } from "./emerging-weight-research"
+import { PEPTIDE_ARTICLES } from "./peptide-articles"
 
 /**
  * News & articles, written as plain-language study summaries. Each number comes from the linked
@@ -18,6 +19,7 @@ export type Article = {
   dek: string
   art: ArticleArtVariant
   glance: { label: string; value: string }[]
+  /** body, means and unknowns may hold inline links: [label](/learn/slug) or [label](shop:slug); see RichText. */
   body: string[]
   means: string
   unknowns: string
@@ -112,6 +114,7 @@ export const ARTICLES: Article[] = [
     peptides: ["ptt-a", "retatrutide", "tirzepatide"],
     sources: PTT_A_SOURCES.map(({ title, ...source }) => ({ label: title, ...source })),
   },
+  ...PEPTIDE_ARTICLES,
   {
     slug: "rlx-201-skin-serum-12-weeks",
     date: "2026-10",
@@ -190,6 +193,7 @@ export const ARTICLES: Article[] = [
       "In July 2026 the FDA asked its expert advisers about seven peptides that people had nominated for that list. On July 23 the panel looked at BPC-157 (for ulcerative colitis, a bowel disease), KPV (for wound healing and inflammation), TB-500 (for wound healing) and MOTS-c (for obesity and osteoporosis). On July 24 it looked at DSIP (for opioid withdrawal, insomnia and narcolepsy), Semax (for stroke-related conditions, migraine and facial nerve pain) and Epitalon (for insomnia).",
       "The official agenda and meeting recordings document the substances and proposed uses under discussion. This summary does not infer a final regulatory decision from an advisory meeting.",
       "Advisory committee recommendations are non-binding. Inclusion on the compounding list and approval of a finished medicine are separate regulatory decisions.",
+      "For what is actually known about these peptides in people, read [BPC-157’s human evidence](/news/bpc-157-human-evidence), [Semax and Selank](/news/semax-selank-russian-nasal-peptides), [Epitalon](/news/epitalon-telomeres-cell-study) and [DSIP](/news/dsip-sleep-peptide-riddle).",
     ],
     means: "If the FDA follows the panel, licensed pharmacies could one day prepare BPC-157 for individual patients with a prescription. That would bring some quality control to a peptide that is mostly sold online today without any oversight.",
     unknowns: "Permission to compound is not the same as approval as a medicine. Even then, there would still be no large human trials showing that BPC-157 works or is safe.",
@@ -220,12 +224,13 @@ export const ARTICLES: Article[] = [
       "TRIUMPH-3 included 1,949 adults with a BMI of 35 or more and heart disease. They lost 21.6% on 9 mg and 22.6% on 12 mg, compared with 3.2% on placebo.",
       "People with type 2 diabetes usually lose less weight on these medicines than people without it, so these results stand out.",
       "With these results, Lilly says it has the data it needs to apply for approval around the world.",
+      "The [retatrutide profile](/learn/retatrutide) covers the earlier trials. Retatrutide research material is listed [in the research shop](shop:retatrutide); it is not Lilly’s investigational medicine.",
     ],
     means: "If approved, retatrutide would give doctors a third generation of hormone-based weight-loss medicines, with results that may suit people who don’t lose enough weight on today’s options.",
     unknowns: "These are company-reported results that haven’t yet been published in full. Long-term safety, and how much weight comes back after stopping, are still unknown.",
     peptides: ["retatrutide", "tirzepatide", "semaglutide"],
     sources: [
-      { label: "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results", detail: "Eli Lilly and Company ? original sponsor announcement ? July 23, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional" },
+      { label: "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results", detail: "Eli Lilly and Company · original sponsor announcement · July 23, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional" },
     ],
   },
   {
@@ -248,12 +253,13 @@ export const ARTICLES: Article[] = [
       "On May 21, 2026, Lilly announced the first results from TRIUMPH-1, its first large phase 3 trial. After 80 weeks, people on the 12 mg dose had lost 28.3% of their body weight on average, about 70 lb (32 kg). On 9 mg they lost 25.9%, and on 4 mg, 19.0%.",
       "A smaller group with a BMI of 35 or more kept going to 104 weeks. Those on 12 mg had lost 30.3% of their weight by then.",
       "Side effects were mostly stomach-related and rose with the dose. On 12 mg, 42% of people had nausea (15% on placebo) and a quarter had vomiting (5% on placebo). 11.3% stopped the top dose because of side effects, compared with 4.9% on placebo.",
+      "Two more phase 3 trials followed in July ([read our report](/news/retatrutide-triumph-2-and-3)). Retatrutide research material is listed [in the research shop](shop:retatrutide); it is not Lilly’s investigational medicine.",
     ],
     means: "If these numbers hold up in the full publication, retatrutide could set a new benchmark for weight-loss medicines.",
     unknowns: "These are company-reported topline results, not yet peer-reviewed. Long-term safety, and how much weight comes back after stopping, are still open questions. Retatrutide is not approved anywhere.",
     peptides: ["retatrutide", "tirzepatide", "semaglutide"],
     sources: [
-      { label: "TRIUMPH-1: phase 3 retatrutide topline results", detail: "Eli Lilly and Company ? original sponsor announcement ? May 21, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss" },
+      { label: "TRIUMPH-1: phase 3 retatrutide topline results", detail: "Eli Lilly and Company · original sponsor announcement · May 21, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss" },
     ],
   },
   {
@@ -305,12 +311,13 @@ export const ARTICLES: Article[] = [
       "CagriSema is Novo Nordisk’s next weight-loss medicine. It combines semaglutide, the active ingredient in Wegovy, with cagrilintide, a copy of amylin. Amylin is a hormone released with insulin after meals that also tells the brain you’re full.",
       "In a phase 3 trial that pitted it directly against Eli Lilly’s Zepbound (tirzepatide), people on CagriSema lost about 23% of their body weight over 84 weeks. People on Zepbound lost about 25%.",
       "Novo had already applied for FDA approval before the result came out. A decision is expected in late 2026.",
+      "Read the profiles of [tirzepatide](/learn/tirzepatide), [semaglutide](/learn/semaglutide) and [cagrilintide](/learn/cagrilintide). Research materials for [tirzepatide](shop:tirzepatide) and [semaglutide](shop:semaglutide) are listed in the research shop, separate from the approved medicines.",
     ],
     means: "Both medicines produced large weight losses. The trial shows how fast the field is moving, and how high the bar has become for new medicines.",
     unknowns: "Full trial details, side-effect comparisons and the FDA’s decision are still to come.",
     peptides: ["semaglutide", "tirzepatide", "cagrilintide"],
     sources: [
-      { label: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk ? original sponsor announcement ? February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
+      { label: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk · original sponsor announcement · February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
     ],
   },
   {
@@ -333,6 +340,7 @@ export const ARTICLES: Article[] = [
       "The approval was based on the OASIS 4 trial, in which 307 adults with obesity or overweight took the pill or a placebo for 64 weeks, along with diet and exercise advice. People on the pill lost 13.6% of their body weight on average, compared with 2.2% on placebo.",
       "Side effects were similar to the injection and mostly affected the stomach: 74.0% of people on the pill had stomach-related side effects, compared with 42.2% on placebo.",
       "Novo Nordisk planned a full US launch for early January 2026.",
+      "Semaglutide research material is listed [in the research shop](shop:semaglutide); it is not the approved tablet or injection.",
     ],
     means: "For people who don’t want injections, a pill could make treatment easier to start and stick with.",
     unknowns: "How results hold up over years, and when the pill will be available outside the US, remain to be seen.",
