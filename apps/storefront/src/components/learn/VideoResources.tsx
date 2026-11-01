@@ -7,7 +7,7 @@ import VideoGallery from "./VideoGallery"
 export default function VideoResources({ videos, background = false, introduction, connections, currentArticle }: { videos: LearnVideo[]; background?: boolean; introduction?: string; connections?: Record<string, VideoConnection>; currentArticle?: string }) {
   return (
     <Box>
-      <Typography sx={{ mb: 2.5, color: "text.secondary", fontSize: 15, lineHeight: 1.7, maxWidth: 820 }}>
+      <Typography sx={{ mb: 2.5, color: "brand.navySoft", fontSize: 16, lineHeight: 1.8, maxWidth: 820 }}>
         {introduction ?? (background
           ? "These videos explain related biology and how to assess the evidence. They do not test the specific compound or formulation discussed in this article."
           : "Selected educational videos and official recordings. Videos provide context; the original studies and regulatory documents below support this profile. Older recordings may not include later findings.")}

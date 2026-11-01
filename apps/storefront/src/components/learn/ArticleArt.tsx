@@ -1,12 +1,18 @@
 import Box, { type BoxProps } from "@mui/material/Box"
+import Image from "next/image"
 import type { ArticleArtVariant } from "@/content/learn/articles"
+import { getLearnIllustration } from "@/content/learn/illustrations"
 
 /**
  * Editorial illustrations drawn for VETUD Learn, in the brand's navy and glacier palette.
  * Original artwork, so there are no stock-photo licences to manage. `uid` keeps gradient
  * ids unique when several illustrations share a page.
  */
-export default function ArticleArt({ variant, uid, sx, ...props }: { variant: ArticleArtVariant; uid: string } & BoxProps) {
+export default function ArticleArt({ variant, uid, illustrationSlug, sizes = "(max-width: 600px) 90vw, (max-width: 1200px) 45vw, 440px", sx, ...props }: { variant: ArticleArtVariant; uid: string; illustrationSlug?: string; sizes?: string } & BoxProps) {
+  const illustration = illustrationSlug ? getLearnIllustration(illustrationSlug) : undefined
+  if (illustration) return <Box sx={[{ position: "relative", overflow: "hidden", bgcolor: "brand.mintWash" }, ...(Array.isArray(sx) ? sx : [sx])]} {...props}>
+    <Image src={illustration.src} alt={illustration.alt} fill sizes={sizes} style={{ objectFit: "cover" }} />
+  </Box>
   const id = (name: string) => `${uid}-${name}`
   const url = (name: string) => `url(#${id(name)})`
   return (

@@ -2,6 +2,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
 import { getCategory } from "@/content/learn/categories"
+import { getLearnIllustration } from "@/content/learn/illustrations"
 import type { PeptideProfile } from "@/content/learn/peptides"
 import Icon from "../brand/Icon"
 import { AppLink } from "../common/links"
@@ -14,10 +15,13 @@ import StatusBadge from "./StatusBadge"
  */
 export default function PeptideCard({ peptide, shopHref }: { peptide: PeptideProfile; shopHref?: string }) {
   const category = getCategory(peptide.category)
+  const illustration = getLearnIllustration(peptide.slug)
   return (
     <Box component="article" sx={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: "#fff", overflow: "hidden", transition: "border-color .2s ease, box-shadow .2s ease", "&:hover": { borderColor: "brand.lineStrong", boxShadow: "0 12px 30px rgba(21,38,94,.07)" }, "&:focus-within": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 3 } }}>
       <Box sx={{ position: "relative", height: 150, bgcolor: "#fff", borderBottom: "1px solid", borderColor: "divider" }}>
-        {peptide.pubchem
+        {illustration
+          ? <Image src={illustration.src} alt={illustration.alt} fill sizes="(max-width: 600px) 90vw, 420px" style={{ objectFit: "cover" }} />
+          : peptide.pubchem
           ? <Image src={`/images/learn/structures/${peptide.slug}.webp`} alt={`Chemical structure of ${peptide.name}`} fill sizes="(max-width: 600px) 90vw, 320px" style={{ objectFit: "contain", padding: 12 }} loading="lazy" />
           : <ArticleArt variant="triple" uid={`peptide-${peptide.slug}`} sx={{ position: "absolute", inset: 0 }} />}
       </Box>

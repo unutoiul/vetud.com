@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box"
-import Chip from "@mui/material/Chip"
 import Skeleton from "@mui/material/Skeleton"
 import Typography from "@mui/material/Typography"
 import type { Metadata } from "next"
@@ -7,133 +6,95 @@ import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { AppLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
-import ArticleArt from "@/components/learn/ArticleArt"
-import ArticleCard, { ArticleHeadline } from "@/components/learn/ArticleCard"
+import ArticleCard from "@/components/learn/ArticleCard"
 import ResearchCatalog from "@/components/learn/ResearchCatalog"
 import RichText from "@/components/learn/RichText"
+import { ArticleJsonLd, ReadingHeader, ReadingLayout, ReadingSection, readingProse } from "@/components/learn/ReadingLayout"
 import SourceList, { LEARN_DISCLAIMER } from "@/components/learn/SourceList"
 import VideoResources from "@/components/learn/VideoResources"
 import { ARTICLES, formatArticleDate, getArticle } from "@/content/learn/articles"
+import { getLearnIllustration } from "@/content/learn/illustrations"
+import { ARTICLE_SEARCH_TITLES } from "@/content/learn/search-titles"
 import { getPeptide } from "@/content/learn/peptides"
 import { getArticleVideoResources } from "@/content/learn/video-resources"
+import { articleMetadata, articleStructuredData, readingMinutes } from "@/lib/article-seo"
 import { getLearnShopLinks } from "@/lib/learn-shop"
-import { gutter } from "@/theme/tokens"
 
 export function generateStaticParams() {
-  return ARTICLES.map((article) => ({ slug: article.slug }))
+  return ARTICLES.map(article => ({ slug: article.slug }))
 }
 
 export async function generateMetadata({ params }: PageProps<"/[countryCode]/news/[slug]">): Promise<Metadata> {
   const { slug } = await params
   const article = getArticle(slug)
-  return article ? { title: article.headline.join(""), description: article.dek } : { title: "Not found" }
+  return article ? articleMetadata({ title: ARTICLE_SEARCH_TITLES[article.slug] ?? article.headline.join(""), description: article.dek, path: `/news/${article.slug}`, image: getLearnIllustration(article.slug) }) : { title: "Not found", robots: { index: false } }
 }
 
 export default function ArticlePage({ params }: PageProps<"/[countryCode]/news/[slug]">) {
-  return (
-    <Suspense fallback={<Skeleton variant="rectangular" height={640} />}>
-      <ArticleContent params={params} />
-    </Suspense>
-  )
+  return <Suspense fallback={<Skeleton variant="rectangular" height={640} />}><ArticleContent params={params} /></Suspense>
 }
-
-const callout = { p: { xs: 2.5, md: 3 }, borderRadius: "12px", border: "1px solid", borderColor: "divider" }
 
 async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[slug]">, "params">) {
   const { slug } = await params
   const article = getArticle(slug)
   if (!article) notFound()
-  const peptides = article.peptides.flatMap((id) => {
-    const peptide = getPeptide(id)
-    return peptide ? [peptide] : []
-  })
-  const relevance = (other: (typeof ARTICLES)[number]) =>
-    Number(other.topic === article.topic) + other.peptides.filter((id) => article.peptides.includes(id)).length
-  const more = ARTICLES.filter((other) => other.slug !== article.slug).sort((a, b) => relevance(b) - relevance(a)).slice(0, 3)
+  const peptides = article.peptides.flatMap(id => { const peptide = getPeptide(id); return peptide ? [peptide] : [] })
+  const relevance = (other: (typeof ARTICLES)[number]) => Number(other.topic === article.topic) + other.peptides.filter(id => article.peptides.includes(id)).length
+  const more = ARTICLES.filter(other => other.slug !== article.slug).sort((a, b) => relevance(b) - relevance(a)).slice(0, 3)
   const videos = getArticleVideoResources(article.slug, peptides)
   const shop = await getLearnShopLinks()
+  const image = getLearnIllustration(article.slug)
+  const title = article.headline.join("")
+  const text = [article.dek, ...article.glance.map(item => item.value), ...article.body, article.means, article.unknowns]
+  const contents = [
+    { id: "at-a-glance", label: "At a glance" }, { id: "research", label: "The research, explained" },
+    { id: "meaning", label: "What it means" }, { id: "unknowns", label: "What we don’t know" },
+    ...(peptides.length ? [{ id: "related-guides", label: "Related peptide guides" }] : []),
+    { id: "videos", label: "Watch and learn" }, { id: "sources", label: "Sources and references" },
+    { id: "research-shop", label: "Related research products" },
+  ]
+  const data = articleStructuredData({ title, description: article.dek, path: `/news/${article.slug}`, image, sources: article.sources, text,
+    breadcrumbs: [{ name: "Home", path: "" }, { name: "News and articles", path: "/news" }, { name: title, path: `/news/${article.slug}` }],
+  })
 
-  return (
-    <>
-      {/* Magazine-style cover: original illustration, headline with its key phrase highlighted. */}
-      <Box component="header" sx={{ position: "relative", overflow: "hidden", bgcolor: "#0a1430", color: "#fff" }}>
-        <ArticleArt variant={article.art} uid={`hero-${article.slug}`} sx={{ position: "absolute", inset: 0 }} />
-        <Box sx={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(5,9,26,.96) 0%, rgba(5,9,26,.7) 45%, rgba(5,9,26,.15) 100%)" }} />
-        <Box sx={{ position: "relative", px: gutter, pt: { xs: 18, md: 26 }, pb: { xs: 5, md: 7 } }}>
-          <Box sx={{ maxWidth: 1000, mx: "auto" }}>
-            <Typography sx={{ fontSize: 13, color: "brand.onNavyMuted", display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-              <Box component="span" sx={{ color: "brand.cyan", fontWeight: 700 }}>{article.kind}</Box>
-              <span>{article.topic}</span>
-              <Box component="time" dateTime={article.date}>{formatArticleDate(article.date)}</Box>
-            </Typography>
-            <Typography component="h1" sx={{ mt: 2, fontSize: { xs: 34, sm: 44, md: 58 }, fontWeight: 700, lineHeight: 1.08, letterSpacing: "-.035em", textWrap: "balance" }}>
-              <ArticleHeadline headline={article.headline} />
-            </Typography>
-            <Typography sx={{ mt: 2.5, fontSize: { xs: 17, md: 20 }, lineHeight: 1.6, color: "rgba(255,255,255,.86)", maxWidth: 760 }}>{article.dek}</Typography>
-            <Typography sx={{ mt: 3, fontSize: 12.5, letterSpacing: ".08em", textTransform: "uppercase", color: "brand.onNavyMuted" }}>By VETUD Learn</Typography>
+  return <>
+    <Box component="article" lang="en" aria-labelledby="article-title">
+      <ArticleJsonLd data={data} />
+      <ReadingHeader title={title} description={article.dek} image={image} variant={article.art} uid={`hero-${article.slug}`} minutes={readingMinutes(text)}
+        breadcrumbs={[{ label: "News and articles", href: "/news" }, { label: article.topic }]}
+        meta={<><Typography component="span" sx={{ px: 1.25, py: .375, borderRadius: 99, bgcolor: "brand.mint", color: "brand.navy", fontSize: 12, fontWeight: 700, letterSpacing: ".06em", textTransform: "uppercase" }}>{article.kind}</Typography><time dateTime={article.date}>{formatArticleDate(article.date)}</time></>} />
+      <ReadingLayout items={contents}>
+        <ReadingSection id="at-a-glance" title={article.kind === "Study" ? "The study at a glance" : "At a glance"} first>
+          <Box component="dl" sx={{ m: 0, p: { xs: 2.5, md: 3 }, bgcolor: "brand.mintWash", borderLeft: "3px solid", borderColor: "brand.blue", borderRadius: "0 8px 8px 0", display: "grid", gridTemplateColumns: { xs: "1fr", sm: "145px minmax(0, 1fr)" }, columnGap: 3, rowGap: { xs: .5, sm: 2 } }}>
+            {article.glance.map(item => <Box key={item.label} sx={{ display: "contents" }}>
+              <Box component="dt" sx={{ fontSize: 15, fontWeight: 700, color: "brand.navy", mt: { xs: 1.5, sm: 0 }, "&:first-of-type": { mt: 0 } }}>{item.label}</Box>
+              <Box component="dd" sx={{ m: 0, fontSize: 16, color: "brand.navySoft", lineHeight: 1.75 }}>{item.value}</Box>
+            </Box>)}
           </Box>
-        </Box>
-      </Box>
-
-      <Section tone="white" sx={{ py: { xs: 5, md: 8 } }}>
-        <Box sx={{ maxWidth: 760, mx: "auto" }}>
-          <Box component="section" aria-labelledby="glance-title" sx={{ ...callout, bgcolor: "brand.mintWash" }}>
-            <Typography id="glance-title" component="h2" sx={{ fontSize: 19, fontWeight: 700, mb: 2 }}>{article.kind === "Study" ? "The study at a glance" : "At a glance"}</Typography>
-            <Box component="dl" sx={{ m: 0, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "150px 1fr" }, columnGap: 2.5, rowGap: { xs: .25, sm: 1.5 } }}>
-              {article.glance.map((item) => (
-                <Box key={item.label} sx={{ display: "contents" }}>
-                  <Box component="dt" sx={{ fontSize: 13.5, fontWeight: 650, color: "text.primary", mt: { xs: 1.25, sm: 0 } }}>{item.label}</Box>
-                  <Box component="dd" sx={{ m: 0, fontSize: 15, color: "text.secondary", lineHeight: 1.6 }}>{item.value}</Box>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-
-          <Box sx={{ mt: { xs: 4, md: 5 }, display: "grid", gap: 2.5 }}>
-            {article.body.map((paragraph, index) => <Typography key={index} sx={{ fontSize: { xs: 17, md: 18 }, lineHeight: 1.85, color: index === 0 ? "text.primary" : "text.secondary" }}><RichText text={paragraph} shop={shop} /></Typography>)}
-          </Box>
-
-          <Box sx={{ mt: { xs: 4, md: 5 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 2 }}>
-            <Box sx={callout}>
-              <Typography component="h2" sx={{ fontSize: 17, fontWeight: 700, mb: 1 }}>What it means</Typography>
-              <Typography sx={{ color: "text.secondary", lineHeight: 1.75 }}><RichText text={article.means} shop={shop} /></Typography>
-            </Box>
-            <Box sx={{ ...callout, bgcolor: "#fbf6ec", borderColor: "#f0e2c4" }}>
-              <Typography component="h2" sx={{ fontSize: 17, fontWeight: 700, mb: 1 }}>What we don’t know yet</Typography>
-              <Typography sx={{ color: "text.secondary", lineHeight: 1.75 }}><RichText text={article.unknowns} shop={shop} /></Typography>
-            </Box>
-          </Box>
-
-          {peptides.length ? (
-            <Box sx={{ mt: { xs: 4, md: 5 } }}>
-              <Typography component="h2" sx={{ fontSize: 17, fontWeight: 700, mb: 1.5 }}>Read more in the library</Typography>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                {peptides.map((peptide) => <Chip key={peptide.slug} component={AppLink} href={`/learn/${peptide.slug}`} clickable label={peptide.name} variant="outlined" sx={{ fontSize: 14, height: 36, textDecoration: "none" }} />)}
-              </Box>
-            </Box>
-          ) : null}
-
-          <ResearchCatalog peptides={article.peptides} />
-
-          <Box sx={{ mt: { xs: 4, md: 5 }, pt: { xs: 4, md: 5 }, borderTop: "1px solid", borderColor: "divider" }}>
-            <Typography component="h2" sx={{ fontSize: 17, fontWeight: 700, mb: 2 }}>Sources</Typography>
-            <SourceList sources={article.sources} />
-            <Typography sx={{ mt: 4, fontSize: 13, color: "text.secondary" }}>{LEARN_DISCLAIMER}</Typography>
-          </Box>
-        </Box>
-
-        <Box component="section" sx={{ mt: { xs: 5, md: 7 }, pt: { xs: 4, md: 5 }, borderTop: "1px solid", borderColor: "divider" }}>
-          <Typography component="h2" sx={{ fontSize: { xs: 24, md: 28 }, fontWeight: 600, mb: 2 }}>Watch: videos connected to this article</Typography>
-          <VideoResources videos={videos.videos} connections={videos.connections} introduction={videos.introduction} currentArticle={article.slug} />
-        </Box>
-
-        <Box sx={{ mt: { xs: 7, md: 10 }, pt: { xs: 5, md: 6 }, borderTop: "1px solid", borderColor: "divider" }}>
-          <Typography component="h2" sx={{ fontSize: { xs: 24, md: 30 }, fontWeight: 600, letterSpacing: "-.03em", mb: 3 }}>More news & articles</Typography>
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" }, gap: 3.5 }}>
-            {more.map((other) => <ArticleCard key={other.slug} article={other} />)}
-          </Box>
-        </Box>
-      </Section>
-    </>
-  )
+        </ReadingSection>
+        <ReadingSection id="research" title="The research, explained">
+          <Box sx={{ display: "grid", gap: 2.5 }}>{article.body.map((paragraph, index) => <Typography key={index} sx={readingProse}><RichText text={paragraph} shop={shop} /></Typography>)}</Box>
+        </ReadingSection>
+        <ReadingSection id="meaning" title="What does this mean?"><Typography sx={readingProse}><RichText text={article.means} shop={shop} /></Typography></ReadingSection>
+        <ReadingSection id="unknowns" title="What don’t we know yet?"><Typography sx={readingProse}><RichText text={article.unknowns} shop={shop} /></Typography></ReadingSection>
+        {peptides.length ? <ReadingSection id="related-guides" title="Understand the peptides in this article">
+          <Box component="ul" sx={{ m: 0, pl: 2.5, display: "grid", gap: 1.5 }}>{peptides.map(peptide => <li key={peptide.slug}>
+            <AppLink href={`/learn/${peptide.slug}`} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 17, fontWeight: 650 }}>{peptide.name}: research and safety guide</AppLink>
+            <Typography sx={{ fontSize: 15, lineHeight: 1.75, color: "brand.navySoft" }}>{peptide.oneLiner}</Typography>
+          </li>)}</Box>
+        </ReadingSection> : null}
+        <ReadingSection id="videos" title="Watch and learn"><VideoResources videos={videos.videos} connections={videos.connections} introduction={videos.introduction} currentArticle={article.slug} /></ReadingSection>
+        <ReadingSection id="sources" title="Sources and references">
+          <SourceList sources={article.sources} />
+          <Typography sx={{ mt: 3, fontSize: 14, lineHeight: 1.8, color: "brand.navySoft" }}>{LEARN_DISCLAIMER}</Typography>
+        </ReadingSection>
+        <Box id="research-shop" sx={{ scrollMarginTop: 8 }}><ResearchCatalog peptides={article.peptides} /></Box>
+      </ReadingLayout>
+    </Box>
+    <Section tone="paper" sx={{ py: { xs: 5, md: 7 }, borderTop: "1px solid", borderColor: "divider" }}>
+      <Typography component="h2" sx={{ fontSize: { xs: 25, md: 30 }, fontWeight: 650, color: "brand.navy", mb: 3 }}>Keep reading</Typography>
+      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" }, gap: 4 }}>{more.map(other => <ArticleCard key={other.slug} article={other} />)}</Box>
+      <AppLink href="/news" sx={{ mt: 3, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>Browse all articles</AppLink>
+    </Section>
+  </>
 }

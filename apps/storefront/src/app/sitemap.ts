@@ -3,7 +3,9 @@ import { cacheLife } from "next/cache"
 import { LEGAL_DOCUMENTS } from "@/content/legal"
 import { ARTICLES } from "@/content/learn/articles"
 import { PEPTIDES } from "@/content/learn/peptides"
+import { getLearnIllustration } from "@/content/learn/illustrations"
 import { BASE_URL } from "@/lib/config"
+import { articleLanguages, articleUrl } from "@/lib/article-seo"
 import { listProductHandles } from "@/lib/medusa/products"
 import { listCountryCodes } from "@/lib/medusa/regions"
 
@@ -24,16 +26,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const paths = [
     ...STATIC_PATHS,
     ...LEGAL_DOCUMENTS.map((document) => `/legal/${document.slug}`),
-    ...PEPTIDES.map((peptide) => `/learn/${peptide.slug}`),
-    ...ARTICLES.map((article) => `/news/${article.slug}`),
     ...handles.map((handle) => `/products/${handle}`),
   ]
 
-  return countries.flatMap((country) =>
+  const storefront = countries.flatMap((country) =>
     paths.map((path) => ({
       url: `${BASE_URL}/${country}${path}`,
       changeFrequency: path.startsWith("/products") ? ("daily" as const) : ("weekly" as const),
       priority: path === "" ? 1 : path.startsWith("/products") ? 0.8 : 0.5,
     }))
   )
+
+  // English article bodies are shared across storefronts; list the same preferred
+  // URLs used in their canonical tags, with reciprocal regional alternates.
+  const editorial = [
+    ...PEPTIDES.map(peptide => ({ path: `/learn/${peptide.slug}`, slug: peptide.slug })),
+    ...ARTICLES.map(article => ({ path: `/news/${article.slug}`, slug: article.slug })),
+  ].map(({ path, slug }) => {
+    const image = getLearnIllustration(slug)
+    return { url: articleUrl(path), changeFrequency: "monthly" as const, priority: 0.7,
+      alternates: { languages: articleLanguages(path) }, ...(image ? { images: [`${BASE_URL}${image.src}`] } : {}),
+    }
+  })
+  return [...storefront, ...editorial]
 }
