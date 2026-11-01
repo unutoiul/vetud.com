@@ -45,7 +45,7 @@ export default function Header() {
   const searchInput = useRef<HTMLInputElement>(null)
   return <>
     <AppBar position="sticky" sx={{ top: 0, mt: 0, mx: "auto", width: "100%", borderRadius: 0, bgcolor: "rgba(255,255,255,.94)", backdropFilter: "blur(18px)", borderBottom: "1px solid", borderColor: "divider", boxShadow: "none" }}>
-      <Toolbar sx={{ minHeight: { xs: 76, md: 92 }, width: "100%", maxWidth: 1488, mx: "auto", px: { xs: 2, md: 6 }, gap: { xs: .25, md: 1.5 }, "& > .MuiIconButton-root": { minWidth: 44, width: 44, height: 44 } }}>
+      <Toolbar sx={{ minHeight: { xs: 76, md: 92 }, width: "100%", maxWidth: 1488, mx: "auto", px: { xs: 1.5, sm: 2, md: 6 }, gap: { xs: 0, sm: .25, md: 1.5 }, "& > .MuiIconButton-root": { minWidth: 44, width: 44, height: 44 } }}>
         <Box component={LocalizedNextLink} href="/" aria-label="Vetud Peptides home" sx={{ textDecoration: "none", display: "inline-flex", mr: { xs: "auto", lg: 5 } }}><Logo /></Box>
         <Suspense fallback={<MainNav />}><ActiveMainNav /></Suspense>
         <Box sx={{ display: { xs: "none", md: "block" }, ml: { md: "auto", lg: 1 } }}><CountrySelect /></Box>
