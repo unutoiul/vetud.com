@@ -1,0 +1,81 @@
+{
+  "config": {
+    "card": true,
+    "crypto": false
+  },
+  "regions": [
+    {
+      "region": "United States",
+      "countries": [
+        "us"
+      ],
+      "providers": [
+        "pp_makepay_makepay",
+        "pp_paygate_card",
+        "pp_system_default"
+      ],
+      "paygateAvailable": true,
+      "existingMethodsPreserved": true
+    },
+    {
+      "region": "Europe",
+      "countries": [
+        "fr",
+        "de",
+        "nl"
+      ],
+      "providers": [
+        "pp_paygate_card",
+        "pp_system_default"
+      ],
+      "paygateAvailable": true,
+      "existingMethodsPreserved": true
+    },
+    {
+      "region": "United Kingdom",
+      "countries": [
+        "gb"
+      ],
+      "providers": [
+        "pp_paygate_card",
+        "pp_system_default"
+      ],
+      "paygateAvailable": true,
+      "existingMethodsPreserved": true
+    }
+  ],
+  "checkouts": [
+    {
+      "country": "us",
+      "status": 200,
+      "html": true,
+      "title": "Checkout · Vetud Peptides"
+    },
+    {
+      "country": "gb",
+      "status": 200,
+      "html": true,
+      "title": "Checkout · Vetud Peptides"
+    },
+    {
+      "country": "de",
+      "status": 200,
+      "html": true,
+      "title": "Checkout · Vetud Peptides"
+    },
+    {
+      "country": "fr",
+      "status": 200,
+      "html": true,
+      "title": "Checkout · Vetud Peptides"
+    },
+    {
+      "country": "nl",
+      "status": 200,
+      "html": true,
+      "title": "Checkout · Vetud Peptides"
+    }
+  ],
+  "unsignedCallbackStatus": 400,
+  "unsignedCallbackRejected": true
+}
