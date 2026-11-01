@@ -1,0 +1,23 @@
+{
+  "checks": [
+    {
+      "route": "/us/learn/selank",
+      "width": 1440,
+      "overflow": false,
+      "youtubeLinks": true,
+      "localizedShop": true,
+      "playerOpenAndClose": true,
+      "humanBarSeparation": false
+    },
+    {
+      "route": "/us/learn/selank",
+      "width": 390,
+      "overflow": false,
+      "youtubeLinks": true,
+      "localizedShop": true,
+      "playerOpenAndClose": true,
+      "humanBarSeparation": false
+    }
+  ],
+  "errors": []
+}

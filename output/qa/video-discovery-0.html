@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <!-- Primary SEO -->
+  <title>
+   PepIQ – Peptide Shop, Scanner &amp; Dosage Guide App for iOS
+  </title>
+  <meta content="PepIQ is the peptide app with a verified peptide shop, vial scanner, reconstitution calculator and dosing guides. 4.9 stars, 600+ reviews. Free on the App Store." name="description"/>
+  <meta content="PepIQ" name="author"/>
+  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
+  <meta content="index, follow" name="googlebot"/>
+  <!-- Open Graph (Facebook, LinkedIn, iMessage previews) -->
+  <meta content="website" property="og:type"/>
+  <meta content="PepIQ – Peptide Shop, Scanner &amp; Dosage Guide App for iOS" property="og:title"/>
+  <meta content="PepIQ is the peptide app with a verified peptide shop, vial scanner, reconstitution calculator and dosing guides. 4.9 stars, 600+ reviews. Free on the App Store." property="og:description"/>
+  <meta content="https://media.base44.com/images/public/6a131b806bb6919e0fb4c496/05dd58707_PepIQ_appicon_1024.png" property="og:image"/>
+  <meta content="1024" property="og:image:width"/>
+  <meta content="1024" property="og:image:height"/>
+  <meta content="PepIQ app icon" property="og:image:alt"/>
+  <meta content="PepIQ" property="og:site_name"/>
+  <meta content="en_US" property="og:locale"/>
+  <!-- Twitter / X Card -->
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="PepIQ – Peptide Shop, Scanner &amp; Dosage Guide App for iOS" name="twitter:title"/>
+  <meta content="PepIQ is the peptide app with a verified peptide shop, vial scanner, reconstitution calculator and dosing guides. 4.9 stars, 600+ reviews. Free on the App Store." name="twitter:description"/>
+  <meta content="https://media.base44.com/images/public/6a131b806bb6919e0fb4c496/05dd58707_PepIQ_appicon_1024.png" name="twitter:image"/>
+  <meta content="PepIQ app icon" name="twitter:image:alt"/>
+  <!-- App Store Smart Banner (iOS) -->
+  <meta content="PepIQ" name="apple-mobile-web-app-title"/>
+  <meta content="app-id=6772365932, app-argument=https://apps.apple.com/us/app/pepiq-shop-scan/id6772365932?ref=web" name="apple-itunes-app"/>
+  <!-- Theme color -->
+  <meta content="#0a0a0a" name="theme-color"/>
+  <!-- Route-specific structured data is injected by the rendered page. -->
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <script crossorigin="" src="/assets/index-BSg1HR-4.js" type="module">
+  </script>
+  <link crossorigin="" href="/assets/index-BX3ZIS5W.css" rel="stylesheet"/>
+  <script type="module">
+   if (window.self === window.top) {
+  let lastPath = "";
+  function getPageNameFromPath(path) {
+    const segments = path.split("/").filter(Boolean);
+    return segments[0] || null;
+  }
+  function trackPageView() {
+    const path = window.location.pathname;
+    if (path === lastPath) return;
+    lastPath = path;
+    const pageName = getPageNameFromPath(path) || "home";
+    const appId = "6a131b806bb6919e0fb4c496";
+    if (!appId) return;
+    fetch(`/api/app-logs/${appId}/log-user-in-app/${pageName}`, {
+      method: "POST",
+    }).catch(() => {});
+  }
+  const originalPushState = history.pushState.bind(history);
+  history.pushState = function (...args) {
+    originalPushState(...args);
+    trackPageView();
+  };
+  const originalReplaceState = history.replaceState.bind(history);
+  history.replaceState = function (...args) {
+    originalReplaceState(...args);
+    trackPageView();
+  };
+  window.addEventListener("popstate", trackPageView);
+  trackPageView();
+}
+  </script>
+  <link href="https://pepiq.io/" rel="canonical"/>
+  <meta content="https://pepiq.io/" property="og:url"/>
+  <meta content="on" name="base44-analytics"/>
+  <script id="b44-consent-listener">
+   (function () {
+  if (window.__b44Consent) return;
+  var state = {};
+  var listeners = [];
+  function notify(listener) {
+    try {
+      (state[listener.category] === "granted" ? listener.grant : listener.revoke)();
+    } catch (e) {}
+  }
+  function read(entry) {
+    if (!entry || entry[0] !== "consent" || entry[1] !== "update" || !entry[2]) return;
+    for (var category in entry[2]) {
+      state[category] = entry[2][category];
+      for (var i = 0; i < listeners.length; i++) {
+        if (listeners[i].category === category) notify(listeners[i]);
+      }
+    }
+  }
+  var dataLayer = (window.dataLayer = window.dataLayer || []);
+  // The banner may have restored the visitor's saved choice before this script ran.
+  for (var i = 0; i < dataLayer.length; i++) read(dataLayer[i]);
+  var push = dataLayer.push;
+  dataLayer.push = function () {
+    var result = push.apply(dataLayer, arguments);
+    for (var j = 0; j < arguments.length; j++) read(arguments[j]);
+    return result;
+  };
+  window.__b44Consent = {
+    on: function (category, grant, revoke) {
+      var listener = { category: category, grant: grant, revoke: revoke };
+      listeners.push(listener);
+      if (category in state) notify(listener);
+    },
+  };
+})();
+  </script>
+  <meta content="yes" name="mobile-web-app-capable"/>
+  <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+  <script data-seo-source="builder" type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "WebSite", "name": "Maximise your potential", "url": "https://pepiq.io"}
+  </script>
+  <script data-seo-source="builder" type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "Organization", "name": "Maximise your potential", "url": "https://pepiq.io", "logo": "https://www.glowlyaiapp.com/_next/image?url=%2Fassets%2Fglowlylogo.png&w=64&q=75&dpl=dpl_Bt6gPwbEiPYH5CtmUAGfHwrAMvLv"}
+  </script>
+  <script data-seo-source="builder" type="application/ld+json">
+   {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://pepiq.io/"}, {"@type": "ListItem", "position": 2, "name": "Videos", "item": "https://pepiq.io/videos"}]}
+  </script>
+ </head>
+ <body class="inter_5901b7c6-module__ec5Qua__variable antialiased">
+  <div id="root">
+   <div class="bg-background text-foreground min-h-screen">
+    <main class="site-content px-4 pb-12 pt-28">
+     <article class="mx-auto max-w-4xl">
+      <h1 class="text-3xl font-bold">
+       PepIQ – Peptide Shop, Scanner &amp; Dosage Guide App for iOS
+      </h1>
+      <p class="mt-4 text-muted-foreground">
+       PepIQ is the peptide app with a verified peptide shop, vial scanner, reconstitution calculator and dosing guides. 4.9 stars, 600+ reviews. Free on the App Store.
+      </p>
+      <section>
+       <h2 class="mb-4 mt-8 text-2xl font-bold">
+        Pages
+       </h2>
+       <ul class="space-y-3">
+        <li>
+         <a class="text-primary" href="/">
+          PepIQ – Peptide Shop, Scanner &amp; Dosage Guide App for iOS
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Explore PepIQ's verified peptide shop, vial scanner, calculators and dosing guides for iOS.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog">
+          Peptide Guides &amp; Research Blog | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Research-backed guides on BPC-157, TB-500, semaglutide, tirzepatide, retatrutide, GHK-Cu and more from the PepIQ team.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptide-analysis">
+          AI Peptide Analysis &amp; Recommendations | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Get personalised peptide recommendations based on your goals and profile with PepIQ's AI analysis.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/PrivacyPolicy">
+          Privacy Policy | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Learn how PepIQ collects, uses, protects and deletes personal information, photos and face data.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/TermsOfService">
+          Terms of Service | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Read the terms that govern your use of the PepIQ app, AI analysis, content and services.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides">
+          Peptide Guides: Research, Dosing &amp; Reconstitution | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Browse PepIQ peptide guides covering research, dosing, reconstitution, storage, stacks and frequently asked questions.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/compare">
+          Compare Peptides Side by Side | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Compare commonly researched peptide compounds and formats side by side.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/guides">
+          Peptide How-To Guides | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Answer-first educational guides to peptide reconstitution, storage, COAs and vendor verification.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/vendors/verified">
+          Verified Peptide Vendors | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          PepIQ is the only peptide app with a verified vendor shop.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/buy-peptides">
+          Buy Peptides Safely – Verified Vendor Shop in the PepIQ App
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Looking to buy peptides?
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/calculators">
+          Free Peptide Calculators | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Use free educational peptide calculators for reconstitution and research measurements.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/calculators/reconstitution">
+          Peptide Reconstitution Calculator – Units, mg &amp; Bacteriostatic Water | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Calculate peptide concentration, insulin-syringe units, doses per vial, and bacteriostatic water measurements.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/calculators/dosage">
+          Peptide Dosage Calculator | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Explore educational peptide research dose ranges and estimated weekly totals by compound, body weight, and frequency.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos">
+          Peptide videos | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Watch third-party educational videos about peptide research, mechanisms, risks and reconstitution.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/pepiq-only-apple-approved-peptide-app">
+          PepIQ: The Only App Approved by Apple to Sell Peptides | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Why PepIQ holds the unique distinction of being the only iOS app Apple has approved for selling peptides — and what that means for you.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/ai-facial-analysis-explained">
+          How PepIQ's AI Facial Analysis Works | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A deep dive into the technology behind PepIQ's instant facial analysis powered by Google Gemini.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/ai-peptide-recommendations">
+          Personalized Peptide Recommendations Powered by AI | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          How PepIQ turns your facial and physique scan into a custom peptide protocol tailored to your unique profile.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/face-scans-what-they-reveal">
+          Face Scans: What Your Face Really Reveals | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Your face tells a story about your health, habits, and potential.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/physique-scans-body-optimization">
+          Physique Scans: Body Optimization with AI | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          PepIQ's physique scan analyses your body composition and helps you build a targeted improvement plan.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/precise-dosing-and-tracking">
+          Precise Dosing and Tracking with PepIQ | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Getting peptides is only half the battle.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/why-apple-approved-pepiq">
+          Why Apple Approved PepIQ (And Rejected Everyone Else) | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          An inside look at what it takes for an app to earn Apple's approval to sell peptides.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/science-of-peptide-therapy">
+          The Science Behind Peptide Therapy | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          What peptides are, how they work, and why they've become one of the most exciting frontiers in personal optimization.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/track-peptide-progress">
+          How to Track Your Peptide Progress Effectively | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          The proven system for measuring your peptide results — and how PepIQ automates it for you.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/ai-personal-improvement-plans">
+          AI-Powered Daily Improvement Plans | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          PepIQ doesn't just analyse you — it builds you a daily plan to actually improve.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/privacy-first-peptide-app">
+          PepIQ is Privacy-First: Your Photos Are Never Stored | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          How PepIQ analyses your face and body without ever saving your images.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/pepiq-community-features">
+          The PepIQ Community: Connect, Share, and Grow Together | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          PepIQ isn't just an app — it's a community of people working toward their best selves.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/getting-started-with-pepiq">
+          Getting Started with PepIQ: Your First 7 Days | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A step-by-step guide to getting the most out of PepIQ in your first week.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/best-peptides-facial-aesthetics">
+          The Best Peptides for Facial Aesthetics | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Which peptides target skin, symmetry, and facial rejuvenation — and how PepIQ identifies them for you.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/peptides-for-recovery-physique">
+          Peptides for Recovery and Physique Building | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          How peptides support muscle recovery, growth, and fat loss — and how PepIQ targets them to your body.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/pepiq-vs-other-peptide-apps">
+          PepIQ vs Other Peptide Apps: There Is No Comparison | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Why PepIQ is in a category of its own — and why no other peptide app comes close.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/future-of-ai-health-analysis">
+          The Future of AI Health Analysis Is Here | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          How AI is transforming personal health and aesthetics — and why PepIQ is leading the way.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/daily-improvement-plans-explained">
+          Daily Improvement Plans: How PepIQ Keeps You on Track | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          What goes into a PepIQ daily plan and why having one is the key to real results.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/understanding-your-pepiq-score">
+          Understanding Your PepIQ Score | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          What your PepIQ score means, how it's calculated, and how to use it to track progress.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/peptide-dosing-safety-guide">
+          Peptide Dosing Safety: A Complete Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          How to dose peptides safely and effectively — and how PepIQ takes the guesswork out of it.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/how-google-gemini-powers-pepiq">
+          How Google Gemini Powers PepIQ's Analysis | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A look at the AI engine behind PepIQ's instant facial and physique analysis.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/blog/pepiq-success-stories">
+          PepIQ Success Stories: Real Results from Real Users | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          How PepIQ users are transforming their faces, physiques, and confidence — one scan at a time.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/bpc-157">
+          BPC-157 – Research, Dosing &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          What BPC-157 is, what the research shows, how to reconstitute a 5mg vial, storage, and common stacks.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/tb-500">
+          TB-500 – Research, Dosing &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          TB-500 (Thymosin Beta-4 fragment) explained: research on tissue repair, loading-phase dosing, reconstitution of 5mg and 10mg vials, storage, and stacking with BPC-157.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/cjc-1295-ipamorelin">
+          CJC-1295 / Ipamorelin – Research, Dosing &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          CJC-1295 and ipamorelin explained: how the GHRH + GHRP stack raises growth hormone, research dosing, timing, reconstituting a 5mg/5mg blend, and side effects.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/ghk-cu">
+          GHK-Cu – Research, Dosing &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          GHK-Cu (copper peptide) explained: research on skin, hair, and tissue repair, injectable dosing, reconstituting 50mg and 100mg vials, topical use, and side effects.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/semaglutide">
+          Semaglutide – Research, Dosing Chart &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Semaglutide (Ozempic / Wegovy) explained: how GLP-1 agonists work, the clinical titration schedule, how to reconstitute a 3mg or 5mg research vial, and units per dose.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/tirzepatide">
+          Tirzepatide – Research, Dosing Chart &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Tirzepatide (Mounjaro / Zepbound) explained: dual GIP/GLP-1 mechanism, clinical titration schedule, how to reconstitute 10mg and 15mg research vials, and units per dose.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/retatrutide">
+          Retatrutide – Research, Dosing Chart &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Retatrutide explained: the triple GLP-1/GIP/glucagon agonist, phase 2 trial results, dose escalation used in trials, and how to reconstitute 10mg research vials.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/nad-plus">
+          NAD+ Injections – Research, Dosing &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          NAD+ explained: what it does, what the research shows for injectable vs oral precursors, subcutaneous dosing ranges, reconstituting 500mg and 1000mg vials, and side effects.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/mots-c">
+          MOTS-c – Research, Dosing &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          MOTS-c explained: the mitochondrial peptide studied for metabolism, exercise performance, and insulin sensitivity.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/epithalon">
+          Epithalon (Epitalon) – Research, Dosing &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Epithalon explained: the telomerase-activating tetrapeptide, what Russian and animal studies show, typical 10–20 day cycles, reconstituting 10mg vials, and side effects.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/pt-141">
+          PT-141 (Bremelanotide) – Research, Dosing &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          PT-141 (bremelanotide, Vyleesi) explained: how it works on the brain rather than blood flow, clinical trial results, dosing and timing, reconstituting 10mg vials, and side effects.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/peptides/tesamorelin">
+          Tesamorelin – Research, Dosing &amp; Reconstitution Guide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Tesamorelin (Egrifta) explained: the FDA-approved GHRH analog for visceral fat, what the trials show, the labeled daily dose, and how to reconstitute 5mg and 10mg vials.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/compare/bpc-157-vs-tb-500">
+          BPC-157 vs TB-500 – Differences, Stacking &amp; Which to Use | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          BPC-157 and TB-500 are the two most used recovery peptides.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/compare/retatrutide-vs-tirzepatide">
+          Retatrutide vs Tirzepatide – Weight Loss, Side Effects &amp; Status | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Retatrutide (triple agonist) vs tirzepatide (dual agonist): trial weight-loss results, mechanism differences, side effects, dosing, and approval status compared.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/compare/cjc-1295-dac-vs-no-dac">
+          CJC-1295 With DAC vs Without DAC (Mod GRF 1-29) – Differences | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          CJC-1295 with DAC lasts about a week; without DAC (Mod GRF 1-29) lasts about 30 minutes.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/compare/ghk-cu-injectable-vs-topical">
+          GHK-Cu Injectable vs Topical – Which Form Works for Skin, Hair &amp; Healing | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          GHK-Cu comes as injectable vials, serums, and creams.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/guides/how-to-reconstitute-peptides">
+          How to Reconstitute Peptides – Step-by-Step With Bacteriostatic Water | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Step-by-step guide to reconstituting a lyophilized peptide vial: supplies, how much bacteriostatic water to add, how to calculate units, and how to store the result.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/guides/how-to-store-peptides">
+          How to Store Peptides – Lyophilized, Reconstituted &amp; Travel | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          How to store peptides correctly: fridge vs freezer for powder, how long reconstituted peptides last, light and heat exposure, shipping, travel, and which peptides are less stable.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/guides/how-to-read-a-peptide-coa">
+          How to Read a Peptide COA (Certificate of Analysis) | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          How to read a peptide certificate of analysis: purity vs net peptide content, HPLC and mass spec results, batch numbers, what a legitimate third-party COA includes, and red flags.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/guides/how-to-spot-fake-peptides">
+          How to Spot Fake or Underdosed Peptides | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          How to tell if peptides are fake, underdosed, or degraded: vial and label checks, dissolving behavior, vendor red flags, COA verification, and when to get a vial tested.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/bpc-157-explained">
+          BPC-157 explained: mechanism, evidence and risks | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A deep dive into BPC-157: how it is thought to work, what the research shows so far, the known risks, and the gap between animal studies and human trials.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/tb-500-explained">
+          TB-500 and Thymosin Beta-4 explained | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          TB-500 and Thymosin Beta-4 explained: what they are, the proposed benefits, the known risks, and what the evidence does and does not show.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/cjc-1295-ipamorelin-explained">
+          CJC-1295 and Ipamorelin explained by a doctor | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A doctor explains the classic CJC-1295 and Ipamorelin stack: what each peptide does and why they are often discussed together.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/ghk-cu-explained">
+          GHK-Cu explained: the science of the copper peptide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          The science behind GHK-Cu, the copper peptide studied for skin, hair and tissue repair.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/nad-plus-injections">
+          Do NAD+ injections really work? | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A doctor looks at NAD+ injections and whether the evidence supports the claims made about them.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/mots-c-explained">
+          MOTS-c explained: benefits, risks and research | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A full deep dive on MOTS-c (CB-4211): the research behind its "exercise in a vial" nickname, the potential benefits and the risks.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/epitalon-explained">
+          Epitalon explained: the truth about the "fountain of youth" peptide | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          What the research actually shows about Epitalon, the peptide nicknamed the fountain of youth.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/pt-141-explained">
+          PT-141 (Bremelanotide) and sexual desire explained | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A physician explains PT-141 (Bremelanotide) and what is known about its effect on sexual desire.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/how-semaglutide-works">
+          How semaglutide works: mechanism of action animation | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          An animated explanation of how semaglutide (Ozempic, Wegovy, Rybelsus) works in the body.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/how-glp-1-drugs-work">
+          How GLP-1 drugs like tirzepatide and semaglutide work | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A doctor explains how GLP-1 receptor agonists such as semaglutide and tirzepatide work.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/retatrutide-explained">
+          Retatrutide explained: mechanism and human trial results | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Retatrutide explained: how it works, the evidence so far, and what the human trials show.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/tesamorelin-explained">
+          Tesamorelin explained: the FDA-approved peptide for visceral fat | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          Tesamorelin explained: the FDA-approved peptide studied for reducing visceral belly fat.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/cjc-1295-ipamorelin-tesamorelin-sermorelin">
+          CJC-1295, Ipamorelin, Tesamorelin and Sermorelin compared | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          CJC-1295, Ipamorelin, Tesamorelin and Sermorelin compared: their forms, timing and how they differ.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/ghk-cu-topical-vs-injection">
+          GHK-Cu: topical vs microneedling vs injections | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A doctor compares the ways GHK-Cu is used: topical, with microneedling, and by injection.
+         </p>
+        </li>
+        <li>
+         <a class="text-primary" href="/videos/how-to-reconstitute-peptides">
+          How to reconstitute peptides | PepIQ
+         </a>
+         <p class="text-sm text-muted-foreground">
+          A step-by-step walkthrough of how peptides are reconstituted with bacteriostatic water.
+         </p>
+        </li>
+       </ul>
+      </section>
+     </article>
+    </main>
+   </div>
+  </div>
+ </body>
+</html>

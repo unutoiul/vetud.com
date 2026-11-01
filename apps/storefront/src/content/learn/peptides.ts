@@ -1,10 +1,11 @@
 import type { CategoryId, StatusId } from "./categories"
+import { CBL_514_SOURCES, PTT_A_SOURCES } from "./emerging-weight-research"
 
 /**
  * The peptide library: plain-language profiles for readers without a science background.
  * Every number comes from the linked source (PubMed abstracts checked 2026-11-01).
  * Profiles describe published research and approval status only. They never give doses,
- * never suggest personal use, and never link to the shop.
+ * never suggest personal use. Related catalog links show live research-product availability.
  */
 export type Source = { title: string; detail: string; url: string }
 export type KeyResult = { value: string; label: string; detail: string }
@@ -32,7 +33,7 @@ export type PeptideProfile = {
 
 const pubmed = (id: number) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`
 const FDA_ADVISERS_2026 = { title: "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026", detail: "US Food and Drug Administration · meeting page", url: "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026" }
-const FDA_CATEGORY_2_2026 = { title: "FDA to remove 12 popular peptides from the Category 2 “do not compound” list", detail: "Frier Levitt (healthcare law firm) · April 16, 2026", url: "https://www.frierlevitt.com/articles/fda-peptides-do-not-compound-list-update-2026/" }
+const FDA_CATEGORY_2_2026 = { title: "Bulk drug substances nominated for compounding under Section 503A", detail: "US Food and Drug Administration · updated May 14, 2026 (PDF)", url: "https://www.fda.gov/media/94155/download" }
 const GLP1_RISKS = [
   "Stomach side effects are common: nausea, diarrhea, vomiting and constipation, especially while the dose is being raised.",
   "Less common but serious problems include inflammation of the pancreas (pancreatitis) and gallbladder problems.",
@@ -41,6 +42,44 @@ const GLP1_RISKS = [
 ]
 
 export const PEPTIDES: PeptideProfile[] = [
+  {
+    slug: "ptt-a",
+    name: "PTT-A",
+    aka: "Experimental peptide tetra-agonist",
+    category: "weight",
+    status: "early",
+    statusNote: "An investigational peptide, not an approved medicine. The cited efficacy findings are from cell and rodent experiments, not human weight-loss trials.",
+    oneLiner: "An experimental peptide targeting four hormone receptors. Its weight and muscle findings are from animals so far.",
+    whatItIs: "PTT-A is a research name for a long-acting peptide developed by Pep2Tango. It is designed to activate GLP-1, GIP, amylin and calcitonin receptors in one molecule. The company’s launch announcement described work preparing candidates for clinical development.",
+    howItWorks: "The proposed approach combines several hormone signals rather than using a single receptor. Early studies tested receptor activity in cells and metabolic effects in rodents. Four targets alone do not establish how effective or tolerable a medicine will be in people.",
+    findings: [
+      "An ADA 2025 conference abstract reported a 21-day experiment in diet-induced obese rats, comparing PTT-A with tirzepatide and a vehicle control.",
+      "Researchers reported fat-mass reduction with preserved muscle measures in the PTT-A groups. This is an animal finding, not proof of muscle preservation in people.",
+      "The cited sources do not provide an average human body-weight-loss percentage or a human comparison with retatrutide.",
+    ],
+    keyResult: { value: "Animal data", label: "Human body-weight loss is not established", detail: "21-day rat experiment · conference abstract · not a human trial" },
+    risks: ["Human effectiveness, adverse effects and long-term safety cannot be established from these animal experiments.", "Products sold under a research name cannot be assumed to match the developer’s investigational material."],
+    sources: PTT_A_SOURCES,
+  },
+  {
+    slug: "cbl-514",
+    name: "CBL-514",
+    category: "weight",
+    status: "trials",
+    notAPeptide: true,
+    statusNote: "An experimental small-molecule drug in human studies, not an approved peptide medicine. Its fat-volume results are different from whole-body weight loss.",
+    oneLiner: "A small molecule, not a peptide, studied for reducing local fat deposits by triggering fat-cell death.",
+    whatItIs: "CBL-514 is an investigational injectable drug developed by Caliway. Studies examine abdominal fat under the skin and, in a smaller subgroup, visceral fat around the organs.",
+    howItWorks: "It is designed to trigger apoptosis, a process that removes cells, in targeted fat tissue. Clinical research measures whether local fat deposits shrink; this is a different endpoint from a change in total body weight.",
+    findings: [
+      "A published randomized phase 2 study enrolled 76 participants. At eight-week follow-up, 69.6% of assessed CBL-514 participants had lost at least 150 mL of subcutaneous fat, compared with none on placebo.",
+      "An EASD 2026 conference report described a small MRI subgroup: visceral-fat volume fell 12.01% four weeks after final treatment, while placebo rose 5.68%. That is not a body-weight-loss percentage.",
+      "A possible reduction in weight regain after stopping tirzepatide has been reported in rats. It has not been established in people by the cited studies.",
+    ],
+    keyResult: { value: "−12.01%", label: "visceral-fat volume, not body weight", detail: "Preliminary MRI subgroup · four weeks after final treatment · placebo: +5.68%" },
+    risks: ["Reported reactions include pain, swelling and redness at injection sites.", "Small, short studies cannot establish uncommon or long-term risks. Local fat reduction does not establish a treatment benefit for obesity or weight regain."],
+    sources: CBL_514_SOURCES,
+  },
   {
     slug: "semaglutide",
     name: "Semaglutide",
@@ -88,7 +127,7 @@ export const PEPTIDES: PeptideProfile[] = [
     sources: [
       { title: "Tirzepatide Once Weekly for the Treatment of Obesity (SURMOUNT-1)", detail: "Jastreboff et al. · New England Journal of Medicine · 2022", url: pubmed(35658024) },
       { title: "LY3298176, a novel dual GIP and GLP-1 receptor agonist: from discovery to clinical proof of concept", detail: "Coskun et al. · Molecular Metabolism · 2018", url: pubmed(30473097) },
-      { title: "What’s next for Novo Nordisk’s CagriSema after trial miss", detail: "CNBC · February 24, 2026", url: "https://www.cnbc.com/2026/02/24/healthy-returns-whats-next-for-novo-nordisks-obesity-drug-cagrisema.html" },
+      { title: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk ? original sponsor announcement ? February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
     ],
     videos: ["QGIFdakceHM", "o8YMLTfNYtc"],
     pubchem: 166567236,
@@ -117,8 +156,8 @@ export const PEPTIDES: PeptideProfile[] = [
     ],
     sources: [
       { title: "Triple-Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial", detail: "Jastreboff et al. · New England Journal of Medicine · 2023", url: pubmed(37366315) },
-      { title: "Retatrutide achieves up to 30.3% average weight loss in phase 3 TRIUMPH-1 trial", detail: "AJMC · May 2026", url: "https://www.ajmc.com/view/retatrutide-achieves-up-to-30-3-average-weight-loss-in-phase-3-triumph-1-trial" },
-      { title: "Retatrutide delivers up to 22.6% weight loss in two new phase III trials", detail: "Pharmaceutical Executive · July 2026", url: "https://www.pharmexec.com/view/retatrutide-delivers-22-weight-loss-two-phase-iii-trials" },
+      { title: "TRIUMPH-1: phase 3 retatrutide topline results", detail: "Eli Lilly and Company ? original sponsor announcement ? May 21, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss" },
+      { title: "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results", detail: "Eli Lilly and Company ? original sponsor announcement ? July 23, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional" },
     ],
     videos: ["w0A_VRT3rIE"],
   },
@@ -159,7 +198,7 @@ export const PEPTIDES: PeptideProfile[] = [
     findings: [
       "Dozens of studies in rats and mice report faster healing of tendons, muscles, ligaments, bones and the gut.",
       "A 2025 review for sports medicine found the animal results encouraging, but very little evidence in humans.",
-      "In July 2026 FDA advisers reviewed it (for the bowel disease ulcerative colitis) as a possible ingredient for compounding pharmacies. Reports say they voted 8 to 6 in favor. Their vote is advice only; the FDA has not made a final decision.",
+      "The FDA’s July 2026 meeting agenda covered BPC-157 for the bowel disease ulcerative colitis as a possible compounding ingredient. Advisory committee recommendations are non-binding and are not drug approval.",
     ],
     risks: [
       "Because it hasn’t been properly tested in people, its side effects and long-term safety are unknown.",
@@ -629,7 +668,7 @@ export const PEPTIDES: PeptideProfile[] = [
     sources: [
       { title: "Once-weekly cagrilintide for weight management in people with overweight and obesity: a phase 2 trial", detail: "Lau et al. · The Lancet · 2021", url: pubmed(34798060) },
       { title: "Coadministered Cagrilintide and Semaglutide in Adults with Overweight or Obesity (REDEFINE 1)", detail: "Garvey et al. · New England Journal of Medicine · 2025", url: pubmed(40544433) },
-      { title: "What’s next for Novo Nordisk’s CagriSema after trial miss", detail: "CNBC · February 24, 2026", url: "https://www.cnbc.com/2026/02/24/healthy-returns-whats-next-for-novo-nordisks-obesity-drug-cagrisema.html" },
+      { title: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk ? original sponsor announcement ? February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
     ],
     pubchem: 171397054,
   },

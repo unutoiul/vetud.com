@@ -1,0 +1,475 @@
+{
+  "profiles": [
+    {
+      "slug": "ptt-a",
+      "specific": [],
+      "background": [
+        "KeqMSzFbSos",
+        "lJOQB_G15Jc",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "cbl-514",
+      "specific": [],
+      "background": [
+        "gNFDONSjB7Q",
+        "pUWAgJKkOlg",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "semaglutide",
+      "specific": [
+        "IRS2xnO-y28",
+        "o8YMLTfNYtc"
+      ],
+      "background": [
+        "KeqMSzFbSos"
+      ]
+    },
+    {
+      "slug": "tirzepatide",
+      "specific": [
+        "IRS2xnO-y28"
+      ],
+      "background": [
+        "KeqMSzFbSos",
+        "pUWAgJKkOlg"
+      ]
+    },
+    {
+      "slug": "retatrutide",
+      "specific": [
+        "ku8izA1Nh6o",
+        "w0A_VRT3rIE"
+      ],
+      "background": [
+        "KeqMSzFbSos"
+      ]
+    },
+    {
+      "slug": "liraglutide",
+      "specific": [],
+      "background": [
+        "KeqMSzFbSos",
+        "pUWAgJKkOlg",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "bpc-157",
+      "specific": [
+        "Y6smr1o-f9o",
+        "DhDC0DAYdBI"
+      ],
+      "background": [
+        "O1N2rENXq_Y"
+      ]
+    },
+    {
+      "slug": "tb-500",
+      "specific": [
+        "DhDC0DAYdBI"
+      ],
+      "background": [
+        "O1N2rENXq_Y",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "kpv",
+      "specific": [
+        "DhDC0DAYdBI"
+      ],
+      "background": [
+        "O1N2rENXq_Y",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "ipamorelin",
+      "specific": [
+        "wDqrmuOOdBI"
+      ],
+      "background": [
+        "9dS7bc_2bUE",
+        "Frck4v4YGV8"
+      ]
+    },
+    {
+      "slug": "cjc-1295",
+      "specific": [
+        "E7MlK4p7O7c"
+      ],
+      "background": [
+        "9dS7bc_2bUE",
+        "Frck4v4YGV8"
+      ]
+    },
+    {
+      "slug": "sermorelin",
+      "specific": [],
+      "background": [
+        "9dS7bc_2bUE",
+        "Frck4v4YGV8",
+        "_LKdNhF2WhI"
+      ]
+    },
+    {
+      "slug": "tesamorelin",
+      "specific": [],
+      "background": [
+        "9dS7bc_2bUE",
+        "Frck4v4YGV8",
+        "_LKdNhF2WhI"
+      ]
+    },
+    {
+      "slug": "selank",
+      "specific": [],
+      "background": [
+        "FXYX_ksRwIk",
+        "ixCGzGOlnGo"
+      ]
+    },
+    {
+      "slug": "semax",
+      "specific": [
+        "xXM5ecHxlMU"
+      ],
+      "background": [
+        "FXYX_ksRwIk",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "ghk-cu",
+      "specific": [
+        "TH_ZDyMzhqM"
+      ],
+      "background": [
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "melanotan",
+      "specific": [
+        "DWL46HWhmgQ"
+      ],
+      "background": [
+        "ixCGzGOlnGo"
+      ]
+    },
+    {
+      "slug": "epitalon",
+      "specific": [
+        "xXM5ecHxlMU"
+      ],
+      "background": [
+        "2wseM6wWd74",
+        "ixCGzGOlnGo"
+      ]
+    },
+    {
+      "slug": "mots-c",
+      "specific": [
+        "DhDC0DAYdBI"
+      ],
+      "background": [
+        "i1dAnpSFbyI",
+        "l8BI_720Dfs"
+      ]
+    },
+    {
+      "slug": "nad",
+      "specific": [
+        "l8BI_720Dfs"
+      ],
+      "background": [
+        "i1dAnpSFbyI"
+      ]
+    },
+    {
+      "slug": "pt-141",
+      "specific": [
+        "D58NZXJ3UeE"
+      ],
+      "background": [
+        "ixCGzGOlnGo",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "thymosin-alpha-1",
+      "specific": [
+        "E7MlK4p7O7c"
+      ],
+      "background": [
+        "O1N2rENXq_Y",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "insulin",
+      "specific": [
+        "Gk1D4VgM8jY"
+      ],
+      "background": [
+        "9dS7bc_2bUE",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "oxytocin",
+      "specific": [
+        "S933fvQGK1I"
+      ],
+      "background": [
+        "9dS7bc_2bUE",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "octreotide",
+      "specific": [
+        "fYK29VEpMQw"
+      ],
+      "background": [
+        "9dS7bc_2bUE",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "teriparatide",
+      "specific": [
+        "zTW_R-OqpZI"
+      ],
+      "background": [
+        "9dS7bc_2bUE",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "cagrilintide",
+      "specific": [
+        "wbqcnfjETc4"
+      ],
+      "background": [
+        "KeqMSzFbSos",
+        "pUWAgJKkOlg"
+      ]
+    },
+    {
+      "slug": "aod-9604",
+      "specific": [
+        "E7MlK4p7O7c"
+      ],
+      "background": [
+        "KeqMSzFbSos",
+        "pUWAgJKkOlg"
+      ]
+    },
+    {
+      "slug": "argireline",
+      "specific": [],
+      "background": [
+        "TH_ZDyMzhqM",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "ahk-cu",
+      "specific": [],
+      "background": [
+        "8diYLhl8bWU",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "ara-290",
+      "specific": [],
+      "background": [
+        "O1N2rENXq_Y",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "ss-31",
+      "specific": [],
+      "background": [
+        "i1dAnpSFbyI",
+        "l8BI_720Dfs"
+      ]
+    },
+    {
+      "slug": "slu-pp-332",
+      "specific": [],
+      "background": [
+        "i1dAnpSFbyI",
+        "l8BI_720Dfs"
+      ]
+    },
+    {
+      "slug": "5-amino-1mq",
+      "specific": [],
+      "background": [
+        "i1dAnpSFbyI",
+        "l8BI_720Dfs"
+      ]
+    },
+    {
+      "slug": "hgh",
+      "specific": [
+        "Frck4v4YGV8",
+        "_LKdNhF2WhI"
+      ],
+      "background": [
+        "9dS7bc_2bUE"
+      ]
+    },
+    {
+      "slug": "igf-1-lr3",
+      "specific": [],
+      "background": [
+        "9dS7bc_2bUE",
+        "Frck4v4YGV8",
+        "_LKdNhF2WhI"
+      ]
+    },
+    {
+      "slug": "dsip",
+      "specific": [
+        "xXM5ecHxlMU"
+      ],
+      "background": [
+        "FXYX_ksRwIk",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "vip",
+      "specific": [],
+      "background": [
+        "O1N2rENXq_Y",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "kisspeptin",
+      "specific": [
+        "nMtSSCV1yvY",
+        "wDqrmuOOdBI"
+      ],
+      "background": [
+        "9dS7bc_2bUE"
+      ]
+    },
+    {
+      "slug": "hcg",
+      "specific": [],
+      "background": [
+        "9dS7bc_2bUE",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "fsh",
+      "specific": [],
+      "background": [
+        "9dS7bc_2bUE",
+        "BBTqkHQjUzg"
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "slug": "from-cells-to-human-trials",
+      "videos": [
+        "lJOQB_G15Jc",
+        "BBTqkHQjUzg",
+        "y7BCOolGVcM"
+      ]
+    },
+    {
+      "slug": "body-weight-fat-and-muscle-results",
+      "videos": [
+        "BBTqkHQjUzg",
+        "pUWAgJKkOlg",
+        "lJOQB_G15Jc"
+      ]
+    },
+    {
+      "slug": "ptt-a-four-receptors-animal-evidence",
+      "videos": [
+        "KeqMSzFbSos",
+        "lJOQB_G15Jc",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "rlx-201-skin-serum-12-weeks",
+      "videos": [
+        "2wseM6wWd74",
+        "lJOQB_G15Jc",
+        "TH_ZDyMzhqM"
+      ]
+    },
+    {
+      "slug": "cbl-514-fat-cells-self-destruct",
+      "videos": [
+        "gNFDONSjB7Q",
+        "pUWAgJKkOlg",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "fda-advisers-review-bpc-157-and-six-peptides",
+      "videos": [
+        "DhDC0DAYdBI",
+        "xXM5ecHxlMU",
+        "ixCGzGOlnGo"
+      ]
+    },
+    {
+      "slug": "retatrutide-triumph-2-and-3",
+      "videos": [
+        "ku8izA1Nh6o",
+        "w0A_VRT3rIE",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "retatrutide-triumph-1-28-percent",
+      "videos": [
+        "ku8izA1Nh6o",
+        "w0A_VRT3rIE",
+        "KeqMSzFbSos"
+      ]
+    },
+    {
+      "slug": "fda-category-2-twelve-peptides",
+      "videos": [
+        "E7MlK4p7O7c",
+        "DhDC0DAYdBI",
+        "xXM5ecHxlMU"
+      ]
+    },
+    {
+      "slug": "cagrisema-vs-zepbound",
+      "videos": [
+        "wbqcnfjETc4",
+        "IRS2xnO-y28",
+        "BBTqkHQjUzg"
+      ]
+    },
+    {
+      "slug": "wegovy-pill-approved",
+      "videos": [
+        "IRS2xnO-y28",
+        "o8YMLTfNYtc",
+        "lJOQB_G15Jc"
+      ]
+    }
+  ]
+}

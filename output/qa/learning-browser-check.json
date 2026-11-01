@@ -1,0 +1,19 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "overflow": false,
+      "youtubeLinks": true,
+      "localizedShop": true,
+      "playerOpenAndClose": true
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "youtubeLinks": true,
+      "localizedShop": true,
+      "playerOpenAndClose": true
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,22 @@
+{
+  "deploymentId": "dpl_BjCZZsDf8U7Zm8WaHAcCH49NPUSN",
+  "checkedAt": "2026-11-01T19:16:46.710Z",
+  "checks": [
+    {
+      "route": "/brand/vetud-logo.svg",
+      "passed": true
+    },
+    {
+      "route": "/brand/vetud-logo-white.svg",
+      "passed": true
+    },
+    {
+      "route": "/us",
+      "passed": true
+    },
+    {
+      "route": "/gb",
+      "passed": true
+    }
+  ]
+}

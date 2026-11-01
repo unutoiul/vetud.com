@@ -1,0 +1,2462 @@
+{
+  "peptides": [
+    {
+      "slug": "semaglutide",
+      "name": "Semaglutide",
+      "aka": "Ozempic, Wegovy, Rybelsus",
+      "category": "weight",
+      "status": "approved",
+      "statusNote": "Approved in the US, EU and many other countries. Ozempic and Rybelsus treat type 2 diabetes; Wegovy is for weight management. A daily Wegovy pill was approved in the US in December 2025.",
+      "oneLiner": "A copy of a gut hormone that makes you feel full. One of the most studied weight-loss medicines in the world.",
+      "whatItIs": "Semaglutide is a man-made version of GLP-1, a hormone your gut releases after you eat. The natural hormone is broken down within minutes. Semaglutide was changed slightly so it lasts about a week, which is why the injection is given once a week.",
+      "howItWorks": "GLP-1 tells your brain you’re full, slows down how fast your stomach empties, and helps your body release insulin when blood sugar rises. Semaglutide does the same, for much longer.",
+      "findings": [
+        "In the STEP 1 trial, 1,961 adults with obesity took weekly semaglutide for 68 weeks. They lost 14.9% of their body weight on average, compared with 2.4% on a placebo (a dummy injection).",
+        "About half of the people on semaglutide lost 15% or more of their body weight. On placebo, fewer than 1 in 20 did.",
+        "In the SELECT trial of 17,604 people with heart disease and overweight, semaglutide lowered the risk of a heart attack, stroke or heart-related death by 20%. Over about three years, 6.5% had one of these events, compared with 8.0% on placebo.",
+        "A once-a-day pill version led to 13.6% weight loss over 64 weeks in the OASIS 4 trial, compared with 2.2% on placebo."
+      ],
+      "keyResult": {
+        "value": "14.9%",
+        "label": "average weight lost in 68 weeks",
+        "detail": "STEP 1 trial, 1,961 adults · placebo: 2.4%"
+      },
+      "risks": [
+        "Stomach side effects are common: nausea, diarrhea, vomiting and constipation, especially while the dose is being raised.",
+        "Less common but serious problems include inflammation of the pancreas (pancreatitis) and gallbladder problems.",
+        "In the US the label warns about a type of thyroid tumor seen in rodents, so people with a family history of medullary thyroid cancer are told not to use it.",
+        "Weight usually comes back after the medicine is stopped."
+      ],
+      "sources": [
+        {
+          "title": "Once-Weekly Semaglutide in Adults with Overweight or Obesity (STEP 1)",
+          "detail": "Wilding et al. · New England Journal of Medicine · 2021",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/33567185/"
+        },
+        {
+          "title": "Semaglutide and Cardiovascular Outcomes in Obesity without Diabetes (SELECT)",
+          "detail": "Lincoff et al. · New England Journal of Medicine · 2023",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37952131/"
+        },
+        {
+          "title": "Oral Semaglutide at a Dose of 25 mg in Adults with Overweight or Obesity (OASIS 4)",
+          "detail": "Wharton et al. · New England Journal of Medicine · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40934115/"
+        },
+        {
+          "title": "Discovery of the Once-Weekly GLP-1 Analogue Semaglutide",
+          "detail": "Lau et al. · Journal of Medicinal Chemistry · 2015",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26308095/"
+        }
+      ],
+      "videos": [
+        "o8YMLTfNYtc",
+        "QGIFdakceHM",
+        "mm5zPW5offA"
+      ],
+      "pubchem": 56843331
+    },
+    {
+      "slug": "tirzepatide",
+      "name": "Tirzepatide",
+      "aka": "Mounjaro, Zepbound",
+      "category": "weight",
+      "status": "approved",
+      "statusNote": "Approved in the US, EU and other countries. Mounjaro treats type 2 diabetes (and, in the EU, is also used for weight management). Zepbound is approved in the US for weight management and for sleep apnea in adults with obesity.",
+      "oneLiner": "Works on two gut hormones at once, GLP-1 and GIP. In trials it led to some of the biggest weight losses seen with an approved medicine.",
+      "whatItIs": "Tirzepatide is a single molecule that acts like two hormones your gut releases after meals: GLP-1 and GIP. Both help control appetite and blood sugar.",
+      "howItWorks": "Like semaglutide, it tells your brain you’re full, slows your stomach and helps insulin release when blood sugar is high. Adding the GIP signal appears to strengthen these effects.",
+      "findings": [
+        "In the SURMOUNT-1 trial, 2,539 adults with obesity took tirzepatide for 72 weeks. On average they lost 15.0%, 19.5% and 20.9% of their body weight on the 5, 10 and 15 mg doses, compared with 3.1% on placebo.",
+        "On the two higher doses, about half or more lost at least 20% of their body weight (50% and 57%), compared with 3% on placebo.",
+        "In February 2026 a head-to-head trial reported that tirzepatide (Zepbound) led to more weight loss than Novo Nordisk’s experimental CagriSema: about 25% versus 23% over 84 weeks."
+      ],
+      "keyResult": {
+        "value": "20.9%",
+        "label": "average weight lost in 72 weeks (15 mg)",
+        "detail": "SURMOUNT-1 trial, 2,539 adults · placebo: 3.1%"
+      },
+      "risks": [
+        "Stomach side effects are common: nausea, diarrhea, vomiting and constipation, especially while the dose is being raised.",
+        "Less common but serious problems include inflammation of the pancreas (pancreatitis) and gallbladder problems.",
+        "In the US the label warns about a type of thyroid tumor seen in rodents, so people with a family history of medullary thyroid cancer are told not to use it.",
+        "Weight usually comes back after the medicine is stopped."
+      ],
+      "sources": [
+        {
+          "title": "Tirzepatide Once Weekly for the Treatment of Obesity (SURMOUNT-1)",
+          "detail": "Jastreboff et al. · New England Journal of Medicine · 2022",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35658024/"
+        },
+        {
+          "title": "LY3298176, a novel dual GIP and GLP-1 receptor agonist: from discovery to clinical proof of concept",
+          "detail": "Coskun et al. · Molecular Metabolism · 2018",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30473097/"
+        },
+        {
+          "title": "REDEFINE 4: CagriSema and tirzepatide head-to-head results",
+          "detail": "Novo Nordisk ? original sponsor announcement ? February 23, 2026",
+          "url": "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501"
+        }
+      ],
+      "videos": [
+        "QGIFdakceHM",
+        "o8YMLTfNYtc"
+      ],
+      "pubchem": 166567236
+    },
+    {
+      "slug": "retatrutide",
+      "name": "Retatrutide",
+      "aka": "LY3437943, often called “triple G”",
+      "category": "weight",
+      "status": "trials",
+      "statusNote": "Not approved anywhere yet. Eli Lilly has reported positive results from its large phase 3 trials and plans to apply for US approval by early 2027.",
+      "oneLiner": "An experimental “triple” hormone medicine that has produced some of the largest weight losses ever seen in a drug trial.",
+      "whatItIs": "Retatrutide is an experimental medicine made by Eli Lilly. It acts on three hormone targets at once: GLP-1, GIP and glucagon.",
+      "howItWorks": "GLP-1 and GIP reduce appetite and help control blood sugar. Glucagon is thought to make the body burn more energy, including fat stored in the liver. Together they work on appetite and on energy use at the same time.",
+      "findings": [
+        "In a 2023 phase 2 trial, 338 adults with obesity took retatrutide for 48 weeks. People on the highest dose (12 mg) lost 24.2% of their body weight on average, compared with 2.1% on placebo.",
+        "In May 2026 Lilly reported early results from the first big phase 3 trial, TRIUMPH-1, with 2,339 adults: 28.3% average weight loss after 80 weeks on 12 mg. These are company results and have not yet been published in a medical journal.",
+        "Two more phase 3 trials (July 2026) showed average weight loss of up to 20.8% in people with type 2 diabetes and up to 22.6% in people with heart disease, compared with 4.0% and 3.2% on placebo."
+      ],
+      "keyResult": {
+        "value": "24.2%",
+        "label": "average weight lost in 48 weeks (12 mg)",
+        "detail": "Phase 2 trial, 338 adults · placebo: 2.1%"
+      },
+      "risks": [
+        "Stomach side effects are common and increase with the dose. In TRIUMPH-1, 42% of people on the top dose had nausea, compared with 15% on placebo.",
+        "More people stopped the top dose because of side effects: 11.3%, compared with 4.9% on placebo.",
+        "The phase 2 trial also saw a dose-related rise in heart rate.",
+        "Long-term safety is still being studied, and it is not an approved medicine."
+      ],
+      "sources": [
+        {
+          "title": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial",
+          "detail": "Jastreboff et al. · New England Journal of Medicine · 2023",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37366315/"
+        },
+        {
+          "title": "TRIUMPH-1: phase 3 retatrutide topline results",
+          "detail": "Eli Lilly and Company ? original sponsor announcement ? May 21, 2026",
+          "url": "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss"
+        },
+        {
+          "title": "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results",
+          "detail": "Eli Lilly and Company ? original sponsor announcement ? July 23, 2026",
+          "url": "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional"
+        }
+      ],
+      "videos": [
+        "w0A_VRT3rIE"
+      ]
+    },
+    {
+      "slug": "liraglutide",
+      "name": "Liraglutide",
+      "aka": "Victoza, Saxenda",
+      "category": "weight",
+      "status": "approved",
+      "statusNote": "Approved for type 2 diabetes (Victoza, US 2010) and for weight management (Saxenda, US 2014).",
+      "oneLiner": "The older, once-a-day cousin of semaglutide, and the first GLP-1 medicine approved for weight management.",
+      "whatItIs": "Liraglutide is an earlier copy of the gut hormone GLP-1. It lasts about a day in the body, so it is injected once daily.",
+      "howItWorks": "Like other GLP-1 medicines, it makes you feel full sooner, slows your stomach and helps control blood sugar.",
+      "findings": [
+        "In the SCALE trial, 3,731 adults without diabetes took liraglutide or a placebo for 56 weeks, alongside diet and exercise advice. People on liraglutide lost 8.4 kg on average, compared with 2.8 kg on placebo.",
+        "63% of people on liraglutide lost at least 5% of their body weight, compared with 27% on placebo.",
+        "In the LEADER trial in people with type 2 diabetes, liraglutide lowered the risk of heart attack, stroke or heart-related death."
+      ],
+      "keyResult": {
+        "value": "8.4 kg",
+        "label": "average weight lost in 56 weeks",
+        "detail": "SCALE trial, 3,731 adults · placebo: 2.8 kg"
+      },
+      "risks": [
+        "Stomach side effects are common: nausea, diarrhea, vomiting and constipation, especially while the dose is being raised.",
+        "Less common but serious problems include inflammation of the pancreas (pancreatitis) and gallbladder problems.",
+        "In the US the label warns about a type of thyroid tumor seen in rodents, so people with a family history of medullary thyroid cancer are told not to use it.",
+        "Weight usually comes back after the medicine is stopped."
+      ],
+      "sources": [
+        {
+          "title": "A Randomized, Controlled Trial of 3.0 mg of Liraglutide in Weight Management (SCALE)",
+          "detail": "Pi-Sunyer et al. · New England Journal of Medicine · 2015",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26132939/"
+        },
+        {
+          "title": "Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes (LEADER)",
+          "detail": "Marso et al. · New England Journal of Medicine · 2016",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/27295427/"
+        }
+      ],
+      "videos": [
+        "o8YMLTfNYtc"
+      ],
+      "pubchem": 16134956
+    },
+    {
+      "slug": "bpc-157",
+      "name": "BPC-157",
+      "aka": "Body Protection Compound-157",
+      "category": "recovery",
+      "status": "early",
+      "statusNote": "Not approved anywhere, and banned in sport by the World Anti-Doping Agency (WADA). In 2026 the FDA took it off a list of risky compounding ingredients, but that is not an approval.",
+      "oneLiner": "A popular “healing” peptide with lots of animal research behind it, and almost no proper studies in people.",
+      "whatItIs": "BPC-157 is a lab-made chain of 15 amino acids, based on a protein found in stomach juice. It became famous in sports and “biohacking” circles as a healing aid.",
+      "howItWorks": "Animal studies suggest it may help new blood vessels grow and help tissues repair. How, or whether, it works in people is not known.",
+      "findings": [
+        "Dozens of studies in rats and mice report faster healing of tendons, muscles, ligaments, bones and the gut.",
+        "A 2025 review for sports medicine found the animal results encouraging, but very little evidence in humans.",
+        "The FDA’s July 2026 meeting agenda covered BPC-157 for the bowel disease ulcerative colitis as a possible compounding ingredient. Advisory committee recommendations are non-binding and are not drug approval."
+      ],
+      "risks": [
+        "Because it hasn’t been properly tested in people, its side effects and long-term safety are unknown.",
+        "Products sold online are not regulated, so what’s in the vial and how pure it is can vary.",
+        "Some doctors raise a theoretical worry: if it encourages new blood vessels, it might also help existing tumors grow. This hasn’t been studied in people."
+      ],
+      "sources": [
+        {
+          "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine: A Systematic Review",
+          "detail": "Vasireddi et al. · HSS Journal · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/"
+        },
+        {
+          "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+          "detail": "US Food and Drug Administration · meeting page",
+          "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026"
+        },
+        {
+          "title": "Bulk drug substances nominated for compounding under Section 503A",
+          "detail": "US Food and Drug Administration · updated May 14, 2026 (PDF)",
+          "url": "https://www.fda.gov/media/94155/download"
+        }
+      ],
+      "videos": [
+        "Y6smr1o-f9o",
+        "8DVatJ9de90",
+        "iM3TACEG-cQ"
+      ],
+      "pubchem": 9941957
+    },
+    {
+      "slug": "tb-500",
+      "name": "TB-500",
+      "aka": "Thymosin beta-4 fragment",
+      "category": "recovery",
+      "status": "early",
+      "statusNote": "Not approved, and banned in sport by WADA. In 2026 the FDA took it off its “do not compound” list, but that is not an approval.",
+      "oneLiner": "A small piece of a natural repair protein. Popular for recovery, but barely tested in people.",
+      "whatItIs": "TB-500 is a short, lab-made piece of thymosin beta-4, a protein found in almost every cell. Thymosin beta-4 helps cells move and build their inner “scaffolding”.",
+      "howItWorks": "In lab and animal studies, thymosin beta-4 helps cells travel to wounds and supports new blood-vessel growth. Whether the small TB-500 fragment does the same in people hasn’t been shown.",
+      "findings": [
+        "The full-length protein, thymosin beta-4, has been tested in small human trials, for example as eye drops for dry eye and as a gel for slow-healing leg ulcers, with early or mixed results.",
+        "There are no good human trials of the TB-500 fragment itself.",
+        "FDA advisers reviewed TB-500 for wound healing in July 2026 as a possible compounding ingredient."
+      ],
+      "risks": [
+        "Safety in people is unknown.",
+        "Products sold online are unregulated, so quality varies."
+      ],
+      "sources": [
+        {
+          "title": "Thymosin β4: a multi-functional regenerative peptide",
+          "detail": "Goldstein et al. · Expert Opinion on Biological Therapy · 2012",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22074294/"
+        },
+        {
+          "title": "Thymosin beta 4 ophthalmic solution for dry eye: a randomized, placebo-controlled, phase II clinical trial",
+          "detail": "Sosne et al. · Clinical Ophthalmology · 2015",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26056426/"
+        },
+        {
+          "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+          "detail": "US Food and Drug Administration · meeting page",
+          "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026"
+        }
+      ],
+      "pubchem": 62707662
+    },
+    {
+      "slug": "kpv",
+      "name": "KPV",
+      "aka": "Lys-Pro-Val",
+      "category": "recovery",
+      "status": "early",
+      "statusNote": "Not approved. Studied mainly in cells and mice.",
+      "oneLiner": "A tiny peptide of three amino acids, studied for calming inflammation in the gut.",
+      "whatItIs": "KPV is made of the last three building blocks (lysine, proline and valine) of a natural hormone called alpha-MSH, which helps control inflammation.",
+      "howItWorks": "In lab studies, KPV gets into gut cells through a doorway called PepT1 and quiets the inflammation signals inside them.",
+      "findings": [
+        "In a 2008 study, mice with colitis (inflamed bowels) that were given KPV by mouth had less inflammation.",
+        "It hasn’t been tested in proper human trials.",
+        "FDA advisers reviewed it in July 2026 as a possible compounding ingredient for wound healing and inflammation."
+      ],
+      "risks": [
+        "Its effects and safety in people are unknown."
+      ],
+      "sources": [
+        {
+          "title": "PepT1-mediated tripeptide KPV uptake reduces intestinal inflammation",
+          "detail": "Dalmasso et al. · Gastroenterology · 2008",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18061177/"
+        },
+        {
+          "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+          "detail": "US Food and Drug Administration · meeting page",
+          "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026"
+        }
+      ],
+      "pubchem": 125672
+    },
+    {
+      "slug": "ipamorelin",
+      "name": "Ipamorelin",
+      "category": "growth",
+      "status": "trials",
+      "statusNote": "Tested in small human trials but not approved. Banned in sport by WADA, along with other growth-hormone-releasing peptides.",
+      "oneLiner": "A peptide that nudges the body to release its own growth hormone.",
+      "whatItIs": "Ipamorelin is a lab-made peptide that copies one job of ghrelin, the “hunger hormone”: telling the pituitary gland at the base of the brain to release growth hormone.",
+      "howItWorks": "It switches on the ghrelin receptor. In early studies it caused bursts of growth hormone without also raising stress hormones such as cortisol, which earlier drugs of this type did.",
+      "findings": [
+        "A 1998 study described it as the first “selective” growth-hormone releaser, based on lab and animal tests.",
+        "In a 2014 trial of 114 people recovering from bowel surgery, it did not clearly speed up recovery. The first meal they could keep down came at 25.3 hours on ipamorelin versus 32.6 hours on placebo, a difference that could have been down to chance."
+      ],
+      "risks": [
+        "The long-term effects of raising growth hormone this way haven’t been studied.",
+        "Products sold online are unregulated."
+      ],
+      "sources": [
+        {
+          "title": "Ipamorelin, the first selective growth hormone secretagogue",
+          "detail": "Raun et al. · European Journal of Endocrinology · 1998",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/9849822/"
+        },
+        {
+          "title": "Prospective, randomized, controlled, proof-of-concept study of the ghrelin mimetic ipamorelin for postoperative ileus",
+          "detail": "Beck et al. · International Journal of Colorectal Disease · 2014",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25331030/"
+        }
+      ],
+      "videos": [
+        "xpdLs-_nl4g"
+      ],
+      "pubchem": 9831659
+    },
+    {
+      "slug": "cjc-1295",
+      "name": "CJC-1295",
+      "category": "growth",
+      "status": "trials",
+      "statusNote": "Tested in small studies in healthy adults in 2006. Never approved.",
+      "oneLiner": "A long-lasting version of the brain signal that triggers growth hormone.",
+      "whatItIs": "CJC-1295 is a modified copy of growth-hormone-releasing hormone (GHRH), the signal your brain uses to tell the pituitary gland to release growth hormone. A chemical “hook” lets it cling to a protein in the blood, so it lasts for days.",
+      "howItWorks": "Because it stays in the blood for about a week, it keeps prompting the pituitary to release more growth hormone.",
+      "findings": [
+        "In healthy adults, a single injection raised growth hormone levels 2 to 10 times for 6 days or more, and IGF-1 (a marker of growth hormone activity) for 9 to 11 days.",
+        "It lasted 5.8 to 8.1 days in the body. No serious side effects were reported in these short studies."
+      ],
+      "risks": [
+        "It has only been studied briefly, in small groups. Long-term effects are unknown.",
+        "Banned in sport by WADA. Products sold online are unregulated."
+      ],
+      "sources": [
+        {
+          "title": "Prolonged stimulation of growth hormone and IGF-I secretion by CJC-1295, a long-acting analog of GHRH, in healthy adults",
+          "detail": "Teichman et al. · Journal of Clinical Endocrinology & Metabolism · 2006",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16352683/"
+        }
+      ],
+      "pubchem": 91971820
+    },
+    {
+      "slug": "sermorelin",
+      "name": "Sermorelin",
+      "aka": "Geref",
+      "category": "growth",
+      "status": "former",
+      "statusNote": "Once approved in the US (as Geref) for children with growth hormone deficiency. It is no longer sold there as an approved medicine.",
+      "oneLiner": "A short copy of the brain’s growth-hormone signal that was once a prescription medicine for children.",
+      "whatItIs": "Sermorelin is the first 29 building blocks of growth-hormone-releasing hormone (GHRH), the part of the hormone that does the work.",
+      "howItWorks": "It tells the pituitary gland to release growth hormone in natural pulses, rather than replacing growth hormone directly.",
+      "findings": [
+        "It was used to test for, and treat, growth hormone deficiency in some children (1999 review)."
+      ],
+      "risks": [
+        "Outside an approved product, quality and strength can vary.",
+        "Common side effects in studies included reactions at the injection site."
+      ],
+      "sources": [
+        {
+          "title": "Sermorelin: a review of its use in the diagnosis and treatment of children with idiopathic growth hormone deficiency",
+          "detail": "Prakash & Goa · BioDrugs · 1999",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18031173/"
+        }
+      ],
+      "pubchem": 16132413
+    },
+    {
+      "slug": "tesamorelin",
+      "name": "Tesamorelin",
+      "aka": "Egrifta",
+      "category": "growth",
+      "status": "approved",
+      "statusNote": "Egrifta is approved in the US for a narrowly defined prescription indication involving excess abdominal fat. It is not approved for general weight-loss management.",
+      "oneLiner": "A growth-hormone-releasing medicine studied for changes in visceral fat, the deep fat around the organs.",
+      "whatItIs": "Tesamorelin is a stabilized copy of growth-hormone-releasing hormone (GHRH).",
+      "howItWorks": "It raises the body’s own growth hormone, which helps break down visceral fat, the deep fat packed around the organs.",
+      "findings": [
+        "In a 26-week trial of 412 adults with lipodystrophy and excess abdominal fat, visceral fat fell by 15.2% on tesamorelin and rose by 5.0% on placebo.",
+        "Triglycerides, a type of fat in the blood, also improved.",
+        "These results apply to the specific patient group studied and do not establish effectiveness for weight loss in the general population."
+      ],
+      "keyResult": {
+        "value": "−15.2%",
+        "label": "deep belly fat in 26 weeks",
+        "detail": "26-week lipodystrophy trial · 412 adults · placebo: +5.0%"
+      },
+      "risks": [
+        "More people on tesamorelin stopped because of side effects than on placebo.",
+        "Growth hormone can affect blood sugar, so this is monitored."
+      ],
+      "sources": [
+        {
+          "title": "Tesamorelin: 26-week randomized clinical trial",
+          "detail": "Falutz et al. · New England Journal of Medicine · 2007",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18057338/"
+        },
+        {
+          "title": "Egrifta SV prescribing information",
+          "detail": "FDA-approved labeling · DailyMed",
+          "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3d783378-b02d-4f19-99dd-0fc91a042224"
+        }
+      ],
+      "pubchem": 16137828
+    },
+    {
+      "slug": "selank",
+      "name": "Selank",
+      "category": "calm",
+      "status": "approved-elsewhere",
+      "statusNote": "Registered as a medicine in Russia, where it is used for anxiety. Not approved in the US, UK or EU.",
+      "oneLiner": "A nasal-spray peptide developed in Russia and studied for anxiety.",
+      "whatItIs": "Selank is a lab-made version of tuftsin, a tiny natural peptide involved in the immune system, with three extra building blocks added so it lasts longer.",
+      "howItWorks": "Researchers think it affects brain chemicals involved in anxiety, such as GABA and serotonin, but this isn’t fully understood.",
+      "findings": [
+        "Most studies come from Russia and are small.",
+        "In a 2017 study in rats under chronic stress, Selank strengthened the anti-anxiety effect of diazepam (Valium).",
+        "Small Russian clinical studies in people with anxiety report benefits, but there are no large international trials."
+      ],
+      "risks": [
+        "It has not been well studied outside Russia, so side effects and long-term safety are unclear."
+      ],
+      "sources": [
+        {
+          "title": "Peptide Selank Enhances the Effect of Diazepam in Reducing Anxiety in Unpredictable Chronic Mild Stress Conditions in Rats",
+          "detail": "Kasian et al. · Behavioural Neurology · 2017",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28280289/"
+        },
+        {
+          "title": "Optimization of the treatment of anxiety disorders with Selank (in Russian)",
+          "detail": "Medvedev et al. · Zhurnal Nevrologii i Psikhiatrii · 2015",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26356395/"
+        }
+      ],
+      "pubchem": 11765600
+    },
+    {
+      "slug": "semax",
+      "name": "Semax",
+      "category": "focus",
+      "status": "approved-elsewhere",
+      "statusNote": "Registered as a medicine in Russia, where it is used after strokes and for some other brain conditions. Not approved in the US, UK or EU.",
+      "oneLiner": "A Russian nasal-spray peptide used after strokes and studied as a “brain booster”.",
+      "whatItIs": "Semax is a lab-made fragment of ACTH, a hormone from the pituitary gland, with a short tail added so it lasts longer. It doesn’t have ACTH’s hormone effects.",
+      "howItWorks": "It is thought to raise levels of BDNF, a protein that helps brain cells survive and form new connections.",
+      "findings": [
+        "Russian studies in stroke patients report better recovery when Semax is added to standard care, for example a 2018 study.",
+        "FDA advisers reviewed it in July 2026 as a possible compounding ingredient for stroke-related conditions and migraine."
+      ],
+      "risks": [
+        "Most evidence comes from small studies in one country. Long-term safety and benefit are not established."
+      ],
+      "sources": [
+        {
+          "title": "The efficacy of Semax in the treatment of patients at different stages of ischemic stroke (in Russian)",
+          "detail": "Gusev et al. · Zhurnal Nevrologii i Psikhiatrii · 2018",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29798983/"
+        },
+        {
+          "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+          "detail": "US Food and Drug Administration · meeting page",
+          "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026"
+        }
+      ],
+      "pubchem": 9811102
+    },
+    {
+      "slug": "ghk-cu",
+      "name": "GHK-Cu",
+      "aka": "Copper peptide",
+      "category": "skin",
+      "status": "early",
+      "statusNote": "Used in many skin creams and serums as a cosmetic ingredient. Not approved as a medicine; injected use is unregulated.",
+      "oneLiner": "A copper-carrying peptide found in skin care for its anti-aging effects.",
+      "whatItIs": "GHK is a tiny peptide made of three amino acids (glycine, histidine and lysine) that occurs naturally in blood and saliva. It grabs copper, and this copper-bound form is called GHK-Cu. Levels in the body fall as we age.",
+      "howItWorks": "In lab studies it encourages skin cells to make collagen and other “scaffolding” proteins, and it affects many genes involved in repair.",
+      "findings": [
+        "Lab studies and small cosmetic trials suggest creams with GHK-Cu can improve skin firmness and fine lines.",
+        "Much of the evidence comes from lab work and small studies, so the size of the benefit is uncertain."
+      ],
+      "risks": [
+        "Skin products are generally well tolerated, though some people get irritation.",
+        "Injected GHK-Cu hasn’t been properly studied in people."
+      ],
+      "sources": [
+        {
+          "title": "Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data",
+          "detail": "Pickart & Margolina · International Journal of Molecular Sciences · 2018",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29986520/"
+        },
+        {
+          "title": "Topically applied GHK as an anti-wrinkle peptide: advantages, problems and prospective",
+          "detail": "Mortazavi et al. · BioImpacts · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39963574/"
+        }
+      ],
+      "videos": [
+        "TH_ZDyMzhqM"
+      ],
+      "pubchem": 71587328
+    },
+    {
+      "slug": "melanotan",
+      "name": "Melanotan I & II",
+      "aka": "Afamelanotide (Melanotan I)",
+      "category": "pigmentation",
+      "status": "early",
+      "statusNote": "Melanotan I (afamelanotide) is approved as Scenesse for a rare light-sensitivity disease. Melanotan II is not approved anywhere, and health agencies warn against tanning injections.",
+      "oneLiner": "The “tanning peptides”. One is an approved medicine for a rare disease; the other is an unapproved tanning injection that doctors warn about.",
+      "whatItIs": "Both are lab-made versions of alpha-MSH, the hormone that tells skin to make melanin, the pigment that darkens skin.",
+      "howItWorks": "They switch on receptors in the skin’s pigment cells, darkening skin without sunlight. Melanotan II also acts on receptors in the brain, which is why it can affect appetite and sexual arousal.",
+      "findings": [
+        "Afamelanotide (Melanotan I) helps people with erythropoietic protoporphyria, a rare condition that makes sunlight painful. In a US trial they spent a median of 69 hours pain-free in daylight over 6 months, compared with 41 hours on placebo.",
+        "Melanotan II was only tested in tiny early studies in the 1990s, for example a safety study in three men."
+      ],
+      "keyResult": {
+        "value": "69 h",
+        "label": "pain-free time in daylight over 6 months (Melanotan I)",
+        "detail": "US trial in a rare light-sensitivity disease · placebo: 41 h"
+      },
+      "risks": [
+        "In the first small human study of Melanotan II, men reported nausea, tiredness, and spontaneous erections lasting up to five hours.",
+        "Doctors have reported serious problems in people using it, including melanoma (skin cancer) and kidney damage.",
+        "Tanning injections bought online are unregulated."
+      ],
+      "sources": [
+        {
+          "title": "Afamelanotide for Erythropoietic Protoporphyria",
+          "detail": "Langendonk et al. · New England Journal of Medicine · 2015",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/26132941/"
+        },
+        {
+          "title": "Evaluation of melanotan-II in a pilot phase-I clinical study",
+          "detail": "Dorr et al. · Life Sciences · 1996",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/8637402/"
+        },
+        {
+          "title": "Melanoma associated with the use of melanotan-II",
+          "detail": "Hjuler & Lorentzen · Dermatology · 2014",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24355990/"
+        },
+        {
+          "title": "Melanotan II: a possible cause of renal infarction",
+          "detail": "Peters et al. · CEN Case Reports · 2020",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31953620/"
+        }
+      ],
+      "videos": [
+        "DWL46HWhmgQ"
+      ],
+      "pubchem": 92432
+    },
+    {
+      "slug": "epitalon",
+      "name": "Epitalon",
+      "aka": "Epithalon",
+      "category": "longevity",
+      "status": "early",
+      "statusNote": "Not approved. Most research is lab and animal work.",
+      "oneLiner": "A four-amino-acid peptide studied for aging and telomeres, mostly in cells and animals.",
+      "whatItIs": "Epitalon is a lab-made peptide of four building blocks (alanine, glutamic acid, aspartic acid and glycine), based on an extract from the pineal gland. It was developed by Russian researchers.",
+      "howItWorks": "Lab studies suggest it may switch on telomerase, an enzyme that rebuilds telomeres. Telomeres are the protective caps on the ends of our chromosomes, and they get shorter as we age.",
+      "findings": [
+        "A 2025 study found it lengthened telomeres in human cells grown in the lab.",
+        "Much of the earlier research comes from one Russian group, and good human trials are lacking.",
+        "FDA advisers reviewed it for insomnia in July 2026 as a possible compounding ingredient."
+      ],
+      "risks": [
+        "Its effects and safety in people are unknown."
+      ],
+      "sources": [
+        {
+          "title": "Overview of Epitalon, a highly bioactive pineal tetrapeptide",
+          "detail": "Araj et al. · International Journal of Molecular Sciences · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40141333/"
+        },
+        {
+          "title": "Epitalon increases telomere length in human cell lines through telomerase upregulation or ALT activity",
+          "detail": "Al-Dulaimi et al. · Biogerontology · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40908429/"
+        },
+        {
+          "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+          "detail": "US Food and Drug Administration · meeting page",
+          "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026"
+        }
+      ],
+      "pubchem": 219042
+    },
+    {
+      "slug": "mots-c",
+      "name": "MOTS-c",
+      "category": "energy",
+      "status": "early",
+      "statusNote": "Not approved. Studied mainly in mice.",
+      "oneLiner": "A peptide made inside mitochondria, the cell’s power plants, and studied for metabolism.",
+      "whatItIs": "MOTS-c is a 16-amino-acid peptide made from the DNA inside mitochondria, the tiny power plants in our cells. It was discovered in 2015.",
+      "howItWorks": "In mice it helps muscles use sugar for energy, and it seems to act as a signal of exercise and energy balance.",
+      "findings": [
+        "In the 2015 discovery study, MOTS-c protected mice on a high-fat diet from weight gain and insulin resistance.",
+        "Human trials are lacking. FDA advisers reviewed it in July 2026 (for obesity and osteoporosis) as a possible compounding ingredient."
+      ],
+      "risks": [
+        "Its effects and safety in people are unknown."
+      ],
+      "sources": [
+        {
+          "title": "The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance",
+          "detail": "Lee et al. · Cell Metabolism · 2015",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25738459/"
+        },
+        {
+          "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+          "detail": "US Food and Drug Administration · meeting page",
+          "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026"
+        }
+      ],
+      "pubchem": 146675088
+    },
+    {
+      "slug": "nad",
+      "name": "NAD+",
+      "aka": "Nicotinamide adenine dinucleotide",
+      "category": "energy",
+      "status": "early",
+      "statusNote": "NAD+ itself is not an approved medicine. Related vitamin B3 compounds, such as nicotinamide riboside, are sold as supplements.",
+      "oneLiner": "Not a peptide, but often mentioned alongside them: a molecule every cell needs to make energy.",
+      "whatItIs": "NAD+ is a coenzyme, a helper molecule found in every living cell. Your body makes it from vitamin B3.",
+      "howItWorks": "Cells use NAD+ to turn food into energy and to run repair enzymes. Levels tend to fall with age, which is why researchers are interested in raising them.",
+      "findings": [
+        "A 2024 review explains how NAD+ levels fall with age and in some diseases, and the ways researchers are trying to raise them.",
+        "Studies of NAD+ boosters in people are mostly small, with mixed results."
+      ],
+      "risks": [
+        "NAD+ injections and drips are not approved, and their benefits and safety are not well studied."
+      ],
+      "sources": [
+        {
+          "title": "Roles of NAD+ in Health and Aging",
+          "detail": "Lautrup et al. · Cold Spring Harbor Perspectives in Medicine · 2024",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37848251/"
+        }
+      ],
+      "videos": [
+        "l8BI_720Dfs"
+      ],
+      "pubchem": 5892,
+      "notAPeptide": true
+    },
+    {
+      "slug": "pt-141",
+      "name": "PT-141",
+      "aka": "Bremelanotide, Vyleesi",
+      "category": "intimacy",
+      "status": "approved",
+      "statusNote": "Approved in the US (Vyleesi, 2019) for low sexual desire in premenopausal women.",
+      "oneLiner": "An approved medicine that works in the brain to increase sexual desire.",
+      "whatItIs": "Bremelanotide (PT-141) is a peptide closely related to Melanotan II. It was developed after researchers noticed effects on arousal in tanning studies.",
+      "howItWorks": "It switches on melanocortin receptors in the brain that are involved in desire. It doesn’t work on blood flow the way Viagra does.",
+      "findings": [
+        "In two trials of 1,267 women, bremelanotide modestly increased desire scores and reduced distress about low desire, compared with placebo."
+      ],
+      "risks": [
+        "Nausea, flushing and headache were common (10% or more of women in both trials).",
+        "It can cause a temporary rise in blood pressure after each dose."
+      ],
+      "sources": [
+        {
+          "title": "Bremelanotide for the Treatment of Hypoactive Sexual Desire Disorder: Two Randomized Phase 3 Trials",
+          "detail": "Kingsberg et al. · Obstetrics & Gynecology · 2019",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31599840/"
+        }
+      ],
+      "pubchem": 9941379
+    },
+    {
+      "slug": "thymosin-alpha-1",
+      "name": "Thymosin alpha-1",
+      "aka": "Thymalfasin, Zadaxin",
+      "category": "immune",
+      "status": "approved-elsewhere",
+      "statusNote": "Approved as a medicine (Zadaxin) in a number of countries, mainly for hepatitis B. Not approved in the US or EU.",
+      "oneLiner": "A natural immune-signaling peptide from the thymus gland, used as a medicine in some countries.",
+      "whatItIs": "Thymosin alpha-1 is a 28-amino-acid peptide first found in the thymus, the gland behind the breastbone where some immune cells mature.",
+      "howItWorks": "It helps switch on T cells and other parts of the immune response.",
+      "findings": [
+        "Reviews describe its use for hepatitis B and C, as an add-on to vaccines and cancer treatment, and in severe infections. The quality of the evidence varies."
+      ],
+      "risks": [
+        "Reviews of the human trials describe it as generally well tolerated.",
+        "Outside an approved product, quality and strength can vary."
+      ],
+      "sources": [
+        {
+          "title": "Thymosin alpha 1: a comprehensive review of the literature",
+          "detail": "Dominari et al. · World Journal of Virology · 2020",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/33362999/"
+        },
+        {
+          "title": "Comprehensive Review of the Safety and Efficacy of Thymosin Alpha 1 in Human Clinical Trials",
+          "detail": "Dinetz et al. · Alternative Therapies in Health and Medicine · 2024",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/38308608/"
+        }
+      ],
+      "pubchem": 16130571
+    },
+    {
+      "slug": "insulin",
+      "name": "Insulin",
+      "category": "medicines",
+      "status": "approved",
+      "statusNote": "An approved, essential medicine used by millions of people with diabetes.",
+      "oneLiner": "The most famous peptide medicine of all. It turned type 1 diabetes from a fatal disease into a manageable one.",
+      "whatItIs": "Insulin is a hormone made by the pancreas. It is a small protein made of two chains, 51 amino acids in total.",
+      "howItWorks": "After you eat, insulin lets your cells take sugar out of the blood to use for energy. People with type 1 diabetes can’t make it, so they inject it.",
+      "findings": [
+        "It was first given to a patient in 1922 in Toronto: a 14-year-old boy named Leonard Thompson.",
+        "In 1982 human insulin made by bacteria became the first medicine produced through genetic engineering."
+      ],
+      "risks": [
+        "Too much insulin causes low blood sugar (hypoglycemia), which can be dangerous."
+      ],
+      "sources": [
+        {
+          "title": "Insulin’s centenary: the birth of an idea",
+          "detail": "Hegele & Maltman · Lancet Diabetes & Endocrinology · 2020",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/33129375/"
+        },
+        {
+          "title": "100 years of insulin: celebrating the past, present and future of diabetes therapy",
+          "detail": "Sims et al. · Nature Medicine · 2021",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34267380/"
+        }
+      ],
+      "videos": [
+        "Gk1D4VgM8jY"
+      ],
+      "pubchem": 118984375
+    },
+    {
+      "slug": "oxytocin",
+      "name": "Oxytocin",
+      "aka": "Pitocin, Syntocinon",
+      "category": "medicines",
+      "status": "approved",
+      "statusNote": "Approved worldwide to start or strengthen labor and to reduce bleeding after birth.",
+      "oneLiner": "The “bonding hormone”, and one of the most used medicines in childbirth.",
+      "whatItIs": "Oxytocin is a hormone of nine amino acids, made in the brain and released by the pituitary gland.",
+      "howItWorks": "It makes the womb contract during labor and helps milk flow during breastfeeding. It also plays a part in social bonding.",
+      "findings": [
+        "Given through a drip, synthetic oxytocin is a standard way to start or speed up labor and to prevent heavy bleeding after delivery (2024 review)."
+      ],
+      "risks": [
+        "Too much can make contractions too strong, which can harm mother or baby, so it is only given under close medical supervision."
+      ],
+      "sources": [
+        {
+          "title": "Oxytocin: physiology, pharmacology, and clinical application for labor management",
+          "detail": "Hermesch et al. · American Journal of Obstetrics & Gynecology · 2024",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37460365/"
+        }
+      ],
+      "pubchem": 439302
+    },
+    {
+      "slug": "octreotide",
+      "name": "Octreotide",
+      "aka": "Sandostatin, Mycapssa",
+      "category": "medicines",
+      "status": "approved",
+      "statusNote": "Approved for acromegaly (a growth hormone disorder) and for symptoms of some hormone-producing tumors. A capsule form, Mycapssa, is approved in the US for acromegaly.",
+      "oneLiner": "A long-lasting copy of a natural “brake” hormone, used to control some hormone disorders and tumors.",
+      "whatItIs": "Octreotide is an eight-amino-acid version of somatostatin, a hormone that switches off the release of many other hormones.",
+      "howItWorks": "It blocks excess growth hormone in acromegaly and calms the floods of hormones from some gut tumors, easing symptoms such as severe diarrhea and flushing.",
+      "findings": [
+        "Natural somatostatin lasts only minutes in the blood. Octreotide lasts hours, and long-acting injections last a month.",
+        "A capsule form now allows some people with acromegaly to take it by mouth (2022 review)."
+      ],
+      "risks": [
+        "Stomach upset and gallstones are among the common side effects."
+      ],
+      "sources": [
+        {
+          "title": "Pharmacology of Octreotide: Clinical Implications for Anesthesiologists and Associated Risks",
+          "detail": "Borna et al. · Anesthesiology Clinics · 2017",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28526153/"
+        },
+        {
+          "title": "Oral Octreotide: A Review of Recent Clinical Trials and Practical Recommendations",
+          "detail": "Yuen et al. · Endocrine Practice · 2022",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35452815/"
+        }
+      ],
+      "pubchem": 448601
+    },
+    {
+      "slug": "teriparatide",
+      "name": "Teriparatide",
+      "aka": "Forteo, Forsteo",
+      "category": "medicines",
+      "status": "approved",
+      "statusNote": "Approved for osteoporosis in people at high risk of fractures.",
+      "oneLiner": "A bone-building peptide that cuts the risk of spine fractures in osteoporosis.",
+      "whatItIs": "Teriparatide is the active first part (34 amino acids) of parathyroid hormone, which controls calcium and how bone is renewed.",
+      "howItWorks": "Given as a small daily injection, it switches on bone-building cells more than bone-removing cells, so bones become denser and stronger.",
+      "findings": [
+        "In a trial of 1,637 women with osteoporosis who had already had a spine fracture, new spine fractures fell from 14% on placebo to 5% on the 20 µg dose: about 65% fewer.",
+        "Bone density in the spine rose by 9 percentage points more than on placebo."
+      ],
+      "keyResult": {
+        "value": "65%",
+        "label": "fewer new spine fractures",
+        "detail": "Trial of 1,637 women · 5% vs 14% on placebo"
+      },
+      "risks": [
+        "Dizziness, leg cramps and nausea are reported, and it can raise calcium levels.",
+        "High doses caused bone tumors in rats; this has not been clearly seen in people."
+      ],
+      "sources": [
+        {
+          "title": "Effect of parathyroid hormone (1-34) on fractures and bone mineral density in postmenopausal women with osteoporosis",
+          "detail": "Neer et al. · New England Journal of Medicine · 2001",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/11346808/"
+        }
+      ],
+      "pubchem": 16133850
+    },
+    {
+      "slug": "cagrilintide",
+      "name": "Cagrilintide",
+      "aka": "Half of CagriSema",
+      "category": "weight",
+      "status": "trials",
+      "statusNote": "Not approved yet. Combined with semaglutide as CagriSema, it has been submitted to the FDA, with a decision expected in late 2026.",
+      "oneLiner": "A copy of amylin, a fullness hormone, being developed alongside semaglutide.",
+      "whatItIs": "Cagrilintide is a long-acting copy of amylin, a hormone your pancreas releases together with insulin after you eat.",
+      "howItWorks": "Amylin tells the brain you’ve had enough to eat and slows down how fast the stomach empties. It works through different receptors from GLP-1, which is why it is being combined with semaglutide.",
+      "findings": [
+        "In a phase 2 trial, 706 adults took different doses of cagrilintide alone. They lost 6.0% to 10.8% of their body weight on average, depending on the dose, compared with 3.0% on placebo.",
+        "In the REDEFINE 1 trial of 3,417 adults, cagrilintide combined with semaglutide (CagriSema) led to 20.4% average weight loss over 68 weeks, compared with 3.0% on placebo.",
+        "In a head-to-head trial reported in February 2026, CagriSema led to about 23% weight loss, compared with about 25% on tirzepatide (Zepbound)."
+      ],
+      "keyResult": {
+        "value": "20.4%",
+        "label": "average weight lost in 68 weeks, combined with semaglutide",
+        "detail": "REDEFINE 1 trial, 3,417 adults · placebo: 3.0%"
+      },
+      "risks": [
+        "Like GLP-1 medicines, it mainly causes stomach side effects such as nausea, constipation and diarrhea.",
+        "It is not approved, and long-term safety is still being studied."
+      ],
+      "sources": [
+        {
+          "title": "Once-weekly cagrilintide for weight management in people with overweight and obesity: a phase 2 trial",
+          "detail": "Lau et al. · The Lancet · 2021",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34798060/"
+        },
+        {
+          "title": "Coadministered Cagrilintide and Semaglutide in Adults with Overweight or Obesity (REDEFINE 1)",
+          "detail": "Garvey et al. · New England Journal of Medicine · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40544433/"
+        },
+        {
+          "title": "REDEFINE 4: CagriSema and tirzepatide head-to-head results",
+          "detail": "Novo Nordisk ? original sponsor announcement ? February 23, 2026",
+          "url": "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501"
+        }
+      ],
+      "pubchem": 171397054
+    },
+    {
+      "slug": "aod-9604",
+      "name": "AOD-9604",
+      "aka": "HGH fragment 176-191",
+      "category": "weight",
+      "status": "trials",
+      "statusNote": "Tested in people in the 2000s but never approved as a medicine.",
+      "oneLiner": "A small piece of growth hormone that was developed as a fat-loss drug, but never made it to approval.",
+      "whatItIs": "AOD-9604 is a modified copy of the last part of human growth hormone (the stretch around building blocks 177 to 191). HGH fragment 176-191 is a closely related version.",
+      "howItWorks": "Researchers hoped this piece would keep growth hormone’s fat-burning effect without its effects on growth and blood sugar.",
+      "findings": [
+        "It was developed in Australia as an obesity treatment, and early trials did not show clear enough weight loss for it to be approved.",
+        "A 2026 review of popular “gray market” peptides lists it among unapproved peptides sold directly to the public, outside of regulatory oversight."
+      ],
+      "risks": [
+        "Products sold online are unregulated, so content and purity vary.",
+        "Its long-term safety hasn’t been established."
+      ],
+      "sources": [
+        {
+          "title": "AOD-9604 (Metabolic)",
+          "detail": "Wilding · Current Opinion in Investigational Drugs · 2004",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15134286/"
+        },
+        {
+          "title": "Safety and Efficacy of Approved and Unapproved Peptide Therapies for Musculoskeletal Injuries and Athletic Performance",
+          "detail": "Mendias et al. · Sports Medicine · 2026",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41966639/"
+        }
+      ],
+      "pubchem": 71300630
+    },
+    {
+      "slug": "argireline",
+      "name": "Argireline & Snap-8",
+      "aka": "Acetyl hexapeptide-8 and acetyl octapeptide-3",
+      "category": "skin",
+      "status": "early",
+      "statusNote": "Cosmetic ingredients used in anti-wrinkle creams and serums. Not medicines.",
+      "oneLiner": "The “Botox in a jar” peptides: skin-care ingredients designed to soften expression lines.",
+      "whatItIs": "Argireline is a lab-made peptide of six building blocks, designed to copy a small part of the machinery that Botox blocks. Snap-8 is a slightly longer version made for the same purpose.",
+      "howItWorks": "Muscles contract when nerves release a chemical messenger. Argireline is designed to interfere gently with that release, so the small facial muscles behind expression lines relax a little. It is far weaker than Botox and isn’t injected.",
+      "findings": [
+        "In a 2002 study, healthy women who applied a cream with 10% Argireline saw wrinkle depth fall by up to 30% after 30 days.",
+        "Snap-8 has very little published research of its own."
+      ],
+      "keyResult": {
+        "value": "Up to 30%",
+        "label": "less wrinkle depth after 30 days (Argireline cream)",
+        "detail": "Small 2002 study in healthy women"
+      },
+      "risks": [
+        "Creams are generally well tolerated; some people get skin irritation."
+      ],
+      "sources": [
+        {
+          "title": "A synthetic hexapeptide (Argireline) with antiwrinkle activity",
+          "detail": "Blanes-Mira et al. · International Journal of Cosmetic Science · 2002",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18498523/"
+        }
+      ],
+      "pubchem": 71587772
+    },
+    {
+      "slug": "ahk-cu",
+      "name": "AHK-Cu",
+      "aka": "Copper tripeptide-1",
+      "category": "hair",
+      "status": "early",
+      "statusNote": "Used in some hair and skin products as a cosmetic ingredient. Not a medicine.",
+      "oneLiner": "A copper-carrying peptide, cousin of GHK-Cu, studied for hair growth.",
+      "whatItIs": "AHK-Cu is a tiny peptide of three building blocks (alanine, histidine and lysine) holding a copper atom. It is closely related to GHK-Cu.",
+      "howItWorks": "In lab studies, it encouraged hair follicles to lengthen and the cells at their base, which drive hair growth, to multiply.",
+      "findings": [
+        "In a 2007 lab study, AHK-Cu made human hair follicles grown in a dish lengthen faster.",
+        "There are no good clinical trials of AHK-Cu on people’s hair."
+      ],
+      "risks": [
+        "Its effects in people are not well studied."
+      ],
+      "sources": [
+        {
+          "title": "The effect of tripeptide-copper complex on human hair growth in vitro",
+          "detail": "Pyo et al. · Archives of Pharmacal Research · 2007",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/17703734/"
+        }
+      ]
+    },
+    {
+      "slug": "ara-290",
+      "name": "ARA-290",
+      "aka": "Cibinetide",
+      "category": "recovery",
+      "status": "trials",
+      "statusNote": "Tested in small human trials for nerve pain. Not approved.",
+      "oneLiner": "A small peptide made from a part of EPO that protects tissues, studied for nerve damage.",
+      "whatItIs": "ARA-290 is an 11-amino-acid peptide based on a part of erythropoietin (EPO), the hormone that tells the body to make red blood cells. This part protects tissue but doesn’t raise red blood cells.",
+      "howItWorks": "It switches on a “repair receptor” that calms inflammation and protects nerve fibers in lab and animal studies.",
+      "findings": [
+        "In a 28-day trial in people with sarcoidosis, an inflammatory disease that can damage small nerves, the 4 mg dose increased the amount of small nerve fibers seen in the eye’s cornea, compared with placebo.",
+        "Pain improved in all dose groups."
+      ],
+      "risks": [
+        "Only small, short trials have been done, so longer-term safety and benefit are unknown."
+      ],
+      "sources": [
+        {
+          "title": "Cibinetide Improves Corneal Nerve Fiber Abundance in Patients With Sarcoidosis-Associated Small Nerve Fiber Loss and Neuropathic Pain",
+          "detail": "Culver et al. · Investigative Ophthalmology & Visual Science · 2017",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28475703/"
+        },
+        {
+          "title": "ARA 290 for treatment of small fiber neuropathy in sarcoidosis",
+          "detail": "van Velzen et al. · Expert Opinion on Investigational Drugs · 2014",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24555851/"
+        }
+      ],
+      "pubchem": 91810664
+    },
+    {
+      "slug": "ss-31",
+      "name": "SS-31",
+      "aka": "Elamipretide, Forzinity",
+      "category": "energy",
+      "status": "approved",
+      "statusNote": "Approved in the US in September 2025 (as Forzinity) for Barth syndrome, a rare inherited disease. It is an accelerated approval, which means a further trial must confirm the benefit.",
+      "oneLiner": "The first approved medicine that targets the mitochondria, the cell’s power plants.",
+      "whatItIs": "SS-31 is a small four-building-block peptide that travels into mitochondria, the parts of our cells that make energy.",
+      "howItWorks": "It binds to the inner membrane of mitochondria and helps them keep their structure and work properly.",
+      "findings": [
+        "The FDA approved it for Barth syndrome, a rare disease that weakens the heart and muscles, based on improved leg (knee) strength in a placebo-controlled trial.",
+        "In a long-term follow-up of 10 people with Barth syndrome, the distance they could walk in 6 minutes improved by 96 meters after 168 weeks."
+      ],
+      "keyResult": {
+        "value": "+96 m",
+        "label": "longer 6-minute walk after 168 weeks",
+        "detail": "Long-term follow-up of 10 people with Barth syndrome"
+      },
+      "risks": [
+        "Reactions where it is injected were the most common side effect.",
+        "It is approved only for Barth syndrome; use for anything else hasn’t been proven."
+      ],
+      "sources": [
+        {
+          "title": "FDA grants accelerated approval for first treatment for Barth syndrome",
+          "detail": "US Food and Drug Administration · September 2025",
+          "url": "https://www.fda.gov/news-events/press-announcements/fda-grants-accelerated-approval-first-treatment-barth-syndrome"
+        },
+        {
+          "title": "Long-term efficacy and safety of elamipretide in patients with Barth syndrome: 168-week open-label extension results",
+          "detail": "Thompson et al. · Genetics in Medicine · 2024",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/38602181/"
+        }
+      ],
+      "pubchem": 11764719
+    },
+    {
+      "slug": "slu-pp-332",
+      "name": "SLU-PP-332",
+      "aka": "Often called an “exercise pill”",
+      "category": "energy",
+      "status": "early",
+      "statusNote": "Not approved. Studied only in mice.",
+      "oneLiner": "Not a peptide: a lab compound that makes mice’s muscles behave as if they had exercised.",
+      "whatItIs": "SLU-PP-332 is a small chemical, not a peptide. It switches on ERR receptors, which help control how muscles burn energy.",
+      "howItWorks": "In mice it turns on part of the body’s natural response to aerobic exercise, without the exercise.",
+      "findings": [
+        "In obese mice, it mimicked effects of exercise and reduced fat mass (2024 study).",
+        "It has not been tested in people."
+      ],
+      "risks": [
+        "Its effects and safety in people are completely unknown."
+      ],
+      "sources": [
+        {
+          "title": "A Synthetic ERR Agonist Alleviates Metabolic Syndrome",
+          "detail": "Billon et al. · Journal of Pharmacology and Experimental Therapeutics · 2024",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37739806/"
+        }
+      ],
+      "pubchem": 5338394,
+      "notAPeptide": true
+    },
+    {
+      "slug": "5-amino-1mq",
+      "name": "5-Amino-1MQ",
+      "category": "energy",
+      "status": "early",
+      "statusNote": "Not approved. Studied in cells and mice.",
+      "oneLiner": "Not a peptide: a small compound that blocks an enzyme linked to fat storage, studied in mice.",
+      "whatItIs": "5-Amino-1MQ is a small chemical, not a peptide. It blocks NNMT, an enzyme that is especially active in fat tissue.",
+      "howItWorks": "Blocking NNMT changes how fat cells use energy. In lab studies it reduced the making of new fat in fat cells.",
+      "findings": [
+        "In mice made obese by a high-fat diet, it reduced body weight and fat (2018 study).",
+        "It has not been tested in people."
+      ],
+      "risks": [
+        "Its effects and safety in people are unknown."
+      ],
+      "sources": [
+        {
+          "title": "Selective and membrane-permeable small molecule inhibitors of nicotinamide N-methyltransferase reverse high fat diet-induced obesity in mice",
+          "detail": "Neelakantan et al. · Biochemical Pharmacology · 2018",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29155147/"
+        },
+        {
+          "title": "Nicotinamide N-methyltransferase inhibition mitigates obesity-related metabolic dysfunction",
+          "detail": "Babula et al. · Diabetes, Obesity and Metabolism · 2024",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39161060/"
+        }
+      ],
+      "pubchem": 950107,
+      "notAPeptide": true
+    },
+    {
+      "slug": "hgh",
+      "name": "Growth hormone (HGH)",
+      "aka": "Somatropin",
+      "category": "growth",
+      "status": "approved",
+      "statusNote": "An approved prescription medicine for children with certain growth problems and adults with proven growth hormone deficiency.",
+      "oneLiner": "The body’s own growth hormone, made in the lab: a proven medicine for real deficiency, and widely misused.",
+      "whatItIs": "Growth hormone is a small protein (191 amino acids) made by the pituitary gland at the base of the brain. The medicine, somatropin, is made by bacteria and is identical to the human hormone.",
+      "howItWorks": "It helps children grow and, in adults, affects muscle, bone and fat. Much of its effect works through another hormone, IGF-1, made in the liver.",
+      "findings": [
+        "Expert guidelines support treatment for adults with confirmed growth hormone deficiency, after proper testing, with doses adjusted to blood levels of IGF-1."
+      ],
+      "risks": [
+        "Side effects include fluid retention and swelling, joint pain, carpal tunnel symptoms and higher blood sugar.",
+        "It is banned in sport, and using it without a proven deficiency is not supported by evidence."
+      ],
+      "sources": [
+        {
+          "title": "Evaluation and treatment of adult growth hormone deficiency: an Endocrine Society clinical practice guideline",
+          "detail": "Molitch et al. · Journal of Clinical Endocrinology & Metabolism · 2011",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21602453/"
+        }
+      ]
+    },
+    {
+      "slug": "igf-1-lr3",
+      "name": "IGF-1 LR3",
+      "aka": "Long R3 IGF-1",
+      "category": "growth",
+      "status": "early",
+      "statusNote": "Not approved. A lab version of IGF-1 used mainly in cell culture. A different form of IGF-1, mecasermin, is approved for a rare growth disorder.",
+      "oneLiner": "A long-lasting lab version of IGF-1, the hormone growth hormone works through.",
+      "whatItIs": "IGF-1 is the hormone that carries out much of growth hormone’s work. IGF-1 LR3 is a modified version with extra building blocks that make it last much longer. It was developed for growing cells in laboratories.",
+      "howItWorks": "It acts on the same receptor as natural IGF-1, but blood proteins that normally hold IGF-1 in check barely bind it, so it stays active longer.",
+      "findings": [
+        "In a 2025 study in growth-restricted unborn lambs, IGF-1 LR3 did not improve growth.",
+        "The approved medicine mecasermin (natural IGF-1) is used for children with severe primary IGF-1 deficiency."
+      ],
+      "risks": [
+        "IGF-1 can cause low blood sugar.",
+        "IGF-1 LR3 has not been tested for safety in people, and it is banned in sport."
+      ],
+      "sources": [
+        {
+          "title": "IGF-1 LR3 does not promote growth in late-gestation growth-restricted fetal sheep",
+          "detail": "White et al. · American Journal of Physiology: Endocrinology and Metabolism · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39679943/"
+        },
+        {
+          "title": "Profile of mecasermin for the long-term treatment of growth failure in children and adolescents with severe primary IGF-1 deficiency",
+          "detail": "Fintini et al. · Therapeutics and Clinical Risk Management · 2009",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/19707272/"
+        }
+      ]
+    },
+    {
+      "slug": "dsip",
+      "name": "DSIP",
+      "aka": "Delta sleep-inducing peptide, emideltide",
+      "category": "sleep",
+      "status": "early",
+      "statusNote": "Not approved. FDA advisers reviewed it in July 2026 as a possible compounding ingredient for opioid withdrawal, insomnia and narcolepsy.",
+      "oneLiner": "A small brain peptide named for deep sleep, whose effect still isn’t clear after 50 years.",
+      "whatItIs": "DSIP is a peptide of nine building blocks. It was found in 1977 in the blood of rabbits in deep sleep, which is how it got its name.",
+      "howItWorks": "No one has pinned down how it works. Despite the name, scientists haven’t found a dedicated receptor or a reliable sleep effect.",
+      "findings": [
+        "Reviews describe decades of mixed results: some small studies reported better sleep, others found no effect.",
+        "A 2006 review called it “a still unresolved riddle”."
+      ],
+      "risks": [
+        "Its effects and safety are not well established."
+      ],
+      "sources": [
+        {
+          "title": "Delta sleep-inducing peptide (DSIP): a still unresolved riddle",
+          "detail": "Kovalzon & Strekalova · Journal of Neurochemistry · 2006",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16539679/"
+        },
+        {
+          "title": "Delta-sleep-inducing peptide (DSIP): a review",
+          "detail": "Graf & Kastin · Neuroscience & Biobehavioral Reviews · 1984",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/6145137/"
+        },
+        {
+          "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+          "detail": "US Food and Drug Administration · meeting page",
+          "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026"
+        }
+      ],
+      "pubchem": 68816
+    },
+    {
+      "slug": "vip",
+      "name": "VIP",
+      "aka": "Vasoactive intestinal peptide, aviptadil",
+      "category": "immune",
+      "status": "trials",
+      "statusNote": "Tested in human trials (as aviptadil), but not approved in the US.",
+      "oneLiner": "A natural messenger peptide that relaxes blood vessels and calms inflammation, studied in lung disease.",
+      "whatItIs": "VIP is a peptide of 28 building blocks found in the gut, lungs, brain and nerves. Aviptadil is the lab-made version.",
+      "howItWorks": "It relaxes smooth muscle, widens blood vessels and dampens inflammation, especially in the lungs.",
+      "findings": [
+        "Aviptadil was tested in people with severe breathing failure, including from COVID-19. A 2025 review asks whether it is “promise or mirage”: results so far are mixed.",
+        "Injected together with another medicine, phentolamine, it has been used for erectile problems that didn’t respond to other treatments."
+      ],
+      "risks": [
+        "Flushing and low blood pressure can occur, because it widens blood vessels."
+      ],
+      "sources": [
+        {
+          "title": "Aviptadil in Acute Respiratory Distress Syndrome: Promise or Mirage?",
+          "detail": "Chanchalani et al. · Indian Journal of Critical Care Medicine · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41368453/"
+        },
+        {
+          "title": "Intracavernosal injection of aviptadil and phentolamine for refractory erectile dysfunction",
+          "detail": "Al-Mitwalli et al. · Journal of Sexual Medicine · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40192471/"
+        }
+      ]
+    },
+    {
+      "slug": "kisspeptin",
+      "name": "Kisspeptin",
+      "category": "fertility",
+      "status": "trials",
+      "statusNote": "Tested in human fertility studies. Not approved.",
+      "oneLiner": "The hormone that switches on the reproductive system, being tested as a gentler way to trigger egg maturation in IVF.",
+      "whatItIs": "Kisspeptin is a natural hormone made in the brain. It was named after the Hershey’s Kisses chocolates made in the town where it was discovered. Kisspeptin-54 and kisspeptin-10 are two of its forms.",
+      "howItWorks": "It tells the brain to release the hormones that control the ovaries and testes, which is how puberty starts.",
+      "findings": [
+        "In a 2014 study, a single injection of kisspeptin-54 triggered egg maturation in 53 women having IVF. Embryos were transferred for 92% of them, and 23% (12 of 53) had a clinical pregnancy."
+      ],
+      "keyResult": {
+        "value": "92%",
+        "label": "of women had embryos transferred after one kisspeptin injection",
+        "detail": "2014 IVF study of 53 women · 12 clinical pregnancies"
+      },
+      "risks": [
+        "Its long-term safety and best use are still being studied."
+      ],
+      "sources": [
+        {
+          "title": "Kisspeptin-54 triggers egg maturation in women undergoing in vitro fertilization",
+          "detail": "Jayasena et al. · Journal of Clinical Investigation · 2014",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25036713/"
+        },
+        {
+          "title": "Kisspeptin as a promising oocyte maturation trigger for in vitro fertilisation in humans",
+          "detail": "Kasum et al. · Gynecological Endocrinology · 2017",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28393578/"
+        }
+      ],
+      "pubchem": 25240297
+    },
+    {
+      "slug": "hcg",
+      "name": "hCG",
+      "aka": "Human chorionic gonadotropin, Pregnyl, Ovidrel",
+      "category": "fertility",
+      "status": "approved",
+      "statusNote": "Approved as a prescription medicine for female infertility and some other conditions. It is not approved for weight loss, and the FDA warns against “hCG diet” products.",
+      "oneLiner": "The pregnancy hormone: an approved fertility medicine, and the center of a long-running weight-loss myth.",
+      "whatItIs": "hCG is the hormone made during pregnancy, the one pregnancy tests detect. It is a protein hormone, larger than most peptides.",
+      "howItWorks": "It acts like LH, the hormone that triggers ovulation in women and tells the testes to make testosterone in men.",
+      "findings": [
+        "Doctors use it to trigger ovulation in fertility treatment, and in some men whose low testosterone comes from a pituitary problem, including after anabolic steroid use.",
+        "The FDA says hCG does not cause weight loss: any loss on “hCG diets” comes from extreme calorie cutting."
+      ],
+      "risks": [
+        "In fertility treatment it can over-stimulate the ovaries (ovarian hyperstimulation syndrome), so it is used under close medical supervision."
+      ],
+      "sources": [
+        {
+          "title": "Avoid dangerous hCG diet products",
+          "detail": "US Food and Drug Administration · consumer update",
+          "url": "https://www.fda.gov/consumers/consumer-updates/avoid-dangerous-hcg-diet-products"
+        },
+        {
+          "title": "Anabolic steroid-induced hypogonadism: diagnosis and treatment",
+          "detail": "Rahnema et al. · Fertility and Sterility · 2014",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24636400/"
+        }
+      ]
+    },
+    {
+      "slug": "fsh",
+      "name": "FSH",
+      "aka": "Follicle-stimulating hormone, follitropin",
+      "category": "fertility",
+      "status": "approved",
+      "statusNote": "Approved as a prescription fertility medicine (for example Gonal-f) to help the ovaries develop eggs.",
+      "oneLiner": "An approved fertility hormone that helps eggs develop during IVF.",
+      "whatItIs": "FSH is a hormone made by the pituitary gland. The medicine version (follitropin) is made in the lab and is identical, or very close, to the natural hormone.",
+      "howItWorks": "It tells the ovaries to grow follicles, the small sacs where eggs mature. In men it helps sperm production.",
+      "findings": [
+        "It is a standard part of ovarian stimulation in IVF. A 2025 review found that lower-cost copies (biosimilars) of follitropin alfa performed similarly to the original."
+      ],
+      "risks": [
+        "It can over-stimulate the ovaries (ovarian hyperstimulation syndrome) and raises the chance of twins or more, so dosing is closely monitored."
+      ],
+      "sources": [
+        {
+          "title": "Biosimilars versus the originator of follitropin alfa for ovarian stimulation in ART: a systematic review and meta-analysis",
+          "detail": "Kiose et al. · Human Reproduction · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39719046/"
+        }
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "slug": "rlx-201-skin-serum-12-weeks",
+      "date": "2026-10",
+      "kind": "Study",
+      "topic": "Skin",
+      "headline": [
+        "A cream that targets an “aging switch” ",
+        "firmed skin in 12 weeks"
+      ],
+      "dek": "In a controlled trial, a serum containing RLX-201 improved firmness, elasticity and sagging compared with the same cream without it.",
+      "art": "skin",
+      "glance": [
+        {
+          "label": "Who took part",
+          "value": "47 women with moderate to severe sun-damaged facial skin; 31 received RLX-201 and 16 received vehicle"
+        },
+        {
+          "label": "How it was tested",
+          "value": "Applied twice a day for 12 weeks; randomized and double-blind, against the same cream without RLX-201"
+        },
+        {
+          "label": "What improved",
+          "value": "Firmness, elasticity, sagging and overall skin quality, starting from week 2"
+        },
+        {
+          "label": "What people said",
+          "value": "More than 85% reported better radiance, texture and hydration"
+        },
+        {
+          "label": "Published in",
+          "value": "Journal of Cosmetic Dermatology, October 2026"
+        }
+      ],
+      "body": [
+        "Most anti-aging creams work on the surface: they moisturize, exfoliate or add collagen-boosting ingredients. A new study tested a different idea: switching down one of the body’s main aging controls, right in the skin.",
+        "That control is called TORC1. It’s a sensor inside our cells that responds to nutrients and tells cells when to grow. Scientists link it to many of the processes of aging, and dialing it down is one of the most studied ideas in aging research. It’s how the drug rapamycin works.",
+        "Researchers gave women with sun-damaged facial skin either a serum containing RLX-201, a TORC1 blocker, or the same serum without it. Neither the women nor the investigators knew who had which. Skin was checked at the start and after 2, 4, 8 and 12 weeks.",
+        "The RLX-201 group had significantly firmer, more elastic and less saggy skin than the comparison group, and the difference showed up as early as week 2. Measurements with a device that tests how skin stretches and springs back agreed. More than 85% of the women using it said their skin looked more radiant, smoother and more hydrated.",
+        "In lab-grown human skin, the formula cut a marker of TORC1 activity by about 91%, a sign it was doing what it was designed to do."
+      ],
+      "means": "It’s an early sign that skin care aimed at the biology of aging, not just moisture or collagen, can make a visible difference.",
+      "unknowns": "This is a single-center, 12-week trial with 47 participants. Some authors are affiliated with the developer. Longer, independent studies are needed. RLX-201 is not a peptide, and this trial did not test GHK-Cu.",
+      "peptides": [
+        "ghk-cu"
+      ],
+      "sources": [
+        {
+          "label": "A novel TORC1 inhibitor, RLX-201, improves skin health, biomechanics, and extracellular matrix integrity in a double-blind clinical study",
+          "detail": "Draelos et al. · Journal of Cosmetic Dermatology · 2026",
+          "url": "https://doi.org/10.1111/jocd.71219"
+        }
+      ]
+    },
+    {
+      "slug": "cbl-514-fat-cells-self-destruct",
+      "date": "2026-10-01",
+      "kind": "Study",
+      "topic": "Weight management",
+      "headline": [
+        "A new injection makes ",
+        "fat cells self-destruct",
+        ", and might help stop weight coming back"
+      ],
+      "dek": "In a small trial, CBL-514 cut deep belly fat by 12% while fat grew in the placebo group. Animal tests hint it could slow weight regain after GLP-1 medicines.",
+      "art": "cells",
+      "glance": [
+        {
+          "label": "Who took part",
+          "value": "40 adults with a BMI of 22 to 30, from two phase 2 trials"
+        },
+        {
+          "label": "How it was tested",
+          "value": "Injections into the lower belly every 3 weeks for up to 12 weeks, against a placebo"
+        },
+        {
+          "label": "What was measured",
+          "value": "Deep (visceral) belly fat, on MRI scans"
+        },
+        {
+          "label": "Result",
+          "value": "−12.01% on CBL-514 vs +5.68% on placebo, 4 weeks after the last injection"
+        },
+        {
+          "label": "Status",
+          "value": "Presented at a medical conference (EASD 2026); not yet published in a journal"
+        }
+      ],
+      "body": [
+        "Most weight-loss medicines shrink fat cells. An experimental drug called CBL-514 does something different: it makes fat cells self-destruct.",
+        "It triggers apoptosis, the body’s built-in way of removing cells it no longer needs, in fat cells only, leaving other cells alone. It is injected directly into the fat of the belly.",
+        "Researchers from the University of Alabama at Birmingham and the drug’s developer, Caliway Biopharmaceuticals, presented new results at the European Association for the Study of Diabetes meeting in Milan.",
+        "They looked at 40 people from two phase 2 trials who had MRI scans. Four weeks after the last injection, deep belly fat (the kind wrapped around the organs) had fallen by 12.01% on average in the CBL-514 group, but grown by 5.68% in the placebo group. At a later check, 8 to 12 weeks after treatment ended, the drug group was still 10.45% below where they started.",
+        "Earlier phase 2 results showed that 69.6% of treated people lost at least 150 ml of the fat just under the skin by the 8-week follow-up. Nobody on placebo did.",
+        "Animal tests added an interesting twist. Rats given CBL-514 together with the GLP-1 medicine tirzepatide lost more weight than rats on tirzepatide alone, and regained less when tirzepatide was stopped. The idea: with fewer fat cells left, there’s less room for fat to come back.",
+        "Side effects were mostly mild, short-lived reactions where the injections were given, such as pain, swelling and redness. No serious side effects were reported."
+      ],
+      "means": "Weight coming back after stopping GLP-1 medicines is one of the biggest open problems in obesity care. Reducing the number of fat cells, not just their size, is a new way to tackle it.",
+      "unknowns": "The human group was small, the results haven’t been published in a journal yet, and the benefit for weight regain has only been seen in rats. CBL-514 is not a peptide and is not approved anywhere.",
+      "peptides": [
+        "tirzepatide",
+        "semaglutide"
+      ],
+      "sources": [
+        {
+          "label": "New weight-loss injection targets fat cells",
+          "detail": "EurekAlert! news release, European Association for the Study of Diabetes · October 1, 2026",
+          "url": "https://www.eurekalert.org/news-releases/1146063"
+        }
+      ]
+    },
+    {
+      "slug": "fda-advisers-review-bpc-157-and-six-peptides",
+      "date": "2026-07-24",
+      "kind": "Regulation",
+      "topic": "Regulation",
+      "headline": [
+        "FDA advisers weigh in on ",
+        "BPC-157 and six other peptides"
+      ],
+      "dek": "A federal advisory panel looked at whether pharmacies should be allowed to make seven popular peptides. Here’s what happened, and what it does and doesn’t mean.",
+      "art": "vials",
+      "glance": [
+        {
+          "label": "When",
+          "value": "July 23–24, 2026"
+        },
+        {
+          "label": "Who",
+          "value": "The FDA’s Pharmacy Compounding Advisory Committee"
+        },
+        {
+          "label": "Peptides reviewed",
+          "value": "BPC-157, KPV, TB-500, MOTS-c, DSIP (emideltide), Semax and Epitalon"
+        },
+        {
+          "label": "Purpose",
+          "value": "Consideration for the Section 503A compounding ingredients list"
+        },
+        {
+          "label": "Is it approval?",
+          "value": "No. Advisory recommendations are non-binding; FDA makes the decision"
+        }
+      ],
+      "body": [
+        "Compounding pharmacies make medicines for individual patients from raw ingredients, for example when someone needs a strength or form that isn’t sold. In the US they can only use raw ingredients that meet certain rules, such as being part of an approved medicine or being on an FDA list. While the FDA reviews newly nominated ingredients, it keeps interim lists, and “Category 1” ingredients can be used in the meantime.",
+        "In July 2026 the FDA asked its expert advisers about seven peptides that people had nominated for that list. On July 23 the panel looked at BPC-157 (for ulcerative colitis, a bowel disease), KPV (for wound healing and inflammation), TB-500 (for wound healing) and MOTS-c (for obesity and osteoporosis). On July 24 it looked at DSIP (for opioid withdrawal, insomnia and narcolepsy), Semax (for stroke-related conditions, migraine and facial nerve pain) and Epitalon (for insomnia).",
+        "The official agenda and meeting recordings document the substances and proposed uses under discussion. This summary does not infer a final regulatory decision from an advisory meeting.",
+        "Advisory committee recommendations are non-binding. Inclusion on the compounding list and approval of a finished medicine are separate regulatory decisions."
+      ],
+      "means": "If the FDA follows the panel, licensed pharmacies could one day prepare BPC-157 for individual patients with a prescription. That would bring some quality control to a peptide that is mostly sold online today without any oversight.",
+      "unknowns": "Permission to compound is not the same as approval as a medicine. Even then, there would still be no large human trials showing that BPC-157 works or is safe.",
+      "peptides": [
+        "bpc-157",
+        "kpv",
+        "tb-500",
+        "mots-c",
+        "dsip",
+        "semax",
+        "epitalon"
+      ],
+      "sources": [
+        {
+          "label": "July 23–24, 2026: Meeting of the Pharmacy Compounding Advisory Committee",
+          "detail": "US Food and Drug Administration",
+          "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026"
+        },
+        {
+          "label": "Bulk drug substances nominated for compounding under Section 503A",
+          "detail": "US Food and Drug Administration · updated May 14, 2026 (PDF)",
+          "url": "https://www.fda.gov/media/94155/download"
+        }
+      ]
+    },
+    {
+      "slug": "retatrutide-triumph-2-and-3",
+      "date": "2026-07-23",
+      "kind": "Study",
+      "topic": "Weight management",
+      "headline": [
+        "Two more wins for retatrutide, in people with ",
+        "diabetes and heart disease"
+      ],
+      "dek": "New phase 3 results show strong weight loss in people with type 2 diabetes or heart disease. Lilly plans to apply for US approval by early 2027.",
+      "art": "bars",
+      "glance": [
+        {
+          "label": "TRIUMPH-2",
+          "value": "1,152 adults with type 2 diabetes: up to 20.8% weight loss vs 4.0% on placebo"
+        },
+        {
+          "label": "TRIUMPH-3",
+          "value": "1,949 adults with heart disease and a BMI of 35 or more: up to 22.6% vs 3.2%"
+        },
+        {
+          "label": "How long",
+          "value": "80 weeks, once-weekly injections"
+        },
+        {
+          "label": "Blood sugar",
+          "value": "HbA1c (average blood sugar) down by up to 1.6 points, from 7.7%"
+        },
+        {
+          "label": "Next step",
+          "value": "US application planned by early 2027"
+        }
+      ],
+      "body": [
+        "Retatrutide is Eli Lilly’s experimental “triple” hormone medicine. Two months after its first big phase 3 trial, the company reported results from two more.",
+        "TRIUMPH-2 included 1,152 adults with type 2 diabetes and overweight. After 80 weeks, they lost 12.7%, 19.1% and 20.8% of their body weight on the 4, 9 and 12 mg doses, compared with 4.0% on placebo. HbA1c, a measure of average blood sugar, fell by up to 1.6 points from a starting level of 7.7%.",
+        "TRIUMPH-3 included 1,949 adults with a BMI of 35 or more and heart disease. They lost 21.6% on 9 mg and 22.6% on 12 mg, compared with 3.2% on placebo.",
+        "People with type 2 diabetes usually lose less weight on these medicines than people without it, so these results stand out.",
+        "With these results, Lilly says it has the data it needs to apply for approval around the world."
+      ],
+      "means": "If approved, retatrutide would give doctors a third generation of hormone-based weight-loss medicines, with results that may suit people who don’t lose enough weight on today’s options.",
+      "unknowns": "These are company-reported results that haven’t yet been published in full. Long-term safety, and how much weight comes back after stopping, are still unknown.",
+      "peptides": [
+        "retatrutide",
+        "tirzepatide",
+        "semaglutide"
+      ],
+      "sources": [
+        {
+          "label": "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results",
+          "detail": "Eli Lilly and Company ? original sponsor announcement ? July 23, 2026",
+          "url": "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional"
+        }
+      ]
+    },
+    {
+      "slug": "retatrutide-triumph-1-28-percent",
+      "date": "2026-05-21",
+      "kind": "Study",
+      "topic": "Weight management",
+      "headline": [
+        "Retatrutide’s first big trial: ",
+        "28% weight loss",
+        " in 80 weeks"
+      ],
+      "dek": "Eli Lilly’s experimental “triple” hormone medicine helped people lose more than a quarter of their body weight on the top dose.",
+      "art": "triple",
+      "glance": [
+        {
+          "label": "Who took part",
+          "value": "2,339 adults with obesity, or overweight plus a related health problem, without diabetes"
+        },
+        {
+          "label": "How long",
+          "value": "80 weeks of once-weekly injections"
+        },
+        {
+          "label": "Result",
+          "value": "19.0%, 25.9% and 28.3% average weight loss on 4, 9 and 12 mg"
+        },
+        {
+          "label": "Longest follow-up",
+          "value": "30.3% at 104 weeks on 12 mg, in people with a BMI of 35 or more"
+        },
+        {
+          "label": "Status",
+          "value": "Company (topline) results; full data still to be published"
+        }
+      ],
+      "body": [
+        "Retatrutide is an experimental weekly injection that works on three hormone targets at once: GLP-1, GIP and glucagon. Today’s approved weight-loss medicines work on one (semaglutide) or two (tirzepatide).",
+        "On May 21, 2026, Lilly announced the first results from TRIUMPH-1, its first large phase 3 trial. After 80 weeks, people on the 12 mg dose had lost 28.3% of their body weight on average, about 70 lb (32 kg). On 9 mg they lost 25.9%, and on 4 mg, 19.0%.",
+        "A smaller group with a BMI of 35 or more kept going to 104 weeks. Those on 12 mg had lost 30.3% of their weight by then.",
+        "Side effects were mostly stomach-related and rose with the dose. On 12 mg, 42% of people had nausea (15% on placebo) and a quarter had vomiting (5% on placebo). 11.3% stopped the top dose because of side effects, compared with 4.9% on placebo."
+      ],
+      "means": "If these numbers hold up in the full publication, retatrutide could set a new benchmark for weight-loss medicines.",
+      "unknowns": "These are company-reported topline results, not yet peer-reviewed. Long-term safety, and how much weight comes back after stopping, are still open questions. Retatrutide is not approved anywhere.",
+      "peptides": [
+        "retatrutide",
+        "tirzepatide",
+        "semaglutide"
+      ],
+      "sources": [
+        {
+          "label": "TRIUMPH-1: phase 3 retatrutide topline results",
+          "detail": "Eli Lilly and Company ? original sponsor announcement ? May 21, 2026",
+          "url": "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss"
+        }
+      ]
+    },
+    {
+      "slug": "fda-category-2-twelve-peptides",
+      "date": "2026-04-22",
+      "kind": "Regulation",
+      "topic": "Regulation",
+      "headline": [
+        "12 popular peptides come off the FDA’s ",
+        "“do not compound” list",
+        ". Here’s what that means"
+      ],
+      "dek": "BPC-157, TB-500, GHK-Cu and nine others are no longer on the FDA’s list of risky compounding ingredients. That isn’t the same as approval.",
+      "art": "documents",
+      "glance": [
+        {
+          "label": "Official record",
+          "value": "FDA list updated April 22, 2026"
+        },
+        {
+          "label": "Peptides",
+          "value": "BPC-157, LL-37, Dihexa, DSIP, Epitalon, injectable GHK-Cu, KPV, PEG-MGF, Melanotan II, MOTS-c, Semax and TB-500"
+        },
+        {
+          "label": "Why",
+          "value": "The people who nominated them withdrew their nominations"
+        },
+        {
+          "label": "Approved now?",
+          "value": "No. A change to an interim list is not drug approval"
+        },
+        {
+          "label": "Next",
+          "value": "Expert reviews in July 2026, and for the rest by February 2027"
+        }
+      ],
+      "body": [
+        "The FDA keeps interim lists of raw ingredients that compounding pharmacies want to use. Category 1 ingredients can be used while the FDA reviews them. Category 2 is for ingredients the FDA believes may pose significant safety risks; pharmacies shouldn’t use those.",
+        "The FDA’s 2026 records describe the removal of substances from Category 2 after nominators withdrew their nominations. They include BPC-157, TB-500, Melanotan II, MOTS-c, Semax, Epitalon and injectable GHK-Cu.",
+        "Removal after a withdrawn nomination does not demonstrate safety or effectiveness and does not amount to approval of a medicine. Compounding eligibility remains subject to the applicable legal requirements.",
+        "The FDA scheduled expert reviews for seven of them in July 2026, and for the other five before the end of February 2027.",
+        "A later FDA update, dated May 14, distinguishes non-injectable GHK-Cu: that nomination was restored to Category 1 after the nominator clarified that only the injectable nomination was being withdrawn. Route of administration matters."
+      ],
+      "means": "The change opened the door to a formal review of these peptides, which is how they could eventually be made by licensed pharmacies.",
+      "unknowns": "None of these peptides has been approved as a medicine, and most have very little human research. Whether any will end up on the allowed list is still undecided.",
+      "peptides": [
+        "bpc-157",
+        "tb-500",
+        "ghk-cu",
+        "melanotan",
+        "mots-c",
+        "semax",
+        "epitalon",
+        "kpv"
+      ],
+      "sources": [
+        {
+          "label": "Bulk drug substances nominated for compounding under Section 503A",
+          "detail": "US Food and Drug Administration · updated May 14, 2026 (PDF)",
+          "url": "https://www.fda.gov/media/94155/download"
+        },
+        {
+          "label": "Safety risks and withdrawn compounding nominations",
+          "detail": "US Food and Drug Administration · primary safety information",
+          "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks"
+        }
+      ]
+    },
+    {
+      "slug": "cagrisema-vs-zepbound",
+      "date": "2026-02-24",
+      "kind": "Study",
+      "topic": "Weight management",
+      "headline": [
+        "In a head-to-head trial, ",
+        "Zepbound beat CagriSema"
+      ],
+      "dek": "Novo Nordisk’s next-generation combination led to 23% weight loss, but Lilly’s tirzepatide reached about 25%.",
+      "art": "duo",
+      "glance": [
+        {
+          "label": "CagriSema is",
+          "value": "Semaglutide combined with cagrilintide, a copy of the hormone amylin"
+        },
+        {
+          "label": "Compared with",
+          "value": "Zepbound (tirzepatide)"
+        },
+        {
+          "label": "How long",
+          "value": "84 weeks"
+        },
+        {
+          "label": "Result",
+          "value": "About 23% vs about 25% average weight loss"
+        },
+        {
+          "label": "Status",
+          "value": "Filed for FDA approval; decision expected in late 2026"
+        }
+      ],
+      "body": [
+        "CagriSema is Novo Nordisk’s next weight-loss medicine. It combines semaglutide, the active ingredient in Wegovy, with cagrilintide, a copy of amylin. Amylin is a hormone released with insulin after meals that also tells the brain you’re full.",
+        "In a phase 3 trial that pitted it directly against Eli Lilly’s Zepbound (tirzepatide), people on CagriSema lost about 23% of their body weight over 84 weeks. People on Zepbound lost about 25%.",
+        "Novo had already applied for FDA approval before the result came out. A decision is expected in late 2026."
+      ],
+      "means": "Both medicines produced large weight losses. The trial shows how fast the field is moving, and how high the bar has become for new medicines.",
+      "unknowns": "Full trial details, side-effect comparisons and the FDA’s decision are still to come.",
+      "peptides": [
+        "semaglutide",
+        "tirzepatide",
+        "cagrilintide"
+      ],
+      "sources": [
+        {
+          "label": "REDEFINE 4: CagriSema and tirzepatide head-to-head results",
+          "detail": "Novo Nordisk ? original sponsor announcement ? February 23, 2026",
+          "url": "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501"
+        }
+      ]
+    },
+    {
+      "slug": "wegovy-pill-approved",
+      "date": "2025-12-22",
+      "kind": "News",
+      "topic": "Weight management",
+      "headline": [
+        "The first ",
+        "GLP-1 weight-loss pill",
+        " is approved in the US"
+      ],
+      "dek": "Wegovy now comes as a once-a-day tablet. In its main trial, people lost 13.6% of their body weight on average.",
+      "art": "pill",
+      "glance": [
+        {
+          "label": "Medicine",
+          "value": "Semaglutide 25 mg tablet, once a day"
+        },
+        {
+          "label": "Approved for",
+          "value": "Weight management in adults with obesity, or overweight plus a weight-related health problem. It also lowers the risk of heart attack and stroke in people with heart disease"
+        },
+        {
+          "label": "Main trial",
+          "value": "OASIS 4: 307 adults over 64 weeks"
+        },
+        {
+          "label": "Result",
+          "value": "13.6% average weight loss vs 2.2% on placebo"
+        },
+        {
+          "label": "Where",
+          "value": "US (at the time of approval)"
+        }
+      ],
+      "body": [
+        "On December 22, 2025, the FDA approved the Wegovy pill: the same medicine as the Wegovy injection, semaglutide, as a tablet taken once a day. It is the first GLP-1 pill approved for weight management.",
+        "The approval was based on the OASIS 4 trial, in which 307 adults with obesity or overweight took the pill or a placebo for 64 weeks, along with diet and exercise advice. People on the pill lost 13.6% of their body weight on average, compared with 2.2% on placebo.",
+        "Side effects were similar to the injection and mostly affected the stomach: 74.0% of people on the pill had stomach-related side effects, compared with 42.2% on placebo.",
+        "Novo Nordisk planned a full US launch for early January 2026."
+      ],
+      "means": "For people who don’t want injections, a pill could make treatment easier to start and stick with.",
+      "unknowns": "How results hold up over years, and when the pill will be available outside the US, remain to be seen.",
+      "peptides": [
+        "semaglutide"
+      ],
+      "sources": [
+        {
+          "label": "FDA approves Novo Nordisk’s Wegovy pill, the first and only oral GLP-1 for weight loss in adults",
+          "detail": "Novo Nordisk press release · December 22, 2025",
+          "url": "https://www.prnewswire.com/news-releases/fda-approves-novo-nordisks-wegovy-pill-the-first-and-only-oral-glp-1-for-weight-loss-in-adults-302648344.html"
+        },
+        {
+          "label": "Oral Semaglutide at a Dose of 25 mg in Adults with Overweight or Obesity (OASIS 4)",
+          "detail": "Wharton et al. · New England Journal of Medicine · 2025",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40934115/"
+        }
+      ]
+    }
+  ],
+  "videos": [
+    {
+      "id": "78QUeXVKiJ4",
+      "title": "Introduction to proteins and amino acids",
+      "creator": "Khan Academy",
+      "credential": "Free science education",
+      "summary": "The building blocks every peptide is made from, explained from scratch.",
+      "topic": "basics"
+    },
+    {
+      "id": "nv2kfBFkv4s",
+      "title": "Peptide bond formation",
+      "creator": "Khan Academy",
+      "credential": "Free science education",
+      "summary": "How amino acids link up into chains, which is all a peptide really is.",
+      "topic": "basics"
+    },
+    {
+      "id": "xpdLs-_nl4g",
+      "title": "Exposing the truth about peptides",
+      "creator": "Doctor Mike",
+      "credential": "Mikhail Varshavski, DO, family medicine physician",
+      "summary": "A practicing doctor looks at the peptide trend and separates the evidence from the hype.",
+      "topic": "basics"
+    },
+    {
+      "id": "iM3TACEG-cQ",
+      "title": "Are peptides even legal?",
+      "creator": "Doctor Mike",
+      "credential": "Mikhail Varshavski, DO, family medicine physician",
+      "summary": "The legal gray zone many popular peptides are sold in.",
+      "topic": "basics"
+    },
+    {
+      "id": "o8YMLTfNYtc",
+      "title": "The science behind Ozempic and other GLP-1 medications",
+      "creator": "Nick Norwitz",
+      "credential": "Nick Norwitz, MD, PhD",
+      "summary": "How GLP-1 medicines work in the gut and brain, in clear language.",
+      "topic": "weight"
+    },
+    {
+      "id": "QGIFdakceHM",
+      "title": "Pros and cons of GLP-1 weight-loss drugs",
+      "creator": "Peter Attia MD",
+      "credential": "Peter Attia, MD, with diabetes researcher Ralph DeFronzo, MD",
+      "summary": "Two doctors weigh the benefits against the downsides, including muscle loss and cost.",
+      "topic": "weight"
+    },
+    {
+      "id": "mm5zPW5offA",
+      "title": "Does everyone need Ozempic?",
+      "creator": "Doctor Mike",
+      "credential": "Mikhail Varshavski, DO, family medicine physician",
+      "summary": "Who these medicines are really for, and who they aren’t.",
+      "topic": "weight"
+    },
+    {
+      "id": "w0A_VRT3rIE",
+      "title": "Retatrutide weight-loss truth",
+      "creator": "Dr Brad Stanfield",
+      "credential": "Brad Stanfield, MBChB, general practitioner",
+      "summary": "A GP reads the retatrutide trial data and what it does and doesn’t show.",
+      "topic": "weight"
+    },
+    {
+      "id": "Y6smr1o-f9o",
+      "title": "Should you take BPC-157 peptides?",
+      "creator": "Dr Brad Stanfield",
+      "credential": "Brad Stanfield, MBChB, general practitioner",
+      "summary": "What the research on BPC-157 actually contains, study by study.",
+      "topic": "peptides"
+    },
+    {
+      "id": "8DVatJ9de90",
+      "title": "Did the FDA just approve BPC-157?",
+      "creator": "Dr Brad Stanfield",
+      "credential": "Brad Stanfield, MBChB, general practitioner",
+      "summary": "Why the 2026 FDA news is not an approval.",
+      "topic": "peptides"
+    },
+    {
+      "id": "wRsX_ZkzxvQ",
+      "title": "Peptide and hormone therapies for health, performance and longevity",
+      "creator": "Andrew Huberman",
+      "credential": "Andrew Huberman, PhD, with physician Craig Koniver, MD",
+      "summary": "A long-form conversation about the peptides doctors are being asked about, from GLP-1s to BPC-157.",
+      "topic": "peptides"
+    },
+    {
+      "id": "DWL46HWhmgQ",
+      "title": "Melanotan II: the truth about the viral “Barbie drug”",
+      "creator": "Dr Dray",
+      "credential": "Andrea Suarez, MD, dermatologist",
+      "summary": "A dermatologist on why tanning injections worry skin doctors.",
+      "topic": "skin"
+    },
+    {
+      "id": "TH_ZDyMzhqM",
+      "title": "Dermatologist rates copper peptide serums",
+      "creator": "Dr. Aleksandra Brown",
+      "credential": "Aleksandra Brown, DO, FAAD, dermatologist",
+      "summary": "What copper peptides (GHK-Cu) can and can’t do in skin care.",
+      "topic": "skin"
+    },
+    {
+      "id": "l8BI_720Dfs",
+      "title": "NAD coenzymes, metabolic stress and new interventions",
+      "creator": "Progress, Potential, and Possibilities",
+      "credential": "Interview with Charles Brenner, PhD, NAD researcher at City of Hope",
+      "summary": "A leading NAD scientist on what the molecule does and what boosting it might achieve.",
+      "topic": "ageing"
+    },
+    {
+      "id": "Gk1D4VgM8jY",
+      "title": "The discovery of insulin",
+      "creator": "Nature",
+      "credential": "The journal Nature",
+      "summary": "How a peptide hormone became the medicine that changed diabetes forever.",
+      "topic": "history"
+    },
+    {
+      "id": "DhDC0DAYdBI",
+      "title": "FDA peptide compounding meeting: July 23, 2026",
+      "creator": "U.S. Food and Drug Administration",
+      "credential": "Official FDA advisory committee recording",
+      "summary": "Full meeting covering BPC-157, KPV, TB-500 and MOTS-c. Advisory discussion is not drug approval.",
+      "topic": "regulation"
+    },
+    {
+      "id": "xXM5ecHxlMU",
+      "title": "FDA peptide compounding meeting: July 24, 2026",
+      "creator": "U.S. Food and Drug Administration",
+      "credential": "Official FDA advisory committee recording",
+      "summary": "Full meeting covering DSIP (emideltide), Semax and Epitalon. Advisory discussion is not drug approval.",
+      "topic": "regulation"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Once-Weekly Semaglutide in Adults with Overweight or Obesity (STEP 1)",
+      "detail": "Wilding et al. · New England Journal of Medicine · 2021",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33567185/",
+      "owner": "learn/semaglutide"
+    },
+    {
+      "title": "Semaglutide and Cardiovascular Outcomes in Obesity without Diabetes (SELECT)",
+      "detail": "Lincoff et al. · New England Journal of Medicine · 2023",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37952131/",
+      "owner": "learn/semaglutide"
+    },
+    {
+      "title": "Oral Semaglutide at a Dose of 25 mg in Adults with Overweight or Obesity (OASIS 4)",
+      "detail": "Wharton et al. · New England Journal of Medicine · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40934115/",
+      "owner": "learn/semaglutide"
+    },
+    {
+      "title": "Discovery of the Once-Weekly GLP-1 Analogue Semaglutide",
+      "detail": "Lau et al. · Journal of Medicinal Chemistry · 2015",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26308095/",
+      "owner": "learn/semaglutide"
+    },
+    {
+      "title": "Tirzepatide Once Weekly for the Treatment of Obesity (SURMOUNT-1)",
+      "detail": "Jastreboff et al. · New England Journal of Medicine · 2022",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35658024/",
+      "owner": "learn/tirzepatide"
+    },
+    {
+      "title": "LY3298176, a novel dual GIP and GLP-1 receptor agonist: from discovery to clinical proof of concept",
+      "detail": "Coskun et al. · Molecular Metabolism · 2018",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30473097/",
+      "owner": "learn/tirzepatide"
+    },
+    {
+      "title": "REDEFINE 4: CagriSema and tirzepatide head-to-head results",
+      "detail": "Novo Nordisk ? original sponsor announcement ? February 23, 2026",
+      "url": "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501",
+      "owner": "learn/tirzepatide"
+    },
+    {
+      "title": "Triple-Hormone-Receptor Agonist Retatrutide for Obesity — A Phase 2 Trial",
+      "detail": "Jastreboff et al. · New England Journal of Medicine · 2023",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37366315/",
+      "owner": "learn/retatrutide"
+    },
+    {
+      "title": "TRIUMPH-1: phase 3 retatrutide topline results",
+      "detail": "Eli Lilly and Company ? original sponsor announcement ? May 21, 2026",
+      "url": "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss",
+      "owner": "learn/retatrutide"
+    },
+    {
+      "title": "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results",
+      "detail": "Eli Lilly and Company ? original sponsor announcement ? July 23, 2026",
+      "url": "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional",
+      "owner": "learn/retatrutide"
+    },
+    {
+      "title": "A Randomized, Controlled Trial of 3.0 mg of Liraglutide in Weight Management (SCALE)",
+      "detail": "Pi-Sunyer et al. · New England Journal of Medicine · 2015",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26132939/",
+      "owner": "learn/liraglutide"
+    },
+    {
+      "title": "Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes (LEADER)",
+      "detail": "Marso et al. · New England Journal of Medicine · 2016",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27295427/",
+      "owner": "learn/liraglutide"
+    },
+    {
+      "title": "Emerging Use of BPC-157 in Orthopaedic Sports Medicine: A Systematic Review",
+      "detail": "Vasireddi et al. · HSS Journal · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40756949/",
+      "owner": "learn/bpc-157"
+    },
+    {
+      "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+      "detail": "US Food and Drug Administration · meeting page",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      "owner": "learn/bpc-157"
+    },
+    {
+      "title": "Bulk drug substances nominated for compounding under Section 503A",
+      "detail": "US Food and Drug Administration · updated May 14, 2026 (PDF)",
+      "url": "https://www.fda.gov/media/94155/download",
+      "owner": "learn/bpc-157"
+    },
+    {
+      "title": "Thymosin β4: a multi-functional regenerative peptide",
+      "detail": "Goldstein et al. · Expert Opinion on Biological Therapy · 2012",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22074294/",
+      "owner": "learn/tb-500"
+    },
+    {
+      "title": "Thymosin beta 4 ophthalmic solution for dry eye: a randomized, placebo-controlled, phase II clinical trial",
+      "detail": "Sosne et al. · Clinical Ophthalmology · 2015",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26056426/",
+      "owner": "learn/tb-500"
+    },
+    {
+      "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+      "detail": "US Food and Drug Administration · meeting page",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      "owner": "learn/tb-500"
+    },
+    {
+      "title": "PepT1-mediated tripeptide KPV uptake reduces intestinal inflammation",
+      "detail": "Dalmasso et al. · Gastroenterology · 2008",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18061177/",
+      "owner": "learn/kpv"
+    },
+    {
+      "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+      "detail": "US Food and Drug Administration · meeting page",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      "owner": "learn/kpv"
+    },
+    {
+      "title": "Ipamorelin, the first selective growth hormone secretagogue",
+      "detail": "Raun et al. · European Journal of Endocrinology · 1998",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9849822/",
+      "owner": "learn/ipamorelin"
+    },
+    {
+      "title": "Prospective, randomized, controlled, proof-of-concept study of the ghrelin mimetic ipamorelin for postoperative ileus",
+      "detail": "Beck et al. · International Journal of Colorectal Disease · 2014",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25331030/",
+      "owner": "learn/ipamorelin"
+    },
+    {
+      "title": "Prolonged stimulation of growth hormone and IGF-I secretion by CJC-1295, a long-acting analog of GHRH, in healthy adults",
+      "detail": "Teichman et al. · Journal of Clinical Endocrinology & Metabolism · 2006",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16352683/",
+      "owner": "learn/cjc-1295"
+    },
+    {
+      "title": "Sermorelin: a review of its use in the diagnosis and treatment of children with idiopathic growth hormone deficiency",
+      "detail": "Prakash & Goa · BioDrugs · 1999",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18031173/",
+      "owner": "learn/sermorelin"
+    },
+    {
+      "title": "Tesamorelin: 26-week randomized clinical trial",
+      "detail": "Falutz et al. · New England Journal of Medicine · 2007",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18057338/",
+      "owner": "learn/tesamorelin"
+    },
+    {
+      "title": "Egrifta SV prescribing information",
+      "detail": "FDA-approved labeling · DailyMed",
+      "url": "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3d783378-b02d-4f19-99dd-0fc91a042224",
+      "owner": "learn/tesamorelin"
+    },
+    {
+      "title": "Peptide Selank Enhances the Effect of Diazepam in Reducing Anxiety in Unpredictable Chronic Mild Stress Conditions in Rats",
+      "detail": "Kasian et al. · Behavioural Neurology · 2017",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28280289/",
+      "owner": "learn/selank"
+    },
+    {
+      "title": "Optimization of the treatment of anxiety disorders with Selank (in Russian)",
+      "detail": "Medvedev et al. · Zhurnal Nevrologii i Psikhiatrii · 2015",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26356395/",
+      "owner": "learn/selank"
+    },
+    {
+      "title": "The efficacy of Semax in the treatment of patients at different stages of ischemic stroke (in Russian)",
+      "detail": "Gusev et al. · Zhurnal Nevrologii i Psikhiatrii · 2018",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29798983/",
+      "owner": "learn/semax"
+    },
+    {
+      "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+      "detail": "US Food and Drug Administration · meeting page",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      "owner": "learn/semax"
+    },
+    {
+      "title": "Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data",
+      "detail": "Pickart & Margolina · International Journal of Molecular Sciences · 2018",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29986520/",
+      "owner": "learn/ghk-cu"
+    },
+    {
+      "title": "Topically applied GHK as an anti-wrinkle peptide: advantages, problems and prospective",
+      "detail": "Mortazavi et al. · BioImpacts · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39963574/",
+      "owner": "learn/ghk-cu"
+    },
+    {
+      "title": "Afamelanotide for Erythropoietic Protoporphyria",
+      "detail": "Langendonk et al. · New England Journal of Medicine · 2015",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/26132941/",
+      "owner": "learn/melanotan"
+    },
+    {
+      "title": "Evaluation of melanotan-II in a pilot phase-I clinical study",
+      "detail": "Dorr et al. · Life Sciences · 1996",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8637402/",
+      "owner": "learn/melanotan"
+    },
+    {
+      "title": "Melanoma associated with the use of melanotan-II",
+      "detail": "Hjuler & Lorentzen · Dermatology · 2014",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24355990/",
+      "owner": "learn/melanotan"
+    },
+    {
+      "title": "Melanotan II: a possible cause of renal infarction",
+      "detail": "Peters et al. · CEN Case Reports · 2020",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31953620/",
+      "owner": "learn/melanotan"
+    },
+    {
+      "title": "Overview of Epitalon, a highly bioactive pineal tetrapeptide",
+      "detail": "Araj et al. · International Journal of Molecular Sciences · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40141333/",
+      "owner": "learn/epitalon"
+    },
+    {
+      "title": "Epitalon increases telomere length in human cell lines through telomerase upregulation or ALT activity",
+      "detail": "Al-Dulaimi et al. · Biogerontology · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40908429/",
+      "owner": "learn/epitalon"
+    },
+    {
+      "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+      "detail": "US Food and Drug Administration · meeting page",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      "owner": "learn/epitalon"
+    },
+    {
+      "title": "The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance",
+      "detail": "Lee et al. · Cell Metabolism · 2015",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25738459/",
+      "owner": "learn/mots-c"
+    },
+    {
+      "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+      "detail": "US Food and Drug Administration · meeting page",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      "owner": "learn/mots-c"
+    },
+    {
+      "title": "Roles of NAD+ in Health and Aging",
+      "detail": "Lautrup et al. · Cold Spring Harbor Perspectives in Medicine · 2024",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37848251/",
+      "owner": "learn/nad"
+    },
+    {
+      "title": "Bremelanotide for the Treatment of Hypoactive Sexual Desire Disorder: Two Randomized Phase 3 Trials",
+      "detail": "Kingsberg et al. · Obstetrics & Gynecology · 2019",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31599840/",
+      "owner": "learn/pt-141"
+    },
+    {
+      "title": "Thymosin alpha 1: a comprehensive review of the literature",
+      "detail": "Dominari et al. · World Journal of Virology · 2020",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33362999/",
+      "owner": "learn/thymosin-alpha-1"
+    },
+    {
+      "title": "Comprehensive Review of the Safety and Efficacy of Thymosin Alpha 1 in Human Clinical Trials",
+      "detail": "Dinetz et al. · Alternative Therapies in Health and Medicine · 2024",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38308608/",
+      "owner": "learn/thymosin-alpha-1"
+    },
+    {
+      "title": "Insulin’s centenary: the birth of an idea",
+      "detail": "Hegele & Maltman · Lancet Diabetes & Endocrinology · 2020",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33129375/",
+      "owner": "learn/insulin"
+    },
+    {
+      "title": "100 years of insulin: celebrating the past, present and future of diabetes therapy",
+      "detail": "Sims et al. · Nature Medicine · 2021",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34267380/",
+      "owner": "learn/insulin"
+    },
+    {
+      "title": "Oxytocin: physiology, pharmacology, and clinical application for labor management",
+      "detail": "Hermesch et al. · American Journal of Obstetrics & Gynecology · 2024",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37460365/",
+      "owner": "learn/oxytocin"
+    },
+    {
+      "title": "Pharmacology of Octreotide: Clinical Implications for Anesthesiologists and Associated Risks",
+      "detail": "Borna et al. · Anesthesiology Clinics · 2017",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28526153/",
+      "owner": "learn/octreotide"
+    },
+    {
+      "title": "Oral Octreotide: A Review of Recent Clinical Trials and Practical Recommendations",
+      "detail": "Yuen et al. · Endocrine Practice · 2022",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35452815/",
+      "owner": "learn/octreotide"
+    },
+    {
+      "title": "Effect of parathyroid hormone (1-34) on fractures and bone mineral density in postmenopausal women with osteoporosis",
+      "detail": "Neer et al. · New England Journal of Medicine · 2001",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11346808/",
+      "owner": "learn/teriparatide"
+    },
+    {
+      "title": "Once-weekly cagrilintide for weight management in people with overweight and obesity: a phase 2 trial",
+      "detail": "Lau et al. · The Lancet · 2021",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34798060/",
+      "owner": "learn/cagrilintide"
+    },
+    {
+      "title": "Coadministered Cagrilintide and Semaglutide in Adults with Overweight or Obesity (REDEFINE 1)",
+      "detail": "Garvey et al. · New England Journal of Medicine · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40544433/",
+      "owner": "learn/cagrilintide"
+    },
+    {
+      "title": "REDEFINE 4: CagriSema and tirzepatide head-to-head results",
+      "detail": "Novo Nordisk ? original sponsor announcement ? February 23, 2026",
+      "url": "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501",
+      "owner": "learn/cagrilintide"
+    },
+    {
+      "title": "AOD-9604 (Metabolic)",
+      "detail": "Wilding · Current Opinion in Investigational Drugs · 2004",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15134286/",
+      "owner": "learn/aod-9604"
+    },
+    {
+      "title": "Safety and Efficacy of Approved and Unapproved Peptide Therapies for Musculoskeletal Injuries and Athletic Performance",
+      "detail": "Mendias et al. · Sports Medicine · 2026",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41966639/",
+      "owner": "learn/aod-9604"
+    },
+    {
+      "title": "A synthetic hexapeptide (Argireline) with antiwrinkle activity",
+      "detail": "Blanes-Mira et al. · International Journal of Cosmetic Science · 2002",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18498523/",
+      "owner": "learn/argireline"
+    },
+    {
+      "title": "The effect of tripeptide-copper complex on human hair growth in vitro",
+      "detail": "Pyo et al. · Archives of Pharmacal Research · 2007",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17703734/",
+      "owner": "learn/ahk-cu"
+    },
+    {
+      "title": "Cibinetide Improves Corneal Nerve Fiber Abundance in Patients With Sarcoidosis-Associated Small Nerve Fiber Loss and Neuropathic Pain",
+      "detail": "Culver et al. · Investigative Ophthalmology & Visual Science · 2017",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28475703/",
+      "owner": "learn/ara-290"
+    },
+    {
+      "title": "ARA 290 for treatment of small fiber neuropathy in sarcoidosis",
+      "detail": "van Velzen et al. · Expert Opinion on Investigational Drugs · 2014",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24555851/",
+      "owner": "learn/ara-290"
+    },
+    {
+      "title": "FDA grants accelerated approval for first treatment for Barth syndrome",
+      "detail": "US Food and Drug Administration · September 2025",
+      "url": "https://www.fda.gov/news-events/press-announcements/fda-grants-accelerated-approval-first-treatment-barth-syndrome",
+      "owner": "learn/ss-31"
+    },
+    {
+      "title": "Long-term efficacy and safety of elamipretide in patients with Barth syndrome: 168-week open-label extension results",
+      "detail": "Thompson et al. · Genetics in Medicine · 2024",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38602181/",
+      "owner": "learn/ss-31"
+    },
+    {
+      "title": "A Synthetic ERR Agonist Alleviates Metabolic Syndrome",
+      "detail": "Billon et al. · Journal of Pharmacology and Experimental Therapeutics · 2024",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37739806/",
+      "owner": "learn/slu-pp-332"
+    },
+    {
+      "title": "Selective and membrane-permeable small molecule inhibitors of nicotinamide N-methyltransferase reverse high fat diet-induced obesity in mice",
+      "detail": "Neelakantan et al. · Biochemical Pharmacology · 2018",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29155147/",
+      "owner": "learn/5-amino-1mq"
+    },
+    {
+      "title": "Nicotinamide N-methyltransferase inhibition mitigates obesity-related metabolic dysfunction",
+      "detail": "Babula et al. · Diabetes, Obesity and Metabolism · 2024",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39161060/",
+      "owner": "learn/5-amino-1mq"
+    },
+    {
+      "title": "Evaluation and treatment of adult growth hormone deficiency: an Endocrine Society clinical practice guideline",
+      "detail": "Molitch et al. · Journal of Clinical Endocrinology & Metabolism · 2011",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21602453/",
+      "owner": "learn/hgh"
+    },
+    {
+      "title": "IGF-1 LR3 does not promote growth in late-gestation growth-restricted fetal sheep",
+      "detail": "White et al. · American Journal of Physiology: Endocrinology and Metabolism · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39679943/",
+      "owner": "learn/igf-1-lr3"
+    },
+    {
+      "title": "Profile of mecasermin for the long-term treatment of growth failure in children and adolescents with severe primary IGF-1 deficiency",
+      "detail": "Fintini et al. · Therapeutics and Clinical Risk Management · 2009",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19707272/",
+      "owner": "learn/igf-1-lr3"
+    },
+    {
+      "title": "Delta sleep-inducing peptide (DSIP): a still unresolved riddle",
+      "detail": "Kovalzon & Strekalova · Journal of Neurochemistry · 2006",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16539679/",
+      "owner": "learn/dsip"
+    },
+    {
+      "title": "Delta-sleep-inducing peptide (DSIP): a review",
+      "detail": "Graf & Kastin · Neuroscience & Biobehavioral Reviews · 1984",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/6145137/",
+      "owner": "learn/dsip"
+    },
+    {
+      "title": "FDA Pharmacy Compounding Advisory Committee, July 23–24, 2026",
+      "detail": "US Food and Drug Administration · meeting page",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      "owner": "learn/dsip"
+    },
+    {
+      "title": "Aviptadil in Acute Respiratory Distress Syndrome: Promise or Mirage?",
+      "detail": "Chanchalani et al. · Indian Journal of Critical Care Medicine · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41368453/",
+      "owner": "learn/vip"
+    },
+    {
+      "title": "Intracavernosal injection of aviptadil and phentolamine for refractory erectile dysfunction",
+      "detail": "Al-Mitwalli et al. · Journal of Sexual Medicine · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40192471/",
+      "owner": "learn/vip"
+    },
+    {
+      "title": "Kisspeptin-54 triggers egg maturation in women undergoing in vitro fertilization",
+      "detail": "Jayasena et al. · Journal of Clinical Investigation · 2014",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25036713/",
+      "owner": "learn/kisspeptin"
+    },
+    {
+      "title": "Kisspeptin as a promising oocyte maturation trigger for in vitro fertilisation in humans",
+      "detail": "Kasum et al. · Gynecological Endocrinology · 2017",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28393578/",
+      "owner": "learn/kisspeptin"
+    },
+    {
+      "title": "Avoid dangerous hCG diet products",
+      "detail": "US Food and Drug Administration · consumer update",
+      "url": "https://www.fda.gov/consumers/consumer-updates/avoid-dangerous-hcg-diet-products",
+      "owner": "learn/hcg"
+    },
+    {
+      "title": "Anabolic steroid-induced hypogonadism: diagnosis and treatment",
+      "detail": "Rahnema et al. · Fertility and Sterility · 2014",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/24636400/",
+      "owner": "learn/hcg"
+    },
+    {
+      "title": "Biosimilars versus the originator of follitropin alfa for ovarian stimulation in ART: a systematic review and meta-analysis",
+      "detail": "Kiose et al. · Human Reproduction · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39719046/",
+      "owner": "learn/fsh"
+    },
+    {
+      "label": "A novel TORC1 inhibitor, RLX-201, improves skin health, biomechanics, and extracellular matrix integrity in a double-blind clinical study",
+      "detail": "Draelos et al. · Journal of Cosmetic Dermatology · 2026",
+      "url": "https://doi.org/10.1111/jocd.71219",
+      "owner": "news/rlx-201-skin-serum-12-weeks"
+    },
+    {
+      "label": "New weight-loss injection targets fat cells",
+      "detail": "EurekAlert! news release, European Association for the Study of Diabetes · October 1, 2026",
+      "url": "https://www.eurekalert.org/news-releases/1146063",
+      "owner": "news/cbl-514-fat-cells-self-destruct"
+    },
+    {
+      "label": "July 23–24, 2026: Meeting of the Pharmacy Compounding Advisory Committee",
+      "detail": "US Food and Drug Administration",
+      "url": "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      "owner": "news/fda-advisers-review-bpc-157-and-six-peptides"
+    },
+    {
+      "label": "Bulk drug substances nominated for compounding under Section 503A",
+      "detail": "US Food and Drug Administration · updated May 14, 2026 (PDF)",
+      "url": "https://www.fda.gov/media/94155/download",
+      "owner": "news/fda-advisers-review-bpc-157-and-six-peptides"
+    },
+    {
+      "label": "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results",
+      "detail": "Eli Lilly and Company ? original sponsor announcement ? July 23, 2026",
+      "url": "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional",
+      "owner": "news/retatrutide-triumph-2-and-3"
+    },
+    {
+      "label": "TRIUMPH-1: phase 3 retatrutide topline results",
+      "detail": "Eli Lilly and Company ? original sponsor announcement ? May 21, 2026",
+      "url": "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss",
+      "owner": "news/retatrutide-triumph-1-28-percent"
+    },
+    {
+      "label": "Bulk drug substances nominated for compounding under Section 503A",
+      "detail": "US Food and Drug Administration · updated May 14, 2026 (PDF)",
+      "url": "https://www.fda.gov/media/94155/download",
+      "owner": "news/fda-category-2-twelve-peptides"
+    },
+    {
+      "label": "Safety risks and withdrawn compounding nominations",
+      "detail": "US Food and Drug Administration · primary safety information",
+      "url": "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      "owner": "news/fda-category-2-twelve-peptides"
+    },
+    {
+      "label": "REDEFINE 4: CagriSema and tirzepatide head-to-head results",
+      "detail": "Novo Nordisk ? original sponsor announcement ? February 23, 2026",
+      "url": "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501",
+      "owner": "news/cagrisema-vs-zepbound"
+    },
+    {
+      "label": "FDA approves Novo Nordisk’s Wegovy pill, the first and only oral GLP-1 for weight loss in adults",
+      "detail": "Novo Nordisk press release · December 22, 2025",
+      "url": "https://www.prnewswire.com/news-releases/fda-approves-novo-nordisks-wegovy-pill-the-first-and-only-oral-glp-1-for-weight-loss-in-adults-302648344.html",
+      "owner": "news/wegovy-pill-approved"
+    },
+    {
+      "label": "Oral Semaglutide at a Dose of 25 mg in Adults with Overweight or Obesity (OASIS 4)",
+      "detail": "Wharton et al. · New England Journal of Medicine · 2025",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40934115/",
+      "owner": "news/wegovy-pill-approved"
+    }
+  ]
+}

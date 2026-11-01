@@ -13,14 +13,16 @@ import Section from "@/components/common/Section"
 import ArticleArt from "@/components/learn/ArticleArt"
 import ArticleCard from "@/components/learn/ArticleCard"
 import PeptideCard from "@/components/learn/PeptideCard"
+import ResearchCatalog from "@/components/learn/ResearchCatalog"
 import SourceList, { LEARN_DISCLAIMER } from "@/components/learn/SourceList"
 import StatusBadge from "@/components/learn/StatusBadge"
-import VideoGallery from "@/components/learn/VideoGallery"
+import VideoResources from "@/components/learn/VideoResources"
 import WeightLossChart from "@/components/learn/WeightLossChart"
 import { ARTICLES } from "@/content/learn/articles"
+import { EMERGING_WEIGHT_RESEARCH } from "@/content/learn/emerging-weight-research"
 import { getCategory, STATUSES } from "@/content/learn/categories"
 import { getPeptide, PEPTIDES } from "@/content/learn/peptides"
-import { getVideos } from "@/content/learn/videos"
+import { getProfileVideoResources } from "@/content/learn/video-resources"
 import { WEIGHT_LOSS_TRIALS } from "@/content/learn/weight-loss-trials"
 import { gutter } from "@/theme/tokens"
 
@@ -62,9 +64,11 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
   const category = getCategory(peptide.category)
   const status = STATUSES[peptide.status]
   const inChart = WEIGHT_LOSS_TRIALS.some((trial) => trial.peptide === peptide.slug)
+    || EMERGING_WEIGHT_RESEARCH.some((research) => research.peptide === peptide.slug)
   const articles = ARTICLES.filter((article) => article.peptides.includes(peptide.slug)).slice(0, 3)
-  const related = PEPTIDES.filter((other) => other.category === peptide.category && other.slug !== peptide.slug).slice(0, 3)
-  const videos = getVideos(peptide.videos)
+  const related = PEPTIDES.filter((other) => other.slug !== peptide.slug)
+    .sort((a, b) => Number(b.category === peptide.category) - Number(a.category === peptide.category)).slice(0, 3)
+  const videos = getProfileVideoResources(peptide)
 
   return (
     <>
@@ -130,7 +134,9 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
           </Block>
         </Box>
 
-        {videos.length ? <Block title="Watch: doctors explain"><VideoGallery videos={videos} /></Block> : null}
+        <Block title={`Watch: ${peptide.name} and related science`}>
+          <VideoResources videos={videos.videos} connections={videos.connections} introduction={videos.introduction} />
+        </Block>
 
         {articles.length ? (
           <Block title="In the news">
@@ -143,12 +149,14 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
         <Block title="Sources"><SourceList sources={peptide.sources} /></Block>
 
         {related.length ? (
-          <Block title={`More in ${category.name}`}>
+          <Block title="Related peptide profiles">
             <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "repeat(3, 1fr)" }, gap: 2.5 }}>
               {related.map((other) => <PeptideCard key={other.slug} peptide={other} />)}
             </Box>
           </Block>
         ) : null}
+
+        <ResearchCatalog peptides={[peptide.slug]} />
 
         <Box sx={{ mt: { xs: 5, md: 7 }, pt: 3, borderTop: "1px solid", borderColor: "divider", display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2, justifyContent: "space-between" }}>
           <Typography sx={{ fontSize: 13, color: "text.secondary", maxWidth: 760 }}>{LEARN_DISCLAIMER}</Typography>

@@ -1,0 +1,23 @@
+{
+  "checks": [
+    {
+      "route": "/us/learn/cbl-514",
+      "width": 1440,
+      "overflow": false,
+      "youtubeLinks": true,
+      "localizedShop": true,
+      "playerOpenAndClose": true,
+      "humanBarSeparation": true
+    },
+    {
+      "route": "/us/learn/cbl-514",
+      "width": 390,
+      "overflow": false,
+      "youtubeLinks": true,
+      "localizedShop": true,
+      "playerOpenAndClose": true,
+      "humanBarSeparation": true
+    }
+  ],
+  "errors": []
+}

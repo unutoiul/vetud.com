@@ -9,14 +9,14 @@ import { ARTICLES } from "@/content/learn/articles"
 
 export const metadata: Metadata = {
   title: "News & articles",
-  description: "New peptide research and regulation, explained in plain language, with every source linked.",
+  description: "Peptide research, regulation and learning guides, with connected videos and original sources.",
 }
 
 export default function NewsPage() {
   const [latest, ...rest] = ARTICLES
   return (
     <>
-      <PageHeader eyebrow="News" title="News & articles." description="New peptide research and regulation, explained in plain language. Every article links to its sources." />
+      <PageHeader eyebrow="News" title="News & articles." description="Research, regulation and learning guides, explained in plain language. Every article has connected videos and source links." />
       <Section tone="white" sx={{ py: { xs: 5, md: 8 } }}>
         {latest ? <Box sx={{ maxWidth: 1040 }}><ArticleCard article={latest} featured /></Box> : null}
         <Box sx={{ mt: { xs: 6, md: 8 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "repeat(3, 1fr)" }, columnGap: 3.5, rowGap: { xs: 5, md: 6 } }}>

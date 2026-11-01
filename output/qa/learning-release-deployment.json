@@ -1,0 +1,20 @@
+{
+  "deploymentId": "dpl_GpH6xuq1WRTjYyh8w7AztoJgnjnc",
+  "deploymentUrl": "https://vetud-storefront-n5pj9t8qt-gold-structure-engine.vercel.app",
+  "liveUrl": "https://www.vetud.com",
+  "verifiedAt": "2026-11-01T18:16:28.853Z",
+  "profiles": 39,
+  "articles": 8,
+  "curatedYouTubeVideos": 17,
+  "uniqueSourceReferences": 75,
+  "verification": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "inventoryAndMatchingTests": 4,
+    "desktopAndMobile": "passed",
+    "stagedRoutes": 65,
+    "liveRoutes": 65
+  },
+  "publicationScope": "Peptide learning profiles and news articles; catalog inventory and product publication status were not mutated."
+}

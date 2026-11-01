@@ -8,11 +8,11 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
 import { useState } from "react"
-import { thumbnailUrl, watchUrl, type LearnVideo } from "@/content/learn/videos"
+import { thumbnailUrl, watchUrl, type LearnVideo, type VideoConnection } from "@/content/learn/videos"
 import Icon from "../brand/Icon"
 
 /** Video cards that play in a dialog. Nothing loads from YouTube until a video is opened. */
-export default function VideoGallery({ videos, columns = 3 }: { videos: LearnVideo[]; columns?: 2 | 3 }) {
+export default function VideoGallery({ videos, columns = 3, connections }: { videos: LearnVideo[]; columns?: 2 | 3; connections?: Record<string, VideoConnection> }) {
   const [playing, setPlaying] = useState<LearnVideo | null>(null)
   return <>
     <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: `repeat(${columns}, 1fr)` }, gap: { xs: 3.5, md: 4 } }}>
@@ -27,6 +27,11 @@ export default function VideoGallery({ videos, columns = 3 }: { videos: LearnVid
           <Typography component="h3" sx={{ mt: .5, fontSize: 18, fontWeight: 600, lineHeight: 1.3, letterSpacing: "-.02em" }}>{video.title}</Typography>
           <Typography sx={{ mt: .75, fontSize: 14, color: "text.secondary", lineHeight: 1.6 }}>{video.summary}</Typography>
           <Typography sx={{ mt: .75, fontSize: 12.5, color: "text.secondary" }}>{video.credential}</Typography>
+          {connections?.[video.id] ? <Box sx={{ mt: 1.5, p: 1.5, bgcolor: "brand.mintWash", borderRadius: "6px" }}>
+            <Typography sx={{ fontSize: 12, fontWeight: 700, color: "brand.blue" }}>{connections[video.id].label}</Typography>
+            <Typography sx={{ mt: .5, fontSize: 13, color: "text.secondary", lineHeight: 1.65 }}>{connections[video.id].explanation}</Typography>
+          </Box> : null}
+          <Link href={watchUrl(video.id)} target="_blank" rel="noopener noreferrer" aria-label={`Watch ${video.title} on YouTube (opens in a new tab)`} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, mt: .5, fontSize: 14, fontWeight: 600 }}>Watch on YouTube ↗</Link>
         </Box>
       ))}
     </Box>

@@ -1,0 +1,25 @@
+{
+  "deploymentId": "dpl_9fYUA4KH1N16SyidcdGbVLSfKy7t",
+  "deploymentUrl": "https://vetud-storefront-f3968a0zo-gold-structure-engine.vercel.app",
+  "liveUrl": "https://www.vetud.com",
+  "verifiedAt": "2026-11-01T19:35:24.768Z",
+  "profiles": 41,
+  "articles": 11,
+  "curatedVideos": 42,
+  "newVideos": 25,
+  "compoundVideoProfiles": 25,
+  "learningGuides": [
+    "from-cells-to-human-trials",
+    "body-weight-fat-and-muscle-results"
+  ],
+  "checks": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "youtubeLinks": "42 original channels and embed links checked",
+    "browser": "Desktop and mobile: compound recording, background selection, guide, library topic links and player",
+    "stagedPages": 17,
+    "livePages": 70
+  },
+  "backendMutations": false
+}

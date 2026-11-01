@@ -1,7 +1,9 @@
+import { CBL_514_SOURCES, PTT_A_SOURCES } from "./emerging-weight-research"
+
 /**
  * News & articles, written as plain-language study summaries. Each number comes from the linked
  * source. New articles arrive as drafts from the weekly news job and go live only once approved.
- * Articles never link to the shop and never suggest personal use.
+ * Articles never suggest personal use. Related catalog links distinguish research materials.
  */
 export type ArticleArtVariant = "cells" | "triple" | "bars" | "pill" | "vials" | "documents" | "duo" | "skin"
 
@@ -9,7 +11,7 @@ export type Article = {
   slug: string
   /** YYYY-MM-DD, or YYYY-MM when only the month is known. */
   date: string
-  kind: "Study" | "News" | "Regulation"
+  kind: "Study" | "News" | "Regulation" | "Guide"
   topic: string
   /** Rendered with the middle part highlighted, like a magazine cover line. */
   headline: [before: string, highlight: string, after?: string]
@@ -23,7 +25,93 @@ export type Article = {
   sources: { label: string; detail: string; url: string }[]
 }
 
+export const LEARNING_GUIDES: Article[] = [
+  {
+    slug: "from-cells-to-human-trials", date: "2026-11-02", kind: "Guide", topic: "Reading the evidence",
+    headline: ["From cells to people: ", "understand the research stages"],
+    dek: "A promising mechanism, an animal experiment and a human trial answer different questions. Here is how to tell which kind of evidence you are reading.",
+    art: "documents",
+    glance: [
+      { label: "Cell experiments", value: "Can explore a mechanism under controlled laboratory conditions" },
+      { label: "Animal research", value: "Can investigate effects and safety in a model; it is not a human result" },
+      { label: "Human trials", value: "Study people using a defined formulation, protocol and follow-up period" },
+      { label: "First question", value: "What was studied, in whom, and what was actually measured?" },
+    ],
+    body: [
+      "Begin with the study model. A compound changing a signal in a dish tells us something about that experiment. It does not show how much weight a person will lose, how an injury will heal, or which side effects a person might experience.",
+      "Preclinical research includes work before testing in people, using laboratory systems and animal models. Researchers examine biological activity and potential toxicity. A promising preclinical finding is a reason for further investigation, rather than a demonstrated human benefit.",
+      "Human clinical research follows a protocol: who can join, what treatment is studied, how comparisons are made and what outcomes will be measured. Early trials often focus on safety and how a drug behaves in the body. Later trials can investigate effectiveness and compare outcomes in larger groups.",
+      "Next, check the comparison. Was there a placebo, another treatment, or no comparison group? Then look at the number of participants, the length of follow-up, and whether everyone who entered the study was included in the analysis.",
+      "A conference abstract or company announcement may report early findings with limited detail. Look for a full study report and its methods before treating a headline as a complete account. A video can explain the story, but the original source lets you check the actual experiment.",
+      "Finally, keep uncertainty visible. The absence of a reported serious event in a small study does not settle uncommon or long-term risks. The study’s formulation and patient group also matter when interpreting what its result applies to.",
+    ],
+    means: "Read the model, comparison, outcome and follow-up before the headline. Use the videos below to build the vocabulary, then return to the original research linked on each profile.",
+    unknowns: "No single study answers every question. Findings may change with a different population, formulation, exposure or duration, and later research may revise an early conclusion.",
+    peptides: ["ptt-a", "bpc-157", "retatrutide"],
+    sources: [
+      { label: "Step 2: Preclinical Research", detail: "US Food and Drug Administration · drug-development education", url: "https://www.fda.gov/patients/drug-development-process/step-2-preclinical-research" },
+      { label: "Step 3: Clinical Research", detail: "US Food and Drug Administration · human trials and research phases", url: "https://www.fda.gov/patients/drug-development-process/step-3-clinical-research" },
+      { label: "Clinical Trials: Information for Participants", detail: "National Institute of Mental Health · NIH videos and explanations", url: "https://www.nimh.nih.gov/health/trials" },
+    ],
+  },
+  {
+    slug: "body-weight-fat-and-muscle-results", date: "2026-11-02", kind: "Guide", topic: "Reading the evidence",
+    headline: ["Body weight, fat and muscle: ", "read the right result"],
+    dek: "A percentage means little without its denominator. Learn why changes in body weight, a fat deposit and a measurement in rats belong in different comparisons.",
+    art: "bars",
+    glance: [
+      { label: "Body weight", value: "The change in total weight, usually relative to starting weight" },
+      { label: "Fat volume", value: "A measured fat compartment, reported in units such as mL or as its own percentage change" },
+      { label: "Muscle outcomes", value: "Check whether the study measured mass, size, strength or function" },
+      { label: "Control comparison", value: "A difference versus a control group is not automatically the change from baseline" },
+    ],
+    body: [
+      "Start by naming the outcome. Total body weight, visceral-fat volume and muscle strength are different measurements. Giving each a percentage sign does not make them interchangeable.",
+      "Here is an illustrative calculation, not a trial result: a change from 100 kg to 90 kg is a 10% reduction in body weight. A scan showing a fat compartment changing from 1,000 mL to 900 mL is a 10% reduction in that compartment. The second calculation does not tell us that the person lost 10 kg.",
+      "Also ask what the percentage is relative to. A change from a participant’s own starting value differs from a difference between treated and control groups. If control animals gain weight, a lower weight versus those animals need not represent the same percentage lost from the treated animals’ starting weight.",
+      "Muscle claims need their own outcome. Look for what was measured and how it was measured, whether strength or function was assessed, and how long any difference lasted. Do not assume that a reduction in total weight identifies the tissue that changed.",
+      "The examples in our library make this distinction concrete. Retatrutide trials report average human body-weight change. The cited CBL-514 work examines fat deposits, while the PTT-A findings discussed here come from animal experiments. Their numbers answer different questions.",
+      "Even human weight-loss trials can differ in participants, treatment duration, accompanying care and analysis. Use the chart to explore reported results, then open each source before deciding how closely two studies can be compared.",
+    ],
+    means: "Ask: percentage of what, compared with what, in which population and over how long? Those four questions prevent many misleading comparisons.",
+    unknowns: "A single percentage cannot establish long-term benefit, tissue-specific change or safety. An average also does not predict the result for an individual.",
+    peptides: ["retatrutide", "cbl-514", "ptt-a", "tesamorelin"],
+    sources: [
+      { label: "Retatrutide phase 2 obesity trial", detail: "Jastreboff et al. · New England Journal of Medicine · human body-weight outcome", url: "https://pubmed.ncbi.nlm.nih.gov/37366315/" },
+      ...CBL_514_SOURCES.map(({ title, ...source }) => ({ label: title, ...source })),
+      ...PTT_A_SOURCES.slice(0, 1).map(({ title, ...source }) => ({ label: title, ...source })),
+    ],
+  },
+]
+
 export const ARTICLES: Article[] = [
+  ...LEARNING_GUIDES,
+  {
+    slug: "ptt-a-four-receptors-animal-evidence",
+    date: "2026-11-02",
+    kind: "Study",
+    topic: "Weight management",
+    headline: ["PTT-A targets four receptors. ", "The evidence is still in animals"],
+    dek: "The experimental peptide combines GLP-1, GIP, amylin and calcitonin activity. Here is what the original research can tell us about weight loss.",
+    art: "triple",
+    glance: [
+      { label: "Compound", value: "PTT-A, an experimental peptide tetra-agonist from Pep2Tango" },
+      { label: "Evidence reviewed", value: "ADA 2024 and 2025 conference abstracts, plus the developer’s launch announcement" },
+      { label: "Study model", value: "Cells and rodents; the 2025 comparison used diet-induced obese rats for 21 days" },
+      { label: "Human weight loss", value: "Not established in the cited research" },
+      { label: "Versus retatrutide", value: "No human head-to-head result in these sources" },
+    ],
+    body: [
+      "PTT-A is designed to combine four receptor activities in one peptide. The discovery work tested the molecule in laboratory systems and animal models. Pep2Tango’s 2024 launch announcement described preparations for clinical development; an announced development plan is not a clinical result.",
+      "The ADA 2025 abstract compared PTT-A with tirzepatide in obese rats. Researchers reported body-weight and fat-mass reductions with preservation of measured muscle outcomes in the PTT-A groups. Those findings are a reason to investigate further, not proof of the same benefit in people.",
+      "The weight result is expressed relative to the vehicle-control animals. It should not be read as the percentage of starting weight lost by a person. Our comparison shows this animal result separately from the human trials.",
+      "Receptor counts also cannot rank medicines: four targets do not automatically outperform three. A claim that PTT-A beats retatrutide in people would require suitable human evidence that these sources do not provide.",
+    ],
+    means: "PTT-A is an early research approach worth following. It does not yet have a comparable human average weight-loss percentage in the sources reviewed here.",
+    unknowns: "Human effectiveness, muscle preservation, tolerability and long-term safety remain unresolved by these preclinical sources. Conference abstracts provide less detail than full study reports.",
+    peptides: ["ptt-a", "retatrutide", "tirzepatide"],
+    sources: PTT_A_SOURCES.map(({ title, ...source }) => ({ label: title, ...source })),
+  },
   {
     slug: "rlx-201-skin-serum-12-weeks",
     date: "2026-10",
@@ -33,7 +121,7 @@ export const ARTICLES: Article[] = [
     dek: "In a controlled trial, a serum containing RLX-201 improved firmness, elasticity and sagging compared with the same cream without it.",
     art: "skin",
     glance: [
-      { label: "Who took part", value: "Women with moderate to severe sun-damaged facial skin" },
+      { label: "Who took part", value: "47 women with moderate to severe sun-damaged facial skin; 31 received RLX-201 and 16 received vehicle" },
       { label: "How it was tested", value: "Applied twice a day for 12 weeks; randomized and double-blind, against the same cream without RLX-201" },
       { label: "What improved", value: "Firmness, elasticity, sagging and overall skin quality, starting from week 2" },
       { label: "What people said", value: "More than 85% reported better radiance, texture and hydration" },
@@ -47,7 +135,7 @@ export const ARTICLES: Article[] = [
       "In lab-grown human skin, the formula cut a marker of TORC1 activity by about 91%, a sign it was doing what it was designed to do.",
     ],
     means: "It’s an early sign that skin care aimed at the biology of aging, not just moisture or collagen, can make a visible difference.",
-    unknowns: "This is a single 12-week trial, and the published summary doesn’t give the group size or exact percentages. Longer and independent studies would tell us more. RLX-201 is not a peptide.",
+    unknowns: "This is a single-center, 12-week trial with 47 participants. Some authors are affiliated with the developer. Longer, independent studies are needed. RLX-201 is not a peptide, and this trial did not test GHK-Cu.",
     peptides: ["ghk-cu"],
     sources: [
       { label: "A novel TORC1 inhibitor, RLX-201, improves skin health, biomechanics, and extracellular matrix integrity in a double-blind clinical study", detail: "Draelos et al. · Journal of Cosmetic Dermatology · 2026", url: "https://doi.org/10.1111/jocd.71219" },
@@ -59,31 +147,28 @@ export const ARTICLES: Article[] = [
     kind: "Study",
     topic: "Weight management",
     headline: ["A new injection makes ", "fat cells self-destruct", ", and might help stop weight coming back"],
-    dek: "In a small trial, CBL-514 cut deep belly fat by 12% while fat grew in the placebo group. Animal tests hint it could slow weight regain after GLP-1 medicines.",
+    dek: "A small MRI analysis found a 12% reduction in visceral-fat volume, not body weight. A possible effect on weight regain after GLP-1 medicines is still an animal finding.",
     art: "cells",
     glance: [
-      { label: "Who took part", value: "40 adults with a BMI of 22 to 30, from two phase 2 trials" },
+      { label: "Who took part", value: "MRI subgroup from two phase 2 trials; 41 at baseline, 40 with later follow-up data; BMI 22 to 30" },
       { label: "How it was tested", value: "Injections into the lower belly every 3 weeks for up to 12 weeks, against a placebo" },
-      { label: "What was measured", value: "Deep (visceral) belly fat, on MRI scans" },
+      { label: "What was measured", value: "Visceral-fat volume on MRI, not average whole-body weight loss" },
       { label: "Result", value: "−12.01% on CBL-514 vs +5.68% on placebo, 4 weeks after the last injection" },
-      { label: "Status", value: "Presented at a medical conference (EASD 2026); not yet published in a journal" },
+      { label: "Status", value: "The visceral-fat analysis is a preliminary EASD 2026 report; a separate subcutaneous-fat trial is published" },
     ],
     body: [
       "Most weight-loss medicines shrink fat cells. An experimental drug called CBL-514 does something different: it makes fat cells self-destruct.",
-      "It triggers apoptosis, the body’s built-in way of removing cells it no longer needs, in fat cells only, leaving other cells alone. It is injected directly into the fat of the belly.",
+      "CBL-514 is a small molecule, not a peptide. It is designed to trigger apoptosis, the body’s cell-removal process, in targeted fat tissue.",
       "Researchers from the University of Alabama at Birmingham and the drug’s developer, Caliway Biopharmaceuticals, presented new results at the European Association for the Study of Diabetes meeting in Milan.",
-      "They looked at 40 people from two phase 2 trials who had MRI scans. Four weeks after the last injection, deep belly fat (the kind wrapped around the organs) had fallen by 12.01% on average in the CBL-514 group, but grown by 5.68% in the placebo group. At a later check, 8 to 12 weeks after treatment ended, the drug group was still 10.45% below where they started.",
+      "The developer’s account identifies 41 participants at baseline and 40 with later MRI follow-up data. Four weeks after final treatment, visceral-fat volume had fallen by 12.01% in the CBL-514 group and risen by 5.68% on placebo. This does not mean participants lost 12.01% of their body weight.",
       "Earlier phase 2 results showed that 69.6% of treated people lost at least 150 ml of the fat just under the skin by the 8-week follow-up. Nobody on placebo did.",
       "Animal tests added an interesting twist. Rats given CBL-514 together with the GLP-1 medicine tirzepatide lost more weight than rats on tirzepatide alone, and regained less when tirzepatide was stopped. The idea: with fewer fat cells left, there’s less room for fat to come back.",
       "Side effects were mostly mild, short-lived reactions where the injections were given, such as pain, swelling and redness. No serious side effects were reported.",
     ],
-    means: "Weight coming back after stopping GLP-1 medicines is one of the biggest open problems in obesity care. Reducing the number of fat cells, not just their size, is a new way to tackle it.",
-    unknowns: "The human group was small, the results haven’t been published in a journal yet, and the benefit for weight regain has only been seen in rats. CBL-514 is not a peptide and is not approved anywhere.",
-    peptides: ["tirzepatide", "semaglutide"],
-    sources: [
-      { label: "New weight-loss injection targets fat cells", detail: "EurekAlert! news release, European Association for the Study of Diabetes · October 1, 2026", url: "https://www.eurekalert.org/news-releases/1146063" },
-      { label: "New injection makes fat cells self-destruct", detail: "ScienceDaily · October 8, 2026", url: "https://www.sciencedaily.com/releases/2026/10/261008102713.htm" },
-    ],
+    means: "The studies address local fat deposits and an early hypothesis about weight regain. The fat-volume result cannot be ranked alongside average human body-weight loss with semaglutide, tirzepatide or retatrutide.",
+    unknowns: "The MRI subgroup was small and the visceral-fat report is preliminary. Reduced weight regain after stopping a GLP-1 medicine has not been established in people. Long-term safety and whole-body weight outcomes need further study.",
+    peptides: ["cbl-514", "tirzepatide", "semaglutide"],
+    sources: CBL_514_SOURCES.map(({ title, ...source }) => ({ label: title, ...source })),
   },
   {
     slug: "fda-advisers-review-bpc-157-and-six-peptides",
@@ -97,21 +182,21 @@ export const ARTICLES: Article[] = [
       { label: "When", value: "July 23–24, 2026" },
       { label: "Who", value: "The FDA’s Pharmacy Compounding Advisory Committee" },
       { label: "Peptides reviewed", value: "BPC-157, KPV, TB-500, MOTS-c, DSIP (emideltide), Semax and Epitalon" },
-      { label: "Reported vote", value: "8 to 6 in favor for BPC-157, for ulcerative colitis" },
-      { label: "Is it final?", value: "No. The vote is advice; the FDA makes the decision" },
+      { label: "Purpose", value: "Consideration for the Section 503A compounding ingredients list" },
+      { label: "Is it approval?", value: "No. Advisory recommendations are non-binding; FDA makes the decision" },
     ],
     body: [
       "Compounding pharmacies make medicines for individual patients from raw ingredients, for example when someone needs a strength or form that isn’t sold. In the US they can only use raw ingredients that meet certain rules, such as being part of an approved medicine or being on an FDA list. While the FDA reviews newly nominated ingredients, it keeps interim lists, and “Category 1” ingredients can be used in the meantime.",
       "In July 2026 the FDA asked its expert advisers about seven peptides that people had nominated for that list. On July 23 the panel looked at BPC-157 (for ulcerative colitis, a bowel disease), KPV (for wound healing and inflammation), TB-500 (for wound healing) and MOTS-c (for obesity and osteoporosis). On July 24 it looked at DSIP (for opioid withdrawal, insomnia and narcolepsy), Semax (for stroke-related conditions, migraine and facial nerve pain) and Epitalon (for insomnia).",
-      "According to reports, the panel voted 8 to 6 to recommend adding BPC-157 to the list, even though FDA staff had raised concerns, including that one form of the ingredient was not well characterized.",
-      "The FDA now decides whether to follow the advice. Any change to the list would go through a formal rule-making process, which can take many months.",
+      "The official agenda and meeting recordings document the substances and proposed uses under discussion. This summary does not infer a final regulatory decision from an advisory meeting.",
+      "Advisory committee recommendations are non-binding. Inclusion on the compounding list and approval of a finished medicine are separate regulatory decisions.",
     ],
     means: "If the FDA follows the panel, licensed pharmacies could one day prepare BPC-157 for individual patients with a prescription. That would bring some quality control to a peptide that is mostly sold online today without any oversight.",
     unknowns: "Permission to compound is not the same as approval as a medicine. Even then, there would still be no large human trials showing that BPC-157 works or is safe.",
-    peptides: ["bpc-157", "kpv", "tb-500", "mots-c", "semax", "epitalon"],
+    peptides: ["bpc-157", "kpv", "tb-500", "mots-c", "dsip", "semax", "epitalon"],
     sources: [
       { label: "July 23–24, 2026: Meeting of the Pharmacy Compounding Advisory Committee", detail: "US Food and Drug Administration", url: "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026" },
-      { label: "FDA advisory committee’s vote may open a drug-compounding back door for unapproved peptides", detail: "Health Affairs Forefront · 2026", url: "https://www.healthaffairs.org/content/forefront/fda-advisory-committee-s-vote-may-open-drug-compounding-back-door-unapproved-peptides" },
+      { label: "Bulk drug substances nominated for compounding under Section 503A", detail: "US Food and Drug Administration · updated May 14, 2026 (PDF)", url: "https://www.fda.gov/media/94155/download" },
     ],
   },
   {
@@ -140,7 +225,7 @@ export const ARTICLES: Article[] = [
     unknowns: "These are company-reported results that haven’t yet been published in full. Long-term safety, and how much weight comes back after stopping, are still unknown.",
     peptides: ["retatrutide", "tirzepatide", "semaglutide"],
     sources: [
-      { label: "Retatrutide delivers up to 22.6% weight loss in two new phase III trials", detail: "Pharmaceutical Executive · July 2026", url: "https://www.pharmexec.com/view/retatrutide-delivers-22-weight-loss-two-phase-iii-trials" },
+      { label: "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results", detail: "Eli Lilly and Company ? original sponsor announcement ? July 23, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional" },
     ],
   },
   {
@@ -168,35 +253,37 @@ export const ARTICLES: Article[] = [
     unknowns: "These are company-reported topline results, not yet peer-reviewed. Long-term safety, and how much weight comes back after stopping, are still open questions. Retatrutide is not approved anywhere.",
     peptides: ["retatrutide", "tirzepatide", "semaglutide"],
     sources: [
-      { label: "Retatrutide achieves up to 30.3% average weight loss in phase 3 TRIUMPH-1 trial", detail: "AJMC · May 2026", url: "https://www.ajmc.com/view/retatrutide-achieves-up-to-30-3-average-weight-loss-in-phase-3-triumph-1-trial" },
+      { label: "TRIUMPH-1: phase 3 retatrutide topline results", detail: "Eli Lilly and Company ? original sponsor announcement ? May 21, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss" },
     ],
   },
   {
     slug: "fda-category-2-twelve-peptides",
-    date: "2026-04-15",
+    date: "2026-04-22",
     kind: "Regulation",
     topic: "Regulation",
     headline: ["12 popular peptides come off the FDA’s ", "“do not compound” list", ". Here’s what that means"],
     dek: "BPC-157, TB-500, GHK-Cu and nine others are no longer on the FDA’s list of risky compounding ingredients. That isn’t the same as approval.",
     art: "documents",
     glance: [
-      { label: "When", value: "Announced April 15, 2026" },
+      { label: "Official record", value: "FDA list updated April 22, 2026" },
       { label: "Peptides", value: "BPC-157, LL-37, Dihexa, DSIP, Epitalon, injectable GHK-Cu, KPV, PEG-MGF, Melanotan II, MOTS-c, Semax and TB-500" },
       { label: "Why", value: "The people who nominated them withdrew their nominations" },
-      { label: "Approved now?", value: "No. They are not on the list pharmacies are allowed to use either" },
+      { label: "Approved now?", value: "No. A change to an interim list is not drug approval" },
       { label: "Next", value: "Expert reviews in July 2026, and for the rest by February 2027" },
     ],
     body: [
       "The FDA keeps interim lists of raw ingredients that compounding pharmacies want to use. Category 1 ingredients can be used while the FDA reviews them. Category 2 is for ingredients the FDA believes may pose significant safety risks; pharmacies shouldn’t use those.",
-      "On April 15, 2026, the FDA said it would remove 12 peptides from Category 2, because their nominations had been withdrawn. They included some of the best-known names in the peptide world: BPC-157, TB-500, Melanotan II, MOTS-c, Semax, Epitalon and injectable GHK-Cu.",
-      "Coming off the “do not compound” list does not put them on the “allowed” list. The FDA was clear that removal does not make them eligible for compounding. Legal experts describe them as being “in limbo”.",
+      "The FDA’s 2026 records describe the removal of substances from Category 2 after nominators withdrew their nominations. They include BPC-157, TB-500, Melanotan II, MOTS-c, Semax, Epitalon and injectable GHK-Cu.",
+      "Removal after a withdrawn nomination does not demonstrate safety or effectiveness and does not amount to approval of a medicine. Compounding eligibility remains subject to the applicable legal requirements.",
       "The FDA scheduled expert reviews for seven of them in July 2026, and for the other five before the end of February 2027.",
+      "A later FDA update, dated May 14, distinguishes non-injectable GHK-Cu: that nomination was restored to Category 1 after the nominator clarified that only the injectable nomination was being withdrawn. Route of administration matters.",
     ],
     means: "The change opened the door to a formal review of these peptides, which is how they could eventually be made by licensed pharmacies.",
     unknowns: "None of these peptides has been approved as a medicine, and most have very little human research. Whether any will end up on the allowed list is still undecided.",
     peptides: ["bpc-157", "tb-500", "ghk-cu", "melanotan", "mots-c", "semax", "epitalon", "kpv"],
     sources: [
-      { label: "FDA to remove 12 popular peptides from the Category 2 “do not compound” list", detail: "Frier Levitt (healthcare law firm) · April 16, 2026", url: "https://www.frierlevitt.com/articles/fda-peptides-do-not-compound-list-update-2026/" },
+      { label: "Bulk drug substances nominated for compounding under Section 503A", detail: "US Food and Drug Administration · updated May 14, 2026 (PDF)", url: "https://www.fda.gov/media/94155/download" },
+      { label: "Safety risks and withdrawn compounding nominations", detail: "US Food and Drug Administration · primary safety information", url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks" },
     ],
   },
   {
@@ -221,9 +308,9 @@ export const ARTICLES: Article[] = [
     ],
     means: "Both medicines produced large weight losses. The trial shows how fast the field is moving, and how high the bar has become for new medicines.",
     unknowns: "Full trial details, side-effect comparisons and the FDA’s decision are still to come.",
-    peptides: ["semaglutide", "tirzepatide"],
+    peptides: ["semaglutide", "tirzepatide", "cagrilintide"],
     sources: [
-      { label: "Healthy Returns: What’s next for Novo Nordisk’s next-generation obesity drug CagriSema after trial miss", detail: "CNBC · February 24, 2026", url: "https://www.cnbc.com/2026/02/24/healthy-returns-whats-next-for-novo-nordisks-obesity-drug-cagrisema.html" },
+      { label: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk ? original sponsor announcement ? February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
     ],
   },
   {

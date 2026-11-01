@@ -4,6 +4,8 @@ import Box from "@mui/material/Box"
 import Link from "@mui/material/Link"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
+import { AppLink } from "@/components/common/links"
+import { EMERGING_WEIGHT_RESEARCH } from "@/content/learn/emerging-weight-research"
 import { WEIGHT_LOSS_TRIALS, type WeightLossTrial } from "@/content/learn/weight-loss-trials"
 
 // Emphasis form: the medicine in the brand blue, placebo in a gray that passes 3:1 on white
@@ -28,12 +30,13 @@ function Bar({ trial, value, color, series }: { trial: WeightLossTrial; value: n
 }
 
 export default function WeightLossChart({ highlight }: { highlight?: string }) {
+  const hasHumanHighlight = WEIGHT_LOSS_TRIALS.some((trial) => trial.peptide === highlight)
   return (
     <Box component="figure" sx={{ m: 0, minWidth: 0, maxWidth: "100%", bgcolor: "#fff", border: "1px solid", borderColor: "divider", borderRadius: "10px", p: { xs: 2.5, md: 4 } }}>
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: 2, mb: 3 }}>
         <Box>
-          <Typography component="figcaption" sx={{ fontSize: { xs: 19, md: 22 }, fontWeight: 650, letterSpacing: "-.02em" }}>Average body weight lost in the main trials</Typography>
-          <Typography sx={{ fontSize: 13.5, color: "text.secondary", mt: .5 }}>Each medicine compared with a placebo (a dummy treatment) in the same trial. Ranked by result.</Typography>
+          <Typography component="figcaption" sx={{ fontSize: { xs: 19, md: 22 }, fontWeight: 650, letterSpacing: "-.02em" }}>Average body weight lost in human trials</Typography>
+          <Typography sx={{ fontSize: 13.5, color: "text.secondary", mt: .5 }}>Each medicine compared with a placebo in its own trial. Ordered by reported average; this is not a head-to-head ranking.</Typography>
         </Box>
         <Box component="ul" aria-label="Legend" sx={{ display: "flex", gap: 2.5, listStyle: "none", m: 0, p: 0 }}>
           {[["Medicine", MEDICINE], ["Placebo", PLACEBO]].map(([label, color]) => <Box component="li" key={label} sx={{ display: "flex", alignItems: "center", gap: 1, fontSize: 13, color: "text.secondary" }}><Box component="span" sx={{ width: 14, height: 14, borderRadius: "3px", bgcolor: color }} />{label}</Box>)}
@@ -42,11 +45,11 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
 
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "minmax(220px, 280px) 1fr" }, columnGap: 3 }}>
         {WEIGHT_LOSS_TRIALS.map((trial) => {
-          const muted = Boolean(highlight) && trial.peptide !== highlight
+          const muted = hasHumanHighlight && trial.peptide !== highlight
           return (
             <Box key={`${trial.trial}-${trial.dose}`} sx={{ display: "contents" }}>
               <Box sx={{ pt: { xs: 2.5, md: 2 }, pb: { md: 2 }, borderTop: { md: "1px solid" }, borderColor: { md: "divider" }, opacity: muted ? .5 : 1 }}>
-                <Typography sx={{ fontWeight: 650, fontSize: 15 }}>{trial.medicine} <Box component="span" sx={{ fontWeight: 400, color: "text.secondary" }}>· {trial.status}</Box></Typography>
+                <Typography sx={{ fontWeight: 650, fontSize: 15 }}><AppLink href={`/learn/${trial.peptide}`} underline="hover" sx={{ fontWeight: "inherit", color: "inherit" }}>{trial.medicine}</AppLink> <Box component="span" sx={{ fontWeight: 400, color: "text.secondary" }}>· {trial.status}</Box></Typography>
                 <Typography sx={{ fontSize: 12.5, color: "text.secondary", lineHeight: 1.5 }}>{trial.dose}<br />{trial.trial} · {trial.weeks} weeks · {trial.people.toLocaleString("en-US")} people</Typography>
               </Box>
               <Box sx={{ position: "relative", py: { xs: 1, md: 2 }, borderTop: { md: "1px solid" }, borderColor: { md: "divider" }, opacity: muted ? .5 : 1, display: "grid", alignContent: "center" }}>
@@ -68,7 +71,7 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
       <Typography sx={{ fontSize: 12.5, color: "text.secondary", textAlign: { md: "right" }, mr: { md: 6 } }}>Average body weight lost</Typography>
 
       <Typography sx={{ mt: 3, pt: 2.5, borderTop: "1px solid", borderColor: "divider", fontSize: 13.5, color: "text.secondary", lineHeight: 1.7 }}>
-        Each trial had different people, doses and lengths, so compare with care. These are average results for approved or experimental medicines, taken under medical supervision alongside diet and exercise advice. They do not describe research materials sold for laboratory use. Only results published in medical journals are shown.
+        Each human trial had different people, doses and lengths, so compare with care. The bars describe approved or experimental medicines studied under medical supervision with diet and exercise advice, not laboratory research products. They use full journal reports; conference findings and different endpoints appear separately below.
       </Typography>
 
       <Box component="details" sx={{ mt: 2, "& summary": { cursor: "pointer", fontSize: 13.5, fontWeight: 600, color: "brand.blue", minHeight: 44, display: "flex", alignItems: "center" } }}>
@@ -83,6 +86,28 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
               </tr>)}
             </tbody>
           </Box>
+        </Box>
+      </Box>
+
+      <Box component="section" aria-label="PTT-A and CBL-514 evidence comparison" sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
+        <Typography component="h2" sx={{ fontSize: { xs: 19, md: 22 }, fontWeight: 650, letterSpacing: "-.02em" }}>PTT-A and CBL-514: evidence so far</Typography>
+        <Typography sx={{ mt: 1, mb: 2.5, fontSize: 14, lineHeight: 1.7, color: "text.secondary", maxWidth: 880 }}>Neither has a comparable average human body-weight-loss result in the research below. Animal body weight and human fat volume measure different things, so they are shown separately from the bars.</Typography>
+        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 2 }}>
+          {EMERGING_WEIGHT_RESEARCH.map((research) => <Box component="article" key={research.peptide} sx={{ p: { xs: 2, md: 2.5 }, minWidth: 0, border: "1px solid", borderColor: research.peptide === highlight ? "brand.blue" : "divider", borderRadius: "8px", bgcolor: "brand.paper" }}>
+            <Typography sx={{ fontSize: 12, fontWeight: 600, color: "brand.blue" }}>{research.evidence}</Typography>
+            <Typography component="h3" sx={{ mt: .75, fontSize: 22, fontWeight: 650 }}><AppLink href={`/learn/${research.peptide}`} underline="hover" sx={{ fontWeight: "inherit", color: "inherit" }}>{research.name}</AppLink></Typography>
+            <Box component="dl" sx={{ m: 0, mt: 2, fontSize: 14, lineHeight: 1.7, "& dt": { fontWeight: 650, mt: 1.5 }, "& dd": { m: 0, color: "text.secondary" } }}>
+              <dt>Average human body-weight loss</dt><dd>{research.humanWeightLoss}</dd>
+              <dt>What was measured</dt><dd>{research.measured}</dd>
+              <dt>Reported finding</dt><dd>{research.finding}</dd>
+            </Box>
+            <Typography sx={{ mt: 2, fontSize: 13.5, color: "text.secondary", lineHeight: 1.7 }}>{research.limitation}</Typography>
+            <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", columnGap: 2, rowGap: .5, "& a": { display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 13.5, fontWeight: 600 } }}>
+              <AppLink href={`/learn/${research.peptide}`}>Read the profile →</AppLink>
+              <AppLink href={`/news/${research.article}`}>Read the article →</AppLink>
+              <Link href={research.source.url} target="_blank" rel="noopener noreferrer">{research.sourceLabel} ↗</Link>
+            </Box>
+          </Box>)}
         </Box>
       </Box>
     </Box>

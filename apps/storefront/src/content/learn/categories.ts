@@ -6,7 +6,7 @@ export type CategoryId =
 
 /** Short, plain topic names, in the order readers browse them. */
 export const CATEGORIES: { id: CategoryId; name: string; blurb: string; icon: IconName }[] = [
-  { id: "weight", name: "Weight management", blurb: "Copies of gut hormones that curb appetite and help control blood sugar.", icon: "scale" },
+  { id: "weight", name: "Weight management", blurb: "Medicines and experimental compounds studied for appetite, body weight and body fat.", icon: "scale" },
   { id: "skin", name: "Skin & copper peptides", blurb: "Peptides used in skin care, led by copper peptide GHK-Cu.", icon: "leaf" },
   { id: "pigmentation", name: "Pigmentation", blurb: "The tanning peptides, one approved and one that doctors warn about.", icon: "sun" },
   { id: "hair", name: "Hair", blurb: "Copper peptides studied for hair growth.", icon: "leaf" },

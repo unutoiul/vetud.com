@@ -9,9 +9,12 @@ import { AppLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 import ArticleArt from "@/components/learn/ArticleArt"
 import ArticleCard, { ArticleHeadline } from "@/components/learn/ArticleCard"
+import ResearchCatalog from "@/components/learn/ResearchCatalog"
 import SourceList, { LEARN_DISCLAIMER } from "@/components/learn/SourceList"
+import VideoResources from "@/components/learn/VideoResources"
 import { ARTICLES, formatArticleDate, getArticle } from "@/content/learn/articles"
 import { getPeptide } from "@/content/learn/peptides"
+import { getArticleVideoResources } from "@/content/learn/video-resources"
 import { gutter } from "@/theme/tokens"
 
 export function generateStaticParams() {
@@ -42,7 +45,10 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
     const peptide = getPeptide(id)
     return peptide ? [peptide] : []
   })
-  const more = ARTICLES.filter((other) => other.slug !== article.slug).slice(0, 3)
+  const relevance = (other: (typeof ARTICLES)[number]) =>
+    Number(other.topic === article.topic) + other.peptides.filter((id) => article.peptides.includes(id)).length
+  const more = ARTICLES.filter((other) => other.slug !== article.slug).sort((a, b) => relevance(b) - relevance(a)).slice(0, 3)
+  const videos = getArticleVideoResources(article.slug, peptides)
 
   return (
     <>
@@ -110,6 +116,13 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
             <Typography sx={{ mt: 4, fontSize: 13, color: "text.secondary" }}>{LEARN_DISCLAIMER}</Typography>
           </Box>
         </Box>
+
+        <Box component="section" sx={{ mt: { xs: 5, md: 7 }, pt: { xs: 4, md: 5 }, borderTop: "1px solid", borderColor: "divider" }}>
+          <Typography component="h2" sx={{ fontSize: { xs: 24, md: 28 }, fontWeight: 600, mb: 2 }}>Watch: videos connected to this article</Typography>
+          <VideoResources videos={videos.videos} connections={videos.connections} introduction={videos.introduction} currentArticle={article.slug} />
+        </Box>
+
+        <ResearchCatalog peptides={article.peptides} />
 
         <Box sx={{ mt: { xs: 7, md: 10 }, pt: { xs: 5, md: 6 }, borderTop: "1px solid", borderColor: "divider" }}>
           <Typography component="h2" sx={{ fontSize: { xs: 24, md: 30 }, fontWeight: 600, letterSpacing: "-.03em", mb: 3 }}>More news & articles</Typography>
