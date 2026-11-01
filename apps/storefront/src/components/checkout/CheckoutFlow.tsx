@@ -49,8 +49,8 @@ const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, l
 
 const PAYMENT_LABELS: Record<string, { title: string; description: string; icon?: IconName }> = {
   [PAYGATE_CARD]: {
-    icon: "card", title: "Card payment via PayGate.to",
-    description: "Reserve your order, then continue to hosted card checkout. Available providers, fees and any identity checks are shown before you pay. We ship after payment is confirmed.",
+    icon: "card", title: "Credit / debit card on PayGate.to",
+    description: "Reserve your order, then leave Vetud to choose a card provider such as MoonPay on PayGate.to. You enter card details on the provider's website. Fees and any identity checks are shown before you pay. We ship after payment is confirmed.",
   },
   [PAYGATE_CRYPTO]: {
     icon: "coin", title: "Cryptocurrency via PayGate.to",
@@ -867,6 +867,8 @@ function ReviewStep({
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
         {provider === NMI_PROVIDER_ID
           ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
+          : provider === PAYGATE_CARD
+          ? "By continuing you agree to our terms of sale and confirm the products are for laboratory research use only. You will leave Vetud for PayGate.to and your selected card provider's website. Your order remains unpaid until payment is verified. Provider fees and any identity checks are shown before you pay."
           : isPaygate(provider)
           ? "By continuing you agree to our terms of sale and confirm the products are for laboratory research use only. Your order is reserved while you pay on PayGate's hosted checkout. Provider fees, network minimums and any identity checks are shown there. We ship after payment is verified."
           : provider === PAYPAL_PROVIDER_ID
@@ -887,10 +889,12 @@ function ReviewStep({
         sx={{ mt: 3, minWidth: { xs: 0, sm: 260 }, width: { xs: "100%", sm: "auto" } }}
       >
         {busy
-          ? provider === PAYPAL_PROVIDER_ID
+          ? isPaygate(provider)
+            ? "Opening PayGate.to…"
+            : provider === PAYPAL_PROVIDER_ID
             ? "Opening PayPal…"
             : "Placing order…"
-          : `${isPaygate(provider) ? "Continue to PayGate" : provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${formatMoney(Number(cart.total ?? 0), cart.currency_code, { locale })}`}
+          : `${isPaygate(provider) ? "Continue to PayGate.to" : provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${formatMoney(Number(cart.total ?? 0), cart.currency_code, { locale })}`}
       </Button>}
     </Box>
   )

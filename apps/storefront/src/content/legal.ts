@@ -1,3 +1,5 @@
+import { SITE } from "@/lib/config"
+
 /**
  * Legal page templates. Replace every [bracketed placeholder] and have the text reviewed by a
  * lawyer for each market you sell to before launch. Research-material rules differ by country.
@@ -13,21 +15,20 @@ export type LegalDocument = {
   sections: LegalSection[]
 }
 
-const COMPANY = "Vetud LTD"
-const ADDRESS = "390 Fulham Road, London"
-const EMAIL = "contact@vetud.com"
+const COMPANY = SITE.name
+const EMAIL = SITE.email
 
 export const LEGAL_DOCUMENTS: LegalDocument[] = [
   {
     slug: "terms",
     title: "Terms of sale",
     summary: "The terms that apply when you order from Vetud Peptides.",
-    updated: "1 January 2026",
+    updated: "2 November 2026",
     sections: [
       {
         heading: "1. Who we are",
         paragraphs: [
-          `This website is operated by ${COMPANY}, ${ADDRESS} ("Vetud", "we", "us"). You can contact us at ${EMAIL}.`,
+          `These terms apply to purchases from ${COMPANY} ("Vetud", "we", "us"). You can contact us at ${EMAIL}.`,
         ],
       },
       {
@@ -93,11 +94,11 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     slug: "privacy",
     title: "Privacy policy",
     summary: "What personal data we collect, why, and your rights.",
-    updated: "1 January 2026",
+    updated: "2 November 2026",
     sections: [
       {
         heading: "Controller",
-        paragraphs: [`${COMPANY}, ${ADDRESS}, is responsible for your personal data. Contact: ${EMAIL}.`],
+        paragraphs: [`${COMPANY} handles your personal data. Contact: ${EMAIL}.`],
       },
       {
         heading: "Data we collect",

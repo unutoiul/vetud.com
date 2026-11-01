@@ -13,6 +13,7 @@ import { useStore } from "../store/StoreProvider"
 import CartLineItem from "./CartLineItem"
 import FreeShippingProgress from "./FreeShippingProgress"
 import OrderTotals from "./OrderTotals"
+import PromoCodeField from "./PromoCodeField"
 
 export default function CartView() {
   const { cart, cartReady, error, clearError, region } = useStore()
@@ -74,6 +75,7 @@ export default function CartView() {
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
             Order summary
           </Typography>
+          <Box sx={{ mb: 2 }}><PromoCodeField /></Box>
           <OrderTotals totals={{ ...cart, currency_code: currency }} shippingKnown={false} />
           <ButtonLink href="/checkout" variant="contained" size="large" fullWidth startIcon={<LockOutlinedIcon />} sx={{ mt: 3 }}>
             Proceed to checkout

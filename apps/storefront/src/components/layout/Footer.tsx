@@ -84,9 +84,9 @@ export default async function Footer() {
             region.
           </Typography>
           <Typography sx={{ fontSize: "inherit", lineHeight: 1.7 }}>
-            © <CopyrightYear /> {SITE.legalName}
+            © <CopyrightYear /> {SITE.name}
             <br />
-            {SITE.address} · <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
           </Typography>
         </Stack>
       </Box>

@@ -3,6 +3,7 @@ import { createElement, type ComponentType } from "react"
 import ContactMessageEmail, { contactMessageSubject } from "./emails/contact-message"
 import OrderPlacedEmail, { orderPlacedSubject } from "./emails/order-placed"
 import OrderPlacedAdminEmail, { orderPlacedAdminSubject } from "./emails/order-placed-admin"
+import NewsletterOfferEmail, { newsletterOfferSubject } from "./emails/newsletter-offer"
 import PasswordResetEmail, { passwordResetSubject } from "./emails/password-reset"
 import ShipmentCreatedEmail, { shipmentCreatedSubject } from "./emails/shipment-created"
 
@@ -12,6 +13,7 @@ export const EmailTemplates = {
   SHIPMENT_CREATED: "shipment-created",
   CONTACT_MESSAGE: "contact-message",
   PASSWORD_RESET: "password-reset",
+  NEWSLETTER_OFFER: "newsletter-offer",
 } as const
 
 type TemplateEntry = {
@@ -36,6 +38,7 @@ const registry: Record<string, TemplateEntry> = {
     replyTo: (data) => data.email,
   },
   [EmailTemplates.PASSWORD_RESET]: { component: PasswordResetEmail, subject: passwordResetSubject },
+  [EmailTemplates.NEWSLETTER_OFFER]: { component: NewsletterOfferEmail, subject: newsletterOfferSubject },
 }
 
 export type RenderedEmail = {

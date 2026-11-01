@@ -9,8 +9,8 @@ const label = { ...cell, color: colors.muted }
 export function OrderSummary({ order }: { order: EmailOrder }) {
   const currency = order.currency_code
   const totals: [string, number | string | null | undefined][] = [
-    ["Subtotal", order.item_total],
-    ["Shipping", order.shipping_total],
+    ["Subtotal", order.item_subtotal ?? order.item_total],
+    ["Shipping", order.shipping_subtotal ?? order.shipping_total],
   ]
   if (Number(order.discount_total ?? 0) > 0) {
     totals.push(["Discount", -Number(order.discount_total)])

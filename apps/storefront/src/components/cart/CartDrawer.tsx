@@ -23,6 +23,8 @@ export default function CartDrawer() {
   )
   const currency = cart?.currency_code ?? region.currencyCode
   const itemTotal = Number(cart?.item_total ?? 0)
+  const subtotal = Number(cart?.item_subtotal ?? itemTotal)
+  const discount = Number(cart?.discount_total ?? 0)
 
   return (
     <Drawer
@@ -79,8 +81,14 @@ export default function CartDrawer() {
           <Box sx={{ px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
             <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
               <Typography sx={{ fontWeight: 600 }}>Subtotal</Typography>
-              <Typography sx={{ fontWeight: 700 }}>{formatMoney(itemTotal, currency, { locale })}</Typography>
+              <Typography sx={{ fontWeight: 700 }}>{formatMoney(subtotal, currency, { locale })}</Typography>
             </Stack>
+            {discount > 0 ? (
+              <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
+                <Typography sx={{ color: "text.secondary" }}>Discount</Typography>
+                <Typography sx={{ fontWeight: 600 }}>−{formatMoney(discount, currency, { locale })}</Typography>
+              </Stack>
+            ) : null}
             <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
               Shipping and taxes are calculated at checkout.
             </Typography>

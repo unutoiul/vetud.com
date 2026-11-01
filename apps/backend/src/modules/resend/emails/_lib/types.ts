@@ -28,7 +28,10 @@ export type EmailOrder = {
   currency_code: string
   created_at?: string | Date | null
   item_total?: number | string | null
+  /** Before discounts and taxes, so the summary rows add up to the total. */
+  item_subtotal?: number | string | null
   shipping_total?: number | string | null
+  shipping_subtotal?: number | string | null
   tax_total?: number | string | null
   discount_total?: number | string | null
   total?: number | string | null
@@ -51,6 +54,20 @@ export type ShipmentCreatedEmailData = {
   order: EmailOrder
   storefront_url: string
   tracking: { tracking_number?: string | null; tracking_url?: string | null }[]
+}
+
+export type NewsletterOfferEmailData = {
+  offer: {
+    promotion_id: string
+    code: string
+    headline: string
+    description: string | null
+    discount: string
+    starts_at: string | null
+    ends_at: string | null
+  } | null
+  shop_url: string
+  unsubscribe_url: string
 }
 
 export type PasswordResetEmailData = {

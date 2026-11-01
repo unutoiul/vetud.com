@@ -8,7 +8,10 @@ import { formatMoney } from "@/lib/product"
 
 type Totals = {
   currency_code: string
+  /** The *_subtotal fields are before discounts and taxes, so the rows add up; *_total already has the discount taken off. */
+  item_subtotal?: number | null
   item_total?: number | null
+  shipping_subtotal?: number | null
   shipping_total?: number | null
   tax_total?: number | null
   discount_total?: number | null
@@ -33,13 +36,13 @@ function Row({ label, value, strong }: { label: string; value: string; strong?: 
 export default function OrderTotals({ totals, shippingKnown }: OrderTotalsProps) {
   const locale = useLocale()
   const currency = totals.currency_code
-  const shipping = Number(totals.shipping_total ?? 0)
+  const shipping = Number(totals.shipping_subtotal ?? totals.shipping_total ?? 0)
   const discount = Number(totals.discount_total ?? 0)
   const tax = Number(totals.tax_total ?? 0)
 
   return (
     <Stack>
-      <Row label="Subtotal" value={formatMoney(Number(totals.item_total ?? 0), currency, { locale })} />
+      <Row label="Subtotal" value={formatMoney(Number(totals.item_subtotal ?? totals.item_total ?? 0), currency, { locale })} />
       <Row
         label="Shipping"
         value={shippingKnown ? (shipping === 0 ? "Free" : formatMoney(shipping, currency, { locale })) : "Calculated at checkout"}

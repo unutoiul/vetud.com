@@ -13,7 +13,8 @@ export type CustomerOrdersInput = {
 // Store order field allowlist in our Medusa version.
 const CUSTOMER_ORDER_FIELDS = [
   "id", "display_id", "custom_display_id", "created_at", "status", "email",
-  "currency_code", "total", "item_total", "shipping_total", "tax_total", "discount_total",
+  "currency_code", "total", "item_total", "item_subtotal", "shipping_total", "shipping_subtotal",
+  "tax_total", "discount_total",
   "items.id", "items.title", "items.product_title", "items.variant_title",
   "items.quantity", "items.unit_price", "items.total",
   "shipping_address.first_name", "shipping_address.last_name", "shipping_address.company",

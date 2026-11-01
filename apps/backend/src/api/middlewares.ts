@@ -6,6 +6,7 @@ import {
   validateAndTransformQuery,
 } from "@medusajs/framework/http"
 import { StoreContactSchema } from "./store/contact/validators"
+import { StoreNewsletterSchema, StoreNewsletterUnsubscribeSchema } from "./store/newsletter/validators"
 import { CustomerOrderQuery, CustomerOrdersQuery } from "./store/account/orders/validators"
 import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
@@ -58,6 +59,16 @@ export default defineMiddlewares({
       method: ["POST"],
       matcher: "/store/contact",
       middlewares: [validateAndTransformBody(StoreContactSchema)],
+    },
+    {
+      method: ["POST"],
+      matcher: "/store/newsletter",
+      middlewares: [validateAndTransformBody(StoreNewsletterSchema)],
+    },
+    {
+      method: ["POST"],
+      matcher: "/store/newsletter/unsubscribe",
+      middlewares: [validateAndTransformBody(StoreNewsletterUnsubscribeSchema)],
     },
   ],
 })

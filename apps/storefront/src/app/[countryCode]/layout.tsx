@@ -2,7 +2,9 @@ import Box from "@mui/material/Box"
 import type { Metadata, Viewport } from "next"
 import { DM_Mono, Manrope } from "next/font/google"
 import { countryCode } from "next/root-params"
+import { Suspense } from "react"
 import CartDrawer from "@/components/cart/CartDrawer"
+import OfferPopup from "@/components/newsletter/OfferPopup"
 import AccountProvider from "@/components/account/AccountProvider"
 import Footer from "@/components/layout/Footer"
 import Header from "@/components/layout/Header"
@@ -97,6 +99,9 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
               </Box>
               <Footer />
               <CartDrawer />
+              <Suspense fallback={null}>
+                <OfferPopup />
+              </Suspense>
             </AccountProvider>
           </StoreProvider>
         </ThemeRegistry>

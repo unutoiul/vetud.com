@@ -7,7 +7,7 @@ export default function PaygateResume({ checkoutUrl }: { checkoutUrl?: string })
   const url = paygateOrderLink(checkoutUrl)
   if (!url) return null
   return <Stack spacing={1.5} sx={{ alignItems: "flex-start" }}>
-    <Button component="a" href={url} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" variant="contained">Complete PayGate payment</Button>
-    <Typography variant="body2" sx={{ color: "text.secondary" }}>Checkout opens in a new tab. After paying, return to your orders and refresh the status. If you already paid, wait for confirmation before paying again.</Typography>
+    <Button component="a" href={url} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" variant="contained">Continue payment on PayGate.to</Button>
+    <Typography variant="body2" sx={{ color: "text.secondary" }}>PayGate.to opens in a new tab. Card payments continue on the website of your selected provider. After paying, return to your orders and refresh the status. If you already paid, wait for confirmation before paying again.</Typography>
   </Stack>
 }

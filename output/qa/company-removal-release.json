@@ -1,0 +1,208 @@
+{
+  "baseDeploymentId": "dpl_9GiY1ofCH3vEJJMAZL7uzgZjPef3",
+  "changedFiles": [
+    "src/app/[countryCode]/contact/page.tsx",
+    "src/components/checkout/CheckoutFlow.tsx",
+    "src/components/layout/Footer.tsx",
+    "src/content/legal.ts",
+    "src/lib/config.ts"
+  ],
+  "sourceScan": "passed",
+  "status": "published_verified",
+  "deployment": "https://vetud-storefront-hb9nk6qor-gold-structure-engine.vercel.app",
+  "deploymentId": "dpl_5L1r9dSe6iXZpJTqXLGZUBnaZ2Rf",
+  "validation": {
+    "lint": "passed",
+    "typecheck": "passed",
+    "productionBuild": "passed",
+    "stagedPages": [
+      "/gb",
+      "/gb/contact",
+      "/gb/checkout",
+      "/gb/legal/terms",
+      "/gb/legal/privacy"
+    ],
+    "stagedCheckoutScripts": 21
+  },
+  "liveSite": "https://www.vetud.com",
+  "checkedAt": "2026-11-01T17:40:08.287Z",
+  "liveRoutes": [
+    {
+      "path": "/gb",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/gb/contact",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/gb/checkout",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/gb/legal/terms",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/gb/legal/privacy",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/gb/order/confirmed",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/gb/account/orders",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/us",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/us/contact",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/us/checkout",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/us/legal/terms",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/us/legal/privacy",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/us/order/confirmed",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/us/account/orders",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/de",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/de/contact",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/de/checkout",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/de/legal/terms",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/de/legal/privacy",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/de/order/confirmed",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/de/account/orders",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/fr",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/fr/contact",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/fr/checkout",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/fr/legal/terms",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/fr/legal/privacy",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/fr/order/confirmed",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/fr/account/orders",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/nl",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/nl/contact",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/nl/checkout",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/nl/legal/terms",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/nl/legal/privacy",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/nl/order/confirmed",
+      "status": 200,
+      "companyDetailsAbsent": true
+    },
+    {
+      "path": "/nl/account/orders",
+      "status": 200,
+      "companyDetailsAbsent": true
+    }
+  ],
+  "liveCheckoutScripts": 21,
+  "orderAndAccountScriptsChecked": 20
+}

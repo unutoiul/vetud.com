@@ -8,7 +8,8 @@ export function serializeOrderReceipt(order: HttpTypes.StoreOrder, customerId?: 
   const snapshot = {
     id: order.id, display_id: order.display_id, custom_display_id: order.custom_display_id,
     email: order.email, created_at: order.created_at, currency_code: order.currency_code,
-    total: order.total, item_total: order.item_total, shipping_total: order.shipping_total,
+    total: order.total, item_total: order.item_total, item_subtotal: order.item_subtotal,
+    shipping_total: order.shipping_total, shipping_subtotal: order.shipping_subtotal,
     tax_total: order.tax_total, discount_total: order.discount_total,
     items: order.items?.map((item) => ({
       id: item.id, title: item.title, product_title: item.product_title,

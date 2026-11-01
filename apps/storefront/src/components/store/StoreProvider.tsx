@@ -28,6 +28,7 @@ export const CART_FIELDS = [
   "*payment_collection.payment_sessions",
   "*region",
   "*region.countries",
+  "*promotions",
 ].join(",")
 
 const CART_STORAGE_KEY = "vetud_cart_id"

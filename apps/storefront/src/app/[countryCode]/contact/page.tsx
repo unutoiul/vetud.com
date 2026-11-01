@@ -1,4 +1,4 @@
-import { ClockIcon as AccessTimeOutlinedIcon, DocumentIcon as DescriptionOutlinedIcon, GlobeIcon as PlaceOutlinedIcon, MailIcon as MailOutlineIcon } from "@/components/brand/Icon"
+import { ClockIcon as AccessTimeOutlinedIcon, DocumentIcon as DescriptionOutlinedIcon, MailIcon as MailOutlineIcon } from "@/components/brand/Icon"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Skeleton from "@mui/material/Skeleton"
@@ -22,7 +22,6 @@ export default async function ContactPage() {
   const t = await getTranslations("Pages")
   const details = [
     { icon: MailOutlineIcon, title: "Email", body: <a href={`mailto:${SITE.email}`}>{SITE.email}</a> },
-    { icon: PlaceOutlinedIcon, title: t("registered"), body: `${SITE.legalName}, ${SITE.address}` },
     { icon: AccessTimeOutlinedIcon, title: t("response"), body: t("responseText") },
     {
       icon: DescriptionOutlinedIcon,
