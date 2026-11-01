@@ -2,22 +2,26 @@
  * Storefront copy and specifications for the three supplied pen kits, approved by the owner on
  * 2026-10-30: publish with zero stock, keep the proposed USD/EUR prices, convert the other store
  * currencies from EUR, and describe the kits like the existing pen kits (99% purity).
+ * Tesamorelin joined on 2026-11-02 on the same terms, at the owner's price of $198 / €178.
  */
-export const SUPPLIED_PUBLICATION_REVISION = "supplied-three-pen-kits-published-2026-10-30-v1"
+export const SUPPLIED_PUBLICATION_REVISION = "supplied-pen-kits-published-2026-11-02-v2"
 
 type PublishedKit = {
-  handle: "nad-plus" | "melanotan" | "ipamorelin"
+  handle: "nad-plus" | "melanotan" | "ipamorelin" | "tesamorelin"
   name: string
   amount: string
   /** NAD+ is a coenzyme, not a peptide, so its copy says "powder". */
   peptide: boolean
   note?: string
+  /** Learn library profiles for a handle that differs from the profile slug. */
+  learn?: string[]
 }
 
 const KITS: PublishedKit[] = [
-  { handle: "nad-plus", name: "NAD+", amount: "1000 mg", peptide: false, note: "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme, not a peptide." },
+  { handle: "nad-plus", name: "NAD+", amount: "1000 mg", peptide: false, note: "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme, not a peptide.", learn: ["nad"] },
   { handle: "melanotan", name: "Melanotan", amount: "10 mg", peptide: true },
   { handle: "ipamorelin", name: "Ipamorelin", amount: "5 mg", peptide: true },
+  { handle: "tesamorelin", name: "Tesamorelin", amount: "20 mg", peptide: true },
 ]
 
 const STORAGE = "Follow the manufacturer's batch-specific storage temperature and conditions."
@@ -52,6 +56,7 @@ export const SUPPLIED_PUBLICATIONS = KITS.map((kit) => {
       specifications_status: "owner_approved",
       inventory_status: "awaiting_stock",
       publication_revision: SUPPLIED_PUBLICATION_REVISION,
+      ...(kit.learn ? { learn_peptides: kit.learn } : {}),
     },
   }
 })

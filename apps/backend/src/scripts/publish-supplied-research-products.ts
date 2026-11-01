@@ -12,7 +12,7 @@ function canonical(value: unknown): unknown {
 const fingerprint = (value: unknown) => createHash("sha256").update(JSON.stringify(canonical(value)) ?? "null").digest("hex")
 
 /**
- * Publishes NAD+, Melanotan and Ipamorelin as approved on 2026-10-30.
+ * Publishes NAD+, Melanotan and Ipamorelin as approved on 2026-10-30, and Tesamorelin (2026-11-02).
  * `DRY_RUN=1 npx medusa exec ./src/scripts/publish-supplied-research-products.ts` only prints the plan.
  * Afterwards it checks that no other product and no existing stock level changed.
  */

@@ -42,7 +42,7 @@ export default async function importSuppliedProducts({ container }: ExecArgs) {
     fields: ["id", "title", "handle", "status", "thumbnail", "metadata", "images.url", "categories.handle", "variants.id", "variants.title", "variants.sku", "variants.manage_inventory", "variants.allow_backorder", "variants.price_set.prices.amount", "variants.price_set.prices.currency_code"],
     filters: { handle: SUPPLIED_RESEARCH_PRODUCTS.map(product => product.handle) },
   })
-  if (products.length !== 3) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, "Expected three imported products.")
+  if (products.length !== SUPPLIED_RESEARCH_PRODUCTS.length) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `Expected ${SUPPLIED_RESEARCH_PRODUCTS.length} imported products.`)
   const details = products.map(product => {
     const expected = SUPPLIED_RESEARCH_PRODUCTS.find(item => item.handle === product.handle)!
     const categories = (product.categories ?? []).flatMap(category => category ? [category.handle] : [])

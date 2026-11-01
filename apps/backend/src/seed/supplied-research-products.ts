@@ -1,4 +1,4 @@
-/** Label facts from the owner's six supplied photographs; all retail amounts below are draft proposals. */
+/** Label facts from the owner's supplied photographs; retail amounts were approved with each publication. */
 export const SUPPLIED_RESEARCH_PRODUCTS = [
   {
     title: "NAD+",
@@ -38,6 +38,20 @@ export const SUPPLIED_RESEARCH_PRODUCTS = [
     usd: 98,
     eur: 88,
     researchSource: "https://pubmed.ncbi.nlm.nih.gov/9849822/",
+  },
+  {
+    // Added 2026-11-02 from the owner's two Tesamorelin photographs; price chosen by the owner.
+    title: "Tesamorelin",
+    handle: "tesamorelin",
+    code: "VTD-TES",
+    amount: "20 mg",
+    sku: "VTD-TES-20MG",
+    categoryHandles: ["peptide-series", "muscle-growth-research"],
+    subtitle: "Tesamorelin research pen kit · 20 mg",
+    description: "VETUD Tesamorelin research pen kit, labelled with 20 mg total content. Tesamorelin is a peptide analogue of growth-hormone-releasing hormone (GHRH) investigated in growth hormone and visceral fat research. The Muscle Growth Research category describes a research area and does not establish an outcome for this product. The supplied packaging shows one pen, 12 disposable needles and an instruction booklet.\n\nThe labelled amount is the total kit amount, not a per-use quantity. Formulation, purity, concentration, batch documentation and storage conditions require manufacturer confirmation. For laboratory research use only.",
+    usd: 198,
+    eur: 178,
+    researchSource: "https://pubmed.ncbi.nlm.nih.gov/18057338/",
   },
 ] as const
 
