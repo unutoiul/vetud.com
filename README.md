@@ -234,6 +234,16 @@ A custom Medusa payment provider (`apps/backend/src/modules/paypal`) using PayPa
 
 Flow: the shopper approves the payment on PayPal first. On return, the storefront completes the cart; the backend checks the order with PayPal and captures the payment, so the order is created already paid. Refunds from Admin refund the PayPal capture. PayPal disputes and reviews are handled in your PayPal account.
 
+### Card payments (Stripe)
+
+Uses Medusa's built-in Stripe provider (`pp_stripe_stripe`), limited to cards. It stays off until `STRIPE_API_KEY` is set on the backend, and the storefront hides it until `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` is set. The backend refuses a live key unless `STRIPE_ENVIRONMENT=live`. Stripe's own policies decide whether a live account may sell these products; a working sandbox doesn't mean the account is approved.
+
+1. In the Stripe Dashboard, open a sandbox, then **Developers → API keys**. Set `STRIPE_API_KEY=sk_test_…` on the backend and `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_…` on the storefront (`.env.local`, or Vercel), then restart both.
+2. Enable it on the regions: `STRIPE_REGION_COUNTRIES=us,gb,de,fr,nl npx medusa exec ./src/scripts/enable-stripe.ts` from `apps/backend`, or Admin → **Settings → Regions** → `pp_stripe_stripe`.
+3. Check out with test card `4242 4242 4242 4242` (any future expiry, any CVC). Use `4000 0025 0000 3155` for 3-D Secure and `4000 0000 0000 9995` for a decline.
+
+Flow: the shopper picks **Credit / debit card**, enters the card on the review step (Stripe Payment Element), and the card is authorized before the order is created. The order is then **authorized**: capture it in Admin when it ships (set `STRIPE_CAPTURE=true` to charge at checkout instead). Refunds from Admin refund in Stripe. Cards don't need webhooks; to receive them locally run `stripe listen --forward-to localhost:9000/hooks/payment/stripe_stripe` and set `STRIPE_WEBHOOK_SECRET` to the secret it prints.
+
 ### Countries and currencies
 
 The storefront sells to a short list of countries for now: the United States (USD), the United Kingdom (GBP) and Germany, France and the Netherlands (EUR). The list is `SUPPORTED_COUNTRIES` in `apps/storefront/src/lib/config.ts` (override with `NEXT_PUBLIC_SUPPORTED_COUNTRIES`, comma-separated ISO codes). Every other country and region in Medusa is hidden from the country menu, checkout, URLs and the geo redirect. To add a country, add it there, and make sure it belongs to a Medusa region with prices, shipping options and legal pages ready.
@@ -254,6 +264,8 @@ Checkout and the account address book can suggest addresses as the shopper types
 Without the key, the address field is a normal text input. Suggestions are limited to the countries the shopper's region ships to. Parsing of Google's response is covered by `node --test tests/places.test.mjs` in `apps/storefront`.
 
 ### Backend on Railway
+
+The backend now builds with `apps/backend/Dockerfile`, using the same pinned Node 22.23.3 release as the last working image. `apps/backend/.dockerignore` excludes local dependencies, generated builds, environment files and uploaded files from the image context. The build includes the MakePay Admin extension using a build-only placeholder; production encryption keys stay in Railway's runtime variables. `MEDUSA_BACKEND_URL` and `DISABLE_MEDUSA_ADMIN` are declared as public Docker build arguments. Both services retain the existing startup script and the server's `/health` check.
 
 Create one Railway project with these services:
 

@@ -36,6 +36,7 @@ import { formatMoney } from "@/lib/product"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
 import { NMI_PROVIDER_ID, nmiAvailable, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
 import { PAYGATE_CARD, PAYGATE_CRYPTO, isPaygate, readPaygateRedirect, type PaygateConfig } from "@/lib/paygate"
+import { STRIPE_PROVIDER_ID, readStripeClientSecret, stripeEnabled } from "@/lib/stripe"
 import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
 import CartLineItem from "../cart/CartLineItem"
@@ -46,6 +47,7 @@ import AddressFields, { EMPTY_ADDRESS, toAddressValues, validateAddress, type Ad
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
+const StripePaymentForm = dynamic(() => import("./StripePaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
 
 const PAYMENT_LABELS: Record<string, { title: string; description: string; icon?: IconName }> = {
   [PAYGATE_CARD]: {
@@ -60,6 +62,11 @@ const PAYMENT_LABELS: Record<string, { title: string; description: string; icon?
     icon: "card",
     title: "Credit / debit card or eligible bank account",
     description: "Enter payment details securely on the next step. Cards are authorized now and captured when ready to ship. Bank debit is available only when enabled and must settle before shipment.",
+  },
+  [STRIPE_PROVIDER_ID]: {
+    icon: "card",
+    title: "Credit / debit card",
+    description: "Pay securely by card with Stripe on the next step. Your card is checked now and charged when your order is ready to ship.",
   },
   pp_system_default: {
     icon: "bank",
@@ -194,13 +201,23 @@ export default function CheckoutFlow() {
     }
   }
 
-  const placeOrder = (nmiToken?: NmiToken) =>
+  const placeOrder = (nmiToken?: NmiToken, confirmStripe?: () => Promise<void>) =>
     guard(async (assertCurrent) => {
       let checkoutCart = customer ? await linkCustomerCart() : cart
       assertCurrent()
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         setStep(2)
         throw new Error("Your account pricing has been applied. Please review the updated total and choose payment again.")
+      }
+      // Stripe: confirm the card only once the total is known to be current, then create the order.
+      if (checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === STRIPE_PROVIDER_ID)) {
+        if (!confirmStripe || readStripeClientSecret(checkoutCart) !== readStripeClientSecret(cart)) {
+          setCart(checkoutCart)
+          setStep(2)
+          throw new Error("Your checkout changed. Review your order and enter your card details again.")
+        }
+        await confirmStripe()
+        assertCurrent()
       }
       const isNmi = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === NMI_PROVIDER_ID)
       if (isNmi || nmiToken) {
@@ -385,8 +402,8 @@ export default function CheckoutFlow() {
                   const existing = checkoutCart.payment_collection?.payment_sessions?.find(
                     (session) => session.provider_id === providerId
                   )
-                  if (providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID || isPaygate(providerId)) {
-                    // A MakePay link or PayPal order is bound to one amount, so always create a fresh session.
+                  if (providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID || providerId === STRIPE_PROVIDER_ID || isPaygate(providerId)) {
+                    // A MakePay link, PayPal order or Stripe intent is bound to one amount, so always create a fresh session.
                     await sdk.store.payment.initiatePaymentSession(checkoutCart, {
                       provider_id: providerId,
                       data: providerId === MAKEPAY_PROVIDER_ID && checkoutCart.email ? { customer_email: checkoutCart.email } : undefined,
@@ -403,7 +420,7 @@ export default function CheckoutFlow() {
               }
             />
           ) : null}
-          {activeStep === 3 ? <ReviewStep cart={cart} busy={busy} onEdit={setStep} onPlaceOrder={() => void placeOrder()} onNmiToken={placeOrder} /> : null}
+          {activeStep === 3 ? <ReviewStep cart={cart} busy={busy} onEdit={setStep} onPlaceOrder={() => void placeOrder()} onNmiToken={placeOrder} onStripePay={(confirm) => placeOrder(undefined, confirm)} /> : null}
         </Paper>
       </Grid>
 
@@ -717,6 +734,7 @@ function PaymentStep({
         const available = payment_providers.filter(provider => {
           if (provider.id === PAYGATE_CARD) return paygate?.card === true
           if (provider.id === PAYGATE_CRYPTO) return paygate?.crypto === true
+          if (provider.id === STRIPE_PROVIDER_ID) return stripeEnabled
           return provider.id !== NMI_PROVIDER_ID || nmiAvailable(config, cart.currency_code)
         })
         setProviders(available)
@@ -796,18 +814,21 @@ function ReviewStep({
   onEdit,
   onPlaceOrder,
   onNmiToken,
+  onStripePay,
 }: {
   cart: HttpTypes.StoreCart
   busy: boolean
   onEdit: (step: number) => void
   onPlaceOrder: () => void
   onNmiToken: (token: NmiToken) => Promise<void>
+  onStripePay: (confirm: () => Promise<void>) => Promise<void>
 }) {
   const locale = useLocale()
   const address = cart.shipping_address
   const method = cart.shipping_methods?.[0]
   const provider = cart.payment_collection?.payment_sessions?.[0]?.provider_id ?? ""
   const nmiSession = provider === NMI_PROVIDER_ID ? readNmiSession(cart) : null
+  const stripeSecret = provider === STRIPE_PROVIDER_ID ? readStripeClientSecret(cart) : null
 
   const blocks = [
     {
@@ -867,6 +888,8 @@ function ReviewStep({
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
         {provider === NMI_PROVIDER_ID
           ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
+          : provider === STRIPE_PROVIDER_ID
+          ? "By paying and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Your card is authorized now and charged when your order is ready to ship."
           : provider === PAYGATE_CARD
           ? "By continuing you agree to our terms of sale and confirm the products are for laboratory research use only. You will leave Vetud for PayGate.to and your selected card provider's website. Your order remains unpaid until payment is verified. Provider fees and any identity checks are shown before you pay."
           : isPaygate(provider)
@@ -880,6 +903,9 @@ function ReviewStep({
       {provider === NMI_PROVIDER_ID ? (
         nmiSession ? <NmiPaymentForm key={`${nmiSession.id}:${nmiCartFingerprint(cart)}`} session={nmiSession} busy={busy} onToken={onNmiToken} />
           : <Alert severity="warning" sx={{ mt: 3 }} action={<Button onClick={() => onEdit(2)}>Choose payment</Button>}>Your secure payment session needs refreshing. Return to Payment to review the current currency and total.</Alert>
+      ) : provider === STRIPE_PROVIDER_ID ? (
+        stripeSecret ? <StripePaymentForm key={stripeSecret} clientSecret={stripeSecret} amountLabel={formatMoney(Number(cart.total ?? 0), cart.currency_code, { locale })} busy={busy} onPay={onStripePay} />
+          : <Alert severity="warning" sx={{ mt: 3 }} action={<Button onClick={() => onEdit(2)}>Choose payment</Button>}>Your card payment session needs refreshing. Return to Payment and choose card again.</Alert>
       ) : <Button
         variant="contained"
         size="large"

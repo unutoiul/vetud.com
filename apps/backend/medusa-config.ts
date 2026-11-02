@@ -1,4 +1,4 @@
-import { loadEnv, defineConfig } from "@medusajs/framework/utils"
+import { loadEnv, defineConfig, MedusaError } from "@medusajs/framework/utils"
 import { getNmiConfig } from "./src/lib/nmi-config"
 import { getPaygateConfig } from "./src/lib/paygate-config"
 
@@ -196,6 +196,25 @@ if (process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET) {
       brand_name: "Vetud Peptides",
     },
   } as ModuleConfig)
+}
+// Stripe card checkout (pp_stripe_stripe); src/api/stripe-session.ts limits intents to cards.
+// Sandbox keys only unless STRIPE_ENVIRONMENT=live.
+const STRIPE_API_KEY = process.env.STRIPE_API_KEY
+if (STRIPE_API_KEY) {
+  if (!/^(sk|rk)_test_/.test(STRIPE_API_KEY) && process.env.STRIPE_ENVIRONMENT !== "live") {
+    throw new MedusaError(MedusaError.Types.INVALID_DATA, "STRIPE_API_KEY is not a test-mode key. Use a sandbox key, or set STRIPE_ENVIRONMENT=live on purpose.")
+  }
+  paymentProviders.push({
+    resolve: "@medusajs/medusa/payment-stripe",
+    id: "stripe",
+    options: {
+      apiKey: STRIPE_API_KEY,
+      webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+      // Authorize at checkout and capture from Admin, unless STRIPE_CAPTURE=true.
+      capture: process.env.STRIPE_CAPTURE === "true",
+      paymentDescription: "Vetud Peptides order",
+    },
+  })
 }
 if (paymentProviders.length) {
   modules.push({

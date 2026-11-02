@@ -12,6 +12,7 @@ import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
 import { cartOwnerGuardRoutes } from "./cart-owner-guards"
 import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
+import { prepareStripeSession } from "./stripe-session"
 
 export default defineMiddlewares({
   routes: [
@@ -25,6 +26,7 @@ export default defineMiddlewares({
         authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
         prepareNmiSession,
         preparePaygateSession,
+        prepareStripeSession,
       ],
     },
     {
