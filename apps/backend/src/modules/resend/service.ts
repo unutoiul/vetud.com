@@ -8,7 +8,8 @@ import type {
   ProviderSendNotificationResultsDTO,
 } from "@medusajs/framework/types"
 import { Resend } from "resend"
-import { renderEmail } from "./templates"
+import { RESEND_TEMPLATE_IDS } from "./template-ids"
+import { buildEmail } from "./templates"
 
 type ResendOptions = {
   api_key: string
@@ -52,7 +53,7 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
   async send(
     notification: ProviderSendNotificationDTO
   ): Promise<ProviderSendNotificationResultsDTO> {
-    const email = await renderEmail(notification.template, notification.data ?? {})
+    const email = buildEmail(notification.template, notification.data ?? {})
 
     if (!email) {
       throw new MedusaError(
@@ -61,12 +62,19 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
       )
     }
 
+    const templateId = RESEND_TEMPLATE_IDS[email.template]
+    if (!templateId) {
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        `No Resend template ID for "${email.template}" in template-ids.ts.`
+      )
+    }
+
     const { data, error } = await this.client.emails.send({
       from: notification.from || this.options.from,
       to: [notification.to],
+      template: { id: templateId, variables: email.variables },
       subject: email.subject,
-      html: email.html,
-      text: email.text,
       replyTo: email.replyTo ?? this.options.reply_to,
       attachments: notification.attachments?.map((attachment) => ({
         content: attachment.content,

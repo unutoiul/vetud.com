@@ -104,7 +104,7 @@ Migration `vetud-product-16-research-categories` creates the eight active/public
 
 ## Emails (Resend)
 
-The templates live in `apps/backend/src/modules/resend/emails/`:
+The emails are published templates in Resend (**Dashboard → Templates**, named `VETUD · …`). The backend sends each one by its template ID with variables. The IDs are in `apps/backend/src/modules/resend/template-ids.ts`, and `templates.ts` next to it builds the variables. Edit wording and layout in Resend and publish; keep the `{{{VARIABLE}}}` names, because the backend fills them in.
 
 | Template | Sent when | To |
 |---|---|---|
@@ -112,8 +112,15 @@ The templates live in `apps/backend/src/modules/resend/emails/`:
 | `order-placed-admin` | Order placed | `STORE_OWNER_EMAIL` |
 | `shipment-created` | Shipment created in Admin | Customer (tracking) |
 | `contact-message` | Contact form submitted | `STORE_OWNER_EMAIL` (reply-to is the customer) |
-
-To preview the templates in a browser, run `npm run email:dev` in `apps/backend` (port 3030).
+| `password-reset` | Password reset requested (storefront or Admin) | Customer or admin user |
+| `newsletter-offer` / `newsletter-welcome` | Newsletter sign-up, with or without a current offer code | Subscriber |
+| `customer-welcome` | Customer registers an account | Customer |
+| `payment-received` | Payment captured on an existing order (e.g. bank transfer marked paid in Admin) | Customer |
+| `order-canceled` | Order canceled in Admin | Customer |
+| `refund-issued` | Refund created in Admin | Customer (amount of that refund) |
+| `order-delivered` | Fulfillment marked as delivered in Admin | Customer |
+| `return-received` | Return received in Admin | Customer |
+| `user-invite` | Admin user invited or invite resent | Invited user (link to `/app/invite`) |
 
 **Setup:** create a Resend account, verify your sending domain, then set `RESEND_API_KEY`, `RESEND_FROM_EMAIL` (an address on the verified domain), `STORE_OWNER_EMAIL`, `PAYMENT_INSTRUCTIONS` and `PAYMENT_BANK_DETAILS` on the backend.
 
@@ -349,7 +356,6 @@ The build fetches regions and products from the backend, so deploy the backend f
 | backend | `npm run build` | Production build into `.medusa/server` |
 | backend | `npm run lint` | Medusa lint rules (framework correctness) |
 | backend | `npm run seed` | Re-run the seed (it skips itself if the catalog exists) |
-| backend | `npm run email:dev` | Preview email templates |
 | storefront | `npm run dev` | Next.js dev server on :8000 |
 | storefront | `npm run build` | Production build (needs the backend running) |
 | storefront | `npm run lint` / `npm run typecheck` | ESLint / TypeScript |
