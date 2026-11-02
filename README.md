@@ -167,7 +167,9 @@ Uses the `@makecrypto/medusa-plugin-makepay` plugin (pinned) and needs a MakePay
 1. On **both** Railway Medusa services set `MAKEPAY_ENCRYPTION_KEY` (`openssl rand -base64 32`, never rotate it) and optionally `MAKEPAY_SETTLEMENT_CURRENCY`. `MEDUSA_BACKEND_URL` and `STOREFRONT_URL` must be the public HTTPS URLs. The first deploy runs the plugin's migration.
 2. Admin → **Settings → MakePay → Connect MakePay**, choose the company and approve.
 3. Admin → **Settings → Regions**: edit **every** region, enable the `pp_makepay_makepay` payment provider and save.
-4. Redeploy the storefront (it caches the provider list). Optional `NEXT_PUBLIC_MAKEPAY_CHECKOUT_ORIGIN` (default `https://www.makepay.io`, only change it for sandbox testing).
+4. Use the same exact checkout origin on both sides: backend `MAKEPAY_CHECKOUT_ORIGIN` and storefront `NEXT_PUBLIC_MAKEPAY_CHECKOUT_ORIGIN` default to `https://pay.makecrypto.io`, the hosted endpoint in [MakePay's current documentation](https://www.makecrypto.io/documentation/makepay/getting-started/overview). The plugin and storefront validate this origin independently. The older SDK default, `https://www.makepay.io`, rejects current payment-link responses with `MakePay payment-link correlation failed`. Override both values together for a different environment, then deploy backend and rebuild the storefront.
+
+To enable MakePay for the existing storefront destinations while preserving other methods, run `MAKEPAY_REGION_COUNTRIES=us,gb,de,fr,nl npx medusa exec ./src/scripts/enable-makepay.ts` from the backend source root (`/app` on Railway). Use the actual storefront country list. Run `npm run test:makepay` from `apps/backend` to verify backend correlation and storefront redirect validation together.
 
 Checkout then offers "Pay with cryptocurrency": the order is created, the shopper pays on MakePay's hosted page, and returns to `/order/makepay-return`, which waits for the backend's confirmed-paid status before showing the confirmation. The plugin does not support automated refunds; refund crypto payments manually in MakePay.
 

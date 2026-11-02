@@ -1,0 +1,65 @@
+MakePay checkout repair - 2 November 2026
+
+Root cause
+The official merchant API returns https://pay.makecrypto.io/payment/<uid>.
+Both our backend plugin configuration and storefront expected www.makepay.io.
+The backend therefore raised "MakePay payment-link correlation failed" before
+saving a payment session. The storefront's generic error concealed this cause.
+
+Source: https://www.makecrypto.io/documentation/makepay/getting-started/overview
+
+Completed
+- Backend checkoutBaseUrl and storefront redirect allowlist now use the current
+  official checkout origin, with matching optional environment overrides.
+- Four regression tests pass, including mismatched amount, currency, company,
+  session, installation, provider and external-origin rejection.
+- Backend lint, TypeScript and production build pass.
+- Storefront lint, TypeScript and Vercel production build pass.
+- The actual failed merchant link passes the corrected backend verification.
+  Its hosted page returns HTTP 200. No payment or order was submitted.
+- The staged checkout's compiled browser code contains pay.makecrypto.io and
+  no longer contains www.makepay.io for MakePay navigation.
+
+Staged storefront (READY; not promoted to the live domains)
+https://vetud-storefront-aloxw6cbk-gold-structure-engine.vercel.app
+Deployment ID: dpl_H5wS4kb588RqfAWa6PhCGbqJj3x8
+
+Release blocker
+Railway's build daemon failed before compiling the backend. Upload, redeploy
+and a documented clean-build retry failed with the same infrastructure error:
+
+Build Failed: build daemon returned an error < listing workers for Build:
+failed to list workers: Unavailable: connection error: desc = "error reading
+server preface: raw-read unix @->/run/buildkit/buildkitd.sock: use of closed
+network connection" >
+
+Failed server deployment IDs
+52062c4d-0fa5-4f00-8e4c-a280a3af2f74
+b096d36a-dda6-4ba4-9df0-20841e7faadc
+b3e426e7-60ce-4e8e-ad09-a9208ac9b09b (clean-build retry)
+
+Failed worker deployment IDs
+410e80b7-67d8-4e34-9ab7-19a616ec4686
+6f31c897-1602-451c-9b49-402468600e43
+
+Railway project: e04f2eac-45d2-4854-9f2b-c523f5cff113
+Server service: 236671ed-00e2-4810-92b8-72471cd42807
+Worker service: b362ba34-07cd-4b4b-b673-c17c0c7fa45c
+
+The previously healthy backend releases remain active. MakePay is still
+enabled only for the US region. The UK/Europe changes were prepared but were
+not applied while the backend correction could not be released.
+
+Remaining release steps after Railway builds recover
+1. Redeploy the uploaded server and worker releases and wait for SUCCESS.
+2. Confirm the deployed makePayOptions.checkoutBaseUrl is pay.makecrypto.io
+   on both services and the existing merchant connection remains healthy.
+3. From the backend SOURCE root /app, run:
+   MAKEPAY_REGION_COUNTRIES=us,gb,de,fr,nl ./node_modules/.bin/medusa exec ./src/scripts/enable-makepay.ts
+   This preserves the other payment methods and is safe to rerun.
+4. From the repository root, promote the already-tested storefront:
+   vercel promote https://vetud-storefront-aloxw6cbk-gold-structure-engine.vercel.app --yes
+5. Verify the available payment methods and retry MakePay checkout. A real
+   customer payment and confirmed settlement still require an end-to-end check.
+
+No support message was sent and no payment was made.

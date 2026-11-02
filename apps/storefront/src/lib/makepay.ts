@@ -4,7 +4,7 @@ export const MAKEPAY_PROVIDER_ID = "pp_makepay_makepay"
 
 // Exact origin of MakePay's hosted checkout. An allowlist, never derived from the returned URL.
 const MAKEPAY_CHECKOUT_ORIGIN = (
-  process.env.NEXT_PUBLIC_MAKEPAY_CHECKOUT_ORIGIN || "https://www.makepay.io"
+  process.env.NEXT_PUBLIC_MAKEPAY_CHECKOUT_ORIGIN || "https://pay.makecrypto.io"
 ).replace(/\/$/, "")
 
 export const MAKEPAY_STORAGE = {

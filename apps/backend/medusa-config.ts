@@ -22,6 +22,7 @@ const MAKEPAY_ENABLED = Boolean(process.env.MAKEPAY_ENCRYPTION_KEY)
 const makePayOptions = {
   authMode: "oauth" as const,
   backendUrl: BACKEND_URL,
+  checkoutBaseUrl: process.env.MAKEPAY_CHECKOUT_ORIGIN || "https://pay.makecrypto.io",
   storefrontReturnUrl: `${(process.env.STOREFRONT_URL || "http://localhost:8000").replace(/\/$/, "")}/order/makepay-return`,
   encryptionKey: process.env.MAKEPAY_ENCRYPTION_KEY,
   lockingProvider: "makepay-postgres",
