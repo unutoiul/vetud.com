@@ -59,13 +59,22 @@ function languageCountry(request: NextRequest) {
 
 /**
  * Every page lives under a country segment (/us/shop, /de/shop) that selects the Medusa region
- * and currency. Requests without a valid segment are redirected, using the visitor's country
- * from the hosting platform's geo header when we sell there.
+ * and currency. The root is a stable, crawlable US default; visitors can choose another
+ * region in the header. Other unprefixed routes retain the regional redirect.
  */
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const segments = pathname.split("/")
   const first = segments[1]?.toLowerCase() ?? ""
+
+  // A stable x-default homepage avoids redirecting crawlers or people by their IP.
+  // A rewrite preserves / while the existing country layout renders the US store.
+  if (pathname === "/") {
+    const url = request.nextUrl.clone()
+    url.pathname = "/us"
+    return NextResponse.rewrite(url)
+  }
+
   const countries = await sellableCountries()
 
   if (countries.includes(first)) {

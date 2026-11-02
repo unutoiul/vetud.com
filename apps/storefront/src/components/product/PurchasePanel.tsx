@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 import { useLocale } from "next-intl"
 import { SITE } from "@/lib/config"
-import { formatMoney, isVariantInStock, sortedVariants, variantPrice } from "@/lib/product"
+import { formatMoney, initialProductVariant, isVariantInStock, sortedVariants, variantPrice } from "@/lib/product"
 import { useStore } from "../store/StoreProvider"
 import QuantityStepper from "./QuantityStepper"
 import StockBadge from "./StockBadge"
@@ -21,7 +21,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
   const locale = useLocale()
   const { addItem, pending, error, clearError, region } = useStore()
   const variants = sortedVariants(product)
-  const firstAvailable = variants.find((variant) => isVariantInStock(variant)) ?? variants[0]
+  const firstAvailable = initialProductVariant(product)
   const [variantId, setVariantId] = useState(firstAvailable?.id ?? "")
   const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)

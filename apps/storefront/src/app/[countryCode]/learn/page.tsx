@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import type { Metadata } from "next"
 import Image from "next/image"
 import { Suspense } from "react"
 import Icon, { type IconName } from "@/components/brand/Icon"
@@ -17,6 +16,7 @@ import { ARTICLES, LEARNING_GUIDES } from "@/content/learn/articles"
 import { PEPTIDES } from "@/content/learn/peptides"
 import { getVideos, VIDEOS } from "@/content/learn/videos"
 import { getLearnShopLinks } from "@/lib/learn-shop"
+import { collectionMetadata } from "@/lib/article-seo"
 
 const PROFILE_COUNT = PEPTIDES.length
 
@@ -24,10 +24,10 @@ async function LibraryWithShop() {
   return <LearnLibrary shop={await getLearnShopLinks()} />
 }
 
-export const metadata: Metadata = {
-  title: "Learn: peptides explained simply",
+export const metadata = collectionMetadata({
+  path: "/learn", title: "Peptides Explained: Research, Evidence & Learning Guides",
   description: `Plain-language guides to ${PROFILE_COUNT} peptides and related compounds, from approved medicines to early research: what they are, what studies found, approval status and known risks.`,
-}
+})
 
 const BASICS: { title: string; icon: IconName; text: string }[] = [
   { title: "What is a peptide?", icon: "molecule", text: "A short chain of amino acids, the same building blocks that make up proteins. Insulin, oxytocin and the new weight-loss medicines are all peptides." },

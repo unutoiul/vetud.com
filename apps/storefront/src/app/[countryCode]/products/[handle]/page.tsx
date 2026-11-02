@@ -17,11 +17,14 @@ import ProductGrid from "@/components/product/ProductGrid"
 import ProductGallery from "@/components/product/ProductGallery"
 import ProductDossier from "@/components/product/ProductDossier"
 import { getProductResearch } from "@/content/product-research"
+import { PEPTIDES } from "@/content/learn/peptides"
+import { ARTICLES } from "@/content/learn/articles"
 import PurchasePanel from "@/components/product/PurchasePanel"
-import { BASE_URL } from "@/lib/config"
+import { matchesPeptide } from "@/lib/learn-products"
+import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
-import { cheapestPrice, isProductInStock, readProductMeta, sortedVariants, sortProducts } from "@/lib/product"
+import { readProductMeta, sortedVariants, sortProducts } from "@/lib/product"
 import { getProductImages, getProductPhotography } from "@/lib/product-images"
 
 const PLACEHOLDER = "__placeholder__"
@@ -45,13 +48,9 @@ async function loadProduct(handle: string) {
 
 export async function generateMetadata({ params }: PageProps<"/[countryCode]/products/[handle]">): Promise<Metadata> {
   const { handle } = await params
-  const { product } = await loadProduct(handle)
-  if (!product) return { title: "Product not found" }
-  const meta = readProductMeta(product)
-  return {
-    title: `${product.title} (${meta.code})`,
-    description: `${product.subtitle ?? "Research material"}. ${meta.purity ?? ""} ${meta.form ?? ""}. Lot-documented, for laboratory research use only.`.replace(/\s+/g, " "),
-  }
+  const { product, countryCode } = await loadProduct(handle)
+  if (!product) return { title: "Product not found", robots: { index: false, follow: true } }
+  return productMetadata(product, countryCode)
 }
 
 function ProductSkeleton() {
@@ -115,28 +114,10 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     { label: "Intended use", value: "Laboratory research only" },
   ]
 
-  const price = cheapestPrice(product)
   const images = getProductImages(product)
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.title,
-    sku: meta.code,
-    description: product.description ?? undefined,
-    brand: { "@type": "Brand", name: "Vetud Peptides" },
-    url: `${BASE_URL}/${countryCode}/products/${product.handle}`,
-    image: images.map(image => new URL(image.url, BASE_URL).href),
-    ...(price
-      ? {
-          offers: {
-            "@type": "Offer",
-            price: price.amount,
-            priceCurrency: price.currencyCode.toUpperCase(),
-            availability: isProductInStock(product) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-          },
-        }
-      : {}),
-  }
+  const jsonLd = productStructuredData(product, countryCode)
+  const guides = PEPTIDES.filter(peptide => matchesPeptide(product, peptide.slug))
+  const articles = ARTICLES.filter(article => guides.some(guide => article.peptides.includes(guide.slug))).slice(0, 3)
 
   return (
     <>
@@ -207,6 +188,17 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
           <ProductDossier profile={profile} description={product.description} specs={specs} meta={meta} title={product.title} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
         </Box>
       </Section>
+
+      {guides.length ? (
+        <Section tone="white" aria-labelledby="product-reading-title" sx={{ borderTop: "1px solid", borderColor: "divider" }}>
+          <Typography component="h2" variant="h3" id="product-reading-title" sx={{ mb: 2 }}>Understand the research behind {product.title}.</Typography>
+          <Typography sx={{ maxWidth: 740, color: "text.secondary", lineHeight: 1.8, mb: 2.5 }}>Read the evidence, research status and known limitations of the named compound. Published studies do not establish the safety or performance of this research product.</Typography>
+          <Box component="ul" sx={{ m: 0, pl: 2.5, "& li": { py: 1 }, "& a": { lineHeight: 1.7 } }}>
+            {guides.map(guide => <li key={guide.slug}><AppLink href={`/learn/${guide.slug}`}>{guide.name}: research, evidence and limitations</AppLink></li>)}
+            {articles.map(article => <li key={article.slug}><AppLink href={`/news/${article.slug}`}>{article.headline.join("")}</AppLink></li>)}
+          </Box>
+        </Section>
+      ) : null}
 
       {related.length ? (
         <Section tone="paper">

@@ -1,16 +1,16 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import type { Metadata } from "next"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import ArticleCard from "@/components/learn/ArticleCard"
 import { LEARN_DISCLAIMER } from "@/components/learn/SourceList"
 import { ARTICLES } from "@/content/learn/articles"
+import { collectionMetadata } from "@/lib/article-seo"
 
-export const metadata: Metadata = {
-  title: "News & articles",
+export const metadata = collectionMetadata({
+  path: "/news", title: "Peptide Research Articles & Evidence Guides",
   description: "Peptide research, regulation and learning guides, with connected videos and original sources.",
-}
+})
 
 export default function NewsPage() {
   const [latest, ...rest] = ARTICLES

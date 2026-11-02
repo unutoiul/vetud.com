@@ -139,6 +139,12 @@ export function isProductInStock(product: HttpTypes.StoreProduct) {
   return (product.variants ?? []).some((variant) => isVariantInStock(variant))
 }
 
+/** Shared by the purchase panel and search data so both describe the same option. */
+export function initialProductVariant(product: HttpTypes.StoreProduct) {
+  const variants = sortedVariants(product)
+  return variants.find(variant => isVariantInStock(variant)) ?? variants[0]
+}
+
 /** Locale per currency, so each region sees its familiar symbol position and separators. */
 const CURRENCY_LOCALES: Record<string, string> = {
   usd: "en-US",

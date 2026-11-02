@@ -1,16 +1,17 @@
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import type { Metadata } from "next"
 import PageHeader from "@/components/common/PageHeader"
 import { AppLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 import VideoGallery from "@/components/learn/VideoGallery"
 import { VIDEO_TOPICS, VIDEOS } from "@/content/learn/videos"
+import { collectionMetadata } from "@/lib/article-seo"
 
-export const metadata: Metadata = {
+export const metadata = collectionMetadata({
+  path: "/videos",
   title: "Peptide videos, biology and research education",
   description: `${VIDEOS.length} selected YouTube videos about peptides, hormones, medicines and reading research, from clinicians, universities, hospitals and science educators.`,
-}
+})
 
 export default function VideosPage() {
   return (

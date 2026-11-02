@@ -37,6 +37,13 @@ export function articleMetadata({ title, description, path, image }: {
   }
 }
 
+/** Shared English library pages consolidate on the same preferred region as articles. */
+export function collectionMetadata(input: { title: string; description: string; path: string }): Metadata {
+  const metadata = articleMetadata(input)
+  return { ...metadata, openGraph: { ...metadata.openGraph, type: "website" },
+    twitter: { card: "summary", title: input.title, description: input.description } }
+}
+
 export function articleStructuredData({ title, description, path, image, breadcrumbs, sources, text }: {
   title: string; description: string; path: string; image?: LearnIllustration
   breadcrumbs: { name: string; path: string }[]; sources: { url: string }[]; text: string[]

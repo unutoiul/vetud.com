@@ -20,10 +20,15 @@ import {
   type ProductSort,
 } from "@/lib/medusa/products"
 import { sortProducts } from "@/lib/product"
+import { storefrontMetadata } from "@/lib/storefront-seo"
 
-export const metadata: Metadata = {
-  title: "Shop the collection",
-  description: "Explore the complete collection with clear specifications and lot-level documentation.",
+export async function generateMetadata({ params, searchParams }: PageProps<"/[countryCode]/shop">): Promise<Metadata> {
+  const [{ countryCode }, search] = await Promise.all([params, searchParams])
+  return storefrontMetadata({
+    title: `Research Peptides & Laboratory Materials | VETUD ${countryCode === "gb" ? "UK" : countryCode.toUpperCase()}`,
+    description: "Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare amounts, regional prices, stock and lot documentation. Laboratory use only.",
+    country: countryCode, path: "/shop", noindex: Boolean(first(search.q) || first(search.category) || first(search.sort)),
+  })
 }
 
 const SORT_VALUES: ProductSort[] = ["featured", "price-asc", "price-desc", "name"]
@@ -116,7 +121,7 @@ function ResultsSkeleton() {
 export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/shop">) {
   return (
     <>
-      <PageHeader eyebrow="The collection" title="A precise place to begin." description="Explore research peptides by research area, product type and available amount. Every product brings its specifications and research context into focus." />
+      <PageHeader eyebrow="The collection" title="Research peptides & laboratory materials." description="Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only." />
       <Section tone="white" tight sx={{ pt: { xs: 3, md: 5 } }}>
         <Suspense fallback={<ResultsSkeleton />}>
           <ShopResults searchParams={searchParams} />

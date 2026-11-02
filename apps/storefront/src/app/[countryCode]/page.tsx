@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box"
+import type { Metadata } from "next"
 import Typography from "@mui/material/Typography"
 import Icon from "@/components/brand/Icon"
 import { ButtonLink } from "@/components/common/links"
@@ -12,14 +13,30 @@ import VideoGallery from "@/components/learn/VideoGallery"
 import WeightLossChart from "@/components/learn/WeightLossChart"
 import { ARTICLES } from "@/content/learn/articles"
 import { getVideos } from "@/content/learn/videos"
-import { SITE } from "@/lib/config"
+import { BASE_URL, SITE } from "@/lib/config"
+import { storefrontLanguages, storefrontMetadata, websiteStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { listCatalogProducts } from "@/lib/medusa/products"
+
+export async function generateMetadata({ params }: PageProps<"/[countryCode]">): Promise<Metadata> {
+  const { countryCode } = await params
+  const metadata = storefrontMetadata({
+    title: "Peptides Explained: Research Guides & Laboratory Materials | VETUD",
+    description: "Explore peptide research, Retatrutide, Tirzepatide and Semaglutide guides, evidence and educational videos. Browse VETUD laboratory research materials.",
+    country: countryCode, path: "",
+  })
+  const url = countryCode === "us" ? BASE_URL : `${BASE_URL}/${countryCode}`
+  return { ...metadata,
+    alternates: { canonical: url, languages: { ...storefrontLanguages(""), "en-US": BASE_URL, "x-default": BASE_URL } },
+    openGraph: { ...metadata.openGraph, url },
+  }
+}
 
 export default async function HomePage() {
   const { region } = await getCurrentRegion()
   const products = await listCatalogProducts(region.id)
   return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData).replace(/</g, "\\u003c") }} />
     <LearnHero />
 
     <Section tone="white" sx={{ py: { xs: 6, md: 9 } }}>

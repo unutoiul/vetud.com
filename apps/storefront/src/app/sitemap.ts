@@ -8,8 +8,9 @@ import { BASE_URL } from "@/lib/config"
 import { articleLanguages, articleUrl } from "@/lib/article-seo"
 import { listProductHandles } from "@/lib/medusa/products"
 import { listCountryCodes } from "@/lib/medusa/regions"
+import { storefrontLanguages } from "@/lib/storefront-seo"
 
-const STATIC_PATHS = ["", "/learn", "/news", "/videos", "/shop", "/tracking", "/standards", "/documentation", "/contact"]
+const STATIC_PATHS = ["", "/shop", "/tracking", "/standards", "/documentation", "/contact"]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   "use cache"
@@ -31,9 +32,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const storefront = countries.flatMap((country) =>
     paths.map((path) => ({
-      url: `${BASE_URL}/${country}${path}`,
+      url: country === "us" && path === "" ? BASE_URL : `${BASE_URL}/${country}${path}`,
       changeFrequency: path.startsWith("/products") ? ("daily" as const) : ("weekly" as const),
       priority: path === "" ? 1 : path.startsWith("/products") ? 0.8 : 0.5,
+      ...(path === "" ? { alternates: { languages: { ...storefrontLanguages(""), "en-US": BASE_URL, "x-default": BASE_URL } } }
+        : path.startsWith("/products") || path === "/shop" ? { alternates: { languages: storefrontLanguages(path) } } : {}),
     }))
   )
 
@@ -48,5 +51,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       alternates: { languages: articleLanguages(path) }, ...(image ? { images: [`${BASE_URL}${image.src}`] } : {}),
     }
   })
-  return [...storefront, ...editorial]
+  const collections = ["/learn", "/news", "/videos"].map(path => ({
+    url: articleUrl(path), changeFrequency: "weekly" as const, priority: 0.8,
+    alternates: { languages: articleLanguages(path) },
+  }))
+  return [...storefront, ...collections, ...editorial]
 }
