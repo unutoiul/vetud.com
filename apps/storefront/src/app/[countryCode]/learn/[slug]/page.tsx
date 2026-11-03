@@ -8,6 +8,7 @@ import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { AppLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
+import PeptideCommunity from "@/components/community/PeptideCommunity"
 import ArticleCard from "@/components/learn/ArticleCard"
 import PeptideCard from "@/components/learn/PeptideCard"
 import ResearchCatalog from "@/components/learn/ResearchCatalog"
@@ -66,6 +67,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
     ...(inChart ? [{ id: "comparison", label: "Weight-loss comparison" }] : []),
     { id: "risks", label: "Risks and side effects" },
     { id: "approval", label: "Approval status" },
+    { id: "community", label: "What members report" },
     { id: "videos", label: "Watch and learn" },
     { id: "sources", label: "Sources and references" },
     { id: "research-shop", label: "Related research products" },
@@ -117,6 +119,9 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
         <ReadingSection id="approval" title={`Is ${peptide.name} approved?`}>
           <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1.5, mb: 2 }}><StatusBadge status={peptide.status} /><Typography sx={{ fontSize: 15, color: "brand.navySoft" }}>{status.explain}</Typography></Box>
           <Typography sx={readingProse}>{peptide.statusNote}</Typography>
+        </ReadingSection>
+        <ReadingSection id="community" title="What members report">
+          <Suspense fallback={<Skeleton variant="rounded" height={220} />}><PeptideCommunity peptide={peptide} /></Suspense>
         </ReadingSection>
         <ReadingSection id="videos" title={`Watch: ${peptide.name} and related science`}><VideoResources videos={videos.videos} connections={videos.connections} introduction={videos.introduction} /></ReadingSection>
         <ReadingSection id="sources" title="Sources and references">

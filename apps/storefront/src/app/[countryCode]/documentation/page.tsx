@@ -15,6 +15,7 @@ import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
+import { getLotReportCounts } from "@/lib/medusa/forum"
 import { listProducts } from "@/lib/medusa/products"
 import { readProductMeta } from "@/lib/product"
 
@@ -32,6 +33,8 @@ export default async function DocumentationPage() {
       return meta.lots.map((lot) => ({ product, meta, lot }))
     })
     .sort((a, b) => (b.lot.date ?? "").localeCompare(a.lot.date ?? "") || a.lot.lot.localeCompare(b.lot.lot))
+  // Community posts that name each lot. The register still renders if the community is unreachable.
+  const reports: Record<string, number> = await getLotReportCounts(rows.map(({ lot }) => lot.lot)).catch(() => ({}))
 
   return (
     <>
@@ -59,6 +62,7 @@ export default async function DocumentationPage() {
                 <TableCell scope="col">Product</TableCell>
                 <TableCell scope="col">Batch date</TableCell>
                 <TableCell scope="col">Purity</TableCell>
+                <TableCell scope="col">Member reports</TableCell>
                 <TableCell scope="col" align="right">Certificate</TableCell>
               </TableRow>
             </TableHead>
@@ -76,6 +80,9 @@ export default async function DocumentationPage() {
                   </TableCell>
                   <TableCell>{lot.date ?? "—"}</TableCell>
                   <TableCell sx={{ fontVariantNumeric: "tabular-nums" }}>{lot.purity ?? "—"}</TableCell>
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>
+                    {reports[lot.lot] ? <AppLink href={`/community?lot=${encodeURIComponent(lot.lot)}`}>{reports[lot.lot]} {reports[lot.lot] === 1 ? "report" : "reports"}</AppLink> : "—"}
+                  </TableCell>
                   <TableCell align="right">
                     {lot.coaUrl ? (
                       <Box component="a" href={lot.coaUrl} target="_blank" rel="noopener" sx={{ display: "inline-flex", gap: 0.75, alignItems: "center", color: "secondary.main", fontWeight: 600 }}>
@@ -89,7 +96,7 @@ export default async function DocumentationPage() {
               ))}
               {!rows.length ? (
                 <TableRow>
-                  <TableCell colSpan={5} sx={{ py: 5, color: "text.secondary", textAlign: "center" }}>
+                  <TableCell colSpan={6} sx={{ py: 5, color: "text.secondary", textAlign: "center" }}>
                     No lot records are published yet. <AppLink href="/contact">Contact the team</AppLink> for documentation.
                   </TableCell>
                 </TableRow>

@@ -6,6 +6,7 @@ import { PEPTIDES } from "@/content/learn/peptides"
 import { getLearnIllustration } from "@/content/learn/illustrations"
 import { BASE_URL } from "@/lib/config"
 import { articleLanguages, articleUrl } from "@/lib/article-seo"
+import { listForumThreadIds } from "@/lib/medusa/forum"
 import { listProductHandles } from "@/lib/medusa/products"
 import { listCountryCodes } from "@/lib/medusa/regions"
 import { storefrontLanguages } from "@/lib/storefront-seo"
@@ -51,9 +52,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       alternates: { languages: articleLanguages(path) }, ...(image ? { images: [`${BASE_URL}${image.src}`] } : {}),
     }
   })
-  const collections = ["/learn", "/news", "/videos"].map(path => ({
+  const collections = ["/learn", "/news", "/videos", "/community", "/community/guidelines"].map(path => ({
     url: articleUrl(path), changeFrequency: "weekly" as const, priority: 0.8,
     alternates: { languages: articleLanguages(path) },
   }))
-  return [...storefront, ...collections, ...editorial]
+  // Community threads are English too, and share the same preferred URLs.
+  let threads: string[] = []
+  try {
+    threads = await listForumThreadIds(500)
+  } catch {
+    threads = []
+  }
+  const community = threads.map(id => ({
+    url: articleUrl(`/community/${id}`), changeFrequency: "weekly" as const, priority: 0.5,
+    alternates: { languages: articleLanguages(`/community/${id}`) },
+  }))
+  return [...storefront, ...collections, ...editorial, ...community]
 }

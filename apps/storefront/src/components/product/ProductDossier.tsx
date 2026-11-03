@@ -21,8 +21,10 @@ const sections = [
 const sectionStyle = { pt: { xs: 4, md: 5 }, pb: { xs: 4, md: 5 }, borderTop: "1px solid", borderColor: "divider", scrollMarginTop: 115 }
 const bodyStyle = { fontSize: 14, lineHeight: 1.95, color: "text.secondary", maxWidth: 800 }
 
-export default function ProductDossier({ profile, description, specs, meta, title, currencyCode, freeShippingThreshold }: {
+export default function ProductDossier({ profile, description, specs, meta, title, currencyCode, freeShippingThreshold, lotReports }: {
   profile?: ProductResearch; description?: string | null; specs: { label: string; value: string }[]; meta: ProductMeta; title: string; currencyCode: string; freeShippingThreshold?: number
+  /** Community posts per lot number, when the community is reachable. */
+  lotReports?: Record<string, number>
 }) {
   return <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "230px minmax(0, 1fr)" }, gap: { xs: 3, md: 8 }, mt: { xs: 5, md: 9 } }}>
     <Box component="nav" aria-label="Product dossier" sx={{ minWidth: 0, width: "100%", alignSelf: "start", position: { md: "sticky" }, top: 125 }}>
@@ -49,7 +51,7 @@ export default function ProductDossier({ profile, description, specs, meta, titl
       <Box component="section" id="quality" aria-labelledby="quality-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="quality-heading" sx={{ mb: 2.5 }}>Know the batch behind the label.</Typography>
         <Typography sx={{ ...bodyStyle, mb: 2.5 }}>Use the lot number on your packaging to match the material to its analytical documentation. A purity percentage describes a reported analytical measurement; consult the certificate for the method, identity results and scope of testing.</Typography>
-        <LotTable lots={meta.lots} productTitle={title} />
+        <LotTable lots={meta.lots} productTitle={title} reports={lotReports} />
         <AppLink href="/documentation" sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 2.5, fontSize: 12 }}>Open the lot register <Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></AppLink>
       </Box>
       <Box component="section" id="storage" aria-labelledby="storage-heading" sx={sectionStyle}>

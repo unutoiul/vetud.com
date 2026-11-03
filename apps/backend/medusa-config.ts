@@ -32,6 +32,10 @@ const makePayOptions = {
 }
 
 const modules: ModuleConfig[] = [
+  // Comments signed-in customers leave on storefront articles.
+  { resolve: "./src/modules/article-comment" },
+  // Community forum: profiles, threads, research logs, votes and reports.
+  { resolve: "./src/modules/forum" },
   // Product images and other uploads. Files are written to `<server dir>/static` and served at
   // /static; on Railway that folder is a persistent volume (see README).
   {

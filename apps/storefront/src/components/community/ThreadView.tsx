@@ -1,0 +1,189 @@
+"use client"
+
+import Alert from "@mui/material/Alert"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import Skeleton from "@mui/material/Skeleton"
+import Typography from "@mui/material/Typography"
+import { useRouter } from "next/navigation"
+import { useCallback, useEffect, useMemo, useState } from "react"
+import { sdk } from "@/lib/medusa/sdk"
+import { revalidateCommunity } from "@/lib/community/actions"
+import { formatForumDate, HOLD_MESSAGES, KIND_LABELS, KIND_PLURALS, plural } from "@/lib/community/format"
+import type { ForumPost, ForumThreadDetail } from "@/lib/community/types"
+import { getPeptide } from "@/content/learn/peptides"
+import { useAccount } from "../account/AccountProvider"
+import { AppLink, ButtonLink, useLocalizedHref } from "../common/links"
+import { AuthorLine, Pill } from "./Badges"
+import CheckInForm from "./CheckInForm"
+import JoinCommunity from "./JoinCommunity"
+import PostCard from "./PostCard"
+import ReplyForm from "./ReplyForm"
+import ResearchLogSummary from "./ResearchLogSummary"
+import { useCommunityProfile } from "./useCommunityProfile"
+
+const PAGE_SIZE = 100
+
+/**
+ * A thread page. The server renders the public version (so search engines see it); signed in,
+ * it reloads with the reader's votes and own posts waiting for review, and adds the controls.
+ */
+export default function ThreadView({ threadId, initial }: { threadId: string; initial: ForumThreadDetail | null }) {
+  const router = useRouter()
+  const localize = useLocalizedHref()
+  const { customer, loading: accountLoading } = useAccount()
+  const community = useCommunityProfile()
+  const [detail, setDetail] = useState(initial)
+  const [state, setState] = useState<"ready" | "loading" | "missing">(initial ? "ready" : "loading")
+  const [loadingMore, setLoadingMore] = useState(false)
+  const customerId = customer?.id
+
+  const fetchPage = useCallback((offset: number) => sdk.client.fetch<ForumThreadDetail>(`/store/forum/threads/${encodeURIComponent(threadId)}`, {
+    query: { offset, limit: PAGE_SIZE },
+    cache: "no-store",
+  }), [threadId])
+
+  // The public page is cached for a few minutes; signed-in readers get their own view.
+  useEffect(() => {
+    if (accountLoading || (!customerId && initial)) return
+    let cancelled = false
+    fetchPage(0)
+      .then(data => { if (!cancelled) { setDetail(data); setState("ready") } })
+      .catch(() => { if (!cancelled && !initial) setState("missing") })
+    return () => { cancelled = true }
+  }, [accountLoading, customerId, fetchPage, initial])
+
+  const refresh = useCallback(() => { void revalidateCommunity(threadId) }, [threadId])
+
+  const updatePost = useCallback((post: ForumPost) => setDetail(current => current && ({
+    ...current,
+    opening: current.opening.id === post.id ? post : current.opening,
+    accepted: current.accepted?.id === post.id ? post : current.accepted,
+    posts: current.posts.map(existing => existing.id === post.id ? post : existing),
+  })), [])
+
+  const { highlighted, expert, others } = useMemo(() => {
+    if (!detail) return { highlighted: null, expert: null, others: [] as ForumPost[] }
+    const accepted = detail.accepted
+    // The most helpful expert reply that isn't already the best answer is pinned under it.
+    const expertReply = [...detail.posts]
+      .filter(post => post.author.role === "expert" && post.id !== accepted?.id && post.kind === "post")
+      .sort((a, b) => b.helpful_count - a.helpful_count)[0] ?? null
+    return {
+      highlighted: accepted,
+      expert: expertReply,
+      others: detail.posts.filter(post => post.id !== accepted?.id && post.id !== expertReply?.id),
+    }
+  }, [detail])
+
+  if (state === "loading" && !detail) {
+    return <Box role="status" aria-label="Loading thread" sx={{ display: "grid", gap: 2 }}><Skeleton variant="text" height={64} /><Skeleton variant="rounded" height={240} /></Box>
+  }
+  if (!detail) {
+    return <Box sx={{ py: 6, textAlign: "center" }}>
+      <Typography component="h1" sx={{ fontSize: 28, fontWeight: 650 }}>This thread isn&apos;t available</Typography>
+      <Typography sx={{ mt: 1.5, color: "brand.navySoft" }}>It may have been removed, or it&apos;s waiting for a moderator to review it.</Typography>
+      <ButtonLink href="/community" variant="contained" sx={{ mt: 3 }}>Back to the community</ButtonLink>
+    </Box>
+  }
+
+  const { thread, opening, measurements, viewer } = detail
+  const peptide = thread.peptide_slug ? getPeptide(thread.peptide_slug) : undefined
+  const canInteract = Boolean(community.profile && community.profile.status === "active")
+  const question = thread.kind === "question"
+  const shared = {
+    thread,
+    measurements,
+    canInteract,
+    canAccept: viewer.can_accept,
+    onChange: (post: ForumPost) => { updatePost(post); refresh() },
+    onDeleted: (post: ForumPost) => {
+      refresh()
+      if (post.is_opening) {
+        router.push(localize("/community"))
+        return
+      }
+      setDetail(current => current && ({ ...current, posts: current.posts.filter(existing => existing.id !== post.id), accepted: current.accepted?.id === post.id ? null : current.accepted, count: Math.max(0, current.count - 1) }))
+    },
+    onAccept: async (postId: string | null) => {
+      await sdk.client.fetch(`/store/forum/threads/${encodeURIComponent(thread.id)}/accept`, { method: "POST", body: { post_id: postId } })
+      setDetail(current => current && ({ ...current, thread: { ...current.thread, accepted_post_id: postId }, accepted: postId ? current.posts.find(post => post.id === postId) ?? null : null }))
+      refresh()
+    },
+  }
+
+  const loadMore = async () => {
+    setLoadingMore(true)
+    try {
+      const next = await fetchPage(detail.posts.length)
+      setDetail(current => current && ({ ...current, posts: [...current.posts, ...next.posts.filter(post => !current.posts.some(existing => existing.id === post.id))], count: next.count }))
+    } finally {
+      setLoadingMore(false)
+    }
+  }
+
+  return <Box>
+    <Box component="nav" aria-label="Breadcrumb" sx={{ display: "flex", flexWrap: "wrap", gap: 1, fontSize: 14, color: "brand.navySoft", mb: 2 }}>
+      <AppLink href="/community">Community</AppLink><span aria-hidden>/</span>
+      <AppLink href={`/community?kind=${thread.kind}`}>{KIND_PLURALS[thread.kind]}</AppLink>
+    </Box>
+
+    <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: .75, mb: 1.5 }}>
+      {thread.pinned ? <Pill tone="moderator">Pinned</Pill> : null}
+      <Pill tone={thread.kind === "research_log" ? "verified" : thread.kind === "question" ? "expert" : "neutral"}>{KIND_LABELS[thread.kind]}</Pill>
+      {question && thread.accepted_post_id ? <Pill tone="accepted" icon="check">Answered</Pill> : null}
+      {thread.locked ? <Pill>Closed</Pill> : null}
+    </Box>
+    <Typography component="h1" sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 500, lineHeight: 1.15, letterSpacing: "-.035em", textWrap: "balance", color: "brand.navy" }}>{thread.title}</Typography>
+    <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 2, rowGap: 1 }}>
+      <AuthorLine author={thread.author} verified={thread.verified_purchase} verifiedLot={thread.lot} />
+      <Typography component="time" dateTime={thread.created_at} sx={{ fontSize: 14, color: "brand.navySoft" }}>Started {formatForumDate(thread.created_at)}</Typography>
+    </Box>
+    {peptide || thread.product_handle || thread.lot ? <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", gap: 1, "& a": { display: "inline-flex", alignItems: "center", minHeight: 36, px: 1.5, border: "1px solid", borderColor: "divider", borderRadius: 999, fontSize: 13.5, bgcolor: "#fff" } }}>
+      {peptide ? <AppLink href={`/learn/${peptide.slug}`} underline="none">About {peptide.name}</AppLink> : null}
+      {thread.other_peptides.flatMap(slug => getPeptide(slug) ?? []).map(other => <AppLink key={other.slug} href={`/learn/${other.slug}`} underline="none">+ {other.name}</AppLink>)}
+      {thread.lot ? <AppLink href={`/documentation?lot=${encodeURIComponent(thread.lot)}`} underline="none">Lot {thread.lot} · batch record</AppLink> : null}
+    </Box> : null}
+
+    {thread.status && thread.status !== "published" ? <Alert severity="info" sx={{ mt: 3 }}>
+      <strong>Only you can see this thread for now.</strong> {HOLD_MESSAGES[thread.hold_reason ?? ""] ?? "A moderator will review it."}
+    </Alert> : null}
+
+    {thread.kind === "research_log" && measurements.length ? <Box sx={{ mt: 3 }}>
+      <ResearchLogSummary measurements={measurements} units={thread.unit_system} sideEffects={thread.side_effects} author={thread.author.display_name} />
+    </Box> : null}
+
+    <Box sx={{ mt: 1 }}><PostCard post={opening} {...shared} /></Box>
+
+    {thread.kind === "research_log" && thread.mine && !thread.locked ? <Box sx={{ mt: 1, mb: 3 }}>
+      <CheckInForm thread={thread} measurements={measurements} onAdded={updated => { setDetail(updated); refresh() }} />
+    </Box> : null}
+
+    <Box component="section" aria-labelledby="replies-heading" sx={{ mt: 4 }}>
+      <Typography id="replies-heading" component="h2" sx={{ fontSize: 22, fontWeight: 650, mb: 1 }}>
+        {detail.count ? plural(detail.count, question ? "answer" : "reply", question ? "answers" : "replies") : question ? "No answers yet" : "No replies yet"}
+      </Typography>
+      {highlighted ? <PostCard post={highlighted} highlight="accepted" {...shared} /> : null}
+      {expert ? <PostCard post={expert} highlight="expert" {...shared} /> : null}
+      {others.map(post => <PostCard key={post.id} post={post} {...shared} />)}
+      {detail.posts.length < detail.count ? <Button variant="outlined" onClick={() => void loadMore()} disabled={loadingMore} sx={{ mt: 2 }}>
+        {loadingMore ? "Loading…" : `Show more (${detail.count - detail.posts.length})`}
+      </Button> : null}
+    </Box>
+
+    <Box component="section" aria-label={question ? "Your answer" : "Your reply"} sx={{ mt: 4, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
+      {thread.locked ? <Typography sx={{ color: "brand.navySoft" }}>This thread is closed to new replies.</Typography>
+        : community.loading ? <Skeleton variant="rounded" height={150} />
+          : !community.signedIn ? <Box sx={{ p: { xs: 2.5, md: 3 }, bgcolor: "brand.mintWash", borderRadius: 2, display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
+            <Typography sx={{ fontSize: 16, color: "brand.navySoft", lineHeight: 1.7 }}>Sign in to your Vetud account to {question ? "answer" : "reply"}, vote and report.</Typography>
+            <ButtonLink href="/account" variant="contained" sx={{ flexShrink: 0 }}>Sign in</ButtonLink>
+          </Box>
+            : !community.profile ? <JoinCommunity suggested={community.suggested} onJoined={community.setProfile} />
+              : community.profile.status !== "active" ? <Alert severity="info">Your community account can&apos;t post right now. Contact us if you think this is a mistake.</Alert>
+                : <ReplyForm threadId={thread.id} profile={community.profile} question={question} onPosted={post => {
+                  setDetail(current => current && ({ ...current, posts: [...current.posts, post], count: current.count + (post.status === "published" ? 1 : 0) }))
+                  if (post.status === "published") refresh()
+                }} />}
+    </Box>
+  </Box>
+}

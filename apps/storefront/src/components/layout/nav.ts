@@ -3,6 +3,7 @@ export const NAV_LABEL_KEYS = {
   "/learn": "learn",
   "/news": "news",
   "/videos": "videos",
+  "/community": "community",
   "/shop": "shop",
   "/standards": "standards",
   "/documentation": "documentation",
@@ -17,6 +18,7 @@ export const NAV_LINKS: { label: string; href: NavHref }[] = [
   { label: "Learn", href: "/learn" },
   { label: "News", href: "/news" },
   { label: "Videos", href: "/videos" },
+  { label: "Community", href: "/community" },
   { label: "Shop", href: "/shop" },
 ]
 

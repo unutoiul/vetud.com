@@ -16,6 +16,7 @@ import { useCallback, useEffect, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { parseLots, readProductMeta, type ProductLot } from "@/lib/product"
 import { AppLink } from "../common/links"
+import LotReportsLink from "../community/LotReportsLink"
 import ProductThumb from "../product/ProductThumb"
 
 type Match = { product: HttpTypes.StoreProduct; lot: ProductLot }
@@ -143,6 +144,7 @@ export default function LotLookup() {
                         <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>Request COA</AppLink>
                       )}
                     </Typography>
+                    <LotReportsLink lot={lot.lot} />
                   </Box>
                 </Paper>
               </Grid>

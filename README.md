@@ -100,6 +100,36 @@ Migration `vetud-product-16-research-categories` creates the eight active/public
 2. When the transfer arrives: **Admin → Orders → (order) → Payment → Capture**.
 3. **Create fulfillment**, then **Mark as shipped** with the tracking number. The customer gets the "shipped" email with tracking.
 
+### Community (`/community`)
+
+A public forum. Anyone can read it, and customers with an account can post once they choose a community name and accept the guidelines (`/community/guidelines`). Its data lives in the `forum` backend module, and the UI is in `apps/storefront/src/components/community`.
+
+- **Thread types**: research logs, questions and discussions.
+  - A research log is structured. It names the peptide and records measurements (body weight, waist, 0–10 scores and so on) at week 0 and later check-ins.
+  - Logs never include doses.
+  - Members agree to publish a log's measurements before it goes live.
+- **Moderation**:
+  - Posts that mention a dose amount wait for review, and so do links from members below the Contributor level.
+  - Three reports hide a post until staff review it.
+  - Staff review posts in **Admin → Community → Review queue**. Approving a post also dismisses its reports. Removing a post costs the author 10 reputation points.
+- **Community charts**:
+  - Each peptide page has a "What members report" section. It shows the median change from published logs for each measure, once at least 5 logs report that measure.
+  - Weight-loss peptides also show members next to their published trials.
+  - Staff can leave a log out of the charts from **Admin → Community → Threads**.
+- **Lots and buyers**:
+  - A post can name a product and lot. The lot has to exist in the product's `lots` metadata.
+  - A **Verified buyer** badge appears when the author has a paid (captured), non-canceled order for that product.
+  - The lot register, product lot tables and lot lookup show how many member reports mention each lot.
+- **Experts and reputation**:
+  - Make someone an Expert (credentials are required) or a Moderator in **Admin → Community → Members**. You can also mute or ban members there.
+  - Experts' answers are badged, and the most helpful one is pinned under the best answer. Moderators can choose the best answer on any question.
+  - Reputation counts +2 per helpful vote, +15 per best answer and +5 per published log. Levels are Contributor at 25 points, Trusted member at 100 and Community lead at 300.
+- **Rate limits**: one new thread per member every 2 minutes, and one reply or check-in every 20 seconds.
+
+The forum pages are cached for a few minutes. Posting refreshes them through the `revalidateCommunity` Server Action.
+
+Check the helpers with `TEST_TYPE=unit npx jest src/lib/__tests__/forum.unit.spec.ts` from `apps/backend` (use Git Bash on Windows).
+
 ---
 
 ## Emails (Resend)

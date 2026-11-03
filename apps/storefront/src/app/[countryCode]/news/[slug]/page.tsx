@@ -7,6 +7,7 @@ import { Suspense } from "react"
 import { AppLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 import ArticleCard from "@/components/learn/ArticleCard"
+import ArticleComments from "@/components/learn/ArticleComments"
 import ResearchCatalog from "@/components/learn/ResearchCatalog"
 import RichText from "@/components/learn/RichText"
 import { ArticleJsonLd, ReadingHeader, ReadingLayout, ReadingSection, readingProse } from "@/components/learn/ReadingLayout"
@@ -51,7 +52,7 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
     { id: "meaning", label: "What it means" }, { id: "unknowns", label: "What we don’t know" },
     ...(peptides.length ? [{ id: "related-guides", label: "Related peptide guides" }] : []),
     { id: "videos", label: "Watch and learn" }, { id: "sources", label: "Sources and references" },
-    { id: "research-shop", label: "Related research products" },
+    { id: "research-shop", label: "Related research products" }, { id: "comments", label: "Comments" },
   ]
   const data = articleStructuredData({ title, description: article.dek, path: `/news/${article.slug}`, image, sources: article.sources, text,
     breadcrumbs: [{ name: "Home", path: "" }, { name: "News and articles", path: "/news" }, { name: title, path: `/news/${article.slug}` }],
@@ -89,6 +90,7 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
           <Typography sx={{ mt: 3, fontSize: 14, lineHeight: 1.8, color: "brand.navySoft" }}>{LEARN_DISCLAIMER}</Typography>
         </ReadingSection>
         <Box id="research-shop" sx={{ scrollMarginTop: 8 }}><ResearchCatalog peptides={article.peptides} /></Box>
+        <ReadingSection id="comments" title="Comments"><ArticleComments article={article.slug} /></ReadingSection>
       </ReadingLayout>
     </Box>
     <Section tone="paper" sx={{ py: { xs: 5, md: 7 }, borderTop: "1px solid", borderColor: "divider" }}>

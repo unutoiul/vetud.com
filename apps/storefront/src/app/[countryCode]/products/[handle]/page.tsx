@@ -23,6 +23,7 @@ import PurchasePanel from "@/components/product/PurchasePanel"
 import { matchesPeptide } from "@/lib/learn-products"
 import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
+import { getLotReportCounts } from "@/lib/medusa/forum"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
 import { readProductMeta, sortedVariants, sortProducts } from "@/lib/product"
 import { getProductImages, getProductPhotography } from "@/lib/product-images"
@@ -86,6 +87,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
   if (!product || !region) notFound()
 
   const meta = readProductMeta(product)
+  const lotReports = meta.lots.length ? await getLotReportCounts(meta.lots.map(lot => lot.lot)).catch(() => undefined) : undefined
   const profile = getProductResearch(handle)
   const category = product.categories?.[0]
   const related = sortProducts(await listProducts({ regionId: region.id, categoryId: category?.id }), "featured")
@@ -185,7 +187,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </Grid>
 
         <Box>
-          <ProductDossier profile={profile} description={product.description} specs={specs} meta={meta} title={product.title} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
+          <ProductDossier profile={profile} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
         </Box>
       </Section>
 
