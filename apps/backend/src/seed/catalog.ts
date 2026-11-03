@@ -15,7 +15,6 @@ export const REGIONS = [
 ] as const
 
 export const SHIPPING = {
-  freeShippingThreshold: { usd: 200, eur: 200 },
   standard: { usd: 9.95, eur: 12 },
   express: { usd: 24.95, eur: 29 },
 }

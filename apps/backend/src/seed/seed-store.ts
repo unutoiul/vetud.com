@@ -198,23 +198,10 @@ export async function seedVetudStore(container: MedusaContainer) {
           shipping_profile_id: shippingProfileId!,
           type: {
             label: "Standard",
-            description: `3–5 business days. Free over ${SHIPPING.freeShippingThreshold[currency]} ${currency.toUpperCase()}.`,
+            description: "3–5 business days.",
             code: "standard",
           },
-          prices: [
-            { currency_code: currency, amount: SHIPPING.standard[currency], rules: [] },
-            {
-              currency_code: currency,
-              amount: 0,
-              rules: [
-                {
-                  attribute: "item_total",
-                  operator: "gte" as const,
-                  value: SHIPPING.freeShippingThreshold[currency],
-                },
-              ],
-            },
-          ],
+          prices: [{ currency_code: currency, amount: SHIPPING.standard[currency] }],
           rules: storeRules,
         },
         {

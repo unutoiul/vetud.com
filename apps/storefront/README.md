@@ -11,4 +11,4 @@ Setup and deployment are documented in the [root README](../../README.md).
 | `src/components/store/StoreProvider.tsx` | Client cart state (Medusa JS SDK, cart id in localStorage) |
 | `src/components/checkout/` | 4-step checkout and order confirmation |
 | `src/content/legal.ts` | Legal page templates (placeholders to replace) |
-| `src/lib/config.ts` | Site constants: email, free-shipping thresholds, fallback countries |
+| `src/lib/config.ts` | Site constants: email, fallback countries |

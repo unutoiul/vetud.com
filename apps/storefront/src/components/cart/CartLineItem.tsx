@@ -6,7 +6,7 @@ import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { formatMoney, readProductMeta } from "@/lib/product"
 import { getProductThumbnail } from "@/lib/product-images"
 import { LocalizedNextLink } from "../common/links"
@@ -23,6 +23,7 @@ type CartLineItemProps = {
 
 export default function CartLineItem({ item, currencyCode, readOnly, onNavigate }: CartLineItemProps) {
   const locale = useLocale()
+  const t = useTranslations("Checkout")
   const { updateItem, removeItem, pending } = useStore()
   const meta = readProductMeta({
     title: item.product_title ?? item.title,
@@ -77,7 +78,7 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
         </Stack>
         {readOnly ? (
           <Typography variant="body2" sx={{ mt: 1, color: "text.secondary" }}>
-            Qty {item.quantity}
+            {t("qty", { count: item.quantity })}
           </Typography>
         ) : (
           <Stack direction="row" spacing={1} sx={{ mt: 1.5, alignItems: "center" }}>

@@ -9,11 +9,12 @@ import Button from "@mui/material/Button"
 import CircularProgress from "@mui/material/CircularProgress"
 import Typography from "@mui/material/Typography"
 import { LockIcon } from "@/components/brand/Icon"
-import { getStripe, stripeSandbox } from "@/lib/stripe"
+import { getStripe, stripeSandbox, type StripeBillingDetails } from "@/lib/stripe"
 
 type Props = {
   clientSecret: string
   amountLabel: string
+  billingDetails: StripeBillingDetails
   busy: boolean
   /** Runs the checkout; `confirm` charges the card and throws if Stripe declines it. */
   onPay: (confirm: () => Promise<void>) => Promise<void>
@@ -41,7 +42,7 @@ export default function StripePaymentForm(props: Props) {
   )
 }
 
-function CardForm({ amountLabel, busy, onPay }: Props) {
+function CardForm({ amountLabel, billingDetails, busy, onPay }: Props) {
   const stripe = useStripe()
   const elements = useElements()
   const [fieldError, setFieldError] = useState<string | null>(null)
@@ -87,7 +88,7 @@ function CardForm({ amountLabel, busy, onPay }: Props) {
           Stripe sandbox: no real charge. Use test card 4242 4242 4242 4242, any future expiry and any CVC.
         </Alert>
       ) : null}
-      <PaymentElement options={{ layout: "tabs" }} />
+      <PaymentElement options={{ layout: "tabs", defaultValues: { billingDetails } }} />
       {fieldError ? (
         <Typography role="alert" variant="body2" sx={{ color: "error.main", mt: 1.5 }}>
           {fieldError}

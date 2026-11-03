@@ -7,7 +7,6 @@ import {
   updateStoresWorkflow,
 } from "@medusajs/medusa/core-flows"
 import { BASE_CURRENCY, CONVERTED_MARKETS, EUROZONE_COUNTRIES } from "../lib/currencies"
-import { SHIPPING } from "./catalog"
 
 type RegionRow = {
   id: string
@@ -36,15 +35,14 @@ const PLUGIN_PRICE_WORKFLOW = "update-prices-with-exchange-rates"
 
 /**
  * Brings the store up to the European multi-currency setup. Idempotent, and never overwrites
- * prices or thresholds that already exist.
+ * prices that already exist.
  *  1. Every eurozone country is in the EUR region.
  *  2. EUR is the store's default currency (the currency plugin converts from it) and every
  *     converted currency is supported.
  *  3. Each currency in CONVERTED_MARKETS has its own region.
  *  4. New countries get tax regions and join the European shipping zone.
  *  5. The currency plugin is enabled (auto rates) for each converted currency.
- *  6. European shipping options get a one-time price per currency, and every region gets a
- *     `free_shipping_threshold` in its metadata. Adjust either in Admin afterwards.
+ *  6. European shipping options get a one-time price per currency. Adjust them in Admin afterwards.
  *  7. The plugin converts all product prices once, right away.
  */
 export async function ensureEuropeanMarkets(container: MedusaContainer) {
@@ -179,9 +177,8 @@ export async function ensureEuropeanMarkets(container: MedusaContainer) {
     }
   }
 
-  // 6. Shipping prices and free-shipping thresholds in each converted currency.
+  // 6. Shipping prices in each converted currency.
   await addShippingPrices(container, rates)
-  await addFreeShippingThresholds(container, rates)
 
   // 7. Convert all product prices now (the plugin's nightly job keeps them current).
   try {
@@ -203,7 +200,7 @@ async function findEuropeZone(container: MedusaContainer, euroRegion: RegionRow)
 
 /**
  * Gives every shipping option that has EUR prices a matching price in each converted currency
- * (whole units, like the plugin), including the "free over X" rule. Existing prices are kept,
+ * (whole units, like the plugin), including any cart-total rules. Existing prices are kept,
  * so edits made in Admin survive. The plugin only converts product prices, not shipping.
  */
 async function addShippingPrices(container: MedusaContainer, rates: Record<string, number>) {
@@ -232,7 +229,7 @@ async function addShippingPrices(container: MedusaContainer, rates: Record<strin
       .flatMap(({ currency }) =>
         euro.map((price) => {
           const rate = rates[currency]
-          // Cart-total thresholds ("free over 200 EUR") are converted and rounded up.
+          // Cart-total thresholds are converted and rounded up.
           const rules = Object.fromEntries(
             (price.price_rules ?? []).map((rule) => [
               rule.attribute,
@@ -255,27 +252,5 @@ async function addShippingPrices(container: MedusaContainer, rates: Record<strin
     if (toAdd.length) {
       await pricing.addPrices({ priceSetId: priceSet.id, prices: toAdd })
     }
-  }
-}
-
-/** Stores the free-shipping threshold on each region for the storefront's banner and progress bar. */
-async function addFreeShippingThresholds(container: MedusaContainer, rates: Record<string, number>) {
-  const regionModule = container.resolve(Modules.REGION)
-  const regions = await regionModule.listRegions({}, { select: ["id", "currency_code", "metadata"] })
-  const base = SHIPPING.freeShippingThreshold
-
-  for (const region of regions) {
-    if (region.metadata?.free_shipping_threshold !== undefined) continue
-    const currency = region.currency_code
-    const threshold =
-      currency in base
-        ? base[currency as keyof typeof base]
-        : rates[currency] > 0
-          ? Math.ceil(base.eur * rates[currency])
-          : undefined
-    if (threshold === undefined) continue
-    await regionModule.updateRegions(region.id, {
-      metadata: { ...(region.metadata ?? {}), free_shipping_threshold: threshold },
-    })
   }
 }

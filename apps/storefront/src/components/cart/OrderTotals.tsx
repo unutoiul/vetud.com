@@ -3,7 +3,7 @@
 import Divider from "@mui/material/Divider"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { formatMoney } from "@/lib/product"
 
 type Totals = {
@@ -35,6 +35,7 @@ function Row({ label, value, strong }: { label: string; value: string; strong?: 
 
 export default function OrderTotals({ totals, shippingKnown }: OrderTotalsProps) {
   const locale = useLocale()
+  const t = useTranslations("Checkout")
   const currency = totals.currency_code
   const shipping = Number(totals.shipping_subtotal ?? totals.shipping_total ?? 0)
   const discount = Number(totals.discount_total ?? 0)
@@ -42,15 +43,15 @@ export default function OrderTotals({ totals, shippingKnown }: OrderTotalsProps)
 
   return (
     <Stack>
-      <Row label="Subtotal" value={formatMoney(Number(totals.item_subtotal ?? totals.item_total ?? 0), currency, { locale })} />
+      <Row label={t("subtotal")} value={formatMoney(Number(totals.item_subtotal ?? totals.item_total ?? 0), currency, { locale })} />
       <Row
-        label="Shipping"
-        value={shippingKnown ? (shipping === 0 ? "Free" : formatMoney(shipping, currency, { locale })) : "Calculated at checkout"}
+        label={t("shippingCost")}
+        value={shippingKnown ? (shipping === 0 ? t("free") : formatMoney(shipping, currency, { locale })) : t("shippingPending")}
       />
-      {discount > 0 ? <Row label="Discount" value={`−${formatMoney(discount, currency, { locale })}`} /> : null}
-      {tax > 0 ? <Row label="Tax" value={formatMoney(tax, currency, { locale })} /> : null}
+      {discount > 0 ? <Row label={t("discount")} value={`−${formatMoney(discount, currency, { locale })}`} /> : null}
+      {tax > 0 ? <Row label={t("tax")} value={formatMoney(tax, currency, { locale })} /> : null}
       <Divider sx={{ my: 1.5 }} />
-      <Row label={shippingKnown ? "Total" : "Estimated total"} value={formatMoney(Number(totals.total ?? 0), currency, { locale })} strong />
+      <Row label={shippingKnown ? t("total") : t("estimatedTotal")} value={formatMoney(Number(totals.total ?? 0), currency, { locale })} strong />
     </Stack>
   )
 }

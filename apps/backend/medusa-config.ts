@@ -197,12 +197,18 @@ if (process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET) {
     },
   } as ModuleConfig)
 }
-// Stripe card checkout (pp_stripe_stripe); src/api/stripe-session.ts limits intents to cards.
+// Stripe checkout (pp_stripe_stripe); methods are managed in Stripe's Dashboard.
 // Sandbox keys only unless STRIPE_ENVIRONMENT=live.
 const STRIPE_API_KEY = process.env.STRIPE_API_KEY
 if (STRIPE_API_KEY) {
+  if (!/^(sk|rk)_(test|live)_\S+$/.test(STRIPE_API_KEY)) {
+    throw new MedusaError(MedusaError.Types.INVALID_DATA, "STRIPE_API_KEY must be a Stripe restricted or secret API key.")
+  }
   if (!/^(sk|rk)_test_/.test(STRIPE_API_KEY) && process.env.STRIPE_ENVIRONMENT !== "live") {
     throw new MedusaError(MedusaError.Types.INVALID_DATA, "STRIPE_API_KEY is not a test-mode key. Use a sandbox key, or set STRIPE_ENVIRONMENT=live on purpose.")
+  }
+  if ((process.env.NODE_ENV === "production" || /^(sk|rk)_live_/.test(STRIPE_API_KEY)) && !process.env.STRIPE_WEBHOOK_SECRET) {
+    throw new MedusaError(MedusaError.Types.INVALID_DATA, "Set STRIPE_WEBHOOK_SECRET before deploying Stripe checkout so payment updates can be verified.")
   }
   paymentProviders.push({
     resolve: "@medusajs/medusa/payment-stripe",
@@ -210,6 +216,8 @@ if (STRIPE_API_KEY) {
     options: {
       apiKey: STRIPE_API_KEY,
       webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+      automaticPaymentMethods: true,
+      paymentMethodConfiguration: process.env.STRIPE_PAYMENT_METHOD_CONFIGURATION || undefined,
       // Authorize at checkout and capture from Admin, unless STRIPE_CAPTURE=true.
       capture: process.env.STRIPE_CAPTURE === "true",
       paymentDescription: "Vetud Peptides order",
