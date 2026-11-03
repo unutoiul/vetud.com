@@ -15,11 +15,9 @@ import { getPeptide } from "@/content/learn/peptides"
 import { useAccount } from "../account/AccountProvider"
 import { AppLink, ButtonLink, useLocalizedHref } from "../common/links"
 import { AuthorLine, Pill } from "./Badges"
-import CheckInForm from "./CheckInForm"
 import JoinCommunity from "./JoinCommunity"
 import PostCard from "./PostCard"
 import ReplyForm from "./ReplyForm"
-import ResearchLogSummary from "./ResearchLogSummary"
 import { useCommunityProfile } from "./useCommunityProfile"
 
 const PAGE_SIZE = 100
@@ -67,7 +65,7 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
     const accepted = detail.accepted
     // The most helpful expert reply that isn't already the best answer is pinned under it.
     const expertReply = [...detail.posts]
-      .filter(post => post.author.role === "expert" && post.id !== accepted?.id && post.kind === "post")
+      .filter(post => post.author.role === "expert" && post.id !== accepted?.id)
       .sort((a, b) => b.helpful_count - a.helpful_count)[0] ?? null
     return {
       highlighted: accepted,
@@ -87,13 +85,12 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
     </Box>
   }
 
-  const { thread, opening, measurements, viewer } = detail
+  const { thread, opening, viewer } = detail
   const peptide = thread.peptide_slug ? getPeptide(thread.peptide_slug) : undefined
   const canInteract = Boolean(community.profile && community.profile.status === "active")
   const question = thread.kind === "question"
   const shared = {
     thread,
-    measurements,
     canInteract,
     canAccept: viewer.can_accept,
     onChange: (post: ForumPost) => { updatePost(post); refresh() },
@@ -130,7 +127,7 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
 
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: .75, mb: 1.5 }}>
       {thread.pinned ? <Pill tone="moderator">Pinned</Pill> : null}
-      <Pill tone={thread.kind === "research_log" ? "verified" : thread.kind === "question" ? "expert" : "neutral"}>{KIND_LABELS[thread.kind]}</Pill>
+      <Pill tone={thread.kind === "question" ? "expert" : "neutral"}>{KIND_LABELS[thread.kind]}</Pill>
       {question && thread.accepted_post_id ? <Pill tone="accepted" icon="check">Answered</Pill> : null}
       {thread.locked ? <Pill>Closed</Pill> : null}
     </Box>
@@ -141,7 +138,6 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
     </Box>
     {peptide || thread.product_handle || thread.lot ? <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", gap: 1, "& a": { display: "inline-flex", alignItems: "center", minHeight: 36, px: 1.5, border: "1px solid", borderColor: "divider", borderRadius: 999, fontSize: 13.5, bgcolor: "#fff" } }}>
       {peptide ? <AppLink href={`/learn/${peptide.slug}`} underline="none">About {peptide.name}</AppLink> : null}
-      {thread.other_peptides.flatMap(slug => getPeptide(slug) ?? []).map(other => <AppLink key={other.slug} href={`/learn/${other.slug}`} underline="none">+ {other.name}</AppLink>)}
       {thread.lot ? <AppLink href={`/documentation?lot=${encodeURIComponent(thread.lot)}`} underline="none">Lot {thread.lot} · batch record</AppLink> : null}
     </Box> : null}
 
@@ -149,15 +145,7 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
       <strong>Only you can see this thread for now.</strong> {HOLD_MESSAGES[thread.hold_reason ?? ""] ?? "A moderator will review it."}
     </Alert> : null}
 
-    {thread.kind === "research_log" && measurements.length ? <Box sx={{ mt: 3 }}>
-      <ResearchLogSummary measurements={measurements} units={thread.unit_system} sideEffects={thread.side_effects} author={thread.author.display_name} />
-    </Box> : null}
-
     <Box sx={{ mt: 1 }}><PostCard post={opening} {...shared} /></Box>
-
-    {thread.kind === "research_log" && thread.mine && !thread.locked ? <Box sx={{ mt: 1, mb: 3 }}>
-      <CheckInForm thread={thread} measurements={measurements} onAdded={updated => { setDetail(updated); refresh() }} />
-    </Box> : null}
 
     <Box component="section" aria-labelledby="replies-heading" sx={{ mt: 4 }}>
       <Typography id="replies-heading" component="h2" sx={{ fontSize: 22, fontWeight: 650, mb: 1 }}>

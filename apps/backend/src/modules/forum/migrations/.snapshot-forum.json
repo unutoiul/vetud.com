@@ -22,8 +22,8 @@
           "enumItems": [],
           "mappedType": "text"
         },
-        "thread_id": {
-          "name": "thread_id",
+        "author_id": {
+          "name": "author_id",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
@@ -54,8 +54,8 @@
           "enumItems": [],
           "mappedType": "text"
         },
-        "metric": {
-          "name": "metric",
+        "file_id": {
+          "name": "file_id",
           "type": "text",
           "unsigned": false,
           "autoincrement": false,
@@ -70,9 +70,9 @@
           "enumItems": [],
           "mappedType": "text"
         },
-        "week": {
-          "name": "week",
-          "type": "integer",
+        "url": {
+          "name": "url",
+          "type": "text",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -84,23 +84,7 @@
           "default": null,
           "comment": null,
           "enumItems": [],
-          "mappedType": "integer"
-        },
-        "value": {
-          "name": "value",
-          "type": "real",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "float"
+          "mappedType": "text"
         },
         "created_at": {
           "name": "created_at",
@@ -151,29 +135,38 @@
           "mappedType": "datetime"
         }
       },
-      "name": "forum_log_measurement",
+      "name": "forum_image",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "IDX_forum_log_measurement_deleted_at",
+          "keyName": "IDX_forum_image_author_id",
           "columnNames": [],
           "composite": false,
           "constraint": false,
           "primary": false,
           "unique": false,
-          "expression": "CREATE INDEX IF NOT EXISTS \"IDX_forum_log_measurement_deleted_at\" ON \"forum_log_measurement\" (\"deleted_at\") WHERE deleted_at IS NULL"
+          "expression": "CREATE INDEX IF NOT EXISTS \"IDX_forum_image_author_id\" ON \"forum_image\" (\"author_id\") WHERE deleted_at IS NULL"
         },
         {
-          "keyName": "IDX_forum_log_measurement_thread_metric_week",
+          "keyName": "IDX_forum_image_post_id",
           "columnNames": [],
           "composite": false,
           "constraint": false,
           "primary": false,
           "unique": false,
-          "expression": "CREATE UNIQUE INDEX IF NOT EXISTS \"IDX_forum_log_measurement_thread_metric_week\" ON \"forum_log_measurement\" (\"thread_id\", \"metric\", \"week\") WHERE deleted_at IS NULL"
+          "expression": "CREATE INDEX IF NOT EXISTS \"IDX_forum_image_post_id\" ON \"forum_image\" (\"post_id\") WHERE deleted_at IS NULL"
         },
         {
-          "keyName": "forum_log_measurement_pkey",
+          "keyName": "IDX_forum_image_deleted_at",
+          "columnNames": [],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false,
+          "expression": "CREATE INDEX IF NOT EXISTS \"IDX_forum_image_deleted_at\" ON \"forum_image\" (\"deleted_at\") WHERE deleted_at IS NULL"
+        },
+        {
+          "keyName": "forum_image_pkey",
           "columnNames": [
             "id"
           ],
@@ -268,41 +261,6 @@
           "comment": null,
           "enumItems": [],
           "mappedType": "boolean"
-        },
-        "kind": {
-          "name": "kind",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": "'post'",
-          "comment": null,
-          "enumItems": [
-            "post",
-            "check_in"
-          ],
-          "mappedType": "enum"
-        },
-        "week": {
-          "name": "week",
-          "type": "integer",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "integer"
         },
         "status": {
           "name": "status",
@@ -972,8 +930,7 @@
           "comment": null,
           "enumItems": [
             "discussion",
-            "question",
-            "research_log"
+            "question"
           ],
           "mappedType": "enum"
         },
@@ -1040,22 +997,6 @@
           "comment": null,
           "enumItems": [],
           "mappedType": "text"
-        },
-        "other_peptides": {
-          "name": "other_peptides",
-          "type": "text[]",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "array"
         },
         "product_handle": {
           "name": "product_handle",
@@ -1237,57 +1178,6 @@
           "comment": null,
           "enumItems": [],
           "mappedType": "datetime"
-        },
-        "unit_system": {
-          "name": "unit_system",
-          "type": "text",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": "'metric'",
-          "comment": null,
-          "enumItems": [
-            "metric",
-            "imperial"
-          ],
-          "mappedType": "enum"
-        },
-        "side_effects": {
-          "name": "side_effects",
-          "type": "text[]",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": true,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": null,
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "array"
-        },
-        "exclude_from_insights": {
-          "name": "exclude_from_insights",
-          "type": "boolean",
-          "unsigned": false,
-          "autoincrement": false,
-          "primary": false,
-          "nullable": false,
-          "unique": false,
-          "length": null,
-          "precision": null,
-          "scale": null,
-          "default": "false",
-          "comment": null,
-          "enumItems": [],
-          "mappedType": "boolean"
         },
         "created_at": {
           "name": "created_at",

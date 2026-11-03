@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { AppLink } from "../common/links"
 
-/** "3 member reports on this lot" (or a prompt to add one), for the lot lookup result. */
+/** "3 member reports on this lot", for the lot lookup result. Nothing when there are none. */
 export default function LotReportsLink({ lot }: { lot: string }) {
   const [count, setCount] = useState<number | null>(null)
 
@@ -17,10 +17,9 @@ export default function LotReportsLink({ lot }: { lot: string }) {
     return () => { cancelled = true }
   }, [lot])
 
-  if (count === null) return null
+  // Posts no longer name lots, so only lots with earlier reports link anywhere.
+  if (!count) return null
   return <Typography variant="body2" sx={{ mt: 0.5 }}>
-    {count
-      ? <AppLink href={`/community?lot=${encodeURIComponent(lot)}`}>{count} member {count === 1 ? "report" : "reports"} on this lot</AppLink>
-      : <AppLink href={`/community/new?lot=${encodeURIComponent(lot)}`}>Be the first to report on this lot</AppLink>}
+    <AppLink href={`/community?lot=${encodeURIComponent(lot)}`}>{count} member {count === 1 ? "report" : "reports"} on this lot</AppLink>
   </Typography>
 }

@@ -6,7 +6,7 @@ import { getPeptide } from "@/content/learn/peptides"
 import { formatForumDate, KIND_LABELS, plural, threadHref } from "@/lib/community/format"
 import type { ForumThread } from "@/lib/community/types"
 
-const KIND_TONES = { research_log: "verified", question: "expert", discussion: "neutral" } as const
+const KIND_TONES = { question: "expert", discussion: "neutral" } as const
 
 /** One row in a thread list: kind, title, excerpt, what it's about, who wrote it and activity. */
 export default function ThreadCard({ thread }: { thread: ForumThread }) {
@@ -18,7 +18,7 @@ export default function ThreadCard({ thread }: { thread: ForumThread }) {
         {thread.pinned ? <Pill tone="moderator">Pinned</Pill> : null}
         <Pill tone={KIND_TONES[thread.kind]}>{KIND_LABELS[thread.kind]}</Pill>
         {answered ? <Pill tone="accepted" icon="check">Answered</Pill> : null}
-        {peptide ? <Typography component="span" sx={{ fontSize: 13, color: "brand.navySoft" }}>{peptide.name}{thread.other_peptides.length ? ` + ${thread.other_peptides.length} more` : ""}</Typography> : null}
+        {peptide ? <Typography component="span" sx={{ fontSize: 13, color: "brand.navySoft" }}>{peptide.name}</Typography> : null}
         {thread.lot ? <Typography component="span" variant="mono" sx={{ fontSize: 12, color: "brand.navySoft" }}>Lot {thread.lot}</Typography> : null}
       </Box>
       <Typography component="h3" sx={{ fontSize: { xs: 18, md: 20 }, fontWeight: 650, lineHeight: 1.35, letterSpacing: "-.01em", textWrap: "pretty" }}>

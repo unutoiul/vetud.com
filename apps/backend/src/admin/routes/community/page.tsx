@@ -13,19 +13,18 @@ type Profile = {
   reputation: number
   status: "active" | "muted" | "banned"
 }
-type Post = { id: string; thread_id: string; body: string; is_opening: boolean; kind: string; status: string; hold_reason: string | null; created_at: string }
+type Post = { id: string; thread_id: string; body: string; is_opening: boolean; status: string; hold_reason: string | null; created_at: string }
 type Report = { id: string; reason: string; note: string | null }
-type QueueItem = { post: Post; thread: { id: string; title: string; kind: string } | null; author: Profile | null; reports: Report[] }
+type QueueItem = { post: Post; thread: { id: string; title: string; kind: string } | null; author: Profile | null; reports: Report[]; images: { id: string; url: string }[] }
 type Thread = {
   id: string
   title: string
-  kind: "discussion" | "question" | "research_log"
+  kind: "discussion" | "question"
   status: string
   reply_count: number
   helpful_count: number
   pinned: boolean
   locked: boolean
-  exclude_from_insights: boolean
   last_activity_at: string
   author: Profile | null
 }
@@ -36,9 +35,10 @@ const PAGE_SIZE = 50
 const HOLD_LABELS: Record<string, string> = {
   dose: "Contains a dose amount",
   link: "Link from a new member",
+  image: "Photos from a new member",
   reports: "Hidden after reports",
 }
-const KIND_LABELS: Record<string, string> = { discussion: "Discussion", question: "Question", research_log: "Research log" }
+const KIND_LABELS: Record<string, string> = { question: "Question", discussion: "Discussion" }
 const REASON_LABELS: Record<string, string> = { dose: "Dose", medical_claim: "Medical claim", spam: "Spam", abuse: "Abuse", other: "Other" }
 const STATUS_COLORS: Record<string, "green" | "orange" | "red" | "grey"> = { published: "green", pending: "orange", hidden: "red", removed: "grey" }
 
@@ -141,13 +141,20 @@ function QueueTab() {
             </Table.Cell>
             <Table.Cell className="max-w-[220px] py-3">
               {item.thread ? <a className="text-ui-fg-interactive" href={threadUrl(item.thread.id)} target="_blank" rel="noreferrer">{item.thread.title}</a> : "—"}
-              <Text size="xsmall" className="text-ui-fg-subtle">{item.post.is_opening ? "Opening post" : item.post.kind === "check_in" ? "Check-in" : "Reply"} · {new Date(item.post.created_at).toLocaleString()}</Text>
+              <Text size="xsmall" className="text-ui-fg-subtle">{item.post.is_opening ? "Opening post" : "Reply"} · {new Date(item.post.created_at).toLocaleString()}</Text>
             </Table.Cell>
             <Table.Cell className="py-3">
               {item.author ? <a className="text-ui-fg-interactive" href={`/app/customers/${item.author.customer_id}`}>{item.author.display_name}</a> : "Former member"}
               {item.author ? <Text size="xsmall" className="text-ui-fg-subtle">{item.author.reputation} points</Text> : null}
             </Table.Cell>
-            <Table.Cell className="max-w-[480px] whitespace-pre-wrap break-words py-3">{item.post.body}</Table.Cell>
+            <Table.Cell className="max-w-[480px] whitespace-pre-wrap break-words py-3">
+              {item.post.body}
+              {item.images?.length ? <div className="mt-2 flex flex-wrap gap-2">
+                {item.images.map(image => <a key={image.id} href={image.url} target="_blank" rel="noreferrer">
+                  <img src={image.url} alt="Member photo" className="h-24 w-24 rounded-md border object-cover" />
+                </a>)}
+              </div> : null}
+            </Table.Cell>
             <Table.Cell className="py-3">
               <div className="flex flex-col gap-2">
                 <Button size="small" onClick={() => void moderate(item, "approve")}>Approve</Button>
@@ -186,7 +193,7 @@ function ThreadsTab() {
 
   useEffect(() => { void load() }, [load])
 
-  const update = async (thread: Thread, changes: Partial<Pick<Thread, "pinned" | "locked" | "exclude_from_insights">>) => {
+  const update = async (thread: Thread, changes: Partial<Pick<Thread, "pinned" | "locked">>) => {
     try {
       await adminFetch(`/admin/forum/threads/${encodeURIComponent(thread.id)}`, { method: "POST", body: JSON.stringify(changes) })
       setThreads(current => current.map(entry => entry.id === thread.id ? { ...entry, ...changes } : entry))
@@ -215,7 +222,6 @@ function ThreadsTab() {
           <Table.HeaderCell>Replies</Table.HeaderCell>
           <Table.HeaderCell>Pinned</Table.HeaderCell>
           <Table.HeaderCell>Locked</Table.HeaderCell>
-          <Table.HeaderCell>In charts</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -229,11 +235,6 @@ function ThreadsTab() {
             <Table.Cell>{thread.reply_count}</Table.Cell>
             <Table.Cell><Switch aria-label="Pinned" checked={thread.pinned} onCheckedChange={checked => void update(thread, { pinned: checked })} /></Table.Cell>
             <Table.Cell><Switch aria-label="Locked" checked={thread.locked} onCheckedChange={checked => void update(thread, { locked: checked })} /></Table.Cell>
-            <Table.Cell>
-              {thread.kind === "research_log"
-                ? <Switch aria-label="Counted in community charts" checked={!thread.exclude_from_insights} onCheckedChange={checked => void update(thread, { exclude_from_insights: !checked })} />
-                : <Text size="xsmall" className="text-ui-fg-muted">—</Text>}
-            </Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

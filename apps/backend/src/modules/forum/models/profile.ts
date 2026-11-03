@@ -14,7 +14,7 @@ const ForumProfile = model.define("forum_profile", {
   // Shown next to an expert's name, e.g. "MD, endocrinology".
   credentials: model.text().nullable(),
   bio: model.text().nullable(),
-  // Recounted from votes, best answers, logs and removals (src/lib/forum/reputation.ts).
+  // Recounted from votes, best answers and removals (src/lib/forum/reputation.ts).
   reputation: model.number().default(0),
   status: model.enum(["active", "muted", "banned"]).default("active"),
   guidelines_accepted_at: model.dateTime(),

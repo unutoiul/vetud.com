@@ -50,8 +50,8 @@ export const moderateForumPostWorkflow = createWorkflow(
   }
 )
 
-type UpdateForumThreadInput = { thread_id: string; pinned?: boolean; locked?: boolean; exclude_from_insights?: boolean }
-type ThreadFlags = Pick<ThreadRecord, "pinned" | "locked" | "exclude_from_insights">
+type UpdateForumThreadInput = { thread_id: string; pinned?: boolean; locked?: boolean }
+type ThreadFlags = Pick<ThreadRecord, "pinned" | "locked">
 
 const updateForumThreadStep = createStep(
   "update-forum-thread",
@@ -59,7 +59,7 @@ const updateForumThreadStep = createStep(
     const service = forumService(container)
     const thread = await findThread(service, input.thread_id)
     const { thread_id, ...changes } = input
-    const previous: ThreadFlags = { pinned: thread.pinned, locked: thread.locked, exclude_from_insights: thread.exclude_from_insights }
+    const previous: ThreadFlags = { pinned: thread.pinned, locked: thread.locked }
     const updated = await service.updateForumThreads({ id: thread_id, ...changes })
     return new StepResponse(updated, { id: thread_id, previous })
   },
@@ -69,7 +69,7 @@ const updateForumThreadStep = createStep(
   }
 )
 
-/** Pins, locks, or leaves a research log out of the community charts. */
+/** Pins or locks a thread. */
 export const updateForumThreadWorkflow = createWorkflow(
   "update-forum-thread",
   function (input: UpdateForumThreadInput) {

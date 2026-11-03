@@ -11,33 +11,31 @@ import CommunityDisclaimer from "@/components/community/CommunityDisclaimer"
 import ThreadCard from "@/components/community/ThreadCard"
 import ThreadFilters from "@/components/community/ThreadFilters"
 import { getPeptide } from "@/content/learn/peptides"
-import { KIND_LABELS, plural } from "@/lib/community/format"
+import { KIND_LABELS, plural, THREAD_KINDS } from "@/lib/community/format"
 import { communityMetadata } from "@/lib/community/seo"
-import type { ThreadFilters as Filters, ThreadKind } from "@/lib/community/types"
+import type { ThreadFilters as Filters } from "@/lib/community/types"
 import { getForumStats, listForumThreads } from "@/lib/medusa/forum"
 
 export const metadata = communityMetadata({
   path: "/community",
-  title: "Peptide Research Community: Logs, Questions and Expert Answers",
-  description: "Structured research logs without doses, questions answered by verified experts, and member reports linked to documented lots.",
+  title: "Peptide Research Community: Questions, Discussions and Expert Answers",
+  description: "Questions answered by verified experts and open discussions about peptide research, without doses.",
 })
 
 const PAGE_SIZE = 20
-const KINDS: ThreadKind[] = ["research_log", "question", "discussion"]
 
 const FEATURES: { icon: IconName; title: string; text: string }[] = [
-  { icon: "sliders", title: "Structured research logs", text: "Members log measurements, never doses. Logs add up into charts shown next to the published trials." },
-  { icon: "document", title: "Linked to real lots", text: "A post can name the lot printed on the pack, so each batch record shows what members report." },
+  { icon: "eye", title: "Photos with your posts", text: "Add up to four photos to a question, discussion or reply. Location data is removed before they're shown." },
   { icon: "shield", title: "Expert answers", text: "Doctors and researchers verified by our team answer questions. Their replies are badged and pinned." },
   { icon: "checkCircle", title: "Reputation that means something", text: "Helpful votes and best answers build each member's level, so useful voices are easy to find." },
 ]
 
 export default function CommunityPage({ searchParams }: PageProps<"/[countryCode]/community">) {
   return <>
-    <PageHeader eyebrow="Community" title="Research, logged in the open." description="Members share structured research logs, ask questions and compare notes on lots. No doses, no hype: measurements, sources and answers from verified experts.">
+    <PageHeader eyebrow="Community" title="Research, discussed in the open." description="Members ask questions and discuss the research. No doses, no hype: sources and answers from verified experts.">
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
         <ButtonLink href="/community/new" variant="contained" size="large">Start a thread</ButtonLink>
-        <ButtonLink href="/community/new?kind=research_log" variant="outlined" size="large">Start a research log</ButtonLink>
+        <ButtonLink href="/community/new?kind=question" variant="outlined" size="large">Ask a question</ButtonLink>
       </Box>
     </PageHeader>
     <Section tone="white" sx={{ py: { xs: 4, md: 6 } }}>
@@ -75,7 +73,7 @@ async function CommunityStats() {
   } catch {
     return null
   }
-  const items = [plural(stats.logs, "research log"), plural(stats.threads, "thread"), plural(stats.members, "member"), plural(stats.experts, "verified expert")]
+  const items = [plural(stats.threads, "thread"), plural(stats.members, "member"), plural(stats.experts, "verified expert")]
   return <Box component="ul" aria-label="Community at a glance" sx={{ listStyle: "none", m: 0, mb: { xs: 3, md: 4 }, p: 0, display: "flex", flexWrap: "wrap", columnGap: 3, rowGap: 1, fontSize: 14, color: "brand.navySoft", "& li strong": { color: "brand.navy", fontVariantNumeric: "tabular-nums" } }}>
     {items.map(item => { const [count, ...words] = item.split(" "); return <li key={item}><strong>{count}</strong> {words.join(" ")}</li> })}
   </Box>
@@ -83,7 +81,7 @@ async function CommunityStats() {
 
 function readFilters(params: Record<string, string | string[] | undefined>): Filters & { page: number } {
   const value = (key: string) => typeof params[key] === "string" ? params[key] as string : undefined
-  const kind = KINDS.find(entry => entry === value("kind"))
+  const kind = THREAD_KINDS.find(entry => entry === value("kind"))
   const sort = value("sort") === "top" || value("sort") === "unanswered" ? value("sort") as "top" | "unanswered" : "latest"
   const peptide = getPeptide(value("peptide") ?? "")?.slug
   const lot = value("lot")?.trim().toUpperCase().slice(0, 40) || undefined

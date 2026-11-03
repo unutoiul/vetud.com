@@ -1,16 +1,15 @@
 import type { MedusaContainer } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
-import { summarizeLogs, MIN_LOGS_FOR_INSIGHT } from "./insights"
 import {
   POST_FIELDS,
   PROFILE_FIELDS,
   THREAD_FIELDS,
   publicAuthor,
-  publicMeasurement,
   publicMember,
   publicPost,
   publicThread,
-  type MeasurementRecord,
+  type ImageRecord,
+  type PublicImage,
   type PostRecord,
   type ProfileRecord,
   type ThreadRecord,
@@ -42,6 +41,24 @@ export async function loadProfiles(container: MedusaContainer, ids: (string | nu
   if (!wanted.length) return new Map<string, ProfileRecord>()
   const { data } = await queryOf(container).graph({ entity: "forum_profile", fields: PROFILE_FIELDS, filters: { id: wanted } })
   return new Map((data as ProfileRecord[]).map(profile => [profile.id, profile]))
+}
+
+/** Each post's photos, oldest upload first. */
+export async function loadImages(container: MedusaContainer, postIds: (string | null | undefined)[]) {
+  const wanted = unique(postIds)
+  const byPost = new Map<string, PublicImage[]>()
+  if (!wanted.length) return byPost
+  const { data } = await queryOf(container).graph({
+    entity: "forum_image",
+    fields: ["id", "post_id", "url", "created_at"],
+    filters: { post_id: wanted },
+    pagination: { order: { created_at: "ASC" } },
+  })
+  for (const image of data as ImageRecord[]) {
+    if (!image.post_id) continue
+    byPost.set(image.post_id, [...(byPost.get(image.post_id) ?? []), { id: image.id, url: image.url }])
+  }
+  return byPost
 }
 
 export async function viewerProfile(container: MedusaContainer, customerId?: string | null) {
@@ -90,8 +107,7 @@ export async function listThreads(container: MedusaContainer, filters: ThreadFil
 }
 
 /**
- * One thread with its opening post, a page of replies (oldest first), the accepted answer and
- * every visible log measurement. Threads and replies waiting for review are only returned to
+ * One thread with its opening post, a page of replies (oldest first) and the accepted answer. Threads and replies waiting for review are only returned to
  * their author.
  */
 export async function threadDetail(container: MedusaContainer, id: string, viewer: ProfileRecord | null, page: { offset: number; limit: number }) {
@@ -105,8 +121,7 @@ export async function threadDetail(container: MedusaContainer, id: string, viewe
     ? { $or: [{ status: "published" }, { status: "pending", author_id: viewer.id }] }
     : { status: "published" }
   const replyFilters: Record<string, unknown> = { thread_id: id, is_opening: false, ...visible }
-  const checkInFilters: Record<string, unknown> = { thread_id: id, kind: "check_in", ...visible }
-  const [{ data: openings }, { data: replies, metadata }, { data: checkIns }, { data: measurements }] = await Promise.all([
+  const [{ data: openings }, { data: replies, metadata }] = await Promise.all([
     query.graph({ entity: "forum_post", fields: POST_FIELDS, filters: { thread_id: id, is_opening: true } }),
     query.graph({
       entity: "forum_post",
@@ -114,8 +129,6 @@ export async function threadDetail(container: MedusaContainer, id: string, viewe
       filters: replyFilters,
       pagination: { skip: page.offset, take: page.limit, order: { created_at: "ASC" } },
     }),
-    query.graph({ entity: "forum_post", fields: ["id"], filters: checkInFilters }),
-    query.graph({ entity: "forum_log_measurement", fields: ["id", "thread_id", "post_id", "metric", "week", "value"], filters: { thread_id: id } }),
   ])
   const opening = openings[0] as PostRecord | undefined
   if (!opening) return null
@@ -128,26 +141,21 @@ export async function threadDetail(container: MedusaContainer, id: string, viewe
   }
 
   const shownIds = unique([opening.id, ...posts.map(post => post.id), accepted?.id])
-  const [authors, voted] = await Promise.all([
+  const [authors, voted, images] = await Promise.all([
     loadProfiles(container, [thread.author_id, opening.author_id, accepted?.author_id, ...posts.map(post => post.author_id)]),
     viewer
       ? query.graph({ entity: "forum_vote", fields: ["post_id"], filters: { profile_id: viewer.id, post_id: shownIds } })
         .then(({ data }) => new Set((data as { post_id: string }[]).map(vote => vote.post_id)))
       : Promise.resolve(new Set<string>()),
+    loadImages(container, shownIds),
   ])
-  // Measurements from check-ins that are waiting for review stay with the check-in.
-  const visiblePosts = new Set([opening.id, ...(checkIns as { id: string }[]).map(post => post.id)])
-  const context = { authors, viewer, voted }
+  const context = { authors, viewer, voted, images }
 
   return {
     thread: publicThread(thread, context),
     opening: publicPost(opening, context),
     posts: posts.map(post => publicPost(post, context)),
     accepted: accepted ? publicPost(accepted, context) : null,
-    measurements: (measurements as MeasurementRecord[])
-      .filter(measurement => !measurement.post_id || visiblePosts.has(measurement.post_id))
-      .sort((a, b) => a.week - b.week || a.metric.localeCompare(b.metric))
-      .map(publicMeasurement),
     count: metadata?.count ?? posts.length,
     offset: page.offset,
     limit: page.limit,
@@ -155,36 +163,6 @@ export async function threadDetail(container: MedusaContainer, id: string, viewe
       profile: viewer ? publicAuthor(viewer) : null,
       can_accept: thread.kind === "question" && Boolean(viewer) && (mine || viewer?.role === "moderator"),
     },
-  }
-}
-
-/** What members report for one peptide, from published logs that staff haven't excluded. */
-export async function peptideInsights(container: MedusaContainer, peptide: string) {
-  const query = queryOf(container)
-  const { data } = await query.graph({
-    entity: "forum_thread",
-    fields: ["id", "other_peptides"],
-    filters: { kind: "research_log", status: "published", exclude_from_insights: false, peptide_slug: peptide },
-  })
-  const logs = data as { id: string; other_peptides?: string[] | null }[]
-  if (!logs.length) return { peptide, logs: 0, min_logs: MIN_LOGS_FOR_INSIGHT, insights: [] }
-
-  const ids = logs.map(log => log.id)
-  const [{ data: posts }, { data: measurements }] = await Promise.all([
-    query.graph({ entity: "forum_post", fields: ["id"], filters: { thread_id: ids, status: "published" } }),
-    query.graph({ entity: "forum_log_measurement", fields: ["thread_id", "post_id", "metric", "week", "value"], filters: { thread_id: ids } }),
-  ])
-  const published = new Set((posts as { id: string }[]).map(post => post.id))
-  const byThread = new Map<string, MeasurementRecord[]>()
-  for (const measurement of measurements as MeasurementRecord[]) {
-    if (measurement.post_id && !published.has(measurement.post_id)) continue
-    byThread.set(measurement.thread_id, [...(byThread.get(measurement.thread_id) ?? []), measurement])
-  }
-  return {
-    peptide,
-    logs: logs.length,
-    min_logs: MIN_LOGS_FOR_INSIGHT,
-    insights: summarizeLogs(logs.map(log => ({ stacked: Boolean(log.other_peptides?.length), measurements: byThread.get(log.id) ?? [] }))),
   }
 }
 
@@ -203,24 +181,22 @@ async function count(container: MedusaContainer, entity: string, filters: Record
 }
 
 export async function forumStats(container: MedusaContainer) {
-  const [threads, logs, members, experts] = await Promise.all([
+  const [threads, members, experts] = await Promise.all([
     count(container, "forum_thread", { status: "published" }),
-    count(container, "forum_thread", { status: "published", kind: "research_log" }),
     count(container, "forum_profile", { status: "active" }),
     count(container, "forum_profile", { role: "expert", status: "active" }),
   ])
-  return { threads, logs, members, experts }
+  return { threads, members, experts }
 }
 
 /** A member's public page: profile, totals and their latest published threads. */
 export async function memberPage(container: MedusaContainer, handle: string, viewer: ProfileRecord | null) {
   const profile = await profileByHandle(container, handle)
   if (!profile || profile.status === "banned") return null
-  const [threads, logs, replies, recent] = await Promise.all([
+  const [threads, replies, recent] = await Promise.all([
     count(container, "forum_thread", { author_id: profile.id, status: "published" }),
-    count(container, "forum_thread", { author_id: profile.id, status: "published", kind: "research_log" }),
     count(container, "forum_post", { author_id: profile.id, status: "published", is_opening: false }),
     listThreads(container, { author: handle, sort: "latest", offset: 0, limit: 10 }, viewer),
   ])
-  return { member: publicMember(profile), totals: { threads, logs, replies }, threads: recent.threads }
+  return { member: publicMember(profile), totals: { threads, replies }, threads: recent.threads }
 }

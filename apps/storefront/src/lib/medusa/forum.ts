@@ -1,6 +1,6 @@
 import { cacheLife, cacheTag } from "next/cache"
 import { sdk } from "./sdk"
-import type { ForumMemberPage, ForumStats, ForumThreadDetail, ForumThreadList, PeptideInsights, ThreadFilters } from "../community/types"
+import type { ForumMemberPage, ForumStats, ForumThreadDetail, ForumThreadList, ThreadFilters } from "../community/types"
 
 /**
  * Public community reads for Server Components. They never send a customer token (the server SDK
@@ -31,13 +31,6 @@ export async function getForumThread(id: string): Promise<ForumThreadDetail | nu
     if (isNotFound(error)) return null
     throw error
   }
-}
-
-export async function getPeptideInsights(peptide: string): Promise<PeptideInsights> {
-  "use cache"
-  cacheLife("hours")
-  cacheTag("forum", "forum-insights")
-  return sdk.client.fetch<PeptideInsights>("/store/forum/insights", { query: { peptide } })
 }
 
 /** Published member reports per lot number. Lots are sorted so equal sets share a cache entry. */

@@ -1,5 +1,5 @@
 import { MedusaService } from "@medusajs/framework/utils"
-import ForumLogMeasurement from "./models/measurement"
+import ForumImage from "./models/image"
 import ForumPost from "./models/post"
 import ForumProfile from "./models/profile"
 import ForumReport from "./models/report"
@@ -10,9 +10,9 @@ class ForumModuleService extends MedusaService({
   ForumProfile,
   ForumThread,
   ForumPost,
-  ForumLogMeasurement,
   ForumVote,
   ForumReport,
+  ForumImage,
 }) {}
 
 export default ForumModuleService

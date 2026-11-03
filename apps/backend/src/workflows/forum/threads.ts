@@ -1,13 +1,12 @@
 import type { MedusaContainer } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
-import { validateMeasurements, type MeasurementInput } from "../../lib/forum/metrics"
+import { createStep, createWorkflow, StepResponse, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { screenPost } from "../../lib/forum/moderation"
 import { hasPaidOrderFor, matchLot, type OrderForPurchaseCheck } from "../../lib/forum/purchase"
 import { excerptOf, normalizeBody, normalizeTitle, slugify } from "../../lib/forum/text"
-import { activeProfile, assertNotTooSoon, forumService, recountForumReputationStep } from "./shared"
+import { activeProfile, assertNotTooSoon, attachImages, claimableImages, forumService, releaseImages } from "./shared"
 
-export type ThreadKind = "discussion" | "question" | "research_log"
+export type ThreadKind = "discussion" | "question"
 
 export type CreateForumThreadInput = {
   customer_id: string
@@ -15,12 +14,9 @@ export type CreateForumThreadInput = {
   title: string
   body: string
   peptide_slug?: string | null
-  other_peptides?: string[]
   product_handle?: string | null
   lot?: string | null
-  unit_system?: "metric" | "imperial"
-  side_effects?: string[]
-  measurements?: MeasurementInput[]
+  images?: string[]
 }
 
 /** One new thread per member per interval. */
@@ -35,17 +31,14 @@ type PreparedThread = {
     slug: string
     excerpt: string
     peptide_slug: string | null
-    other_peptides: string[]
     product_handle: string | null
     lot: string | null
     verified_purchase: boolean
     status: "published" | "pending"
     hold_reason: string | null
-    unit_system: "metric" | "imperial"
-    side_effects: string[]
   }
   body: string
-  measurements: MeasurementInput[]
+  image_ids: string[]
 }
 
 async function findProduct(container: MedusaContainer, handle: string) {
@@ -77,16 +70,6 @@ const prepareForumThreadStep = createStep(
     if (title.length < 8) throw new MedusaError(MedusaError.Types.INVALID_DATA, "Please give your thread a clearer title.")
     if (body.length < 20) throw new MedusaError(MedusaError.Types.INVALID_DATA, "Please write a little more, so others can help.")
 
-    const isLog = input.kind === "research_log"
-    if (isLog && !input.peptide_slug) throw new MedusaError(MedusaError.Types.INVALID_DATA, "Choose the peptide this log is about.")
-    if (!isLog && (input.measurements?.length || input.side_effects?.length)) {
-      throw new MedusaError(MedusaError.Types.INVALID_DATA, "Only research logs include measurements.")
-    }
-    // Week 0 is the starting point; a log can also include where the member is now.
-    const measurements = isLog ? validateMeasurements(input.measurements ?? [], { requireBaseline: true }) : []
-    const sideEffects = [...new Set((input.side_effects ?? []).map(normalizeTitle).filter(Boolean))]
-    const peptide = input.peptide_slug ?? null
-    const otherPeptides = [...new Set(input.other_peptides ?? [])].filter(slug => slug !== peptide)
 
     const product = input.product_handle ? await findProduct(container, input.product_handle) : undefined
     if (input.product_handle && !product) throw new MedusaError(MedusaError.Types.INVALID_DATA, "We couldn't find that product.")
@@ -99,7 +82,8 @@ const prepareForumThreadStep = createStep(
       }
     }
 
-    const hold = screenPost([title, body, ...sideEffects], profile)
+    const imageIds = await claimableImages(service, profile.id, input.images)
+    const hold = screenPost([title, body], profile, imageIds.length)
     const prepared: PreparedThread = {
       profile_id: profile.id,
       thread: {
@@ -108,18 +92,15 @@ const prepareForumThreadStep = createStep(
         title,
         slug: slugify(title),
         excerpt: excerptOf(body),
-        peptide_slug: peptide,
-        other_peptides: otherPeptides,
+        peptide_slug: input.peptide_slug ?? null,
         product_handle: product?.handle ?? null,
         lot,
         verified_purchase: product ? await hasPurchased(container, input.customer_id, product.id) : false,
         status: hold ? "pending" : "published",
         hold_reason: hold,
-        unit_system: input.unit_system ?? "metric",
-        side_effects: sideEffects,
       },
       body,
-      measurements,
+      image_ids: imageIds,
     }
     return new StepResponse(prepared)
   }
@@ -138,22 +119,20 @@ const createForumThreadStep = createStep(
       status: input.thread.status,
       hold_reason: input.thread.hold_reason,
     })
-    const measurements = input.measurements.length
-      ? await service.createForumLogMeasurements(input.measurements.map(measurement => ({ ...measurement, thread_id: thread.id, post_id: post.id })))
-      : []
-    return new StepResponse({ thread, post }, { thread_id: thread.id, post_id: post.id, measurement_ids: measurements.map(measurement => measurement.id) })
+    await attachImages(service, input.image_ids, post.id)
+    return new StepResponse({ thread, post }, { thread_id: thread.id, post_id: post.id, image_ids: input.image_ids })
   },
   async (created, { container }) => {
     if (!created) return
     const service = forumService(container)
-    if (created.measurement_ids.length) await service.deleteForumLogMeasurements(created.measurement_ids)
+    await releaseImages(service, created.image_ids)
     await service.deleteForumPosts(created.post_id)
     await service.deleteForumThreads(created.thread_id)
   }
 )
 
 /**
- * Starts a discussion, question or research log as the signed-in member. Posts with dose amounts
+ * Starts a discussion or question as the signed-in member. Posts with dose amounts
  * (or a new member's links) wait for review; everything else is published straight away.
  */
 export const createForumThreadWorkflow = createWorkflow(
@@ -161,9 +140,6 @@ export const createForumThreadWorkflow = createWorkflow(
   function (input: CreateForumThreadInput) {
     const prepared = prepareForumThreadStep(input)
     const created = createForumThreadStep(prepared)
-    const profileIds = transform({ prepared }, ({ prepared }) => [prepared.profile_id])
-    // A published research log earns reputation.
-    recountForumReputationStep({ profile_ids: profileIds })
     return new WorkflowResponse(created)
   }
 )

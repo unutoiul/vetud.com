@@ -68,7 +68,6 @@ async function MemberContent({ params }: Pick<PageProps<"/[countryCode]/communit
     {member.bio ? <Typography sx={{ mt: 3, fontSize: 16, lineHeight: 1.75, whiteSpace: "pre-wrap" }}>{member.bio}</Typography> : null}
     <Box component="dl" sx={{ mt: 3, display: "flex", flexWrap: "wrap", gap: { xs: 3, md: 5 }, "& dt": { fontSize: 13, color: "brand.navySoft" }, "& dd": { m: 0, fontSize: 26, fontWeight: 650, color: "brand.navy", fontVariantNumeric: "tabular-nums" } }}>
       <div><dt>Threads</dt><dd>{totals.threads}</dd></div>
-      <div><dt>Research logs</dt><dd>{totals.logs}</dd></div>
       <div><dt>Replies</dt><dd>{totals.replies}</dd></div>
     </Box>
     <Typography component="h2" sx={{ mt: 5, mb: 1, fontSize: 22, fontWeight: 650 }}>Latest threads</Typography>

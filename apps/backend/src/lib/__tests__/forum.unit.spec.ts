@@ -1,5 +1,3 @@
-import { MIN_LOGS_FOR_INSIGHT, quantile, summarizeLogs, type LogForInsight } from "../forum/insights"
-import { validateMeasurements } from "../forum/metrics"
 import { containsDose, containsLink, screenPost } from "../forum/moderation"
 import { publicAuthor, publicPost, type PostRecord, type ProfileRecord } from "../forum/public"
 import { hasPaidOrderFor, matchLot } from "../forum/purchase"
@@ -31,12 +29,21 @@ describe("forum moderation", () => {
     expect(screenPost(["Week 8: sleeping better", null], member)).toBeNull()
     expect(containsLink("version 2.0 is out")).toBe(false)
   })
+
+  it("holds new members' photos, and doses before photos", () => {
+    const member = { role: "member", reputation: 0 }
+    const contributor = { role: "member", reputation: 25 }
+    expect(screenPost(["Week 4 progress"], member, 2)).toBe("image")
+    expect(screenPost(["Week 4 progress"], member, 0)).toBeNull()
+    expect(screenPost(["Week 4 progress"], contributor, 2)).toBeNull()
+    expect(screenPost(["Took 2 mg"], contributor, 1)).toBe("dose")
+  })
 })
 
 describe("forum reputation", () => {
   it("adds up points and never goes below zero", () => {
-    expect(computeReputation({ helpfulVotes: 3, bestAnswers: 1, publishedLogs: 2, removedPosts: 0 })).toBe(31)
-    expect(computeReputation({ helpfulVotes: 0, bestAnswers: 0, publishedLogs: 0, removedPosts: 2 })).toBe(0)
+    expect(computeReputation({ helpfulVotes: 3, bestAnswers: 1, removedPosts: 0 })).toBe(21)
+    expect(computeReputation({ helpfulVotes: 0, bestAnswers: 0, removedPosts: 2 })).toBe(0)
   })
 
   it("maps reputation to levels", () => {
@@ -70,72 +77,6 @@ describe("forum text", () => {
   })
 })
 
-describe("forum measurements", () => {
-  it("requires a starting value for every metric in a new log", () => {
-    expect(() => validateMeasurements([], { requireBaseline: true })).toThrow(/starting measurement/)
-    expect(() => validateMeasurements([{ metric: "body_weight", week: 8, value: 80 }], { requireBaseline: true })).toThrow(/week 0/)
-    expect(validateMeasurements([
-      { metric: "body_weight", week: 0, value: 92.456 },
-      { metric: "body_weight", week: 8, value: 88 },
-    ], { requireBaseline: true })).toEqual([
-      { metric: "body_weight", week: 0, value: 92.46 },
-      { metric: "body_weight", week: 8, value: 88 },
-    ])
-  })
-
-  it("rejects unknown metrics, impossible values and duplicates", () => {
-    expect(() => validateMeasurements([{ metric: "dose", week: 0, value: 1 }], { requireBaseline: false })).toThrow(/Unknown/)
-    expect(() => validateMeasurements([{ metric: "energy", week: 0, value: 11 }], { requireBaseline: false })).toThrow(/between 0 and 10/)
-    expect(() => validateMeasurements([{ metric: "energy", week: 200, value: 5 }], { requireBaseline: false })).toThrow(/Weeks/)
-    expect(() => validateMeasurements([
-      { metric: "energy", week: 0, value: 5 },
-      { metric: "energy", week: 0, value: 6 },
-    ], { requireBaseline: false })).toThrow(/twice/)
-  })
-})
-
-describe("forum insights", () => {
-  const weightLog = (start: number, end: number, week = 12, stacked = false): LogForInsight => ({
-    stacked,
-    measurements: [{ metric: "body_weight", week: 0, value: start }, { metric: "body_weight", week, value: end }],
-  })
-
-  it("interpolates quantiles", () => {
-    expect(quantile([1, 2, 3, 4], 0.5)).toBe(2.5)
-    expect(quantile([5], 0.25)).toBe(5)
-  })
-
-  it("shows nothing until enough logs report a metric", () => {
-    const logs = Array.from({ length: MIN_LOGS_FOR_INSIGHT - 1 }, () => weightLog(100, 90))
-    expect(summarizeLogs(logs)).toEqual([])
-  })
-
-  it("reports median percent change for weight and point change for scores", () => {
-    const logs = [weightLog(100, 90), weightLog(100, 95), weightLog(100, 92, 12, true), weightLog(80, 76), weightLog(100, 100)]
-    const [weight] = summarizeLogs(logs)
-    expect(weight).toMatchObject({ metric: "body_weight", change: "percent", logs: 5, stacked: 1, median: -5, median_weeks: 12 })
-    expect(weight.p25).toBeLessThanOrEqual(weight.median)
-    expect(weight.curve).toEqual([{ week: 12, logs: 5, median: -5 }])
-    // A log measured at week 8 counts towards the week-8 mark, not week 12.
-    expect(summarizeLogs([...logs.slice(1), weightLog(100, 90, 8)])[0].curve).toEqual([])
-
-    const scores = Array.from({ length: 5 }, (_, index): LogForInsight => ({
-      stacked: false,
-      measurements: [{ metric: "sleep_quality", week: 0, value: 4 }, { metric: "sleep_quality", week: 6, value: 4 + index }],
-    }))
-    expect(summarizeLogs(scores)[0]).toMatchObject({ metric: "sleep_quality", change: "points", median: 2 })
-  })
-
-  it("ignores logs without a baseline or a measurement after week 4", () => {
-    const logs = [
-      ...Array.from({ length: 4 }, () => weightLog(100, 90)),
-      weightLog(100, 90, 2),
-      { stacked: false, measurements: [{ metric: "body_weight", week: 12, value: 90 }] },
-    ]
-    expect(summarizeLogs(logs)).toEqual([])
-  })
-})
-
 describe("forum purchases and lots", () => {
   const paid = { payment_collections: [{ payments: [{ captured_at: "2026-10-01" }] }] }
 
@@ -162,8 +103,8 @@ describe("forum public projections", () => {
     credentials: "MD, endocrinology", bio: null, reputation: 120, status: "active", created_at: "2026-11-01",
   }
   const post: PostRecord = {
-    id: "fpost_1", thread_id: "fthr_1", author_id: "fprof_1", body: "Hello", is_opening: false, kind: "post",
-    week: null, status: "pending", hold_reason: "link", helpful_count: 0, edited_at: null, created_at: "2026-11-02",
+    id: "fpost_1", thread_id: "fthr_1", author_id: "fprof_1", body: "Hello", is_opening: false,
+    status: "pending", hold_reason: "link", helpful_count: 0, edited_at: null, created_at: "2026-11-02",
   }
 
   it("never exposes the customer and shows moderation details only to the author", () => {

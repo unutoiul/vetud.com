@@ -23,12 +23,9 @@ export async function POST(req: AuthenticatedMedusaRequest<StoreCreateForumThrea
       title: body.title,
       body: body.body,
       peptide_slug: body.peptide,
-      other_peptides: body.other_peptides,
       product_handle: body.product,
       lot: body.lot,
-      unit_system: body.unit_system,
-      side_effects: body.side_effects,
-      measurements: body.measurements,
+      images: body.images,
     },
   })
 

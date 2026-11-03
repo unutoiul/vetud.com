@@ -11,11 +11,11 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState, useTransition } from "react"
 import { getPeptide, PEPTIDES } from "@/content/learn/peptides"
-import { KIND_PLURALS } from "@/lib/community/format"
+import { KIND_PLURALS, THREAD_KINDS } from "@/lib/community/format"
 import type { ThreadKind } from "@/lib/community/types"
 import { useLocalizedHref } from "../common/links"
 
-const KINDS: (ThreadKind | "all")[] = ["all", "research_log", "question", "discussion"]
+const KINDS: (ThreadKind | "all")[] = ["all", ...THREAD_KINDS]
 const PEPTIDE_OPTIONS = [...PEPTIDES].sort((a, b) => a.name.localeCompare(b.name))
 
 /** Kind, sort, peptide and search filters, kept in the URL so filtered lists can be shared. */

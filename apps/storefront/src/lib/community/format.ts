@@ -9,14 +9,15 @@ export function findDose(text: string) {
   return text.match(DOSE_PATTERN)?.[0]?.trim() ?? null
 }
 
+/** Questions first, then discussions, wherever the kinds are listed. */
+export const THREAD_KINDS: ThreadKind[] = ["question", "discussion"]
+
 export const KIND_LABELS: Record<ThreadKind, string> = {
-  research_log: "Research log",
   question: "Question",
   discussion: "Discussion",
 }
 
 export const KIND_PLURALS: Record<ThreadKind, string> = {
-  research_log: "Research logs",
   question: "Questions",
   discussion: "Discussions",
 }
@@ -24,6 +25,7 @@ export const KIND_PLURALS: Record<ThreadKind, string> = {
 export const HOLD_MESSAGES: Record<string, string> = {
   dose: "It mentions a dose amount, so a moderator will review it before it appears. The community doesn't share doses; you can edit the post to remove it.",
   link: "New members' links are checked by a moderator first. Links are published straight away once you reach the Contributor level.",
+  image: "New members' photos are checked by a moderator first. Photos are published straight away once you reach the Contributor level.",
   reports: "Several members reported it, so it's hidden until a moderator reviews it.",
   staff: "A moderator has hidden it.",
 }
@@ -32,8 +34,8 @@ export const HOLD_MESSAGES: Record<string, string> = {
 export const GUIDELINE_SUMMARY = [
   "Never share doses, dosing schedules or sources outside Vetud.",
   "Share observations, not medical advice. Encourage others to talk to a doctor.",
-  "Be accurate: log real measurements and say when something is a guess.",
-  "Your community name, posts and log measurements are public.",
+  "Be accurate: cite your sources and say when something is a guess.",
+  "Your community name, posts and photos are public.",
 ]
 
 export const REPORT_REASONS = [

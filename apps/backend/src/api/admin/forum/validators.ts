@@ -8,7 +8,7 @@ export const AdminForumQueueQuery = z.object({ offset: Offset, limit: Limit }).s
 export const AdminForumThreadsQuery = z.object({
   q: z.string().trim().max(80).optional(),
   status: z.enum(["published", "pending", "hidden", "removed"]).optional(),
-  kind: z.enum(["discussion", "question", "research_log"]).optional(),
+  kind: z.enum(["discussion", "question"]).optional(),
   offset: Offset,
   limit: Limit,
 }).strict()
@@ -27,7 +27,6 @@ export const AdminModerateForumPostSchema = z.object({
 export const AdminUpdateForumThreadSchema = z.object({
   pinned: z.boolean().optional(),
   locked: z.boolean().optional(),
-  exclude_from_insights: z.boolean().optional(),
 }).strict()
 
 export const AdminUpdateForumMemberSchema = z.object({

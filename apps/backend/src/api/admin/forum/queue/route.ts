@@ -1,7 +1,7 @@
 import type { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { POST_FIELDS, type PostRecord } from "../../../../lib/forum/public"
-import { loadProfiles } from "../../../../lib/forum/read"
+import { loadImages, loadProfiles } from "../../../../lib/forum/read"
 import type { AdminForumQueueQueryType } from "../validators"
 
 type ReportRecord = { id: string; post_id: string; reason: string; note?: string | null; created_at: string }
@@ -28,11 +28,12 @@ export async function GET(req: AuthenticatedMedusaRequest<unknown, AdminForumQue
   })
   const posts = data as PostRecord[]
   const threadIds = [...new Set(posts.map(post => post.thread_id))]
-  const [{ data: threads }, authors] = await Promise.all([
+  const [{ data: threads }, authors, images] = await Promise.all([
     threadIds.length
       ? query.graph({ entity: "forum_thread", fields: ["id", "title", "slug", "kind", "status"], filters: { id: threadIds } })
       : Promise.resolve({ data: [] }),
     loadProfiles(req.scope, posts.map(post => post.author_id)),
+    loadImages(req.scope, posts.map(post => post.id)),
   ])
   const threadById = new Map((threads as { id: string }[]).map(thread => [thread.id, thread]))
 
@@ -42,6 +43,7 @@ export async function GET(req: AuthenticatedMedusaRequest<unknown, AdminForumQue
       thread: threadById.get(post.thread_id) ?? null,
       author: authors.get(post.author_id) ?? null,
       reports: reports.filter(report => report.post_id === post.id),
+      images: images.get(post.id) ?? [],
     })),
     count: metadata?.count ?? posts.length,
     offset,

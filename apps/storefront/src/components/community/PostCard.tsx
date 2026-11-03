@@ -8,18 +8,17 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { findDose, formatForumDate, HOLD_MESSAGES } from "@/lib/community/format"
-import { formatValue, isMetricId, METRICS } from "@/lib/community/metrics"
-import type { ForumMeasurement, ForumPost, ForumThread } from "@/lib/community/types"
+import type { ForumPost, ForumThread } from "@/lib/community/types"
 import Icon from "../brand/Icon"
 import { AuthorLine, Pill } from "./Badges"
 import PostBody from "./PostBody"
+import PostImages from "./PostImages"
 import ReportDialog from "./ReportDialog"
 import { forumError } from "./useCommunityProfile"
 
 export type PostCardProps = {
   post: ForumPost
   thread: ForumThread
-  measurements?: ForumMeasurement[]
   highlight?: "accepted" | "expert" | null
   canAccept?: boolean
   canInteract: boolean
@@ -34,7 +33,7 @@ const HIGHLIGHTS = {
 } as const
 
 /** One post with its actions: helpful vote, report, best answer, and edit or delete for the author. */
-export default function PostCard({ post, thread, measurements = [], highlight, canAccept, canInteract, onChange, onDeleted, onAccept }: PostCardProps) {
+export default function PostCard({ post, thread, highlight, canAccept, canInteract, onChange, onDeleted, onAccept }: PostCardProps) {
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [editing, setEditing] = useState(false)
@@ -83,27 +82,20 @@ export default function PostCard({ post, thread, measurements = [], highlight, c
     }, "We couldn't delete your post. Please try again.")
   }
 
-  // A check-in's own values; the opening post's are in the log table above it.
-  const own = post.kind === "check_in" ? measurements.filter(measurement => measurement.post_id === post.id) : []
-
   return <Box component="article" id={`post-${post.id}`} sx={{ scrollMarginTop: 96, py: 2.5, ...(style ? { px: { xs: 2, md: 2.5 }, my: 1.5, border: "1px solid", borderColor: style.border, borderLeftWidth: 4, borderRadius: "8px", bgcolor: style.bg } : { borderTop: "1px solid", borderColor: "divider" }) }}>
     {/* The thread header already names the opening post's author and date. */}
     {post.is_opening ? (post.edited_at ? <Typography sx={{ fontSize: 13, color: "brand.navySoft", mb: 1 }}>Edited {formatForumDate(post.edited_at)}</Typography> : null) : <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 1.5, rowGap: .75, mb: 1.25 }}>
       {style ? <Pill tone={style.tone} icon={highlight === "accepted" ? "checkCircle" : "shield"}>{style.label}</Pill> : null}
-      {post.kind === "check_in" && post.week ? <Pill tone="verified">Week {post.week} check-in</Pill> : null}
       <AuthorLine author={post.author} size="small" />
       <Typography component="time" dateTime={post.created_at} sx={{ fontSize: 13, color: "brand.navySoft" }}>
         {formatForumDate(post.created_at)}{post.edited_at ? " · edited" : ""}
       </Typography>
     </Box>}
 
-    {post.status && post.status !== "published" ? <Alert severity="info" sx={{ mb: 1.5 }}>
+    {/* The opening post's status mirrors the thread's, which the thread header already explains. */}
+    {post.status && post.status !== "published" && !post.is_opening ? <Alert severity="info" sx={{ mb: 1.5 }}>
       <strong>Only you can see this {post.is_opening ? "thread" : "post"} for now.</strong> {HOLD_MESSAGES[post.hold_reason ?? ""] ?? "A moderator will review it."}
     </Alert> : null}
-
-    {own.length ? <Box component="dl" sx={{ m: 0, mb: 1.5, display: "flex", flexWrap: "wrap", gap: 1, "& > div": { px: 1.5, py: .75, bgcolor: "#fff", border: "1px solid", borderColor: "divider", borderRadius: "6px" }, "& dt": { fontSize: 12, color: "brand.navySoft" }, "& dd": { m: 0, fontSize: 14, fontWeight: 650, fontVariantNumeric: "tabular-nums" } }}>
-      {own.map(measurement => isMetricId(measurement.metric) ? <div key={measurement.metric}><dt>{METRICS[measurement.metric].label}</dt><dd>{formatValue(measurement.metric, measurement.value, thread.unit_system)}</dd></div> : null)}
-    </Box> : null}
 
     {editing ? <Box>
       <TextField value={draft} onChange={event => setDraft(event.target.value.slice(0, post.is_opening ? 10000 : 5000))} multiline minRows={4} fullWidth label="Edit your post" />
@@ -113,6 +105,7 @@ export default function PostCard({ post, thread, measurements = [], highlight, c
         <Button size="small" onClick={() => { setEditing(false); setDraft(post.body) }}>Cancel</Button>
       </Box>
     </Box> : <PostBody body={post.body} size={post.is_opening ? 17 : 16} />}
+    <PostImages images={post.images ?? []} author={post.author.display_name} />
 
     {error ? <Alert severity="error" sx={{ mt: 1.5 }} onClose={() => setError(null)}>{error}</Alert> : null}
 

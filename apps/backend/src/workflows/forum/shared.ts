@@ -39,6 +39,32 @@ export async function findPost(service: ForumModuleService, id: string) {
   return post as PostRecord
 }
 
+/** Photos per thread or reply. */
+export const MAX_POST_IMAGES = 4
+
+/** The member's own uploads that no post has claimed yet. */
+export async function claimableImages(service: ForumModuleService, profileId: string, ids: string[] = []) {
+  const wanted = [...new Set(ids)]
+  if (!wanted.length) return []
+  if (wanted.length > MAX_POST_IMAGES) {
+    throw new MedusaError(MedusaError.Types.INVALID_DATA, `You can add up to ${MAX_POST_IMAGES} photos to a post.`)
+  }
+  const images = await service.listForumImages({ id: wanted, author_id: profileId, post_id: null })
+  if (images.length !== wanted.length) {
+    throw new MedusaError(MedusaError.Types.INVALID_DATA, "One of your photos is no longer available. Please add it again.")
+  }
+  return wanted
+}
+
+/** Attaches claimed uploads to a new post; the compensation releases them again. */
+export async function attachImages(service: ForumModuleService, ids: string[], postId: string) {
+  if (ids.length) await service.updateForumImages({ selector: { id: ids }, data: { post_id: postId } })
+}
+
+export async function releaseImages(service: ForumModuleService, ids: string[]) {
+  if (ids.length) await service.updateForumImages({ selector: { id: ids }, data: { post_id: null } })
+}
+
 /** One action per interval, counted from the member's latest record (deleted ones too). */
 export function assertNotTooSoon(latest: { created_at: Date | string } | undefined, intervalMs: number, message: string) {
   if (latest && Date.now() - new Date(latest.created_at).getTime() < intervalMs) {
@@ -75,7 +101,7 @@ export const recountForumThreadsStep = createStep(
   }
 )
 
-/** Recounts reputation from the members' votes, best answers, logs and removed posts. */
+/** Recounts reputation from the members' votes, best answers and removed posts. */
 export const recountForumReputationStep = createStep(
   "recount-forum-reputation",
   async (input: { profile_ids: (string | null | undefined)[] }, { container }) => {
@@ -86,14 +112,12 @@ export const recountForumReputationStep = createStep(
       const [, bestAnswers] = postIds.length
         ? await service.listAndCountForumThreads({ accepted_post_id: postIds, status: "published" }, { take: 1 })
         : [[], 0]
-      const [, publishedLogs] = await service.listAndCountForumThreads({ author_id: id, kind: "research_log", status: "published" }, { take: 1 })
       const [, removedPosts] = await service.listAndCountForumPosts({ author_id: id, status: "removed" }, { take: 1 })
       await service.updateForumProfiles({
         id,
         reputation: computeReputation({
           helpfulVotes: published.reduce((total, post) => total + (post.helpful_count ?? 0), 0),
           bestAnswers,
-          publishedLogs,
           removedPosts,
         }),
       })
