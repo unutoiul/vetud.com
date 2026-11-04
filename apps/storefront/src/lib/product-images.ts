@@ -24,27 +24,39 @@ const PEN_KIT_BOXES: Record<string, string> = {
 /** Sold without a pen kit box, so no box photo. */
 const NO_PEN_KIT = new Set(["bacteriostatic-water"])
 
-/** The unlabelled open VETUD box, for products without their own box photo. */
+/**
+ * Sold as a nasal spray in place of the pen kit box: the spray's own photo, box left and bottle
+ * right (<handle>-front.webp, from prepare-product-images.mjs), replaces the pen kit box photos.
+ */
+const NASAL_SPRAYS = new Set(["selank", "semax"])
+
+/** The unlabelled VETUD Peptide Series box, closed and open, for products without their own box photo. */
+const GENERIC_CLOSED_BOX = "/images/products/generic-closed.webp"
 const GENERIC_OPEN_BOX = "/images/products/generic-open.webp"
 
 /**
- * The photos of each format: the cartridge (dual-chamber vial), the vial and the pen kit box.
- * Products without their own box photo show the generic open box for the kit.
+ * The photos of each format: the cartridge (dual-chamber vial), the vial and the pen kit box (or the
+ * nasal spray). Products without their own box photo show the generic Peptide Series box, closed and open.
  */
 const formatPhotos = (handle: string, title: string) => {
   const named = Object.hasOwn(PEN_KIT_BOXES, handle) ? PEN_KIT_BOXES[handle] : undefined
+  const spray = NASAL_SPRAYS.has(handle)
+    ? { url: `/images/products/${handle}-front.webp`, alt: `${title} 10 ml nasal spray: the VETUD box and the spray bottle`, label: "Nasal spray", format: "Nasal spray" }
+    : undefined
   const openBox = named
     ? { url: `/images/products/${named}-open.webp`, alt: `${title} pen kit, open box with the reusable pen, 12 needles and the instruction booklet`, label: "Open pen kit", format: "Pen kit box" }
-    : NO_PEN_KIT.has(handle) ? undefined
-    : { url: GENERIC_OPEN_BOX, alt: "VETUD pen kit, open box with the reusable pen, 12 needles and the instruction booklet", label: "Pen kit box", format: "Pen kit box" }
+    : NO_PEN_KIT.has(handle) || spray ? undefined
+    : { url: GENERIC_OPEN_BOX, alt: "VETUD pen kit, open box with the reusable pen, 12 needles and the instruction booklet", label: "Open pen kit", format: "Pen kit box" }
   return {
     pen: { url: `/images/products/${handle}-pen.webp`, alt: `${title} dual-chamber vial: powder and BAC water in separate chambers`, label: "Dual-chamber vial", format: "Dual-chamber vial" },
-    box: named ? { url: `/images/products/${named}-closed.webp`, alt: `${title} pen kit, closed VETUD box`, label: "Pen kit box", format: "Pen kit box" } : undefined,
+    box: spray ?? (named ? { url: `/images/products/${named}-closed.webp`, alt: `${title} pen kit, closed VETUD box`, label: "Pen kit box", format: "Pen kit box" }
+      : NO_PEN_KIT.has(handle) ? undefined
+      : { url: GENERIC_CLOSED_BOX, alt: "VETUD Peptide Series pen kit, closed box: 1 reusable pen, 12 disposable needles and 1 instruction booklet", label: "Pen kit box", format: "Pen kit box" }),
     openBox,
     vial: { url: `/images/products/${handle}-vial.webp`, alt: `${title} research vial with VETUD label`, label: "Vial", format: "Vial" },
-    reusable: { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT, label: "Reusable pen", format: openBox ? undefined : "Pen kit box" },
-    /** The photo that stands for the pen kit box: the open box shows what's inside. */
-    kit: openBox ? { url: openBox.url, alt: openBox.alt } : { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT },
+    reusable: { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT, label: "Reusable pen", format: openBox || spray ? undefined : "Pen kit box" },
+    /** The photo that stands for the boxed format: the open pen kit shows what's inside; the nasal spray its box and bottle. */
+    kit: spray ? { url: spray.url, alt: spray.alt } : openBox ? { url: openBox.url, alt: openBox.alt } : { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT },
   }
 }
 

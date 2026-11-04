@@ -369,7 +369,12 @@ function AddressBook() {
   const save = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setShowErrors(true)
-    if (Object.keys(errors).length) return
+    // Show the form's own messages (like checkout) and take the visitor to the first one.
+    const firstError = Object.keys(errors)[0]
+    if (firstError) {
+      event.currentTarget.querySelector<HTMLElement>(`[id="account-address-${firstError}"]`)?.focus()
+      return
+    }
     const generatedName = customer?.addresses?.length ? values.address_1.trim() : t("primary")
     const payload = {
       ...normalizeAddress(values),
@@ -393,7 +398,7 @@ function AddressBook() {
       </Stack>
       {account.error ? <Alert severity="error" sx={{ mt: 2 }}>{account.error}</Alert> : null}
       {showForm ? (
-        <Box component="form" onSubmit={save} sx={{ mt: 3 }}>
+        <Box component="form" onSubmit={save} noValidate sx={{ mt: 3 }}>
           <Stack spacing={2}>
             <AddressFields
               prefix="account-address"

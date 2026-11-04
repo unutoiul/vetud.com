@@ -308,3 +308,21 @@ export const PEN_KIT_BOX = {
 } as const
 
 export const boxSku = (product: DualChamberProduct, amount: string) => variantSku(product, "pen", amount).replace("-PEN-", "-BOX-")
+
+/**
+ * Selank and Semax (owner's request, 2026-11-05): their boxed format is the 10 ml nasal spray in its
+ * VETUD box, not the pen kit box. Same amounts, prices and SKUs as the pen kit box it replaces.
+ */
+export const NASAL_SPRAY = {
+  title: "Nasal spray",
+  revision: "nasal-spray-format-2026-11-05-v1",
+  handles: ["selank", "semax"],
+  contents: "VETUD box with one 10 ml nasal spray bottle",
+} as const
+
+const PEN_KIT_FORM = "Dual-chamber vial, vial or pen kit box"
+
+/** A product's boxed format: the pen kit box, or the nasal spray for Selank and Semax. */
+export const boxFormat = (handle: string) => (NASAL_SPRAY.handles as readonly string[]).includes(handle)
+  ? { title: NASAL_SPRAY.title, contents: NASAL_SPRAY.contents, form: "Nasal spray, dual-chamber vial or vial" }
+  : { title: PEN_KIT_BOX.title, contents: PEN_KIT_BOX.contents, form: PEN_KIT_FORM }

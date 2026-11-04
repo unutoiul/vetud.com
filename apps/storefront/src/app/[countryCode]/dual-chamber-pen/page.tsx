@@ -36,7 +36,7 @@ const FAQ: FaqItem[] = [
   { question: "Is bacteriostatic water included?", answer: "With a dual-chamber vial or the pen kit box, yes: it's already in the cartridge's second chamber. With a vial, no: add bacteriostatic water (10 ml or 30 ml) and U-100 syringes from the product page." },
   { question: "What's the difference between the three?", answer: "The amount of peptide is the same. The pen kit box has the reusable pen with one dual-chamber vial, 12 disposable needles and an instruction booklet, in the VETUD box. A dual-chamber vial is the two-chamber cartridge on its own, to refill the pen. A vial is the freeze-dried powder on its own, at the lowest price." },
   { question: "Is the pen reusable?", answer: "Yes. Buy the pen kit box once, keep the pen body, and replace the cartridge with a new dual-chamber vial when it's empty." },
-  { question: "Which products come in all three formats?", answer: "Every peptide. Each product page lets you choose a dual-chamber vial, a vial or the pen kit box, and shows the price of each amount. Bacteriostatic water comes as a cartridge or a vial." },
+  { question: "Which products come in all three formats?", answer: "Every peptide. Each product page lets you choose a dual-chamber vial, a vial or the pen kit box, and shows the price of each amount. Selank and Semax come as a nasal spray in place of the pen kit box. Bacteriostatic water comes as a cartridge or a vial." },
   { question: "Is the pen for personal use?", answer: "No. Like everything we sell, the pen and the vial are supplied for laboratory research use only, not for human or veterinary use. This page describes the packaging; it isn't a guide to using it." },
 ]
 

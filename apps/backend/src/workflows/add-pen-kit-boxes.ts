@@ -2,7 +2,7 @@ import type { CreateProductVariantWorkflowInputDTO, UpsertProductDTO } from "@me
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createProductVariantsWorkflow, updateProductOptionValuesOnProductStep, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
-import { boxSku, DUAL_CHAMBER_PRODUCTS, FORMAT_CONTENTS, PEN_KIT_BOX } from "../seed/dual-chamber-catalog"
+import { boxFormat, boxSku, DUAL_CHAMBER_PRODUCTS, FORMAT_CONTENTS, PEN_KIT_BOX } from "../seed/dual-chamber-catalog"
 import { usdPrice } from "./import-dual-chamber-catalog"
 
 type ProductRow = {
@@ -42,15 +42,17 @@ const planPenKitBoxesStep = createStep(
       const row = rows.find((item) => item.handle === product.handle)
       const format = row?.options?.find((option) => option.title === "Format")
       if (!row || !format) throw new MedusaError(MedusaError.Types.NOT_FOUND, `Import the dual-chamber catalog first: ${product.handle}`)
+      // Selank and Semax get the nasal spray instead (see NASAL_SPRAY).
+      const box = boxFormat(product.handle)
       const previous = (format.values ?? []).map((value) => value.value)
-      if (!previous.includes(PEN_KIT_BOX.title)) options.push({ product_id: row.id, product_option_id: format.id, add: [{ value: PEN_KIT_BOX.title }] })
+      if (!previous.includes(box.title)) options.push({ product_id: row.id, product_option_id: format.id, add: [{ value: box.title }] })
       variants.push(...product.pen.map((offer) => ({
         product_id: row.id,
-        title: `${PEN_KIT_BOX.title} · ${offer.amount}`,
+        title: `${box.title} · ${offer.amount}`,
         sku: boxSku(product, offer.amount),
         manage_inventory: false,
         allow_backorder: false,
-        options: { Format: PEN_KIT_BOX.title, Amount: offer.amount },
+        options: { Format: box.title, Amount: offer.amount },
         prices: usdPrice(offer.usd + PEN_KIT_BOX.premium),
         metadata: { format: "box" },
       })))
@@ -59,7 +61,7 @@ const planPenKitBoxesStep = createStep(
         metadata: {
           ...(row.metadata ?? {}),
           contents_pen: product.contents?.pen ?? FORMAT_CONTENTS.pen,
-          contents_box: PEN_KIT_BOX.contents,
+          contents_box: box.contents,
           pen_kit_box_revision: PEN_KIT_BOX.revision,
         },
       })

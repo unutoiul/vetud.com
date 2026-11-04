@@ -21,6 +21,14 @@ const FACTS = {
   box: { contents: "The reusable pen, 1 dual-chamber vial, 12 needles and a booklet, in the VETUD box", water: "Included, in the cartridge" },
 }
 
+/** Selank and Semax have a nasal spray in the pen kit box's place. */
+const SPRAY = {
+  title: "Nasal spray",
+  facts: { contents: "A 10 ml nasal spray bottle in the VETUD box", water: "Not needed: the spray is a liquid" },
+  intro: "Every product comes three ways. It's the same peptide and the same amounts; what changes is the packaging, what's included and the price. Choose the nasal spray in its VETUD box, a dual-chamber vial for the reusable pen, or a vial.",
+  pen: "The dual-chamber vial fits the reusable VETUD pen, which comes in the pen kit box of the other VETUD peptides. The drive, dial and indicator window stay with the pen: when a cartridge is empty, fit a new dual-chamber vial.",
+}
+
 const COLUMNS = [
   { key: "box", title: "Pen kit box", fallback: "Highest" },
   { key: "pen", title: "Dual-chamber vial", fallback: "Mid-price" },
@@ -100,9 +108,10 @@ const HEADING = { component: "h2", variant: "h3", id: "formats-heading", sx: { m
 /**
  * The "Dual-chamber pen or vial?" part of the product dossier, on every product sold in both
  * formats (the dossier supplies the section and its menu entry). Supplies such as bacteriostatic
- * water get the short version: the video and the guide link.
+ * water get the short version: the video and the guide link. `spray` shows the nasal spray in the
+ * pen kit box's place (Selank, Semax).
  */
-export default function DualChamberExplainer({ prices, photos, supply }: { prices?: FormatPrices; photos?: FormatPhotos; supply?: boolean }) {
+export default function DualChamberExplainer({ prices, photos, supply, spray }: { prices?: FormatPrices; photos?: FormatPhotos; supply?: boolean; spray?: boolean }) {
   if (supply) {
     return (
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "minmax(0, 5fr) minmax(0, 7fr)" }, gap: { xs: 3, md: 5 }, alignItems: "center" }}>
@@ -117,16 +126,17 @@ export default function DualChamberExplainer({ prices, photos, supply }: { price
       </Box>
     )
   }
+  const points = spray ? POINTS.map((point, index) => (index === 1 ? { ...point, text: SPRAY.pen } : point)) : POINTS
   return (
     <Box>
-      <Typography {...HEADING}>Pen kit box, dual-chamber vial or vial?</Typography>
+      <Typography {...HEADING}>{spray ? "Nasal spray" : "Pen kit box"}, dual-chamber vial or vial?</Typography>
       <Typography sx={{ maxWidth: 680, fontSize: 15, lineHeight: 1.8, color: "text.secondary" }}>
-        Every product comes three ways. It&apos;s the same peptide and the same amounts; what changes is the packaging, what&apos;s included and the price. Start with the pen kit box, which has the reusable pen, then refill it with dual-chamber vials.
+        {spray ? SPRAY.intro : "Every product comes three ways. It's the same peptide and the same amounts; what changes is the packaging, what's included and the price. Start with the pen kit box, which has the reusable pen, then refill it with dual-chamber vials."}
       </Typography>
 
       {photos ? (
         <Box sx={{ mt: { xs: 3, md: 4 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, minmax(0, 1fr))" }, gap: { xs: 2, md: 2.5 } }}>
-          <FormatCard id="format-box-title" title="Pen kit box" price={prices?.box} facts={FACTS.box} photos={[photos.kit]} />
+          <FormatCard id="format-box-title" title={spray ? SPRAY.title : "Pen kit box"} price={prices?.box} facts={spray ? SPRAY.facts : FACTS.box} photos={[photos.kit]} />
           <FormatCard id="format-pen-title" title="Dual-chamber vial" price={prices?.pen} facts={FACTS.pen} photos={[{ ...photos.pen, slim: true }]} />
           <FormatCard id="format-vial-title" title="Vial" price={prices?.vial} facts={FACTS.vial} photos={[photos.vial]} />
         </Box>
@@ -136,7 +146,7 @@ export default function DualChamberExplainer({ prices, photos, supply }: { price
 
       <Box sx={{ mt: { xs: 4, md: 5 }, display: "grid", gridTemplateColumns: { xs: "1fr", md: "minmax(0, 5fr) minmax(0, 7fr)" }, gap: { xs: 4, md: 5 }, alignItems: "center" }}>
         <Box component="ol" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gap: 3 }}>
-          {POINTS.map((point, index) => (
+          {points.map((point, index) => (
             <Box component="li" key={point.title} sx={{ display: "grid", gridTemplateColumns: "44px 1fr", gap: 2 }}>
               <Box aria-hidden sx={{ width: 44, height: 44, borderRadius: "50%", display: "grid", placeItems: "center", bgcolor: "brand.mintWash", color: "brand.blue" }}><Icon name={point.icon} sx={{ fontSize: 22 }} /></Box>
               <Box>

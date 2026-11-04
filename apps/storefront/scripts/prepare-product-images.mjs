@@ -5,7 +5,8 @@ import sharp from "sharp"
 
 // Turns the owner's white-background box photography into storefront photos:
 // "VETUD-Tirzepatide-40mg-Open-Box.png" → tirzepatide-open.webp, the unlabelled
-// "VETUD-Generic-VETUD-Open-Box.png" → generic-open.webp. Run with `node scripts/prepare-product-images.mjs`.
+// "VETUD-Generic-VETUD-Open-Box.png" → generic-open.webp and the blue Peptide Series box
+// "VETUD-Generic-VETUD-Closed-Box.png" → generic-closed.webp. Run with `node scripts/prepare-product-images.mjs`.
 const root = fileURLToPath(new URL("../../../", import.meta.url))
 const source = path.join(root, "assets/vetud_product_white_background")
 const destination = path.join(root, "apps/storefront/public/images/products")

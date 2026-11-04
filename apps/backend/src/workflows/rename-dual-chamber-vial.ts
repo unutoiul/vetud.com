@@ -2,7 +2,7 @@ import type { UpsertProductDTO } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { updateProductsWorkflow, updateProductVariantsWorkflow } from "@medusajs/medusa/core-flows"
-import { DUAL_CHAMBER_PRODUCTS, FORMAT_CONTENTS, FORMATS, PEN_KIT_BOX } from "../seed/dual-chamber-catalog"
+import { boxFormat, DUAL_CHAMBER_PRODUCTS, FORMAT_CONTENTS, FORMATS, PEN_KIT_BOX } from "../seed/dual-chamber-catalog"
 
 /** The name the cartridge format had before 2026-11-04. */
 const OLD_NAME = "Dual-chamber pen"
@@ -41,10 +41,12 @@ const planDualChamberVialRenameStep = createStep(
         if (variant.title.startsWith(`${OLD_NAME} · `)) variants.push({ id: variant.id, title: variant.title.replace(OLD_NAME, FORMATS.pen) })
       }
       const boxed = !(PEN_KIT_BOX.excluded as readonly string[]).includes(row.handle)
+      // Selank and Semax have the nasal spray in place of the pen kit box.
+      const box = boxFormat(row.handle)
       const contents = {
-        form: boxed ? "Dual-chamber vial, vial or pen kit box" : "Dual-chamber vial or vial",
+        form: boxed ? box.form : "Dual-chamber vial or vial",
         contents_pen: product.contents?.pen ?? FORMAT_CONTENTS.pen,
-        ...(boxed ? { contents_box: PEN_KIT_BOX.contents } : {}),
+        ...(boxed ? { contents_box: box.contents } : {}),
       }
       if (Object.entries(contents).some(([key, value]) => row.metadata?.[key] !== value)) updates.push({ id: row.id, metadata: { ...(row.metadata ?? {}), ...contents } })
     }

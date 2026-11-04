@@ -6,9 +6,12 @@ type Variant = HttpTypes.StoreProductVariant
 /**
  * The ways a dual-chamber product is sold, keyed by the Medusa "Format" option value. The key order
  * is the order shown on the product page (pen kit box, dual-chamber vial, vial); the first is preselected.
+ * Selank and Semax have the nasal spray in the pen kit box's place, so it shares the "box" key
+ * (metadata `contents_box`).
  */
 export const FORMAT_INFO: Record<string, { line: string; key: "pen" | "box" | "vial" }> = {
   "Pen kit box": { line: "The reusable pen with a dual-chamber vial, 12 needles and a booklet, in the VETUD box", key: "box" },
+  "Nasal spray": { line: "A 10 ml nasal spray bottle in the VETUD box", key: "box" },
   "Dual-chamber vial": { line: "Powder and BAC water in one two-chamber cartridge. Refills the reusable pen", key: "pen" },
   // The cartridge's name until 2026-11-04, kept so older carts and the catalog in between still read well.
   "Dual-chamber pen": { line: "Powder and BAC water in one two-chamber cartridge", key: "pen" },
@@ -16,6 +19,8 @@ export const FORMAT_INFO: Record<string, { line: string; key: "pen" | "box" | "v
 }
 
 export const KIT_FORMAT = "Pen kit box"
+
+export const SPRAY_FORMAT = "Nasal spray"
 
 export const FORMAT_OPTION = "Format"
 
@@ -93,12 +98,18 @@ export function formatLine(product: HttpTypes.StoreProduct, format: string) {
   return formatMetadata(product, "format_line", format) ?? FORMAT_INFO[format]?.line
 }
 
+/** The product's boxed format, "Pen kit box" or "Nasal spray", if it has one. */
+export function boxedFormat(product: HttpTypes.StoreProduct) {
+  return readOptions(product).find((option) => option.title === FORMAT_OPTION)?.values.find((value) => FORMAT_INFO[value]?.key === "box")
+}
+
 /** One short line for cards: "Pen kit, dual-chamber vial or vial · 5 mg / 10 mg", or the variant titles. */
 export function shortAvailability(product: HttpTypes.StoreProduct) {
   const options = readOptions(product)
   if (!options.some((option) => option.title === FORMAT_OPTION)) return sortedVariants(product).map((variant) => variant.title).join(" / ")
   const formats = options.find((option) => option.title === FORMAT_OPTION)?.values ?? []
   const amounts = options.find((option) => option.title !== FORMAT_OPTION)?.values ?? []
-  const label = formats.includes(KIT_FORMAT) ? "Pen kit, dual-chamber vial or vial" : "Dual-chamber vial or vial"
+  const label = formats.includes(SPRAY_FORMAT) ? "Nasal spray, dual-chamber vial or vial"
+    : formats.includes(KIT_FORMAT) ? "Pen kit, dual-chamber vial or vial" : "Dual-chamber vial or vial"
   return `${label}${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
 }

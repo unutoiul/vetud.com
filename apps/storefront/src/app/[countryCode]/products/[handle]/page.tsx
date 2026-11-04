@@ -29,7 +29,7 @@ import { getLotReportCounts } from "@/lib/medusa/forum"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
 import { getMoney } from "@/lib/money-server"
 import { isVariantInStock, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
-import { availabilitySummary, defaultVariant, FORMAT_OPTION, formatContents, formatOf, hasFormats, readOptions, variantsWith } from "@/lib/product-formats"
+import { availabilitySummary, boxedFormat, defaultVariant, FORMAT_OPTION, formatContents, formatOf, hasFormats, readOptions, SPRAY_FORMAT, variantsWith } from "@/lib/product-formats"
 import { getFormatPhotos, getProductImages, getProductPhotography } from "@/lib/product-images"
 
 const PLACEHOLDER = "__placeholder__"
@@ -120,6 +120,8 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     .filter(Boolean)
     .join(", ")
   const formats = readOptions(product).find((option) => option.title === FORMAT_OPTION)?.values ?? []
+  // "Pen kit box", or "Nasal spray" for Selank and Semax.
+  const boxed = boxedFormat(product)
   const included = formats.flatMap((format) => {
     const contents = formatContents(product, format)
     return contents ? [{ format, contents }] : []
@@ -224,7 +226,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </ProductSelectionProvider>
 
         <Box>
-          <ProductDossier profile={profile} overview={overview} skus={formats.length ? skus : undefined} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: fromPrice("Pen kit box"), vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} /> : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
+          <ProductDossier profile={profile} overview={overview} skus={formats.length ? skus : undefined} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
         </Box>
       </Section>
 

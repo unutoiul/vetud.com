@@ -44,7 +44,12 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
   const pick = async (picked: { placeId: string; main: string }, token: string, postalOnly = false) => {
     const initial = latest.current.values
     const version = ++requestVersion.current
-    const active = () => version === requestVersion.current && latest.current.values.country_code === country
+    const key = postalOnly ? "postal_code" : "address_1"
+    // Still the latest pick, and the visitor hasn't edited or cleared the field while the details loaded.
+    const active = () => {
+      const now = latest.current.values
+      return version === requestVersion.current && now.country_code === country && (now[key] === initial[key] || now[key] === picked.main)
+    }
     try {
       const { address, location } = await placeDetails(picked.placeId, token, locale)
       if (!active() || (address.country_code && address.country_code !== country)) return
@@ -52,7 +57,6 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
       if (!active()) return
       if (location) setNear(location)
       const previous = latest.current.values
-      if (!postalOnly && previous.address_1 !== initial.address_1 && previous.address_1 !== picked.main) return
       latest.current.onChange({
         ...previous,
         ...(!postalOnly ? { address_1: address.address_1 || picked.main, address_2: address.address_2 || previous.address_2 } : {}),
@@ -61,7 +65,7 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
         province: rules.provinceRequired ? address.province || previous.province : "",
       })
     } catch {
-      if (active()) latest.current.onChange({ ...latest.current.values, [postalOnly ? "postal_code" : "address_1"]: picked.main })
+      if (active()) latest.current.onChange({ ...latest.current.values, [key]: picked.main })
     }
   }
   const postalField = suggestionsOn ? <PlaceAutocomplete key={`${prefix}-postal-${country}`} id={`${prefix}-postal_code`} name={`${prefix}-postal_code`} label={t(rules.postalLabel as "postal" | "zip" | "postcode")} value={values.postal_code} required error={Boolean(errors.postal_code)} helperText={errors.postal_code || t("postalHelp", { example: rules.postalExample })} autoComplete={autocomplete("postal-code")} minCharacters={2} suggest={(text, token, signal) => suggestPostalCodes(text, token, country, signal, locale)} onTextChange={text => set({ postal_code: text })} onPick={(picked, token) => void pick(picked, token, true)} /> : <TextField {...field("postal_code", t(rules.postalLabel as "postal" | "zip" | "postcode"), "postal-code", true)} helperText={errors.postal_code || t("postalHelp", { example: rules.postalExample })} onBlur={() => set({ postal_code: normalizePostal(values.postal_code, country) })} />

@@ -75,11 +75,22 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
         filterOptions={(all) => all}
         getOptionLabel={(option) => (typeof option === "string" ? option : option.main)}
         getOptionKey={(option) => (typeof option === "string" ? option : option.placeId)}
+        // The field is plain text owned by the form; a pick is handled in onChange and not kept as a
+        // selection, so the clear button and the text never disagree.
+        value={null}
         inputValue={value}
         onInputChange={(_event, text, reason) => {
           if (reason === "input") {
             typed.current = true
+            // Suggestions for longer text would be stale once the text is too short to ask again.
+            if (text.trim().length < minCharacters) setOptions([])
             onTextChange(text)
+          } else if (reason === "clear") {
+            // The clear (×) button: empty the form value, not just MUI's copy of the text.
+            typed.current = false
+            setOptions([])
+            setOpen(false)
+            onTextChange("")
           }
         }}
         onChange={(_event, picked) => {
@@ -111,6 +122,9 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
             required={required}
             error={error}
             helperText={helperText}
+            // MUI only reports a close while the list is showing. Suggestions that arrive after the
+            // visitor has moved to another field must not open this list there.
+            onBlur={() => setOpen(false)}
             slotProps={{
               ...params.slotProps,
               // MUI gives the input its own generated id; ours is what the label, the focus-on-error

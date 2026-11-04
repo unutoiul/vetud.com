@@ -87,9 +87,10 @@ The `lots` format is one lot per entry, with entries separated by `;` and fields
 
 ### Dual-chamber pens and vials
 
-Since 2026-11-04 the catalog has 28 products, each sold as a **Dual-chamber vial**, a **Vial** and a **Pen kit box**, at different prices and in one to three amounts. Bacteriostatic water has no kit box.
+Since 2026-11-04 the catalog has 28 products, each sold as a **Dual-chamber vial**, a **Vial** and a **Pen kit box**, at different prices and in one to three amounts. Bacteriostatic water has no kit box, and Selank and Semax have a **Nasal spray** in its place.
 - **Dual-chamber vial.** One cartridge holding the freeze-dried peptide and bacteriostatic water in separate chambers, to refill the reusable pen. It was called "Dual-chamber pen" until migration `vetud-product-22-dual-chamber-vial` renamed it (prices and SKUs unchanged).
 - **Pen kit box.** The reusable pen body with a dual-chamber vial, 12 needles and an instruction booklet, in the VETUD box. It costs the dual-chamber vial's price plus $40 / €38 (`PEN_KIT_BOX` in the seed file). Migration `vetud-product-20-pen-kit-boxes` adds it; rerun it safely with `npx medusa exec ./src/scripts/add-pen-kit-boxes.ts`. The six products with box photos (Retatrutide, Tirzepatide, Semaglutide, NAD+, Ipamorelin, Tesamorelin) show them; the others show the reusable pen (`assets/Reusable dual-chamber peptide pen.png`).
+- **Nasal spray (Selank, Semax).** A 10 ml nasal spray bottle in the VETUD box, in place of the pen kit box: same amounts, prices and SKUs (`NASAL_SPRAY` in the seed file). Migration `vetud-product-23-nasal-spray-format` renamed their Pen kit box variants; rerun it safely with `npx medusa exec ./src/scripts/rename-nasal-spray-format.ts`. The storefront shows the spray photo, box left and bottle right (`selank-front.webp`, `semax-front.webp`, made by `scripts/prepare-product-images.mjs`).
 - **Vial add-ons.** With the Vial format selected, the product page offers bacteriostatic water (10 ml vial) and U-100 syringes as tick boxes; Add to cart adds them too.
 - **Vial.** A sealed vial of freeze-dried powder; bacteriostatic water is sold separately.
 

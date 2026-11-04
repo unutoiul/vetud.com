@@ -126,7 +126,7 @@ export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/sho
   return (
     <>
       <VideoHero video={SHOP_HERO_VIDEO} eyebrow="The collection" title="Research peptides & laboratory materials." description="Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.">
-        <AppLink href="/dual-chamber-pen" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}>Every peptide comes as a dual-chamber vial, a vial or a pen kit box with the reusable pen. See how they compare →</AppLink>
+        <AppLink href="/dual-chamber-pen" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}>Every peptide comes as a dual-chamber vial, a vial or a pen kit box with the reusable pen (Selank and Semax: a nasal spray). See how they compare →</AppLink>
       </VideoHero>
       <Section tone="white" tight sx={{ pt: { xs: 3, md: 5 } }}>
         <Suspense fallback={<ResultsSkeleton />}>
