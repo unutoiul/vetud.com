@@ -1,5 +1,5 @@
 import type { MedusaContainer } from "@medusajs/framework/types"
-import { ContainerRegistrationKeys, Modules, ProductStatus } from "@medusajs/framework/utils"
+import { ContainerRegistrationKeys, ProductStatus } from "@medusajs/framework/utils"
 import {
   createInventoryLevelsWorkflow,
   createProductsWorkflow,
@@ -7,10 +7,10 @@ import {
   updateProductsWorkflow,
 } from "@medusajs/medusa/core-flows"
 import { AMOUNT_OPTION, RETATRUTIDE } from "./catalog"
+import { syncCurrencyPrices } from "../workflows/sync-currency-prices"
 import { uploadProductImage } from "./product-images"
 
 const OLD_HANDLE = "peptide-series-01"
-const PLUGIN_PRICE_WORKFLOW = "update-prices-with-exchange-rates"
 
 type OldProduct = {
   id: string
@@ -107,10 +107,7 @@ export async function replaceSeriesOneWithRetatrutide(container: MedusaContainer
             sku: sku(variant.amount),
             manage_inventory: true,
             options: { [AMOUNT_OPTION.title]: variant.amount },
-            prices: [
-              { currency_code: "usd", amount: variant.usd },
-              { currency_code: "eur", amount: variant.eur },
-            ],
+            prices: [{ currency_code: "usd", amount: variant.usd }],
           })),
         },
       ],
@@ -137,9 +134,9 @@ export async function replaceSeriesOneWithRetatrutide(container: MedusaContainer
     })
   }
 
-  // Prices in the other European currencies, via the currency plugin.
+  // Prices in the other currencies, from USD.
   try {
-    await container.resolve(Modules.WORKFLOW_ENGINE).run(PLUGIN_PRICE_WORKFLOW, { input: {} })
+    await syncCurrencyPrices(container)
   } catch (error) {
     logger.warn(`Retatrutide: price conversion failed (${(error as Error).message}).`)
   }

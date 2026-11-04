@@ -16,7 +16,7 @@ export default async function addPenKitBoxes({ container }: ExecArgs) {
     for (const offer of expected.pen) {
       const box = product?.variants?.find((variant) => variant.title === `${PEN_KIT_BOX.title} · ${offer.amount}`)
       const usd = box?.price_set?.prices?.find((price) => price.currency_code === "usd")
-      if (!box || Number(usd?.amount) !== offer.usd + PEN_KIT_BOX.premium.usd) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `Missing or mispriced Pen kit box: ${expected.handle} ${offer.amount}`)
+      if (!box || Number(usd?.amount) !== offer.usd + PEN_KIT_BOX.premium) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `Missing or mispriced Pen kit box: ${expected.handle} ${offer.amount}`)
     }
   }
   container.resolve(ContainerRegistrationKeys.LOGGER).info(`PEN_KIT_BOXES_VERIFIED ${JSON.stringify(result)}`)

@@ -9,11 +9,10 @@ import Skeleton from "@mui/material/Skeleton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { useSearchParams } from "next/navigation"
-import { useLocale } from "next-intl"
 import { useEffect, useState } from "react"
 import { PAYMENT_BANK_DETAILS } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
-import { formatMoney } from "@/lib/product"
+import { useMoney } from "@/lib/money"
 import { formatAddressLines } from "@/lib/address"
 import { confirmationPayment } from "@/lib/nmi"
 import { orderNumber, type CustomerOrder } from "@/lib/orders"
@@ -35,7 +34,7 @@ function readStoredOrder(id: string, customerId?: string): CustomerOrder | null 
 export default function OrderConfirmation() {
   const { customer } = useAccount()
   const params = useSearchParams()
-  const locale = useLocale()
+  const money = useMoney()
   const id = params.get("id") ?? ""
   const [result, setResult] = useState<{ id: string; customerId?: string; order: CustomerOrder | null; authoritative: boolean }>({ id: "", order: null, authoritative: false })
 
@@ -101,7 +100,7 @@ export default function OrderConfirmation() {
                 Amount due
               </Typography>
               <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
-                {formatMoney(Number(order.total ?? 0), order.currency_code, { locale })}
+                {money(Number(order.total ?? 0), order.currency_code)}
               </Typography>
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
@@ -189,7 +188,7 @@ export default function OrderConfirmation() {
                   </Typography>
                 </Box>
                 <Typography sx={{ fontWeight: 600 }}>
-                  {formatMoney(Number(item.unit_price) * Number(item.quantity), order.currency_code, { locale })}
+                  {money(Number(item.unit_price) * Number(item.quantity), order.currency_code)}
                 </Typography>
               </Stack>
             ))}

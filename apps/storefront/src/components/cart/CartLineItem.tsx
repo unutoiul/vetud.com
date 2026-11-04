@@ -6,8 +6,9 @@ import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import { useLocale, useTranslations } from "next-intl"
-import { formatMoney, readProductMeta } from "@/lib/product"
+import { useTranslations } from "next-intl"
+import { readProductMeta } from "@/lib/product"
+import { useMoney } from "@/lib/money"
 import { getProductThumbnail } from "@/lib/product-images"
 import { LocalizedNextLink } from "../common/links"
 import ProductThumb from "../product/ProductThumb"
@@ -22,7 +23,7 @@ type CartLineItemProps = {
 }
 
 export default function CartLineItem({ item, currencyCode, readOnly, onNavigate }: CartLineItemProps) {
-  const locale = useLocale()
+  const money = useMoney()
   const t = useTranslations("Checkout")
   const { updateItem, removeItem, pending } = useStore()
   const meta = readProductMeta({
@@ -66,14 +67,14 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
               {item.product_title}
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              {item.variant_title} · {formatMoney(Number(item.unit_price), currencyCode, { locale })}
+              {item.variant_title} · {money(Number(item.unit_price), currencyCode)}
             </Typography>
             <Typography variant="mono" sx={{ color: "text.secondary", fontSize: 11 }}>
               {item.variant_sku ?? meta.code}
             </Typography>
           </Box>
           <Typography sx={{ fontWeight: 700, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
-            {formatMoney(lineTotal, currencyCode, { locale })}
+            {money(lineTotal, currencyCode)}
           </Typography>
         </Stack>
         {readOnly ? (

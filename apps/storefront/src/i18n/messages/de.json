@@ -257,6 +257,9 @@
     "topics": "Nach Thema stöbern"
   },
   "Offer": {
+    "bannerSale": "{title}: {percent} % Rabatt auf alles",
+    "bannerEnds": "Endet am {date}",
+    "bannerCta": "Jetzt sparen",
     "label": "Angebot",
     "endsIn": "Endet in",
     "days": "Tage",

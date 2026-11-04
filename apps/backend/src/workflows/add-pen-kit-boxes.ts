@@ -3,9 +3,7 @@ import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/util
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createProductVariantsWorkflow, updateProductOptionValuesOnProductStep, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
 import { boxSku, DUAL_CHAMBER_PRODUCTS, FORMAT_CONTENTS, PEN_KIT_BOX } from "../seed/dual-chamber-catalog"
-import { regionalPrices } from "./import-dual-chamber-catalog"
-
-type ExchangeService = { getExchangeRates: (base: string) => Promise<Record<string, number>> }
+import { usdPrice } from "./import-dual-chamber-catalog"
 
 type ProductRow = {
   id: string
@@ -19,7 +17,7 @@ type OptionChange = { product_id: string; product_option_id: string; add: { valu
 
 /**
  * Works out every change first: the new Format value, one Pen kit box variant per pen amount
- * (pen price plus the premium, in every region currency) and the updated contents. Products that
+ * (pen price plus the premium, in USD) and the updated contents. Products that
  * already have the box are skipped, so the step can be repeated.
  */
 const planPenKitBoxesStep = createStep(
@@ -27,10 +25,7 @@ const planPenKitBoxesStep = createStep(
   async (_input: Record<string, never>, { container }) => {
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
     const catalog = DUAL_CHAMBER_PRODUCTS.filter((product) => !(PEN_KIT_BOX.excluded as readonly string[]).includes(product.handle))
-    const [{ data }, { data: regions }] = await Promise.all([
-      query.graph({ entity: "product", fields: ["id", "handle", "metadata", "options.id", "options.title", "options.values.value"], filters: { handle: catalog.map((product) => product.handle) } }),
-      query.graph({ entity: "region", fields: ["currency_code"] }),
-    ])
+    const { data } = await query.graph({ entity: "product", fields: ["id", "handle", "metadata", "options.id", "options.title", "options.values.value"], filters: { handle: catalog.map((product) => product.handle) } })
     const rows = data as unknown as ProductRow[]
     const pending = catalog.filter((product) => rows.find((row) => row.handle === product.handle)?.metadata?.pen_kit_box_revision !== PEN_KIT_BOX.revision)
 
@@ -39,8 +34,6 @@ const planPenKitBoxesStep = createStep(
       const { data: clashes } = await query.graph({ entity: "product_variant", fields: ["sku"], filters: { sku: skus } })
       if (clashes.length) throw new MedusaError(MedusaError.Types.INVALID_DATA, `SKU ${clashes[0].sku} already exists.`)
     }
-    const currencies = [...new Set(regions.map((region) => region.currency_code))].sort()
-    const rates = pending.length ? await container.resolve<ExchangeService>("currencyExchangeService").getExchangeRates("eur") : {}
 
     const options: OptionChange[] = []
     const variants: CreateProductVariantWorkflowInputDTO[] = []
@@ -58,7 +51,7 @@ const planPenKitBoxesStep = createStep(
         manage_inventory: false,
         allow_backorder: false,
         options: { Format: PEN_KIT_BOX.title, Amount: offer.amount },
-        prices: regionalPrices(offer.usd + PEN_KIT_BOX.premium.usd, offer.eur + PEN_KIT_BOX.premium.eur, currencies, rates),
+        prices: usdPrice(offer.usd + PEN_KIT_BOX.premium),
         metadata: { format: "box" },
       })))
       updates.push({

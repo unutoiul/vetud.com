@@ -27,7 +27,8 @@ import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { getLotReportCounts } from "@/lib/medusa/forum"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
-import { formatMoney, isVariantInStock, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
+import { getMoney } from "@/lib/money-server"
+import { isVariantInStock, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
 import { availabilitySummary, defaultVariant, FORMAT_OPTION, formatContents, formatOf, hasFormats, readOptions, variantsWith } from "@/lib/product-formats"
 import { getFormatPhotos, getProductImages, getProductPhotography } from "@/lib/product-images"
 
@@ -97,7 +98,7 @@ export default function ProductPage({ params }: PageProps<"/[countryCode]/produc
 
 async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/products/[handle]">, "params">) {
   const { handle } = await params
-  const { product, region, countryCode } = await loadProduct(handle)
+  const [{ product, region, countryCode }, money] = await Promise.all([loadProduct(handle), getMoney()])
   if (!product || !region) notFound()
 
   const meta = readProductMeta(product)
@@ -126,7 +127,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
   // "From" prices per format for the pen-vs-vial comparison.
   const fromPrice = (format: string) => {
     const amounts = variantsWith(product, FORMAT_OPTION, format).flatMap((variant) => variantPrice(variant)?.amount ?? [])
-    return amounts.length ? formatMoney(Math.min(...amounts), region.currency_code) : undefined
+    return amounts.length ? money(Math.min(...amounts), region.currency_code) : undefined
   }
   // Products sold in both formats get a short table: what's included and storage have their own sections.
   const specs = formats.length ? [

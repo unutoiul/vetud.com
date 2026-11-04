@@ -2,7 +2,8 @@
  * Placeholder catalog for the Vetud storefront. Replace names, prices and lots with real
  * products (here before first deploy, or later in Medusa Admin).
  *
- * Prices are in major units (49 = $49.00 / €49.00).
+ * Prices are US dollars in major units (49 = $49.00). Every other currency is converted from them
+ * (workflows/sync-currency-prices.ts).
  */
 
 export const REGIONS = [
@@ -14,10 +15,8 @@ export const REGIONS = [
   },
 ] as const
 
-export const SHIPPING = {
-  standard: { usd: 9.95, eur: 12 },
-  express: { usd: 24.95, eur: 29 },
-}
+/** Flat shipping in USD, the same in every country. Raised on 2026-11-04 (was 9.95 / 24.95). */
+export const SHIPPING = { standard: 24.95, express: 50 }
 
 export const CATEGORIES = [
   { name: "Peptide Series", handle: "peptide-series", description: "Single-sequence research peptides." },
@@ -36,7 +35,6 @@ export const AMOUNT_OPTION = {
 type SeedVariant = {
   amount: (typeof AMOUNT_OPTION.values)[number]
   usd: number
-  eur: number
   stock: number
 }
 
@@ -76,7 +74,7 @@ const PEPTIDE_SPECS = {
 function peptide(
   index: number,
   accent: string,
-  prices: { small: [number, number]; large: [number, number] },
+  prices: { small: number; large: number },
   featured = false
 ): SeedProduct {
   const number = String(index).padStart(2, "0")
@@ -95,8 +93,8 @@ function peptide(
       lots: `VTD${number}-2609A|2026-09|99.4%; VTD${number}-2607B|2026-07|99.2%`,
     },
     variants: [
-      { amount: "5 mg", usd: prices.small[0], eur: prices.small[1], stock: 100 },
-      { amount: "10 mg", usd: prices.large[0], eur: prices.large[1], stock: 100 },
+      { amount: "5 mg", usd: prices.small, stock: 100 },
+      { amount: "10 mg", usd: prices.large, stock: 100 },
     ],
   }
 }
@@ -117,16 +115,16 @@ export const RETATRUTIDE: SeedProduct = {
     ...PEPTIDE_SPECS,
     lots: "VTD01-2609A|2026-09|99.4%; VTD01-2607B|2026-07|99.2%",
   },
-  variants: [{ amount: "40 mg", usd: 159, eur: 149, stock: 100 }],
+  variants: [{ amount: "40 mg", usd: 159, stock: 100 }],
 }
 
 export const PRODUCTS: SeedProduct[] = [
   RETATRUTIDE,
-  peptide(2, "#23618a", { small: [54, 50], large: [96, 88] }, true),
-  peptide(3, "#5ba79b", { small: [59, 54], large: [104, 96] }, true),
-  peptide(4, "#6f86c9", { small: [45, 42], large: [82, 76] }),
-  peptide(5, "#c39a52", { small: [64, 59], large: [115, 106] }),
-  peptide(6, "#c97a72", { small: [69, 64], large: [124, 114] }),
+  peptide(2, "#23618a", { small: 54, large: 96 }, true),
+  peptide(3, "#5ba79b", { small: 59, large: 104 }, true),
+  peptide(4, "#6f86c9", { small: 45, large: 82 }),
+  peptide(5, "#c39a52", { small: 64, large: 115 }),
+  peptide(6, "#c97a72", { small: 69, large: 124 }),
   {
     title: "Research Blend A",
     handle: "research-blend-a",
@@ -142,8 +140,8 @@ export const PRODUCTS: SeedProduct[] = [
       lots: "VTDB1-2608A|2026-08|99.1%",
     },
     variants: [
-      { amount: "10 mg", usd: 119, eur: 110, stock: 60 },
-      { amount: "20 mg", usd: 209, eur: 192, stock: 40 },
+      { amount: "10 mg", usd: 119, stock: 60 },
+      { amount: "20 mg", usd: 209, stock: 40 },
     ],
   },
   {
@@ -161,8 +159,8 @@ export const PRODUCTS: SeedProduct[] = [
       lots: "VTDB2-2608A|2026-08|99.0%",
     },
     variants: [
-      { amount: "10 mg", usd: 129, eur: 119, stock: 60 },
-      { amount: "20 mg", usd: 229, eur: 210, stock: 40 },
+      { amount: "10 mg", usd: 129, stock: 60 },
+      { amount: "20 mg", usd: 229, stock: 40 },
     ],
   },
   {
@@ -183,8 +181,8 @@ export const PRODUCTS: SeedProduct[] = [
       lots: "VTDS1-2609A|2026-09|USP",
     },
     variants: [
-      { amount: "10 ml", usd: 12, eur: 11, stock: 500 },
-      { amount: "30 ml", usd: 24, eur: 22, stock: 500 },
+      { amount: "10 ml", usd: 12, stock: 500 },
+      { amount: "30 ml", usd: 24, stock: 500 },
     ],
   },
 ]

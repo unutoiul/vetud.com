@@ -6,8 +6,9 @@ import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { useEffect, useRef, useState } from "react"
-import { useLocale, useTranslations } from "next-intl"
-import { cheapestPrice, formatMoney, readProductMeta } from "@/lib/product"
+import { useTranslations } from "next-intl"
+import { cheapestPrice, readProductMeta } from "@/lib/product"
+import { useMoney } from "@/lib/money"
 import { brand } from "@/theme/tokens"
 import { hasFormats, shortAvailability } from "@/lib/product-formats"
 import { getProductImages } from "@/lib/product-images"
@@ -18,7 +19,7 @@ import ProductPhoto from "../product/ProductPhoto"
 /** Product cards share the hero's alpine stage; the active card sits above its neighbours. */
 export default function CollectionCarousel({ products }: { products: HttpTypes.StoreProduct[] }) {
   const t = useTranslations("Common")
-  const locale = useLocale()
+  const money = useMoney()
   const photos = products.filter(product => getProductImages(product).length > 0)
   const count = photos.length
   const root = useRef<HTMLDivElement>(null)
@@ -99,7 +100,7 @@ export default function CollectionCarousel({ products }: { products: HttpTypes.S
               <Typography sx={{ mt: 1, fontSize: 12, color: "text.secondary", lineHeight: 1.6 }}>{shortAvailability(product)}</Typography>
               {hasFormats(product) ? null : <Typography sx={{ fontSize: 12, color: "text.secondary", lineHeight: 1.6 }}>{meta.form}</Typography>}
               <Stack direction="row" sx={{ mt: "auto", pt: 2, alignItems: "center", justifyContent: "space-between", gap: 1 }}>
-                <Typography sx={{ fontSize: 14, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{price ? `${t("from")} ${formatMoney(price.amount, price.currencyCode, { locale })}` : t("viewProduct")}</Typography>
+                <Typography sx={{ fontSize: 14, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{price ? `${t("from")} ${money(price.amount, price.currencyCode)}` : t("viewProduct")}</Typography>
                 <Box className="hero-product-arrow" sx={{ display: "grid", placeItems: "center", width: 34, height: 34, border: "1px solid", borderColor: "divider", borderRadius: "50%", color: "brand.blue", transition: "background-color .2s, color .2s" }}><Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></Box>
               </Stack>
             </Box>

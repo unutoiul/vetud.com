@@ -8,6 +8,7 @@ import OfferPopup from "@/components/newsletter/OfferPopup"
 import AccountProvider from "@/components/account/AccountProvider"
 import Footer from "@/components/layout/Footer"
 import Header from "@/components/layout/Header"
+import SaleBannerSlot from "@/components/layout/SaleBannerSlot"
 import StoreProvider from "@/components/store/StoreProvider"
 import { BASE_URL, SITE } from "@/lib/config"
 import {
@@ -93,6 +94,9 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
               >
                 Skip to content
               </Box>
+              <Suspense fallback={null}>
+                <SaleBannerSlot />
+              </Suspense>
               <Header />
               <Box component="main" id="main" sx={{ minHeight: "60vh" }}>
                 {children}

@@ -13,12 +13,6 @@ import { useState } from "react"
 import { persistCountryCookie } from "@/lib/country-cookie"
 import { useStore } from "../store/StoreProvider"
 
-const CURRENCY_NAMES: Record<string, string> = {
-  usd: "US dollar",
-  eur: "Euro",
-  gbp: "British pound",
-}
-
 /**
  * Two dropdowns: the currency, and the country. Prices, shipping and tax are set per region and a
  * country belongs to exactly one region, so each currency only offers the countries that use it
@@ -34,8 +28,10 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
   const [currency, setCurrency] = useState(region.currencyCode)
   const [country, setCountry] = useState(countryCode)
 
-  // Only currencies that have at least one country we sell to.
-  const currencies = Object.keys(CURRENCY_NAMES).filter((code) => countries.some((item) => item.currencyCode === code))
+  // The currencies of the countries we sell to, named by Intl in the page's language.
+  const currencies = [...new Set(countries.map((item) => item.currencyCode))]
+  const currencyName = new Intl.DisplayNames([locale], { type: "currency" })
+  const countryName = new Intl.DisplayNames([locale], { type: "region" })
   const countriesForCurrency = countries.filter((item) => item.currencyCode === currency)
 
   const open = (target: HTMLElement) => {
@@ -99,14 +95,14 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
           <TextField select size="small" label={t("currency")} value={currency} onChange={(event) => changeCurrency(event.target.value)}>
             {currencies.map((code) => (
               <MenuItem key={code} value={code}>
-                {code.toUpperCase()} · {CURRENCY_NAMES[code]}
+                {code.toUpperCase()} · {currencyName.of(code.toUpperCase())}
               </MenuItem>
             ))}
           </TextField>
           <TextField select size="small" label={t("country")} value={country} onChange={(event) => setCountry(event.target.value)}>
             {countriesForCurrency.map((item) => (
               <MenuItem key={item.code} value={item.code}>
-                {new Intl.DisplayNames([locale], { type: "region" }).of(item.code.toUpperCase()) ?? item.name}
+                {countryName.of(item.code.toUpperCase()) ?? item.name}
               </MenuItem>
             ))}
           </TextField>

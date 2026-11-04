@@ -16,8 +16,7 @@ import Typography from "@mui/material/Typography"
 import { useEffect, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { activeShipments, deliveryLabel, orderNumber, orderPaymentLabel, orderPaymentNotice, shipmentLabel, trackingLink, type CustomerOrder, type CustomerOrdersResponse } from "@/lib/orders"
-import { useLocale } from "next-intl"
-import { formatMoney } from "@/lib/product"
+import { useMoney } from "@/lib/money"
 import { formatAddressLines } from "@/lib/address"
 import PaygateResume from "../checkout/PaygateResume"
 import Icon from "../brand/Icon"
@@ -115,8 +114,8 @@ function OrderCard({ order }: { order: CustomerOrder }) {
   const shipments = activeShipments(order)
   const address = order.shipping_address
   const paymentNotice = orderPaymentNotice(order)
-  const locale = useLocale()
-  const money = (amount: number | null | undefined) => formatMoney(Number(amount ?? 0), order.currency_code, { locale })
+  const format = useMoney()
+  const money = (amount: number | null | undefined) => format(amount, order.currency_code)
 
   return (
     <Paper component="article" aria-label={`Order ${number}`} variant="outlined" sx={{ borderRadius: 3, overflow: "hidden" }}>

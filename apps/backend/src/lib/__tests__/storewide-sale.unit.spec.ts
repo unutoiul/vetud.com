@@ -55,7 +55,7 @@ describe("storewide sale", () => {
     }]
     expect(planSalePrices(variants, "plist_sale", 30)).toEqual({
       create: [],
-      update: [{ id: "s1", variant_id: "variant_a", amount: 70 }],
+      update: [{ id: "s1", variant_id: "variant_a", currency_code: "usd", amount: 70 }],
       delete: ["s3", "s4"],
     })
   })

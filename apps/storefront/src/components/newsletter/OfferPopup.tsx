@@ -19,32 +19,43 @@ import { useEffect, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import Icon from "../brand/Icon"
 import { useLocalizedHref } from "../common/links"
+import { useAccount } from "../account/AccountProvider"
 import { useStore } from "../store/StoreProvider"
 
 type Offer = { id: string; headline: string; description: string | null; discount: string; ends_at: string | null }
 
 const DELAY_MS = 8000
-const SNOOZE_MS = 7 * 24 * 60 * 60 * 1000
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // No interruptions while someone is buying or managing their account.
 const QUIET_PATHS = /\/(cart|checkout|account|order|newsletter)(\/|$)/
 
-const storageKey = (id: string) => `vetud_offer_${id}`
+/** Set in this browser once someone subscribes; they never see the pop-up again. */
+const SUBSCRIBED_KEY = "vetud_newsletter"
+const offerKey = (id: string) => `vetud_offer_${id}`
 
-function snoozed(id: string) {
+function subscribed(id: string) {
   try {
-    const value = window.localStorage.getItem(storageKey(id))
-    return value === "subscribed" || (value !== null && Date.now() - Number(value) < SNOOZE_MS)
+    // Older sign-ups were recorded per offer.
+    return window.localStorage.getItem(SUBSCRIBED_KEY) === "subscribed" || window.localStorage.getItem(offerKey(id)) === "subscribed"
   } catch {
     return false
   }
 }
 
-function remember(id: string, value: string) {
+/** "No thanks" lasts for this visit (this tab); the pop-up asks again on the next one. */
+function closedThisVisit(id: string) {
   try {
-    window.localStorage.setItem(storageKey(id), value)
+    return window.sessionStorage.getItem(offerKey(id)) === "closed"
   } catch {
-    // Without storage the pop-up may show again on a later visit; nothing else depends on it.
+    return false
+  }
+}
+
+function remember(storage: "local" | "session", key: string, value: string) {
+  try {
+    (storage === "local" ? window.localStorage : window.sessionStorage).setItem(key, value)
+  } catch {
+    // Without storage the pop-up may show again sooner; nothing else depends on it.
   }
 }
 
@@ -76,14 +87,17 @@ function Countdown({ endsAt }: { endsAt: string }) {
 
 /**
  * Sign-up pop-up for the current Medusa offer (a campaign whose identifier starts with "popup-").
- * Shows once after a short delay, never on cart, checkout or account pages, and stays away for
- * a week after being closed. The code itself is only sent by email.
+ * Everyone who hasn't subscribed sees it on every visit, after a short delay; closing it hides it
+ * until the next visit. Never on cart, checkout or account pages, and never for subscribers
+ * (in this browser, or signed in with marketing consent). The code itself is only sent by email.
  */
 export default function OfferPopup() {
   const t = useTranslations("Offer")
   const pathname = usePathname()
   const localize = useLocalizedHref()
   const { countryCode } = useStore()
+  const { customer } = useAccount()
+  const consented = customer?.metadata?.marketing_consent === true
   const [offer, setOffer] = useState<Offer | null>(null)
   const [open, setOpen] = useState(false)
   const [email, setEmail] = useState("")
@@ -93,12 +107,12 @@ export default function OfferPopup() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
 
   useEffect(() => {
-    if (QUIET_PATHS.test(pathname)) return
+    if (QUIET_PATHS.test(pathname) || consented) return
     let cancelled = false
     const timer = window.setTimeout(async () => {
       try {
         const { offer: current } = await sdk.client.fetch<{ offer: Offer | null }>("/store/newsletter/offer", { method: "GET" })
-        if (cancelled || !current || snoozed(current.id) || (current.ends_at && new Date(current.ends_at).getTime() <= Date.now())) return
+        if (cancelled || !current || subscribed(current.id) || closedThisVisit(current.id) || (current.ends_at && new Date(current.ends_at).getTime() <= Date.now())) return
         setOffer(current)
         setOpen(true)
       } catch {
@@ -109,14 +123,14 @@ export default function OfferPopup() {
       cancelled = true
       window.clearTimeout(timer)
     }
-  }, [pathname])
+  }, [pathname, consented])
 
   if (!offer) return null
 
   const emailError = EMAIL_PATTERN.test(email.trim()) ? undefined : t("invalidEmail")
   const close = () => {
     setOpen(false)
-    if (status !== "sent") remember(offer.id, String(Date.now()))
+    if (status !== "sent") remember("session", offerKey(offer.id), "closed")
   }
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -125,7 +139,7 @@ export default function OfferPopup() {
     setStatus("sending")
     try {
       await sdk.client.fetch("/store/newsletter", { method: "POST", body: { email: email.trim(), consent: true, country_code: countryCode, ...(website ? { website } : {}) } })
-      remember(offer.id, "subscribed")
+      remember("local", SUBSCRIBED_KEY, "subscribed")
       setStatus("sent")
     } catch {
       setStatus("error")

@@ -261,12 +261,6 @@ module.exports = defineConfig({
       resolve: "@rokmohar/medusa-plugin-meilisearch",
       options: {},
     },
-    {
-      // Converts product prices from the store's default currency (EUR) into every enabled
-      // currency, nightly and on demand (Admin > Currency Exchange Settings).
-      resolve: "@kb0912/currency-exchange-plugin",
-      options: {},
-    },
     ...(MAKEPAY_ENABLED
       ? [{ resolve: "@makecrypto/medusa-plugin-makepay", options: makePayOptions }]
       : []),

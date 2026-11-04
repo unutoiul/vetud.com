@@ -15,7 +15,7 @@ import { CUSTOMER_TOKEN_KEY, sdk } from "@/lib/medusa/sdk"
 import { useStore } from "../store/StoreProvider"
 
 const CUSTOMER_FIELDS =
-  "id,email,first_name,last_name,phone,company_name,default_shipping_address_id,default_billing_address_id,*addresses"
+  "id,email,first_name,last_name,phone,company_name,default_shipping_address_id,default_billing_address_id,metadata,*addresses"
 
 export type AccountAddress = HttpTypes.StoreCustomerAddress
 

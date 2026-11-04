@@ -6,23 +6,45 @@ export const PEN_EXPLAINER_IMAGE = "/images/products/dual-chamber-pen.webp"
 export const REUSABLE_PEN_IMAGE = "/images/products/reusable-dual-chamber-pen.webp"
 const REUSABLE_PEN_ALT = "The reusable VETUD dual-chamber pen, labelled: graduated holder, freeze-dried peptide, diluent and reusable pen body"
 
-/** Products whose dual-chamber pen kit box is photographed, closed and open. */
-const PEN_KIT_BOXES = new Set(["ipamorelin", "nad-plus", "retatrutide", "semaglutide", "tesamorelin", "tirzepatide"])
+/**
+ * Products whose own pen kit box is photographed, closed and open (product handle → photo name).
+ * Melanotan I and II share the "Melanotan 10 mg" box.
+ */
+const PEN_KIT_BOXES: Record<string, string> = {
+  ipamorelin: "ipamorelin",
+  "melanotan-i": "melanotan",
+  "melanotan-ii": "melanotan",
+  "nad-plus": "nad-plus",
+  retatrutide: "retatrutide",
+  semaglutide: "semaglutide",
+  tesamorelin: "tesamorelin",
+  tirzepatide: "tirzepatide",
+}
+
+/** Sold without a pen kit box, so no box photo. */
+const NO_PEN_KIT = new Set(["bacteriostatic-water"])
+
+/** The unlabelled open VETUD box, for products without their own box photo. */
+const GENERIC_OPEN_BOX = "/images/products/generic-open.webp"
 
 /**
  * The photos of each format: the cartridge (dual-chamber vial), the vial and the pen kit box.
- * Products without a box photo show the reusable pen for the kit.
+ * Products without their own box photo show the generic open box for the kit.
  */
 const formatPhotos = (handle: string, title: string) => {
-  const boxed = PEN_KIT_BOXES.has(handle)
+  const named = Object.hasOwn(PEN_KIT_BOXES, handle) ? PEN_KIT_BOXES[handle] : undefined
+  const openBox = named
+    ? { url: `/images/products/${named}-open.webp`, alt: `${title} pen kit, open box with the reusable pen, 12 needles and the instruction booklet`, label: "Open pen kit", format: "Pen kit box" }
+    : NO_PEN_KIT.has(handle) ? undefined
+    : { url: GENERIC_OPEN_BOX, alt: "VETUD pen kit, open box with the reusable pen, 12 needles and the instruction booklet", label: "Pen kit box", format: "Pen kit box" }
   return {
     pen: { url: `/images/products/${handle}-pen.webp`, alt: `${title} dual-chamber vial: powder and BAC water in separate chambers`, label: "Dual-chamber vial", format: "Dual-chamber vial" },
-    box: boxed ? { url: `/images/products/${handle}-closed.webp`, alt: `${title} pen kit, closed VETUD box`, label: "Pen kit box", format: "Pen kit box" } : undefined,
-    openBox: boxed ? { url: `/images/products/${handle}-open.webp`, alt: `${title} pen kit, open box with the pen, 12 needles and booklet`, label: "Open pen kit", format: "Pen kit box" } : undefined,
+    box: named ? { url: `/images/products/${named}-closed.webp`, alt: `${title} pen kit, closed VETUD box`, label: "Pen kit box", format: "Pen kit box" } : undefined,
+    openBox,
     vial: { url: `/images/products/${handle}-vial.webp`, alt: `${title} research vial with VETUD label`, label: "Vial", format: "Vial" },
-    reusable: { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT, label: "Reusable pen", format: boxed ? undefined : "Pen kit box" },
-    /** The photo that stands for the pen kit box: its box, or the reusable pen. */
-    kit: boxed ? { url: `/images/products/${handle}-closed.webp`, alt: `${title} pen kit, closed VETUD box` } : { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT },
+    reusable: { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT, label: "Reusable pen", format: openBox ? undefined : "Pen kit box" },
+    /** The photo that stands for the pen kit box: the open box shows what's inside. */
+    kit: openBox ? { url: openBox.url, alt: openBox.alt } : { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT },
   }
 }
 
@@ -30,7 +52,7 @@ export type FormatPhotos = ReturnType<typeof formatPhotos>
 
 const formatPhotography = (handle: string, title: string): ProductPhotography => {
   const { pen, box, openBox, vial, reusable } = formatPhotos(handle, title)
-  return { aspectRatio: "1 / 1", images: [pen, vial, ...(box && openBox ? [box, openBox] : []), reusable] }
+  return { aspectRatio: "1 / 1", images: [pen, vial, ...(box ? [box] : []), ...(openBox ? [openBox] : []), reusable] }
 }
 
 /** The 28 products sold as a dual-chamber pen or a vial (prepare-dual-chamber-images.mjs makes the photos). */

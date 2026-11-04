@@ -32,7 +32,8 @@ export async function generateMetadata({ params, searchParams }: PageProps<"/[co
   })
 }
 
-const SORT_VALUES: ProductSort[] = ["featured", "price-asc", "price-desc", "name"]
+// Older links with sort=featured fall back to relevance, the default.
+const SORT_VALUES: ProductSort[] = ["relevance", "price-asc", "price-desc", "name"]
 
 function first(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value
@@ -45,7 +46,7 @@ async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countr
   const selectedCategory = first(params.category) || undefined
   const selectedCategories = selectedCategory ? [selectedCategory] : []
   const sortParam = first(params.sort) as ProductSort | undefined
-  const sort = sortParam && SORT_VALUES.includes(sortParam) ? sortParam : "featured"
+  const sort = sortParam && SORT_VALUES.includes(sortParam) ? sortParam : "relevance"
 
   const { region } = await getCurrentRegion()
   const [categories, catalog, matches] = await Promise.all([
@@ -54,7 +55,9 @@ async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countr
     query ? searchProducts(query, region.id) : Promise.resolve(null),
   ])
   const facets = categoryFacets(categories, catalog)
-  const sorted = sortProducts(filterByCategories(matches ?? catalog, facets, selectedCategories), sort)
+  const filtered = filterByCategories(matches ?? catalog, facets, selectedCategories)
+  // When searching, relevance keeps Meilisearch's order (best match first).
+  const sorted = matches && sort === "relevance" ? filtered : sortProducts(filtered, sort)
 
   return (
     <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "300px minmax(0, 1fr)" }, alignItems: "start", gap: { xs: 2.5, lg: 5 } }}>

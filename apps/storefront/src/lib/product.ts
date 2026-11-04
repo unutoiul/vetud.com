@@ -1,5 +1,6 @@
 import type { HttpTypes } from "@medusajs/types"
 import type { ProductSort } from "./medusa/products"
+import { popularity } from "./popularity"
 
 export type ProductLot = {
   lot: string
@@ -102,15 +103,16 @@ export function sortedVariants(product: HttpTypes.StoreProduct): HttpTypes.Store
   )
 }
 
+/** The variant's price in the region's currency, as Medusa calculated it. */
 export function variantPrice(variant?: HttpTypes.StoreProductVariant | null) {
   const price = variant?.calculated_price
-  if (!price || typeof price.calculated_amount !== "number") {
+  if (!price || typeof price.calculated_amount !== "number" || !price.currency_code) {
     return null
   }
   return {
     amount: price.calculated_amount,
     original: typeof price.original_amount === "number" ? price.original_amount : price.calculated_amount,
-    currencyCode: price.currency_code ?? "usd",
+    currencyCode: price.currency_code,
   }
 }
 
@@ -151,46 +153,6 @@ export function initialProductVariant(product: HttpTypes.StoreProduct) {
   return variants.find(variant => isVariantInStock(variant)) ?? variants[0]
 }
 
-/** Locale per currency, so each region sees its familiar symbol position and separators. */
-const CURRENCY_LOCALES: Record<string, string> = {
-  usd: "en-US",
-  eur: "en-IE",
-  gbp: "en-GB",
-  chf: "de-CH",
-  sek: "sv-SE",
-  nok: "nb-NO",
-  dkk: "da-DK",
-  pln: "pl-PL",
-  czk: "cs-CZ",
-  huf: "hu-HU",
-  ron: "ro-RO",
-  isk: "is-IS",
-  cad: "en-CA",
-  aud: "en-AU",
-  jpy: "ja-JP",
-  cny: "zh-CN",
-  sgd: "en-SG",
-  hkd: "en-HK",
-  aed: "en-AE",
-}
-const ZERO_DECIMAL_CURRENCIES = new Set(["huf", "isk", "jpy"])
-
-/** `whole` drops the decimals, e.g. for "free shipping over £170". */
-export function formatMoney(
-  amount: number | null | undefined,
-  currencyCode: string,
-  { whole = false, locale }: { whole?: boolean; locale?: string } = {}
-) {
-  const code = currencyCode.toLowerCase()
-  const digits = whole || ZERO_DECIMAL_CURRENCIES.has(code) ? 0 : 2
-  return new Intl.NumberFormat(locale ?? CURRENCY_LOCALES[code] ?? "en-US", {
-    style: "currency",
-    currency: code.toUpperCase(),
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
-  }).format(Number(amount ?? 0))
-}
-
 export function sortProducts(products: HttpTypes.StoreProduct[], sort: ProductSort) {
   const price = (product: HttpTypes.StoreProduct) => cheapestPrice(product)?.amount ?? Infinity
   const sorted = [...products]
@@ -201,11 +163,16 @@ export function sortProducts(products: HttpTypes.StoreProduct[], sort: ProductSo
       return sorted.sort((a, b) => price(b) - price(a))
     case "name":
       return sorted.sort((a, b) => a.title.localeCompare(b.title, "en", { numeric: true }))
+    case "relevance":
+      // Best-known products first; equal scores keep the featured order.
+      return sorted.sort((a, b) => popularity(b) - popularity(a) || featuredOrder(a, b))
     default:
-      // Branded materials lead the collection; retain all other catalog entries.
-      return sorted.sort((a, b) =>
-        Number(b.metadata?.brand === "VETUD") - Number(a.metadata?.brand === "VETUD") ||
-        readProductMeta(a).code.localeCompare(readProductMeta(b).code, "en", { numeric: true })
-      )
+      return sorted.sort(featuredOrder)
   }
+}
+
+/** Branded materials lead the collection, then product code order; all other entries are kept. */
+function featuredOrder(a: HttpTypes.StoreProduct, b: HttpTypes.StoreProduct) {
+  return Number(b.metadata?.brand === "VETUD") - Number(a.metadata?.brand === "VETUD") ||
+    readProductMeta(a).code.localeCompare(readProductMeta(b).code, "en", { numeric: true })
 }

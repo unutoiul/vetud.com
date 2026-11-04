@@ -41,10 +41,10 @@ export function filterByCategories(products: HttpTypes.StoreProduct[], categorie
   })
 }
 
-export function shopQuery({ query, sort = "featured", categories = [] }: { query?: string; sort?: ProductSort; categories?: string[] }) {
+export function shopQuery({ query, sort = "relevance", categories = [] }: { query?: string; sort?: ProductSort; categories?: string[] }) {
   const params = new URLSearchParams()
   if (query) params.set("q", query)
   for (const category of new Set(categories)) params.append("category", category)
-  if (sort !== "featured") params.set("sort", sort)
+  if (sort !== "relevance") params.set("sort", sort)
   return params.toString()
 }

@@ -11,7 +11,8 @@ import LotTable from "./LotTable"
 import StatusBadge from "../learn/StatusBadge"
 import type { ProductOverview } from "@/content/product-overview"
 import type { ProductResearch } from "@/content/product-research"
-import { formatMoney, type ProductMeta } from "@/lib/product"
+import { useMoney } from "@/lib/money"
+import type { ProductMeta } from "@/lib/product"
 import { SITE } from "@/lib/config"
 
 const sections = [
@@ -62,6 +63,7 @@ export default function ProductDossier({ profile, overview, description, specs, 
   /** Shown in small type under the specifications rather than as a table row. */
   skus?: string
 }) {
+  const money = useMoney()
   const items = formats ? [{ id: "formats", label: "Vial, dual-chamber or pen kit" }, ...sections] : sections
   return <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "230px minmax(0, 1fr)" }, gap: { xs: 3, md: 8 }, mt: { xs: 5, md: 9 } }}>
     <Box component="nav" aria-label="Product dossier" sx={{ minWidth: 0, width: "100%", alignSelf: "start", position: { md: "sticky" }, top: 125 }}>
@@ -101,7 +103,7 @@ export default function ProductDossier({ profile, overview, description, specs, 
       <Box component="section" id="delivery" aria-labelledby="delivery-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="delivery-heading" sx={{ mb: 2.5 }}>From our collection to your laboratory.</Typography>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 3, mb: 3 }}>
-          <Box sx={{ p: 3, border: "1px solid", borderColor: "divider", borderRadius: "5px" }}><Icon name="truck" sx={{ color: "brand.blue", mb: 1.5 }} /><Typography component="h3" sx={{ fontSize: 14, fontWeight: 600 }}>Standard delivery</Typography><Typography sx={{ ...bodyStyle, mt: .75 }}>3–5 business days, tracked.{freeShippingThreshold ? ` Free on orders over ${formatMoney(freeShippingThreshold, currencyCode, { whole: true })}.` : ""}</Typography></Box>
+          <Box sx={{ p: 3, border: "1px solid", borderColor: "divider", borderRadius: "5px" }}><Icon name="truck" sx={{ color: "brand.blue", mb: 1.5 }} /><Typography component="h3" sx={{ fontSize: 14, fontWeight: 600 }}>Standard delivery</Typography><Typography sx={{ ...bodyStyle, mt: .75 }}>3–5 business days, tracked.{freeShippingThreshold ? ` Free on orders over ${money(freeShippingThreshold, currencyCode, { whole: true })}.` : ""}</Typography></Box>
           <Box sx={{ p: 3, border: "1px solid", borderColor: "divider", borderRadius: "5px" }}><Icon name="clock" sx={{ color: "brand.blue", mb: 1.5 }} /><Typography component="h3" sx={{ fontSize: 14, fontWeight: 600 }}>Express delivery</Typography><Typography sx={{ ...bodyStyle, mt: .75 }}>1–2 business days, tracked. Available services and charges appear at checkout.</Typography></Box>
         </Box>
         <Typography sx={bodyStyle}>Orders dispatch after payment confirmation. Products travel in protective packaging; follow the supplied storage requirements when they arrive. See our <AppLink href="/legal/shipping">shipping policy</AppLink> and <AppLink href="/legal/returns">returns policy</AppLink> for full details.</Typography>

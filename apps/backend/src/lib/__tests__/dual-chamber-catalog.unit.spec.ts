@@ -16,7 +16,6 @@ describe("dual-chamber catalog", () => {
         expect(product[format].length).toBeGreaterThan(0)
         for (const offer of product[format]) {
           expect(offer.usd).toBeGreaterThan(0)
-          expect(offer.eur).toBeGreaterThan(0)
         }
       }
       for (const pen of product.pen) {
@@ -40,8 +39,7 @@ describe("dual-chamber catalog", () => {
     const boxSkus = boxed.flatMap((product) => product.pen.map((offer) => boxSku(product, offer.amount)))
     expect(new Set([...skus, ...boxSkus]).size).toBe(skus.length + boxSkus.length)
     expect(boxSku(boxed.find((product) => product.handle === "bpc-157")!, "10 mg")).toBe("VTD-BPC-BOX-10MG")
-    expect(PEN_KIT_BOX.premium.usd).toBeGreaterThan(0)
-    expect(PEN_KIT_BOX.premium.eur).toBeGreaterThan(0)
+    expect(PEN_KIT_BOX.premium).toBeGreaterThan(0)
   })
 
   it("keeps doses and use instructions out of the copy", () => {

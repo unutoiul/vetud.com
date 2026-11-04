@@ -1,8 +1,8 @@
 /**
  * Storefront copy and specifications for the three supplied pen kits, approved by the owner on
- * 2026-10-30: publish with zero stock, keep the proposed USD/EUR prices, convert the other store
- * currencies from EUR, and describe the kits like the existing pen kits (99% purity).
- * Tesamorelin joined on 2026-11-02 on the same terms, at the owner's price of $198 / €178.
+ * 2026-10-30: publish with zero stock at the proposed USD prices (other currencies are converted
+ * from USD) and describe the kits like the existing pen kits (99% purity).
+ * Tesamorelin joined on 2026-11-02 on the same terms, at the owner's price of $198.
  */
 export const SUPPLIED_PUBLICATION_REVISION = "supplied-pen-kits-published-2026-11-02-v2"
 
@@ -61,5 +61,3 @@ export const SUPPLIED_PUBLICATIONS = KITS.map((kit) => {
   }
 })
 
-/** Store currencies priced in whole units, matching the rest of the catalog. All others round to the cent. */
-export const WHOLE_UNIT_CURRENCIES = new Set(["huf", "isk", "jpy", "cad", "aud", "cny", "sgd", "hkd", "aed"])

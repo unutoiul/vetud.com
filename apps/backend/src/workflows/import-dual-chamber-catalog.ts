@@ -6,9 +6,7 @@ import {
   DUAL_CHAMBER_PRODUCTS, DUAL_CHAMBER_REVISION, EXPLAINER_IMAGE, FORMAT_CONTENTS, FORMATS, imageUrl,
   REPLACED_SUFFIX, RETIRED_HANDLES, variantSku, variantTitle, type DualChamberProduct, type FormatKey,
 } from "../seed/dual-chamber-catalog"
-import { WHOLE_UNIT_CURRENCIES } from "../seed/supplied-research-publication"
-
-type ExchangeService = { getExchangeRates: (base: string) => Promise<Record<string, number>> }
+import { BASE_CURRENCY } from "../lib/currencies"
 
 type ExistingProduct = {
   id: string
@@ -24,20 +22,12 @@ type ExistingProduct = {
  */
 const CARRIED_KEYS = ["lots", "purity", "testing", "storage", "handling", "research_source", "research_sources"]
 
-export function regionalPrices(usd: number, eur: number, currencies: string[], rates: Record<string, number>) {
-  return currencies.map((currency) => {
-    if (currency === "usd") return { currency_code: currency, amount: usd }
-    if (currency === "eur") return { currency_code: currency, amount: eur }
-    const rate = rates[currency]
-    if (!rate || !Number.isFinite(rate) || rate <= 0) throw new MedusaError(MedusaError.Types.INVALID_DATA, `Missing exchange rate for ${currency.toUpperCase()}.`)
-    const amount = eur * rate
-    return { currency_code: currency, amount: WHOLE_UNIT_CURRENCIES.has(currency) ? Math.round(amount) : Math.round(amount * 100) / 100 }
-  })
-}
+/** New variants get their USD price; the other currencies follow from workflows/sync-currency-prices.ts. */
+export const usdPrice = (amount: number) => [{ currency_code: BASE_CURRENCY, amount }]
 
 function productInput(
   product: DualChamberProduct,
-  context: { categoryIds: Map<string, string>; currencies: string[]; rates: Record<string, number>; salesChannelId: string; shippingProfileId: string; previous?: ExistingProduct },
+  context: { categoryIds: Map<string, string>; salesChannelId: string; shippingProfileId: string; previous?: ExistingProduct },
 ): CreateProductWorkflowInputDTO {
   const formats = (["pen", "vial"] as FormatKey[]).filter((format) => product[format].length)
   const amounts = [...new Set(formats.flatMap((format) => product[format].map((offer) => offer.amount)))]
@@ -83,7 +73,7 @@ function productInput(
       manage_inventory: false,
       allow_backorder: false,
       options: { Format: FORMATS[format], Amount: offer.amount },
-      prices: regionalPrices(offer.usd, offer.eur, context.currencies, context.rates),
+      prices: usdPrice(offer.usd),
       metadata: { format },
     }))),
   }
@@ -131,11 +121,9 @@ const planDualChamberCatalogStep = createStep(
     if (taken.length) throw new MedusaError(MedusaError.Types.INVALID_DATA, `The handle ${taken[0].handle} is already in use.`)
 
     const currencies = [...new Set(regions.map((region) => region.currency_code))].sort()
-    const needsRates = pending.length > 0 && currencies.some((currency) => currency !== "usd" && currency !== "eur")
-    const rates = needsRates ? await container.resolve<ExchangeService>("currencyExchangeService").getExchangeRates("eur") : {}
     const categoryIds = new Map(categories.map((category) => [category.handle as string, category.id]))
     const products = pending.map((product) => productInput(product, {
-      categoryIds, currencies, rates,
+      categoryIds,
       salesChannelId: salesChannelId!, shippingProfileId: shippingProfileId!,
       previous: replaced.find((row) => row.handle === product.handle),
     }))

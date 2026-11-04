@@ -12,9 +12,9 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
 import { useState } from "react"
-import { useLocale } from "next-intl"
 import { SITE } from "@/lib/config"
-import { formatMoney, isVariantInStock, percentOff, sortedVariants, variantPrice } from "@/lib/product"
+import { isVariantInStock, percentOff, sortedVariants, variantPrice } from "@/lib/product"
+import { useMoney } from "@/lib/money"
 import { defaultVariant, findVariant, FORMAT_OPTION, formatContents, formatLine, readOptions, selectionOf, variantsWith } from "@/lib/product-formats"
 import { useStore } from "../store/StoreProvider"
 import { useProductSelection } from "./ProductSelection"
@@ -28,7 +28,6 @@ export type PurchaseAddOn = { variantId: string; title: string; detail: string; 
 const ADD_ON_FORMATS = ["Vial"]
 
 export default function PurchasePanel({ product, addOns = [] }: { product: HttpTypes.StoreProduct; addOns?: PurchaseAddOn[] }) {
-  const locale = useLocale()
   const { addItem, pending, error, clearError, region } = useStore()
   const { setFormat } = useProductSelection()
   const variants = sortedVariants(product)
@@ -52,7 +51,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
       ? Math.max(1, Math.min(99, variant.inventory_quantity ?? 1))
       : 99
   const threshold = region.freeShippingThreshold
-  const money = (amount: number, currencyCode: string) => formatMoney(amount, currencyCode, { locale })
+  const money = useMoney()
 
   // Keep the other choices when that combination exists; otherwise take the first variant with the new value.
   const choose = (title: string, value: string) => {
@@ -110,7 +109,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
         ) : null}
         {threshold ? (
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-            Free standard shipping on orders over {formatMoney(threshold, region.currencyCode, { whole: true, locale })}
+            Free standard shipping on orders over {money(threshold, region.currencyCode, { whole: true })}
           </Typography>
         ) : null}
       </Box>

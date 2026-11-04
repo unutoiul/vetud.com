@@ -1,5 +1,5 @@
 import type { CreatePriceListPriceWorkflowDTO, UpdatePriceListPriceWorkflowDTO } from "@medusajs/framework/types"
-import { WHOLE_UNIT_CURRENCIES } from "../seed/supplied-research-publication"
+import { roundMoney } from "./currencies"
 
 /**
  * A store-wide sale is a Medusa price list (type "sale") that takes the same percentage off every
@@ -21,10 +21,9 @@ export function readSaleSettings(metadata: Record<string, unknown> | null | unde
   return typeof percent === "number" && Number.isFinite(percent) ? { percent_off: percent } : null
 }
 
-/** 30% off 98 USD is 68.60; whole-unit currencies (JPY, HUF…) round to the unit, like the regular prices. */
+/** 30% off 98 USD is 68.60; currencies without decimals (JPY) round to the unit. */
 export function saleAmount(amount: number, percentOff: number, currencyCode: string) {
-  const value = (amount * (100 - percentOff)) / 100
-  return WHOLE_UNIT_CURRENCIES.has(currencyCode.toLowerCase()) ? Math.round(value) : Math.round(value * 100) / 100
+  return roundMoney((amount * (100 - percentOff)) / 100, currencyCode)
 }
 
 export type PriceRow = {
@@ -74,7 +73,9 @@ export function planSalePrices(variants: VariantPrices[], priceListId: string | 
       const target = saleAmount(amount, percentOff, currency)
       const existing = current.get(currency)
       if (!existing) plan.create.push({ variant_id: variant.id, currency_code: currency, amount: target })
-      else if (Math.abs(Number(existing.amount) - target) > 0.000001) plan.update.push({ id: existing.id, variant_id: variant.id, amount: target })
+      // The currency is required: Medusa matches price list updates by price set and currency, so
+      // without it every update for a variant collapses into one.
+      else if (Math.abs(Number(existing.amount) - target) > 0.000001) plan.update.push({ id: existing.id, variant_id: variant.id, currency_code: currency, amount: target })
     }
   }
   return plan

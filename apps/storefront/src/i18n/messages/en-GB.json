@@ -257,6 +257,9 @@
     "topics": "Browse by topic"
   },
   "Offer": {
+    "bannerSale": "{title}: {percent}% off everything",
+    "bannerEnds": "Ends {date}",
+    "bannerCta": "Take advantage",
     "label": "Offer",
     "endsIn": "Ends in",
     "days": "Days",

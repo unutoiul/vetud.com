@@ -52,9 +52,7 @@ export default async function importSuppliedProducts({ container }: ExecArgs) {
     // The generated graph types omit the Pricing Module's linked fields.
     const prices = (variant as unknown as { price_set?: { prices?: { amount: number; currency_code: string }[] } }).price_set?.prices ?? []
     if (!expected.categoryHandles.every(handle => categories.includes(handle)) || product.images?.length !== 2) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `Unexpected category or gallery: ${expected.handle}`)
-    for (const [currency, amount] of [["usd", expected.usd], ["eur", expected.eur]] as const) {
-      if (!prices.some(price => price.currency_code === currency && Number(price.amount) === amount)) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `Unexpected proposed price: ${expected.handle} ${currency}`)
-    }
+    if (!prices.some(price => price.currency_code === "usd" && Number(price.amount) === expected.usd)) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `Unexpected proposed price: ${expected.handle}`)
     if (product.metadata?.purity || product.metadata?.testing || product.metadata?.concentration || product.metadata?.ingredients) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `Unverified specifications were populated: ${expected.handle}`)
     if (product.handle === "melanotan" && product.metadata?.melanotan_subtype !== "unspecified") throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, "Melanotan subtype must remain unspecified.")
     return { id: product.id, handle: product.handle, title: product.title, status: product.status, categories, amount: variant.title, sku: variant.sku, prices: prices.map(price => ({ currency_code: price.currency_code, amount: Number(price.amount) })), images: product.images?.map(image => image?.url), inventory: "No available stock assigned" }

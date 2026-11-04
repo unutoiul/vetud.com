@@ -22,7 +22,8 @@ export const PRODUCT_FIELDS = [
   "*options",
 ].join(",")
 
-export type ProductSort = "featured" | "price-asc" | "price-desc" | "name"
+/** "relevance" is the shop default: search order when searching, otherwise best known first (lib/popularity). */
+export type ProductSort = "relevance" | "featured" | "price-asc" | "price-desc" | "name"
 
 type ListProductsInput = {
   regionId: string

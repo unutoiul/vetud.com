@@ -18,10 +18,8 @@ import {
   updateProductsWorkflow,
   updateProductVariantsWorkflow,
 } from "@medusajs/medusa/core-flows"
+import { BASE_CURRENCY } from "../lib/currencies"
 import {
-  PREMIUM_EUR_RATES,
-  PREMIUM_FX_DATE,
-  PREMIUM_FX_SOURCE,
   PREMIUM_PRICE_HANDLES,
   PREMIUM_PRICE_MULTIPLIER,
   PREMIUM_PRICE_REVISION,
@@ -55,25 +53,6 @@ const preparePremiumPricesStep = createStep(
   "prepare-premium-prices",
   async (_input: Record<string, never>, { container }) => {
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
-    const { data: regions } = await query.graph({
-      entity: "region",
-      fields: ["currency_code"],
-    })
-    const currencies = [
-      ...new Set(regions.map((region) => region.currency_code)),
-    ].sort()
-    for (const currency of currencies) {
-      if (!(PREMIUM_EUR_RATES[currency] > 0))
-        throw new MedusaError(
-          MedusaError.Types.INVALID_DATA,
-          `Missing exchange rate: ${currency}`,
-        )
-    }
-    if (!currencies.includes("usd") || !currencies.includes("eur"))
-      throw new MedusaError(
-        MedusaError.Types.INVALID_DATA,
-        "USD and EUR markets are required.",
-      )
     const { data } = await query.graph({
       entity: "product",
       fields: [
@@ -92,7 +71,7 @@ const preparePremiumPricesStep = createStep(
     const summary: {
       handle: string
       title: string
-      prices: Record<string, number>
+      usd: number
     }[] = []
     for (const handle of PREMIUM_PRICE_HANDLES) {
       const product = (data as unknown as ProductRow[]).find(
@@ -113,40 +92,14 @@ const preparePremiumPricesStep = createStep(
       for (const variant of product.variants) {
         const oldPrices = variant.price_set?.prices ?? []
         const basePrices = oldPrices.filter(isBasePrice)
-        const usd = basePrices.filter((price) => price.currency_code === "usd")
+        const usd = basePrices.filter((price) => price.currency_code === BASE_CURRENCY)
         if (usd.length !== 1 || !(Number(usd[0].amount) > 0))
           throw new MedusaError(
             MedusaError.Types.INVALID_DATA,
             `${handle} ${variant.title} needs one positive base USD price.`,
           )
-        const amounts: Record<string, number> = {}
-        for (const currency of currencies) {
-          const existing = basePrices.filter(
-            (price) => price.currency_code === currency,
-          )
-          if (existing.length > 1)
-            throw new MedusaError(
-              MedusaError.Types.INVALID_DATA,
-              `${handle} ${variant.title} has multiple base ${currency.toUpperCase()} prices.`,
-            )
-          if (existing[0]) {
-            const amount = Number(existing[0].amount)
-            if (!(Number.isFinite(amount) && amount > 0))
-              throw new MedusaError(
-                MedusaError.Types.INVALID_DATA,
-                `Invalid ${currency} price for ${handle} ${variant.title}`,
-              )
-            amounts[currency] =
-              Math.round(amount * PREMIUM_PRICE_MULTIPLIER * 100) / 100
-          }
-        }
-        // Existing regional retail prices double exactly. Missing EUR prices come from the new USD
-        // price; the EUR anchor also lets the existing nightly conversion job keep other markets current.
-        amounts.eur ??= Math.ceil(amounts.usd / PREMIUM_EUR_RATES.usd)
-        for (const currency of currencies)
-          amounts[currency] ??= Math.round(
-            amounts.eur * PREMIUM_EUR_RATES[currency],
-          )
+        // Only the USD price doubles; the other currencies are converted from it.
+        const doubled = Math.round(Number(usd[0].amount) * PREMIUM_PRICE_MULTIPLIER * 100) / 100
 
         const prices: CreatePricesDTO[] = oldPrices
           .filter((price) => !price.price_list_id)
@@ -170,20 +123,14 @@ const preparePremiumPricesStep = createStep(
               id: price.id,
               currency_code: price.currency_code,
               amount:
-                isBasePrice(price) && amounts[price.currency_code] !== undefined
-                  ? amounts[price.currency_code]
-                  : price.amount,
+                price.id === usd[0].id ? doubled : price.amount,
               min_quantity: price.min_quantity,
               max_quantity: price.max_quantity,
               ...(Object.keys(rules).length ? { rules } : {}),
             }
           })
-        for (const currency of currencies) {
-          if (!basePrices.some((price) => price.currency_code === currency))
-            prices.push({ currency_code: currency, amount: amounts[currency] })
-        }
         variants.push({ id: variant.id, prices })
-        summary.push({ handle, title: variant.title, prices: amounts })
+        summary.push({ handle, title: variant.title, usd: doubled })
       }
       products.push({
         id: product.id,
@@ -191,19 +138,15 @@ const preparePremiumPricesStep = createStep(
           ...product.metadata,
           retail_pricing_revision: PREMIUM_PRICE_REVISION,
           retail_pricing_multiplier: PREMIUM_PRICE_MULTIPLIER,
-          retail_pricing_note:
-            "User-requested 100% increase of existing retail prices; missing currencies added using the EUR anchor and recorded exchange rates.",
-          retail_pricing_fx_date: PREMIUM_FX_DATE,
-          retail_pricing_fx_source: PREMIUM_FX_SOURCE,
-          retail_pricing_fx_rates: PREMIUM_EUR_RATES,
+          retail_pricing_note: "User-requested 100% increase of the USD retail price.",
         },
       })
     }
-    return new StepResponse({ products, variants, summary, currencies })
+    return new StepResponse({ products, variants, summary })
   },
 )
 
-/** Doubles retail prices once and makes all current market currencies available, without altering stock. */
+/** Doubles the USD retail prices once, without altering stock. */
 export const pricePremiumProductsWorkflow = createWorkflow(
   "price-premium-products",
   (input: Record<string, never>) => {
@@ -227,7 +170,6 @@ export const pricePremiumProductsWorkflow = createWorkflow(
     return new WorkflowResponse(
       transform(prepared, (data) => ({
         updated: data.summary,
-        currencies: data.currencies,
       })),
     )
   },

@@ -89,7 +89,7 @@ const planSuppliedProductsStep = createStep(
           manage_inventory: true,
           allow_backorder: false,
           options: { Amount: product.amount },
-          prices: [{ currency_code: "usd", amount: product.usd }, { currency_code: "eur", amount: product.eur }],
+          prices: [{ currency_code: "usd", amount: product.usd }],
         }],
       }
     })

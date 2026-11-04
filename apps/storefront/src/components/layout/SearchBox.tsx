@@ -9,10 +9,10 @@ import InputAdornment from "@mui/material/InputAdornment"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
-import { useLocale } from "next-intl"
 import { useEffect, useRef, useState, type Ref } from "react"
 import { sdk } from "@/lib/medusa/sdk"
-import { cheapestPrice, formatMoney, readProductMeta } from "@/lib/product"
+import { cheapestPrice, readProductMeta } from "@/lib/product"
+import { useMoney } from "@/lib/money"
 import { shortAvailability } from "@/lib/product-formats"
 import { loadSearchIndex, rank, type ArticleEntry, type GuideEntry } from "@/lib/site-search"
 import { useStore } from "../store/StoreProvider"
@@ -35,7 +35,6 @@ type SearchBoxProps = {
 /** Searches products (Meilisearch), the peptide guides and the news, grouped by kind. */
 export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: SearchBoxProps) {
   const router = useRouter()
-  const locale = useLocale()
   const { countryCode, region } = useStore()
   const [input, setInput] = useState("")
   const [options, setOptions] = useState<Result[]>([])
@@ -114,7 +113,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
         const { key, ...rest } = props as typeof props & { key: string }
         return (
           <Box component="li" key={key} {...rest} sx={{ gap: 1.5, alignItems: "flex-start !important" }}>
-            {option.group === "Products" ? <ProductRow product={option.product} locale={locale} />
+            {option.group === "Products" ? <ProductRow product={option.product} />
               : option.group === "Peptide guides" ? <ContentRow icon="molecule" title={option.guide.name} detail={option.guide.aka ? `${option.guide.aka} · ${option.guide.line}` : option.guide.line} />
               : <ContentRow icon="news" title={option.article.title} detail={`${option.article.kind} · ${option.article.date}`} />}
           </Box>
@@ -160,7 +159,8 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
   )
 }
 
-function ProductRow({ product, locale }: { product: HttpTypes.StoreProduct; locale: string }) {
+function ProductRow({ product }: { product: HttpTypes.StoreProduct }) {
+  const money = useMoney()
   const meta = readProductMeta(product)
   const price = cheapestPrice(product)
   return <>
@@ -172,7 +172,7 @@ function ProductRow({ product, locale }: { product: HttpTypes.StoreProduct; loca
     {price ? (
       <Typography sx={{ fontSize: 13, color: "text.secondary", whiteSpace: "nowrap" }}>
         {price.hasRange ? "from " : ""}
-        {formatMoney(price.amount, price.currencyCode, { locale })}
+        {money(price.amount, price.currencyCode)}
       </Typography>
     ) : null}
   </>

@@ -22,7 +22,6 @@
     "start:railway": "cd .medusa/server && npm install && if [ \"$MEDUSA_WORKER_MODE\" = \"worker\" ]; then npm run start; else npm run predeploy && npm run start; fi"
   },
   "dependencies": {
-    "@kb0912/currency-exchange-plugin": "^0.0.4",
     "@makecrypto/medusa-plugin-makepay": "1.0.1",
     "@medusajs/admin-sdk": "2.21.2",
     "@medusajs/admin-shared": "2.21.2",
@@ -33,6 +32,11 @@
     "@medusajs/framework": "2.21.2",
     "@medusajs/medusa": "2.21.2",
     "@medusajs/ui": "4.2.6",
+    "@mikro-orm/cli": "6.6.14",
+    "@mikro-orm/core": "6.6.14",
+    "@mikro-orm/knex": "6.6.14",
+    "@mikro-orm/migrations": "6.6.14",
+    "@mikro-orm/postgresql": "6.6.14",
     "@rokmohar/medusa-plugin-meilisearch": "^2.3.1",
     "@tanstack/react-query": "5.64.2",
     "medusa-payment-nmi": "0.4.2",
@@ -77,13 +81,6 @@
     },
     "@eslint/eslintrc": {
       "ajv": "^6.12.4"
-    },
-    "@kb0912/currency-exchange-plugin": {
-      "@mikro-orm/cli": "6.6.14",
-      "@mikro-orm/core": "6.6.14",
-      "@mikro-orm/knex": "6.6.14",
-      "@mikro-orm/migrations": "6.6.14",
-      "@mikro-orm/postgresql": "6.6.14"
     },
     "@makecrypto/medusa-plugin-makepay": {
       "react-router-dom": "$react-router-dom"

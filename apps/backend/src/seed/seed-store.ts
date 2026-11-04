@@ -188,7 +188,6 @@ export async function seedVetudStore(container: MedusaContainer) {
   await createShippingOptionsWorkflow(container).run({
     input: REGIONS.flatMap((region) => {
       const zone = fulfillmentSet.service_zones.find((z) => z.name === region.name)!
-      const currency = region.currency_code
       return [
         {
           name: "Standard Shipping",
@@ -201,7 +200,7 @@ export async function seedVetudStore(container: MedusaContainer) {
             description: "3–5 business days.",
             code: "standard",
           },
-          prices: [{ currency_code: currency, amount: SHIPPING.standard[currency] }],
+          prices: [{ currency_code: "usd", amount: SHIPPING.standard }],
           rules: storeRules,
         },
         {
@@ -215,7 +214,7 @@ export async function seedVetudStore(container: MedusaContainer) {
             description: "1–2 business days, tracked.",
             code: "express",
           },
-          prices: [{ currency_code: currency, amount: SHIPPING.express[currency] }],
+          prices: [{ currency_code: "usd", amount: SHIPPING.express }],
           rules: storeRules,
         },
       ]
@@ -289,7 +288,6 @@ export async function seedVetudStore(container: MedusaContainer) {
           options: { [AMOUNT_OPTION.title]: variant.amount },
           prices: [
             { currency_code: "usd", amount: variant.usd },
-            { currency_code: "eur", amount: variant.eur },
           ],
         })),
       })),

@@ -257,6 +257,9 @@
     "topics": "Bladeren per onderwerp"
   },
   "Offer": {
+    "bannerSale": "{title}: {percent}% korting op alles",
+    "bannerEnds": "Eindigt {date}",
+    "bannerCta": "Profiteer nu",
     "label": "Aanbieding",
     "endsIn": "Eindigt over",
     "days": "Dagen",

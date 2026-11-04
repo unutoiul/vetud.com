@@ -3,21 +3,18 @@ import { ContainerRegistrationKeys, MedusaError, ProductStatus } from "@medusajs
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createProductsWorkflow } from "@medusajs/medusa/core-flows"
 import { LAB_SUPPLIES, LAB_SUPPLIES_REVISION, LAB_SUPPLY_IMAGE_ORIGIN } from "../seed/lab-supplies"
-import { regionalPrices } from "./import-dual-chamber-catalog"
-
-type ExchangeService = { getExchangeRates: (base: string) => Promise<Record<string, number>> }
+import { usdPrice } from "./import-dual-chamber-catalog"
 
 /** Plans the missing lab supplies; existing handles are left alone, so it can be repeated. */
 const planLabSuppliesStep = createStep(
   "plan-lab-supplies",
   async (_input: Record<string, never>, { container }) => {
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
-    const [{ data: existing }, { data: categories }, { data: stores }, { data: profiles }, { data: regions }] = await Promise.all([
+    const [{ data: existing }, { data: categories }, { data: stores }, { data: profiles }] = await Promise.all([
       query.graph({ entity: "product", fields: ["handle"], filters: { handle: LAB_SUPPLIES.map((supply) => supply.handle) } }),
       query.graph({ entity: "product_category", fields: ["id", "handle"], filters: { handle: [...new Set(LAB_SUPPLIES.map((supply) => supply.category))] } }),
       query.graph({ entity: "store", fields: ["default_sales_channel_id"] }),
       query.graph({ entity: "shipping_profile", fields: ["id"], filters: { type: "default" } }),
-      query.graph({ entity: "region", fields: ["currency_code"] }),
     ])
     const pending = LAB_SUPPLIES.filter((supply) => !existing.some((row) => row.handle === supply.handle))
     const salesChannelId = stores[0]?.default_sales_channel_id
@@ -27,8 +24,6 @@ const planLabSuppliesStep = createStep(
       const { data: clashes } = await query.graph({ entity: "product_variant", fields: ["sku"], filters: { sku: pending.flatMap((supply) => supply.variants.map((variant) => variant.sku)) } })
       if (clashes.length) throw new MedusaError(MedusaError.Types.INVALID_DATA, `SKU ${clashes[0].sku} already exists.`)
     }
-    const currencies = [...new Set(regions.map((region) => region.currency_code))].sort()
-    const rates = pending.length ? await container.resolve<ExchangeService>("currencyExchangeService").getExchangeRates("eur") : {}
 
     const products: CreateProductWorkflowInputDTO[] = pending.map((supply) => {
       const category = categories.find((row) => row.handle === supply.category)
@@ -53,7 +48,7 @@ const planLabSuppliesStep = createStep(
           manage_inventory: false,
           allow_backorder: false,
           options: { Pack: variant.title },
-          prices: regionalPrices(variant.usd, variant.eur, currencies, rates),
+          prices: usdPrice(variant.usd),
         })),
       }
     })

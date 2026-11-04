@@ -1,4 +1,4 @@
-import type { CreatePricesDTO, MedusaContainer, PricingRuleOperatorValues } from "@medusajs/framework/types"
+import type { MedusaContainer } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import {
   createRegionsWorkflow,
@@ -7,6 +7,7 @@ import {
   updateStoresWorkflow,
 } from "@medusajs/medusa/core-flows"
 import { BASE_CURRENCY, CONVERTED_MARKETS, EUROZONE_COUNTRIES } from "../lib/currencies"
+import { syncCurrencyPrices } from "../workflows/sync-currency-prices"
 
 type RegionRow = {
   id: string
@@ -16,34 +17,14 @@ type RegionRow = {
 }
 type ZoneRow = { id: string; geo_zones?: { country_code?: string | null }[] | null }
 type StoreRow = { id: string; supported_currencies?: { currency_code: string; is_default?: boolean }[] }
-type PriceRow = {
-  currency_code?: string
-  amount?: unknown
-  price_list_id?: string | null
-  price_rules?: { attribute: string; operator?: string | null; value: string }[]
-}
-
-/** Service registered by @kb0912/currency-exchange-plugin (it ships no TypeScript types). */
-type CurrencyExchangeService = {
-  getExchangeRates: (base: string) => Promise<Record<string, number>>
-  listCurrencyExchangeSettings: (filters: object) => Promise<{ id: string; currency_code: string }[]>
-  createCurrencyExchangeSettings: (data: object[]) => Promise<unknown>
-  updateCurrencyExchangeSettings: (data: object[]) => Promise<unknown>
-}
-const CURRENCY_EXCHANGE_MODULE = "currencyExchangeService"
-const PLUGIN_PRICE_WORKFLOW = "update-prices-with-exchange-rates"
 
 /**
- * Brings the store up to the European multi-currency setup. Idempotent, and never overwrites
- * prices that already exist.
+ * Brings the store up to the European multi-currency setup. Idempotent.
  *  1. Every eurozone country is in the EUR region.
- *  2. EUR is the store's default currency (the currency plugin converts from it) and every
- *     converted currency is supported.
+ *  2. USD is the store's default currency and every converted currency is supported.
  *  3. Each currency in CONVERTED_MARKETS has its own region.
  *  4. New countries get tax regions and join the European shipping zone.
- *  5. The currency plugin is enabled (auto rates) for each converted currency.
- *  6. European shipping options get a one-time price per currency. Adjust them in Admin afterwards.
- *  7. The plugin converts all product prices once, right away.
+ *  5. Prices in the new currencies are converted from USD (workflows/sync-currency-prices.ts).
  */
 export async function ensureEuropeanMarkets(container: MedusaContainer) {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
@@ -54,7 +35,7 @@ export async function ensureEuropeanMarkets(container: MedusaContainer) {
     fields: ["id", "currency_code", "metadata", "countries.iso_2"],
   })
   const regions = regionData as RegionRow[]
-  const euroRegion = regions.find((region) => region.currency_code === BASE_CURRENCY)
+  const euroRegion = regions.find((region) => region.currency_code === "eur")
   if (!euroRegion) {
     logger.info("European markets: no EUR region yet (store not seeded), skipping.")
     return
@@ -77,7 +58,7 @@ export async function ensureEuropeanMarkets(container: MedusaContainer) {
     logger.info(`European markets: added ${missingEuro.join(", ")} to the EUR region.`)
   }
 
-  // 2. EUR is the default currency and every converted currency is supported.
+  // 2. USD is the default currency and every converted currency is supported.
   const { data: stores } = await query.graph({
     entity: "store",
     fields: ["id", "supported_currencies.currency_code", "supported_currencies.is_default"],
@@ -101,7 +82,7 @@ export async function ensureEuropeanMarkets(container: MedusaContainer) {
           },
         },
       })
-      logger.info(`European markets: store currencies ${codes.join(", ").toUpperCase()} (default EUR).`)
+      logger.info(`European markets: store currencies ${codes.join(", ").toUpperCase()} (default USD).`)
     }
   }
 
@@ -151,41 +132,11 @@ export async function ensureEuropeanMarkets(container: MedusaContainer) {
     }
   }
 
-  // 5-7 need today's rates from the currency plugin.
-  const exchange = container.resolve<CurrencyExchangeService>(CURRENCY_EXCHANGE_MODULE)
-  let rates: Record<string, number>
+  // 5. Prices in every currency, from USD. If the rates are unavailable, the hourly job catches up.
   try {
-    rates = await exchange.getExchangeRates(BASE_CURRENCY)
+    await syncCurrencyPrices(container)
   } catch (error) {
-    logger.warn(
-      `European markets: exchange rates unavailable (${(error as Error).message}). ` +
-        "Run `npm run markets:setup` later to finish the currency setup."
-    )
-    return
-  }
-
-  // 5. Enable automatic conversion in the plugin for each converted currency.
-  const settings = await exchange.listCurrencyExchangeSettings({})
-  for (const { currency } of CONVERTED_MARKETS) {
-    const rate = rates[currency]
-    if (typeof rate !== "number") continue
-    const existing = settings.find((setting) => setting.currency_code === currency)
-    if (!existing) {
-      await exchange.createCurrencyExchangeSettings([
-        { currency_code: currency, exchange_rate: rate, mode: "auto", status: "enable" },
-      ])
-    }
-  }
-
-  // 6. Shipping prices in each converted currency.
-  await addShippingPrices(container, rates)
-
-  // 7. Convert all product prices now (the plugin's nightly job keeps them current).
-  try {
-    await container.resolve(Modules.WORKFLOW_ENGINE).run(PLUGIN_PRICE_WORKFLOW, { input: {} })
-    logger.info("European markets: product prices converted from EUR.")
-  } catch (error) {
-    logger.warn(`European markets: price conversion failed (${(error as Error).message}).`)
+    logger.warn(`European markets: prices not converted yet (${(error as Error).message}).`)
   }
 }
 
@@ -196,61 +147,4 @@ async function findEuropeZone(container: MedusaContainer, euroRegion: RegionRow)
   return (data as ZoneRow[]).find((zone) =>
     (zone.geo_zones ?? []).some((geo) => euroCountries.has(geo.country_code))
   )
-}
-
-/**
- * Gives every shipping option that has EUR prices a matching price in each converted currency
- * (whole units, like the plugin), including any cart-total rules. Existing prices are kept,
- * so edits made in Admin survive. The plugin only converts product prices, not shipping.
- */
-async function addShippingPrices(container: MedusaContainer, rates: Record<string, number>) {
-  const query = container.resolve(ContainerRegistrationKeys.QUERY)
-  const pricing = container.resolve(Modules.PRICING)
-
-  const { data: links } = await query.graph({
-    entity: "shipping_option_price_set",
-    fields: ["shipping_option_id", "price_set_id"],
-  })
-  const priceSetIds = (links as { price_set_id: string }[]).map((link) => link.price_set_id)
-  if (!priceSetIds.length) return
-
-  const priceSets = await pricing.listPriceSets(
-    { id: priceSetIds },
-    { relations: ["prices", "prices.price_rules"] }
-  )
-
-  for (const priceSet of priceSets) {
-    const prices = (priceSet.prices ?? []) as PriceRow[]
-    const euro = prices.filter((price) => price.currency_code === BASE_CURRENCY && !price.price_list_id)
-    if (!euro.length) continue
-
-    const toAdd: CreatePricesDTO[] = CONVERTED_MARKETS.filter(({ currency }) => rates[currency] > 0)
-      .filter(({ currency }) => !prices.some((price) => price.currency_code === currency))
-      .flatMap(({ currency }) =>
-        euro.map((price) => {
-          const rate = rates[currency]
-          // Cart-total thresholds are converted and rounded up.
-          const rules = Object.fromEntries(
-            (price.price_rules ?? []).map((rule) => [
-              rule.attribute,
-              [
-                {
-                  operator: (rule.operator ?? "eq") as PricingRuleOperatorValues,
-                  value: Math.ceil(Number(rule.value) * rate),
-                },
-              ],
-            ])
-          )
-          return {
-            currency_code: currency,
-            amount: Math.round(Number(price.amount) * rate),
-            ...(Object.keys(rules).length ? { rules } : {}),
-          }
-        })
-      )
-
-    if (toAdd.length) {
-      await pricing.addPrices({ priceSetId: priceSet.id, prices: toAdd })
-    }
-  }
 }

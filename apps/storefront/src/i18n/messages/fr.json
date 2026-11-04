@@ -257,6 +257,9 @@
     "topics": "Explorer par thème"
   },
   "Offer": {
+    "bannerSale": "{title} : -{percent} % sur tout",
+    "bannerEnds": "Jusqu’au {date}",
+    "bannerCta": "J’en profite",
     "label": "Offre",
     "endsIn": "Se termine dans",
     "days": "Jours",

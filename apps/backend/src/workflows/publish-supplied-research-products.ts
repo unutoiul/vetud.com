@@ -2,9 +2,8 @@ import type { CreatePricesDTO, MedusaContainer, UpsertProductDTO } from "@medusa
 import { ContainerRegistrationKeys, MedusaError, Modules, ProductStatus } from "@medusajs/framework/utils"
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createInventoryLevelsWorkflow, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
-import { SUPPLIED_PUBLICATIONS, WHOLE_UNIT_CURRENCIES } from "../seed/supplied-research-publication"
-
-type ExchangeService = { getExchangeRates: (base: string) => Promise<Record<string, number>> }
+import { BASE_CURRENCY, getExchangeRates, roundMoney } from "../lib/currencies"
+import { SUPPLIED_PUBLICATIONS } from "../seed/supplied-research-publication"
 
 type PriceRow = {
   id: string
@@ -33,14 +32,9 @@ type ProductRow = {
 export type PriceAddition = { priceSetId: string; existingPriceIds: string[]; prices: CreatePricesDTO[] }
 export type LevelInput = { inventory_item_id: string; location_id: string; stocked_quantity: number }
 
-function convert(eur: number, rate: number, currency: string) {
-  const amount = eur * rate
-  return WHOLE_UNIT_CURRENCIES.has(currency) ? Math.round(amount) : Math.round(amount * 100) / 100
-}
-
 /**
  * Works out every change before anything is written: missing regional prices (converted from the
- * EUR price with the store's exchange-rate feed), zero-stock levels so Admin can set stock, and
+ * USD price at today's rate), zero-stock levels so Admin can set stock, and
  * the published copy. Throws if the catalog is not in the expected state.
  */
 export async function planSuppliedPublication(container: MedusaContainer) {
@@ -71,19 +65,19 @@ export async function planSuppliedPublication(container: MedusaContainer) {
     if (product.variants.length !== 1) throw new MedusaError(MedusaError.Types.INVALID_DATA, `${publication.handle} should have one variant.`)
     const variant = product.variants[0]
     const prices = variant.price_set?.prices ?? []
-    const base = prices.filter((price) => price.currency_code === "eur" && !price.price_list_id && !price.rules_count && price.min_quantity == null && price.max_quantity == null)
+    const base = prices.filter((price) => price.currency_code === BASE_CURRENCY && !price.price_list_id && !price.rules_count && price.min_quantity == null && price.max_quantity == null)
     if (!variant.price_set || base.length !== 1 || !(Number(base[0].amount) > 0)) {
-      throw new MedusaError(MedusaError.Types.INVALID_DATA, `${publication.handle} needs one positive base EUR price.`)
+      throw new MedusaError(MedusaError.Types.INVALID_DATA, `${publication.handle} needs one positive base USD price.`)
     }
 
     const missing = currencies.filter((currency) => !prices.some((price) => price.currency_code === currency))
     let added: { currency_code: string; amount: number }[] = []
     if (missing.length) {
-      rates ??= await container.resolve<ExchangeService>("currencyExchangeService").getExchangeRates("eur")
+      rates ??= await getExchangeRates()
       added = missing.map((currency) => {
         const rate = rates?.[currency]
         if (!rate || !Number.isFinite(rate) || rate <= 0) throw new MedusaError(MedusaError.Types.INVALID_DATA, `Missing exchange rate for ${currency.toUpperCase()}.`)
-        return { currency_code: currency, amount: convert(Number(base[0].amount), rate, currency) }
+        return { currency_code: currency, amount: roundMoney(Number(base[0].amount) * rate, currency) }
       })
       priceAdditions.push({ priceSetId: variant.price_set.id, existingPriceIds: prices.map((price) => price.id), prices: added })
     }

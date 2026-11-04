@@ -7,8 +7,7 @@ import Drawer from "@mui/material/Drawer"
 import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import { useLocale } from "next-intl"
-import { formatMoney } from "@/lib/product"
+import { useMoney } from "@/lib/money"
 import { ButtonLink } from "../common/links"
 import { useStore } from "../store/StoreProvider"
 import CartAnnouncer from "./CartAnnouncer"
@@ -16,7 +15,7 @@ import CartLineItem from "./CartLineItem"
 import FreeShippingProgress from "./FreeShippingProgress"
 
 export default function CartDrawer() {
-  const locale = useLocale()
+  const money = useMoney()
   const { cart, drawerOpen, closeDrawer, itemCount, error, clearError, region } = useStore()
   const items = [...(cart?.items ?? [])].sort((a, b) =>
     String(a.created_at ?? "").localeCompare(String(b.created_at ?? ""))
@@ -81,12 +80,12 @@ export default function CartDrawer() {
           <Box sx={{ px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
             <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
               <Typography sx={{ fontWeight: 600 }}>Subtotal</Typography>
-              <Typography sx={{ fontWeight: 700 }}>{formatMoney(subtotal, currency, { locale })}</Typography>
+              <Typography sx={{ fontWeight: 700 }}>{money(subtotal, currency)}</Typography>
             </Stack>
             {discount > 0 ? (
               <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
                 <Typography sx={{ color: "text.secondary" }}>Discount</Typography>
-                <Typography sx={{ fontWeight: 600 }}>−{formatMoney(discount, currency, { locale })}</Typography>
+                <Typography sx={{ fontWeight: 600 }}>−{money(discount, currency)}</Typography>
               </Stack>
             ) : null}
             <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>

@@ -30,7 +30,7 @@ import { persistCountryCookie } from "@/lib/country-cookie"
 import { SITE } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { PAYPAL_PROVIDER_ID, readPayPalRedirect } from "@/lib/paypal"
-import { formatMoney } from "@/lib/product"
+import { useMoney } from "@/lib/money"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
 import { NMI_PROVIDER_ID, nmiAvailable, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
 import { PAYGATE_CARD, PAYGATE_CRYPTO, isPaygate, readPaygateRedirect, type PaygateConfig } from "@/lib/paygate"
@@ -198,6 +198,7 @@ export default function CheckoutFlow() {
 function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; customer: HttpTypes.StoreCustomer; onCompleted: (orderId: string) => void }) {
   const t = useTranslations("Checkout")
   const locale = useLocale()
+  const money = useMoney()
   const router = useRouter()
   const { setCart, clearCart, linkCustomerCart, isCurrentCart, region, countries, countryCode } = useStore()
   const { createAddress, captureSession } = useAccount()
@@ -473,7 +474,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         <Accordion disableGutters sx={{ display: { md: "none" }, mb: 3, px: 2, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: 3, boxShadow: "none", "&::before": { display: "none" } }}>
           <AccordionSummary expandIcon={<Icon name="chevronDown" />} aria-controls="checkout-summary-content" id="checkout-summary-header" sx={{ minHeight: 64, "& .MuiAccordionSummary-content": { my: 2 } }}>
             <Typography sx={{ fontWeight: 600, flex: 1 }}>{t("summary")}</Typography>
-            <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{formatMoney(Number(cart.total ?? 0), currency, { locale })}</Typography>
+            <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{money(Number(cart.total ?? 0), currency)}</Typography>
           </AccordionSummary>
           <AccordionDetails sx={{ px: 0 }}>{summary}</AccordionDetails>
         </Accordion>
@@ -865,6 +866,7 @@ function DeliverySection({
 }) {
   const t = useTranslations("Checkout")
   const locale = useLocale()
+  const money = useMoney()
   const selected = cart.shipping_methods?.[0]?.shipping_option_id ?? ""
   const name = (option: HttpTypes.StoreCartShippingOption) => {
     const code = optionType(option)?.code
@@ -905,7 +907,7 @@ function DeliverySection({
                     </Typography>
                   </Box>
                   <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
-                    {amount === 0 ? t("free") : formatMoney(amount, cart.currency_code, { locale })}
+                    {amount === 0 ? t("free") : money(amount, cart.currency_code)}
                   </Typography>
                 </Box>
               )
@@ -936,8 +938,8 @@ function PayPanel({
   onNmiToken: (token: NmiToken) => Promise<void>
   onStripePay: (confirm: () => Promise<void>) => Promise<void>
 }) {
-  const locale = useLocale()
-  const total = formatMoney(Number(cart.total ?? 0), cart.currency_code, { locale })
+  const money = useMoney()
+  const total = money(Number(cart.total ?? 0), cart.currency_code)
   const nmiSession = provider === NMI_PROVIDER_ID ? readNmiSession(cart) : null
   const stripeSecret = provider === STRIPE_PROVIDER_ID ? readStripeClientSecret(cart) : null
 

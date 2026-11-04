@@ -17,7 +17,7 @@ import type { ProductSort } from "@/lib/medusa/products"
 import { shopQuery, type CategoryFacet } from "@/lib/catalog-filters"
 
 const SORTS: { value: ProductSort; label: string }[] = [
-  { value: "featured", label: "Featured" },
+  { value: "relevance", label: "Relevance" },
   { value: "price-asc", label: "Price: low to high" },
   { value: "price-desc", label: "Price: high to low" },
   { value: "name", label: "Name" },
@@ -65,7 +65,7 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
           }}
         >
           {selectedCategories.map(handle => <input key={handle} type="hidden" name="category" value={handle} />)}
-          {sort !== "featured" ? <input type="hidden" name="sort" value={sort} /> : null}
+          {sort !== "relevance" ? <input type="hidden" name="sort" value={sort} /> : null}
           <Typography component="label" htmlFor="catalog-search" sx={controlLabel}>Search products</Typography>
           <TextField
             id="catalog-search"
