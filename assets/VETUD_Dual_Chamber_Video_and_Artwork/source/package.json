@@ -1,0 +1,12 @@
+{
+  "name": "vetud-dual-chamber-film",
+  "private": true,
+  "scripts": {
+    "preview": "hyperframes preview",
+    "render": "hyperframes render --quality delivery --fps 30 --workers 2 -o VETUD_Dual_Chamber_Explainer_1080p.mp4"
+  },
+  "devDependencies": {
+    "hyperframes": "0.8.138",
+    "gsap": "3.14.2"
+  }
+}

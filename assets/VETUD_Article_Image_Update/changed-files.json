@@ -1,0 +1,8 @@
+[
+  "src/components/learn/ArticleArt.tsx",
+  "src/components/learn/PeptideCard.tsx",
+  "src/app/[countryCode]/learn/[slug]/page.tsx",
+  "src/components/learn/ArticleCard.tsx",
+  "src/app/[countryCode]/news/[slug]/page.tsx",
+  "src/content/learn/illustrations.ts"
+]
