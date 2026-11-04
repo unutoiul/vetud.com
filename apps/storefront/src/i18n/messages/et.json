@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: kõik {percent}% soodsamalt",
+    "bannerDeal": "kõik <b>{percent}%</b> soodsamalt",
     "bannerEnds": "Lõpeb {date}",
-    "bannerCta": "Kasuta pakkumist",
+    "bannerCta": "Vaata pakkumisi",
     "label": "Pakkumine",
     "endsIn": "Lõpuni",
     "days": "Päeva",

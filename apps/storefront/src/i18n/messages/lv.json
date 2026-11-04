@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent}% atlaide visam",
+    "bannerDeal": "<b>{percent}%</b> atlaide visam",
     "bannerEnds": "Beidzas {date}",
-    "bannerCta": "Izmantot",
+    "bannerCta": "Skatīt piedāvājumus",
     "label": "Piedāvājums",
     "endsIn": "Beidzas pēc",
     "days": "Dienas",

@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent}% afsláttur af öllu",
+    "bannerDeal": "<b>{percent}%</b> afsláttur af öllu",
     "bannerEnds": "Lýkur {date}",
-    "bannerCta": "Nýta tilboðið",
+    "bannerCta": "Skoða tilboðin",
     "label": "Tilboð",
     "endsIn": "Lýkur eftir",
     "days": "Dagar",

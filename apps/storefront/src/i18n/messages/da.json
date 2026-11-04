@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent} % rabat på alt",
+    "bannerDeal": "<b>{percent} %</b> rabat på alt",
     "bannerEnds": "Slutter {date}",
-    "bannerCta": "Benyt tilbuddet",
+    "bannerCta": "Se tilbuddene",
     "label": "Tilbud",
     "endsIn": "Slutter om",
     "days": "Dage",

@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent} % rabatt på allt",
+    "bannerDeal": "<b>{percent} %</b> rabatt på allt",
     "bannerEnds": "Slutar {date}",
-    "bannerCta": "Passa på",
+    "bannerCta": "Handla på rean",
     "label": "Erbjudande",
     "endsIn": "Slutar om",
     "days": "Dagar",

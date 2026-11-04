@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent} % nuolaida viskam",
+    "bannerDeal": "<b>{percent} %</b> nuolaida viskam",
     "bannerEnds": "Baigiasi {date}",
-    "bannerCta": "Pasinaudoti",
+    "bannerCta": "Žiūrėti pasiūlymus",
     "label": "Pasiūlymas",
     "endsIn": "Baigiasi po",
     "days": "D.",

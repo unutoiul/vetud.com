@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent}% korting op alles",
+    "bannerDeal": "<b>{percent}%</b> korting op alles",
     "bannerEnds": "Eindigt {date}",
-    "bannerCta": "Profiteer nu",
+    "bannerCta": "Naar de aanbiedingen",
     "label": "Aanbieding",
     "endsIn": "Eindigt over",
     "days": "Dagen",

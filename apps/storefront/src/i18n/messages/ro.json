@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent}% reducere la tot",
+    "bannerDeal": "<b>{percent}%</b> reducere la tot",
     "bannerEnds": "Se termină pe {date}",
-    "bannerCta": "Profită",
+    "bannerCta": "Vezi ofertele",
     "label": "Ofertă",
     "endsIn": "Se termină în",
     "days": "Zile",

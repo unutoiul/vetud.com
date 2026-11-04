@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent}% отстъпка за всичко",
+    "bannerDeal": "<b>{percent}%</b> отстъпка за всичко",
     "bannerEnds": "До {date}",
-    "bannerCta": "Възползвайте се",
+    "bannerCta": "Към промоциите",
     "label": "Оферта",
     "endsIn": "Изтича след",
     "days": "Дни",

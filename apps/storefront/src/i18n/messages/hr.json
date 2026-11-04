@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent}% popusta na sve",
+    "bannerDeal": "<b>{percent}%</b> popusta na sve",
     "bannerEnds": "Završava {date}",
-    "bannerCta": "Iskoristite",
+    "bannerCta": "Pogledajte ponudu",
     "label": "Ponuda",
     "endsIn": "Završava za",
     "days": "Dana",

@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent}% off everything",
+    "bannerDeal": "<b>{percent}%</b> off everything",
     "bannerEnds": "Ends {date}",
-    "bannerCta": "Take advantage",
+    "bannerCta": "Shop the sale",
     "label": "Offer",
     "endsIn": "Ends in",
     "days": "Days",

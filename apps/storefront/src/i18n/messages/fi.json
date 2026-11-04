@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent} % alennus kaikesta",
+    "bannerDeal": "<b>{percent} %</b> alennus kaikesta",
     "bannerEnds": "Päättyy {date}",
-    "bannerCta": "Hyödynnä",
+    "bannerCta": "Katso tarjoukset",
     "label": "Tarjous",
     "endsIn": "Päättyy",
     "days": "Päivää",

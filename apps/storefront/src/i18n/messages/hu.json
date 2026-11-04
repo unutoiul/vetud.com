@@ -258,8 +258,9 @@
   },
   "Offer": {
     "bannerSale": "{title}: {percent}% kedvezmény mindenre",
+    "bannerDeal": "<b>{percent}%</b> kedvezmény mindenre",
     "bannerEnds": "Vége: {date}",
-    "bannerCta": "Kihasználom",
+    "bannerCta": "Akciós termékek",
     "label": "Ajánlat",
     "endsIn": "Hátralévő idő",
     "days": "Nap",
