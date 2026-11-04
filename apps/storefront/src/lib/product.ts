@@ -114,6 +114,12 @@ export function variantPrice(variant?: HttpTypes.StoreProductVariant | null) {
   }
 }
 
+/** The whole percentage a sale takes off the regular price (30 for 98 → 68.60), or 0 when there's no sale. */
+export function percentOff(price?: { amount: number; original: number } | null) {
+  if (!price || !(price.original > price.amount)) return 0
+  return Math.round((1 - price.amount / price.original) * 100)
+}
+
 export function cheapestPrice(product: HttpTypes.StoreProduct) {
   const prices = (product.variants ?? [])
     .map((variant) => variantPrice(variant))

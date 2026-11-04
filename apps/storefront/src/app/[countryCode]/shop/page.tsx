@@ -8,7 +8,7 @@ import { Suspense } from "react"
 import { ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 import { AppLink } from "@/components/common/links"
-import PageHeader from "@/components/common/PageHeader"
+import VideoHero, { SHOP_HERO_VIDEO } from "@/components/common/VideoHero"
 import ProductGrid from "@/components/product/ProductGrid"
 import ShopToolbar from "@/components/shop/ShopToolbar"
 import CategoryFilters from "@/components/shop/CategoryFilters"
@@ -122,9 +122,9 @@ function ResultsSkeleton() {
 export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/shop">) {
   return (
     <>
-      <PageHeader eyebrow="The collection" title="Research peptides & laboratory materials." description="Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.">
+      <VideoHero video={SHOP_HERO_VIDEO} eyebrow="The collection" title="Research peptides & laboratory materials." description="Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.">
         <AppLink href="/dual-chamber-pen" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}>Every peptide comes as a dual-chamber vial, a vial or a pen kit box with the reusable pen. See how they compare →</AppLink>
-      </PageHeader>
+      </VideoHero>
       <Section tone="white" tight sx={{ pt: { xs: 3, md: 5 } }}>
         <Suspense fallback={<ResultsSkeleton />}>
           <ShopResults searchParams={searchParams} />

@@ -10,6 +10,7 @@ import { StoreNewsletterSchema, StoreNewsletterUnsubscribeSchema } from "./store
 import { CustomerOrderQuery, CustomerOrdersQuery } from "./store/account/orders/validators"
 import { StoreArticleCommentsQuery, StoreCreateArticleCommentSchema } from "./store/article-comments/validators"
 import { AdminArticleCommentsQuery } from "./admin/article-comments/validators"
+import { AdminCreateStorewideSale, AdminUpdateStorewideSale } from "./admin/storewide-sales/validators"
 import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
 import { cartOwnerGuardRoutes } from "./cart-owner-guards"
@@ -102,6 +103,16 @@ export default defineMiddlewares({
       method: ["GET"],
       matcher: "/admin/article-comments",
       middlewares: [validateAndTransformQuery(AdminArticleCommentsQuery, { isList: true, defaults: [] })],
+    },
+    {
+      method: ["POST"],
+      matcher: "/admin/storewide-sales",
+      middlewares: [validateAndTransformBody(AdminCreateStorewideSale)],
+    },
+    {
+      method: ["POST"],
+      matcher: "/admin/storewide-sales/:id",
+      middlewares: [validateAndTransformBody(AdminUpdateStorewideSale)],
     },
   ],
 })

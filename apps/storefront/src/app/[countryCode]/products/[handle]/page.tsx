@@ -218,11 +218,6 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
               </Typography>
             ) : null}
             <PurchasePanel product={product} addOns={addOns} />
-            <Box sx={{ mt: 3.5, borderTop: "1px solid", borderColor: "divider", "& details": { borderBottom: "1px solid", borderColor: "divider", py: 1.75 }, "& summary": { cursor: "pointer", fontSize: 12, fontWeight: 600 }, "& details p": { mt: 1.25, color: "text.secondary", fontSize: 12, lineHeight: 1.8 } }}>
-              <details><summary>Quality & documentation</summary><Typography>Listed purity: {meta.purity ?? "see batch documentation"}. Match any certificate to the lot printed on your product. <AppLink href="#quality">View documentation</AppLink>.</Typography></details>
-              <details><summary>Storage & stability</summary><Typography>{meta.storage ?? "Follow the conditions on your batch label."} {meta.stability}</Typography></details>
-              <details><summary>What is included?</summary>{included.length ? included.map(({ format, contents }) => <Typography key={format}><strong>{format}:</strong> {contents}</Typography>) : <Typography>{typeof product.metadata?.contents === "string" ? product.metadata.contents : `${product.title} in the selected format and amount. Refer to the specifications below for composition.`}{product.metadata?.image_packaging_amount ? ` Images show ${product.metadata.image_packaging_amount} packaging; your selected amount determines the supplied product.` : ""}</Typography>}</details>
-            </Box>
           </Grid>
         </Grid>
         </ProductSelectionProvider>

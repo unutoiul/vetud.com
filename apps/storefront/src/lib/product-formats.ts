@@ -3,13 +3,16 @@ import { initialProductVariant, isVariantInStock, sortedVariants } from "./produ
 
 type Variant = HttpTypes.StoreProductVariant
 
-/** The two ways a dual-chamber product is sold, keyed by the Medusa "Format" option value. */
+/**
+ * The ways a dual-chamber product is sold, keyed by the Medusa "Format" option value. The key order
+ * is the order shown on the product page (pen kit box, dual-chamber vial, vial); the first is preselected.
+ */
 export const FORMAT_INFO: Record<string, { line: string; key: "pen" | "box" | "vial" }> = {
+  "Pen kit box": { line: "The reusable pen with a dual-chamber vial, 12 needles and a booklet, in the VETUD box", key: "box" },
   "Dual-chamber vial": { line: "Powder and BAC water in one two-chamber cartridge. Refills the reusable pen", key: "pen" },
   // The cartridge's name until 2026-11-04, kept so older carts and the catalog in between still read well.
   "Dual-chamber pen": { line: "Powder and BAC water in one two-chamber cartridge", key: "pen" },
   Vial: { line: "Freeze-dried powder in a sealed vial, the lowest price", key: "vial" },
-  "Pen kit box": { line: "The reusable pen with a dual-chamber vial, 12 needles and a booklet, in the VETUD box", key: "box" },
 }
 
 export const KIT_FORMAT = "Pen kit box"
@@ -32,14 +35,14 @@ export function readOptions(product: HttpTypes.StoreProduct): ProductOption[] {
       if (!entry.values.includes(option.value)) entry.values.push(option.value)
     }
   }
-  // Formats come first and always read pen, then vial; amounts follow variant order (cheapest first).
+  // Formats come first, in FORMAT_INFO order; amounts follow variant order (cheapest first).
   const known = Object.keys(FORMAT_INFO)
   const rank = (value: string) => (known.includes(value) ? known.indexOf(value) : known.length)
   for (const option of options) if (option.title === FORMAT_OPTION) option.values.sort((a, b) => rank(a) - rank(b))
   return options.sort((a, b) => Number(b.title === FORMAT_OPTION) - Number(a.title === FORMAT_OPTION))
 }
 
-/** The variant shown first: the smallest dual-chamber pen in stock, or the usual first variant. */
+/** The variant shown first: the smallest pen kit box in stock, or the usual first variant. */
 export function defaultVariant(product: HttpTypes.StoreProduct) {
   const format = readOptions(product).find((option) => option.title === FORMAT_OPTION)?.values[0]
   const candidates = format ? variantsWith(product, FORMAT_OPTION, format) : []
@@ -67,7 +70,7 @@ export function hasFormats(product: HttpTypes.StoreProduct) {
   return readOptions(product).some((option) => option.title === FORMAT_OPTION)
 }
 
-/** "Dual-chamber pen: 5 mg, 10 mg · Vial: 5 mg, 10 mg", or the plain variant titles. */
+/** "Pen kit box: 5 mg, 10 mg · Dual-chamber vial: 5 mg, 10 mg · Vial: 5 mg, 10 mg", or the plain variant titles. */
 export function availabilitySummary(product: HttpTypes.StoreProduct, separator = " · ") {
   const formats = readOptions(product).find((option) => option.title === FORMAT_OPTION)
   if (!formats) return sortedVariants(product).map((variant) => variant.title).join(", ")
@@ -90,12 +93,12 @@ export function formatLine(product: HttpTypes.StoreProduct, format: string) {
   return formatMetadata(product, "format_line", format) ?? FORMAT_INFO[format]?.line
 }
 
-/** One short line for cards: "Dual-chamber vial, vial or pen kit · 5 mg / 10 mg", or the variant titles. */
+/** One short line for cards: "Pen kit, dual-chamber vial or vial · 5 mg / 10 mg", or the variant titles. */
 export function shortAvailability(product: HttpTypes.StoreProduct) {
   const options = readOptions(product)
   if (!options.some((option) => option.title === FORMAT_OPTION)) return sortedVariants(product).map((variant) => variant.title).join(" / ")
   const formats = options.find((option) => option.title === FORMAT_OPTION)?.values ?? []
   const amounts = options.find((option) => option.title !== FORMAT_OPTION)?.values ?? []
-  const label = formats.includes(KIT_FORMAT) ? "Dual-chamber vial, vial or pen kit" : "Dual-chamber vial or vial"
+  const label = formats.includes(KIT_FORMAT) ? "Pen kit, dual-chamber vial or vial" : "Dual-chamber vial or vial"
   return `${label}${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
 }

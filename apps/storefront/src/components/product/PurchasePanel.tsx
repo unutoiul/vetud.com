@@ -14,7 +14,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { useLocale } from "next-intl"
 import { SITE } from "@/lib/config"
-import { formatMoney, isVariantInStock, sortedVariants, variantPrice } from "@/lib/product"
+import { formatMoney, isVariantInStock, percentOff, sortedVariants, variantPrice } from "@/lib/product"
 import { defaultVariant, findVariant, FORMAT_OPTION, formatContents, formatLine, readOptions, selectionOf, variantsWith } from "@/lib/product-formats"
 import { useStore } from "../store/StoreProvider"
 import { useProductSelection } from "./ProductSelection"
@@ -45,6 +45,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
   const format = selection[FORMAT_OPTION]
   const contents = format ? formatContents(product, format) : undefined
   const price = variantPrice(variant)
+  const off = percentOff(price)
   const inStock = isVariantInStock(variant)
   const maxQuantity =
     variant?.manage_inventory && !variant.allow_backorder
@@ -91,7 +92,13 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
             </Typography>
             {price.original > price.amount ? (
               <Typography sx={{ color: "text.secondary", textDecoration: "line-through" }}>
+                <Box component="span" sx={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>Regular price </Box>
                 {money(price.original, price.currencyCode)}
+              </Typography>
+            ) : null}
+            {off ? (
+              <Typography component="span" sx={{ alignSelf: "center", fontSize: 13, fontWeight: 700, color: "#fff", bgcolor: "brand.navy", borderRadius: "4px", px: 1, py: 0.25 }}>
+                Save {off}%
               </Typography>
             ) : null}
           </Stack>

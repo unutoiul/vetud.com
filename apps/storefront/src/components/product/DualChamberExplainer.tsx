@@ -22,9 +22,9 @@ const FACTS = {
 }
 
 const COLUMNS = [
+  { key: "box", title: "Pen kit box", fallback: "Highest" },
   { key: "pen", title: "Dual-chamber vial", fallback: "Mid-price" },
   { key: "vial", title: "Vial", fallback: "Lowest" },
-  { key: "box", title: "Pen kit box", fallback: "Highest" },
 ] as const
 
 /** The three formats side by side. Prices are "from" prices for the product, when there is one. */
@@ -35,7 +35,7 @@ export function FormatComparison({ prices }: { prices?: FormatPrices }) {
     { label: "Price", cells: COLUMNS.map((column) => prices?.[column.key] ? `From ${prices[column.key]}` : column.fallback) },
   ]
   return (
-    <Box component="table" aria-label="Dual-chamber vial, vial and pen kit box compared" sx={{ width: "100%", borderCollapse: "collapse", fontSize: 14, "& th, & td": { textAlign: "left", verticalAlign: "top", py: 1.5, px: { xs: 1, sm: 1.5 }, borderBottom: "1px solid", borderColor: "divider", lineHeight: 1.55 }, "& thead th": { fontSize: 13, fontWeight: 700, color: "brand.ink", borderBottomWidth: 2 }, "& tbody th": { fontWeight: 600, color: "text.secondary", width: { xs: "28%", sm: "24%" } } }}>
+    <Box component="table" aria-label="Pen kit box, dual-chamber vial and vial compared" sx={{ width: "100%", borderCollapse: "collapse", fontSize: 14, "& th, & td": { textAlign: "left", verticalAlign: "top", py: 1.5, px: { xs: 1, sm: 1.5 }, borderBottom: "1px solid", borderColor: "divider", lineHeight: 1.55 }, "& thead th": { fontSize: 13, fontWeight: 700, color: "brand.ink", borderBottomWidth: 2 }, "& tbody th": { fontWeight: 600, color: "text.secondary", width: { xs: "28%", sm: "24%" } } }}>
       <thead>
         <tr><td />{COLUMNS.map((column) => <th key={column.key} scope="col">{column.title}</th>)}</tr>
       </thead>
@@ -91,7 +91,7 @@ export function ExplainerVideo({ title = "The reusable VETUD dual-chamber pen" }
 
 const GUIDE_LINK = (
   <AppLink href="/dual-chamber-pen" sx={{ mt: 1.5, display: "inline-flex", alignItems: "center", gap: 0.75, minHeight: 44, fontSize: 15, fontWeight: 600 }}>
-    Watch the full guide: the reusable dual-chamber pen <Icon name="arrowRight" sx={{ fontSize: 18 }} />
+    Read the full guide: the reusable dual-chamber pen <Icon name="arrowRight" sx={{ fontSize: 18 }} />
   </AppLink>
 )
 
@@ -119,16 +119,16 @@ export default function DualChamberExplainer({ prices, photos, supply }: { price
   }
   return (
     <Box>
-      <Typography {...HEADING}>Dual-chamber vial, vial or pen kit box?</Typography>
+      <Typography {...HEADING}>Pen kit box, dual-chamber vial or vial?</Typography>
       <Typography sx={{ maxWidth: 680, fontSize: 15, lineHeight: 1.8, color: "text.secondary" }}>
         Every product comes three ways. It&apos;s the same peptide and the same amounts; what changes is the packaging, what&apos;s included and the price. Start with the pen kit box, which has the reusable pen, then refill it with dual-chamber vials.
       </Typography>
 
       {photos ? (
         <Box sx={{ mt: { xs: 3, md: 4 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, minmax(0, 1fr))" }, gap: { xs: 2, md: 2.5 } }}>
+          <FormatCard id="format-box-title" title="Pen kit box" price={prices?.box} facts={FACTS.box} photos={[photos.kit]} />
           <FormatCard id="format-pen-title" title="Dual-chamber vial" price={prices?.pen} facts={FACTS.pen} photos={[{ ...photos.pen, slim: true }]} />
           <FormatCard id="format-vial-title" title="Vial" price={prices?.vial} facts={FACTS.vial} photos={[photos.vial]} />
-          <FormatCard id="format-box-title" title="Pen kit box" price={prices?.box} facts={FACTS.box} photos={[photos.kit]} />
         </Box>
       ) : (
         <Box sx={{ mt: { xs: 3, md: 4 } }}><FormatComparison prices={prices} /></Box>

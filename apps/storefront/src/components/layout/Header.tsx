@@ -92,7 +92,7 @@ export default function Header() {
     <Dialog open={searchOpen} onClose={() => setSearchOpen(false)} fullWidth maxWidth="sm" aria-labelledby="search-title" slotProps={{ paper: { sx: { alignSelf: "flex-start", mt: 10, p: { xs: 2.5, sm: 4 } } }, transition: { onEntered: () => searchInput.current?.focus() } }}>
       <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", mb: 2 }}><Typography component="h2" variant="h4" id="search-title">Find your research materials</Typography><IconButton aria-label="Close search" onClick={() => setSearchOpen(false)}><Icon name="close" /></IconButton></Stack>
       <SearchBox autoFocus inputRef={searchInput} onNavigate={() => setSearchOpen(false)} />
-      <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>Search by product name, code, or lot number.</Typography>
+      <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>Search products (name, code or lot number), peptide guides and news.</Typography>
     </Dialog>
   </>
 }
