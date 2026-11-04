@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography"
 import { useEffect, useRef, useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { getCountryRules, COUNTRY_RULES } from "@/i18n/config"
-import { normalizePostal, US_STATES, type AddressValues } from "@/lib/address"
+import { normalizePostal, provincesOf, type AddressValues } from "@/lib/address"
 import { findPostalCode, PLACES_ENABLED, placeDetails, suggestAddresses, suggestPostalCodes, type PlaceLocation } from "@/lib/places"
 import PhoneField from "../common/PhoneField"
 import PlaceAutocomplete from "./PlaceAutocomplete"
@@ -84,7 +84,7 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
       <Grid size={12}><TextField {...field("address_2", t("address2"), "address-line2")} /></Grid>
       <Grid size={{ xs: 12, sm: rules.postalBeforeCity ? 5 : 7 }}>{rules.postalBeforeCity ? postalField : cityField}</Grid>
       <Grid size={{ xs: 12, sm: rules.postalBeforeCity ? 7 : 5 }}>{rules.postalBeforeCity ? cityField : postalField}</Grid>
-      {rules.provinceRequired ? <Grid size={12}><TextField select {...field("province", t("state"), "address-level1", true)}>{Object.entries(US_STATES).map(([code, name]) => <MenuItem key={code} value={code}>{name}</MenuItem>)}</TextField></Grid> : null}
+      {rules.provinceRequired ? <Grid size={12}><TextField select {...field("province", t(country === "us" ? "state" : "region"), "address-level1", true)}>{Object.entries(provincesOf(country)).map(([code, name]) => <MenuItem key={code} value={code}>{name}</MenuItem>)}</TextField></Grid> : null}
       <Grid size={12}><PhoneField id={`${prefix}-phone`} name={`${prefix}-phone`} country={Object.hasOwn(COUNTRY_RULES, country) ? country : "us"} value={values.phone} onChange={phone => set({ phone })} error={errors.phone} autoComplete={autocomplete("tel")} /></Grid>
     </Grid>
   </Box>

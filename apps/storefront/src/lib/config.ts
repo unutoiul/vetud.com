@@ -1,3 +1,5 @@
+import countryRules from "../i18n/countries.json"
+
 export const MEDUSA_BACKEND_URL =
   process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
 
@@ -11,15 +13,21 @@ export const BASE_URL = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8
 export const DEFAULT_COUNTRY = (process.env.NEXT_PUBLIC_DEFAULT_COUNTRY || "us").toLowerCase()
 
 /**
- * The countries we sell to for now. Every other country and region in Medusa is hidden from the
- * storefront (country selector, checkout, URLs and the geo redirect). Add a country here once its
- * pricing, shipping and legal pages are ready. Override with NEXT_PUBLIC_SUPPORTED_COUNTRIES
- * (comma-separated ISO codes). Each country must belong to a Medusa region.
+ * The countries we sell to: every country with address rules in i18n/countries.json (since
+ * 2026-11-05 Europe, the US, Canada and Australia). Every other country and region in Medusa is
+ * hidden from the storefront (country selector, checkout, URLs and the geo redirect). Override with
+ * NEXT_PUBLIC_SUPPORTED_COUNTRIES (comma-separated ISO codes). Each country must belong to a Medusa region.
  */
-export const SUPPORTED_COUNTRIES = (process.env.NEXT_PUBLIC_SUPPORTED_COUNTRIES || "us,gb,de,fr,nl")
+export const SUPPORTED_COUNTRIES = (process.env.NEXT_PUBLIC_SUPPORTED_COUNTRIES || Object.keys(countryRules).join(","))
   .split(",")
   .map((code) => code.trim().toLowerCase())
   .filter(Boolean)
+
+/**
+ * Countries whose pages are built ahead of time. The others (most of Europe) render the first time
+ * they're visited and are cached from then on, which keeps builds to about a thousand pages.
+ */
+export const PRERENDERED_COUNTRIES = ["us", "gb", "de", "fr", "nl", "ca", "au"]
 
 /** Used before Medusa answers (proxy fallback, build-time params). */
 export const FALLBACK_COUNTRIES = SUPPORTED_COUNTRIES

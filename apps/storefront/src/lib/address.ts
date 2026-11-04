@@ -1,3 +1,4 @@
+import provinces from "@/i18n/provinces.json"
 import usStates from "@/i18n/us-states.json"
 import { parsePhoneNumberFromString, type CountryCode } from "libphonenumber-js"
 import { COUNTRY_RULES, getCountryRules } from "@/i18n/config"
@@ -20,12 +21,21 @@ export const EMPTY_ADDRESS: AddressValues = {
   city: "", province: "", postal_code: "", country_code: "", phone: "",
 }
 
-export const US_STATES: Record<string, string> = usStates
+/** States, provinces and territories (code → name) for the countries whose addresses need one. */
+const PROVINCES: Record<string, Record<string, string>> = { us: usStates, ...provinces }
+
+export function provincesOf(country: string): Record<string, string> {
+  return PROVINCES[country.toLowerCase()] ?? {}
+}
 
 export function normalizePostal(value: string, country: string) {
   const compact = value.trim().toUpperCase().replace(/\s+/g, "")
   if (country === "gb" && compact.length >= 5) return `${compact.slice(0, -3)} ${compact.slice(-3)}`
   if (country === "nl" && compact.length === 6) return `${compact.slice(0, 4)} ${compact.slice(4)}`
+  // Canadian postal codes (K1A 0B1) and Irish Eircodes (D02 X285) break after the first three characters.
+  if ((country === "ca" && compact.length === 6) || (country === "ie" && compact.length === 7)) return `${compact.slice(0, 3)} ${compact.slice(3)}`
+  if (country === "pl" && /^\d{5}$/.test(compact)) return `${compact.slice(0, 2)}-${compact.slice(2)}`
+  if (country === "pt" && /^\d{7}$/.test(compact)) return `${compact.slice(0, 4)}-${compact.slice(4)}`
   return value.trim().toUpperCase()
 }
 
@@ -58,7 +68,7 @@ export function validateAddress(values: AddressValues, translate?: Translate, po
   }
   const rules = getCountryRules(country)
   if (values.postal_code.trim() && !new RegExp(rules.postalPattern, "i").test(normalizePostal(values.postal_code, country))) errors.postal_code = t("invalidPostal", { label: postalLabel ?? "postal code", example: rules.postalExample })
-  if (rules.provinceRequired && !US_STATES[values.province.trim().toUpperCase()]) errors.province = values.province.trim() ? t("invalidState") : t("required")
+  if (rules.provinceRequired && !provincesOf(country)[values.province.trim().toUpperCase()]) errors.province = values.province.trim() ? t("invalidState") : t("required")
   if (!isValidPhone(values.phone, country)) errors.phone = t("invalidPhone")
   return errors
 }
@@ -71,7 +81,7 @@ export function formatAddressLines(address: Partial<Record<keyof AddressValues, 
   const country = address.country_code?.toLowerCase() ?? "us"
   const location = getCountryRules(country).postalBeforeCity
     ? [address.postal_code, address.city].filter(Boolean).join(" ")
-    : country === "us"
+    : getCountryRules(country).provinceRequired
       ? [address.city, [address.province, address.postal_code].filter(Boolean).join(" ")].filter(Boolean).join(", ")
       : [address.city, address.postal_code].filter(Boolean).join(" ")
   return [[address.first_name, address.last_name].filter(Boolean).join(" "), address.company, address.address_1, address.address_2, location, country.toUpperCase()].filter(Boolean) as string[]

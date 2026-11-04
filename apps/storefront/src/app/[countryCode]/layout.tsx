@@ -10,7 +10,7 @@ import Footer from "@/components/layout/Footer"
 import Header from "@/components/layout/Header"
 import SaleBannerSlot from "@/components/layout/SaleBannerSlot"
 import StoreProvider from "@/components/store/StoreProvider"
-import { BASE_URL, SITE } from "@/lib/config"
+import { BASE_URL, PRERENDERED_COUNTRIES, SITE } from "@/lib/config"
 import {
   getRegionForCountry,
   listCountryCodes,
@@ -21,9 +21,10 @@ import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
 import { getCountryI18n } from "@/i18n/config"
 
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" })
+// latin-ext covers Polish, Czech, Baltic, Romanian and Hungarian letters; Greek and Bulgarian need their own scripts.
+const manrope = Manrope({ subsets: ["latin", "latin-ext", "greek", "cyrillic"], variable: "--font-manrope", display: "swap" })
 const dmMono = DM_Mono({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   weight: ["400", "500"],
   variable: "--font-dm-mono",
   display: "swap",
@@ -43,9 +44,11 @@ export const viewport: Viewport = {
   themeColor: "#f7f9fa",
 }
 
+// The main countries are built ahead of time; the rest render on their first visit (see PRERENDERED_COUNTRIES).
 export async function generateStaticParams() {
   const codes = await listCountryCodes()
-  return codes.map((code) => ({ countryCode: code }))
+  const prerendered = codes.filter((code) => PRERENDERED_COUNTRIES.includes(code))
+  return (prerendered.length ? prerendered : codes.slice(0, 1)).map((code) => ({ countryCode: code }))
 }
 
 export default async function CountryLayout({ children }: LayoutProps<"/[countryCode]">) {

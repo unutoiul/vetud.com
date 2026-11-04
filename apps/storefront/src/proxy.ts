@@ -44,17 +44,16 @@ function languageCountry(request: NextRequest) {
   for (const candidate of candidates) {
     const regional = candidate?.split("-")[1]
     if (regional) return regional
-    if (candidate === "en") return "us"
-    if (candidate === "de") return "de"
-    if (candidate === "fr") return "fr"
-    if (candidate === "es") return "es"
-    if (candidate === "it") return "it"
-    if (candidate === "pt") return "pt"
-    if (candidate === "nl") return "nl"
-    if (candidate === "ja") return "jp"
-    if (candidate === "zh" || candidate === "ko") return "cn"
+    if (candidate && Object.hasOwn(LANGUAGE_COUNTRY, candidate)) return LANGUAGE_COUNTRY[candidate]
   }
   return ""
+}
+
+/** The country a bare language most likely means (Accept-Language "sv" → Sweden). */
+const LANGUAGE_COUNTRY: Record<string, string> = {
+  en: "us", de: "de", fr: "fr", nl: "nl", es: "es", it: "it", pt: "pt", pl: "pl", cs: "cz", sk: "sk",
+  hu: "hu", ro: "ro", bg: "bg", hr: "hr", sl: "si", el: "gr", sv: "se", da: "dk", nb: "no", nn: "no",
+  no: "no", fi: "fi", et: "ee", lv: "lv", lt: "lt", is: "is", mt: "mt", ga: "ie",
 }
 
 /**
