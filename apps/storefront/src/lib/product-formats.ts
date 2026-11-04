@@ -1,0 +1,94 @@
+import type { HttpTypes } from "@medusajs/types"
+import { initialProductVariant, isVariantInStock, sortedVariants } from "./product"
+
+type Variant = HttpTypes.StoreProductVariant
+
+/** The two ways a dual-chamber product is sold, keyed by the Medusa "Format" option value. */
+export const FORMAT_INFO: Record<string, { line: string; key: "pen" | "vial" }> = {
+  "Dual-chamber pen": { line: "Powder and BAC water in one cartridge, with pen and needles", key: "pen" },
+  Vial: { line: "Freeze-dried powder in a sealed vial, lowest price", key: "vial" },
+}
+
+export const FORMAT_OPTION = "Format"
+
+export type ProductOption = { title: string; values: string[] }
+
+const optionValue = (variant: Variant, title: string) =>
+  variant.options?.find((option) => option.option?.title === title)?.value
+
+/** Options in the order the variants use them, each value in variant order. */
+export function readOptions(product: HttpTypes.StoreProduct): ProductOption[] {
+  const options: ProductOption[] = []
+  for (const variant of sortedVariants(product)) {
+    for (const option of variant.options ?? []) {
+      const title = option.option?.title
+      if (!title || !option.value) continue
+      const entry = options.find((item) => item.title === title) ?? options[options.push({ title, values: [] }) - 1]
+      if (!entry.values.includes(option.value)) entry.values.push(option.value)
+    }
+  }
+  // Formats come first and always read pen, then vial; amounts follow variant order (cheapest first).
+  const known = Object.keys(FORMAT_INFO)
+  const rank = (value: string) => (known.includes(value) ? known.indexOf(value) : known.length)
+  for (const option of options) if (option.title === FORMAT_OPTION) option.values.sort((a, b) => rank(a) - rank(b))
+  return options.sort((a, b) => Number(b.title === FORMAT_OPTION) - Number(a.title === FORMAT_OPTION))
+}
+
+/** The variant shown first: the smallest dual-chamber pen in stock, or the usual first variant. */
+export function defaultVariant(product: HttpTypes.StoreProduct) {
+  const format = readOptions(product).find((option) => option.title === FORMAT_OPTION)?.values[0]
+  const candidates = format ? variantsWith(product, FORMAT_OPTION, format) : []
+  return candidates.find(isVariantInStock) ?? candidates[0] ?? initialProductVariant(product)
+}
+
+export function selectionOf(variant: Variant | undefined): Record<string, string> {
+  return Object.fromEntries((variant?.options ?? []).flatMap((option) => option.option?.title && option.value ? [[option.option.title, option.value]] : []))
+}
+
+export function findVariant(product: HttpTypes.StoreProduct, selection: Record<string, string>) {
+  return sortedVariants(product).find((variant) => Object.entries(selection).every(([title, value]) => optionValue(variant, title) === value))
+}
+
+/** Variants that match a partial selection, e.g. every amount of the vial. */
+export function variantsWith(product: HttpTypes.StoreProduct, title: string, value: string) {
+  return sortedVariants(product).filter((variant) => optionValue(variant, title) === value)
+}
+
+export function formatOf(variant: Variant | undefined) {
+  return variant ? optionValue(variant, FORMAT_OPTION) : undefined
+}
+
+export function hasFormats(product: HttpTypes.StoreProduct) {
+  return readOptions(product).some((option) => option.title === FORMAT_OPTION)
+}
+
+/** "Dual-chamber pen: 5 mg, 10 mg · Vial: 5 mg, 10 mg", or the plain variant titles. */
+export function availabilitySummary(product: HttpTypes.StoreProduct, separator = " · ") {
+  const formats = readOptions(product).find((option) => option.title === FORMAT_OPTION)
+  if (!formats) return sortedVariants(product).map((variant) => variant.title).join(", ")
+  return formats.values.map((format) => `${format}: ${variantsWith(product, FORMAT_OPTION, format).map((variant) => optionValue(variant, "Amount") ?? variant.title).join(", ")}`).join(separator)
+}
+
+function formatMetadata(product: HttpTypes.StoreProduct, prefix: string, format: string) {
+  const key = FORMAT_INFO[format]?.key
+  const value = key ? product.metadata?.[`${prefix}_${key}`] : undefined
+  return typeof value === "string" && value.trim() ? value.trim() : undefined
+}
+
+/** What's in the box for a format: product metadata `contents_pen` / `contents_vial` (editable in Admin). */
+export function formatContents(product: HttpTypes.StoreProduct, format: string) {
+  return formatMetadata(product, "contents", format)
+}
+
+/** The format card's one-liner: metadata `format_line_pen` / `format_line_vial`, else the shared copy. */
+export function formatLine(product: HttpTypes.StoreProduct, format: string) {
+  return formatMetadata(product, "format_line", format) ?? FORMAT_INFO[format]?.line
+}
+
+/** One short line for cards: "Dual-chamber pen or vial · 5 mg / 10 mg", or the variant titles. */
+export function shortAvailability(product: HttpTypes.StoreProduct) {
+  const options = readOptions(product)
+  if (!options.some((option) => option.title === FORMAT_OPTION)) return sortedVariants(product).map((variant) => variant.title).join(" / ")
+  const amounts = options.find((option) => option.title !== FORMAT_OPTION)?.values ?? []
+  return `Dual-chamber pen or vial${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
+}

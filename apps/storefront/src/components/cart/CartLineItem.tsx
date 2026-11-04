@@ -31,7 +31,7 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
     categories: item.product?.categories ?? [],
   })
   const lineTotal = Number(item.unit_price) * Number(item.quantity)
-  const image = getProductThumbnail(item.product_handle, item.thumbnail)
+  const image = getProductThumbnail(item.product_handle, item.thumbnail, item.variant_title ?? null)
 
   return (
     <Stack direction="row" spacing={2} sx={{ py: 2, borderBottom: "1px solid", borderColor: "divider" }}>

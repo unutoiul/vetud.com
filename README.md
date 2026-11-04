@@ -84,7 +84,26 @@ Everything is editable in **Admin → Products**. The storefront also reads thes
 
 The `lots` format is one lot per entry, with entries separated by `;` and fields by `|`: `LOT|YYYY-MM|PURITY|COA_URL`. The COA URL is optional. Without it, the site shows a "Request COA" link that goes to the contact form.
 
-The five photographed VETUD products use the approved images from `assets/vetud_product_white_background`, mapped by handle in `apps/storefront/src/lib/product-images.ts`. Each product has two views, shared across the homepage, catalog, galleries, cart/checkout and lot lookup. Full-resolution WebP versions live in `apps/storefront/public/images/products`; regenerate them with `node scripts/prepare-product-images.mjs` from `apps/storefront`. Pen galleries use landscape proportions; spray galleries use portrait proportions, with white backgrounds and contained images throughout. Other products continue to use their Medusa images, or the kit-box art drawn from `code`, `accent` and category when no photos exist.
+### Dual-chamber pens and vials
+
+Since 2026-11-04 the catalog has 28 products, and each one is sold in two formats: a **Dual-chamber pen** and a **Vial**, at different prices and in one to three amounts.
+- **Dual-chamber pen.** One cartridge with the freeze-dried peptide and bacteriostatic water in separate chambers. The kit also has the pen body, 12 needles and a booklet.
+- **Vial.** A sealed vial of freeze-dried powder; bacteriostatic water is sold separately.
+
+How it's set up:
+- **Data.** The products, amounts, prices (USD and EUR; other currencies are converted from EUR) and short descriptions are in `apps/backend/src/seed/dual-chamber-catalog.ts`.
+- **Options.** Each product has the Medusa options **Format** and **Amount**. The variants don't track stock (`manage_inventory: false`), so they're always orderable.
+- **Import.** Migration `vetud-product-19-dual-chamber-catalog` imports the catalog once on deploy. Rerun it safely with `npx medusa exec ./src/scripts/import-dual-chamber-catalog.ts`.
+- **Replaced products.** Earlier products on the same handles (the Retatrutide, Tirzepatide, Semaglutide, NAD+, Ipamorelin and Tesamorelin pen kits, the Selank and Semax sprays, and Bacteriostatic Water) are kept as drafts named `<handle>-pen-kit-2026`. Their orders, stock and reservations stay intact, and the new product takes over the URL, collection, lots and quality notes. The unspecified Melanotan kit is a draft too; Melanotan I and II replace it, and `/products/melanotan` redirects to the Pigmentation shelf.
+- **Photos.** Each product shows its dual-chamber cartridge, its vial and the pen explainer, from `assets/VETUD_Dual_Chamber_28_Products`, `assets/VETUD_Research_Vials_No_Dosage` and `assets/Premium dual-chamber laboratory pen concept.png`. `node scripts/prepare-dual-chamber-images.mjs` (from `apps/storefront`) writes them to `public/images/products/<handle>-pen.webp` / `-vial.webp` / `dual-chamber-pen.webp` and copies the explainer video to `public/videos/`. The import checks that these images are live before it runs, so deploy the storefront first. To test locally, set `DUAL_CHAMBER_IMAGE_ORIGIN=http://localhost:8000`.
+- **Product page.**
+  - Format cards with "from" prices, and amount buttons with their price.
+  - "In the box" for the chosen format.
+  - The gallery switches to the chosen format's photo.
+  - A "Dual-chamber pen or vial?" section with the explainer image, a comparison table, the 40-second video and a link to the guide at `/dual-chamber-pen`.
+- **Admin.** The "what's included" text per format is editable in Admin as the product metadata keys `contents_pen` and `contents_vial`.
+
+Earlier pen kits and sprays used the approved images from `assets/vetud_product_white_background`, mapped by handle in `apps/storefront/src/lib/product-images.ts`. Each product has two views, shared across the homepage, catalog, galleries, cart/checkout and lot lookup. Full-resolution WebP versions live in `apps/storefront/public/images/products`; regenerate them with `node scripts/prepare-product-images.mjs` from `apps/storefront`. Pen galleries use landscape proportions; spray galleries use portrait proportions, with white backgrounds and contained images throughout. Other products continue to use their Medusa images, or the kit-box art drawn from `code`, `accent` and category when no photos exist.
 
 Catalog changes appear on the storefront within about a minute (cached with `cacheLife("minutes")`).
 

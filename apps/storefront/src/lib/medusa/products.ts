@@ -18,6 +18,8 @@ export const PRODUCT_FIELDS = [
   "*variants.calculated_price",
   "+variants.inventory_quantity",
   "*variants.options",
+  // Loads the option titles ("Format", "Amount") onto each variant option as well.
+  "*options",
 ].join(",")
 
 export type ProductSort = "featured" | "price-asc" | "price-desc" | "name"

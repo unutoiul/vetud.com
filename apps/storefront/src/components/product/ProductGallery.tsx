@@ -6,23 +6,32 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
 import { useRef, useState } from "react"
+import { useProductSelection } from "./ProductSelection"
 
 type ProductGalleryProps = {
   title: string
-  images: { url: string; alt?: string }[]
+  images: { url: string; alt?: string; label?: string; format?: string }[]
   aspectRatio: string
 }
 
 export default function ProductGallery({ title, images, aspectRatio }: ProductGalleryProps) {
-  const [selected, setSelected] = useState(0)
+  const { format } = useProductSelection()
+  const [selected, setSelected] = useState(() => Math.max(0, images.findIndex(image => image.format && image.format === format)))
+  // Choosing a format in the purchase panel brings up that format's photo.
+  const [shownFormat, setShownFormat] = useState(format)
+  if (format !== shownFormat) {
+    setShownFormat(format)
+    const index = images.findIndex(image => image.format && image.format === format)
+    if (index >= 0) setSelected(index)
+  }
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const active = images[selected] ?? images[0]
   if (!active) return null
 
   const photoLabel = (image: ProductGalleryProps["images"][number], index: number) =>
     image.alt ?? (/[_-]closed/.test(image.url) ? `${title} closed packaging` : /[_-]open/.test(image.url) ? `${title} open packaging` : `${title} product photo ${index + 1}`)
-  const viewLabel = (url: string, index: number) =>
-    /[_-]closed/.test(url) ? "Closed box" : /[_-]open/.test(url) ? "Open kit" : index === 0 ? "Front view" : "Alternate view"
+  const viewLabel = ({ url, label }: ProductGalleryProps["images"][number], index: number) =>
+    label ?? (/[_-]closed/.test(url) ? "Closed box" : /[_-]open/.test(url) ? "Open kit" : index === 0 ? "Front view" : "Alternate view")
   const advance = (direction: number) => setSelected(value => (value + direction + images.length) % images.length)
 
   return (
@@ -73,7 +82,7 @@ export default function ProductGallery({ title, images, aspectRatio }: ProductGa
               sx={{ width: { xs: 88, sm: 104 }, p: .75, display: "flex", flexDirection: "column", gap: .5, flexShrink: 0, borderRadius: 1.5, border: "2px solid", borderColor: index === selected ? "primary.main" : "divider", bgcolor: "#fff", "&:focus-visible": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: 3 } }}
             >
               <Box sx={{ position: "relative", width: "100%", aspectRatio: "4 / 3" }}><Image src={image.url} alt="" fill loading="lazy" sizes="100px" style={{ objectFit: "contain" }} /></Box>
-              <Typography component="span" sx={{ fontSize: 10, color: index === selected ? "primary.main" : "text.secondary", lineHeight: 1.5 }}>{viewLabel(image.url, index)}</Typography>
+              <Typography component="span" sx={{ fontSize: 10, color: index === selected ? "primary.main" : "text.secondary", lineHeight: 1.5 }}>{viewLabel(image, index)}</Typography>
             </ButtonBase>
           ))}
         </Stack>

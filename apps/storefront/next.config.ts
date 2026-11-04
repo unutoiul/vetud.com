@@ -38,6 +38,8 @@ const nextConfig: NextConfig = {
       { source: "/:countryCode/education", destination: "/:countryCode/learn", permanent: true },
       { source: "/education", destination: "/learn", permanent: true },
       { source: "/discover", destination: "/shop", permanent: true },
+      // The unspecified Melanotan kit was replaced by Melanotan I and II (2026-11-04).
+      { source: "/:countryCode/products/melanotan", destination: "/:countryCode/shop?category=beauty", permanent: false },
       { source: "/admin", destination: adminUrl, permanent: false },
       { source: "/admin/:path*", destination: adminUrl, permanent: false },
     ]

@@ -16,6 +16,8 @@ import { ArtStage } from "@/components/product/ProductCard"
 import ProductGrid from "@/components/product/ProductGrid"
 import ProductGallery from "@/components/product/ProductGallery"
 import ProductDossier from "@/components/product/ProductDossier"
+import DualChamberExplainer from "@/components/product/DualChamberExplainer"
+import { ProductSelectionProvider } from "@/components/product/ProductSelection"
 import { getProductResearch } from "@/content/product-research"
 import { PEPTIDES } from "@/content/learn/peptides"
 import { ARTICLES } from "@/content/learn/articles"
@@ -25,7 +27,8 @@ import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { getLotReportCounts } from "@/lib/medusa/forum"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
-import { readProductMeta, sortedVariants, sortProducts } from "@/lib/product"
+import { formatMoney, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
+import { availabilitySummary, defaultVariant, FORMAT_OPTION, formatContents, formatOf, hasFormats, readOptions, variantsWith } from "@/lib/product-formats"
 import { getProductImages, getProductPhotography } from "@/lib/product-images"
 
 const PLACEHOLDER = "__placeholder__"
@@ -98,11 +101,22 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     .map((variant) => variant.sku)
     .filter(Boolean)
     .join(", ")
+  const formats = readOptions(product).find((option) => option.title === FORMAT_OPTION)?.values ?? []
+  const included = formats.flatMap((format) => {
+    const contents = formatContents(product, format)
+    return contents ? [{ format, contents }] : []
+  })
+  // "From" prices per format for the pen-vs-vial comparison.
+  const fromPrice = (format: string) => {
+    const amounts = variantsWith(product, FORMAT_OPTION, format).flatMap((variant) => variantPrice(variant)?.amount ?? [])
+    return amounts.length ? formatMoney(Math.min(...amounts), region.currency_code) : undefined
+  }
   const specs = [
     { label: "Product code", value: meta.code },
     { label: "Category", value: category?.name ?? "Research material" },
     { label: "Form", value: meta.form ?? "—" },
     ...(typeof product.metadata?.contents === "string" ? [{ label: "Kit contents", value: product.metadata.contents }] : []),
+    ...included.map(({ format, contents }) => ({ label: `${format}: what's included`, value: contents })),
     ...(meta.volume ? [{ label: "Bottle volume", value: meta.volume }] : []),
     ...(meta.concentration ? [{ label: "Peptide strength", value: meta.concentration }] : []),
     ...(meta.ingredients ? [{ label: "Ingredient information", value: meta.ingredients }] : []),
@@ -111,7 +125,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     { label: "Storage", value: meta.storage ?? "—" },
     ...(meta.stability ? [{ label: "Stability", value: meta.stability }] : []),
     ...(meta.handling ? [{ label: "Handling", value: meta.handling }] : []),
-    { label: "Available amounts", value: sortedVariants(product).map((variant) => variant.title).join(", ") },
+    { label: formats.length ? "Formats and amounts" : "Available amounts", value: availabilitySummary(product) },
     ...(skus ? [{ label: "SKU", value: skus }] : []),
     { label: "Intended use", value: "Laboratory research only" },
   ]
@@ -142,6 +156,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
           </Typography>
         </Breadcrumbs>
 
+        <ProductSelectionProvider initialFormat={formatOf(defaultVariant(product))}>
         <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 6 }}>
             <Box sx={{ position: { md: "sticky" }, top: { md: 110 }, border: "1px solid", borderColor: "divider", borderRadius: "5px", overflow: "hidden" }}>
@@ -181,10 +196,13 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
             <Box sx={{ mt: 3.5, borderTop: "1px solid", borderColor: "divider", "& details": { borderBottom: "1px solid", borderColor: "divider", py: 1.75 }, "& summary": { cursor: "pointer", fontSize: 12, fontWeight: 600 }, "& details p": { mt: 1.25, color: "text.secondary", fontSize: 12, lineHeight: 1.8 } }}>
               <details><summary>Quality & documentation</summary><Typography>Listed purity: {meta.purity ?? "see batch documentation"}. Match any certificate to the lot printed on your product. <AppLink href="#quality">View documentation</AppLink>.</Typography></details>
               <details><summary>Storage & stability</summary><Typography>{meta.storage ?? "Follow the conditions on your batch label."} {meta.stability}</Typography></details>
-              <details><summary>What is included?</summary><Typography>{typeof product.metadata?.contents === "string" ? product.metadata.contents : `${product.title} in the selected format and amount. Refer to the specifications below for composition.`}{product.metadata?.image_packaging_amount ? ` Images show ${product.metadata.image_packaging_amount} packaging; your selected amount determines the supplied product.` : ""}</Typography></details>
+              <details><summary>What is included?</summary>{included.length ? included.map(({ format, contents }) => <Typography key={format}><strong>{format}:</strong> {contents}</Typography>) : <Typography>{typeof product.metadata?.contents === "string" ? product.metadata.contents : `${product.title} in the selected format and amount. Refer to the specifications below for composition.`}{product.metadata?.image_packaging_amount ? ` Images show ${product.metadata.image_packaging_amount} packaging; your selected amount determines the supplied product.` : ""}</Typography>}</details>
             </Box>
           </Grid>
         </Grid>
+        </ProductSelectionProvider>
+
+        {hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber pen"), vial: fromPrice("Vial") }} supply={meta.artKind === "supply"} /> : null}
 
         <Box>
           <ProductDossier profile={profile} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
