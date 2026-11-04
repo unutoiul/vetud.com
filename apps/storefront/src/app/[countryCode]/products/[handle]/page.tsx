@@ -16,13 +16,12 @@ import { ArtStage } from "@/components/product/ProductCard"
 import ProductGrid from "@/components/product/ProductGrid"
 import ProductGallery from "@/components/product/ProductGallery"
 import ProductDossier from "@/components/product/ProductDossier"
+import ProductLearnMore from "@/components/product/ProductLearnMore"
 import DualChamberExplainer from "@/components/product/DualChamberExplainer"
 import { ProductSelectionProvider } from "@/components/product/ProductSelection"
 import { getProductResearch } from "@/content/product-research"
-import { PEPTIDES } from "@/content/learn/peptides"
-import { ARTICLES } from "@/content/learn/articles"
+import { getProductGuides, getProductOverview } from "@/content/product-overview"
 import PurchasePanel from "@/components/product/PurchasePanel"
-import { matchesPeptide } from "@/lib/learn-products"
 import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { getLotReportCounts } from "@/lib/medusa/forum"
@@ -111,7 +110,15 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     const amounts = variantsWith(product, FORMAT_OPTION, format).flatMap((variant) => variantPrice(variant)?.amount ?? [])
     return amounts.length ? formatMoney(Math.min(...amounts), region.currency_code) : undefined
   }
-  const specs = [
+  // Products sold in both formats get a short table: what's included and storage have their own sections.
+  const specs = formats.length ? [
+    { label: "Product code", value: meta.code },
+    { label: "Category", value: category?.name ?? "Research material" },
+    ...formats.map((format) => ({ label: format, value: variantsWith(product, FORMAT_OPTION, format).map((variant) => variant.options?.find((option) => option.option?.title === "Amount")?.value ?? variant.title).join(", ") })),
+    ...(meta.purity ? [{ label: "Purity", value: meta.purity }] : []),
+    ...(meta.testing ? [{ label: "Purity testing", value: meta.testing }] : []),
+    { label: "Intended use", value: "Laboratory research only" },
+  ] : [
     { label: "Product code", value: meta.code },
     { label: "Category", value: category?.name ?? "Research material" },
     { label: "Form", value: meta.form ?? "—" },
@@ -129,11 +136,11 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     ...(skus ? [{ label: "SKU", value: skus }] : []),
     { label: "Intended use", value: "Laboratory research only" },
   ]
+  const overview = profile ? undefined : getProductOverview(product)
 
   const images = getProductImages(product)
   const jsonLd = productStructuredData(product, countryCode)
-  const guides = PEPTIDES.filter(peptide => matchesPeptide(product, peptide.slug))
-  const articles = ARTICLES.filter(article => guides.some(guide => article.peptides.includes(guide.slug))).slice(0, 3)
+  const guides = getProductGuides(product)
 
   return (
     <>
@@ -203,20 +210,9 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </ProductSelectionProvider>
 
         <Box>
-          <ProductDossier profile={profile} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber pen"), vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} /> : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
+          <ProductDossier profile={profile} overview={overview} skus={formats.length ? skus : undefined} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber pen"), box: fromPrice("Pen kit box"), vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} /> : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
         </Box>
       </Section>
-
-      {guides.length ? (
-        <Section tone="white" aria-labelledby="product-reading-title" sx={{ borderTop: "1px solid", borderColor: "divider" }}>
-          <Typography component="h2" variant="h3" id="product-reading-title" sx={{ mb: 2 }}>Understand the research behind {product.title}.</Typography>
-          <Typography sx={{ maxWidth: 740, color: "text.secondary", lineHeight: 1.8, mb: 2.5 }}>Read the evidence, research status and known limitations of the named compound. Published studies do not establish the safety or performance of this research product.</Typography>
-          <Box component="ul" sx={{ m: 0, pl: 2.5, "& li": { py: 1 }, "& a": { lineHeight: 1.7 } }}>
-            {guides.map(guide => <li key={guide.slug}><AppLink href={`/learn/${guide.slug}`}>{guide.name}: research, evidence and limitations</AppLink></li>)}
-            {articles.map(article => <li key={article.slug}><AppLink href={`/news/${article.slug}`}>{article.headline.join("")}</AppLink></li>)}
-          </Box>
-        </Section>
-      ) : null}
 
       {related.length ? (
         <Section tone="paper">
@@ -224,6 +220,9 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
           <ProductGrid products={related} />
         </Section>
       ) : null}
+
+      {/* Supplies without a library guide (water, syringes) don't need a reading list. */}
+      {guides.length || meta.artKind !== "supply" ? <ProductLearnMore title={product.title} guides={guides} /> : null}
     </>
   )
 }

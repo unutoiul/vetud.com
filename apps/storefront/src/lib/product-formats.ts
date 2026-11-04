@@ -4,9 +4,10 @@ import { initialProductVariant, isVariantInStock, sortedVariants } from "./produ
 type Variant = HttpTypes.StoreProductVariant
 
 /** The two ways a dual-chamber product is sold, keyed by the Medusa "Format" option value. */
-export const FORMAT_INFO: Record<string, { line: string; key: "pen" | "vial" }> = {
-  "Dual-chamber pen": { line: "Powder and BAC water in one cartridge, with pen and needles", key: "pen" },
-  Vial: { line: "Freeze-dried powder in a sealed vial, lowest price", key: "vial" },
+export const FORMAT_INFO: Record<string, { line: string; key: "pen" | "box" | "vial" }> = {
+  "Dual-chamber pen": { line: "The pen with its cartridge: powder and BAC water kept apart", key: "pen" },
+  "Pen kit box": { line: "The complete kit in the VETUD box: pen, cartridge, 12 needles and a booklet", key: "box" },
+  Vial: { line: "Freeze-dried powder in a sealed vial, the lowest price", key: "vial" },
 }
 
 export const FORMAT_OPTION = "Format"
@@ -75,7 +76,7 @@ function formatMetadata(product: HttpTypes.StoreProduct, prefix: string, format:
   return typeof value === "string" && value.trim() ? value.trim() : undefined
 }
 
-/** What's in the box for a format: product metadata `contents_pen` / `contents_vial` (editable in Admin). */
+/** What's included in a format: product metadata `contents_pen` / `contents_box` / `contents_vial` (editable in Admin). */
 export function formatContents(product: HttpTypes.StoreProduct, format: string) {
   return formatMetadata(product, "contents", format)
 }
@@ -85,10 +86,12 @@ export function formatLine(product: HttpTypes.StoreProduct, format: string) {
   return formatMetadata(product, "format_line", format) ?? FORMAT_INFO[format]?.line
 }
 
-/** One short line for cards: "Dual-chamber pen or vial · 5 mg / 10 mg", or the variant titles. */
+/** One short line for cards: "Pen, pen kit box or vial · 5 mg / 10 mg", or the variant titles. */
 export function shortAvailability(product: HttpTypes.StoreProduct) {
   const options = readOptions(product)
   if (!options.some((option) => option.title === FORMAT_OPTION)) return sortedVariants(product).map((variant) => variant.title).join(" / ")
+  const formats = options.find((option) => option.title === FORMAT_OPTION)?.values ?? []
   const amounts = options.find((option) => option.title !== FORMAT_OPTION)?.values ?? []
-  return `Dual-chamber pen or vial${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
+  const label = formats.includes("Pen kit box") ? "Pen, pen kit box or vial" : "Dual-chamber pen or vial"
+  return `${label}${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
 }

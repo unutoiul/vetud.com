@@ -24,7 +24,7 @@ type ExistingProduct = {
  */
 const CARRIED_KEYS = ["lots", "purity", "testing", "storage", "handling", "research_source", "research_sources"]
 
-function regionalPrices(usd: number, eur: number, currencies: string[], rates: Record<string, number>) {
+export function regionalPrices(usd: number, eur: number, currencies: string[], rates: Record<string, number>) {
   return currencies.map((currency) => {
     if (currency === "usd") return { currency_code: currency, amount: usd }
     if (currency === "eur") return { currency_code: currency, amount: eur }

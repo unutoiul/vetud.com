@@ -9,31 +9,38 @@ export const EXPLAINER_VIDEO = { src: "/videos/dual-chamber-explainer.mp4", post
 
 const POINTS: { icon: IconName; title: string; text: string }[] = [
   { icon: "molecule", title: "Two chambers, one cartridge", text: "The freeze-dried peptide and the bacteriostatic (BAC) water sit in separate chambers, divided by a rubber stopper. They stay apart until the cartridge is used." },
-  { icon: "package", title: "Everything in one box", text: "The pen kit has the pen body, the cartridge, 12 disposable needles and an instruction booklet. There's no separate water to buy." },
+  { icon: "package", title: "The complete kit, boxed", text: "The pen kit box adds 12 disposable needles and an instruction booklet to the pen and cartridge, packed in the VETUD box." },
   { icon: "coin", title: "The vial costs less", text: "Choose the vial if you already have bacteriostatic water and your own lab supplies. It's the lowest price for the same amount." },
 ]
 
-export type FormatPrices = { pen?: string; vial?: string }
+export type FormatPrices = { pen?: string; box?: string; vial?: string }
 
 const FACTS = {
-  pen: { contents: "Pen body, dual-chamber cartridge, 12 needles, booklet", water: "Included, in the cartridge" },
+  pen: { contents: "Pen body and 1 dual-chamber cartridge", water: "Included, in the cartridge" },
+  box: { contents: "Pen body, cartridge, 12 needles and a booklet, in the VETUD box", water: "Included, in the cartridge" },
   vial: { contents: "1 sealed vial of freeze-dried powder", water: "Sold separately" },
 }
 
-/** Pen vs vial, side by side. Prices are "from" prices for the product, when there is one. */
+const COLUMNS = [
+  { key: "pen", title: "Dual-chamber pen", fallback: "Mid-price" },
+  { key: "box", title: "Pen kit box", fallback: "Highest" },
+  { key: "vial", title: "Vial", fallback: "Lowest" },
+] as const
+
+/** The three formats side by side. Prices are "from" prices for the product, when there is one. */
 export function FormatComparison({ prices }: { prices?: FormatPrices }) {
   const rows = [
-    { label: "What you get", pen: FACTS.pen.contents, vial: FACTS.vial.contents },
-    { label: "BAC water", pen: FACTS.pen.water, vial: FACTS.vial.water },
-    { label: "Price", pen: prices?.pen ? `From ${prices.pen}` : "Higher", vial: prices?.vial ? `From ${prices.vial}` : "Lower" },
+    { label: "What you get", cells: COLUMNS.map((column) => FACTS[column.key].contents) },
+    { label: "BAC water", cells: COLUMNS.map((column) => FACTS[column.key].water) },
+    { label: "Price", cells: COLUMNS.map((column) => prices?.[column.key] ? `From ${prices[column.key]}` : column.fallback) },
   ]
   return (
-    <Box component="table" aria-label="Dual-chamber pen compared with vial" sx={{ width: "100%", borderCollapse: "collapse", fontSize: 14, "& th, & td": { textAlign: "left", verticalAlign: "top", py: 1.5, px: { xs: 1, sm: 1.5 }, borderBottom: "1px solid", borderColor: "divider", lineHeight: 1.55 }, "& thead th": { fontSize: 13, fontWeight: 700, color: "brand.ink", borderBottomWidth: 2 }, "& tbody th": { fontWeight: 600, color: "text.secondary", width: { xs: "28%", sm: "24%" } } }}>
+    <Box component="table" aria-label="Dual-chamber pen, pen kit box and vial compared" sx={{ width: "100%", borderCollapse: "collapse", fontSize: 14, "& th, & td": { textAlign: "left", verticalAlign: "top", py: 1.5, px: { xs: 1, sm: 1.5 }, borderBottom: "1px solid", borderColor: "divider", lineHeight: 1.55 }, "& thead th": { fontSize: 13, fontWeight: 700, color: "brand.ink", borderBottomWidth: 2 }, "& tbody th": { fontWeight: 600, color: "text.secondary", width: { xs: "28%", sm: "24%" } } }}>
       <thead>
-        <tr><td /><th scope="col">Dual-chamber pen</th><th scope="col">Vial</th></tr>
+        <tr><td />{COLUMNS.map((column) => <th key={column.key} scope="col">{column.title}</th>)}</tr>
       </thead>
       <tbody>
-        {rows.map((row) => <tr key={row.label}><th scope="row">{row.label}</th><td>{row.pen}</td><td>{row.vial}</td></tr>)}
+        {rows.map((row) => <tr key={row.label}><th scope="row">{row.label}</th>{row.cells.map((cell, index) => <td key={COLUMNS[index].key}>{cell}</td>)}</tr>)}
       </tbody>
     </Box>
   )
@@ -55,12 +62,12 @@ function FormatCard({ id, title, price, photos, facts }: { id: string; title: st
           </Box>
         ))}
       </Box>
-      <Box sx={{ p: { xs: 2.5, md: 3 }, flex: 1 }}>
+      <Box sx={{ p: 2.5, flex: 1 }}>
         <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "baseline", columnGap: 2, rowGap: 0.5 }}>
-          <Typography id={id} component="h3" sx={{ fontSize: 19, fontWeight: 650, color: "brand.ink" }}>{title}</Typography>
+          <Typography id={id} component="h3" sx={{ fontSize: 17, fontWeight: 650, color: "brand.ink" }}>{title}</Typography>
           {price ? <Typography sx={{ fontSize: 15, fontWeight: 650, color: "brand.blue", fontVariantNumeric: "tabular-nums" }}>From {price}</Typography> : null}
         </Box>
-        <Box component="dl" sx={{ m: 0, mt: 2, display: "grid", gridTemplateColumns: "auto 1fr", columnGap: 2, rowGap: 1.25, fontSize: 14, lineHeight: 1.6, "& dt": { fontWeight: 600, color: "text.secondary" }, "& dd": { m: 0, color: "brand.ink" } }}>
+        <Box component="dl" sx={{ m: 0, mt: 1.5, display: "grid", rowGap: 0.25, fontSize: 13.5, lineHeight: 1.55, "& dt": { fontWeight: 600, color: "text.secondary", fontSize: 12, mt: 1 }, "& dd": { m: 0, color: "brand.ink" } }}>
           <dt>What you get</dt><dd>{facts.contents}</dd>
           <dt>BAC water</dt><dd>{facts.water}</dd>
         </Box>
@@ -112,14 +119,15 @@ export default function DualChamberExplainer({ prices, photos, supply }: { price
   }
   return (
     <Box>
-      <Typography {...HEADING}>Dual-chamber pen or vial?</Typography>
+      <Typography {...HEADING}>Dual-chamber pen, pen kit box or vial?</Typography>
       <Typography sx={{ maxWidth: 680, fontSize: 15, lineHeight: 1.8, color: "text.secondary" }}>
-        Every product comes in both. It&apos;s the same peptide and the same amounts; what changes is the packaging, what&apos;s included and the price.
+        Every product comes three ways. It&apos;s the same peptide and the same amounts; what changes is the packaging, what&apos;s included and the price.
       </Typography>
 
       {photos ? (
-        <Box sx={{ mt: { xs: 3, md: 4 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" }, gap: { xs: 2, md: 3 } }}>
-          <FormatCard id="format-pen-title" title="Dual-chamber pen" price={prices?.pen} facts={FACTS.pen} photos={[{ ...photos.pen, slim: true }, ...(photos.box ? [photos.box] : [])]} />
+        <Box sx={{ mt: { xs: 3, md: 4 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, minmax(0, 1fr))" }, gap: { xs: 2, md: 2.5 } }}>
+          <FormatCard id="format-pen-title" title="Dual-chamber pen" price={prices?.pen} facts={FACTS.pen} photos={[{ ...photos.pen, slim: true }]} />
+          <FormatCard id="format-box-title" title="Pen kit box" price={prices?.box} facts={FACTS.box} photos={[photos.kit]} />
           <FormatCard id="format-vial-title" title="Vial" price={prices?.vial} facts={FACTS.vial} photos={[photos.vial]} />
         </Box>
       ) : (

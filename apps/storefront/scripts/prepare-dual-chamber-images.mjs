@@ -77,6 +77,13 @@ for (const handle of Object.values(HANDLES)) {
   for (const view of ["pen", "vial"]) if (!found.has(`${handle}-${view}`)) throw new Error(`Missing ${view} artwork for ${handle}`)
 }
 
+// Lab supplies sold next to the pens and vials.
+const SUPPLY_PHOTOS = {
+  "u-100-syringes-box": "VETUD Ten-Syringe Box Concept.png",
+  "u-100-syringes-single": "VETUD Single U-100 Syringe.png",
+}
+for (const [name, filename] of Object.entries(SUPPLY_PHOTOS)) await photo(path.join(assets, filename), `${name}.webp`)
+
 const explainer = path.join(assets, "Premium dual-chamber laboratory pen concept.png")
 await photo(explainer, "dual-chamber-pen.webp")
 

@@ -99,10 +99,12 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
                 <Typography variant="eyebrow" component="p" id="format-label" sx={{ mb: 1.25, color: "text.secondary" }}>
                   Choose a format
                 </Typography>
-                <Box role="radiogroup" aria-labelledby="format-label" sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: `repeat(${option.values.length}, 1fr)` }, gap: 1.25 }}>
+                {/* One row per format: name and what it is on the left, the starting price on the right. */}
+                <Box role="radiogroup" aria-labelledby="format-label" sx={{ display: "grid", gap: 1 }}>
                   {option.values.map((value) => {
                     const selected = value === format
                     const from = lowestPrice(option.title, value)
+                    const line = formatLine(product, value)
                     return (
                       <Box
                         key={value}
@@ -112,13 +114,16 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
                         aria-checked={selected}
                         onClick={() => choose(option.title, value)}
                         sx={{
-                          position: "relative",
+                          display: "grid",
+                          gridTemplateColumns: "24px minmax(0, 1fr) auto",
+                          alignItems: "center",
+                          columnGap: 1.5,
                           textAlign: "left",
                           font: "inherit",
                           color: "inherit",
                           cursor: "pointer",
-                          p: 2,
-                          pr: 5,
+                          px: 2,
+                          py: 1.5,
                           borderRadius: "8px",
                           border: "2px solid",
                           borderColor: selected ? "brand.blue" : "brand.lineStrong",
@@ -128,13 +133,18 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
                           "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 },
                         }}
                       >
-                        <Icon name={selected ? "checkCircle" : "plus"} aria-hidden sx={{ position: "absolute", top: 14, right: 14, fontSize: 20, color: selected ? "brand.blue" : "text.disabled" }} />
-                        <Typography component="span" sx={{ display: "block", fontWeight: 700, fontSize: 16, color: "brand.ink" }}>{value}</Typography>
-                        {formatLine(product, value) ? (
-                          <Typography component="span" sx={{ display: "block", mt: 0.5, fontSize: 13, lineHeight: 1.5, color: "text.secondary" }}>{formatLine(product, value)}</Typography>
-                        ) : null}
+                        <Box aria-hidden sx={{ width: 20, height: 20, borderRadius: "50%", border: "2px solid", borderColor: selected ? "brand.blue" : "brand.lineStrong", display: "grid", placeItems: "center" }}>
+                          {selected ? <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "brand.blue" }} /> : null}
+                        </Box>
+                        <Box sx={{ minWidth: 0 }}>
+                          <Typography component="span" sx={{ display: "block", fontWeight: 700, fontSize: 15.5, color: "brand.ink" }}>{value}</Typography>
+                          {line ? <Typography component="span" sx={{ display: "block", mt: 0.25, fontSize: 13, lineHeight: 1.45, color: "text.secondary" }}>{line}</Typography> : null}
+                        </Box>
                         {from ? (
-                          <Typography component="span" sx={{ display: "block", mt: 1, fontSize: 14, fontWeight: 600, color: "brand.ink" }}>from {money(from.amount, from.currencyCode)}</Typography>
+                          <Typography component="span" sx={{ fontSize: 14, fontWeight: 650, color: "brand.ink", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums", textAlign: "right" }}>
+                            <Box component="span" sx={{ display: "block", fontSize: 11, fontWeight: 500, color: "text.secondary" }}>from</Box>
+                            {money(from.amount, from.currencyCode)}
+                          </Typography>
                         ) : null}
                       </Box>
                     )

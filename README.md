@@ -86,8 +86,9 @@ The `lots` format is one lot per entry, with entries separated by `;` and fields
 
 ### Dual-chamber pens and vials
 
-Since 2026-11-04 the catalog has 28 products, and each one is sold in two formats: a **Dual-chamber pen** and a **Vial**, at different prices and in one to three amounts.
-- **Dual-chamber pen.** One cartridge with the freeze-dried peptide and bacteriostatic water in separate chambers. The kit also has the pen body, 12 needles and a booklet.
+Since 2026-11-04 the catalog has 28 products, each sold as a **Dual-chamber pen**, a **Pen kit box** and a **Vial**, at different prices and in one to three amounts. Bacteriostatic water has no kit box.
+- **Dual-chamber pen.** The pen body with one cartridge holding the freeze-dried peptide and bacteriostatic water in separate chambers.
+- **Pen kit box.** The pen and cartridge plus 12 needles and an instruction booklet, in the VETUD box. It costs the pen's price plus $40 / €38 (`PEN_KIT_BOX` in the seed file). Migration `vetud-product-20-pen-kit-boxes` adds it; rerun it safely with `npx medusa exec ./src/scripts/add-pen-kit-boxes.ts`. The six products with box photos (Retatrutide, Tirzepatide, Semaglutide, NAD+, Ipamorelin, Tesamorelin) show them; the others show the pen explainer.
 - **Vial.** A sealed vial of freeze-dried powder; bacteriostatic water is sold separately.
 
 How it's set up:
@@ -101,7 +102,9 @@ How it's set up:
   - "In the box" for the chosen format.
   - The gallery switches to the chosen format's photo.
   - A "Dual-chamber pen or vial?" section with the explainer image, a comparison table, the 40-second video and a link to the guide at `/dual-chamber-pen`.
-- **Admin.** The "what's included" text per format is editable in Admin as the product metadata keys `contents_pen` and `contents_vial`.
+- **Admin.** The "what's included" text per format is editable in Admin as the product metadata keys `contents_pen`, `contents_box` and `contents_vial`.
+- **Lab supplies.** U-100 insulin syringes (box of 10, $15 / €14) are on the Laboratory supplies shelf, from `apps/backend/src/seed/lab-supplies.ts` (migration `vetud-product-21-u100-syringes`, or `npx medusa exec ./src/scripts/import-lab-supplies.ts`). Their photos come from `assets/VETUD Ten-Syringe Box Concept.png` and `assets/VETUD Single U-100 Syringe.png` through the same image script.
+- **Research overview and Learn section.** Products without a handwritten profile in `content/product-research.ts` get their overview from the learning library's profile of the same compound (`content/product-overview.ts`; blends list each compound). The end of each product page links its guides, news and videos.
 
 Earlier pen kits and sprays used the approved images from `assets/vetud_product_white_background`, mapped by handle in `apps/storefront/src/lib/product-images.ts`. Each product has two views, shared across the homepage, catalog, galleries, cart/checkout and lot lookup. Full-resolution WebP versions live in `apps/storefront/public/images/products`; regenerate them with `node scripts/prepare-product-images.mjs` from `apps/storefront`. Pen galleries use landscape proportions; spray galleries use portrait proportions, with white backgrounds and contained images throughout. Other products continue to use their Medusa images, or the kit-box art drawn from `code`, `accent` and category when no photos exist.
 

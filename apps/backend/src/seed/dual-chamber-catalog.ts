@@ -13,7 +13,8 @@ export const FORMATS = {
 export type FormatKey = keyof typeof FORMATS
 
 export const FORMAT_CONTENTS: Record<FormatKey, string> = {
-  pen: "Pen body; 1 dual-chamber cartridge (lyophilized peptide in one chamber, bacteriostatic water in the other); 12 disposable needles; instruction booklet",
+  // Since 2026-11-04 the needles and booklet come with the Pen kit box (see PEN_KIT_BOX).
+  pen: "Pen body with 1 dual-chamber cartridge (lyophilized peptide in one chamber, bacteriostatic water in the other)",
   vial: "1 sealed glass vial of lyophilized (freeze-dried) peptide. Bacteriostatic water is sold separately.",
 }
 
@@ -290,3 +291,18 @@ export const variantSku = (product: DualChamberProduct, format: FormatKey, amoun
   `${product.code}-${format.toUpperCase()}-${amount.split("(")[0].replace(/\s+/g, "").replace(".", "_").toUpperCase()}`
 
 export const variantTitle = (format: FormatKey, amount: string) => `${FORMATS[format]} · ${amount}`
+
+/**
+ * The Pen kit box, added on 2026-11-04 as a third format above the pen: the complete kit in the
+ * VETUD box. It's offered in every amount the pen is, at the pen's price plus this premium.
+ * Bacteriostatic water has no kit.
+ */
+export const PEN_KIT_BOX = {
+  title: "Pen kit box",
+  revision: "pen-kit-box-2026-11-04-v1",
+  premium: { usd: 40, eur: 38 },
+  excluded: ["bacteriostatic-water"],
+  contents: "VETUD box with the pen body, 1 dual-chamber cartridge (lyophilized peptide in one chamber, bacteriostatic water in the other), 12 disposable needles and an instruction booklet",
+} as const
+
+export const boxSku = (product: DualChamberProduct, amount: string) => variantSku(product, "pen", amount).replace("-PEN-", "-BOX-")
