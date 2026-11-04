@@ -5,11 +5,11 @@ import Icon, { type IconName } from "@/components/brand/Icon"
 import { AppLink } from "@/components/common/links"
 import type { FormatPhotos } from "@/lib/product-images"
 
-export const EXPLAINER_VIDEO = { src: "/videos/dual-chamber-explainer.mp4", poster: "/videos/dual-chamber-explainer.webp", duration: "PT40S" }
+export const EXPLAINER_VIDEO = { src: "/videos/reusable-dual-chamber-pen.mp4", poster: "/videos/reusable-dual-chamber-pen.webp", duration: "PT51S", length: "51 seconds" }
 
 const POINTS: { icon: IconName; title: string; text: string }[] = [
   { icon: "molecule", title: "Two chambers, one cartridge", text: "The freeze-dried peptide and the bacteriostatic (BAC) water sit in separate chambers, divided by a rubber stopper. They stay apart until the cartridge is used." },
-  { icon: "package", title: "A reusable pen", text: "The pen kit box has the reusable pen body with a dual-chamber vial, 12 disposable needles and a booklet. Keep the pen, and refill it with dual-chamber vials." },
+  { icon: "package", title: "A reusable pen", text: "The pen kit box has the reusable pen body with a dual-chamber vial, 12 disposable needles and a booklet. The drive, dial and indicator window stay with the pen: when a cartridge is empty, fit a new dual-chamber vial." },
   { icon: "coin", title: "The vial costs less", text: "Choose the vial if you already have bacteriostatic water and your own lab supplies. It's the lowest price for the same amount." },
 ]
 
@@ -76,15 +76,15 @@ function FormatCard({ id, title, price, photos, facts }: { id: string; title: st
   )
 }
 
-/** The explainer video, loaded only when played. It has on-screen text and no voiceover. */
-export function ExplainerVideo({ title = "How the VETUD dual-chamber pen works" }: { title?: string }) {
+/** The reusable-pen video, loaded only when played. It explains itself with on-screen text. */
+export function ExplainerVideo({ title = "The reusable VETUD dual-chamber pen" }: { title?: string }) {
   return (
     <Box component="figure" sx={{ m: 0 }}>
       <Box component="video" controls preload="none" playsInline poster={EXPLAINER_VIDEO.poster} aria-label={title}
         sx={{ display: "block", width: "100%", aspectRatio: "16 / 9", bgcolor: "#eef4fb", borderRadius: "8px", border: "1px solid", borderColor: "divider" }}>
         <source src={EXPLAINER_VIDEO.src} type="video/mp4" />
       </Box>
-      <Typography component="figcaption" sx={{ mt: 1, fontSize: 12.5, color: "text.secondary" }}>{title} · 40 seconds, no sound needed</Typography>
+      <Typography component="figcaption" sx={{ mt: 1, fontSize: 12.5, color: "text.secondary" }}>{title} · {EXPLAINER_VIDEO.length}</Typography>
     </Box>
   )
 }

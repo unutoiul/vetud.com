@@ -90,15 +90,15 @@ await photo(path.join(assets, "Reusable dual-chamber peptide pen.png"), "reusabl
 const explainer = path.join(assets, "Premium dual-chamber laboratory pen concept.png")
 await photo(explainer, "dual-chamber-pen.webp")
 
-// The video's poster: its title frame (exported from the video at 4.5 s), or else the explainer
-// artwork centred on the video's 16:9 frame.
-const titleFrame = path.join(assets, "VETUD_Dual_Chamber_Video_and_Artwork/VETUD_Dual_Chamber_Explainer_poster.png")
+// The reusable-pen video and its poster: its title frame (exported from the video at 3 s), or else
+// the explainer artwork centred on the video's 16:9 frame.
+const titleFrame = path.join(assets, "VETUD_Reusable_Dual_Chamber_Pen_poster.png")
 const poster = existsSync(titleFrame)
   ? sharp(titleFrame).resize({ width: 1920 })
   : sharp({ create: { width: 1920, height: 1080, channels: 3, background: "#eef4fb" } })
     .composite([{ input: await sharp(explainer).resize({ height: 1080 }).toBuffer(), gravity: "center" }])
-await poster.webp({ quality: 84 }).toFile(path.join(videos, "dual-chamber-explainer.webp"))
+await poster.webp({ quality: 84 }).toFile(path.join(videos, "reusable-dual-chamber-pen.webp"))
 
-const video = path.join(assets, "VETUD_Dual_Chamber_Video_and_Artwork/VETUD_Dual_Chamber_Explainer_1080p.mp4")
-await copyFile(video, path.join(videos, "dual-chamber-explainer.mp4"))
+const video = path.join(assets, "VETUD_Reusable_Dual_Chamber_Pen_1080p.mp4")
+await copyFile(video, path.join(videos, "reusable-dual-chamber-pen.mp4"))
 console.log(`Photos: ${Math.round(written / 1024)} KB. Video: ${Math.round((await stat(video)).size / 1024)} KB.`)

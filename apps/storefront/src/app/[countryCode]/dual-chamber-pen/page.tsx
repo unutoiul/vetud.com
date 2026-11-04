@@ -25,10 +25,22 @@ const PARTS = [
 
 /** The reusable pen, part by part, as labelled in the artwork. */
 const REUSABLE = [
-  { name: "Reusable pen body", text: "The metal body is made to last. You keep it, and only the cartridge inside is changed." },
-  { name: "Graduated holder", text: "The clear holder has a printed scale, so you can see the cartridge and how much is left at a glance." },
-  { name: "Two chambers in each cartridge", text: "The freeze-dried peptide sits in the front chamber and the diluent (bacteriostatic water) in the rear chamber, kept apart by a rubber stopper." },
-  { name: "Replace the cartridge when it's empty", text: "Take out the empty cartridge and fit a new dual-chamber vial, sold on its own. Nothing else changes, so there's less to throw away." },
+  { name: "A pen body that stays", text: "The metal body is made to last. The drive, the rear dial and the indicator window stay with the pen; only the cartridge inside is changed." },
+  { name: "Transparent, graduated holder", text: "The clear holder supports the cartridge and connects it to the pen body. Its printed scale leaves both chambers visible, so you can see the powder, the liquid and how much is left." },
+  { name: "Two chambers in each cartridge", text: "The freeze-dried peptide sits in the front chamber and the diluent (bacteriostatic water) in the rear chamber, kept apart by a rubber stopper. They don't touch until the cartridge is used." },
+  { name: "Mixed inside the cartridge", text: "When the cartridge is used, the moving stopper reaches a small bypass channel in the glass. The liquid flows around it into the front chamber and the powder dissolves there, so there's no separate mixing vial." },
+  { name: "Replace the cartridge when it's empty", text: "Take out the empty cartridge and fit a new dual-chamber vial, sold on its own. Nothing else changes." },
+  { name: "Why reusable", text: "You buy the pen once, in the pen kit box. After that, refills cost less than a new kit, and there's less to throw away." },
+]
+
+/** What the video shows, in order (it has on-screen text). */
+const CHAPTERS = [
+  "The reusable pen: one pen body with a replaceable cartridge for the powder and the liquid",
+  "Inside the transparent holder: how the cartridge fits the pen body",
+  "Separation: the stopper keeps the freeze-dried peptide and the diluent apart",
+  "Bypass and transfer: a channel opens around the stopper and the liquid moves forward",
+  "Reconstitution: the liquid reaches the dry powder inside the cartridge",
+  "Keep the pen, replace the cartridge when it's empty",
 ]
 
 const FAQ: FaqItem[] = [
@@ -42,7 +54,7 @@ const FAQ: FaqItem[] = [
 const videoJsonLd = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
-  name: "How the VETUD dual-chamber pen works",
+  name: "The reusable VETUD dual-chamber pen",
   description: DESCRIPTION,
   thumbnailUrl: [`${BASE_URL}${EXPLAINER_VIDEO.poster}`],
   contentUrl: `${BASE_URL}${EXPLAINER_VIDEO.src}`,
@@ -60,8 +72,12 @@ export default function DualChamberPenPage() {
 
       <Section tone="white" tight aria-labelledby="video-title">
         <Box sx={{ maxWidth: 1040, mx: "auto" }}>
-          <Typography id="video-title" component="h2" sx={{ fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em", mb: 2.5 }}>Watch: how it works in 40 seconds</Typography>
+          <Typography id="video-title" component="h2" sx={{ fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em", mb: 2.5 }}>Watch: the reusable pen in {EXPLAINER_VIDEO.length}</Typography>
           <ExplainerVideo />
+          <Typography component="h3" sx={{ mt: 3.5, mb: 1.25, fontSize: 15, fontWeight: 650 }}>What the video shows</Typography>
+          <Box component="ol" sx={{ m: 0, pl: 2.5, display: "grid", gap: 0.75, "& li": { fontSize: 15, lineHeight: 1.7, color: "text.secondary" } }}>
+            {CHAPTERS.map((chapter) => <li key={chapter}>{chapter}</li>)}
+          </Box>
         </Box>
       </Section>
 
