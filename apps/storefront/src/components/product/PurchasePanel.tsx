@@ -22,7 +22,7 @@ import QuantityStepper from "./QuantityStepper"
 import StockBadge from "./StockBadge"
 
 /** A supply offered next to the vial format: bacteriostatic water, U-100 syringes. */
-export type PurchaseAddOn = { variantId: string; title: string; detail: string; image?: string; price: { amount: number; currencyCode: string } }
+export type PurchaseAddOn = { variantId: string; title: string; detail: string; unit?: string; image?: string; price: { amount: number; currencyCode: string } }
 
 /** Formats that need water and syringes on the side. */
 const ADD_ON_FORMATS = ["Vial"]
@@ -37,7 +37,8 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
   const [variantId, setVariantId] = useState(firstAvailable?.id ?? "")
   const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)
-  const [extras, setExtras] = useState<string[]>([])
+  // Quantity of each add-on, by variant id; 0 or missing means not added.
+  const [extras, setExtras] = useState<Record<string, number>>({})
 
   const variant = variants.find((item) => item.id === variantId) ?? firstAvailable
   const selection = selectionOf(variant)
@@ -68,14 +69,15 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
   }
 
   const offered = format && ADD_ON_FORMATS.includes(format) ? addOns : []
-  const chosen = offered.filter((addOn) => extras.includes(addOn.variantId))
-  const toggleExtra = (variantId: string) => setExtras((current) => current.includes(variantId) ? current.filter((id) => id !== variantId) : [...current, variantId])
+  const chosen = offered.filter((addOn) => (extras[addOn.variantId] ?? 0) > 0)
+  const extraCount = chosen.reduce((total, addOn) => total + extras[addOn.variantId], 0)
+  const setExtra = (variantId: string, count: number) => setExtras((current) => ({ ...current, [variantId]: count }))
 
   const onAdd = async () => {
     if (!variant) return
     setAdded(false)
     let ok = await addItem(variant.id, quantity)
-    for (const addOn of chosen) if (ok) ok = await addItem(addOn.variantId, 1)
+    for (const addOn of chosen) if (ok) ok = await addItem(addOn.variantId, extras[addOn.variantId])
     setAdded(ok)
   }
 
@@ -241,18 +243,26 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
           <Typography component="legend" sx={{ px: 0.5, fontSize: 13, fontWeight: 700, color: "brand.ink" }}>Add what you need for the vial</Typography>
           <Box sx={{ display: "grid", gap: 1, mt: 0.5 }}>
             {offered.map((addOn) => {
-              const checked = extras.includes(addOn.variantId)
+              const count = extras[addOn.variantId] ?? 0
+              const id = `add-on-${addOn.variantId}`
               return (
-                <Box key={addOn.variantId} component="label" sx={{ display: "grid", gridTemplateColumns: "auto 44px minmax(0, 1fr) auto", alignItems: "center", columnGap: 1.25, p: 0.75, borderRadius: "6px", cursor: "pointer", bgcolor: checked ? "brand.mintLight" : "transparent", "&:hover": { bgcolor: "brand.mintWash" } }}>
-                  <Checkbox checked={checked} onChange={() => toggleExtra(addOn.variantId)} size="small" sx={{ p: 0.5 }} />
-                  <Box sx={{ position: "relative", width: 44, height: 44, borderRadius: "4px", overflow: "hidden", bgcolor: "#fff", border: "1px solid", borderColor: "divider" }}>
+                <Box key={addOn.variantId} sx={{ display: "grid", gridTemplateColumns: "auto 44px minmax(0, 1fr) auto", alignItems: "center", columnGap: 1.25, rowGap: 1, p: 0.75, borderRadius: "6px", bgcolor: count ? "brand.mintLight" : "transparent", "&:hover": { bgcolor: count ? "brand.mintLight" : "brand.mintWash" } }}>
+                  <Checkbox checked={count > 0} onChange={(event) => setExtra(addOn.variantId, event.target.checked ? 1 : 0)} size="small" sx={{ p: 0.5 }} slotProps={{ input: { id } }} />
+                  <Box component="label" htmlFor={id} sx={{ position: "relative", width: 44, height: 44, borderRadius: "4px", overflow: "hidden", bgcolor: "#fff", border: "1px solid", borderColor: "divider", cursor: "pointer" }}>
                     {addOn.image ? <Image src={addOn.image} alt="" fill sizes="44px" style={{ objectFit: "contain" }} /> : null}
                   </Box>
-                  <Box sx={{ minWidth: 0 }}>
-                    <Typography sx={{ fontSize: 14, fontWeight: 650, color: "brand.ink" }}>{addOn.title}</Typography>
-                    <Typography sx={{ fontSize: 12.5, color: "text.secondary" }}>{addOn.detail}</Typography>
+                  <Box component="label" htmlFor={id} sx={{ minWidth: 0, cursor: "pointer" }}>
+                    <Typography component="span" sx={{ display: "block", fontSize: 14, fontWeight: 650, color: "brand.ink" }}>{addOn.title}</Typography>
+                    <Typography component="span" sx={{ display: "block", fontSize: 12.5, color: "text.secondary" }}>{addOn.detail} · {money(addOn.price.amount, addOn.price.currencyCode)} each</Typography>
                   </Box>
-                  <Typography sx={{ fontSize: 14, fontWeight: 650, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>+{money(addOn.price.amount, addOn.price.currencyCode)}</Typography>
+                  <Typography sx={{ fontSize: 14, fontWeight: 650, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>+{money(addOn.price.amount * Math.max(count, 1), addOn.price.currencyCode)}</Typography>
+                  {/* Once ticked, choose how many: more water for more vials. */}
+                  {count ? (
+                    <Box sx={{ gridColumn: "3 / -1", display: "flex", alignItems: "center", gap: 1.25 }}>
+                      <QuantityStepper value={count} onChange={(value) => setExtra(addOn.variantId, value)} min={1} max={20} size="small" label={`${addOn.title} quantity`} />
+                      <Typography sx={{ fontSize: 12.5, color: "text.secondary" }}>{addOn.unit ? `${count} ${addOn.unit}${count > 1 ? "s" : ""}` : null}</Typography>
+                    </Box>
+                  ) : null}
                 </Box>
               )
             })}
@@ -262,11 +272,9 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
 
       <Stack direction="row" spacing={1.5} useFlexGap role="status" aria-live="polite" aria-atomic="true" sx={{ alignItems: "center", flexWrap: "wrap" }}>
         <StockBadge inStock={inStock} />
-        {inStock ? (
+        {inStock && variant?.manage_inventory && (variant.inventory_quantity ?? 0) < 10 ? (
           <Typography variant="body2" sx={{ color: "text.secondary", fontSize: 13 }}>
-            {variant?.manage_inventory && (variant.inventory_quantity ?? 0) < 10
-              ? `Only ${variant.inventory_quantity} left`
-              : "Ships within 1–2 business days"}
+            Only {variant.inventory_quantity} left
           </Typography>
         ) : null}
       </Stack>
@@ -281,7 +289,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
           disabled={!inStock || !price || pending}
           sx={{ flex: 1 }}
         >
-          {pending ? "Adding…" : chosen.length ? `Add ${chosen.length + 1} items to cart` : "Add to cart"}
+          {pending ? "Adding…" : extraCount ? `Add ${extraCount + 1} items to cart` : "Add to cart"}
         </Button>
       </Stack>
 

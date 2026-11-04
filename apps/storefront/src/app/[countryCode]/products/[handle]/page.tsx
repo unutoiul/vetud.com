@@ -36,12 +36,12 @@ const PLACEHOLDER = "__placeholder__"
 /** Supplies offered next to the vial format; they aren't offered on their own pages. */
 const ADD_ON_HANDLES = ["bacteriostatic-water", "u-100-syringes"]
 
-function addOn(product: HttpTypes.StoreProduct | null, variantTitle: string | undefined, title: string, detail: string): PurchaseAddOn | null {
+function addOn(product: HttpTypes.StoreProduct | null, variantTitle: string | undefined, title: string, detail: string, unit: string): PurchaseAddOn | null {
   const variants = product ? sortedVariants(product) : []
   const variant = variants.find((item) => item.title === variantTitle) ?? (variantTitle ? undefined : variants[0])
   const price = variantPrice(variant)
   if (!product || !variant || !price || !isVariantInStock(variant)) return null
-  return { variantId: variant.id, title, detail, image: getProductImages(product).find((image) => image.url.includes("vial") || image.url.includes("box"))?.url ?? getProductImages(product)[0]?.url, price: { amount: price.amount, currencyCode: price.currencyCode } }
+  return { variantId: variant.id, title, detail, unit, image: getProductImages(product).find((image) => image.url.includes("vial") || image.url.includes("box"))?.url ?? getProductImages(product)[0]?.url, price: { amount: price.amount, currencyCode: price.currencyCode } }
 }
 
 export async function generateStaticParams() {
@@ -109,7 +109,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     ADD_ON_HANDLES.includes(handle) ? null : getProductByHandle("bacteriostatic-water", region.id),
     ADD_ON_HANDLES.includes(handle) ? null : getProductByHandle("u-100-syringes", region.id),
   ])
-  const addOns = [addOn(water, "Vial · 10 ml", "Bacteriostatic water", "10 ml multi-use vial"), addOn(syringes, undefined, "U-100 insulin syringes", "Box of 10, single use")].filter((item): item is PurchaseAddOn => item !== null)
+  const addOns = [addOn(water, "Vial · 10 ml", "Bacteriostatic water", "10 ml multi-use vial", "vial"), addOn(syringes, undefined, "U-100 insulin syringes", "Box of 10, single use", "box")].filter((item): item is PurchaseAddOn => item !== null)
   const related = sortProducts(catalog, "featured")
     .filter((item) => item.id !== product.id)
     .slice(0, 3)
