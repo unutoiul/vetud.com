@@ -123,7 +123,7 @@ export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/sho
   return (
     <>
       <PageHeader eyebrow="The collection" title="Research peptides & laboratory materials." description="Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.">
-        <AppLink href="/dual-chamber-pen" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}>Every peptide comes as a dual-chamber pen, a pen kit box or a vial. See how they compare →</AppLink>
+        <AppLink href="/dual-chamber-pen" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}>Every peptide comes as a dual-chamber vial, a vial or a pen kit box with the reusable pen. See how they compare →</AppLink>
       </PageHeader>
       <Section tone="white" tight sx={{ pt: { xs: 3, md: 5 } }}>
         <Suspense fallback={<ResultsSkeleton />}>

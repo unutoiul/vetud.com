@@ -5,10 +5,12 @@ import Icon, { FlaskIcon as ScienceOutlinedIcon, BagIcon as ShoppingBagOutlinedI
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
+import Checkbox from "@mui/material/Checkbox"
 import Stack from "@mui/material/Stack"
 import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import Typography from "@mui/material/Typography"
+import Image from "next/image"
 import { useState } from "react"
 import { useLocale } from "next-intl"
 import { SITE } from "@/lib/config"
@@ -19,7 +21,13 @@ import { useProductSelection } from "./ProductSelection"
 import QuantityStepper from "./QuantityStepper"
 import StockBadge from "./StockBadge"
 
-export default function PurchasePanel({ product }: { product: HttpTypes.StoreProduct }) {
+/** A supply offered next to the vial format: bacteriostatic water, U-100 syringes. */
+export type PurchaseAddOn = { variantId: string; title: string; detail: string; image?: string; price: { amount: number; currencyCode: string } }
+
+/** Formats that need water and syringes on the side. */
+const ADD_ON_FORMATS = ["Vial"]
+
+export default function PurchasePanel({ product, addOns = [] }: { product: HttpTypes.StoreProduct; addOns?: PurchaseAddOn[] }) {
   const locale = useLocale()
   const { addItem, pending, error, clearError, region } = useStore()
   const { setFormat } = useProductSelection()
@@ -29,6 +37,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
   const [variantId, setVariantId] = useState(firstAvailable?.id ?? "")
   const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)
+  const [extras, setExtras] = useState<string[]>([])
 
   const variant = variants.find((item) => item.id === variantId) ?? firstAvailable
   const selection = selectionOf(variant)
@@ -58,10 +67,15 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
     return prices.length ? prices.reduce((min, item) => (item.amount < min.amount ? item : min)) : null
   }
 
+  const offered = format && ADD_ON_FORMATS.includes(format) ? addOns : []
+  const chosen = offered.filter((addOn) => extras.includes(addOn.variantId))
+  const toggleExtra = (variantId: string) => setExtras((current) => current.includes(variantId) ? current.filter((id) => id !== variantId) : [...current, variantId])
+
   const onAdd = async () => {
     if (!variant) return
     setAdded(false)
-    const ok = await addItem(variant.id, quantity)
+    let ok = await addItem(variant.id, quantity)
+    for (const addOn of chosen) if (ok) ok = await addItem(addOn.variantId, 1)
     setAdded(ok)
   }
 
@@ -222,6 +236,30 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
         </Stack>
       ) : null}
 
+      {offered.length ? (
+        <Box component="fieldset" sx={{ m: 0, p: 2, border: "1px solid", borderColor: "divider", borderRadius: "5px", minWidth: 0 }}>
+          <Typography component="legend" sx={{ px: 0.5, fontSize: 13, fontWeight: 700, color: "brand.ink" }}>Add what you need for the vial</Typography>
+          <Box sx={{ display: "grid", gap: 1, mt: 0.5 }}>
+            {offered.map((addOn) => {
+              const checked = extras.includes(addOn.variantId)
+              return (
+                <Box key={addOn.variantId} component="label" sx={{ display: "grid", gridTemplateColumns: "auto 44px minmax(0, 1fr) auto", alignItems: "center", columnGap: 1.25, p: 0.75, borderRadius: "6px", cursor: "pointer", bgcolor: checked ? "brand.mintLight" : "transparent", "&:hover": { bgcolor: "brand.mintWash" } }}>
+                  <Checkbox checked={checked} onChange={() => toggleExtra(addOn.variantId)} size="small" sx={{ p: 0.5 }} />
+                  <Box sx={{ position: "relative", width: 44, height: 44, borderRadius: "4px", overflow: "hidden", bgcolor: "#fff", border: "1px solid", borderColor: "divider" }}>
+                    {addOn.image ? <Image src={addOn.image} alt="" fill sizes="44px" style={{ objectFit: "contain" }} /> : null}
+                  </Box>
+                  <Box sx={{ minWidth: 0 }}>
+                    <Typography sx={{ fontSize: 14, fontWeight: 650, color: "brand.ink" }}>{addOn.title}</Typography>
+                    <Typography sx={{ fontSize: 12.5, color: "text.secondary" }}>{addOn.detail}</Typography>
+                  </Box>
+                  <Typography sx={{ fontSize: 14, fontWeight: 650, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>+{money(addOn.price.amount, addOn.price.currencyCode)}</Typography>
+                </Box>
+              )
+            })}
+          </Box>
+        </Box>
+      ) : null}
+
       <Stack direction="row" spacing={1.5} useFlexGap role="status" aria-live="polite" aria-atomic="true" sx={{ alignItems: "center", flexWrap: "wrap" }}>
         <StockBadge inStock={inStock} />
         {inStock ? (
@@ -243,7 +281,7 @@ export default function PurchasePanel({ product }: { product: HttpTypes.StorePro
           disabled={!inStock || !price || pending}
           sx={{ flex: 1 }}
         >
-          {pending ? "Adding…" : "Add to cart"}
+          {pending ? "Adding…" : chosen.length ? `Add ${chosen.length + 1} items to cart` : "Add to cart"}
         </Button>
       </Stack>
 

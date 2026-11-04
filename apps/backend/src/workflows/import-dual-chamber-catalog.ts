@@ -63,7 +63,7 @@ function productInput(
       ...carried,
       code: product.code,
       brand: "VETUD",
-      form: "Dual-chamber pen or vial",
+      form: "Dual-chamber vial or vial",
       image_aspect_ratio: "1 / 1",
       contents_pen: product.contents?.pen ?? FORMAT_CONTENTS.pen,
       contents_vial: product.contents?.vial ?? FORMAT_CONTENTS.vial,

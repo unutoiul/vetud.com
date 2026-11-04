@@ -7,14 +7,15 @@ export const DUAL_CHAMBER_REVISION = "dual-chamber-2026-11-04-v1"
 export const DUAL_CHAMBER_IMAGE_ORIGIN = process.env.DUAL_CHAMBER_IMAGE_ORIGIN || "https://www.vetud.com"
 
 export const FORMATS = {
-  pen: "Dual-chamber pen",
+  // Called "Dual-chamber pen" until 2026-11-04; the reusable pen now comes in the Pen kit box.
+  pen: "Dual-chamber vial",
   vial: "Vial",
 } as const
 export type FormatKey = keyof typeof FORMATS
 
 export const FORMAT_CONTENTS: Record<FormatKey, string> = {
-  // Since 2026-11-04 the needles and booklet come with the Pen kit box (see PEN_KIT_BOX).
-  pen: "Pen body with 1 dual-chamber cartridge (lyophilized peptide in one chamber, bacteriostatic water in the other)",
+  // Since 2026-11-04 the reusable pen, needles and booklet come with the Pen kit box (see PEN_KIT_BOX).
+  pen: "1 dual-chamber vial: a cartridge with the lyophilized peptide in one chamber and bacteriostatic water in the other. It fits the reusable VETUD pen from the pen kit box.",
   vial: "1 sealed glass vial of lyophilized (freeze-dried) peptide. Bacteriostatic water is sold separately.",
 }
 
@@ -127,7 +128,7 @@ export const DUAL_CHAMBER_PRODUCTS: DualChamberProduct[] = [
       vial: "1 sealed multi-use glass vial of bacteriostatic water",
     },
     lines: {
-      pen: "A cartridge of BAC water for the VETUD pen",
+      pen: "A cartridge of BAC water for the reusable VETUD pen",
       vial: "Multi-use vial, the lowest price per ml",
     },
   },
@@ -293,8 +294,8 @@ export const variantSku = (product: DualChamberProduct, format: FormatKey, amoun
 export const variantTitle = (format: FormatKey, amount: string) => `${FORMATS[format]} · ${amount}`
 
 /**
- * The Pen kit box, added on 2026-11-04 as a third format above the pen: the complete kit in the
- * VETUD box. It's offered in every amount the pen is, at the pen's price plus this premium.
+ * The Pen kit box, added on 2026-11-04 as a third format: the reusable pen with a dual-chamber vial,
+ * in the VETUD box. It's offered in every amount the dual-chamber vial is, at its price plus this premium.
  * Bacteriostatic water has no kit.
  */
 export const PEN_KIT_BOX = {
@@ -302,7 +303,7 @@ export const PEN_KIT_BOX = {
   revision: "pen-kit-box-2026-11-04-v1",
   premium: { usd: 40, eur: 38 },
   excluded: ["bacteriostatic-water"],
-  contents: "VETUD box with the pen body, 1 dual-chamber cartridge (lyophilized peptide in one chamber, bacteriostatic water in the other), 12 disposable needles and an instruction booklet",
+  contents: "VETUD box with the reusable pen body, 1 dual-chamber vial (lyophilized peptide in one chamber, bacteriostatic water in the other), 12 disposable needles and an instruction booklet",
 } as const
 
 export const boxSku = (product: DualChamberProduct, amount: string) => variantSku(product, "pen", amount).replace("-PEN-", "-BOX-")

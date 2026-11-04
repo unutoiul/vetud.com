@@ -62,7 +62,7 @@ export default function ProductDossier({ profile, overview, description, specs, 
   /** Shown in small type under the specifications rather than as a table row. */
   skus?: string
 }) {
-  const items = formats ? [{ id: "formats", label: "Pen, pen kit box or vial" }, ...sections] : sections
+  const items = formats ? [{ id: "formats", label: "Vial, dual-chamber or pen kit" }, ...sections] : sections
   return <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "230px minmax(0, 1fr)" }, gap: { xs: 3, md: 8 }, mt: { xs: 5, md: 9 } }}>
     <Box component="nav" aria-label="Product dossier" sx={{ minWidth: 0, width: "100%", alignSelf: "start", position: { md: "sticky" }, top: 125 }}>
       <Typography variant="mono" component="p" sx={{ fontSize: 10, letterSpacing: ".14em", color: "brand.blue", mb: 2 }}>THE PRODUCT DOSSIER</Typography>

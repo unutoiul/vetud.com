@@ -84,6 +84,9 @@ const SUPPLY_PHOTOS = {
 }
 for (const [name, filename] of Object.entries(SUPPLY_PHOTOS)) await photo(path.join(assets, filename), `${name}.webp`)
 
+// The reusable pen, for the dual-chamber guide page.
+await photo(path.join(assets, "Reusable dual-chamber peptide pen.png"), "reusable-dual-chamber-pen.webp")
+
 const explainer = path.join(assets, "Premium dual-chamber laboratory pen concept.png")
 await photo(explainer, "dual-chamber-pen.webp")
 

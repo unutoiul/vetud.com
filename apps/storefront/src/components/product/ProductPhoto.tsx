@@ -4,11 +4,11 @@ import Image from "next/image"
 type Photo = { url: string; alt?: string; format?: string }
 
 /**
- * A product's card photo. Products sold as a dual-chamber pen and a vial show both side by side
+ * A product's card photo. Products sold as a dual-chamber vial and a vial show both side by side
  * (the slim cartridge on its own reads too small in a card); others show their first photo.
  */
 export default function ProductPhoto({ images, title, sizes, className, preload }: { images: Photo[]; title: string; sizes: string; className?: string; preload?: boolean }) {
-  const pen = images.find((image) => image.format === "Dual-chamber pen")
+  const pen = images.find((image) => image.format === "Dual-chamber vial")
   const vial = images.find((image) => image.format === "Vial")
   if (pen && vial) {
     return (

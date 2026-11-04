@@ -1,3 +1,4 @@
+import type { HttpTypes } from "@medusajs/types"
 import Box from "@mui/material/Box"
 import Breadcrumbs from "@mui/material/Breadcrumbs"
 import Chip from "@mui/material/Chip"
@@ -21,16 +22,27 @@ import DualChamberExplainer from "@/components/product/DualChamberExplainer"
 import { ProductSelectionProvider } from "@/components/product/ProductSelection"
 import { getProductResearch } from "@/content/product-research"
 import { getProductGuides, getProductOverview } from "@/content/product-overview"
-import PurchasePanel from "@/components/product/PurchasePanel"
+import PurchasePanel, { type PurchaseAddOn } from "@/components/product/PurchasePanel"
 import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { getLotReportCounts } from "@/lib/medusa/forum"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
-import { formatMoney, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
+import { formatMoney, isVariantInStock, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
 import { availabilitySummary, defaultVariant, FORMAT_OPTION, formatContents, formatOf, hasFormats, readOptions, variantsWith } from "@/lib/product-formats"
 import { getFormatPhotos, getProductImages, getProductPhotography } from "@/lib/product-images"
 
 const PLACEHOLDER = "__placeholder__"
+
+/** Supplies offered next to the vial format; they aren't offered on their own pages. */
+const ADD_ON_HANDLES = ["bacteriostatic-water", "u-100-syringes"]
+
+function addOn(product: HttpTypes.StoreProduct | null, variantTitle: string | undefined, title: string, detail: string): PurchaseAddOn | null {
+  const variants = product ? sortedVariants(product) : []
+  const variant = variants.find((item) => item.title === variantTitle) ?? (variantTitle ? undefined : variants[0])
+  const price = variantPrice(variant)
+  if (!product || !variant || !price || !isVariantInStock(variant)) return null
+  return { variantId: variant.id, title, detail, image: getProductImages(product).find((image) => image.url.includes("vial") || image.url.includes("box"))?.url ?? getProductImages(product)[0]?.url, price: { amount: price.amount, currencyCode: price.currencyCode } }
+}
 
 export async function generateStaticParams() {
   try {
@@ -92,7 +104,13 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
   const lotReports = meta.lots.length ? await getLotReportCounts(meta.lots.map(lot => lot.lot)).catch(() => undefined) : undefined
   const profile = getProductResearch(handle)
   const category = product.categories?.[0]
-  const related = sortProducts(await listProducts({ regionId: region.id, categoryId: category?.id }), "featured")
+  const [catalog, water, syringes] = await Promise.all([
+    listProducts({ regionId: region.id, categoryId: category?.id }),
+    ADD_ON_HANDLES.includes(handle) ? null : getProductByHandle("bacteriostatic-water", region.id),
+    ADD_ON_HANDLES.includes(handle) ? null : getProductByHandle("u-100-syringes", region.id),
+  ])
+  const addOns = [addOn(water, "Vial · 10 ml", "Bacteriostatic water", "10 ml multi-use vial"), addOn(syringes, undefined, "U-100 insulin syringes", "Box of 10, single use")].filter((item): item is PurchaseAddOn => item !== null)
+  const related = sortProducts(catalog, "featured")
     .filter((item) => item.id !== product.id)
     .slice(0, 3)
 
@@ -199,7 +217,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
                 {profile?.summary ?? product.subtitle}
               </Typography>
             ) : null}
-            <PurchasePanel product={product} />
+            <PurchasePanel product={product} addOns={addOns} />
             <Box sx={{ mt: 3.5, borderTop: "1px solid", borderColor: "divider", "& details": { borderBottom: "1px solid", borderColor: "divider", py: 1.75 }, "& summary": { cursor: "pointer", fontSize: 12, fontWeight: 600 }, "& details p": { mt: 1.25, color: "text.secondary", fontSize: 12, lineHeight: 1.8 } }}>
               <details><summary>Quality & documentation</summary><Typography>Listed purity: {meta.purity ?? "see batch documentation"}. Match any certificate to the lot printed on your product. <AppLink href="#quality">View documentation</AppLink>.</Typography></details>
               <details><summary>Storage & stability</summary><Typography>{meta.storage ?? "Follow the conditions on your batch label."} {meta.stability}</Typography></details>
@@ -210,7 +228,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </ProductSelectionProvider>
 
         <Box>
-          <ProductDossier profile={profile} overview={overview} skus={formats.length ? skus : undefined} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber pen"), box: fromPrice("Pen kit box"), vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} /> : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
+          <ProductDossier profile={profile} overview={overview} skus={formats.length ? skus : undefined} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: fromPrice("Pen kit box"), vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} /> : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
         </Box>
       </Section>
 

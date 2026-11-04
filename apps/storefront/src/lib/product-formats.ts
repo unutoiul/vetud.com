@@ -5,10 +5,14 @@ type Variant = HttpTypes.StoreProductVariant
 
 /** The two ways a dual-chamber product is sold, keyed by the Medusa "Format" option value. */
 export const FORMAT_INFO: Record<string, { line: string; key: "pen" | "box" | "vial" }> = {
-  "Dual-chamber pen": { line: "The pen with its cartridge: powder and BAC water kept apart", key: "pen" },
-  "Pen kit box": { line: "The complete kit in the VETUD box: pen, cartridge, 12 needles and a booklet", key: "box" },
+  "Dual-chamber vial": { line: "Powder and BAC water in one two-chamber cartridge. Refills the reusable pen", key: "pen" },
+  // The cartridge's name until 2026-11-04, kept so older carts and the catalog in between still read well.
+  "Dual-chamber pen": { line: "Powder and BAC water in one two-chamber cartridge", key: "pen" },
   Vial: { line: "Freeze-dried powder in a sealed vial, the lowest price", key: "vial" },
+  "Pen kit box": { line: "The reusable pen with a dual-chamber vial, 12 needles and a booklet, in the VETUD box", key: "box" },
 }
+
+export const KIT_FORMAT = "Pen kit box"
 
 export const FORMAT_OPTION = "Format"
 
@@ -86,12 +90,12 @@ export function formatLine(product: HttpTypes.StoreProduct, format: string) {
   return formatMetadata(product, "format_line", format) ?? FORMAT_INFO[format]?.line
 }
 
-/** One short line for cards: "Pen, pen kit box or vial · 5 mg / 10 mg", or the variant titles. */
+/** One short line for cards: "Dual-chamber vial, vial or pen kit · 5 mg / 10 mg", or the variant titles. */
 export function shortAvailability(product: HttpTypes.StoreProduct) {
   const options = readOptions(product)
   if (!options.some((option) => option.title === FORMAT_OPTION)) return sortedVariants(product).map((variant) => variant.title).join(" / ")
   const formats = options.find((option) => option.title === FORMAT_OPTION)?.values ?? []
   const amounts = options.find((option) => option.title !== FORMAT_OPTION)?.values ?? []
-  const label = formats.includes("Pen kit box") ? "Pen, pen kit box or vial" : "Dual-chamber pen or vial"
+  const label = formats.includes(KIT_FORMAT) ? "Dual-chamber vial, vial or pen kit" : "Dual-chamber vial or vial"
   return `${label}${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
 }
