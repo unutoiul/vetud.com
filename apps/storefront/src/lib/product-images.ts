@@ -4,14 +4,24 @@ type ProductPhotography = { aspectRatio: string; images: ProductImage[] }
 
 export const PEN_EXPLAINER_IMAGE = "/images/products/dual-chamber-pen.webp"
 
-const formatPhotography = (handle: string, title: string): ProductPhotography => ({
-  aspectRatio: "1 / 1",
-  images: [
-    { url: `/images/products/${handle}-pen.webp`, alt: `${title} dual-chamber cartridge: powder and BAC water in separate chambers`, label: "Dual-chamber pen", format: "Dual-chamber pen" },
-    { url: `/images/products/${handle}-vial.webp`, alt: `${title} research vial with VETUD label`, label: "Vial", format: "Vial" },
-    { url: PEN_EXPLAINER_IMAGE, alt: "How the VETUD dual-chamber pen holds the cartridge: cartridge holder, peptide powder, BAC water and pen body", label: "How the pen works" },
-  ],
+/** Products whose dual-chamber pen kit box is photographed, closed and open. */
+const PEN_KIT_BOXES = new Set(["ipamorelin", "nad-plus", "retatrutide", "semaglutide", "tesamorelin", "tirzepatide"])
+
+/** The cartridge, the pen kit box (when photographed) and the vial of a product sold in both formats. */
+const formatPhotos = (handle: string, title: string) => ({
+  pen: { url: `/images/products/${handle}-pen.webp`, alt: `${title} dual-chamber cartridge: powder and BAC water in separate chambers`, label: "Dual-chamber pen", format: "Dual-chamber pen" },
+  box: PEN_KIT_BOXES.has(handle) ? { url: `/images/products/${handle}-closed.webp`, alt: `${title} dual-chamber pen kit, closed VETUD box`, label: "Pen kit box", format: "Dual-chamber pen" } : undefined,
+  openBox: PEN_KIT_BOXES.has(handle) ? { url: `/images/products/${handle}-open.webp`, alt: `${title} dual-chamber pen kit, open box with the pen, 12 needles and booklet`, label: "Open pen kit", format: "Dual-chamber pen" } : undefined,
+  vial: { url: `/images/products/${handle}-vial.webp`, alt: `${title} research vial with VETUD label`, label: "Vial", format: "Vial" },
 })
+
+export type FormatPhotos = ReturnType<typeof formatPhotos>
+
+const formatPhotography = (handle: string, title: string): ProductPhotography => {
+  const { pen, box, openBox, vial } = formatPhotos(handle, title)
+  const explainer = { url: PEN_EXPLAINER_IMAGE, alt: "How the VETUD dual-chamber pen holds the cartridge: cartridge holder, peptide powder, BAC water and pen body", label: "How the pen works" }
+  return { aspectRatio: "1 / 1", images: [pen, ...(box && openBox ? [box, openBox] : []), vial, explainer] }
+}
 
 /** The 28 products sold as a dual-chamber pen or a vial (prepare-dual-chamber-images.mjs makes the photos). */
 const FORMAT_PRODUCTS: Record<string, string> = {
@@ -49,6 +59,11 @@ const FORMAT_PRODUCTS: Record<string, string> = {
 const photography: Record<string, ProductPhotography> = Object.fromEntries(
   Object.entries(FORMAT_PRODUCTS).map(([handle, title]) => [handle, formatPhotography(handle, title)])
 )
+
+/** The pen, box and vial photos for the pen-vs-vial section, for products sold in both formats. */
+export function getFormatPhotos(handle?: string | null): FormatPhotos | undefined {
+  return handle && Object.hasOwn(FORMAT_PRODUCTS, handle) ? formatPhotos(handle, FORMAT_PRODUCTS[handle]) : undefined
+}
 
 export function getProductPhotography(handle?: string | null): ProductPhotography | undefined {
   return handle && Object.hasOwn(photography, handle) ? photography[handle] : undefined

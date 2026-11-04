@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box"
+import type { ReactNode } from "react"
 import Typography from "@mui/material/Typography"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
@@ -21,17 +22,21 @@ const sections = [
 const sectionStyle = { pt: { xs: 4, md: 5 }, pb: { xs: 4, md: 5 }, borderTop: "1px solid", borderColor: "divider", scrollMarginTop: 115 }
 const bodyStyle = { fontSize: 14, lineHeight: 1.95, color: "text.secondary", maxWidth: 800 }
 
-export default function ProductDossier({ profile, description, specs, meta, title, currencyCode, freeShippingThreshold, lotReports }: {
+export default function ProductDossier({ profile, description, specs, meta, title, currencyCode, freeShippingThreshold, lotReports, formats }: {
   profile?: ProductResearch; description?: string | null; specs: { label: string; value: string }[]; meta: ProductMeta; title: string; currencyCode: string; freeShippingThreshold?: number
   /** Community posts per lot number, when the community is reachable. */
   lotReports?: Record<string, number>
+  /** The "Dual-chamber pen or vial?" part, first in the dossier, for products sold in both formats. */
+  formats?: ReactNode
 }) {
+  const items = formats ? [{ id: "formats", label: "Dual-chamber pen or vial" }, ...sections] : sections
   return <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "230px minmax(0, 1fr)" }, gap: { xs: 3, md: 8 }, mt: { xs: 5, md: 9 } }}>
     <Box component="nav" aria-label="Product dossier" sx={{ minWidth: 0, width: "100%", alignSelf: "start", position: { md: "sticky" }, top: 125 }}>
       <Typography variant="mono" component="p" sx={{ fontSize: 10, letterSpacing: ".14em", color: "brand.blue", mb: 2 }}>THE PRODUCT DOSSIER</Typography>
-      <Box sx={{ display: "flex", flexDirection: { xs: "row", md: "column" }, overflowX: "auto", gap: { xs: 2.5, md: 0 }, pb: 1 }}>{sections.map((section, i) => <Box key={section.id} component="a" href={`#${section.id}`} sx={{ display: "flex", alignItems: "center", gap: 1.5, py: 1.3, textDecoration: "none", fontSize: 12, whiteSpace: "nowrap", color: "text.secondary", "&:hover": { color: "brand.blue" } }}><Typography variant="mono" sx={{ fontSize: 9, color: "brand.blue" }}>0{i + 1}</Typography>{section.label}</Box>)}</Box>
+      <Box sx={{ display: "flex", flexDirection: { xs: "row", md: "column" }, overflowX: "auto", gap: { xs: 2.5, md: 0 }, pb: 1 }}>{items.map((section, i) => <Box key={section.id} component="a" href={`#${section.id}`} sx={{ display: "flex", alignItems: "center", gap: 1.5, py: 1.3, textDecoration: "none", fontSize: 12, whiteSpace: "nowrap", color: "text.secondary", "&:hover": { color: "brand.blue" } }}><Typography variant="mono" sx={{ fontSize: 9, color: "brand.blue" }}>0{i + 1}</Typography>{section.label}</Box>)}</Box>
     </Box>
     <Box sx={{ minWidth: 0 }}>
+      {formats ? <Box component="section" id="formats" aria-labelledby="formats-heading" sx={sectionStyle}>{formats}</Box> : null}
       <Box component="section" id="research-overview" aria-labelledby="research-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="research-heading" sx={{ mb: 2.5 }}>Understanding {profile?.name ?? title}.</Typography>
         {profile ? <>

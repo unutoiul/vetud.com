@@ -29,7 +29,7 @@ import { getLotReportCounts } from "@/lib/medusa/forum"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
 import { formatMoney, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
 import { availabilitySummary, defaultVariant, FORMAT_OPTION, formatContents, formatOf, hasFormats, readOptions, variantsWith } from "@/lib/product-formats"
-import { getProductImages, getProductPhotography } from "@/lib/product-images"
+import { getFormatPhotos, getProductImages, getProductPhotography } from "@/lib/product-images"
 
 const PLACEHOLDER = "__placeholder__"
 
@@ -202,10 +202,8 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </Grid>
         </ProductSelectionProvider>
 
-        {hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber pen"), vial: fromPrice("Vial") }} supply={meta.artKind === "supply"} /> : null}
-
         <Box>
-          <ProductDossier profile={profile} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
+          <ProductDossier profile={profile} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber pen"), vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} /> : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
         </Box>
       </Section>
 
