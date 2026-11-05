@@ -139,7 +139,7 @@ function SideNotes() {
       <Icon name="shield" sx={{ fontSize: 22, color: "#abcce3" }} />
       <Typography component="h2" sx={{ mt: 1, fontSize: 15, fontWeight: 650 }}>Doctor or researcher?</Typography>
       <Typography sx={{ mt: .5, fontSize: 13.5, lineHeight: 1.6, color: "rgba(255,255,255,.8)" }}>Verified experts get a badge with their credentials, and their answers are pinned.</Typography>
-      <AppLink href={`/contact?subject=${encodeURIComponent("Verified expert application")}`} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, fontWeight: 650, color: "#fff", textDecorationColor: "rgba(255,255,255,.5)" }}>Apply to be verified →</AppLink>
+      <AppLink href="/community/apply" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, fontWeight: 650, color: "#fff", textDecorationColor: "rgba(255,255,255,.5)" }}>Apply to be verified →</AppLink>
     </Box>
   </Box>
 }

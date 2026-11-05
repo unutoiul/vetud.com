@@ -52,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       alternates: { languages: articleLanguages(path) }, ...(image ? { images: [`${BASE_URL}${image.src}`] } : {}),
     }
   })
-  const collections = ["/learn", "/news", "/videos", "/community", "/community/guidelines"].map(path => ({
+  const collections = ["/learn", "/news", "/videos", "/community", "/community/guidelines", "/community/apply"].map(path => ({
     url: articleUrl(path), changeFrequency: "weekly" as const, priority: 0.8,
     alternates: { languages: articleLanguages(path) },
   }))
