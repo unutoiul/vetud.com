@@ -9,10 +9,12 @@ import Skeleton from "@mui/material/Skeleton"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter, useSearchParams } from "next/navigation"
+import Icon from "../brand/Icon"
 import { useState, type FormEvent } from "react"
 import { getPeptide, PEPTIDES } from "@/content/learn/peptides"
 import { revalidateCommunity } from "@/lib/community/actions"
 import { findDose, KIND_LABELS, THREAD_KINDS } from "@/lib/community/format"
+import { COMMUNITY_TOPICS, getTopic, topicForPeptide, type TopicId } from "@/lib/community/topics"
 import type { ForumImage, ForumThreadDetail, ThreadKind } from "@/lib/community/types"
 import { sdk } from "@/lib/medusa/sdk"
 import { AuthPanel } from "../account/AccountPage"
@@ -37,8 +39,12 @@ export default function Composer() {
 
   const initialKind = THREAD_KINDS.find(kind => kind === params.get("kind")) ?? "question"
   const initialPeptide = getPeptide(params.get("peptide") ?? "")?.slug ?? null
+  const chosenTopic = getTopic(params.get("topic"))?.id
   const [kind, setKind] = useState<ThreadKind>(initialKind)
-  const [title, setTitle] = useState("")
+  // A topic from the link, else the peptide's, until the member picks one themselves.
+  const [topic, setTopic] = useState<TopicId>(chosenTopic ?? topicForPeptide(initialPeptide))
+  const [topicPicked, setTopicPicked] = useState(Boolean(chosenTopic))
+  const [title, setTitle] = useState((params.get("title") ?? "").slice(0, 140))
   const [body, setBody] = useState("")
   const [peptide, setPeptide] = useState<string | null>(initialPeptide)
   const [images, setImages] = useState<ForumImage[]>([])
@@ -63,7 +69,7 @@ export default function Composer() {
     try {
       const detail = await sdk.client.fetch<ForumThreadDetail>("/store/forum/threads", {
         method: "POST",
-        body: { kind, title: title.trim(), body: body.trim(), peptide, images: images.map(image => image.id) },
+        body: { kind, topic, title: title.trim(), body: body.trim(), peptide, images: images.map(image => image.id) },
       })
       await revalidateCommunity(detail.thread.id)
       router.push(localize(`/community/${detail.thread.id}`))
@@ -89,9 +95,26 @@ export default function Composer() {
     </Box>
 
     <Autocomplete options={PEPTIDE_OPTIONS} value={PEPTIDE_OPTIONS.find(option => option.slug === peptide) ?? null}
-      onChange={(_, option) => setPeptide(option?.slug ?? null)}
+      onChange={(_, option) => {
+        setPeptide(option?.slug ?? null)
+        if (!topicPicked) setTopic(topicForPeptide(option?.slug))
+      }}
       getOptionLabel={option => option.name} isOptionEqualToValue={(option, value) => option.slug === value.slug}
-      renderInput={inputProps => <TextField {...inputProps} label="Peptide (optional)" helperText="Helps others find your thread." />} />
+      renderInput={inputProps => <TextField {...inputProps} label="Peptide (optional)" helperText="Helps others find your thread, and picks its topic." />} />
+
+    <Box>
+      <Typography component="h2" id="topic-label" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>Topic</Typography>
+      <Box role="radiogroup" aria-labelledby="topic-label" sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+        {COMMUNITY_TOPICS.map(option => {
+          const selected = option.id === topic
+          return <Box key={option.id} component="button" type="button" role="radio" aria-checked={selected} onClick={() => { setTopic(option.id); setTopicPicked(true) }}
+            sx={{ display: "inline-flex", alignItems: "center", gap: .75, minHeight: 44, px: 1.75, font: "inherit", fontSize: 14, fontWeight: selected ? 650 : 500, cursor: "pointer", borderRadius: 999, border: "1px solid", borderColor: selected ? "brand.blue" : "divider", bgcolor: selected ? "brand.mintWash" : "#fff", color: selected ? "brand.navy" : "brand.navySoft", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
+            <Icon name={option.icon} sx={{ fontSize: 17, color: "brand.blue" }} />{option.name}
+          </Box>
+        })}
+      </Box>
+      <Typography sx={{ mt: 1, fontSize: 13, color: "brand.navySoft" }}>{getTopic(topic)?.description}</Typography>
+    </Box>
 
     <TextField label="Title" value={title} onChange={event => setTitle(event.target.value.slice(0, 140))} required fullWidth
       placeholder={kind === "question" ? "e.g. How do you store vials after opening?" : ""}

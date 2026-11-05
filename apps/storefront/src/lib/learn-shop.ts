@@ -1,6 +1,6 @@
 import "server-only"
 import { PEPTIDES } from "@/content/learn/peptides"
-import { matchesPeptide } from "./learn-products"
+import { peptideMatchRank } from "./learn-products"
 import { getCurrentRegion } from "./medusa/current-region"
 import { listCatalogProducts } from "./medusa/products"
 
@@ -16,7 +16,10 @@ export async function getLearnShopLinks(): Promise<ShopLinks> {
     const { region } = await getCurrentRegion()
     const products = await listCatalogProducts(region.id)
     return Object.fromEntries(PEPTIDES.flatMap((peptide) => {
-      const product = products.find((candidate) => candidate.handle && matchesPeptide(candidate, peptide.slug))
+      // The product named after the peptide, rather than a blend that includes it.
+      const product = products
+        .filter((candidate) => candidate.handle && peptideMatchRank(candidate, peptide.slug) > 0)
+        .sort((a, b) => peptideMatchRank(b, peptide.slug) - peptideMatchRank(a, peptide.slug))[0]
       return product ? [[peptide.slug, `/products/${product.handle}`]] : []
     }))
   } catch {

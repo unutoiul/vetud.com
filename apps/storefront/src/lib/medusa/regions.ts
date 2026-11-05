@@ -36,6 +36,17 @@ export async function getRegionForCountry(
   )
 }
 
+/** The region that prices in a currency (each of USD, EUR and GBP has one). */
+export async function getRegionForCurrency(currency: string): Promise<HttpTypes.StoreRegion | null> {
+  const regions = await listRegions()
+  return regions.find((region) => region.currency_code.toLowerCase() === currency.toLowerCase()) ?? null
+}
+
+/** The region for a page: the shopper's chosen currency, else the country's own. */
+export async function getStoreRegion(country: string, currency: string | null) {
+  return (currency ? await getRegionForCurrency(currency) : null) ?? (await getRegionForCountry(country)) ?? (await listRegions())[0] ?? null
+}
+
 /** Every country the store sells to, for the country selector and checkout. */
 export async function listCountryOptions(): Promise<CountryOption[]> {
   const regions = await listRegions()

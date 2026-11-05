@@ -1,3 +1,4 @@
+import type { ForumTopic } from "../../lib/forum/topics"
 import type { MedusaContainer } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import { createStep, createWorkflow, StepResponse, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
@@ -13,6 +14,7 @@ export type CreateForumThreadInput = {
   kind: ThreadKind
   title: string
   body: string
+  topic?: ForumTopic
   peptide_slug?: string | null
   product_handle?: string | null
   lot?: string | null
@@ -30,6 +32,7 @@ type PreparedThread = {
     title: string
     slug: string
     excerpt: string
+    topic: ForumTopic
     peptide_slug: string | null
     product_handle: string | null
     lot: string | null
@@ -92,6 +95,7 @@ const prepareForumThreadStep = createStep(
         title,
         slug: slugify(title),
         excerpt: excerptOf(body),
+        topic: input.topic ?? "general",
         peptide_slug: input.peptide_slug ?? null,
         product_handle: product?.handle ?? null,
         lot,

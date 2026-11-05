@@ -22,6 +22,8 @@ export type ForumThread = {
   title: string
   slug: string
   excerpt: string
+  /** A topic id from lib/community/topics.ts. */
+  topic: string
   peptide_slug: string | null
   product_handle: string | null
   lot: string | null
@@ -70,12 +72,19 @@ export type ForumThreadDetail = {
 
 export type ForumThreadList = { threads: ForumThread[]; count: number; offset: number; limit: number }
 
-export type ForumStats = { threads: number; members: number; experts: number }
+export type ForumStats = {
+  threads: number
+  members: number
+  experts: number
+  /** Published threads and latest activity per topic id. */
+  topics?: Record<string, { threads: number; last_activity_at: string | null }>
+}
 
 export type ForumMemberPage = { member: ForumMember; totals: { threads: number; replies: number }; threads: ForumThread[] }
 
 export type ThreadFilters = {
   kind?: ThreadKind
+  topic?: string
   peptides?: string[]
   lot?: string
   product?: string

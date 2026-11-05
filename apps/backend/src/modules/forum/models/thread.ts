@@ -13,6 +13,8 @@ const ForumThread = model.define("forum_thread", {
   slug: model.text(),
   excerpt: model.text(),
   peptide_slug: model.text().index("IDX_forum_thread_peptide_slug").nullable(),
+  // A topic space from lib/forum/topics.ts; "general" for anything not about one area.
+  topic: model.text().index("IDX_forum_thread_topic").default("general"),
   product_handle: model.text().nullable(),
   lot: model.text().index("IDX_forum_thread_lot").nullable(),
   // The author has a paid, non-canceled order for `product_handle`.

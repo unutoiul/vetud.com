@@ -34,6 +34,16 @@ export const STATUSES: Record<StatusId, { label: string; explain: string; tone: 
   early: { label: "Early research", explain: "Mostly studied in cells and animals, with little or no proper testing in people.", tone: "caution" },
 }
 
+/** The evidence ladder, weakest to strongest. Shown with the compound's step highlighted. */
+export const EVIDENCE_STEPS = [
+  { id: "cells", label: "Cells", explain: "Tested on cells in a dish" },
+  { id: "animals", label: "Animals", explain: "Tested in animals such as rats and mice" },
+  { id: "small-human", label: "Small human studies", explain: "Tried in small groups of people" },
+  { id: "large-trials", label: "Large trials", explain: "Tested in large, controlled trials in people" },
+  { id: "approved", label: "Approved medicine", explain: "Approved by a medicines regulator for specific uses" },
+] as const
+export type Evidence = (typeof EVIDENCE_STEPS)[number]["id"]
+
 export function getCategory(id: CategoryId) {
   return CATEGORIES.find((category) => category.id === id)!
 }

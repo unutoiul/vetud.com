@@ -22,6 +22,7 @@ import {
 
 export type ThreadFilters = {
   kind?: ThreadRecord["kind"]
+  topic?: string
   peptides?: string[]
   lot?: string
   product?: string
@@ -76,6 +77,7 @@ async function profileByHandle(container: MedusaContainer, handle: string) {
 export async function listThreads(container: MedusaContainer, filters: ThreadFilters, viewer: ProfileRecord | null) {
   const where: Record<string, unknown> = { status: "published" }
   if (filters.kind) where.kind = filters.kind
+  if (filters.topic) where.topic = filters.topic
   if (filters.peptides?.length) where.peptide_slug = filters.peptides
   if (filters.lot) where.lot = filters.lot
   if (filters.product) where.product_handle = filters.product
@@ -181,12 +183,25 @@ async function count(container: MedusaContainer, entity: string, filters: Record
 }
 
 export async function forumStats(container: MedusaContainer) {
-  const [threads, members, experts] = await Promise.all([
+  const [threads, members, experts, topics] = await Promise.all([
     count(container, "forum_thread", { status: "published" }),
     count(container, "forum_profile", { status: "active" }),
     count(container, "forum_profile", { role: "expert", status: "active" }),
+    topicStats(container),
   ])
-  return { threads, members, experts }
+  return { threads, members, experts, topics }
+}
+
+/** Threads and latest activity per topic, for the topic cards. */
+async function topicStats(container: MedusaContainer) {
+  const { data } = await queryOf(container).graph({ entity: "forum_thread", fields: ["topic", "last_activity_at"], filters: { status: "published" } })
+  const topics: Record<string, { threads: number; last_activity_at: string | null }> = {}
+  for (const thread of data as { topic: string; last_activity_at: string | Date }[]) {
+    const entry = topics[thread.topic] ?? { threads: 0, last_activity_at: null }
+    const at = new Date(thread.last_activity_at).toISOString()
+    topics[thread.topic] = { threads: entry.threads + 1, last_activity_at: !entry.last_activity_at || at > entry.last_activity_at ? at : entry.last_activity_at }
+  }
+  return topics
 }
 
 /** A member's public page: profile, totals and their latest published threads. */

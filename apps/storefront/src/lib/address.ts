@@ -1,7 +1,7 @@
 import provinces from "@/i18n/provinces.json"
 import usStates from "@/i18n/us-states.json"
 import { parsePhoneNumberFromString, type CountryCode } from "libphonenumber-js"
-import { COUNTRY_RULES, getCountryRules } from "@/i18n/config"
+import { getCountryRules } from "@/i18n/config"
 
 export type AddressValues = {
   first_name: string
@@ -51,22 +51,26 @@ export function isValidPhone(value: string, country: string) {
 
 export function normalizeAddress(values: AddressValues): AddressValues {
   const country = values.country_code.toLowerCase()
-  return { ...values, country_code: country, postal_code: normalizePostal(values.postal_code, country), phone: normalizePhone(values.phone, country), province: getCountryRules(country).provinceRequired ? values.province.trim().toUpperCase() : "" }
+  const rules = getCountryRules(country)
+  // A state from the list (US, Canada, Australia) is a code; elsewhere it's free text, when given.
+  const province = rules.provinceRequired ? values.province.trim().toUpperCase() : rules.provinceOptional ? values.province.trim() : ""
+  return { ...values, country_code: country, postal_code: normalizePostal(values.postal_code, country), phone: normalizePhone(values.phone, country), province }
 }
 
 type Translate = (key: "required" | "unsupportedCountry" | "invalidState" | "invalidPhone" | "invalidPostal", values?: { label: string; example: string }) => string
 export function validateAddress(values: AddressValues, translate?: Translate, postalLabel?: string) {
   const t: Translate = translate ?? ((key) => ({ required: "Required", unsupportedCountry: "Select a supported delivery country", invalidState: "Select a valid state", invalidPhone: "Enter a valid phone number", invalidPostal: "Enter a valid postal code" })[key])
   const errors: Partial<Record<keyof AddressValues, string>> = {}
-  for (const field of ["first_name", "last_name", "address_1", "city", "postal_code", "country_code"] as const) {
-    if (!values[field].trim()) errors[field] = t("required")
-  }
   const country = values.country_code.toLowerCase()
-  if (!Object.hasOwn(COUNTRY_RULES, country)) {
+  // Any country code: the form only offers countries we deliver to, and the backend checks again.
+  if (!/^[a-z]{2}$/.test(country)) {
     errors.country_code = t("unsupportedCountry")
     return errors
   }
   const rules = getCountryRules(country)
+  for (const field of ["first_name", "last_name", "address_1", "city", ...(rules.postalOptional ? [] : ["postal_code" as const])] as const) {
+    if (!values[field].trim()) errors[field] = t("required")
+  }
   if (values.postal_code.trim() && !new RegExp(rules.postalPattern, "i").test(normalizePostal(values.postal_code, country))) errors.postal_code = t("invalidPostal", { label: postalLabel ?? "postal code", example: rules.postalExample })
   if (rules.provinceRequired && !provincesOf(country)[values.province.trim().toUpperCase()]) errors.province = values.province.trim() ? t("invalidState") : t("required")
   if (!isValidPhone(values.phone, country)) errors.phone = t("invalidPhone")

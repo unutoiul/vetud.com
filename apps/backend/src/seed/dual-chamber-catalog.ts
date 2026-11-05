@@ -43,6 +43,12 @@ const describe = (about: string) => `${about}\n\n${FORMAT_LINE} ${RUO}`
 
 const offer = (amount: string, usd: number): CatalogOffer => ({ amount, usd })
 
+/**
+ * Products whose subtitle and description were rewritten in plain language (2026-11-06, the pilot),
+ * applied to existing databases by migration-scripts/vetud-product-24-plain-descriptions.ts.
+ */
+export const PLAIN_COPY = { revision: "plain-copy-2026-11-06-v1", handles: ["bpc-157", "semaglutide", "selank", "wolverine-blend"] } as const
+
 export const DUAL_CHAMBER_PRODUCTS: DualChamberProduct[] = [
   {
     handle: "5-amino-1mq", title: "5-Amino-1MQ", code: "VTD-5AM",
@@ -71,8 +77,8 @@ export const DUAL_CHAMBER_PRODUCTS: DualChamberProduct[] = [
   {
     handle: "bpc-157", title: "BPC-157", code: "VTD-BPC",
     categories: ["healing-regeneration-research"], learn: ["bpc-157"],
-    summary: "Synthetic gastric peptide fragment studied in tissue-repair research.",
-    description: describe("BPC-157 is a synthetic 15-amino-acid peptide based on a protein found in gastric juice. Most of its research is in animal models of tendon, gut and tissue repair."),
+    summary: "Lab-made peptide based on a stomach protein, studied for tissue repair, mostly in animals.",
+    description: describe("BPC-157 is a lab-made chain of 15 amino acids, based on a protein found in stomach juice. Researchers study it for the healing of tendons, muscles, bones and the gut. Almost all of that research is in animals."),
     pen: [offer("5 mg", 88), offer("10 mg", 138)],
     vial: [offer("5 mg", 58), offer("10 mg", 98)],
   },
@@ -215,8 +221,8 @@ export const DUAL_CHAMBER_PRODUCTS: DualChamberProduct[] = [
   {
     handle: "semaglutide", title: "Semaglutide (SM-1)", code: "VTD-SM1",
     categories: ["weight-loss-research"], learn: ["semaglutide"],
-    summary: "GLP-1 receptor agonist studied in metabolic research.",
-    description: describe("Semaglutide, labelled SM-1, is a long-acting GLP-1 receptor agonist. It is one of the most studied peptides in obesity and type 2 diabetes research."),
+    summary: "Long-acting copy of the gut hormone GLP-1, studied in weight and diabetes research.",
+    description: describe("Semaglutide, labelled SM-1, is a long-acting copy of GLP-1, a hormone the gut releases after a meal that signals fullness. It is one of the most studied peptides in obesity and type 2 diabetes research, including large trials in people."),
     pen: [offer("10 mg", 198), offer("20 mg", 338), offer("40 mg", 488)],
     vial: [offer("10 mg", 128), offer("20 mg", 228), offer("40 mg", 328)],
   },
@@ -231,8 +237,8 @@ export const DUAL_CHAMBER_PRODUCTS: DualChamberProduct[] = [
   {
     handle: "selank", title: "Selank", code: "VTD-SEL",
     categories: ["sleep-enhancement-research"], learn: ["selank"],
-    summary: "Synthetic tuftsin analogue studied in anxiety and stress research.",
-    description: describe("Selank is a synthetic seven-amino-acid peptide based on tuftsin, a fragment of an immune protein. It was developed in Russia and is studied in anxiety and stress research."),
+    summary: "Lab-made peptide developed in Russia, studied for anxiety and stress.",
+    description: describe("Selank is a lab-made chain of seven amino acids, based on tuftsin, a tiny piece of an immune protein. It was developed in Russia, where it is registered for anxiety, and is studied in small human studies and in animals."),
     pen: [offer("5 mg", 88), offer("10 mg", 138)],
     vial: [offer("5 mg", 58), offer("10 mg", 98)],
   },
@@ -271,8 +277,8 @@ export const DUAL_CHAMBER_PRODUCTS: DualChamberProduct[] = [
   {
     handle: "wolverine-blend", title: "Wolverine Blend", code: "VTD-WOLV",
     categories: ["healing-regeneration-research"], learn: ["bpc-157", "tb-500"],
-    summary: "Blend of BPC-157 and TB-500 for tissue-repair research.",
-    description: describe("Wolverine is a research blend of BPC-157 and TB-500 in equal parts. Each is studied separately in tissue-repair research; the blend itself has not been studied."),
+    summary: "Equal parts BPC-157 and TB-500, two peptides studied for tissue repair.",
+    description: describe("Wolverine is a research blend of BPC-157 and TB-500 in equal parts. Each has been studied on its own for tissue repair, mostly in animals. No published study has tested the blend itself."),
     pen: [offer("10 mg (5 mg + 5 mg)", 148), offer("20 mg (10 mg + 10 mg)", 228)],
     vial: [offer("10 mg (5 mg + 5 mg)", 98), offer("20 mg (10 mg + 10 mg)", 158)],
   },

@@ -11,12 +11,9 @@ import Header from "@/components/layout/Header"
 import SaleBannerSlot from "@/components/layout/SaleBannerSlot"
 import StoreProvider from "@/components/store/StoreProvider"
 import { BASE_URL, PRERENDERED_COUNTRIES, SITE } from "@/lib/config"
-import {
-  getRegionForCountry,
-  listCountryCodes,
-  listCountryOptions,
-  listRegions,
-} from "@/lib/medusa/regions"
+import { listDeliveryCountries } from "@/lib/medusa/delivery"
+import { getStoreRegion, listCountryCodes, listCountryOptions } from "@/lib/medusa/regions"
+import { parseStoreSegment } from "@/lib/store-segment"
 import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
 import { getCountryI18n } from "@/i18n/config"
@@ -52,13 +49,14 @@ export async function generateStaticParams() {
 }
 
 export default async function CountryLayout({ children }: LayoutProps<"/[countryCode]">) {
-  const code = await countryCode()
+  // "se" or, when the shopper picked another currency, "se-usd" (see lib/store-segment.ts).
+  const { country: code, currency } = parseStoreSegment(await countryCode())
   const i18n = await getCountryI18n(code)
-  const region = (await getRegionForCountry(code)) ?? (await listRegions())[0]
+  const region = await getStoreRegion(code, currency)
   if (!region) {
     throw new Error("No regions found. Is the Medusa backend running and seeded?")
   }
-  const countries = await listCountryOptions()
+  const [countries, deliveryCountries] = await Promise.all([listCountryOptions(), listDeliveryCountries()])
 
   return (
     <html lang={i18n.locale} className={`${manrope.variable} ${dmMono.variable}`}>
@@ -77,6 +75,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
                   : undefined,
             }}
             countries={countries}
+            deliveryCountries={deliveryCountries}
           >
             <AccountProvider>
               <Box

@@ -32,8 +32,9 @@ const time = (value: PriceRow["updated_at"]) => (value ? new Date(value).getTime
  *  1. Shipping costs the same everywhere: every shipping option of a type (Standard, Express)
  *     gets the USD price most recently set on one of them in Admin.
  *  2. Every USD price is converted at today's rate and rounded to the currency's smallest unit:
- *     product variants into every store currency, shipping options into the currencies of the
- *     regions their zone delivers to (other shipping prices are removed).
+ *     product variants and shipping options into every store currency (prices in other
+ *     currencies are removed from shipping options). Since 2026-11-05 shoppers choose their
+ *     currency whatever the country, so a delivery zone needs a price in each of them.
  * Only regular prices change. Sale price lists follow on their own (jobs/sync-storewide-sales.ts).
  */
 const syncCurrencyPricesStep = createStep("sync-currency-prices", async (_input: Record<string, never>, { container }) => {
@@ -47,19 +48,16 @@ const syncCurrencyPricesStep = createStep("sync-currency-prices", async (_input:
   const missing = currencies.filter((code) => !rates[code])
   if (missing.length) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `No exchange rate for ${missing.join(", ").toUpperCase()}`)
 
-  const [{ data: variantLinks }, { data: shippingLinks }, { data: shippingOptions }, { data: regions }] = await Promise.all([
+  const [{ data: variantLinks }, { data: shippingLinks }, { data: shippingOptions }] = await Promise.all([
     query.graph({ entity: "product_variant_price_set", fields: ["price_set_id"] }),
     query.graph({ entity: "shipping_option_price_set", fields: ["shipping_option_id", "price_set_id"] }),
-    query.graph({ entity: "shipping_option", fields: ["id", "type.code", "service_zone.geo_zones.country_code"] }),
-    query.graph({ entity: "region", fields: ["currency_code", "countries.iso_2"] }),
+    query.graph({ entity: "shipping_option", fields: ["id", "type.code"] }),
   ])
-  const currencyOfCountry = new Map(regions.flatMap((region) => (region.countries ?? []).flatMap((country) => (country?.iso_2 ? [[country.iso_2, region.currency_code.toLowerCase()] as const] : []))))
   const optionById = new Map(shippingOptions.map((option) => [option.id, option]))
   const shipping = (shippingLinks as { shipping_option_id: string; price_set_id: string }[]).flatMap((link) => {
     const option = optionById.get(link.shipping_option_id)
     if (!option?.type?.code) return []
-    const zoneCurrencies = new Set((option.service_zone?.geo_zones ?? []).flatMap((zone) => currencyOfCountry.get(zone?.country_code ?? "") ?? []))
-    return [{ priceSetId: link.price_set_id, type: option.type.code, currencies: currencies.filter((code) => zoneCurrencies.has(code)) }]
+    return [{ priceSetId: link.price_set_id, type: option.type.code, currencies }]
   })
   const shippingSets = new Map(shipping.map((option) => [option.priceSetId, option]))
   const priceSetIds = [...new Set([...variantLinks.map((link) => link.price_set_id as string), ...shipping.map((option) => option.priceSetId)])]

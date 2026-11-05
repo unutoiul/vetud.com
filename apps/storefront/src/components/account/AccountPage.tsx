@@ -333,7 +333,7 @@ function ProfileSection() {
 function AddressBook() {
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
-  const { countries, countryCode } = useStore()
+  const { deliveryCountries, countryCode } = useStore()
   const account = useAccount()
   const { customer } = account
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -342,7 +342,8 @@ function AddressBook() {
   const [showForm, setShowForm] = useState(false)
   const [showErrors, setShowErrors] = useState(false)
   const errors = validateAddress(values, (key, args) => ta(key, args), ta(getCountryRules(values.country_code).postalLabel as "postal" | "zip" | "postcode"))
-  const addressOptions = countries.map((country) => ({ code: country.code, name: country.name }))
+  // Saved addresses can be anywhere checkout delivers to: the whole world.
+  const addressOptions = deliveryCountries.map((code) => ({ code, name: code.toUpperCase() }))
 
   const openNew = () => {
     setEditingId(null)

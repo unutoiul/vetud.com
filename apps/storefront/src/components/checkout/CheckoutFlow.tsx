@@ -26,7 +26,6 @@ import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib/makepay"
-import { persistCountryCookie } from "@/lib/country-cookie"
 import { SITE } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { PAYPAL_PROVIDER_ID, readPayPalRedirect } from "@/lib/paypal"
@@ -200,7 +199,9 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const locale = useLocale()
   const money = useMoney()
   const router = useRouter()
-  const { setCart, clearCart, linkCustomerCart, isCurrentCart, region, countries, countryCode } = useStore()
+  const { setCart, clearCart, linkCustomerCart, isCurrentCart, deliveryCountries, countryCode } = useStore()
+  // Delivery goes anywhere in the world, not only to the countries the site is set up for.
+  const countries = useMemo(() => deliveryCountries.map((code) => ({ code, name: code.toUpperCase() })), [deliveryCountries])
   const { createAddress, captureSession } = useAccount()
   const [busy, setBusy] = useState(false)
   const busyRef = useRef(false)
@@ -304,26 +305,23 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     guard(async (assertCurrent) => {
       await linkCustomerCart()
       assertCurrent()
-      const { saveToAccount, ...addressBody } = body
-      // Shipping to a country in another region changes the currency and prices.
-      const destination = countries.find((country) => country.code === body.shipping_address.country_code)
-      const switchRegion = destination && destination.regionId !== region.id ? destination : null
-      const { cart: updated } = await sdk.store.cart.update(
-        cart.id,
-        { ...addressBody, ...(switchRegion ? { region_id: switchRegion.regionId } : {}) },
-        { fields: CART_FIELDS }
-      )
+      const { saveToAccount, email: nextEmail, ...addresses } = body
+      if (nextEmail && nextEmail !== cart.email) {
+        await sdk.store.cart.update(cart.id, { email: nextEmail })
+        assertCurrent()
+      }
+      // Any country we sell to, in the currency the shopper chose: the cart keeps its currency.
+      const { cart: updated } = await sdk.client.fetch<{ cart: HttpTypes.StoreCart }>(`/store/carts/${cart.id}/delivery-address`, {
+        method: "POST",
+        body: addresses,
+        query: { fields: CART_FIELDS },
+      })
       assertCurrent()
       setCart(updated)
       if (saveToAccount) {
         const first = !customer.addresses?.length
         await createAddress({ ...body.shipping_address, ...(first ? { address_name: "Primary shipping", is_default_shipping: true } : {}) })
         assertCurrent()
-      }
-      if (switchRegion) {
-        // Open the checkout in the new country so the page shows its currency.
-        persistCountryCookie(switchRegion.code)
-        router.push(`/${switchRegion.code}/checkout`)
       }
     })
 
@@ -500,7 +498,6 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
             cart={cart}
             customer={customer}
             countries={countries}
-            regionId={region.id}
             defaultCountry={countries.some((country) => country.code === countryCode) ? countryCode : countries[0]?.code ?? ""}
             busy={busy}
             onSubmit={saveAddress}
@@ -640,15 +637,13 @@ function AddressSection({
   cart,
   customer,
   countries,
-  regionId,
   defaultCountry,
   busy,
   onSubmit,
 }: {
   cart: HttpTypes.StoreCart
   customer: HttpTypes.StoreCustomer
-  countries: { code: string; name: string; regionId: string; currencyCode: string }[]
-  regionId: string
+  countries: { code: string; name: string }[]
   defaultCountry: string
   busy: boolean
   onSubmit: (body: AddressBody) => Promise<boolean>
@@ -696,7 +691,6 @@ function AddressSection({
   const valid = !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length
   // A saved address only needs its form when it is missing something.
   const showForm = selectedId === "new" || Object.keys(shippingErrors).length > 0
-  const destination = countries.find((country) => country.code === shipping.country_code)
 
   const bodyFor = (values: AddressValues): AddressBody => {
     const shippingAddress = normalizeAddress(values)
@@ -817,11 +811,6 @@ function AddressSection({
               <FormControlLabel sx={{ mt: 1 }} control={<Checkbox checked={saveToAccount} onChange={(event) => setSaveToAccount(event.target.checked)} />} label={t("save")} />
             ) : null}
           </>
-        ) : null}
-        {destination && destination.regionId !== regionId ? (
-          <Typography variant="body2" sx={{ color: "text.secondary", mt: 1.5 }}>
-            {t("currencyChange", { currency: destination.currencyCode.toUpperCase(), country: destination.name })}
-          </Typography>
         ) : null}
 
         <FormControlLabel sx={{ mt: 1.5, display: "flex" }} control={<Checkbox checked={billingSame} onChange={(event) => setBillingSame(event.target.checked)} />} label={t("billingSame")} />

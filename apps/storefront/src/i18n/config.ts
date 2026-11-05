@@ -1,9 +1,34 @@
+import { getCountryCallingCode, type CountryCode } from "libphonenumber-js"
 import countryRules from "./countries.json"
 
 export type StoreCountry = keyof typeof countryRules
 export const COUNTRY_RULES = countryRules
-export function getCountryRules(code: string) {
-  return countryRules[code.toLowerCase() as StoreCountry] ?? countryRules.us
+
+/** `postalOptional` / `provinceOptional`: the postcode and state fields aren't required (rest of the world). */
+export type CountryRules = (typeof countryRules)["us"] & { postalOptional?: boolean; provinceOptional?: boolean }
+
+/**
+ * Countries we deliver to without a set-up address format (since 2026-11-06 the rest of the world):
+ * lenient rules, the postcode and state optional (many countries have neither), the phone code from
+ * libphonenumber.
+ */
+function worldRules(code: string): CountryRules {
+  let callingCode = ""
+  try {
+    callingCode = getCountryCallingCode(code.toUpperCase() as CountryCode)
+  } catch {
+    // Territories without a calling code of their own: the phone field just starts empty.
+  }
+  return {
+    locale: "en-US", callingCode, postalLabel: "postal", cityLabel: "city", postalPattern: "^[A-Z0-9][A-Z0-9 -]{1,11}$", postalExample: "",
+    postalBeforeCity: false, numberAfterStreet: false, provinceRequired: false, postalOptional: true, provinceOptional: true,
+  }
+}
+
+export function getCountryRules(code: string): CountryRules {
+  const known = countryRules[code.toLowerCase() as StoreCountry]
+  if (known) return known
+  return /^[a-z]{2}$/i.test(code) ? worldRules(code) : countryRules.us
 }
 
 /** One message file per language; regional locales (de-AT, en-CA) use their language's file. */

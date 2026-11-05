@@ -4,13 +4,18 @@ import { AppLink } from "../common/links"
 import { AuthorLine, Pill } from "./Badges"
 import { getPeptide } from "@/content/learn/peptides"
 import { formatForumDate, KIND_LABELS, plural, threadHref } from "@/lib/community/format"
+import { getTopic } from "@/lib/community/topics"
 import type { ForumThread } from "@/lib/community/types"
 
 const KIND_TONES = { question: "expert", discussion: "neutral" } as const
 
-/** One row in a thread list: kind, title, excerpt, what it's about, who wrote it and activity. */
-export default function ThreadCard({ thread }: { thread: ForumThread }) {
+/**
+ * One row in a thread list: kind, title, excerpt, what it's about, who wrote it and activity.
+ * `showTopic` adds the topic, for lists that mix topics.
+ */
+export default function ThreadCard({ thread, showTopic = false }: { thread: ForumThread; showTopic?: boolean }) {
   const peptide = thread.peptide_slug ? getPeptide(thread.peptide_slug) : undefined
+  const topic = showTopic ? getTopic(thread.topic) : undefined
   const answered = thread.kind === "question" && thread.accepted_post_id
   return <Box component="article" sx={{ py: { xs: 2.5, md: 3 }, borderTop: "1px solid", borderColor: "divider", display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr auto" }, columnGap: 4, rowGap: 1.5 }}>
     <Box sx={{ minWidth: 0 }}>
@@ -18,6 +23,7 @@ export default function ThreadCard({ thread }: { thread: ForumThread }) {
         {thread.pinned ? <Pill tone="moderator">Pinned</Pill> : null}
         <Pill tone={KIND_TONES[thread.kind]}>{KIND_LABELS[thread.kind]}</Pill>
         {answered ? <Pill tone="accepted" icon="check">Answered</Pill> : null}
+        {topic ? <AppLink href={`/community?topic=${topic.id}`} underline="hover" sx={{ fontSize: 13, color: "brand.blue", fontWeight: 600 }}>{topic.name}</AppLink> : null}
         {peptide ? <Typography component="span" sx={{ fontSize: 13, color: "brand.navySoft" }}>{peptide.name}</Typography> : null}
         {thread.lot ? <Typography component="span" variant="mono" sx={{ fontSize: 12, color: "brand.navySoft" }}>Lot {thread.lot}</Typography> : null}
       </Box>

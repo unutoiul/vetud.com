@@ -65,6 +65,8 @@ type StoreContextValue = {
   countryCode: string
   region: RegionSummary
   countries: CountryOption[]
+  /** Every country checkout delivers to (ISO codes): the whole world, wider than `countries`. */
+  deliveryCountries: string[]
   cart: HttpTypes.StoreCart | null
   cartReady: boolean
   pending: boolean
@@ -97,10 +99,11 @@ type StoreProviderProps = {
   countryCode: string
   region: RegionSummary
   countries: CountryOption[]
+  deliveryCountries: string[]
   children: ReactNode
 }
 
-export default function StoreProvider({ countryCode, region, countries, children }: StoreProviderProps) {
+export default function StoreProvider({ countryCode, region, countries, deliveryCountries, children }: StoreProviderProps) {
   const [cart, setCartState] = useState<HttpTypes.StoreCart | null>(null)
   const [cartReady, setCartReady] = useState(false)
   const [pending, setPending] = useState(false)
@@ -266,6 +269,7 @@ export default function StoreProvider({ countryCode, region, countries, children
       countryCode,
       region,
       countries,
+      deliveryCountries,
       cart,
       cartReady,
       pending,
@@ -284,7 +288,7 @@ export default function StoreProvider({ countryCode, region, countries, children
       clearCart,
       clearError: () => setError(null),
     }),
-    [countryCode, region, countries, cart, cartReady, pending, error, drawerOpen, addItem, updateItem, removeItem, refreshCart, linkCustomerCart, isCurrentCart, setCart, clearCart]
+    [countryCode, region, countries, deliveryCountries, cart, cartReady, pending, error, drawerOpen, addItem, updateItem, removeItem, refreshCart, linkCustomerCart, isCurrentCart, setCart, clearCart]
   )
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

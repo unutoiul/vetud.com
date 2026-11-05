@@ -1,4 +1,4 @@
-import type { CategoryId, StatusId } from "./categories"
+import type { CategoryId, Evidence, StatusId } from "./categories"
 import { CBL_514_SOURCES, PTT_A_SOURCES } from "./emerging-weight-research"
 
 /**
@@ -9,6 +9,27 @@ import { CBL_514_SOURCES, PTT_A_SOURCES } from "./emerging-weight-research"
  */
 export type Source = { title: string; detail: string; url: string }
 export type KeyResult = { value: string; label: string; detail: string }
+
+/**
+ * One published result, shown as bars (the compound first, then what it was compared with), a
+ * single number, or a sentence when there is nothing to chart. Never mention doses.
+ */
+export type StudyResult = {
+  /** What was measured, in plain words: "Average body weight lost after 68 weeks". */
+  title: string
+  who: "people" | "animals" | "cells" | "review"
+  /** The study in plain words: name, how many, who, how long. */
+  study: string
+  bars?: { label: string; value: number; display?: string }[]
+  /** Appended to each value: "%", " studies". */
+  unit?: string
+  /** For results where a smaller number is the better outcome, such as heart attacks. */
+  lowerIsBetter?: boolean
+  /** The result in words, when it can't be charted or needs a sentence of context. */
+  finding?: string
+  /** Index into the profile's sources. */
+  source: number
+}
 
 export type PeptideProfile = {
   slug: string
@@ -22,6 +43,12 @@ export type PeptideProfile = {
   howItWorks: string
   findings: string[]
   keyResult?: KeyResult
+  /** How strong the evidence is, shown as the evidence ladder. */
+  evidence?: Evidence
+  /** Published results, charted on the product page and the profile. */
+  results?: StudyResult[]
+  /** "What we don't know yet". */
+  unknowns?: string[]
   risks: string[]
   sources: Source[]
   /** YouTube ids from content/learn/videos.ts */
@@ -97,6 +124,17 @@ export const PEPTIDES: PeptideProfile[] = [
       "A once-a-day pill version led to 13.6% weight loss over 64 weeks in the OASIS 4 trial, compared with 2.2% on placebo.",
     ],
     keyResult: { value: "14.9%", label: "average weight lost in 68 weeks", detail: "STEP 1 trial, 1,961 adults · placebo: 2.4%" },
+    evidence: "approved",
+    results: [
+      { title: "Average body weight lost after 68 weeks", who: "people", study: "STEP 1 trial · 1,961 adults with obesity or overweight, compared with a placebo (a dummy injection)", bars: [{ label: "Semaglutide", value: 14.9 }, { label: "Placebo", value: 2.4 }], unit: "%", source: 0 },
+      { title: "Heart attack, stroke or heart-related death over about 3 years", who: "people", study: "SELECT trial · 17,604 adults with heart disease and overweight", bars: [{ label: "Semaglutide", value: 6.5 }, { label: "Placebo", value: 8.0 }], unit: "%", lowerIsBetter: true, finding: "A 20% lower risk of these events than on placebo.", source: 1 },
+      { title: "Average body weight lost after 64 weeks, as a daily pill", who: "people", study: "OASIS 4 trial · 307 adults with obesity or overweight", bars: [{ label: "Semaglutide pill", value: 13.6 }, { label: "Placebo", value: 2.2 }], unit: "%", source: 2 },
+    ],
+    unknowns: [
+      "Why some people lose a lot of weight on it and others very little.",
+      "How to keep the weight off after stopping: most people regain much of it.",
+      "Effects over decades. The largest trials followed people for a few years.",
+    ],
     risks: GLP1_RISKS,
     sources: [
       { title: "Once-Weekly Semaglutide in Adults with Overweight or Obesity (STEP 1)", detail: "Wilding et al. · New England Journal of Medicine · 2021", url: pubmed(33567185) },
@@ -200,6 +238,16 @@ export const PEPTIDES: PeptideProfile[] = [
       "A 2025 review for sports medicine found the animal results encouraging, but very little evidence in humans.",
       "The FDA’s July 2026 meeting agenda covered BPC-157 for the bowel disease ulcerative colitis as a possible compounding ingredient. Advisory committee recommendations are non-binding and are not drug approval.",
     ],
+    evidence: "animals",
+    results: [
+      { title: "What the research is based on", who: "review", study: "2025 systematic review of BPC-157 research on muscle, tendon, ligament and bone injuries, covering studies from 1993 to 2024", bars: [{ label: "Studies in animals", value: 35, display: "35 studies" }, { label: "Studies in people", value: 1, display: "1 study" }], finding: "In the animal studies, injured muscles, tendons, ligaments and bones healed better. The review found no safety data from people.", source: 0 },
+      { title: "People reporting knee-pain relief for more than 6 months", who: "people", study: "One small look-back study · 12 people with long-term knee pain · no comparison group", bars: [{ label: "BPC-157", value: 7, display: "7 of 12" }], finding: "Without a comparison group, it can’t show whether BPC-157 caused the relief.", source: 0 },
+    ],
+    unknowns: [
+      "Whether the healing seen in animals happens in people. There are no controlled trials in people.",
+      "Its side effects and long-term safety in people.",
+      "How it works. Animal studies point to new blood-vessel growth and less inflammation.",
+    ],
     risks: [
       "Because it hasn’t been properly tested in people, its side effects and long-term safety are unknown.",
       "Products sold online are not regulated, so what’s in the vial and how pure it is can vary.",
@@ -221,6 +269,7 @@ export const PEPTIDES: PeptideProfile[] = [
     status: "early",
     statusNote: "Not approved, and banned in sport by WADA. In 2026 the FDA took it off its “do not compound” list, but that is not an approval.",
     oneLiner: "A small piece of a natural repair protein. Popular for recovery, but barely tested in people.",
+    evidence: "animals",
     whatItIs: "TB-500 is a short, lab-made piece of thymosin beta-4, a protein found in almost every cell. Thymosin beta-4 helps cells move and build their inner “scaffolding”.",
     howItWorks: "In lab and animal studies, thymosin beta-4 helps cells travel to wounds and supports new blood-vessel growth. Whether the small TB-500 fragment does the same in people hasn’t been shown.",
     findings: [
@@ -366,8 +415,17 @@ export const PEPTIDES: PeptideProfile[] = [
     howItWorks: "Researchers think it affects brain chemicals involved in anxiety, such as GABA and serotonin, but this isn’t fully understood.",
     findings: [
       "Most studies come from Russia and are small.",
-      "In a 2017 study in rats under chronic stress, Selank strengthened the anti-anxiety effect of diazepam (Valium).",
       "Small Russian clinical studies in people with anxiety report benefits, but there are no large international trials.",
+    ],
+    evidence: "small-human",
+    results: [
+      { title: "Anxiety treatment in people", who: "people", study: "Russian study, 2015 · 70 adults with anxiety disorders: 40 took Selank with phenazepam (a prescription anti-anxiety medicine), 30 took phenazepam alone", finding: "With Selank added, phenazepam worked sooner and caused fewer side effects, such as poor memory, drowsiness and tiredness, the authors report.", source: 1 },
+      { title: "Anxiety in rats under long-term stress", who: "animals", study: "Rats under long-term, unpredictable mild stress, 2017", finding: "Selank given with diazepam (Valium) brought the rats’ anxiety measures back to where they were before the stress.", source: 0 },
+    ],
+    unknowns: [
+      "Whether it helps anxiety in large, well-controlled trials. The human studies so far are small and from Russia.",
+      "How it works in the brain.",
+      "Its long-term safety.",
     ],
     risks: ["It has not been well studied outside Russia, so side effects and long-term safety are unclear."],
     sources: [

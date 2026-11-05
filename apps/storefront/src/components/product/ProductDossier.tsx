@@ -8,9 +8,11 @@ import TableRow from "@mui/material/TableRow"
 import Icon from "../brand/Icon"
 import { AppLink } from "../common/links"
 import LotTable from "./LotTable"
+import EvidenceLadder from "../learn/EvidenceLadder"
 import StatusBadge from "../learn/StatusBadge"
+import StudyResults from "../learn/StudyResults"
+import { EVIDENCE_STEPS } from "@/content/learn/categories"
 import type { ProductOverview } from "@/content/product-overview"
-import type { ProductResearch } from "@/content/product-research"
 import { useMoney } from "@/lib/money"
 import type { ProductMeta } from "@/lib/product"
 import { SITE } from "@/lib/config"
@@ -25,26 +27,40 @@ const sections = [
 const sectionStyle = { pt: { xs: 4, md: 5 }, pb: { xs: 4, md: 5 }, borderTop: "1px solid", borderColor: "divider", scrollMarginTop: 115 }
 const bodyStyle = { fontSize: 14, lineHeight: 1.95, color: "text.secondary", maxWidth: 800 }
 
-/** The library-based overview: short headed paragraphs, findings as a list, sources at the end. */
+/**
+ * The plain-language overview from the learning library: what it is, how strong the evidence is,
+ * published results (framed as studies of the compound, not of this material), what isn't known
+ * yet, risks, and sources.
+ */
 function Overview({ overview }: { overview: ProductOverview }) {
-  const heading = { component: "h3", sx: { fontSize: 15, fontWeight: 650, color: "text.primary", mb: .75 } } as const
+  const heading = { component: "h3", sx: { fontSize: 17, fontWeight: 650, color: "text.primary", mb: 1.25 } } as const
+  const list = { m: 0, pl: 2.5, maxWidth: 800, "& li": { ...bodyStyle, fontSize: 15, lineHeight: 1.8, mb: .75 } }
   return <>
-    <Typography sx={{ ...bodyStyle, color: "text.primary", fontSize: 17, lineHeight: 1.7, mb: 3 }}>{overview.summary}</Typography>
-    {overview.status ? <Box sx={{ mb: 3, p: 2.5, bgcolor: "brand.mintWash", borderRadius: "8px", maxWidth: 800 }}>
-      <StatusBadge status={overview.status.id} size="small" />
-      <Typography sx={{ ...bodyStyle, mt: 1, fontSize: 14, lineHeight: 1.75 }}>{overview.status.note}</Typography>
+    <Typography sx={{ ...bodyStyle, color: "text.primary", fontSize: 18, lineHeight: 1.65, mb: 3 }}>{overview.summary}</Typography>
+    {overview.status || overview.evidence ? <Box sx={{ mb: 3.5, p: { xs: 2, md: 2.5 }, bgcolor: "brand.mintWash", borderRadius: "8px", maxWidth: 800, display: "grid", gap: 2 }}>
+      {overview.status ? <Box>
+        <StatusBadge status={overview.status.id} size="small" />
+        <Typography sx={{ ...bodyStyle, mt: 1, fontSize: 14, lineHeight: 1.75 }}>{overview.status.note}</Typography>
+      </Box> : null}
+      {overview.evidence ? <EvidenceLadder evidence={overview.evidence} name={overview.name} /> : null}
     </Box> : null}
-    <Box sx={{ display: "grid", gap: 2.5 }}>
-      {overview.sections.map(section => <Box key={section.title}><Typography {...heading}>{section.title}</Typography><Typography sx={{ ...bodyStyle, fontSize: 15, lineHeight: 1.8 }}>{section.text}</Typography></Box>)}
-      {overview.findings.length ? <Box><Typography {...heading}>What studies found</Typography>
-        <Box component="ul" sx={{ m: 0, pl: 2.5, maxWidth: 800, "& li": { ...bodyStyle, fontSize: 15, lineHeight: 1.8, mb: .75 } }}>{overview.findings.map(finding => <li key={finding}>{finding}</li>)}</Box>
+    <Box sx={{ display: "grid", gap: 3.5 }}>
+      {overview.sections.map(section => <Box key={section.title}><Typography {...heading}>{section.title}</Typography><Typography sx={{ ...bodyStyle, fontSize: 15.5, lineHeight: 1.8 }}>{section.text}</Typography></Box>)}
+      {overview.results.length || overview.findings.length ? <Box><Typography {...heading}>What studies found</Typography>
+        {overview.results.length ? <StudyResults results={overview.results} sources={overview.sources} framing={`These results come from published studies of ${overview.name}, not from this research material.`} /> : null}
+        {overview.findings.length ? <Box component="ul" sx={{ ...list, mt: overview.results.length ? 2.5 : 0 }}>{overview.findings.map(finding => <li key={finding}>{finding}</li>)}</Box> : null}
       </Box> : null}
       {overview.components.length ? <Box><Typography {...heading}>What&apos;s in the blend</Typography>
-        <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, maxWidth: 800, borderTop: "1px solid", borderColor: "divider" }}>{overview.components.map(component => <Box component="li" key={component.href} sx={{ py: 1.5, borderBottom: "1px solid", borderColor: "divider" }}>
-          <AppLink href={component.href} sx={{ fontSize: 15, fontWeight: 650 }}>{component.name}</AppLink>
-          <Typography sx={{ ...bodyStyle, fontSize: 14, lineHeight: 1.7 }}>{component.text}</Typography>
+        <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, maxWidth: 800, display: "grid", gap: 1.5 }}>{overview.components.map(component => <Box component="li" key={component.href} sx={{ p: 2, border: "1px solid", borderColor: "divider", borderRadius: "8px" }}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", columnGap: 1.5, rowGap: .5 }}>
+            <AppLink href={component.href} sx={{ fontSize: 15.5, fontWeight: 650 }}>{component.name}</AppLink>
+            {component.evidence ? <Typography component="span" sx={{ fontSize: 12.5, color: "text.secondary" }}>Evidence: {EVIDENCE_STEPS.find(step => step.id === component.evidence)?.label.toLowerCase()}</Typography> : null}
+          </Box>
+          <Typography sx={{ ...bodyStyle, fontSize: 14.5, lineHeight: 1.7, mt: .5 }}>{component.text}</Typography>
         </Box>)}</Box>
       </Box> : null}
+      {overview.unknowns.length ? <Box><Typography {...heading}>What we don&apos;t know yet</Typography><Box component="ul" sx={list}>{overview.unknowns.map(item => <li key={item}>{item}</li>)}</Box></Box> : null}
+      {overview.risks.length ? <Box><Typography {...heading}>Known risks</Typography><Box component="ul" sx={list}>{overview.risks.map(item => <li key={item}>{item}</li>)}</Box></Box> : null}
     </Box>
     {overview.sources.length ? <>
       <Typography variant="mono" component="h3" sx={{ mt: 3.5, mb: 1.5, fontSize: 10, color: "brand.blue", letterSpacing: ".12em" }}>SOURCES</Typography>
@@ -54,8 +70,8 @@ function Overview({ overview }: { overview: ProductOverview }) {
   </>
 }
 
-export default function ProductDossier({ profile, overview, description, specs, meta, title, currencyCode, freeShippingThreshold, lotReports, formats, formatsLabel = "Vial, dual-chamber or pen kit", skus }: {
-  profile?: ProductResearch; overview?: ProductOverview; description?: string | null; specs: { label: string; value: string }[]; meta: ProductMeta; title: string; currencyCode: string; freeShippingThreshold?: number
+export default function ProductDossier({ overview, description, specs, meta, title, currencyCode, freeShippingThreshold, lotReports, formats, formatsLabel = "Vial, dual-chamber or pen kit", skus }: {
+  overview?: ProductOverview; description?: string | null; specs: { label: string; value: string }[]; meta: ProductMeta; title: string; currencyCode: string; freeShippingThreshold?: number
   /** Community posts per lot number, when the community is reachable. */
   lotReports?: Record<string, number>
   /** The "Dual-chamber pen or vial?" part, first in the dossier, for products sold in both formats. */
@@ -75,20 +91,13 @@ export default function ProductDossier({ profile, overview, description, specs, 
     <Box sx={{ minWidth: 0 }}>
       {formats ? <Box component="section" id="formats" aria-labelledby="formats-heading" sx={sectionStyle}>{formats}</Box> : null}
       <Box component="section" id="research-overview" aria-labelledby="research-heading" sx={sectionStyle}>
-        <Typography component="h2" variant="h3" id="research-heading" sx={{ mb: 2.5 }}>Understanding {profile?.name ?? overview?.name ?? title}.</Typography>
-        {profile ? <>
-          <Typography sx={{ ...bodyStyle, color: "text.primary", fontSize: 16, mb: 2 }}>{profile.summary}</Typography>
-          <Typography sx={bodyStyle}>{profile.background}</Typography>
-          <Box sx={{ mt: 3 }}>{profile.topics.map((topic, i) => <Box key={topic.title} sx={{ display: "flex", gap: 2, py: 2, borderBottom: "1px solid", borderColor: "divider" }}><Typography variant="mono" sx={{ fontSize: 10, color: "brand.blue", pt: .7 }}>0{i + 1}</Typography><Box><Typography component="h3" sx={{ fontSize: 15, fontWeight: 600, mb: .75 }}>{topic.title}</Typography><Typography sx={bodyStyle}>{topic.text}</Typography></Box></Box>)}</Box>
-          <Box sx={{ mt: 3.5, p: 3, bgcolor: "brand.mintWash", borderLeft: "2px solid", borderColor: "brand.blue" }}><Typography sx={{ fontSize: 12, fontWeight: 600, mb: 1 }}>Reading the evidence</Typography><Typography sx={{ ...bodyStyle, fontSize: 12.5 }}>{profile.limitation}</Typography></Box>
-          <Typography variant="mono" component="h3" sx={{ mt: 3.5, mb: 1.5, fontSize: 10, color: "brand.blue", letterSpacing: ".12em" }}>SOURCE PUBLICATION</Typography>
-          <Box component="a" href={profile.source.url} target="_blank" rel="noopener noreferrer" sx={{ display: "flex", gap: 2, alignItems: "flex-start", textDecoration: "none", "&:hover": { color: "brand.blue" } }}><Icon name="document" sx={{ color: "brand.blue", fontSize: 20, mt: .3, flexShrink: 0 }} /><Box><Typography sx={{ fontSize: 13, lineHeight: 1.7, fontWeight: 600 }}>{profile.source.title} ↗</Typography><Typography sx={{ mt: .5, fontSize: 11.5, color: "text.secondary" }}>{profile.source.journal} · View on PubMed</Typography></Box></Box>
-        </> : overview ? <Overview overview={overview} /> : <Typography sx={{ ...bodyStyle, whiteSpace: "pre-line" }}>{description ?? "Consult the specifications and lot documentation for the identity and composition of this research material. Contact the team if further analytical information is needed."}</Typography>}
+        <Typography component="h2" variant="h3" id="research-heading" sx={{ mb: 2.5 }}>Understanding {overview?.name ?? title}.</Typography>
+        {overview ? <Overview overview={overview} /> : <Typography sx={{ ...bodyStyle, whiteSpace: "pre-line" }}>{description ?? "Consult the specifications and lot documentation for the identity and composition of this research material. Contact the team if further analytical information is needed."}</Typography>}
         <Typography sx={{ ...bodyStyle, fontSize: 11.5, mt: 3 }}>Scientific background concerns the named molecule. Batch composition and analytical results must be established from the product documentation. {SITE.ruoNotice}</Typography>
       </Box>
       <Box component="section" id="specifications" aria-labelledby="specifications-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="specifications-heading" sx={{ mb: 2.5 }}>The material, in detail.</Typography>
-        <Table size="small" aria-label={`${title} specifications`} sx={{ maxWidth: 680 }}><TableBody>{[...(profile ? [{ label: "Research classification", value: profile.classification }] : []), ...specs].map(spec => <TableRow key={spec.label}><TableCell component="th" scope="row" sx={{ color: "text.secondary", fontSize: 12.5, width: { xs: "40%", sm: "34%" }, pl: 0, py: 1.25, verticalAlign: "top" }}>{spec.label}</TableCell><TableCell sx={{ fontSize: 13.5, lineHeight: 1.6, pr: 0, py: 1.25, overflowWrap: "anywhere", whiteSpace: "pre-line" }}>{spec.value}</TableCell></TableRow>)}</TableBody></Table>
+        <Table size="small" aria-label={`${title} specifications`} sx={{ maxWidth: 680 }}><TableBody>{specs.map(spec => <TableRow key={spec.label}><TableCell component="th" scope="row" sx={{ color: "text.secondary", fontSize: 12.5, width: { xs: "40%", sm: "34%" }, pl: 0, py: 1.25, verticalAlign: "top" }}>{spec.label}</TableCell><TableCell sx={{ fontSize: 13.5, lineHeight: 1.6, pr: 0, py: 1.25, overflowWrap: "anywhere", whiteSpace: "pre-line" }}>{spec.value}</TableCell></TableRow>)}</TableBody></Table>
         {skus ? <Typography variant="mono" sx={{ display: "block", mt: 1.5, fontSize: 10, color: "text.secondary", overflowWrap: "anywhere", lineHeight: 1.8 }}>SKU {skus}</Typography> : null}
       </Box>
       <Box component="section" id="quality" aria-labelledby="quality-heading" sx={sectionStyle}>

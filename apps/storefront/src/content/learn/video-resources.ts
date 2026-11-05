@@ -13,9 +13,10 @@ type Selection = {
 const COMPOUND_VIDEOS: Record<string, string[]> = {
   semaglutide: ["IRS2xnO-y28", "o8YMLTfNYtc"], tirzepatide: ["IRS2xnO-y28"],
   retatrutide: ["ku8izA1Nh6o", "w0A_VRT3rIE"], cagrilintide: ["wbqcnfjETc4"],
-  "bpc-157": ["Y6smr1o-f9o", "DhDC0DAYdBI"], kpv: ["DhDC0DAYdBI"], "tb-500": ["DhDC0DAYdBI"],
+  "bpc-157": ["Y6smr1o-f9o", "oj_IqA_B-1U", "DhDC0DAYdBI"], kpv: ["DhDC0DAYdBI"], "tb-500": ["oj_IqA_B-1U", "DhDC0DAYdBI"],
+  "ara-290": ["oj_IqA_B-1U"],
   ipamorelin: ["wDqrmuOOdBI"], "cjc-1295": ["E7MlK4p7O7c"], "aod-9604": ["E7MlK4p7O7c"],
-  "thymosin-alpha-1": ["E7MlK4p7O7c"], "mots-c": ["DhDC0DAYdBI"],
+  "thymosin-alpha-1": ["E7MlK4p7O7c"], "mots-c": ["oj_IqA_B-1U", "DhDC0DAYdBI"],
   dsip: ["xXM5ecHxlMU"], semax: ["xXM5ecHxlMU"], epitalon: ["xXM5ecHxlMU"],
   "ghk-cu": ["TH_ZDyMzhqM"], melanotan: ["DWL46HWhmgQ"], nad: ["l8BI_720Dfs"],
   "pt-141": ["D58NZXJ3UeE"], kisspeptin: ["nMtSSCV1yvY", "wDqrmuOOdBI"],
@@ -35,6 +36,7 @@ const BACKGROUND: Record<PeptideProfile["category"], string[]> = {
 }
 
 const CONTEXT: Record<string, string> = {
+  "oj_IqA_B-1U": "Two specialist pain physicians review the evidence for BPC-157 (from 16:08), TB-500 (24:04), ARA-290 (4:54), MOTS-c (25:51) and GHK-Cu (24:56), and the risks of unregulated products.",
   wDqrmuOOdBI: "Historical FDA discussion from October 2024. Kisspeptin-10 and ipamorelin are covered; other forms and later decisions may differ.",
   E7MlK4p7O7c: "Historical FDA discussion of CJC-1295, AOD-9604 and thymosin alpha-1. An advisory meeting is not approval or evidence of clinical benefit.",
   DhDC0DAYdBI: "The original July 23, 2026 FDA discussion of BPC-157, KPV, TB-500 and MOTS-c; it documents an advisory review.",

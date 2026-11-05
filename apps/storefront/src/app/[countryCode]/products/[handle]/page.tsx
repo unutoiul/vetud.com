@@ -20,7 +20,6 @@ import ProductDossier from "@/components/product/ProductDossier"
 import ProductLearnMore from "@/components/product/ProductLearnMore"
 import DualChamberExplainer from "@/components/product/DualChamberExplainer"
 import { ProductSelectionProvider } from "@/components/product/ProductSelection"
-import { getProductResearch } from "@/content/product-research"
 import { getProductGuides, getProductOverview } from "@/content/product-overview"
 import PurchasePanel, { type PurchaseAddOn } from "@/components/product/PurchasePanel"
 import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
@@ -103,7 +102,6 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
 
   const meta = readProductMeta(product)
   const lotReports = meta.lots.length ? await getLotReportCounts(meta.lots.map(lot => lot.lot)).catch(() => undefined) : undefined
-  const profile = getProductResearch(handle)
   const category = product.categories?.[0]
   const [catalog, water, syringes] = await Promise.all([
     listProducts({ regionId: region.id, categoryId: category?.id }),
@@ -157,7 +155,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     ...(skus ? [{ label: "SKU", value: skus }] : []),
     { label: "Intended use", value: "Laboratory research only" },
   ]
-  const overview = profile ? undefined : getProductOverview(product)
+  const overview = getProductOverview(product)
 
   const images = getProductImages(product)
   const jsonLd = productStructuredData(product, countryCode)
@@ -215,9 +213,9 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
             <Typography variant="h2" component="h1" sx={{ mt: 1.75, mb: 1.5, fontWeight: 400, fontSize: { xs: 40, md: 52 } }}>
               {product.title}
             </Typography>
-            {profile || product.subtitle ? (
+            {product.subtitle ? (
               <Typography variant="lead" sx={{ color: "text.secondary", mb: 3 }}>
-                {profile?.summary ?? product.subtitle}
+                {product.subtitle}
               </Typography>
             ) : null}
             <PurchasePanel product={product} addOns={addOns} />
@@ -226,7 +224,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </ProductSelectionProvider>
 
         <Box>
-          <ProductDossier profile={profile} overview={overview} skus={formats.length ? skus : undefined} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
+          <ProductDossier overview={overview} skus={formats.length ? skus : undefined} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
         </Box>
       </Section>
 

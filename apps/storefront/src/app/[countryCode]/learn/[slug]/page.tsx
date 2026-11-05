@@ -14,7 +14,9 @@ import PeptideCard from "@/components/learn/PeptideCard"
 import ResearchCatalog from "@/components/learn/ResearchCatalog"
 import { ArticleJsonLd, ReadingHeader, ReadingLayout, ReadingSection, readingProse } from "@/components/learn/ReadingLayout"
 import SourceList, { LEARN_DISCLAIMER } from "@/components/learn/SourceList"
+import EvidenceLadder from "@/components/learn/EvidenceLadder"
 import StatusBadge from "@/components/learn/StatusBadge"
+import StudyResults from "@/components/learn/StudyResults"
 import VideoResources from "@/components/learn/VideoResources"
 import WeightLossChart from "@/components/learn/WeightLossChart"
 import { ARTICLES } from "@/content/learn/articles"
@@ -58,13 +60,15 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
   const related = PEPTIDES.filter(other => other.slug !== peptide.slug)
     .sort((a, b) => Number(b.category === peptide.category) - Number(a.category === peptide.category)).slice(0, 3)
   const videos = getProfileVideoResources(peptide)
-  const text = [peptide.oneLiner, peptide.whatItIs, peptide.howItWorks, ...peptide.findings, ...peptide.risks, peptide.statusNote]
+  const unknowns = peptide.unknowns ?? []
+  const text = [peptide.oneLiner, peptide.whatItIs, peptide.howItWorks, ...peptide.findings, ...unknowns, ...peptide.risks, peptide.statusNote]
   const contents = [
     { id: "at-a-glance", label: "At a glance" },
     { id: "what-it-is", label: `What is ${peptide.name}?` },
     { id: "how-it-works", label: "How it works" },
     { id: "research", label: "Research findings" },
     ...(inChart ? [{ id: "comparison", label: "Weight-loss comparison" }] : []),
+    ...(unknowns.length ? [{ id: "unknowns", label: "What we don't know yet" }] : []),
     { id: "risks", label: "Risks and side effects" },
     { id: "approval", label: "Approval status" },
     { id: "community", label: "From the community" },
@@ -97,6 +101,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
             <Typography sx={{ ...readingProse, mt: peptide.keyResult ? 2 : 0, fontSize: 16 }}>{peptide.statusNote}</Typography>
             {peptide.notAPeptide ? <Typography sx={{ mt: 1.5, fontSize: 14, fontWeight: 650, color: "brand.navy" }}>This compound is not a peptide, but is often discussed alongside them.</Typography> : null}
           </Box>
+          {peptide.evidence ? <Box sx={{ mt: 3 }}><EvidenceLadder evidence={peptide.evidence} name={peptide.name} /></Box> : null}
         </ReadingSection>
 
         <ReadingSection id="what-it-is" title={`What is ${peptide.name}?`}><Typography sx={readingProse}>{peptide.whatItIs}</Typography></ReadingSection>
@@ -109,10 +114,14 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
           </Box> : null}
         </ReadingSection>
         <ReadingSection id="research" title="What does the research show?">
+          {peptide.results?.length ? <Box sx={{ mb: 3 }}><StudyResults results={peptide.results} sources={peptide.sources} /></Box> : null}
           <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{peptide.findings.map(finding => <li key={finding}>{finding}</li>)}</Box>
           <AppLink href="#sources" sx={{ mt: 2, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>Read the original studies and references</AppLink>
         </ReadingSection>
         {inChart ? <ReadingSection id="comparison" title="How do the weight-loss results compare?"><WeightLossChart highlight={peptide.slug} /></ReadingSection> : null}
+        {unknowns.length ? <ReadingSection id="unknowns" title="What we don't know yet">
+          <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{unknowns.map(item => <li key={item}>{item}</li>)}</Box>
+        </ReadingSection> : null}
         <ReadingSection id="risks" title="Known risks and side effects">
           <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{peptide.risks.map(risk => <li key={risk}>{risk}</li>)}</Box>
         </ReadingSection>

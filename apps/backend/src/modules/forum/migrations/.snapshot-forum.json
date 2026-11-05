@@ -998,6 +998,22 @@
           "enumItems": [],
           "mappedType": "text"
         },
+        "topic": {
+          "name": "topic",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": "'general'",
+          "comment": null,
+          "enumItems": [],
+          "mappedType": "text"
+        },
         "product_handle": {
           "name": "product_handle",
           "type": "text",
@@ -1248,6 +1264,15 @@
           "primary": false,
           "unique": false,
           "expression": "CREATE INDEX IF NOT EXISTS \"IDX_forum_thread_peptide_slug\" ON \"forum_thread\" (\"peptide_slug\") WHERE deleted_at IS NULL"
+        },
+        {
+          "keyName": "IDX_forum_thread_topic",
+          "columnNames": [],
+          "composite": false,
+          "constraint": false,
+          "primary": false,
+          "unique": false,
+          "expression": "CREATE INDEX IF NOT EXISTS \"IDX_forum_thread_topic\" ON \"forum_thread\" (\"topic\") WHERE deleted_at IS NULL"
         },
         {
           "keyName": "IDX_forum_thread_lot",

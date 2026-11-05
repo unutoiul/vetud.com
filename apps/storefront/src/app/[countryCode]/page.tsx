@@ -16,10 +16,12 @@ import { getVideos } from "@/content/learn/videos"
 import { BASE_URL, SITE } from "@/lib/config"
 import { storefrontLanguages, storefrontMetadata, websiteStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
+import { parseStoreSegment } from "@/lib/store-segment"
 import { listCatalogProducts } from "@/lib/medusa/products"
 
 export async function generateMetadata({ params }: PageProps<"/[countryCode]">): Promise<Metadata> {
-  const { countryCode } = await params
+  // The canonical URL is the country's, whatever currency the page was rendered in.
+  const countryCode = parseStoreSegment((await params).countryCode).country
   const metadata = storefrontMetadata({
     title: "Peptides Explained: Research Guides & Laboratory Materials | VETUD",
     description: "Explore peptide research, Retatrutide, Tirzepatide and Semaglutide guides, evidence and educational videos. Browse VETUD laboratory research materials.",

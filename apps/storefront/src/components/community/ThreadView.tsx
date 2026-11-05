@@ -19,6 +19,7 @@ import JoinCommunity from "./JoinCommunity"
 import PostCard from "./PostCard"
 import ReplyForm from "./ReplyForm"
 import { useCommunityProfile } from "./useCommunityProfile"
+import { getTopic } from "@/lib/community/topics"
 
 const PAGE_SIZE = 100
 
@@ -122,7 +123,8 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
   return <Box>
     <Box component="nav" aria-label="Breadcrumb" sx={{ display: "flex", flexWrap: "wrap", gap: 1, fontSize: 14, color: "brand.navySoft", mb: 2 }}>
       <AppLink href="/community">Community</AppLink><span aria-hidden>/</span>
-      <AppLink href={`/community?kind=${thread.kind}`}>{KIND_PLURALS[thread.kind]}</AppLink>
+      {getTopic(thread.topic) ? <><AppLink href={`/community?topic=${thread.topic}`}>{getTopic(thread.topic)?.name}</AppLink><span aria-hidden>/</span></> : null}
+      <AppLink href={`/community?${getTopic(thread.topic) ? `topic=${thread.topic}&` : ""}kind=${thread.kind}`}>{KIND_PLURALS[thread.kind]}</AppLink>
     </Box>
 
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: .75, mb: 1.5 }}>

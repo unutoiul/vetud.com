@@ -8,7 +8,6 @@ import Icon from "@/components/brand/Icon"
 import { SITE } from "@/lib/config"
 import { cheapestPrice, isProductInStock, percentOff, readProductMeta } from "@/lib/product"
 import { useMoney } from "@/lib/money"
-import { getProductResearch } from "@/content/product-research"
 import { hasFormats, shortAvailability } from "@/lib/product-formats"
 import { getProductImages } from "@/lib/product-images"
 import { LocalizedNextLink } from "../common/links"
@@ -26,7 +25,6 @@ export function ArtStage({ children, height = 290 }: { children: React.ReactNode
 export default function ProductCard({ product }: { product: HttpTypes.StoreProduct }) {
   const money = useMoney()
   const meta = readProductMeta(product)
-  const profile = getProductResearch(product.handle)
   const price = cheapestPrice(product)
   const off = percentOff(price)
   const inStock = isProductInStock(product)
@@ -43,7 +41,7 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
         <Typography component="h3" sx={{ fontSize: 23, fontWeight: 500, letterSpacing: "-.04em" }}><Box component={LocalizedNextLink} href={`/products/${product.handle}`} sx={{ textDecoration: "none", "&::after": { content: '\"\"', position: "absolute", inset: 0, zIndex: 2 }, "&:focus-visible": { outline: "none" } }}>{product.title}</Box></Typography>
         <Box className="product-arrow" aria-hidden sx={{ width: 33, height: 33, flexShrink: 0, border: "1px solid", borderColor: "divider", borderRadius: "50%", display: "grid", placeItems: "center", transition: "background-color .2s, color .2s" }}><Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></Box>
       </Stack>
-      <Typography sx={{ color: "brand.blue", fontSize: 11.5, mt: .5 }}>{profile?.classification ?? product.subtitle ?? meta.form}</Typography>
+      <Typography sx={{ color: "brand.blue", fontSize: 11.5, mt: .5 }}>{product.subtitle ?? meta.form}</Typography>
       <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 1.25, mb: 2 }}>{detail}</Typography>
       <Stack direction="row" sx={{ mt: "auto", pt: 2, borderTop: "1px solid", borderColor: "divider", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 1.5 }}>
         <Typography sx={{ fontWeight: 600, fontSize: 16 }}>{price ? <>{price.hasRange ? <Box component="span" sx={{ color: "text.secondary", fontWeight: 400, fontSize: 11, mr: .5 }}>From</Box> : null}{money(price.amount, price.currencyCode)}{off ? <Box component="span" sx={{ ml: .75, color: "text.secondary", fontWeight: 400, fontSize: 12, textDecoration: "line-through" }}><Box component="span" sx={visuallyHidden}>regular price </Box>{money(price.original, price.currencyCode)}</Box> : null}</> : "Price on request"}</Typography>

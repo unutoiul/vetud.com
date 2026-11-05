@@ -21,10 +21,12 @@ import {
   type ProductSort,
 } from "@/lib/medusa/products"
 import { sortProducts } from "@/lib/product"
+import { parseStoreSegment } from "@/lib/store-segment"
 import { storefrontMetadata } from "@/lib/storefront-seo"
 
 export async function generateMetadata({ params, searchParams }: PageProps<"/[countryCode]/shop">): Promise<Metadata> {
-  const [{ countryCode }, search] = await Promise.all([params, searchParams])
+  const [segment, search] = await Promise.all([params, searchParams])
+  const countryCode = parseStoreSegment(segment.countryCode).country
   return storefrontMetadata({
     title: `Research Peptides & Laboratory Materials | VETUD ${countryCode === "gb" ? "UK" : countryCode.toUpperCase()}`,
     description: "Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare amounts, regional prices, stock and lot documentation. Laboratory use only.",

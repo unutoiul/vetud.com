@@ -13,7 +13,10 @@ import { AdminArticleCommentsQuery } from "./admin/article-comments/validators"
 import { AdminCreateStorewideSale, AdminUpdateStorewideSale } from "./admin/storewide-sales/validators"
 import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
-import { cartOwnerGuardRoutes } from "./cart-owner-guards"
+import { cartOwnerGuardRoutes, requireCartOwner } from "./cart-owner-guards"
+import * as cartQueryConfig from "@medusajs/medusa/api/store/carts/query-config"
+import { StoreGetCartsCart } from "@medusajs/medusa/api/store/carts/validators"
+import { StoreSetCartDeliveryAddressSchema } from "./store/carts/[id]/delivery-address/validators"
 import { forumRoutes } from "./forum-middlewares"
 import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
 import { prepareStripeSession } from "./stripe-session"
@@ -32,6 +35,17 @@ export default defineMiddlewares({
         prepareNmiSession,
         preparePaygateSession,
         prepareStripeSession,
+      ],
+    },
+    {
+      // The delivery address for any country we sell to; the cart keeps the shopper's currency.
+      method: ["POST"],
+      matcher: "/store/carts/:id/delivery-address",
+      middlewares: [
+        authenticate("customer", ["session", "bearer"]),
+        requireCartOwner,
+        validateAndTransformBody(StoreSetCartDeliveryAddressSchema),
+        validateAndTransformQuery(StoreGetCartsCart, cartQueryConfig.retrieveTransformQueryConfig),
       ],
     },
     {

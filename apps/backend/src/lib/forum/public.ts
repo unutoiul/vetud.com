@@ -22,6 +22,7 @@ export type ThreadRecord = {
   title: string
   slug: string
   excerpt: string
+  topic: string
   peptide_slug?: string | null
   product_handle?: string | null
   lot?: string | null
@@ -54,7 +55,7 @@ export type ImageRecord = { id: string; post_id?: string | null; url: string }
 export type PublicImage = { id: string; url: string }
 
 export const THREAD_FIELDS = [
-  "id", "author_id", "kind", "title", "slug", "excerpt", "peptide_slug", "product_handle", "lot",
+  "id", "author_id", "kind", "title", "slug", "excerpt", "topic", "peptide_slug", "product_handle", "lot",
   "verified_purchase", "status", "hold_reason", "pinned", "locked", "accepted_post_id", "reply_count", "helpful_count",
   "last_activity_at", "created_at",
 ]
@@ -97,6 +98,7 @@ export function publicThread(thread: ThreadRecord, { authors, viewer }: Context)
     title: thread.title,
     slug: thread.slug,
     excerpt: thread.excerpt,
+    topic: thread.topic,
     peptide_slug: thread.peptide_slug ?? null,
     product_handle: thread.product_handle ?? null,
     lot: thread.lot ?? null,

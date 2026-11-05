@@ -1,4 +1,5 @@
 import { z } from "@medusajs/framework/zod"
+import { FORUM_TOPICS } from "../../../lib/forum/topics"
 
 /** Storefront library slugs ("bpc-157") and product handles share this shape. */
 export const ForumSlug = z.string().trim().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).max(80)
@@ -14,10 +15,12 @@ const commaList = (item: z.ZodString, max: number) =>
     .pipe(z.array(item).max(max))
 
 const ThreadKind = z.enum(["discussion", "question"])
+const ForumTopic = z.enum(FORUM_TOPICS)
 const Offset = z.coerce.number().int().min(0).default(0)
 
 export const StoreForumThreadsQuery = z.object({
   kind: ThreadKind.optional(),
+  topic: ForumTopic.optional(),
   peptide: commaList(ForumSlug, 50).optional(),
   lot: ForumLot.optional(),
   product: ForumSlug.optional(),
@@ -37,6 +40,7 @@ export const StoreCreateForumThreadSchema = z.object({
   kind: ThreadKind,
   title: z.string().trim().min(8).max(140),
   body: z.string().trim().min(20).max(10000),
+  topic: ForumTopic.default("general"),
   peptide: ForumSlug.nullish(),
   product: ForumSlug.nullish(),
   lot: ForumLot.nullish(),
