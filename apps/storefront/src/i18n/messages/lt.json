@@ -171,6 +171,7 @@
     "total": "Iš viso",
     "estimatedTotal": "Numatoma bendra suma",
     "shippingPending": "Apskaičiuojama atsiskaitant",
+    "shippingAfterAddress": "Apskaičiuojama įvedus adresą",
     "qty": "Kiekis {count}",
     "payCard": "Kredito / debeto kortelė",
     "payBank": "Banko pavedimas / sąskaita",

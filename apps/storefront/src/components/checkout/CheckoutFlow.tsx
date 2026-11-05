@@ -30,18 +30,18 @@ import { SITE } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { PAYPAL_PROVIDER_ID, payPalAvailable, payPalCartFingerprint, type PayPalConfig } from "@/lib/paypal"
 import { useMoney } from "@/lib/money"
+import { hasShippingPrice } from "@/lib/shipping"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
 import { NMI_PROVIDER_ID, nmiAvailable, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
-import { PAYGATE_CARD, PAYGATE_CRYPTO, isPaygate, readPaygateRedirect, type PaygateConfig } from "@/lib/paygate"
+import { isCheckoutPaymentProvider } from "@/lib/payment-providers"
 import { STRIPE_PROVIDER_ID, readStripeClientSecret, stripeBillingDetails, stripeEnabled } from "@/lib/stripe"
 import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
-import CartLineItem from "../cart/CartLineItem"
-import OrderTotals from "../cart/OrderTotals"
 import { ButtonLink } from "../common/links"
 import { CART_FIELDS, useStore } from "../store/StoreProvider"
 import AddressFields, { EMPTY_ADDRESS, toAddressValues, validateAddress, type AddressValues } from "./AddressFields"
 import PayPalReturn from "./PayPalReturn"
+import CheckoutOrderSummary from "./CheckoutOrderSummary"
 
 const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
 const StripePaymentForm = dynamic(() => import("./StripePaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
@@ -49,14 +49,6 @@ const PayPalPaymentForm = dynamic(() => import("./PayPalPaymentForm"), { ssr: fa
 
 /** `titleKey` names the translated title in the Checkout messages; descriptions stay in English. */
 const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payCard" | "payBank" | "payCrypto"; description: string; icon?: IconName }> = {
-  [PAYGATE_CARD]: {
-    icon: "card", title: "Credit / debit card on PayGate.to",
-    description: "Reserve your order, then leave Vetud to choose a card provider such as MoonPay on PayGate.to. You enter card details on the provider's website. Fees and any identity checks are shown before you pay. We ship after payment is confirmed.",
-  },
-  [PAYGATE_CRYPTO]: {
-    icon: "coin", title: "Cryptocurrency via PayGate.to",
-    description: "Reserve your order, then choose a coin and network on hosted checkout. Send the exact quoted amount above the displayed network minimum. Network fees are shown there.",
-  },
   [NMI_PROVIDER_ID]: {
     icon: "card",
     title: "Credit / debit card or eligible bank account",
@@ -92,7 +84,7 @@ const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payCard" | "pa
 
 /** Providers whose session is bound to one amount, so choosing them always starts a fresh session. */
 function needsFreshSession(providerId: string) {
-  return providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID || providerId === STRIPE_PROVIDER_ID || isPaygate(providerId)
+  return providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID || providerId === STRIPE_PROVIDER_ID
 }
 
 function errorMessage(error: unknown) {
@@ -255,7 +247,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     sdk.store.fulfillment
       .listCartOptions({ cart_id: cart.id })
       .then(({ shipping_options }) => {
-        if (!cancelled) setLoadedOptions({ key: optionsKey, list: shipping_options })
+        if (!cancelled) setLoadedOptions({ key: optionsKey, list: shipping_options.filter(hasShippingPrice) })
       })
       .catch((err) => {
         if (cancelled) return
@@ -273,16 +265,14 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     Promise.all([
       sdk.store.payment.listPaymentProviders({ region_id: cart.region_id ?? "" }),
       sdk.client.fetch<NmiConfig>("/store/nmi/config", { method: "GET", cache: "no-store" }).catch(() => null),
-      sdk.client.fetch<PaygateConfig>("/store/paygate/config", { method: "GET", cache: "no-store" }).catch(() => null),
       sdk.client.fetch<PayPalConfig>("/store/paypal/config", { method: "GET", query: { cart_id: cart.id }, cache: "no-store" }).catch(() => null),
     ])
-      .then(([{ payment_providers }, config, paygate, paypal]) => {
+      .then(([{ payment_providers }, config, paypal]) => {
         if (cancelled) return
         setLoadedPayPal({ key: providersKey, config: paypal })
         setLoadedProviders({ key: providersKey, list: payment_providers.filter((provider) => {
+          if (!isCheckoutPaymentProvider(provider.id)) return false
           if (provider.id === PAYPAL_PROVIDER_ID) return payPalAvailable(paypal, cart.currency_code)
-          if (provider.id === PAYGATE_CARD) return paygate?.card === true
-          if (provider.id === PAYGATE_CRYPTO) return paygate?.crypto === true
           if (provider.id === STRIPE_PROVIDER_ID) return stripeEnabled
           return provider.id !== NMI_PROVIDER_ID || nmiAvailable(config, cart.currency_code)
         }) })
@@ -376,7 +366,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   }
 
   // Preselect the cheapest delivery once the destination is known; the shopper can still switch.
-  const cheapest = options?.length ? options.reduce((best, option) => (Number(option.amount ?? 0) < Number(best.amount ?? 0) ? option : best)) : null
+  const cheapest = options?.length ? options.reduce((best, option) => (Number(option.amount) < Number(best.amount) ? option : best)) : null
   useEffect(() => {
     if (!hasAddress || method || !cheapest || busyRef.current) return
     const key = `${cart.id}:${addressKey}`
@@ -459,7 +449,6 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       }
       // Crypto: validate the hosted-checkout redirect first, create the order, then leave for MakePay.
       const isMakePay = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
-      const paygateRedirect = checkoutCart.payment_collection?.payment_sessions?.some(session => isPaygate(session.provider_id)) ? readPaygateRedirect(checkoutCart) : null
       const redirect = isMakePay ? readMakePayRedirect(checkoutCart) : null
       const result = await sdk.store.cart.complete(checkoutCart.id)
       assertCurrent()
@@ -471,12 +460,6 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         if (receipt) window.sessionStorage.setItem(`vetud_order_${result.order.id}`, receipt)
       } catch {
         // The confirmation page fetches the order when storage is unavailable.
-      }
-      if (paygateRedirect) {
-        onCompleted(result.order.id)
-        clearCart()
-        window.location.assign(paygateRedirect.url)
-        return
       }
       if (redirect) {
         try {
@@ -500,24 +483,18 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const place = address?.country_code
     ? [address.city, countryName(address.country_code, locale)].filter(Boolean).join(", ")
     : ""
-  const summary = (
-    <OrderSummary
-      cart={cart}
-      place={hasAddress ? place : ""}
-      arrival={selectedOption ? arrivalWindow(optionType(selectedOption)?.description, locale) : null}
-    />
-  )
+  const summaryProps = { cart, place: hasAddress ? place : "", arrival: selectedOption ? arrivalWindow(optionType(selectedOption)?.description, locale) : null }
 
   return (
     <Grid container spacing={{ xs: 3, md: 6 }}>
       <Grid size={{ xs: 12, md: 7 }}>
         {/* On small screens the summary sidebar would sit below the form, so the total stays visible up top. */}
-        <Accordion disableGutters sx={{ display: { md: "none" }, mb: 3, px: 2, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: 3, boxShadow: "none", "&::before": { display: "none" } }}>
+        <Accordion disableGutters sx={{ display: { md: "none" }, mb: 3, px: 2, bgcolor: "background.paper", border: "1px solid", borderColor: "divider", borderRadius: 3, boxShadow: "none", "&::before": { display: "none" } }}>
           <AccordionSummary expandIcon={<Icon name="chevronDown" />} aria-controls="checkout-summary-content" id="checkout-summary-header" sx={{ minHeight: 64, "& .MuiAccordionSummary-content": { my: 2 } }}>
             <Typography sx={{ fontWeight: 600, flex: 1 }}>{t("summary")}</Typography>
             <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{money(Number(cart.total ?? 0), currency)}</Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{ px: 0 }}>{summary}</AccordionDetails>
+          <AccordionDetails sx={{ px: 0 }}><CheckoutOrderSummary {...summaryProps} compact /></AccordionDetails>
         </Accordion>
 
         <Box sx={{ mb: 3 }}>
@@ -610,11 +587,8 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       </Grid>
 
       <Grid size={{ xs: 12, md: 5 }} sx={{ display: { xs: "none", md: "block" } }}>
-        <Paper variant="outlined" sx={{ p: 4, bgcolor: "brand.mintWash", borderRadius: 3, position: "sticky", top: 110 }}>
-          <Typography variant="h5" component="h2" sx={{ mb: 1 }}>
-            {t("summary")}
-          </Typography>
-          {summary}
+        <Paper variant="outlined" sx={{ p: 3, bgcolor: "background.paper", borderRadius: 3, position: "sticky", top: 110 }}>
+          <CheckoutOrderSummary {...summaryProps} />
         </Paper>
       </Grid>
     </Grid>
@@ -680,7 +654,6 @@ function Step({
 type AddressBody = {
   email: string
   shipping_address: AddressValues
-  billing_address: AddressValues
   saveToAccount: boolean
 }
 
@@ -732,14 +705,11 @@ function AddressSection({
     withProfile(toAddressValues(current ?? savedAddresses.find((address) => address.id === initialId)))
   )
   const [saveToAccount, setSaveToAccount] = useState(true)
-  const [billingSame, setBillingSame] = useState(!cart.billing_address?.address_1 || sameAddress(cart.billing_address, current))
-  const [billing, setBilling] = useState<AddressValues>(() => withProfile(toAddressValues(cart.billing_address ?? current)))
   const [showErrors, setShowErrors] = useState(false)
   const autoApplied = useRef(false)
 
   const shippingErrors = errorsFor(shipping)
-  const billingErrors = billingSame ? {} : errorsFor(billing)
-  const valid = !Object.keys(shippingErrors).length && !Object.keys(billingErrors).length
+  const valid = !Object.keys(shippingErrors).length
   // A saved address only needs its form when it is missing something.
   const showForm = selectedId === "new" || Object.keys(shippingErrors).length > 0
 
@@ -748,7 +718,6 @@ function AddressSection({
     return {
       email,
       shipping_address: shippingAddress,
-      billing_address: billingSame ? shippingAddress : normalizeAddress(billing),
       saveToAccount: selectedId === "new" && saveToAccount,
     }
   }
@@ -769,7 +738,6 @@ function AddressSection({
   }
 
   if (!editing && current) {
-    const billingAddress = cart.billing_address
     return (
       <Step
         index={1}
@@ -791,11 +759,6 @@ function AddressSection({
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 1.5 }}>
             {t("confirmationTo", { email: cart.email ?? email })}
           </Typography>
-          {billingAddress?.address_1 && !sameAddress(billingAddress, current) ? (
-            <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-              {t("billing")}: {formatAddressLines(billingAddress).join(", ")}
-            </Typography>
-          ) : null}
         </Box>
       </Step>
     )
@@ -810,7 +773,7 @@ function AddressSection({
           event.preventDefault()
           setShowErrors(true)
           if (!valid) {
-            const field = Object.keys(shippingErrors).length ? `shipping-${Object.keys(shippingErrors)[0]}` : `billing-${Object.keys(billingErrors)[0]}`
+            const field = `shipping-${Object.keys(shippingErrors)[0]}`
             const control = event.currentTarget.querySelector<HTMLElement>(`[id="${field}"]`)
               ?? event.currentTarget.querySelector<HTMLInputElement>(`[name="${field}"]`)
             control?.focus()
@@ -862,16 +825,6 @@ function AddressSection({
               <FormControlLabel sx={{ mt: 1 }} control={<Checkbox checked={saveToAccount} onChange={(event) => setSaveToAccount(event.target.checked)} />} label={t("save")} />
             ) : null}
           </>
-        ) : null}
-
-        <FormControlLabel sx={{ mt: 1.5, display: "flex" }} control={<Checkbox checked={billingSame} onChange={(event) => setBillingSame(event.target.checked)} />} label={t("billingSame")} />
-        {!billingSame ? (
-          <Box sx={{ mt: 2 }}>
-            <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 600, mb: 2 }}>
-              {t("billing")}
-            </Typography>
-            <AddressFields prefix="billing" values={billing} errors={showErrors ? billingErrors : {}} countries={countries} onChange={setBilling} />
-          </Box>
         ) : null}
 
         <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3 }}>
@@ -930,7 +883,7 @@ function DeliverySection({
         <RadioGroup name="delivery_method" value={selected} onChange={(event) => onSelect(event.target.value)} aria-label={t("delivery")}>
           <Stack spacing={1.25}>
             {options.map((option) => {
-              const amount = Number(option.amount ?? 0)
+              const amount = Number(option.amount)
               const description = optionType(option)?.description
               const arrival = arrivalWindow(description, locale)
               const tracked = /tracked/i.test(description ?? "")
@@ -1010,12 +963,10 @@ function PayPanel({
           sx={{ minWidth: { xs: 0, sm: 260 }, width: { xs: "100%", sm: "auto" } }}
         >
           {busy
-            ? isPaygate(provider)
-              ? "Opening PayGate.to…"
-              : provider === PAYPAL_PROVIDER_ID
+            ? provider === PAYPAL_PROVIDER_ID
               ? "Opening PayPal…"
               : "Placing order…"
-            : `${isPaygate(provider) ? "Continue to PayGate.to" : provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${total}`}
+            : `${provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${total}`}
         </Button>
       )}
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 2, fontSize: 13 }}>
@@ -1023,10 +974,6 @@ function PayPanel({
           ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
           : provider === STRIPE_PROVIDER_ID
           ? "By paying and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Your card is authorized now and charged when your order is ready to ship."
-          : provider === PAYGATE_CARD
-          ? "By continuing you agree to our terms of sale and confirm the products are for laboratory research use only. You will leave Vetud for PayGate.to and your selected card provider's website. Your order remains unpaid until payment is verified. Provider fees and any identity checks are shown before you pay."
-          : isPaygate(provider)
-          ? "By continuing you agree to our terms of sale and confirm the products are for laboratory research use only. Your order is reserved while you pay on PayGate's hosted checkout. Provider fees, network minimums and any identity checks are shown there. We ship after payment is verified."
           : provider === PAYPAL_PROVIDER_ID
           ? "By paying with PayPal you agree to our terms of sale and confirm the products are for laboratory research use only. We ship after payment is confirmed."
           : provider === MAKEPAY_PROVIDER_ID
@@ -1034,57 +981,5 @@ function PayPanel({
           : "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will receive payment instructions by email; we ship as soon as payment is received."}
       </Typography>
     </Box>
-  )
-}
-
-function OrderSummary({ cart, place, arrival }: { cart: HttpTypes.StoreCart; place: string; arrival: string | null }) {
-  const t = useTranslations("Checkout")
-  const count = (cart.items ?? []).reduce((sum, item) => sum + Number(item.quantity), 0)
-
-  return (
-    <>
-      <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between" }}>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {t("itemCount", { count })}
-        </Typography>
-        <ButtonLink href="/cart" size="small" color="secondary">
-          {t("editCart")}
-        </ButtonLink>
-      </Stack>
-      <Box sx={{ mb: 2 }}>
-        {(cart.items ?? []).map((item) => (
-          <CartLineItem key={item.id} item={item} currencyCode={cart.currency_code} readOnly />
-        ))}
-      </Box>
-      <OrderTotals totals={cart} shippingKnown={Boolean(cart.shipping_methods?.length)} />
-      <Stack spacing={1.25} sx={{ mt: 3, pt: 2.5, borderTop: "1px solid", borderColor: "divider", color: "text.secondary" }}>
-        {place ? (
-          <Stack direction="row" spacing={1.25} sx={{ alignItems: "flex-start" }}>
-            <Icon name="truck" sx={{ fontSize: 18, mt: 0.25, color: "secondary.main" }} />
-            <Typography variant="body2">
-              {t("deliveringTo", { place })}
-              {arrival ? <><br />{t("arrives", { date: arrival })}</> : null}
-            </Typography>
-          </Stack>
-        ) : null}
-        <Stack direction="row" spacing={1.25} sx={{ alignItems: "center" }}>
-          <LockOutlinedIcon sx={{ fontSize: 18, color: "secondary.main" }} />
-          <Typography variant="body2">{t("secure")}</Typography>
-        </Stack>
-        <Stack direction="row" spacing={1.25} sx={{ alignItems: "center" }}>
-          <Icon name="mail" sx={{ fontSize: 18, color: "secondary.main" }} />
-          <Typography variant="body2">
-            {t.rich("help", {
-              email: SITE.email,
-              link: (chunks) => (
-                <Box component="a" href={`mailto:${SITE.email}`} sx={{ color: "secondary.main", fontWeight: 600 }}>
-                  {chunks}
-                </Box>
-              ),
-            })}
-          </Typography>
-        </Stack>
-      </Stack>
-    </>
   )
 }

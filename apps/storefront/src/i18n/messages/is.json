@@ -171,6 +171,7 @@
     "total": "Samtals",
     "estimatedTotal": "Áætluð heildarupphæð",
     "shippingPending": "Reiknað við greiðslu",
+    "shippingAfterAddress": "Reiknast eftir að heimilisfang er skráð",
     "qty": "Magn {count}",
     "payCard": "Kredit- / debetkort",
     "payBank": "Millifærsla / reikningur",

@@ -7,7 +7,7 @@ type Cart = {
   total?: unknown
   currency_code: string
   email?: string | null
-  billing_address?: Record<string, unknown> | null
+  shipping_address?: Record<string, unknown> | null
   payment_collection?: { payment_sessions?: { id: string; provider_id: string; amount: unknown; currency_code: string; data?: Record<string, unknown> | null }[] | null } | null
 }
 
@@ -29,6 +29,6 @@ export function validateNmiCart(cart: Cart) {
   const billing = state.billing as Record<string, unknown> | undefined
   if (!billing || billing.email !== cart.email) return fail()
   for (const key of ["first_name", "last_name", "company", "address_1", "address_2", "city", "province", "postal_code", "country_code", "phone"]) {
-    if ((billing[key] ?? "") !== (cart.billing_address?.[key] ?? "")) return fail()
+    if ((billing[key] ?? "") !== (cart.shipping_address?.[key] ?? "")) return fail()
   }
 }

@@ -13,6 +13,7 @@ import { useStore } from "../store/StoreProvider"
 import CartAnnouncer from "./CartAnnouncer"
 import CartLineItem from "./CartLineItem"
 import FreeShippingProgress from "./FreeShippingProgress"
+import CartPaymentMethods from "./CartPaymentMethods"
 
 export default function CartDrawer() {
   const money = useMoney()
@@ -77,7 +78,7 @@ export default function CartDrawer() {
         </Box>
 
         {items.length ? (
-          <Box sx={{ px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
+          <Box sx={{ flexShrink: 0, px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
             <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
               <Typography sx={{ fontWeight: 600 }}>Subtotal</Typography>
               <Typography sx={{ fontWeight: 700 }}>{money(subtotal, currency)}</Typography>
@@ -99,6 +100,7 @@ export default function CartDrawer() {
                 Checkout
               </ButtonLink>
             </Stack>
+            <CartPaymentMethods open={drawerOpen} regionId={cart?.region_id || region.id} currency={currency} cartId={cart?.id} />
           </Box>
         ) : null}
       </Stack>

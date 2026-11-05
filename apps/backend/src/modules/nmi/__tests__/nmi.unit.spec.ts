@@ -78,11 +78,11 @@ describe("guarded NMI provider", () => {
     const provider = new NmiProvider({}, options)
     const billing = { email: "research@example.test", first_name: "Test", address_1: "Test street" }
     const session = await initiate(provider, { ...token, billing })
-    const cart = { total: 125.5, currency_code: "usd", email: billing.email, billing_address: billing,
+    const cart = { total: 125.5, currency_code: "usd", email: billing.email, shipping_address: billing,
       payment_collection: { payment_sessions: [{ id: context.idempotency_key, provider_id: "pp_nmi_primary", amount: 125.5, currency_code: "usd", data: session.data }] } }
     expect(() => validateNmiCart(cart)).not.toThrow()
     expect(() => validateNmiCart({ ...cart, total: 150 })).toThrow("details changed")
-    expect(() => validateNmiCart({ ...cart, billing_address: { ...billing, address_1: "Different street" } })).toThrow("details changed")
+    expect(() => validateNmiCart({ ...cart, shipping_address: { ...billing, address_1: "Different street" } })).toThrow("details changed")
     expect(() => validateNmiCart({ ...cart, currency_code: "eur" })).toThrow("details changed")
   })
 

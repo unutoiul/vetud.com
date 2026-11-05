@@ -171,6 +171,7 @@
     "total": "Totalt",
     "estimatedTotal": "Beräknad totalsumma",
     "shippingPending": "Beräknas i kassan",
+    "shippingAfterAddress": "Beräknas när adressen angetts",
     "qty": "Antal {count}",
     "payCard": "Kredit- / betalkort",
     "payBank": "Banköverföring / faktura",

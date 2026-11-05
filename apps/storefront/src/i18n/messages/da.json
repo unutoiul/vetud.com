@@ -171,6 +171,7 @@
     "total": "I alt",
     "estimatedTotal": "Anslået total",
     "shippingPending": "Beregnes ved betaling",
+    "shippingAfterAddress": "Beregnes efter adressen er angivet",
     "qty": "Antal {count}",
     "payCard": "Kredit- / betalingskort",
     "payBank": "Bankoverførsel / faktura",

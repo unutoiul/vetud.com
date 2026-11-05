@@ -18,7 +18,6 @@ import { sdk } from "@/lib/medusa/sdk"
 import { activeShipments, deliveryLabel, orderNumber, orderPaymentLabel, orderPaymentNotice, shipmentLabel, trackingLink, type CustomerOrder, type CustomerOrdersResponse } from "@/lib/orders"
 import { useMoney } from "@/lib/money"
 import { formatAddressLines } from "@/lib/address"
-import PaygateResume from "../checkout/PaygateResume"
 import Icon from "../brand/Icon"
 import { ButtonLink } from "../common/links"
 
@@ -135,7 +134,6 @@ function OrderCard({ order }: { order: CustomerOrder }) {
 
       <Stack spacing={2} sx={{ px: { xs: 2.5, md: 3.5 }, py: 2.5 }}>
         {paymentNotice ? <Alert severity={order.payment_summary?.review === "pending_settlement" ? "info" : "warning"}>{paymentNotice}</Alert> : null}
-        <PaygateResume checkoutUrl={order.payment_summary?.checkout_url} />
         {shipments.length ? shipments.map((shipment, index) => (
           <Box key={shipment.id}>
             <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>

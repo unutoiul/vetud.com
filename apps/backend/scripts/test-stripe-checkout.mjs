@@ -38,15 +38,16 @@ const options = configuration({
 }).options
 const { prepareStripeSession } = load(middlewareSource)
 
-test("the card form uses the reviewed billing address and falls back to shipping", () => {
+test("the card form uses delivery details and ignores legacy separate billing data", () => {
   const { stripeBillingDetails } = load(storefrontSource, {}, () => ({ loadStripe() {} }))
-  const cart = { email: "sandbox@example.com", billing_address: { first_name: "Sandbox", last_name: "Checkout", country_code: "gb", postal_code: "SW1A 1AA" }, shipping_address: { country_code: "us" } }
+  const cart = { email: "sandbox@example.com", shipping_address: { first_name: "Sandbox", last_name: "Checkout", country_code: "gb", postal_code: "SW1A 1AA" }, billing_address: { country_code: "us" } }
   const billing = stripeBillingDetails(cart)
   assert.equal(billing.address.country, "GB")
   assert.equal(billing.address.postal_code, "SW1A 1AA")
   assert.equal(billing.name, "Sandbox Checkout")
   assert.equal(billing.email, "sandbox@example.com")
-  assert.equal(stripeBillingDetails({ shipping_address: cart.shipping_address }).address.country, "US")
+  assert.equal(stripeBillingDetails({ shipping_address: cart.shipping_address }).address.country, "GB")
+  assert.equal(stripeBillingDetails({ billing_address: cart.billing_address }).address.country, undefined)
 })
 
 test("Stripe stays disabled without credentials and live/deployed credentials require deliberate setup", () => {

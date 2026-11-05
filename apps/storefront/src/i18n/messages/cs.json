@@ -171,6 +171,7 @@
     "total": "Celkem",
     "estimatedTotal": "Odhadovaná cena celkem",
     "shippingPending": "Vypočítá se v pokladně",
+    "shippingAfterAddress": "Vypočítá se po zadání adresy",
     "qty": "Množství {count}",
     "payCard": "Kreditní / debetní karta",
     "payBank": "Bankovní převod / faktura",

@@ -171,6 +171,7 @@
     "total": "Totaal",
     "estimatedTotal": "Geschat totaal",
     "shippingPending": "Wordt berekend bij het afrekenen",
+    "shippingAfterAddress": "Berekend na invoeren adres",
     "qty": "Aantal {count}",
     "payCard": "Credit- / debetkaart",
     "payBank": "Bankoverschrijving / factuur",

@@ -22,36 +22,44 @@ type OrderTotalsProps = {
   totals: Totals
   /** Before a delivery method is chosen, shipping shows as "Calculated at checkout". */
   shippingKnown: boolean
+  variant?: "default" | "checkout"
+  pendingShippingLabel?: string
 }
 
-function Row({ label, value, strong }: { label: string; value: string; strong?: boolean }) {
+function Row({ label, value, strong, checkout }: { label: string; value: string; strong?: boolean; checkout?: boolean }) {
   return (
     <Stack direction="row" spacing={2} sx={{ justifyContent: "space-between", py: 0.75 }}>
-      <Typography sx={{ color: strong ? "text.primary" : "text.secondary", fontWeight: strong ? 700 : 500 }}>{label}</Typography>
-      <Typography sx={{ fontWeight: strong ? 700 : 600, fontSize: strong ? 18 : undefined, textAlign: "right", fontVariantNumeric: "tabular-nums" }}>{value}</Typography>
+      <Typography component="dt" sx={{ m: 0, color: strong ? "text.primary" : "text.secondary", fontSize: checkout ? strong ? 16 : 14 : undefined, fontWeight: strong ? checkout ? 600 : 700 : checkout ? 400 : 500 }}>{label}</Typography>
+      <Typography component="dd" sx={{ m: 0, fontWeight: strong ? 700 : checkout ? 500 : 600, fontSize: strong ? checkout ? 24 : 18 : checkout ? 14 : undefined, maxWidth: checkout ? "60%" : undefined, textAlign: "right", fontVariantNumeric: "tabular-nums", lineHeight: strong ? 1.3 : undefined }}>{value}</Typography>
     </Stack>
   )
 }
 
-export default function OrderTotals({ totals, shippingKnown }: OrderTotalsProps) {
+export default function OrderTotals({ totals, shippingKnown, variant, pendingShippingLabel }: OrderTotalsProps) {
   const money = useMoney()
   const t = useTranslations("Checkout")
   const currency = totals.currency_code
   const shipping = Number(totals.shipping_subtotal ?? totals.shipping_total ?? 0)
   const discount = Number(totals.discount_total ?? 0)
   const tax = Number(totals.tax_total ?? 0)
+  const checkout = variant === "checkout"
 
   return (
     <Stack>
-      <Row label={t("subtotal")} value={money(Number(totals.item_subtotal ?? totals.item_total ?? 0), currency)} />
-      <Row
-        label={t("shippingCost")}
-        value={shippingKnown ? (shipping === 0 ? t("free") : money(shipping, currency)) : t("shippingPending")}
-      />
-      {discount > 0 ? <Row label={t("discount")} value={`−${money(discount, currency)}`} /> : null}
-      {tax > 0 ? <Row label={t("tax")} value={money(tax, currency)} /> : null}
+      <Stack component="dl" sx={{ m: 0 }}>
+        <Row checkout={checkout} label={t("subtotal")} value={money(Number(totals.item_subtotal ?? totals.item_total ?? 0), currency)} />
+        <Row
+          label={t("shippingCost")}
+          value={shippingKnown ? (shipping === 0 ? t("free") : money(shipping, currency)) : pendingShippingLabel || t("shippingPending")}
+          checkout={checkout}
+        />
+        {discount > 0 ? <Row checkout={checkout} label={t("discount")} value={`−${money(discount, currency)}`} /> : null}
+        {tax > 0 ? <Row checkout={checkout} label={t("tax")} value={money(tax, currency)} /> : null}
+      </Stack>
       <Divider sx={{ my: 1.5 }} />
-      <Row label={shippingKnown ? t("total") : t("estimatedTotal")} value={money(Number(totals.total ?? 0), currency)} strong />
+      <Stack component="dl" sx={{ m: 0 }}>
+        <Row checkout={checkout} label={shippingKnown ? t("total") : t("estimatedTotal")} value={money(Number(totals.total ?? 0), currency)} strong />
+      </Stack>
     </Stack>
   )
 }

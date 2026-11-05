@@ -171,6 +171,7 @@
     "total": "Total",
     "estimatedTotal": "Total estimado",
     "shippingPending": "Calculado no checkout",
+    "shippingAfterAddress": "Calculado após indicar a morada",
     "qty": "Qtd. {count}",
     "payCard": "Cartão de crédito / débito",
     "payBank": "Transferência bancária / fatura",

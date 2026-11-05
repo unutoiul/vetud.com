@@ -18,7 +18,6 @@ const Address = z.object({
 
 export const StoreSetCartDeliveryAddressSchema = z.object({
   shipping_address: Address,
-  billing_address: Address.optional(),
 })
 
 export type StoreSetCartDeliveryAddressBody = z.infer<typeof StoreSetCartDeliveryAddressSchema>

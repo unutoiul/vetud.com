@@ -21,6 +21,7 @@ import { forumRoutes } from "./forum-middlewares"
 import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
 import { prepareStripeSession } from "./stripe-session"
 import { paypalGuardRoutes, preparePayPalSession } from "./paypal-guards"
+import { cartBillingRoutes } from "./cart-billing"
 
 export default defineMiddlewares({
   routes: [
@@ -29,6 +30,7 @@ export default defineMiddlewares({
     ...forumRoutes,
     ...paygateGuardRoutes,
     ...paypalGuardRoutes,
+    ...cartBillingRoutes,
     {
       method: ["POST"],
       matcher: "/store/payment-collections/:id/payment-sessions",

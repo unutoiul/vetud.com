@@ -171,6 +171,7 @@
     "total": "Kopā",
     "estimatedTotal": "Aptuvenā kopsumma",
     "shippingPending": "Tiek aprēķināta norēķinoties",
+    "shippingAfterAddress": "Aprēķina pēc adreses ievadīšanas",
     "qty": "Daudz. {count}",
     "payCard": "Kredītkarte / debetkarte",
     "payBank": "Bankas pārskaitījums / rēķins",

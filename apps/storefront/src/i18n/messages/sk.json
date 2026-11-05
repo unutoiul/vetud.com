@@ -171,6 +171,7 @@
     "total": "Spolu",
     "estimatedTotal": "Odhadovaná suma spolu",
     "shippingPending": "Vypočíta sa v pokladnici",
+    "shippingAfterAddress": "Vypočíta sa po zadaní adresy",
     "qty": "Množstvo {count}",
     "payCard": "Kreditná / debetná karta",
     "payBank": "Bankový prevod / faktúra",

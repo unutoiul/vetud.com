@@ -171,6 +171,7 @@
     "total": "Összesen",
     "estimatedTotal": "Becsült végösszeg",
     "shippingPending": "A pénztárnál számoljuk ki",
+    "shippingAfterAddress": "Cím megadása után számítva",
     "qty": "Menny.: {count}",
     "payCard": "Hitel- / bankkártya",
     "payBank": "Banki átutalás / számla",

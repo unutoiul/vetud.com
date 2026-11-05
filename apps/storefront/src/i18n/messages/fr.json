@@ -171,6 +171,7 @@
     "total": "Total",
     "estimatedTotal": "Total estimé",
     "shippingPending": "Calculée au paiement",
+    "shippingAfterAddress": "Calculée après saisie de l’adresse",
     "qty": "Qté {count}",
     "payCard": "Carte de crédit / débit",
     "payBank": "Virement bancaire / facture",

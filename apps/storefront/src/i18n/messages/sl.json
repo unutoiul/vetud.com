@@ -171,6 +171,7 @@
     "total": "Skupaj",
     "estimatedTotal": "Ocenjeni skupni znesek",
     "shippingPending": "Izračunano pri plačilu",
+    "shippingAfterAddress": "Izračun po vnosu naslova",
     "qty": "Kol. {count}",
     "payCard": "Kreditna / debetna kartica",
     "payBank": "Bančno nakazilo / račun",

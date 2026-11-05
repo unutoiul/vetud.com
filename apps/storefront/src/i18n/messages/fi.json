@@ -171,6 +171,7 @@
     "total": "Yhteensä",
     "estimatedTotal": "Arvioitu kokonaissumma",
     "shippingPending": "Lasketaan kassalla",
+    "shippingAfterAddress": "Lasketaan osoitteen perusteella",
     "qty": "Määrä {count}",
     "payCard": "Luotto- / pankkikortti",
     "payBank": "Pankkisiirto / lasku",

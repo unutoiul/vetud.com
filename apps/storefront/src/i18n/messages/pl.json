@@ -171,6 +171,7 @@
     "total": "Razem",
     "estimatedTotal": "Szacowana suma",
     "shippingPending": "Obliczane przy kasie",
+    "shippingAfterAddress": "Obliczana po podaniu adresu",
     "qty": "Ilość: {count}",
     "payCard": "Karta kredytowa / debetowa",
     "payBank": "Przelew bankowy / faktura",

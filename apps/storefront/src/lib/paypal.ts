@@ -31,10 +31,10 @@ export function isPayPalReturnForCart(cart: HttpTypes.StoreCart, token: string |
 
 /** Bind approval to the addresses, items, delivery option and total the shopper reviewed. */
 export function payPalCartFingerprint(cart: HttpTypes.StoreCart) {
-  const address = (value: HttpTypes.StoreCart["billing_address"]) =>
+  const address = (value: HttpTypes.StoreCart["shipping_address"]) =>
     (["first_name", "last_name", "address_1", "address_2", "city", "province", "postal_code", "country_code", "company", "phone"] as const).map(key => value?.[key] ?? "")
   return JSON.stringify([cart.id, cart.customer_id, cart.currency_code, Number(cart.total), cart.email,
-    address(cart.billing_address), address(cart.shipping_address),
+    address(cart.shipping_address),
     cart.items?.map(item => [item.id, item.quantity, item.unit_price]),
     cart.shipping_methods?.map(method => [method.shipping_option_id, method.amount])])
 }

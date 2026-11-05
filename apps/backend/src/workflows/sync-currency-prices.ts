@@ -20,6 +20,7 @@ type PriceRow = {
 type PriceRowUpdater = { updatePrices(data: { id: string; amount: number }[]): Promise<unknown> }
 
 export type SyncCurrencyPricesResult = { currencies: number; created: number; updated: number; removed: number; shippingUsd: number; withoutUsd: number }
+type SyncCurrencyPricesInput = { scope?: "shipping" }
 
 /** A price that applies to everyone: not from a price list (sales), no rules, no quantity limits. */
 const isRegular = (price: PriceRow) =>
@@ -37,7 +38,7 @@ const time = (value: PriceRow["updated_at"]) => (value ? new Date(value).getTime
  *     currency whatever the country, so a delivery zone needs a price in each of them.
  * Only regular prices change. Sale price lists follow on their own (jobs/sync-storewide-sales.ts).
  */
-const syncCurrencyPricesStep = createStep("sync-currency-prices", async (_input: Record<string, never>, { container }) => {
+const syncCurrencyPricesStep = createStep("sync-currency-prices", async (input: SyncCurrencyPricesInput, { container }) => {
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
   const pricing = container.resolve(Modules.PRICING)
 
@@ -49,7 +50,7 @@ const syncCurrencyPricesStep = createStep("sync-currency-prices", async (_input:
   if (missing.length) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `No exchange rate for ${missing.join(", ").toUpperCase()}`)
 
   const [{ data: variantLinks }, { data: shippingLinks }, { data: shippingOptions }] = await Promise.all([
-    query.graph({ entity: "product_variant_price_set", fields: ["price_set_id"] }),
+    input.scope === "shipping" ? Promise.resolve({ data: [] }) : query.graph({ entity: "product_variant_price_set", fields: ["price_set_id"] }),
     query.graph({ entity: "shipping_option_price_set", fields: ["shipping_option_id", "price_set_id"] }),
     query.graph({ entity: "shipping_option", fields: ["id", "type.code"] }),
   ])
@@ -120,9 +121,9 @@ const syncCurrencyPricesStep = createStep("sync-currency-prices", async (_input:
   })
 })
 
-export const syncCurrencyPricesWorkflow = createWorkflow("sync-currency-prices", (input: Record<string, never>) =>
-  new WorkflowResponse(syncCurrencyPricesStep(input))
-)
+export const syncCurrencyPricesWorkflow = createWorkflow("sync-currency-prices", function (input: SyncCurrencyPricesInput) {
+  return new WorkflowResponse(syncCurrencyPricesStep(input))
+})
 
 /** Runs the sync and logs what changed; used by the hourly job and the deploy migration. */
 export async function syncCurrencyPrices(container: MedusaContainer) {

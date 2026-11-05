@@ -27,11 +27,6 @@ export async function projectCustomerOrders(orders: CustomerOrderRecord[], conta
         const state = readPaygate(session.data, getPaygateConfig().secret)
         if (state.review) summary.review = "requires_review"
         if (state.canceled) summary.review = "canceled"
-        if (!state.settled && !state.canceled && !state.review && !state.receipts.length && session.status === "pending_authorization" && order.status !== "canceled") {
-          const url = new URL(`/paygate/checkout/${encodeURIComponent(session.id)}`, getPaygateConfig().callbackUrl)
-          url.searchParams.set("token", state.redirect_token)
-          summary.checkout_url = url.href
-        }
       } catch { summary.review = "requires_review" }
     }
     return { ...publicCustomerOrder(order), payment_summary: summary }

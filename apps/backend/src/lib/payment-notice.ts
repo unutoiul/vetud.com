@@ -7,7 +7,7 @@ export function paymentNotice(collections?: (Collection | null)[] | null) {
   const payments = collections?.flatMap((collection) => collection?.payments ?? []).filter((payment) => payment !== null) ?? []
   const nmi = payments.find((payment) => payment.provider_id === NMI_PROVIDER_ID)
   if (collections?.some(collection => collection?.payment_sessions?.some(session => isPaygate(session?.provider_id))) || payments.some(payment => isPaygate(payment.provider_id))) {
-    return { manual_payment: false, payment_summary: "Your order is reserved for payment through PayGate.to. Complete the hosted checkout and check your order status in your account. We ship after payment has been verified. Do not make an additional bank transfer.", admin_payment_action: "PayGate: wait for a verified full settlement before fulfillment. Short or mismatched payments require review. Do not manually capture an unverified payment." }
+    return { manual_payment: false, payment_summary: "This order used a payment method that is no longer offered. Check your order status or contact us before making another payment. We ship after payment has been verified.", admin_payment_action: "Legacy payment: wait for a verified full settlement before fulfillment. Short or mismatched payments require review. Do not manually capture an unverified payment." }
   }
   if (nmi?.data?.payment_method === "ach") {
     return {

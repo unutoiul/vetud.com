@@ -171,6 +171,7 @@
     "total": "Total",
     "estimatedTotal": "Total estimat",
     "shippingPending": "Se calculează la finalizare",
+    "shippingAfterAddress": "Calculat după introducerea adresei",
     "qty": "Cant. {count}",
     "payCard": "Card de credit / debit",
     "payBank": "Transfer bancar / factură",

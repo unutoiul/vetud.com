@@ -20,13 +20,12 @@ export type CartAddressInput = {
 export type SetCartDeliveryAddressInput = {
   cart_id: string
   shipping_address: CartAddressInput
-  billing_address?: CartAddressInput
 }
 
 /**
  * The delivery country must be one a delivery zone covers (since 2026-11-06 every country). Unlike
  * Medusa's own cart update, it doesn't have to be in the cart's region: the region only sets the
- * currency the shopper chose. A billing address can be anywhere.
+ * currency the shopper chose.
  */
 const validateDeliveryCountryStep = createStep(
   "validate-delivery-country",
@@ -40,7 +39,7 @@ const validateDeliveryCountryStep = createStep(
 )
 
 /**
- * Sets the delivery and billing addresses of a cart for any country the store sells to, keeping
+ * Sets the delivery address of a cart for any country the store sells to, keeping
  * the cart's currency (owner's choice, 2026-11-05: the currency doesn't depend on the country).
  * Otherwise it follows Medusa's cart update: one change at a time per cart, then prices, taxes,
  * promotions and shipping methods are refreshed for the new address.
@@ -59,7 +58,7 @@ export const setCartDeliveryAddressWorkflow = createWorkflow(
     const update = transform({ input }, ({ input }) => [{
       id: input.cart_id,
       shipping_address: { ...input.shipping_address, country_code: input.shipping_address.country_code.toLowerCase() },
-      ...(input.billing_address ? { billing_address: { ...input.billing_address, country_code: input.billing_address.country_code.toLowerCase() } } : {}),
+      billing_address: null,
     }])
     updateCartsStep(update)
     refreshCartItemsWorkflow.runAsStep({ input: transform({ input }, ({ input }) => ({ cart_id: input.cart_id, force_refresh: true })) })

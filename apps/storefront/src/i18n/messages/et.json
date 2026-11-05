@@ -171,6 +171,7 @@
     "total": "Kokku",
     "estimatedTotal": "Eeldatav kogusumma",
     "shippingPending": "Arvutatakse kassas",
+    "shippingAfterAddress": "Arvutatakse pärast aadressi sisestamist",
     "qty": "Kogus {count}",
     "payCard": "Krediit- / deebetkaart",
     "payBank": "Pangaülekanne / arve",

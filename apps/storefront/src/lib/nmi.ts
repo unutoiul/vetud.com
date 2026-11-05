@@ -24,11 +24,11 @@ export function readNmiSession(cart: HttpTypes.StoreCart): NmiSession | null {
 
 /** A token is only submitted for the exact order the shopper reviewed. */
 export function nmiCartFingerprint(cart: HttpTypes.StoreCart) {
-  const address = (value: HttpTypes.StoreCart["billing_address"]) =>
+  const address = (value: HttpTypes.StoreCart["shipping_address"]) =>
     (["first_name", "last_name", "address_1", "address_2", "city", "province", "postal_code", "country_code", "company", "phone"] as const)
       .map((key) => value?.[key] ?? "")
   return JSON.stringify([cart.id, cart.currency_code, Number(cart.total), cart.email,
-    address(cart.billing_address), address(cart.shipping_address),
+    address(cart.shipping_address),
     cart.items?.map((item) => [item.id, item.quantity, item.unit_price]),
     cart.shipping_methods?.map((method) => [method.shipping_option_id, method.amount])])
 }

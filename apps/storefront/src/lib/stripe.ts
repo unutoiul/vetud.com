@@ -14,7 +14,7 @@ export type StripeBillingDetails = NonNullable<StripePaymentElementOptions["defa
 
 /** Prefer the address reviewed at checkout over Stripe's browser-location defaults. */
 export function stripeBillingDetails(cart: HttpTypes.StoreCart): StripeBillingDetails {
-  const address = cart.billing_address ?? cart.shipping_address
+  const address = cart.shipping_address
   return {
     name: [address?.first_name, address?.last_name].filter(Boolean).join(" ") || undefined,
     email: cart.email || undefined,

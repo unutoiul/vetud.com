@@ -22,7 +22,6 @@ export const CART_FIELDS = [
   "*items.variant",
   "*shipping_methods",
   "*shipping_address",
-  "*billing_address",
   "+metadata",
   "*payment_collection",
   "*payment_collection.payment_sessions",

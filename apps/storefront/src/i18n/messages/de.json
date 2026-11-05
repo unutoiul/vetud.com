@@ -171,6 +171,7 @@
     "total": "Gesamt",
     "estimatedTotal": "Voraussichtlich gesamt",
     "shippingPending": "Wird an der Kasse berechnet",
+    "shippingAfterAddress": "Nach Adresseingabe berechnet",
     "qty": "Menge {count}",
     "payCard": "Kredit- / Debitkarte",
     "payBank": "Banküberweisung / Rechnung",
