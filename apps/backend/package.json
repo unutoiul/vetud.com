@@ -4,6 +4,8 @@
   "description": "Vetud Peptides commerce backend (Medusa)",
   "author": "Vetud Peptides",
   "scripts": {
+    "postinstall": "patch-package --error-on-fail",
+    "test:paypal": "node --test scripts/test-paypal-module.cjs",
     "test:stripe": "node --test scripts/test-stripe-checkout.mjs",
     "test:stripe:sandbox": "node scripts/test-stripe-sandbox.cjs && medusa exec ./scripts/finalize-stripe-sandbox.cjs",
     "test:makepay": "node --test scripts/test-makepay-checkout.mjs",
@@ -19,9 +21,10 @@
     "test:integration:http": "TEST_TYPE=integration:http NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
     "test:integration:modules": "TEST_TYPE=integration:modules NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
     "test:unit": "TEST_TYPE=unit NODE_OPTIONS=--experimental-vm-modules jest --silent --runInBand --forceExit",
-    "start:railway": "cd .medusa/server && npm install && if [ \"$MEDUSA_WORKER_MODE\" = \"worker\" ]; then npm run start; else npm run predeploy && npm run start; fi"
+    "start:railway": "cp -R patches .medusa/server/patches && cd .medusa/server && npm install && if [ \"$MEDUSA_WORKER_MODE\" = \"worker\" ]; then npm run start; else npm run predeploy && npm run start; fi"
   },
   "dependencies": {
+    "@easypayment/medusa-payment-paypal": "1.3.3",
     "@makecrypto/medusa-plugin-makepay": "1.0.1",
     "@medusajs/admin-sdk": "2.21.2",
     "@medusajs/admin-shared": "2.21.2",
@@ -41,6 +44,7 @@
     "@tanstack/react-query": "5.64.2",
     "medusa-payment-nmi": "0.4.2",
     "multer": "2.4.0",
+    "patch-package": "8.0.1",
     "paygate-to": "1.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

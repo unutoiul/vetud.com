@@ -1,0 +1,106 @@
+diff --git a/node_modules/@easypayment/medusa-payment-paypal/src/modules/paypal/service.ts b/node_modules/@easypayment/medusa-payment-paypal/src/modules/paypal/service.ts
+--- a/node_modules/@easypayment/medusa-payment-paypal/src/modules/paypal/service.ts
++++ b/node_modules/@easypayment/medusa-payment-paypal/src/modules/paypal/service.ts
+@@ -1296,14 +1296,12 @@
+             url: webhookUrl,
+             event_types: [
+               { name: "CHECKOUT.ORDER.APPROVED" },
+-              { name: "CHECKOUT.ORDER.CANCELLED" },
+               { name: "PAYMENT.CAPTURE.COMPLETED" },
+               { name: "PAYMENT.CAPTURE.DENIED" },
+               { name: "PAYMENT.CAPTURE.REFUNDED" },
+               { name: "PAYMENT.CAPTURE.REVERSED" },
+               { name: "PAYMENT.AUTHORIZATION.CREATED" },
+               { name: "PAYMENT.AUTHORIZATION.VOIDED" },
+-              { name: "PAYMENT.AUTHORIZATION.DENIED" },
+               { name: "PAYMENT.REFUND.COMPLETED" },
+               { name: "PAYMENT.REFUND.DENIED" },
+             ],
+diff --git a/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/modules/paypal/service.js b/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/modules/paypal/service.js
+--- a/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/modules/paypal/service.js
++++ b/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/modules/paypal/service.js
+@@ -999,14 +999,12 @@
+                     url: webhookUrl,
+                     event_types: [
+                         { name: "CHECKOUT.ORDER.APPROVED" },
+-                        { name: "CHECKOUT.ORDER.CANCELLED" },
+                         { name: "PAYMENT.CAPTURE.COMPLETED" },
+                         { name: "PAYMENT.CAPTURE.DENIED" },
+                         { name: "PAYMENT.CAPTURE.REFUNDED" },
+                         { name: "PAYMENT.CAPTURE.REVERSED" },
+                         { name: "PAYMENT.AUTHORIZATION.CREATED" },
+                         { name: "PAYMENT.AUTHORIZATION.VOIDED" },
+-                        { name: "PAYMENT.AUTHORIZATION.DENIED" },
+                         { name: "PAYMENT.REFUND.COMPLETED" },
+                         { name: "PAYMENT.REFUND.DENIED" },
+                     ],
+diff --git a/node_modules/@easypayment/medusa-payment-paypal/src/modules/paypal/payment-provider/base-provider.ts b/node_modules/@easypayment/medusa-payment-paypal/src/modules/paypal/payment-provider/base-provider.ts
+--- a/node_modules/@easypayment/medusa-payment-paypal/src/modules/paypal/payment-provider/base-provider.ts
++++ b/node_modules/@easypayment/medusa-payment-paypal/src/modules/paypal/payment-provider/base-provider.ts
+@@ -155,6 +155,7 @@
+   }
+ 
+   protected async resolveCurrencyOverride(): Promise<string> {
++    if (process.env.PAYPAL_MULTI_CURRENCY === "true") return ""
+     const { apiDetails } = await this.resolveSettings()
+     const code = apiDetails.currency_code
+     if (typeof code === "string" && code.trim()) {
+diff --git a/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/modules/paypal/payment-provider/base-provider.js b/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/modules/paypal/payment-provider/base-provider.js
+--- a/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/modules/paypal/payment-provider/base-provider.js
++++ b/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/modules/paypal/payment-provider/base-provider.js
+@@ -101,6 +101,7 @@
+         return this.paypal.getSettings();
+     }
+     async resolveCurrencyOverride() {
++        if (process.env.PAYPAL_MULTI_CURRENCY === "true") return "";
+         const { apiDetails } = await this.resolveSettings();
+         const code = apiDetails.currency_code;
+         if (typeof code === "string" && code.trim()) {
+diff --git a/node_modules/@easypayment/medusa-payment-paypal/src/api/store/paypal/create-order/route.ts b/node_modules/@easypayment/medusa-payment-paypal/src/api/store/paypal/create-order/route.ts
+--- a/node_modules/@easypayment/medusa-payment-paypal/src/api/store/paypal/create-order/route.ts
++++ b/node_modules/@easypayment/medusa-payment-paypal/src/api/store/paypal/create-order/route.ts
+@@ -174,7 +174,7 @@
+         ? "SCA_ALWAYS"
+         : "SCA_WHEN_REQUIRED"
+       : null
+-    const configuredCurrency =
++    const configuredCurrency = process.env.PAYPAL_MULTI_CURRENCY === "true" ? undefined :
+       typeof apiDetails.currency_code === "string"
+         ? normalizeCurrencyCode(apiDetails.currency_code)
+         : normalizeCurrencyCode(process.env.PAYPAL_CURRENCY || "EUR")
+diff --git a/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/api/store/paypal/create-order/route.js b/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/api/store/paypal/create-order/route.js
+--- a/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/api/store/paypal/create-order/route.js
++++ b/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/api/store/paypal/create-order/route.js
+@@ -125,7 +125,7 @@
+                 ? "SCA_ALWAYS"
+                 : "SCA_WHEN_REQUIRED"
+             : null;
+-        const configuredCurrency = typeof apiDetails.currency_code === "string"
++        const configuredCurrency = process.env.PAYPAL_MULTI_CURRENCY === "true" ? undefined : typeof apiDetails.currency_code === "string"
+             ? (0, currencies_1.normalizeCurrencyCode)(apiDetails.currency_code)
+             : (0, currencies_1.normalizeCurrencyCode)(process.env.PAYPAL_CURRENCY || "EUR");
+         const currency = (0, currencies_1.normalizeCurrencyCode)(cart.region?.currency_code || cart.currency_code || configuredCurrency);
+diff --git a/node_modules/@easypayment/medusa-payment-paypal/src/api/store/paypal/config/route.ts b/node_modules/@easypayment/medusa-payment-paypal/src/api/store/paypal/config/route.ts
+--- a/node_modules/@easypayment/medusa-payment-paypal/src/api/store/paypal/config/route.ts
++++ b/node_modules/@easypayment/medusa-payment-paypal/src/api/store/paypal/config/route.ts
+@@ -39,7 +39,7 @@
+     const compatibility = getPayPalCurrencyCompatibility({
+       currencyCode: currency,
+       paypalCurrencyOverride:
+-        apiDetails?.apiDetails?.currency_code || process.env.PAYPAL_CURRENCY,
++        process.env.PAYPAL_MULTI_CURRENCY === "true" ? undefined : apiDetails?.apiDetails?.currency_code || process.env.PAYPAL_CURRENCY,
+     })
+ 
+     const settings = await paypal.getSettings().catch(() => ({}))
+diff --git a/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/api/store/paypal/config/route.js b/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/api/store/paypal/config/route.js
+--- a/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/api/store/paypal/config/route.js
++++ b/node_modules/@easypayment/medusa-payment-paypal/.medusa/server/src/api/store/paypal/config/route.js
+@@ -30,7 +30,7 @@
+         }
+         const compatibility = (0, currencies_1.getPayPalCurrencyCompatibility)({
+             currencyCode: currency,
+-            paypalCurrencyOverride: apiDetails?.apiDetails?.currency_code || process.env.PAYPAL_CURRENCY,
++            paypalCurrencyOverride: process.env.PAYPAL_MULTI_CURRENCY === "true" ? undefined : apiDetails?.apiDetails?.currency_code || process.env.PAYPAL_CURRENCY,
+         });
+         const settings = await paypal.getSettings().catch(() => ({}));
+         const data = settings && typeof settings === "object" && "data" in settings

@@ -4,6 +4,10 @@ import { getPaygateConfig } from "./src/lib/paygate-config"
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd())
 
+// The pinned PayPal compatibility patch uses each cart's currency; no implicit FX.
+process.env.PAYPAL_MULTI_CURRENCY ??= "true"
+process.env.PAYPAL_ENCRYPTION_STRICT ??= "true"
+
 const REDIS_URL = process.env.REDIS_URL
 const RESEND_API_KEY = process.env.RESEND_API_KEY
 
@@ -11,6 +15,7 @@ type ModuleConfig = {
   resolve: string
   id?: string
   options?: Record<string, unknown>
+  dependencies?: string[]
 }
 
 const BACKEND_URL = (process.env.MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")
@@ -188,19 +193,14 @@ if (MAKEPAY_ENABLED) {
     options: makePayOptions,
   } as ModuleConfig)
 }
-if (process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET) {
-  paymentProviders.push({
-    resolve: "./src/modules/paypal",
-    id: "paypal",
-    options: {
-      client_id: process.env.PAYPAL_CLIENT_ID,
-      client_secret: process.env.PAYPAL_CLIENT_SECRET,
-      environment: process.env.PAYPAL_ENVIRONMENT === "live" ? "live" : "sandbox",
-      storefront_url: (process.env.STOREFRONT_URL || "http://localhost:8000").replace(/\/$/, ""),
-      brand_name: "Vetud Peptides",
-    },
-  } as ModuleConfig)
-}
+// Credentials are encrypted in the plugin's database and managed in Admin > Settings > PayPal.
+// Register the wallet only; existing card providers continue to handle card checkout.
+paymentProviders.push({
+  resolve: "@easypayment/medusa-payment-paypal/providers/paypal",
+  id: "paypal",
+  options: {},
+  dependencies: ["paypal_onboarding"],
+})
 // Stripe checkout (pp_stripe_stripe); methods are managed in Stripe's Dashboard.
 // Sandbox keys only unless STRIPE_ENVIRONMENT=live.
 const STRIPE_API_KEY = process.env.STRIPE_API_KEY
@@ -256,6 +256,7 @@ module.exports = defineConfig({
     backendUrl: process.env.MEDUSA_BACKEND_URL,
   },
   plugins: [
+    { resolve: "@easypayment/medusa-payment-paypal", options: {} },
     {
       // Registers the Meilisearch admin page and /store/meilisearch/* routes.
       resolve: "@rokmohar/medusa-plugin-meilisearch",

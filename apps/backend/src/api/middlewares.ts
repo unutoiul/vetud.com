@@ -20,6 +20,7 @@ import { StoreSetCartDeliveryAddressSchema } from "./store/carts/[id]/delivery-a
 import { forumRoutes } from "./forum-middlewares"
 import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
 import { prepareStripeSession } from "./stripe-session"
+import { paypalGuardRoutes, preparePayPalSession } from "./paypal-guards"
 
 export default defineMiddlewares({
   routes: [
@@ -27,6 +28,7 @@ export default defineMiddlewares({
     ...cartOwnerGuardRoutes,
     ...forumRoutes,
     ...paygateGuardRoutes,
+    ...paypalGuardRoutes,
     {
       method: ["POST"],
       matcher: "/store/payment-collections/:id/payment-sessions",
@@ -35,6 +37,7 @@ export default defineMiddlewares({
         prepareNmiSession,
         preparePaygateSession,
         prepareStripeSession,
+        preparePayPalSession,
       ],
     },
     {

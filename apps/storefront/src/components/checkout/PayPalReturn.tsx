@@ -8,30 +8,37 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
+import { isPayPalReturnForCart } from "@/lib/paypal"
 import { ButtonLink } from "../common/links"
 import { useStore } from "../store/StoreProvider"
 import { useAccount } from "../account/AccountProvider"
 
 /**
- * Landing page after PayPal. The query string is ignored on purpose: the PayPal order lives on the
- * cart's payment session, and completing the cart makes the backend check it with PayPal and
- * capture the approved payment before the order is created.
+ * Match the returned token to the current PayPal session before completing a cart.
+ * The backend still checks approval and capture with PayPal; the URL never proves payment.
  */
 export default function PayPalReturn() {
   const router = useRouter()
-  const cancelled = useSearchParams().get("cancelled") === "1"
+  const params = useSearchParams()
+  const cancelled = params.get("cancelled") === "1"
+  const token = params.get("token")
   const { cart, cartReady, clearCart, isCurrentCart, countryCode } = useStore()
   const { captureSession, customer } = useAccount()
   const [error, setError] = useState<string | null>(null)
   const started = useRef(false)
   const cartId = cart?.id
+  const matchesCheckout = Boolean(cart && isPayPalReturnForCart(cart, token))
 
   useEffect(() => {
-    if (!cartReady || cancelled || !cartId || started.current) return
+    if (!cartReady || cancelled || !cartId || !matchesCheckout || started.current) return
     started.current = true
     const assertSession = captureSession()
-    sdk.store.cart
-      .complete(cartId)
+    sdk.client.fetch("/store/paypal/capture-order", { method: "POST", body: { cart_id: cartId, order_id: token } })
+      .then(() => {
+        assertSession()
+        if (!isCurrentCart(cartId)) throw new Error("Your cart changed.")
+        return sdk.store.cart.complete(cartId)
+      })
       .then((result) => {
         assertSession()
         if (!isCurrentCart(cartId)) return
@@ -46,15 +53,15 @@ export default function PayPalReturn() {
           // The confirmation page fetches the order when storage is unavailable.
         }
         clearCart()
-        router.replace(`/${countryCode}/order/confirmed?id=${encodeURIComponent(result.order.id)}&paid=1`)
+        router.replace(`/${countryCode}/order/confirmed?id=${encodeURIComponent(result.order.id)}`)
       })
       .catch(() => {
         setError("We couldn't confirm the payment result yet. Check your order history or confirmation email before trying again.")
       })
-  }, [cartReady, cancelled, cartId, clearCart, isCurrentCart, captureSession, customer?.id, router, countryCode])
+  }, [cartReady, cancelled, cartId, token, matchesCheckout, clearCart, isCurrentCart, captureSession, customer?.id, router, countryCode])
 
   const message = cancelled
-    ? { severity: "info" as const, text: "You cancelled the PayPal payment. Nothing was charged." }
+    ? { severity: "info" as const, text: "PayPal checkout was cancelled. If you already approved a payment, check your order history before trying again." }
     : error
       ? { severity: "warning" as const, text: error }
       : cartReady && !cartId
@@ -62,7 +69,9 @@ export default function PayPalReturn() {
             severity: "info" as const,
             text: "We couldn't find your cart. If you already paid, check your email for the order confirmation.",
           }
-        : null
+        : cartReady && !matchesCheckout
+          ? { severity: "warning" as const, text: "This PayPal return does not match your current checkout. Return to checkout to review your payment, or check your order history if you already paid." }
+          : null
 
   if (!message) {
     return (
