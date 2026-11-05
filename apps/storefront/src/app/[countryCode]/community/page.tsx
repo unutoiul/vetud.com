@@ -4,7 +4,7 @@ import Skeleton from "@mui/material/Skeleton"
 import Typography from "@mui/material/Typography"
 import type { Metadata } from "next"
 import { Suspense } from "react"
-import Icon, { type IconName } from "@/components/brand/Icon"
+import Icon from "@/components/brand/Icon"
 import { AppLink, ButtonLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
@@ -31,14 +31,6 @@ export async function generateMetadata({ searchParams }: PageProps<"/[countryCod
 
 const PAGE_SIZE = 20
 
-/** What members can rely on, shown under the header instead of thin early numbers. */
-const PROMISES: { icon: IconName; title: string; text: string }[] = [
-  { icon: "shield", title: "No doses, no protocols", text: "Posts with dose amounts wait for a moderator." },
-  { icon: "document", title: "Sources welcome", text: "Link the study you're talking about." },
-  { icon: "checkCircle", title: "Verified experts", text: "Doctors and researchers checked by our team." },
-  { icon: "eye", title: "Moderated", text: "Three reports hide a post until it's reviewed." },
-]
-
 export default function CommunityPage({ searchParams }: PageProps<"/[countryCode]/community">) {
   return <>
     <PageHeader eyebrow="Community" title="Research, discussed in the open." description="Ask questions and talk through the research with other members and verified experts, by topic. No doses, no hype.">
@@ -47,17 +39,6 @@ export default function CommunityPage({ searchParams }: PageProps<"/[countryCode
         <ButtonLink href="/community/new?kind=discussion" variant="outlined" size="large">Start a discussion</ButtonLink>
       </Box>
     </PageHeader>
-    <Box component="section" aria-label="How the community works" sx={{ borderBottom: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
-      <Box component="ul" sx={{ listStyle: "none", m: "0 auto", maxWidth: 1360, px: { xs: 2.5, sm: 4, md: 6, lg: 8 }, py: { xs: 2.5, md: 3 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))", lg: "repeat(4, minmax(0, 1fr))" }, gap: { xs: 2, md: 3 } }}>
-        {PROMISES.map(item => <Box component="li" key={item.title} sx={{ display: "flex", gap: 1.5, alignItems: "flex-start" }}>
-          <Box aria-hidden sx={{ width: 34, height: 34, flexShrink: 0, borderRadius: "9px", bgcolor: "brand.mintWash", color: "brand.blue", display: "grid", placeItems: "center" }}><Icon name={item.icon} sx={{ fontSize: 18 }} /></Box>
-          <Box>
-            <Typography sx={{ fontSize: 14.5, fontWeight: 650, color: "brand.navy" }}>{item.title}</Typography>
-            <Typography sx={{ fontSize: 13.5, lineHeight: 1.55, color: "brand.navySoft" }}>{item.text}</Typography>
-          </Box>
-        </Box>)}
-      </Box>
-    </Box>
     <Section tone="white" sx={{ py: { xs: 4, md: 6 } }}>
       <Suspense fallback={<Skeleton variant="rounded" height={320} />}>
         <Community searchParams={searchParams} />
