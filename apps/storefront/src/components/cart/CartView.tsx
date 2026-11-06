@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -9,6 +11,7 @@ import Skeleton from "@mui/material/Skeleton"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { ButtonLink } from "../common/links"
+import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
 import { useStore } from "../store/StoreProvider"
 import CartLineItem from "./CartLineItem"
 import FreeShippingProgress from "./FreeShippingProgress"
@@ -16,6 +19,7 @@ import OrderTotals from "./OrderTotals"
 import PromoCodeField from "./PromoCodeField"
 
 export default function CartView() {
+  const act = useTranslations("Actions")
   const { cart, cartReady, error, clearError, region } = useStore()
 
   if (!cartReady) {
@@ -44,7 +48,7 @@ export default function CartView() {
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>Add products from the catalog to get started.</Typography>
         <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>
-          Shop the catalog
+          {act("shopCatalog")}
         </ButtonLink>
       </Stack>
     )
@@ -67,7 +71,7 @@ export default function CartView() {
           ))}
         </Box>
         <ButtonLink href="/shop" variant="text" color="secondary" sx={{ mt: 2, px: 0 }}>
-          ← Continue shopping
+          {act("continueShopping")}
         </ButtonLink>
       </Grid>
       <Grid size={{ xs: 12, md: 4.5 }}>
@@ -78,10 +82,11 @@ export default function CartView() {
           <Box sx={{ mb: 2 }}><PromoCodeField /></Box>
           <OrderTotals totals={{ ...cart, currency_code: currency }} shippingKnown={false} />
           <ButtonLink href="/checkout" variant="contained" size="large" fullWidth startIcon={<LockOutlinedIcon />} sx={{ mt: 3 }}>
-            Proceed to checkout
+            {act("checkout")}
           </ButtonLink>
+          <Box sx={{ mt: 2.5 }}><AcceptedPaymentMethods regionId={cart.region_id || undefined} currency={currency} /></Box>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 2 }}>
-            Pay by bank transfer after ordering. Your items are reserved as soon as you place the order.
+            Choose your payment method at checkout.
           </Typography>
         </Paper>
       </Grid>

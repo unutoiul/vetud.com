@@ -78,6 +78,7 @@ export function PasswordField({ label, value, onChange, autoComplete, helperText
 
 /** Emails a one-time reset link. Medusa replies the same way whether or not the account exists. */
 export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?: string; onBack?: () => void }) {
+  const act = useTranslations("Actions")
   const t = useTranslations("Account")
   const { countryCode } = useStore()
   const { requestPasswordReset, pending } = useAccount()
@@ -105,7 +106,7 @@ export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?:
     <Box component="form" onSubmit={submit} noValidate>
       {sentTo ? <Alert severity="success" role="status" sx={{ mb: 2 }}>{t("resetSent", { email: sentTo })}</Alert> : null}
       {formError ? <Alert severity="error" sx={{ mb: 2 }}>{formError}</Alert> : null}
-      <TextField label="Email" type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
+      <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" } }}>
         <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" sx={{ fontSize: 17 }} />}>
           {sentTo ? t("resendLink") : t("sendLink")}
@@ -117,6 +118,7 @@ export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?:
 }
 
 export function AuthPanel({ context = "account" }: { context?: "account" | "checkout" }) {
+  const act = useTranslations("Actions")
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
   const { countryCode } = useStore()
@@ -220,7 +222,7 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
               </Grid>
             ) : null}
             <Stack spacing={2}>
-              <TextField label="Email" type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
+              <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
               {mode === "signup" ? <PhoneField country={countryCode} value={phone} onChange={setPhone} /> : null}
               <PasswordField label={t("password")} value={password} onChange={setPassword} helperText={mode === "signup" ? t("passwordHelp") : undefined} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
             </Stack>
@@ -242,6 +244,7 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
 }
 
 function AccountDashboard({ view }: { view: "profile" | "orders" }) {
+  const act = useTranslations("Actions")
   const t = useTranslations("Account")
   const { customer, signOut, pending, error } = useAccount()
   if (!customer) return null
@@ -257,7 +260,7 @@ function AccountDashboard({ view }: { view: "profile" | "orders" }) {
           <Button variant="outlined" disabled={pending} onClick={() => void signOut().catch(() => undefined)} sx={{ color: "#fff", borderColor: "rgba(255,255,255,.45)", alignSelf: { xs: "flex-start", sm: "center" } }}>{t("signout")}</Button>
         </Stack>
       </Paper>
-      <Stack component="nav" aria-label="Your account" direction="row" sx={{ gap: 1.5, flexWrap: "wrap" }}>
+      <Stack component="nav" aria-label={act("yourAccount")} direction="row" sx={{ gap: 1.5, flexWrap: "wrap" }}>
         <ButtonLink href="/account" variant={view === "profile" ? "contained" : "outlined"} aria-current={view === "profile" ? "page" : undefined}>{t("profile")}</ButtonLink>
         <ButtonLink href="/account/orders" variant={view === "orders" ? "contained" : "outlined"} aria-current={view === "orders" ? "page" : undefined} startIcon={<Icon name="package" sx={{ fontSize: 18 }} />}>{t("orders")}</ButtonLink>
       </Stack>
@@ -272,6 +275,7 @@ function AccountDashboard({ view }: { view: "profile" | "orders" }) {
 }
 
 function ProfileSection() {
+  const act = useTranslations("Actions")
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
   const { countryCode } = useStore()
@@ -313,7 +317,7 @@ function ProfileSection() {
       {saved ? <Alert severity="success" sx={{ mb: 2 }}>Profile saved.</Alert> : null}
       <Box component="form" onSubmit={submit}>
         <Stack spacing={2}>
-          <TextField label="Email" value={customer?.email ?? ""} disabled />
+          <TextField label={act("email")} value={customer?.email ?? ""} disabled />
           <TextField label={ta("firstName")} value={values.first_name} onChange={(event) => setValues({ ...values, first_name: event.target.value })} autoComplete="given-name" />
           <TextField label={ta("lastName")} value={values.last_name} onChange={(event) => setValues({ ...values, last_name: event.target.value })} autoComplete="family-name" />
           <PhoneField country={countryCode} value={values.phone} onChange={phone => setValues({ ...values, phone })} error={!isValidPhone(values.phone, countryCode) ? ta("invalidPhone") : undefined} />

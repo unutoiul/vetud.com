@@ -23,6 +23,7 @@ type CartLineItemProps = {
 }
 
 export default function CartLineItem({ item, currencyCode, readOnly, onNavigate }: CartLineItemProps) {
+  const act = useTranslations("Actions")
   const money = useMoney()
   const t = useTranslations("Checkout")
   const { updateItem, removeItem, pending } = useStore()
@@ -88,10 +89,10 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
               value={Number(item.quantity)}
               disabled={pending}
               onChange={(quantity) => updateItem(item.id, quantity)}
-              label={`Quantity of ${item.product_title}`}
+              label={act("quantityProduct", { product: item.product_title ?? item.title })}
             />
             <IconButton
-              aria-label={`Remove ${item.product_title} from cart`}
+              aria-label={act("removeFromCart", { product: item.product_title ?? item.title })}
               disabled={pending}
               onClick={() => removeItem(item.id)}
               size="small"

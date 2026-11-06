@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
@@ -41,10 +42,11 @@ const FAQ: FaqItem[] = [
 ]
 
 export default function DualChamberPenPage() {
+  const act = useTranslations("Actions")
   return (
     <>
       <PageHeader eyebrow="Formats" title={TITLE} description="Every VETUD peptide comes as a dual-chamber vial, a vial or a pen kit box with the reusable pen. Here's how the pen works, what each one includes, and how to choose.">
-        <ButtonLink href="/shop" variant="contained" size="large">Shop pens and vials</ButtonLink>
+        <ButtonLink href="/shop" variant="contained" size="large">{act("shopPens")}</ButtonLink>
       </PageHeader>
 
       <Section tone="paper" tight aria-labelledby="parts-title">
@@ -107,9 +109,9 @@ export default function DualChamberPenPage() {
 
       <Section tone="white" tight aria-labelledby="faq-title">
         <Box sx={{ maxWidth: 840, mx: "auto" }}>
-          <Typography id="faq-title" component="h2" sx={{ fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em", mb: 2.5 }}>Questions</Typography>
+          <Typography id="faq-title" component="h2" sx={{ fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em", mb: 2.5 }}>{act("questions")}</Typography>
           <FaqAccordion items={FAQ} />
-          <ButtonLink href="/shop" variant="contained" size="large" sx={{ mt: 4 }}>Shop all products</ButtonLink>
+          <ButtonLink href="/shop" variant="contained" size="large" sx={{ mt: 4 }}>{act("shopCatalog")}</ButtonLink>
         </Box>
       </Section>
     </>

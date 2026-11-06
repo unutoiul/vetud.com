@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import type { Metadata, Viewport } from "next"
 import { DM_Mono, Manrope } from "next/font/google"
@@ -49,6 +50,7 @@ export async function generateStaticParams() {
 }
 
 export default async function CountryLayout({ children }: LayoutProps<"/[countryCode]">) {
+  const act = await getTranslations("Actions")
   // "se" or, when the shopper picked another currency, "se-usd" (see lib/store-segment.ts).
   const { country: code, currency } = parseStoreSegment(await countryCode())
   const i18n = await getCountryI18n(code)
@@ -94,7 +96,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
                   "&:focus": { top: 8 },
                 }}
               >
-                Skip to content
+                {act("skipContent")}
               </Box>
               <Suspense fallback={null}>
                 <SaleBannerSlot />

@@ -20,6 +20,7 @@ import { useStore } from "../store/StoreProvider"
  * remembers both and reloads the page so prices, cart and checkout switch together.
  */
 export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
+  const act = useTranslations("Actions")
   const t = useTranslations("Common")
   const locale = useLocale()
   const router = useRouter()
@@ -78,7 +79,7 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
         aria-haspopup="dialog"
         aria-expanded={Boolean(anchor)}
         aria-controls={anchor ? "currency-country-panel" : undefined}
-        aria-label={`Currency ${region.currencyCode.toUpperCase()}, country ${countryCode.toUpperCase()}. Change`}
+        aria-label={act("currencySelector", { currency: region.currencyCode.toUpperCase(), country: countryCode.toUpperCase() })}
         fullWidth={fullWidth}
         sx={{
           minHeight: 44,

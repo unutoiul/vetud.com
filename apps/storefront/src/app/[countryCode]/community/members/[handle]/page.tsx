@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Skeleton from "@mui/material/Skeleton"
 import Typography from "@mui/material/Typography"
@@ -38,9 +39,10 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]/com
 }
 
 export default function MemberPage({ params }: PageProps<"/[countryCode]/community/members/[handle]">) {
+  const act = useTranslations("Actions")
   return <Section tone="white" sx={{ py: { xs: 4, md: 6 } }}>
     <Box sx={{ maxWidth: 880, mx: "auto" }}>
-      <Box component="nav" aria-label="Breadcrumb" sx={{ fontSize: 14, mb: 2 }}><AppLink href="/community">← Community</AppLink></Box>
+      <Box component="nav" aria-label={act("breadcrumb")} sx={{ fontSize: 14, mb: 2 }}><AppLink href="/community">{act("community")}</AppLink></Box>
       <Suspense fallback={<Skeleton variant="rounded" height={320} />}><MemberContent params={params} /></Suspense>
       <CommunityDisclaimer sx={{ mt: 6, pt: 3, borderTop: "1px solid", borderColor: "divider" }} />
     </Box>

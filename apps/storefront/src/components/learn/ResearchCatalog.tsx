@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl"
+import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import Skeleton from "@mui/material/Skeleton"
 import Typography from "@mui/material/Typography"
@@ -14,8 +16,9 @@ const labels: Record<ResearchAvailability, string> = {
 }
 
 export default function ResearchCatalog({ peptides }: { peptides: string[] }) {
+  const act = useTranslations("Actions")
   return (
-    <Box component="section" aria-label="Related research products" sx={{ mt: { xs: 5, md: 6 }, p: { xs: 2.5, md: 3.5 }, border: "1px solid", borderColor: "divider", borderRadius: "12px", bgcolor: "brand.paper" }}>
+    <Box component="section" aria-label={act("relatedProducts")} sx={{ mt: { xs: 5, md: 6 }, p: { xs: 2.5, md: 3.5 }, border: "1px solid", borderColor: "divider", borderRadius: "12px", bgcolor: "brand.paper" }}>
       <Typography component="h2" sx={{ fontSize: 23, fontWeight: 600, letterSpacing: "-.02em" }}>In the research shop</Typography>
       <Typography sx={{ mt: 1, mb: 2.5, fontSize: 14, lineHeight: 1.7, color: "text.secondary", maxWidth: 760 }}>Check the catalog for related laboratory research materials. These products are separate from the approved medicines and clinical trial formulations discussed here.</Typography>
       <Suspense fallback={<><Skeleton height={44} /><Typography sx={{ fontSize: 13, color: "text.secondary" }}>Checking regional availability…</Typography></>}>
@@ -26,6 +29,7 @@ export default function ResearchCatalog({ peptides }: { peptides: string[] }) {
 }
 
 async function CurrentProducts({ peptides }: { peptides: string[] }) {
+  const act = await getTranslations("Actions")
   // Read stock for each visit; never freeze an "in stock now" claim into the article cache.
   await connection()
   const products: HttpTypes.StoreProduct[] = []
@@ -58,7 +62,7 @@ async function CurrentProducts({ peptides }: { peptides: string[] }) {
             </Box>
           })}
         </Box> : <Typography sx={{ mb: 2, color: "text.secondary" }}>No matching product is currently listed for your region.</Typography>}
-      <AppLink href="/shop" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontWeight: 600 }}>Browse the research shop →</AppLink>
+      <AppLink href="/shop" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontWeight: 600 }}>{act("shopCatalog")}</AppLink>
       {related.length && !failed ? <Typography sx={{ mt: 1, fontSize: 12.5, color: "text.secondary" }}>Availability checked when this page opened. Individual strengths may differ; the product page shows the latest options.</Typography> : null}
     </>
   )

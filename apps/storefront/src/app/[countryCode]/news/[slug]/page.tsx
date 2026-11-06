@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import Skeleton from "@mui/material/Skeleton"
 import Typography from "@mui/material/Typography"
@@ -36,6 +37,7 @@ export default function ArticlePage({ params }: PageProps<"/[countryCode]/news/[
 }
 
 async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[slug]">, "params">) {
+  const act = await getTranslations("Actions")
   const { slug } = await params
   const article = getArticle(slug)
   if (!article) notFound()
@@ -80,7 +82,7 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
         <ReadingSection id="unknowns" title="What don’t we know yet?"><Typography sx={readingProse}><RichText text={article.unknowns} shop={shop} /></Typography></ReadingSection>
         {peptides.length ? <ReadingSection id="related-guides" title="Understand the peptides in this article">
           <Box component="ul" sx={{ m: 0, pl: 2.5, display: "grid", gap: 1.5 }}>{peptides.map(peptide => <li key={peptide.slug}>
-            <AppLink href={`/learn/${peptide.slug}`} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 17, fontWeight: 650 }}>{peptide.name}: research and safety guide</AppLink>
+            <AppLink href={`/learn/${peptide.slug}`} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 17, fontWeight: 650 }}>{peptide.name}{act("researchSafety")}</AppLink>
             <Typography sx={{ fontSize: 15, lineHeight: 1.75, color: "brand.navySoft" }}>{peptide.oneLiner}</Typography>
           </li>)}</Box>
         </ReadingSection> : null}
@@ -96,7 +98,7 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
     <Section tone="paper" sx={{ py: { xs: 5, md: 7 }, borderTop: "1px solid", borderColor: "divider" }}>
       <Typography component="h2" sx={{ fontSize: { xs: 25, md: 30 }, fontWeight: 650, color: "brand.navy", mb: 3 }}>Keep reading</Typography>
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" }, gap: 4 }}>{more.map(other => <ArticleCard key={other.slug} article={other} />)}</Box>
-      <AppLink href="/news" sx={{ mt: 3, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>Browse all articles</AppLink>
+      <AppLink href="/news" sx={{ mt: 3, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>{act("allArticles")}</AppLink>
     </Section>
   </>
 }

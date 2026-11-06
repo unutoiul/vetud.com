@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { useEffect, useEffectEvent, useRef, useState } from "react"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -23,18 +25,20 @@ const FIELDS = {
 }
 
 export default function NmiPaymentForm({ session, busy, onToken }: { session: NmiSession; busy: boolean; onToken: (token: NmiToken) => Promise<void> }) {
+  const act = useTranslations("Actions")
   const [method, setMethod] = useState<"card" | "ach">("card")
   return <Stack spacing={2} sx={{ mt: 3 }}>
     <Typography variant="h6">Secure payment details</Typography>
     {session.sandbox ? <Alert severity="warning">Sandbox checkout — use NMI test details only.</Alert> : null}
-    {session.ach ? <TextField select label="Payment type" value={method} disabled={busy} onChange={(event) => setMethod(event.target.value === "ach" ? "ach" : "card")}>
-      <MenuItem value="card">Credit / debit card</MenuItem><MenuItem value="ach">US bank account (ACH)</MenuItem>
+    {session.ach ? <TextField select label={act("paymentType")} value={method} disabled={busy} onChange={(event) => setMethod(event.target.value === "ach" ? "ach" : "card")}>
+      <MenuItem value="card">{act("card")}</MenuItem><MenuItem value="ach">{act("usBank")}</MenuItem>
     </TextField> : null}
     <HostedFields key={`${session.id}:${method}`} session={session} method={method} busy={busy} onToken={onToken} />
   </Stack>
 }
 
 function HostedFields({ session, method, busy, onToken }: { session: NmiSession; method: "card" | "ach"; busy: boolean; onToken: (token: NmiToken) => Promise<void> }) {
+  const act = useTranslations("Actions")
   const [ready, setReady] = useState(false)
   const [validity, setValidity] = useState<Record<string, boolean>>({})
   const [error, setError] = useState<string | null>(null)
@@ -128,13 +132,13 @@ function HostedFields({ session, method, busy, onToken }: { session: NmiSession;
       </Box>)}
     </Box>
     {method === "ach" ? <>
-      <TextField select label="Account type" value={accountType} disabled={locked} onChange={(event) => { setAccountType(event.target.value as "checking" | "savings"); setConsent(false) }} required>
-        <MenuItem value="checking">Checking</MenuItem><MenuItem value="savings">Savings</MenuItem>
+      <TextField select label={act("accountType")} value={accountType} disabled={locked} onChange={(event) => { setAccountType(event.target.value as "checking" | "savings"); setConsent(false) }} required>
+        <MenuItem value="checking">{act("checking")}</MenuItem><MenuItem value="savings">{act("savings")}</MenuItem>
       </TextField>
-      <TextField select label="Account holder" value={holderType} disabled={locked} onChange={(event) => { setHolderType(event.target.value as "personal" | "business"); setConsent(false) }} required>
-        <MenuItem value="personal">Personal</MenuItem><MenuItem value="business">Business</MenuItem>
+      <TextField select label={act("accountHolder")} value={holderType} disabled={locked} onChange={(event) => { setHolderType(event.target.value as "personal" | "business"); setConsent(false) }} required>
+        <MenuItem value="personal">{act("personal")}</MenuItem><MenuItem value="business">{act("business")}</MenuItem>
       </TextField>
-      <FormControlLabel control={<Checkbox checked={consent} disabled={locked} onChange={(event) => setConsent(event.target.checked)} />} label={`I authorize Vetud Peptides to initiate one ACH debit of ${amountLabel} from this account for this order and confirm I am authorized to use it. This is not a recurring payment.${holderType === "business" ? " For this business account, I agree to be bound by the applicable Nacha Operating Rules." : ""}`} />
+      <FormControlLabel control={<Checkbox checked={consent} disabled={locked} onChange={(event) => setConsent(event.target.checked)} />} label={<>{act("achAgreement", { amount: amountLabel })}{holderType === "business" ? <> {act("achBusinessAgreement")}</> : null}</>} />
     </> : null}
     {error ? <Alert severity="error">{error}</Alert> : null}
     {submitted && !busy && !processing ? <Alert severity="info">Your payment attempt was submitted. Check the message above and your order history before trying again. If you need to change payment details, return to the Payment step.</Alert> : null}
@@ -152,6 +156,6 @@ function HostedFields({ session, method, busy, onToken }: { session: NmiSession;
         setError("Tokenization timed out. No payment token was sent by this form. Return to Payment to reload the secure fields.")
       }, 18000)
       try { window.CollectJS.startPaymentRequest() } catch { activeRequest.current = false; clearTimeout(requestTimeout.current); setProcessing(false); setError("The secure payment form could not start. Return to Payment to reload it.") }
-    }}>{processing || busy ? "Processing securely…" : !ready ? "Loading secure fields…" : `${method === "ach" ? "Authorize debit" : "Authorize card"} & place order · ${amountLabel}`}</Button>
+    }}>{processing || busy ? act("processingSecurely") : !ready ? act("loadingFields") : act("authorizeOrder", { action: method === "ach" ? act("authorizeDebit") : act("authorizeCard"), amount: amountLabel })}</Button>
   </Stack>
 }

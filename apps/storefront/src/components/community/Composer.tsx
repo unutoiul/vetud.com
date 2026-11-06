@@ -1,4 +1,7 @@
 "use client"
+import { translateAction } from "@/i18n/actions"
+import { useTranslations } from "next-intl"
+
 
 import Alert from "@mui/material/Alert"
 import Autocomplete from "@mui/material/Autocomplete"
@@ -32,6 +35,7 @@ const PEPTIDE_OPTIONS = [...PEPTIDES].sort((a, b) => a.name.localeCompare(b.name
 
 /** Start a question or discussion. Signs the member in and creates their profile first if needed. */
 export default function Composer() {
+  const act = useTranslations("Actions")
   const router = useRouter()
   const params = useSearchParams()
   const localize = useLocalizedHref()
@@ -82,13 +86,13 @@ export default function Composer() {
   return <Box component="form" noValidate onSubmit={submit} aria-busy={posting} sx={{ display: "grid", gap: 3.5 }}>
     <Box>
       <Typography component="h2" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>What are you posting?</Typography>
-      <Box role="radiogroup" aria-label="Thread type" sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)" }, gap: 1.5 }}>
+      <Box role="radiogroup" aria-label={act("threadType")} sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)" }, gap: 1.5 }}>
         {THREAD_KINDS.map(option => {
           const selected = option === kind
           return <Box key={option} component="button" type="button" role="radio" aria-checked={selected} onClick={() => setKind(option)}
             sx={{ textAlign: "left", font: "inherit", cursor: "pointer", p: 2, borderRadius: "10px", border: "2px solid", borderColor: selected ? "brand.blue" : "divider", bgcolor: selected ? "brand.mintWash" : "#fff", color: "inherit", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
-            <Typography sx={{ fontWeight: 700, color: "brand.navy" }}>{KIND_LABELS[option]}</Typography>
-            <Typography sx={{ mt: .5, fontSize: 13.5, color: "brand.navySoft", lineHeight: 1.55 }}>{HINTS[option]}</Typography>
+            <Typography sx={{ fontWeight: 700, color: "brand.navy" }}>{translateAction(act, KIND_LABELS[option])}</Typography>
+            <Typography sx={{ mt: .5, fontSize: 13.5, color: "brand.navySoft", lineHeight: 1.55 }}>{translateAction(act, HINTS[option])}</Typography>
           </Box>
         })}
       </Box>
@@ -100,7 +104,7 @@ export default function Composer() {
         if (!topicPicked) setTopic(topicForPeptide(option?.slug))
       }}
       getOptionLabel={option => option.name} isOptionEqualToValue={(option, value) => option.slug === value.slug}
-      renderInput={inputProps => <TextField {...inputProps} label="Peptide (optional)" helperText="Helps others find your thread, and picks its topic." />} />
+      renderInput={inputProps => <TextField {...inputProps} label={act("peptideOptional")} helperText="Helps others find your thread, and picks its topic." />} />
 
     <Box>
       <Typography component="h2" id="topic-label" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>Topic</Typography>
@@ -109,22 +113,22 @@ export default function Composer() {
           const selected = option.id === topic
           return <Box key={option.id} component="button" type="button" role="radio" aria-checked={selected} onClick={() => { setTopic(option.id); setTopicPicked(true) }}
             sx={{ display: "inline-flex", alignItems: "center", gap: .75, minHeight: 44, px: 1.75, font: "inherit", fontSize: 14, fontWeight: selected ? 650 : 500, cursor: "pointer", borderRadius: 999, border: "1px solid", borderColor: selected ? "brand.blue" : "divider", bgcolor: selected ? "brand.mintWash" : "#fff", color: selected ? "brand.navy" : "brand.navySoft", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
-            <Icon name={option.icon} sx={{ fontSize: 17, color: "brand.blue" }} />{option.name}
+            <Icon name={option.icon} sx={{ fontSize: 17, color: "brand.blue" }} />{translateAction(act, option.name)}
           </Box>
         })}
       </Box>
       <Typography sx={{ mt: 1, fontSize: 13, color: "brand.navySoft" }}>{getTopic(topic)?.description}</Typography>
     </Box>
 
-    <TextField label="Title" value={title} onChange={event => setTitle(event.target.value.slice(0, 140))} required fullWidth
+    <TextField label={act("title")} value={title} onChange={event => setTitle(event.target.value.slice(0, 140))} required fullWidth
       placeholder={kind === "question" ? "e.g. How do you store vials after opening?" : ""}
       helperText={`${title.length}/140`} slotProps={{ htmlInput: { maxLength: 140 } }} />
 
-    <TextField label={kind === "question" ? "Your question" : "What would you like to discuss?"} value={body} onChange={event => setBody(event.target.value.slice(0, 10000))} required multiline minRows={6} fullWidth
+    <TextField label={kind === "question" ? act("questionPrompt") : act("discussionPrompt")} value={body} onChange={event => setBody(event.target.value.slice(0, 10000))} required multiline minRows={6} fullWidth
       helperText="Plain text. Links from new members are checked by a moderator first." />
 
     <Box>
-      <Typography component="h2" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>Photos</Typography>
+      <Typography component="h2" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>{act("photos")}</Typography>
       <ImagePicker images={images} onChange={setImages} disabled={posting} />
     </Box>
 
@@ -135,7 +139,7 @@ export default function Composer() {
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 2 }}>
       <Button type="submit" variant="contained" size="large" disabled={posting || title.trim().length < 8 || body.trim().length < 20}
         startIcon={posting ? <CircularProgress size={16} color="inherit" /> : null}>
-        {posting ? "Posting…" : `Post ${KIND_LABELS[kind].toLowerCase()}`}
+        {posting ? act("posting") : kind === "question" ? act("postQuestion") : act("postDiscussion")}
       </Button>
       <Typography sx={{ fontSize: 13.5, color: "brand.navySoft" }}>Posting as {community.profile.display_name}. Titles need 8 characters and the text 20.</Typography>
     </Box>

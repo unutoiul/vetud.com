@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { CloseIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -13,9 +15,10 @@ import { useStore } from "../store/StoreProvider"
 import CartAnnouncer from "./CartAnnouncer"
 import CartLineItem from "./CartLineItem"
 import FreeShippingProgress from "./FreeShippingProgress"
-import CartPaymentMethods from "./CartPaymentMethods"
+import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
 
 export default function CartDrawer() {
+  const act = useTranslations("Actions")
   const money = useMoney()
   const { cart, drawerOpen, closeDrawer, itemCount, error, clearError, region } = useStore()
   const items = [...(cart?.items ?? [])].sort((a, b) =>
@@ -42,7 +45,7 @@ export default function CartDrawer() {
           <Typography variant="h5" component="h2" id="cart-drawer-title">
             Your cart{itemCount ? ` (${itemCount})` : ""}
           </Typography>
-          <IconButton aria-label="Close cart" onClick={closeDrawer}>
+          <IconButton aria-label={act("closeCart")} onClick={closeDrawer}>
             <CloseIcon />
           </IconButton>
         </Stack>
@@ -71,7 +74,7 @@ export default function CartDrawer() {
                 Browse the collection to find documented research materials.
               </Typography>
               <ButtonLink href="/shop" variant="contained" onClick={closeDrawer} endIcon={<NorthEastIcon />}>
-                Shop the catalog
+                {act("shopCatalog")}
               </ButtonLink>
             </Stack>
           )}
@@ -94,13 +97,13 @@ export default function CartDrawer() {
             </Typography>
             <Stack direction="row" spacing={1.5}>
               <ButtonLink href="/cart" variant="outlined" color="primary" onClick={closeDrawer} sx={{ flex: 1 }}>
-                View cart
+                {act("viewCart")}
               </ButtonLink>
               <ButtonLink href="/checkout" variant="contained" onClick={closeDrawer} sx={{ flex: 1 }}>
-                Checkout
+                {act("checkout")}
               </ButtonLink>
             </Stack>
-            <CartPaymentMethods open={drawerOpen} regionId={cart?.region_id || region.id} currency={currency} cartId={cart?.id} />
+            <Box sx={{ mt: 1.75, minHeight: 24 }}><AcceptedPaymentMethods enabled={drawerOpen} regionId={cart?.region_id || region.id} currency={currency} caption={false} /></Box>
           </Box>
         ) : null}
       </Stack>

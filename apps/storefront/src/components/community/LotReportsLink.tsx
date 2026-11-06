@@ -1,4 +1,5 @@
 "use client"
+import { useTranslations } from "next-intl"
 
 import Typography from "@mui/material/Typography"
 import { useEffect, useState } from "react"
@@ -7,6 +8,7 @@ import { AppLink } from "../common/links"
 
 /** "3 member reports on this lot", for the lot lookup result. Nothing when there are none. */
 export default function LotReportsLink({ lot }: { lot: string }) {
+  const act = useTranslations("Actions")
   const [count, setCount] = useState<number | null>(null)
 
   useEffect(() => {
@@ -20,6 +22,6 @@ export default function LotReportsLink({ lot }: { lot: string }) {
   // Posts no longer name lots, so only lots with earlier reports link anywhere.
   if (!count) return null
   return <Typography variant="body2" sx={{ mt: 0.5 }}>
-    <AppLink href={`/community?lot=${encodeURIComponent(lot)}`}>{count} member {count === 1 ? "report" : "reports"} on this lot</AppLink>
+    <AppLink href={`/community?lot=${encodeURIComponent(lot)}`}>{act("memberReports", { count })}</AppLink>
   </Typography>
 }

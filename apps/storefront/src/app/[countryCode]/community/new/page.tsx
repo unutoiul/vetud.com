@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Skeleton from "@mui/material/Skeleton"
 import Typography from "@mui/material/Typography"
@@ -17,10 +18,11 @@ export const metadata = communityMetadata({
 })
 
 export default function NewThreadPage() {
+  const act = useTranslations("Actions")
   return <Section tone="white" sx={{ py: { xs: 4, md: 6 } }}>
     <Box sx={{ maxWidth: 1180, mx: "auto" }}>
-      <Box component="nav" aria-label="Breadcrumb" sx={{ fontSize: 14, mb: 2 }}><AppLink href="/community">← Community</AppLink></Box>
-      <Typography component="h1" sx={{ fontSize: { xs: 32, md: 44 }, fontWeight: 500, letterSpacing: "-.035em", color: "brand.navy" }}>Start a thread</Typography>
+      <Box component="nav" aria-label={act("breadcrumb")} sx={{ fontSize: 14, mb: 2 }}><AppLink href="/community">{act("community")}</AppLink></Box>
+      <Typography component="h1" sx={{ fontSize: { xs: 32, md: 44 }, fontWeight: 500, letterSpacing: "-.035em", color: "brand.navy" }}>{act("startThread")}</Typography>
       <Box sx={{ mt: { xs: 3, md: 4 }, display: "grid", gridTemplateColumns: { xs: "1fr", lg: "minmax(0, 1fr) 300px" }, gap: { xs: 4, lg: 6 }, alignItems: "start" }}>
         <Box sx={{ minWidth: 0 }}>
           {/* The composer reads ?kind= and ?peptide= to start pre-filled. */}
@@ -31,7 +33,7 @@ export default function NewThreadPage() {
           <Box component="ul" sx={{ m: 0, mt: 1.5, pl: 2.25, display: "grid", gap: 1, fontSize: 14, lineHeight: 1.6, color: "brand.navySoft" }}>
             {GUIDELINE_SUMMARY.map(line => <li key={line}>{line}</li>)}
           </Box>
-          <AppLink href="/community/guidelines" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, mt: 1, fontSize: 14, fontWeight: 600 }}>Full guidelines</AppLink>
+          <AppLink href="/community/guidelines" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, mt: 1, fontSize: 14, fontWeight: 600 }}>{act("communityGuidelines")}</AppLink>
         </Box>
       </Box>
       <CommunityDisclaimer sx={{ mt: 6, pt: 3, borderTop: "1px solid", borderColor: "divider" }} />

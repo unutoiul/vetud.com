@@ -1,4 +1,7 @@
 "use client"
+import { translateAction } from "@/i18n/actions"
+import { useTranslations } from "next-intl"
+
 
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
@@ -24,6 +27,7 @@ function readHash(): CategoryId | null {
  * (/learn#weight), so topic links from other pages land on the right shelf.
  */
 export default function LearnLibrary({ shop = {} }: { shop?: Record<string, string> }) {
+  const act = useTranslations("Actions")
   const active = useSyncExternalStore(subscribe, readHash, () => null)
 
   const choose = (id: CategoryId | null) => {
@@ -42,7 +46,7 @@ export default function LearnLibrary({ shop = {} }: { shop?: Record<string, stri
 
   return (
     <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "300px minmax(0, 1fr)" }, gap: { xs: 3, lg: 5 }, alignItems: "start" }}>
-      <Box component="nav" aria-label="Topics" sx={{ minWidth: 0, position: { lg: "sticky" }, top: { lg: 112 }, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "16px", p: { xs: 2, md: 2.5 } }}>
+      <Box component="nav" aria-label={act("topics")} sx={{ minWidth: 0, position: { lg: "sticky" }, top: { lg: 112 }, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "16px", p: { xs: 2, md: 2.5 } }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", px: 1, mb: 1.5 }}>
           <Typography component="h2" sx={{ fontSize: 19, fontWeight: 700, letterSpacing: "-.02em" }}>Topic</Typography>
           <Typography sx={{ fontSize: 13.5, color: "text.secondary" }}>{PEPTIDES.length} guides</Typography>
@@ -53,7 +57,7 @@ export default function LearnLibrary({ shop = {} }: { shop?: Record<string, stri
             return (
               <Box component="li" key={option.id ?? "all"} sx={{ flexShrink: 0 }}>
                 <Box component="button" type="button" onClick={() => choose(option.id)} aria-pressed={selected} sx={{ width: "100%", minHeight: 46, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, px: 1.75, border: 0, borderRadius: "10px", font: "inherit", fontSize: 15, fontWeight: 600, textAlign: "left", whiteSpace: "nowrap", cursor: "pointer", bgcolor: selected ? "brand.navy" : "transparent", color: selected ? "#fff" : "text.primary", transition: "background-color .15s ease", "&:hover": { bgcolor: selected ? "brand.navy" : "rgba(21,38,94,.06)" }, "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
-                  {option.name}
+                  {translateAction(act, option.name)}
                   <Box component="span" sx={{ minWidth: 30, px: .75, py: .25, borderRadius: "6px", textAlign: "center", fontSize: 13, fontVariantNumeric: "tabular-nums", bgcolor: selected ? "rgba(255,255,255,.16)" : "#fff", color: selected ? "#fff" : "text.secondary" }}>{option.count}</Box>
                 </Box>
               </Box>
@@ -63,7 +67,7 @@ export default function LearnLibrary({ shop = {} }: { shop?: Record<string, stri
         <Typography sx={{ display: { xs: "none", lg: "block" }, mt: 2, pt: 2, borderTop: "1px solid", borderColor: "divider", px: 1, fontSize: 13, color: "text.secondary", lineHeight: 1.6 }}>
           Topics make browsing easier. Every page shows how far the research has really got.
         </Typography>
-        {active ? <Box component="button" type="button" onClick={() => choose(null)} sx={{ display: { xs: "none", lg: "inline-block" }, mt: 1.5, ml: 1, p: 0, border: 0, bgcolor: "transparent", font: "inherit", fontSize: 14, fontWeight: 600, color: "brand.blue", textDecoration: "underline", cursor: "pointer", minHeight: 32 }}>Reset filters</Box> : null}
+        {active ? <Box component="button" type="button" onClick={() => choose(null)} sx={{ display: { xs: "none", lg: "inline-block" }, mt: 1.5, ml: 1, p: 0, border: 0, bgcolor: "transparent", font: "inherit", fontSize: 14, fontWeight: 600, color: "brand.blue", textDecoration: "underline", cursor: "pointer", minHeight: 32 }}>{act("clearFilters")}</Box> : null}
       </Box>
 
       <Box>

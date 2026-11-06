@@ -10,6 +10,7 @@ import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { AppLink, ButtonLink } from "../common/links"
 import { FOOTER_LINKS, NAV_LABEL_KEYS } from "./nav"
+import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
 
 async function CopyrightYear() {
   "use cache"
@@ -74,6 +75,7 @@ export default async function Footer() {
             <LinkColumn title={t("legal")} links={FOOTER_LINKS.legal} />
           </Grid>
         </Grid>
+        <Box sx={{ pb: 3 }}><AcceptedPaymentMethods tone="inverse" align="left" /></Box>
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={2}

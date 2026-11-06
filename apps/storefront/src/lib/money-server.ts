@@ -1,9 +1,10 @@
-import { getFormatter } from "next-intl/server"
-import { moneyFormat, type MoneyOptions } from "./money"
+import { getFormatter, getLocale } from "next-intl/server"
+import { icelandicMoney, moneyFormat, type MoneyOptions } from "./money"
 
 /** useMoney for async server components. */
 export async function getMoney() {
-  const format = await getFormatter()
+  const [format, locale] = await Promise.all([getFormatter(), getLocale()])
   return (amount: number | null | undefined, currencyCode: string, options?: MoneyOptions) =>
-    format.number(Number(amount ?? 0), moneyFormat(currencyCode, options))
+    locale.startsWith("is") ? icelandicMoney(Number(amount ?? 0), currencyCode, options)
+      : format.number(Number(amount ?? 0), moneyFormat(currencyCode, options))
 }

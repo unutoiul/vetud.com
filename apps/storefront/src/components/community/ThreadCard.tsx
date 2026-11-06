@@ -1,3 +1,5 @@
+import { translateAction } from "@/i18n/actions"
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { AppLink } from "../common/links"
@@ -14,6 +16,7 @@ const KIND_TONES = { question: "expert", discussion: "neutral" } as const
  * `showTopic` adds the topic, for lists that mix topics.
  */
 export default function ThreadCard({ thread, showTopic = false }: { thread: ForumThread; showTopic?: boolean }) {
+  const act = useTranslations("Actions")
   const peptide = thread.peptide_slug ? getPeptide(thread.peptide_slug) : undefined
   const topic = showTopic ? getTopic(thread.topic) : undefined
   const answered = thread.kind === "question" && thread.accepted_post_id
@@ -21,11 +24,11 @@ export default function ThreadCard({ thread, showTopic = false }: { thread: Foru
     <Box sx={{ minWidth: 0 }}>
       <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: .75, mb: 1 }}>
         {thread.pinned ? <Pill tone="moderator">Pinned</Pill> : null}
-        <Pill tone={KIND_TONES[thread.kind]}>{KIND_LABELS[thread.kind]}</Pill>
+        <Pill tone={KIND_TONES[thread.kind]}>{translateAction(act, KIND_LABELS[thread.kind])}</Pill>
         {answered ? <Pill tone="accepted" icon="check">Answered</Pill> : null}
-        {topic ? <AppLink href={`/community?topic=${topic.id}`} underline="hover" sx={{ fontSize: 13, color: "brand.blue", fontWeight: 600 }}>{topic.name}</AppLink> : null}
+        {topic ? <AppLink href={`/community?topic=${topic.id}`} underline="hover" sx={{ fontSize: 13, color: "brand.blue", fontWeight: 600 }}>{translateAction(act, topic.name)}</AppLink> : null}
         {peptide ? <Typography component="span" sx={{ fontSize: 13, color: "brand.navySoft" }}>{peptide.name}</Typography> : null}
-        {thread.lot ? <Typography component="span" variant="mono" sx={{ fontSize: 12, color: "brand.navySoft" }}>Lot {thread.lot}</Typography> : null}
+        {thread.lot ? <Typography component="span" variant="mono" sx={{ fontSize: 12, color: "brand.navySoft" }}>{act("lot")} {thread.lot}</Typography> : null}
       </Box>
       <Typography component="h3" sx={{ fontSize: { xs: 18, md: 20 }, fontWeight: 650, lineHeight: 1.35, letterSpacing: "-.01em", textWrap: "pretty" }}>
         <AppLink href={threadHref(thread)} underline="hover" sx={{ color: "brand.navy" }}>{thread.title}</AppLink>

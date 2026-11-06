@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 }
 
 export default async function ContactPage() {
+  const act = await getTranslations("Actions")
   const t = await getTranslations("Pages")
   const details = [
     { icon: MailOutlineIcon, title: "Email", body: <a href={`mailto:${SITE.email}`}>{SITE.email}</a> },
@@ -28,7 +29,7 @@ export default async function ContactPage() {
       title: "Looking for a COA?",
       body: (
         <>
-          Try the <AppLink href="/documentation">lot lookup</AppLink> first. Most records are available instantly.
+          Try the <AppLink href="/documentation">{act("lotLookup")}</AppLink> first. Most records are available instantly.
         </>
       ),
     },

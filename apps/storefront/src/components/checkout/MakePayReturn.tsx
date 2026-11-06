@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import Alert from "@mui/material/Alert"
 import CircularProgress from "@mui/material/CircularProgress"
 import Stack from "@mui/material/Stack"
@@ -37,6 +39,7 @@ function write(key: string, value: string | null) {
  * it only carries an opaque state that we exchange for the real status from the backend.
  */
 export default function MakePayReturn() {
+  const act = useTranslations("Actions")
   const { countryCode } = useStore()
   const [message, setMessage] = useState<string | null>(null)
   const [outcome, setOutcome] = useState<"waiting" | "info" | "retry">("waiting")
@@ -146,11 +149,11 @@ export default function MakePayReturn() {
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
         {outcome === "retry" ? (
           <ButtonLink href="/checkout" variant="contained">
-            Back to checkout
+            {act("backCheckout")}
           </ButtonLink>
         ) : null}
         <ButtonLink href="/contact" variant="outlined">
-          Contact us
+          {act("contact")}
         </ButtonLink>
       </Stack>
     </Stack>

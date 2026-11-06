@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import { ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
@@ -5,6 +6,7 @@ import { ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 
 export default function NotFound() {
+  const act = useTranslations("Actions")
   return (
     <Section>
       <Stack spacing={3} sx={{ alignItems: "flex-start", maxWidth: 640, py: { md: 6 } }}>
@@ -20,10 +22,10 @@ export default function NotFound() {
         </Typography>
         <Stack direction="row" spacing={1.5}>
           <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>
-            Browse the catalog
+            {act("shopCatalog")}
           </ButtonLink>
           <ButtonLink href="/" variant="outlined">
-            Home
+            {act("home")}
           </ButtonLink>
         </Stack>
       </Stack>

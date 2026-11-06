@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { PlusIcon as AddIcon, MinusIcon as RemoveIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
@@ -21,13 +23,14 @@ export default function QuantityStepper({
   max = 99,
   disabled,
   size = "medium",
-  label = "Quantity",
+  label,
 }: QuantityStepperProps) {
+  const act = useTranslations("Actions")
   const small = size === "small"
   return (
     <Box
       role="group"
-      aria-label={label}
+      aria-label={label ?? act("quantity")}
       sx={{
         display: "inline-flex",
         alignItems: "center",
@@ -40,7 +43,7 @@ export default function QuantityStepper({
     >
       <IconButton
         size="small"
-        aria-label="Decrease quantity"
+        aria-label={act("decreaseQuantity")}
         disabled={disabled || value <= min}
         onClick={() => onChange(Math.max(min, value - 1))}
         sx={{ width: small ? 34 : 44, height: "100%" }}
@@ -56,7 +59,7 @@ export default function QuantityStepper({
       </Box>
       <IconButton
         size="small"
-        aria-label="Increase quantity"
+        aria-label={act("increaseQuantity")}
         disabled={disabled || value >= max}
         onClick={() => onChange(Math.min(max, value + 1))}
         sx={{ width: small ? 34 : 44, height: "100%" }}

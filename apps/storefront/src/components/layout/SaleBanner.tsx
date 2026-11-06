@@ -2,7 +2,7 @@
 
 import Box from "@mui/material/Box"
 import { keyframes } from "@mui/material/styles"
-import { useFormatter, useLocale, useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useSyncExternalStore } from "react"
 import type { LiveSale } from "@/lib/medusa/sale"
 import { brand, fonts, gutter } from "@/theme/tokens"
@@ -54,16 +54,16 @@ function Ridge({ side }: { side: "left" | "right" }) {
  * end and a "Shop the sale" button. The whole bar is one link to the shop. It disappears on its own
  * when the countdown reaches zero, before the server stops sending the sale.
  */
-export default function SaleBanner({ sale }: { sale: LiveSale }) {
+export default function SaleBanner({ sale, endLabel }: { sale: LiveSale; endLabel: string | null }) {
   const t = useTranslations("Offer")
-  const format = useFormatter()
   const locale = useLocale()
   const now = useSyncExternalStore(subscribe, clientNow, serverNow)
   const endsAt = sale.ends_at ? new Date(sale.ends_at) : null
   const left = endsAt && now !== null ? endsAt.getTime() - now : null
   if (left !== null && left <= 0) return null
 
-  const ends = endsAt ? format.dateTime(endsAt, { day: "numeric", month: "short" }) : null
+  // Keep the initial label identical when browser and server ICU language data differ.
+  const ends = endLabel
   // "27d 5h 59m" in the page's language (de: "27 T. 5 Std. 59 Min."); minutes only in the last days.
   const unit = (value: number, name: "day" | "hour" | "minute") => new Intl.NumberFormat(locale, { style: "unit", unit: name, unitDisplay: "narrow" }).format(value)
   const days = left !== null ? Math.floor(left / 86_400_000) : 0

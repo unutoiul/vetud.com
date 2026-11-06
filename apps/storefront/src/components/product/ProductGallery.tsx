@@ -1,4 +1,7 @@
 "use client"
+import { translateAction } from "@/i18n/actions"
+import { useTranslations } from "next-intl"
+
 
 import Box from "@mui/material/Box"
 import ButtonBase from "@mui/material/ButtonBase"
@@ -15,6 +18,7 @@ type ProductGalleryProps = {
 }
 
 export default function ProductGallery({ title, images, aspectRatio }: ProductGalleryProps) {
+  const act = useTranslations("Actions")
   const { format } = useProductSelection()
   const [selected, setSelected] = useState(() => Math.max(0, images.findIndex(image => image.format && image.format === format)))
   // Choosing a format in the purchase panel brings up that format's photo.
@@ -35,7 +39,7 @@ export default function ProductGallery({ title, images, aspectRatio }: ProductGa
   const advance = (direction: number) => setSelected(value => (value + direction + images.length) % images.length)
 
   return (
-    <Box role="group" aria-label={`${title} product gallery`} onKeyDown={event => {
+    <Box role="group" aria-label={act("productGallery", { product: title })} onKeyDown={event => {
       if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
         event.preventDefault()
         advance(event.key === "ArrowRight" ? 1 : -1)
@@ -77,12 +81,12 @@ export default function ProductGallery({ title, images, aspectRatio }: ProductGa
             <ButtonBase
               key={image.url}
               onClick={() => setSelected(index)}
-              aria-label={`View ${photoLabel(image, index)}`}
+              aria-label={act("photoView", { photo: translateAction(act, viewLabel(image, index)) })}
               aria-pressed={index === selected}
               sx={{ width: { xs: 88, sm: 104 }, p: .75, display: "flex", flexDirection: "column", gap: .5, flexShrink: 0, borderRadius: 1.5, border: "2px solid", borderColor: index === selected ? "primary.main" : "divider", bgcolor: "#fff", "&:focus-visible": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: 3 } }}
             >
               <Box sx={{ position: "relative", width: "100%", aspectRatio: "4 / 3" }}><Image src={image.url} alt="" fill loading="lazy" sizes="100px" style={{ objectFit: "contain" }} /></Box>
-              <Typography component="span" sx={{ fontSize: 10, color: index === selected ? "primary.main" : "text.secondary", lineHeight: 1.5 }}>{viewLabel(image, index)}</Typography>
+              <Typography component="span" sx={{ maxWidth: "100%", overflowWrap: "anywhere", fontSize: 10, color: index === selected ? "primary.main" : "text.secondary", lineHeight: 1.5 }}>{translateAction(act, viewLabel(image, index))}</Typography>
             </ButtonBase>
           ))}
         </Stack>

@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { AppLink, ButtonLink } from "@/components/common/links"
@@ -48,6 +49,7 @@ const HOW = [
 ]
 
 export default function GuidelinesPage() {
+  const act = useTranslations("Actions")
   return <>
     <PageHeader eyebrow="Community" title="Community guidelines." description="A professional space for peptide research: cited sources and respectful discussion." />
     <Section tone="white" sx={{ py: { xs: 5, md: 8 } }}>
@@ -65,9 +67,9 @@ export default function GuidelinesPage() {
           </Box>
         </Box>
         <Typography sx={{ fontSize: 14, lineHeight: 1.7, color: "text.secondary" }}>
-          {COMMUNITY_DISCLAIMER} Questions about these guidelines? <AppLink href="/contact">Contact us</AppLink>. Read the <AppLink href="/legal/research-use">research use policy</AppLink> and <AppLink href="/legal/privacy">privacy policy</AppLink>.
+          {COMMUNITY_DISCLAIMER} Questions about these guidelines? <AppLink href="/contact">{act("contact")}</AppLink>. Read the <AppLink href="/legal/research-use">{act("researchPolicy")}</AppLink> and <AppLink href="/legal/privacy">{act("privacyPolicy")}</AppLink>.
         </Typography>
-        <Box><ButtonLink href="/community" variant="contained">Go to the community</ButtonLink></Box>
+        <Box><ButtonLink href="/community" variant="contained">{act("community")}</ButtonLink></Box>
       </Box>
     </Section>
   </>

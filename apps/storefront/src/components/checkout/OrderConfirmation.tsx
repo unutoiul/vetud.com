@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import { CheckCircleIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -31,6 +33,7 @@ function readStoredOrder(id: string, customerId?: string): CustomerOrder | null 
 }
 
 export default function OrderConfirmation() {
+  const act = useTranslations("Actions")
   const { customer } = useAccount()
   const params = useSearchParams()
   const money = useMoney()
@@ -156,13 +159,13 @@ export default function OrderConfirmation() {
         </Stack>
         <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 4 }}>
           <ButtonLink href={customer ? "/account/orders" : "/tracking"} variant="outlined">
-            {customer ? "View my orders & tracking" : "Track a shipment"}
+            {customer ? act("ordersTracking") : act("trackParcel")}
           </ButtonLink>
           <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>
-            Continue shopping
+            {act("continueShopping")}
           </ButtonLink>
           <ButtonLink href={`/contact?subject=${encodeURIComponent(`Order ${number}`)}`} variant="outlined">
-            Questions about this order
+            {act("orderHelp")}
           </ButtonLink>
         </Stack>
       </Grid>

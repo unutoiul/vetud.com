@@ -13,6 +13,7 @@ import { readProductMeta } from "@/lib/product"
 import { getProductThumbnail } from "@/lib/product-images"
 import OrderTotals from "../cart/OrderTotals"
 import { ButtonLink } from "../common/links"
+import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
 import ProductThumb from "../product/ProductThumb"
 
 export default function CheckoutOrderSummary({ cart, place, arrival, compact = false }: { cart: HttpTypes.StoreCart; place: string; arrival: string | null; compact?: boolean }) {
@@ -71,6 +72,7 @@ export default function CheckoutOrderSummary({ cart, place, arrival, compact = f
         </Stack>
         <Box component="a" href={`mailto:${SITE.email}`} sx={{ color: "secondary.main", fontSize: 12, textUnderlineOffset: "3px", overflowWrap: "anywhere" }}>{SITE.email}</Box>
       </Stack>
+      <Box sx={{ mt: 2.5 }}><AcceptedPaymentMethods regionId={cart.region_id || undefined} currency={cart.currency_code} /></Box>
     </Box>
   )
 }

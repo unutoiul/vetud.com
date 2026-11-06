@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import Alert from "@mui/material/Alert"
 import CircularProgress from "@mui/material/CircularProgress"
 import Stack from "@mui/material/Stack"
@@ -18,6 +20,7 @@ import { useAccount } from "../account/AccountProvider"
  * The backend still checks approval and capture with PayPal; the URL never proves payment.
  */
 export default function PayPalReturn() {
+  const act = useTranslations("Actions")
   const router = useRouter()
   const params = useSearchParams()
   const cancelled = params.get("cancelled") === "1"
@@ -87,12 +90,12 @@ export default function PayPalReturn() {
       <Alert severity={message.severity}>{message.text}</Alert>
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
         <ButtonLink href="/checkout" variant="contained">
-          Back to checkout
+          {act("backCheckout")}
         </ButtonLink>
         <ButtonLink href="/contact" variant="outlined">
-          Contact us
+          {act("contact")}
         </ButtonLink>
-        <ButtonLink href="/account/orders" variant="outlined">Check my orders</ButtonLink>
+        <ButtonLink href="/account/orders" variant="outlined">{act("viewOrders")}</ButtonLink>
       </Stack>
     </Stack>
   )

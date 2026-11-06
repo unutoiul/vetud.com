@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import type { HttpTypes } from "@medusajs/types"
 import Box from "@mui/material/Box"
 import Breadcrumbs from "@mui/material/Breadcrumbs"
@@ -96,6 +97,7 @@ export default function ProductPage({ params }: PageProps<"/[countryCode]/produc
 }
 
 async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/products/[handle]">, "params">) {
+  const act = await getTranslations("Actions")
   const { handle } = await params
   const [{ product, region, countryCode }, money] = await Promise.all([loadProduct(handle), getMoney()])
   if (!product || !region) notFound()
@@ -168,9 +170,9 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <Section tone="white" tight sx={{ pt: { xs: 3, md: 4 } }}>
-        <Breadcrumbs aria-label="Breadcrumb" sx={{ mb: { xs: 3, md: 4 }, fontSize: 14 }}>
+        <Breadcrumbs aria-label={act("breadcrumb")} sx={{ mb: { xs: 3, md: 4 }, fontSize: 14 }}>
           <AppLink href="/shop" color="inherit">
-            Shop
+            {act("shop")}
           </AppLink>
           {category ? (
             <AppLink href={`/shop?category=${category.handle}`} color="inherit">

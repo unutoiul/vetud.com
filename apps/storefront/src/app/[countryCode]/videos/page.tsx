@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import PageHeader from "@/components/common/PageHeader"
@@ -15,13 +16,14 @@ export const metadata = collectionMetadata({
 })
 
 export default function VideosPage() {
+  const act = useTranslations("Actions")
   return (
     <>
       <PageHeader eyebrow="Videos" title="Peptides and science, explained." description={`${VIDEOS.length} selected videos, grouped by topic. Learn the biology, hear clinical and research discussions, and practise reading the evidence. Each profile and article has a connected selection. Opening a video loads it from YouTube.`} />
       {/* Same column and gutters as the header and sections, so the topics line up with the page. */}
       <Box component="nav" aria-label="Video topics" sx={{ px: gutter, py: { xs: 2.5, md: 3.5 }, bgcolor: "brand.paper", borderBottom: "1px solid", borderColor: "divider" }}>
         <Box sx={{ maxWidth: 1360, mx: "auto" }}>
-          <Typography sx={{ fontSize: 13, fontWeight: 650, color: "text.secondary", mb: 1.5 }}>Topics</Typography>
+          <Typography sx={{ fontSize: 13, fontWeight: 650, color: "text.secondary", mb: 1.5 }}>{act("topics")}</Typography>
           {/* Phones: one row that scrolls sideways and runs to the screen edges. Wider: wraps. */}
           <Box sx={{ display: "flex", flexWrap: { xs: "nowrap", md: "wrap" }, gap: 1, overflowX: { xs: "auto", md: "visible" }, mx: { xs: -2.5, sm: -4, md: 0 }, px: { xs: 2.5, sm: 4, md: 0 }, scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
             {VIDEO_TOPICS.map((topic) => (

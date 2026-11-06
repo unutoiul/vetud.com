@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import type { HttpTypes } from "@medusajs/types"
 import { SearchIcon as ManageSearchIcon, ShieldIcon as VerifiedOutlinedIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
@@ -37,6 +39,7 @@ async function findLot(lot: string): Promise<Match[]> {
 const normalize = (raw: string) => raw.trim().toUpperCase()
 
 export default function LotLookup() {
+  const act = useTranslations("Actions")
   const searchParams = useSearchParams()
   const initial = normalize(searchParams.get("lot") ?? "")
   const [value, setValue] = useState(initial)
@@ -88,7 +91,7 @@ export default function LotLookup() {
         }}
       >
         <TextField
-          label="Lot number"
+          label={act("lotNumber")}
           placeholder="e.g. VTD01-2609A…"
           name="lot"
           value={value}
@@ -102,7 +105,7 @@ export default function LotLookup() {
           startIcon={loading ? <CircularProgress size={16} color="inherit" /> : <ManageSearchIcon />}
           sx={{ flexShrink: 0, minHeight: 56 }}
         >
-          Look up lot
+          {act("lotLookup")}
         </Button>
       </Stack>
 
@@ -111,7 +114,7 @@ export default function LotLookup() {
         {!failed && searched && !loading && !matches.length ? (
           <Alert severity="info">
             No documented lot matches <strong>{searched}</strong>. Check the label for typos, or{" "}
-            <AppLink href={`/contact?subject=${encodeURIComponent(`Lot enquiry: ${searched}`)}`}>contact us</AppLink> with a photo of the label.
+            <AppLink href={`/contact?subject=${encodeURIComponent(`Lot enquiry: ${searched}`)}`}>{act("contact")}</AppLink> with a photo of the label.
           </Alert>
         ) : null}
         <Grid container spacing={2}>
@@ -138,10 +141,10 @@ export default function LotLookup() {
                       Batch {lot.date ?? "—"} · Purity {lot.purity ?? "—"} ·{" "}
                       {lot.coaUrl ? (
                         <a href={lot.coaUrl} target="_blank" rel="noopener">
-                          Download COA
+                          {act("downloadCoa")}
                         </a>
                       ) : (
-                        <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>Request COA</AppLink>
+                        <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>{act("requestCoa")}</AppLink>
                       )}
                     </Typography>
                     <LotReportsLink lot={lot.lot} />

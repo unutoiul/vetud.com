@@ -2,6 +2,7 @@ import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { getTranslations } from "next-intl/server"
+import { translateAction } from "@/i18n/actions"
 import Image from "next/image"
 import { ARTICLES, formatArticleDate } from "@/content/learn/articles"
 import { CATEGORIES } from "@/content/learn/categories"
@@ -14,6 +15,7 @@ import { ArticleHeadline } from "../learn/ArticleCard"
 
 /** Learning-first homepage hero: the promise on the left, the newest article on the right, topics below. */
 export default async function LearnHero() {
+  const act = await getTranslations("Actions")
   const t = await getTranslations("LearnHero")
   const latest = ARTICLES[0]
   const topics = CATEGORIES.filter((category) => PEPTIDES.some((peptide) => peptide.category === category.id))
@@ -59,7 +61,7 @@ export default async function LearnHero() {
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
             {topics.map((topic) => (
               <Box key={topic.id} component={LocalizedNextLink} href={`/learn#${topic.id}`} sx={{ display: "inline-flex", alignItems: "center", gap: 1, minHeight: 44, px: 2, borderRadius: 999, border: "1px solid", borderColor: "divider", bgcolor: "#fff", color: "text.primary", textDecoration: "none", fontSize: 14, fontWeight: 600, transition: "border-color .15s ease, color .15s ease", "&:hover": { borderColor: "brand.blue", color: "brand.blue" } }}>
-                <Icon name={topic.icon} sx={{ fontSize: 18, color: "brand.blue" }} />{topic.name}
+                <Icon name={topic.icon} sx={{ fontSize: 18, color: "brand.blue" }} />{translateAction(act, topic.name)}
               </Box>
             ))}
           </Box>

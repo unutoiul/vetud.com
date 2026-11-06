@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
@@ -37,6 +38,7 @@ const BASICS: { title: string; icon: IconName; text: string }[] = [
 ]
 
 export default function LearnPage() {
+  const act = useTranslations("Actions")
   return (
     <>
       <PageHeader eyebrow="Learn" title="Peptides, explained simply." description={`Plain-language guides to ${PROFILE_COUNT} peptides and related compounds, from approved medicines to early research. What they are, what studies found, how far they’ve got, and what’s still unknown.`} />
@@ -57,14 +59,14 @@ export default function LearnPage() {
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: { xs: 4, md: 3.5 }, mb: { xs: 7, md: 9 } }}>
           {LEARNING_GUIDES.map(article => <ArticleCard key={article.slug} article={article} />)}
         </Box>
-        <SectionHeading eyebrow="News & articles" title="New research, explained." description="Recent studies and decisions, written so anyone can follow them, with every source linked." action={<ButtonLink href="/news" variant="outlined" endIcon={<Icon name="arrowRight" />}>All articles</ButtonLink>} />
+        <SectionHeading eyebrow="News & articles" title="New research, explained." description="Recent studies and decisions, written so anyone can follow them, with every source linked." action={<ButtonLink href="/news" variant="outlined" endIcon={<Icon name="arrowRight" />}>{act("allArticles")}</ButtonLink>} />
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" }, gap: { xs: 4, md: 3.5 } }}>
           {ARTICLES.filter(article => article.kind !== "Guide").slice(0, 3).map((article) => <ArticleCard key={article.slug} article={article} />)}
         </Box>
       </Section>
 
       <Section tone="paper" sx={{ py: { xs: 6, md: 9 } }}>
-        <SectionHeading eyebrow="Videos" title="Watch, then explore the evidence." description={`${VIDEOS.length} selected YouTube videos from clinicians, researchers, hospitals and science educators. Each profile and article has its own connected selection.`} action={<ButtonLink href="/videos" variant="outlined" endIcon={<Icon name="arrowRight" />}>All videos</ButtonLink>} />
+        <SectionHeading eyebrow="Videos" title="Watch, then explore the evidence." description={`${VIDEOS.length} selected YouTube videos from clinicians, researchers, hospitals and science educators. Each profile and article has its own connected selection.`} action={<ButtonLink href="/videos" variant="outlined" endIcon={<Icon name="arrowRight" />}>{act("allVideos")}</ButtonLink>} />
         <VideoGallery videos={getVideos(["KeqMSzFbSos", "9dS7bc_2bUE", "lJOQB_G15Jc"])} />
       </Section>
 

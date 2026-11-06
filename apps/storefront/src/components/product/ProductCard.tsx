@@ -16,7 +16,7 @@ import ProductPhoto from "./ProductPhoto"
 import StockBadge from "./StockBadge"
 
 /** Read by screen readers only. */
-const visuallyHidden = { position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" } as const
+const visuallyHidden = { position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" } as const
 
 export function ArtStage({ children, height = 290 }: { children: React.ReactNode; height?: number | object }) {
   return <Box sx={{ position: "relative", height, overflow: "hidden", display: "grid", placeItems: "center", background: "linear-gradient(140deg, #f7faff, #eaf0f8)" }}>{children}</Box>

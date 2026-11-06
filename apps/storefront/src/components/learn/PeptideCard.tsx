@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
@@ -14,6 +15,7 @@ import StatusBadge from "./StatusBadge"
  * No prices; `shopHref` adds a link to the product when the shop carries it.
  */
 export default function PeptideCard({ peptide, shopHref }: { peptide: PeptideProfile; shopHref?: string }) {
+  const act = useTranslations("Actions")
   const category = getCategory(peptide.category)
   const illustration = getLearnIllustration(peptide.slug)
   return (
@@ -40,7 +42,7 @@ export default function PeptideCard({ peptide, shopHref }: { peptide: PeptidePro
           <StatusBadge status={peptide.status} size="small" />
           {shopHref
             // Sits above the card-wide profile link, so it opens the product instead.
-            ? <AppLink href={shopHref} aria-label={`${peptide.name} in the research shop`} sx={{ position: "relative", zIndex: 1, minHeight: 32, display: "inline-flex", alignItems: "center", gap: .5, fontSize: 13, fontWeight: 650 }}>In the shop<Icon name="arrowUpRight" aria-hidden sx={{ fontSize: 16 }} /></AppLink>
+            ? <AppLink href={shopHref} aria-label={act("productInShop", { product: peptide.name })} sx={{ position: "relative", zIndex: 1, minHeight: 32, display: "inline-flex", alignItems: "center", gap: .5, fontSize: 13, fontWeight: 650 }}>{act("shop")}<Icon name="arrowUpRight" aria-hidden sx={{ fontSize: 16 }} /></AppLink>
             : <Icon name="arrowUpRight" aria-hidden sx={{ fontSize: 18, color: "brand.navy" }} />}
         </Box>
       </Box>

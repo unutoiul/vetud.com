@@ -1,5 +1,8 @@
 "use client"
 
+import { useLocale, useTranslations } from "next-intl"
+import type { StripeElementLocale } from "@stripe/stripe-js"
+
 import { useState } from "react"
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { useTheme } from "@mui/material/styles"
@@ -22,11 +25,14 @@ type Props = {
 
 export default function StripePaymentForm(props: Props) {
   const theme = useTheme()
+  const locale = useLocale().split("-")[0]
   return (
     <Elements
       stripe={getStripe()}
       options={{
         clientSecret: props.clientSecret,
+        // Stripe has no Icelandic locale; let it choose its supported browser fallback.
+        locale: locale === "is" ? "auto" : locale as StripeElementLocale,
         appearance: {
           theme: "stripe",
           variables: {
@@ -43,6 +49,7 @@ export default function StripePaymentForm(props: Props) {
 }
 
 function CardForm({ amountLabel, billingDetails, busy, onPay }: Props) {
+  const act = useTranslations("Actions")
   const stripe = useStripe()
   const elements = useElements()
   const [fieldError, setFieldError] = useState<string | null>(null)
@@ -102,7 +109,7 @@ function CardForm({ amountLabel, billingDetails, busy, onPay }: Props) {
         startIcon={busy ? <CircularProgress size={16} color="inherit" /> : <LockIcon />}
         sx={{ mt: 3, minWidth: { xs: 0, sm: 260 }, width: { xs: "100%", sm: "auto" } }}
       >
-        {busy ? "Processing payment…" : `Pay ${amountLabel}`}
+        {busy ? act("processingPayment") : act("payAmount", { amount: amountLabel })}
       </Button>
     </Box>
   )

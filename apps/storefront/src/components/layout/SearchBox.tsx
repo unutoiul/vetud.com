@@ -1,4 +1,7 @@
 "use client"
+import { translateAction } from "@/i18n/actions"
+
+import { useTranslations } from "next-intl"
 
 import type { HttpTypes } from "@medusajs/types"
 import Icon, { SearchIcon } from "@/components/brand/Icon"
@@ -34,6 +37,7 @@ type SearchBoxProps = {
 
 /** Searches products (Meilisearch), the peptide guides and the news, grouped by kind. */
 export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: SearchBoxProps) {
+  const act = useTranslations("Actions")
   const router = useRouter()
   const { countryCode, region } = useStore()
   const [input, setInput] = useState("")
@@ -100,12 +104,12 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
           go(value.href)
         }
       }}
-      noOptionsText={input.trim().length < 2 ? "Type a peptide, product, code or topic" : "No matches"}
+      noOptionsText={input.trim().length < 2 ? act("searchHint") : act("noMatches")}
       sx={{ width: "100%" }}
       slotProps={{ listbox: { sx: { maxHeight: "min(60vh, 520px)" } } }}
       renderGroup={(params) => (
         <Box component="li" key={params.key} sx={{ listStyle: "none" }}>
-          <Typography component="div" sx={{ position: "sticky", top: -8, zIndex: 1, px: 2, py: 1, bgcolor: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "brand.blue", borderTop: "1px solid", borderColor: "divider" }}>{params.group}</Typography>
+          <Typography component="div" sx={{ position: "sticky", top: -8, zIndex: 1, px: 2, py: 1, bgcolor: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "brand.blue", borderTop: "1px solid", borderColor: "divider" }}>{translateAction(act, params.group)}</Typography>
           <Box component="ul" sx={{ p: 0 }}>{params.children}</Box>
         </Box>
       )}
@@ -124,7 +128,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
           {...params}
           autoFocus={autoFocus}
           inputRef={inputRef}
-          placeholder="Search products, peptides, news…"
+          placeholder={act("siteSearch")}
           size={dense ? "small" : "medium"}
           // The Autocomplete has its own clear button; hide the browser's.
           sx={{ "& input::-webkit-search-cancel-button": { display: "none" } }}
@@ -160,6 +164,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
 }
 
 function ProductRow({ product }: { product: HttpTypes.StoreProduct }) {
+  const act = useTranslations("Actions")
   const money = useMoney()
   const meta = readProductMeta(product)
   const price = cheapestPrice(product)
@@ -171,7 +176,7 @@ function ProductRow({ product }: { product: HttpTypes.StoreProduct }) {
     </Box>
     {price ? (
       <Typography sx={{ fontSize: 13, color: "text.secondary", whiteSpace: "nowrap" }}>
-        {price.hasRange ? "from " : ""}
+        {price.hasRange ? act("from") : ""}
         {money(price.amount, price.currencyCode)}
       </Typography>
     ) : null}

@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import Accordion from "@mui/material/Accordion"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import AccordionSummary from "@mui/material/AccordionSummary"
@@ -30,6 +32,7 @@ type HistoryState =
 // The account boundary mounts this with a customer-ID key. Leaving the page or
 // signing out cancels the UI update; another customer never inherits these orders.
 export default function OrderHistory() {
+  const act = useTranslations("Actions")
   const [offset, setOffset] = useState(0)
   const [revision, setRevision] = useState(0)
   const [state, setState] = useState<HistoryState>({ status: "loading" })
@@ -61,20 +64,20 @@ export default function OrderHistory() {
     <Stack spacing={3}>
       <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "space-between", alignItems: { sm: "center" } }}>
         <Box>
-          <Typography variant="h4" component="h2">Orders & tracking</Typography>
+          <Typography variant="h4" component="h2">{act("ordersTracking")}</Typography>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
             Newest first, in each order&apos;s original currency. Open an order for its full details.
           </Typography>
         </Box>
-        <Button variant="outlined" onClick={() => reload()} disabled={state.status === "loading"} sx={{ alignSelf: "flex-start" }}>Refresh orders</Button>
+        <Button variant="outlined" onClick={() => reload()} disabled={state.status === "loading"} sx={{ alignSelf: "flex-start" }}>{act("refreshOrders")}</Button>
       </Stack>
 
       {state.status === "loading" ? (
-        <Stack spacing={2} role="status" aria-label="Loading orders">
+        <Stack spacing={2} role="status" aria-label={act("loadingOrders")}>
           <Skeleton variant="rounded" height={180} /><Skeleton variant="rounded" height={180} />
         </Stack>
       ) : state.status === "error" ? (
-        <Alert severity="error" action={<Button color="inherit" onClick={() => reload()}>Try again</Button>}>{state.message}</Alert>
+        <Alert severity="error" action={<Button color="inherit" onClick={() => reload()}>{act("retry")}</Button>}>{state.message}</Alert>
       ) : (
         <>
           {state.data.orders.length ? state.data.orders.map((order) => <OrderCard key={order.id} order={order} />) : (
@@ -82,17 +85,17 @@ export default function OrderHistory() {
               <Icon name="package" sx={{ color: "secondary.main", fontSize: 32, mb: 1.5 }} />
               <Typography variant="h5" component="h3">{offset ? "No more orders on this page." : "No orders yet."}</Typography>
               <Typography sx={{ color: "text.secondary", mt: 1, mb: 3 }}>Orders placed while signed in will appear here. For an earlier guest order, use the tracking link in your shipping email or contact us.</Typography>
-              <ButtonLink href="/shop" variant="contained">Browse the shop</ButtonLink>
+              <ButtonLink href="/shop" variant="contained">{act("shopCatalog")}</ButtonLink>
             </Paper>
           )}
           {state.data.count > PAGE_SIZE || offset > 0 ? (
-            <Stack component="nav" aria-label="Order history pages" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ alignItems: "center", justifyContent: "space-between" }}>
+            <Stack component="nav" aria-label={act("orderPages")} direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ alignItems: "center", justifyContent: "space-between" }}>
               <Typography variant="body2" aria-live="polite">
                 {state.data.orders.length ? `${offset + 1}–${offset + state.data.orders.length} of ${state.data.count} orders` : "End of order history"}
               </Typography>
               <Stack direction="row" spacing={1}>
-                <Button variant="outlined" disabled={offset === 0} onClick={() => reload(Math.max(0, offset - PAGE_SIZE))}>Previous</Button>
-                <Button variant="outlined" disabled={offset + PAGE_SIZE >= state.data.count} onClick={() => reload(offset + PAGE_SIZE)}>Next</Button>
+                <Button variant="outlined" disabled={offset === 0} onClick={() => reload(Math.max(0, offset - PAGE_SIZE))}>{act("previous")}</Button>
+                <Button variant="outlined" disabled={offset + PAGE_SIZE >= state.data.count} onClick={() => reload(offset + PAGE_SIZE)}>{act("next")}</Button>
               </Stack>
             </Stack>
           ) : null}
@@ -109,6 +112,7 @@ function dateLabel(date: string | Date) {
 }
 
 function OrderCard({ order }: { order: CustomerOrder }) {
+  const act = useTranslations("Actions")
   const number = orderNumber(order)
   const shipments = activeShipments(order)
   const address = order.shipping_address
@@ -148,8 +152,8 @@ function OrderCard({ order }: { order: CustomerOrder }) {
                 <Stack key={labelIndex} direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ alignItems: { sm: "center" }, justifyContent: "space-between", mt: 1 }}>
                   <Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>Tracking number: <strong>{label.tracking_number || "See carrier"}</strong></Typography>
                   {link ? link.external ? (
-                    <Button component="a" href={link.href} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" endIcon={<Icon name="arrowUpRight" sx={{ fontSize: 14 }} />} sx={{ flexShrink: 0, alignSelf: "flex-start" }}>Track package</Button>
-                  ) : <ButtonLink href={link.href} sx={{ flexShrink: 0, alignSelf: "flex-start" }}>Track package</ButtonLink> : null}
+                    <Button component="a" href={link.href} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" endIcon={<Icon name="arrowUpRight" sx={{ fontSize: 14 }} />} sx={{ flexShrink: 0, alignSelf: "flex-start" }}>{act("trackParcel")}</Button>
+                  ) : <ButtonLink href={link.href} sx={{ flexShrink: 0, alignSelf: "flex-start" }}>{act("trackParcel")}</ButtonLink> : null}
                 </Stack>
               )
             }) : <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>No tracking number yet. Please check back after dispatch.</Typography>}
@@ -187,7 +191,7 @@ function OrderCard({ order }: { order: CustomerOrder }) {
               </Stack>
             </Grid>
           </Grid>
-          <ButtonLink href={`/contact?subject=${encodeURIComponent(`Order ${number}`)}`} variant="outlined" sx={{ mt: 3 }}>Get help with this order</ButtonLink>
+          <ButtonLink href={`/contact?subject=${encodeURIComponent(`Order ${number}`)}`} variant="outlined" sx={{ mt: 3 }}>{act("orderHelp")}</ButtonLink>
         </AccordionDetails>
       </Accordion>
     </Paper>

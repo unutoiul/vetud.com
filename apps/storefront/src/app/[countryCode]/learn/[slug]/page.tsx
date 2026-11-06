@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import Link from "@mui/material/Link"
 import Skeleton from "@mui/material/Skeleton"
@@ -47,6 +48,7 @@ export default function PeptidePage({ params }: PageProps<"/[countryCode]/learn/
 }
 
 async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/learn/[slug]">, "params">) {
+  const act = await getTranslations("Actions")
   const { slug } = await params
   const peptide = getPeptide(slug)
   if (!peptide) notFound()
@@ -64,7 +66,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
   const text = [peptide.oneLiner, peptide.whatItIs, peptide.howItWorks, ...peptide.findings, ...unknowns, ...peptide.risks, peptide.statusNote]
   const contents = [
     { id: "at-a-glance", label: "At a glance" },
-    { id: "what-it-is", label: `What is ${peptide.name}?` },
+    { id: "what-it-is", label: act("whatIsPeptide", { peptide: peptide.name }) },
     { id: "how-it-works", label: "How it works" },
     { id: "research", label: "Research findings" },
     ...(inChart ? [{ id: "comparison", label: "Weight-loss comparison" }] : []),
@@ -110,13 +112,13 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
           {peptide.pubchem ? <Box component="details" sx={{ mt: 2.5, p: 2, border: "1px solid", borderColor: "divider", borderRadius: "8px", "& summary": { cursor: "pointer", minHeight: 44, alignContent: "center", color: "brand.blue", fontSize: 15, fontWeight: 600 } }}>
             <summary>View the chemical structure</summary>
             <Box sx={{ position: "relative", height: 300, mt: 2 }}><Image src={`/images/learn/structures/${peptide.slug}.webp`} alt={`Chemical structure of ${peptide.name}, from PubChem`} fill sizes="(max-width: 600px) 85vw, 600px" style={{ objectFit: "contain" }} /></Box>
-            <Link href={`https://pubchem.ncbi.nlm.nih.gov/compound/${peptide.pubchem}`} target="_blank" rel="noopener noreferrer" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14 }}>Chemical structure source: PubChem</Link>
+            <Link href={`https://pubchem.ncbi.nlm.nih.gov/compound/${peptide.pubchem}`} target="_blank" rel="noopener noreferrer" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14 }}>{act("chemicalSource")}</Link>
           </Box> : null}
         </ReadingSection>
         <ReadingSection id="research" title="What does the research show?">
           {peptide.results?.length ? <Box sx={{ mb: 3 }}><StudyResults results={peptide.results} sources={peptide.sources} /></Box> : null}
           <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{peptide.findings.map(finding => <li key={finding}>{finding}</li>)}</Box>
-          <AppLink href="#sources" sx={{ mt: 2, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>Read the original studies and references</AppLink>
+          <AppLink href="#sources" sx={{ mt: 2, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>{act("readStudies")}</AppLink>
         </ReadingSection>
         {inChart ? <ReadingSection id="comparison" title="How do the weight-loss results compare?"><WeightLossChart highlight={peptide.slug} /></ReadingSection> : null}
         {unknowns.length ? <ReadingSection id="unknowns" title="What we don't know yet">
@@ -148,7 +150,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
       </Box> : null}
       <Typography component="h2" sx={{ fontSize: { xs: 25, md: 30 }, fontWeight: 650, mb: 3, color: "brand.navy" }}>Continue exploring</Typography>
       <Suspense fallback={<Skeleton height={360} />}><RelatedProfiles slugs={related.map(other => other.slug)} /></Suspense>
-      <AppLink href="/learn" sx={{ mt: 3, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>Explore the full peptide library</AppLink>
+      <AppLink href="/learn" sx={{ mt: 3, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>{act("peptideLibrary")}</AppLink>
     </Section>
   </>
 }

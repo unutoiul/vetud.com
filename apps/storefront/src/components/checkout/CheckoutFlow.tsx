@@ -2,6 +2,7 @@
 
 import type { HttpTypes } from "@medusajs/types"
 import { useLocale, useTranslations } from "next-intl"
+import { translateAction } from "@/i18n/actions"
 import { getCountryRules } from "@/i18n/config"
 import { normalizeAddress, formatAddressLines } from "@/lib/address"
 import Icon, { type IconName, LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
@@ -47,7 +48,7 @@ const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, l
 const StripePaymentForm = dynamic(() => import("./StripePaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
 const PayPalPaymentForm = dynamic(() => import("./PayPalPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={48} /> })
 
-/** `titleKey` names the translated title in the Checkout messages; descriptions stay in English. */
+/** Display labels are translated without changing payment provider identifiers. */
 const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payCard" | "payBank" | "payCrypto"; description: string; icon?: IconName }> = {
   [NMI_PROVIDER_ID]: {
     icon: "card",
@@ -132,7 +133,10 @@ function arrivalWindow(description: string | null | undefined, locale: string) {
 
 function selectableSx(selected: boolean) {
   return {
-    display: "flex",
+    display: "grid",
+    gridTemplateColumns: "auto minmax(0, 1fr)",
+    minWidth: 0,
+    overflowWrap: "anywhere",
     alignItems: "center",
     gap: 1,
     width: "100%",
@@ -161,6 +165,7 @@ function CheckoutRoute() {
 }
 
 function CheckoutContent() {
+  const act = useTranslations("Actions")
   const { cart, cartReady } = useStore()
   const { customer, loading: accountLoading } = useAccount()
   const [completedOrderId, setCompletedOrderId] = useState<string | null>(null)
@@ -185,7 +190,7 @@ function CheckoutContent() {
           Your cart is empty.
         </Typography>
         <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>
-          Shop the catalog
+          {act("shopCatalog")}
         </ButtonLink>
       </Stack>
     )
@@ -200,6 +205,7 @@ function CheckoutContent() {
 }
 
 function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; customer: HttpTypes.StoreCustomer; onCompleted: (orderId: string) => void }) {
+  const act = useTranslations("Actions")
   const t = useTranslations("Checkout")
   const locale = useLocale()
   const money = useMoney()
@@ -542,11 +548,11 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
                           <Box sx={{ flex: 1, py: 0.75 }}>
                             <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                               <Icon name={label.icon ?? "lock"} fontSize="small" sx={{ color: "secondary.main" }} />
-                              <Typography sx={{ fontWeight: 600 }}>{label.titleKey ? t(label.titleKey) : label.title}</Typography>
+                              <Typography sx={{ fontWeight: 600 }}>{label.titleKey ? t(label.titleKey) : translateAction(act, label.title)}</Typography>
                             </Stack>
                             {selected && label.description ? (
                               <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-                                {label.description}
+                                {translateAction(act, label.description)}
                               </Typography>
                             ) : null}
                           </Box>
@@ -888,7 +894,7 @@ function DeliverySection({
               const arrival = arrivalWindow(description, locale)
               const tracked = /tracked/i.test(description ?? "")
               return (
-                <Box key={option.id} component="label" sx={selectableSx(selected === option.id)}>
+                <Box key={option.id} component="label" sx={{ ...selectableSx(selected === option.id), gridTemplateColumns: "auto minmax(0, 1fr) auto" }}>
                   <Radio value={option.id} disabled={busy} />
                   <Box sx={{ flex: 1, minWidth: 0, py: 0.5 }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", flexWrap: "wrap" }}>
@@ -937,6 +943,7 @@ function PayPanel({
   createPayPalOrder: () => Promise<string>
   onPayPalApprove: (orderId: string) => Promise<void>
 }) {
+  const act = useTranslations("Actions")
   const money = useMoney()
   const total = money(Number(cart.total ?? 0), cart.currency_code)
   const nmiSession = provider === NMI_PROVIDER_ID ? readNmiSession(cart) : null
@@ -946,10 +953,10 @@ function PayPanel({
     <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
       {provider === NMI_PROVIDER_ID ? (
         nmiSession ? <NmiPaymentForm key={`${nmiSession.id}:${nmiCartFingerprint(cart)}`} session={nmiSession} busy={busy} onToken={onNmiToken} />
-          : <Alert severity="warning" action={<Button onClick={onRefresh}>Refresh</Button>}>Your secure payment session needs refreshing.</Alert>
+          : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>Your secure payment session needs refreshing.</Alert>
       ) : provider === STRIPE_PROVIDER_ID ? (
         stripeSecret ? <StripePaymentForm key={stripeSecret} clientSecret={stripeSecret} amountLabel={total} billingDetails={stripeBillingDetails(cart)} busy={busy} onPay={onStripePay} />
-          : <Alert severity="warning" action={<Button onClick={onRefresh}>Refresh</Button>}>Your card payment session needs refreshing.</Alert>
+          : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>Your card payment session needs refreshing.</Alert>
       ) : provider === PAYPAL_PROVIDER_ID ? (
         payPalConfig ? <PayPalPaymentForm key={`${cart.id}:${payPalConfig.client_id}:${payPalConfig.currency}:${payPalConfig.intent}`} config={payPalConfig} busy={busy} createOrder={createPayPalOrder} onApprove={onPayPalApprove} />
           : <Alert severity="warning">PayPal is unavailable. Please choose another payment method.</Alert>
@@ -964,9 +971,9 @@ function PayPanel({
         >
           {busy
             ? provider === PAYPAL_PROVIDER_ID
-              ? "Opening PayPal…"
-              : "Placing order…"
-            : `${provider === PAYPAL_PROVIDER_ID ? "Pay with PayPal" : "Place order"} · ${total}`}
+              ? act("openingPayPal")
+              : act("placingOrder")
+            : act("orderAmount", { action: provider === PAYPAL_PROVIDER_ID ? act("payPal") : act("placeOrder"), amount: total })}
         </Button>
       )}
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 2, fontSize: 13 }}>

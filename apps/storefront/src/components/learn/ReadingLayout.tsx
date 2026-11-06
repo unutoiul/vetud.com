@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl"
+import { translateAction } from "@/i18n/actions"
 import Box from "@mui/material/Box"
 import Breadcrumbs from "@mui/material/Breadcrumbs"
 import Typography from "@mui/material/Typography"
@@ -22,12 +24,13 @@ export function ReadingHeader({ title, description, breadcrumbs, image, variant 
   title: string; description: string; breadcrumbs: { label: string; href?: string }[]
   image?: LearnIllustration; variant?: ArticleArtVariant; uid: string; minutes: number; meta?: ReactNode; children?: ReactNode
 }) {
+  const act = useTranslations("Actions")
   const dot = <Box component="span" aria-hidden sx={{ width: 3, height: 3, borderRadius: "50%", bgcolor: "brand.lineStrong" }} />
   return <Box component="header">
     <Box sx={{ px: gutter, pt: { xs: 3, md: 5 }, pb: { xs: 3.5, md: 5 }, bgcolor: "brand.paper" }}>
       <Box sx={{ maxWidth: READING_WIDTH, mx: "auto" }}>
-        <Breadcrumbs aria-label="Breadcrumb" sx={{ fontSize: 13, mb: { xs: 2.5, md: 4 }, "& a": { minHeight: 32, display: "inline-flex", alignItems: "center" } }}>
-          {breadcrumbs.map(item => item.href ? <AppLink key={item.label} href={item.href}>{item.label}</AppLink> : <Typography key={item.label} component="span" sx={{ fontSize: "inherit", color: "brand.navySoft" }} aria-current="page">{item.label}</Typography>)}
+        <Breadcrumbs aria-label={act("breadcrumb")} sx={{ fontSize: 13, mb: { xs: 2.5, md: 4 }, "& a": { minHeight: 32, display: "inline-flex", alignItems: "center" } }}>
+          {breadcrumbs.map(item => item.href ? <AppLink key={item.label} href={item.href}>{translateAction(act, item.label)}</AppLink> : <Typography key={item.label} component="span" sx={{ fontSize: "inherit", color: "brand.navySoft" }} aria-current="page">{translateAction(act, item.label)}</Typography>)}
         </Breadcrumbs>
         <Box sx={{ maxWidth: 880 }}>
           {meta ? <Box sx={{ mb: { xs: 2, md: 2.5 }, display: "flex", flexWrap: "wrap", gap: 1.5, alignItems: "center", fontSize: 13.5, color: "brand.navySoft" }}>{meta}</Box> : null}
@@ -35,9 +38,9 @@ export function ReadingHeader({ title, description, breadcrumbs, image, variant 
           <Typography sx={{ mt: { xs: 2, md: 3 }, fontSize: { xs: 18, md: 21 }, lineHeight: 1.6, color: "brand.navySoft", maxWidth: "62ch", textWrap: "pretty" }}>{description}</Typography>
           {children}
           <Box sx={{ mt: { xs: 2.5, md: 3.5 }, display: "flex", flexWrap: "wrap", columnGap: 1.5, rowGap: .5, fontSize: 14, color: "brand.navySoft", alignItems: "center" }}>
-            <AppLink href="/learn" sx={{ fontSize: "inherit", color: "brand.navy", minHeight: 32, display: "inline-flex", alignItems: "center", fontWeight: 700 }}>By VETUD Learn</AppLink>
+            <AppLink href="/learn" sx={{ fontSize: "inherit", color: "brand.navy", minHeight: 32, display: "inline-flex", alignItems: "center", fontWeight: 700 }}>{act("byLearn")}</AppLink>
             {dot}<span>{minutes} min read</span>
-            {dot}<AppLink href="#sources" sx={{ fontSize: "inherit", minHeight: 32, display: "inline-flex", alignItems: "center" }}>View sources</AppLink>
+            {dot}<AppLink href="#sources" sx={{ fontSize: "inherit", minHeight: 32, display: "inline-flex", alignItems: "center" }}>{act("viewSources")}</AppLink>
           </Box>
         </Box>
       </Box>

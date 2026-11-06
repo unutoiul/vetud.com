@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl"
+import { getTranslations } from "next-intl/server"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Skeleton from "@mui/material/Skeleton"
@@ -32,11 +34,12 @@ export async function generateMetadata({ searchParams }: PageProps<"/[countryCod
 const PAGE_SIZE = 20
 
 export default function CommunityPage({ searchParams }: PageProps<"/[countryCode]/community">) {
+  const act = useTranslations("Actions")
   return <>
     <PageHeader eyebrow="Community" title="Research, discussed in the open." description="Ask questions and talk through the research with other members and verified experts, by topic. No doses, no hype.">
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-        <ButtonLink href="/community/new?kind=question" variant="contained" size="large">Ask a question</ButtonLink>
-        <ButtonLink href="/community/new?kind=discussion" variant="outlined" size="large">Start a discussion</ButtonLink>
+        <ButtonLink href="/community/new?kind=question" variant="contained" size="large">{act("askQuestion")}</ButtonLink>
+        <ButtonLink href="/community/new?kind=discussion" variant="outlined" size="large">{act("startDiscussion")}</ButtonLink>
       </Box>
     </PageHeader>
     <Section tone="white" sx={{ py: { xs: 4, md: 6 } }}>
@@ -93,18 +96,26 @@ function CommunityStats({ stats }: { stats: ForumStats }) {
 }
 
 function TopicHeader({ topic, threads }: { topic: CommunityTopic; threads: number }) {
-  return <Box component="header" sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 2, p: { xs: 2.5, md: 3 }, mb: 3, bgcolor: "brand.mintWash", borderRadius: "12px" }}>
-    <Box aria-hidden sx={{ width: 48, height: 48, flexShrink: 0, borderRadius: "12px", bgcolor: "#fff", color: "brand.blue", display: "grid", placeItems: "center" }}><Icon name={topic.icon} sx={{ fontSize: 24 }} /></Box>
-    <Box sx={{ flex: "1 1 280px", minWidth: 0 }}>
-      <Typography component="h2" sx={{ fontSize: { xs: 22, md: 26 }, fontWeight: 650, letterSpacing: "-.02em", lineHeight: 1.25 }}>{topic.name}</Typography>
-      <Typography sx={{ mt: .5, fontSize: 14.5, color: "brand.navySoft", lineHeight: 1.6 }}>{topic.description}{threads ? ` · ${plural(threads, "thread")}` : ""}</Typography>
+  const act = useTranslations("Actions")
+  return <Box component="header" sx={{ p: { xs: 2.5, md: 3.5 }, mb: 3, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "brand.mint", borderRadius: "16px" }}>
+    <Box sx={{ display: "flex", alignItems: "center", gap: 1.25, mb: 2 }}>
+      <Box aria-hidden sx={{ width: 40, height: 40, flexShrink: 0, borderRadius: "11px", bgcolor: "background.paper", color: "brand.blue", display: "grid", placeItems: "center" }}><Icon name={topic.icon} sx={{ fontSize: 22 }} /></Box>
+      <Typography sx={{ fontSize: 12, fontWeight: 650, letterSpacing: ".08em", textTransform: "uppercase", color: "brand.navySoft" }}>Community topic</Typography>
+      <Typography component="span" sx={{ ml: "auto", flexShrink: 0, px: 1.25, py: .5, borderRadius: "999px", bgcolor: "background.paper", color: "brand.navySoft", fontSize: 12, fontWeight: 600, fontVariantNumeric: "tabular-nums" }}>{plural(threads, "thread")}</Typography>
     </Box>
-    <ButtonLink href={`/community/new?kind=question&topic=${topic.id}`} variant="contained">Ask in {topic.name}</ButtonLink>
+    <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, alignItems: { xs: "stretch", sm: "center" }, gap: { xs: 2.5, sm: 3 } }}>
+      <Box sx={{ flex: 1, minWidth: 0 }}>
+        <Typography component="h2" sx={{ fontSize: { xs: 25, md: 30 }, fontWeight: 650, letterSpacing: "-.035em", lineHeight: 1.2, textWrap: "balance" }}>{topic.name}</Typography>
+        <Typography sx={{ mt: 1, maxWidth: 580, fontSize: 14.5, color: "brand.navySoft", lineHeight: 1.7 }}>{topic.description}</Typography>
+      </Box>
+      <ButtonLink href={`/community/new?kind=question&topic=${topic.id}`} variant="contained" startIcon={<Icon name="plus" sx={{ fontSize: 18 }} />} sx={{ flexShrink: 0, minHeight: 48, borderRadius: "10px", whiteSpace: "nowrap", px: 2.5, "& .MuiButton-startIcon": { mr: 1 } }}>{act("askQuestion")}</ButtonLink>
+    </Box>
   </Box>
 }
 
 /** How the community works, guidelines, and the invitation for experts. */
 function SideNotes() {
+  const act = useTranslations("Actions")
   return <Box sx={{ display: "grid", gap: 2 }}>
     <Box sx={{ p: 2.5, border: "1px solid", borderColor: "divider", borderRadius: "10px" }}>
       <Typography component="h2" sx={{ fontSize: 15, fontWeight: 650, color: "brand.navy" }}>Good threads here</Typography>
@@ -114,18 +125,19 @@ function SideNotes() {
         <li>Leave out doses and personal protocols.</li>
         <li>Mark the most helpful answer as best.</li>
       </Box>
-      <AppLink href="/community/guidelines" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, fontWeight: 600 }}>Read the community guidelines</AppLink>
+      <AppLink href="/community/guidelines" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, fontWeight: 600 }}>{act("communityGuidelines")}</AppLink>
     </Box>
     <Box sx={{ p: 2.5, bgcolor: "brand.navy", color: "#fff", borderRadius: "10px" }}>
       <Icon name="shield" sx={{ fontSize: 22, color: "#abcce3" }} />
       <Typography component="h2" sx={{ mt: 1, fontSize: 15, fontWeight: 650 }}>Doctor or researcher?</Typography>
       <Typography sx={{ mt: .5, fontSize: 13.5, lineHeight: 1.6, color: "rgba(255,255,255,.8)" }}>Verified experts get a badge with their credentials, and their answers are pinned.</Typography>
-      <AppLink href="/community/apply" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, fontWeight: 650, color: "#fff", textDecorationColor: "rgba(255,255,255,.5)" }}>Apply to be verified →</AppLink>
+      <AppLink href="/community/apply" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, fontWeight: 650, color: "#fff", textDecorationColor: "rgba(255,255,255,.5)" }}>{act("applyVerified")}</AppLink>
     </Box>
   </Box>
 }
 
 async function ThreadList({ filters, page, topic, empty }: { filters: Filters; page: number; topic?: CommunityTopic; empty: boolean }) {
+  const act = await getTranslations("Actions")
   let result
   try {
     result = await listForumThreads({ ...filters, offset: (page - 1) * PAGE_SIZE, limit: PAGE_SIZE })
@@ -159,8 +171,8 @@ async function ThreadList({ filters, page, topic, empty }: { filters: Filters; p
         <Typography sx={{ fontSize: 18, fontWeight: 650 }}>{filters.q ? `No threads match “${filters.q}”` : filters.lot ? `No reports on lot ${filters.lot} yet` : "No threads match these filters"}</Typography>
         <Typography sx={{ mt: 1, color: "brand.navySoft", maxWidth: 480, mx: "auto" }}>Try a shorter search or clear a filter. If nobody has asked yet, you can be the first.</Typography>
         <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 1.5, mt: 2.5 }}>
-          <ButtonLink href={composeHref} variant="contained">{filters.q ? "Ask this question" : "Start a thread"}</ButtonLink>
-          <ButtonLink href={topic ? `/community?topic=${topic.id}` : "/community"} variant="outlined">Clear filters</ButtonLink>
+          <ButtonLink href={composeHref} variant="contained">{filters.q ? act("askThis") : act("startThread")}</ButtonLink>
+          <ButtonLink href={topic ? `/community?topic=${topic.id}` : "/community"} variant="outlined">{act("clearFilters")}</ButtonLink>
         </Box>
       </Box>
       : <Box sx={{ p: { xs: 3, md: 4 }, border: "1px solid", borderColor: "divider", borderRadius: "12px", bgcolor: "brand.paper" }}>
@@ -171,12 +183,12 @@ async function ThreadList({ filters, page, topic, empty }: { filters: Filters; p
           {topic ? "Questions people often have about this topic. Pick one to start with it filled in, or write your own." : "The community is just starting. Pick a question to ask, or write your own. Experts and members answer in the open."}
         </Typography>
         <StarterPrompts topic={topic} prompts={topic?.prompts ?? COMMUNITY_TOPICS[0].prompts} />
-        <ButtonLink href={composeHref} variant="contained" sx={{ mt: 2.5 }}>Write your own</ButtonLink>
+        <ButtonLink href={composeHref} variant="contained" sx={{ mt: 2.5 }}>{act("writeOwn")}</ButtonLink>
       </Box>}
-    {pages > 1 ? <Box component="nav" aria-label="Pages" sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 3, pt: 2, borderTop: "1px solid", borderColor: "divider", fontSize: 14 }}>
-      {page > 1 ? <AppLink href={query(page - 1)} rel="prev">← Previous</AppLink> : <span />}
+    {pages > 1 ? <Box component="nav" aria-label={act("pages")} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 3, pt: 2, borderTop: "1px solid", borderColor: "divider", fontSize: 14 }}>
+      {page > 1 ? <AppLink href={query(page - 1)} rel="prev">{act("previous")}</AppLink> : <span />}
       <Typography component="span" sx={{ fontSize: 14, color: "brand.navySoft" }}>Page {page} of {pages}</Typography>
-      {page < pages ? <AppLink href={query(page + 1)} rel="next">Next →</AppLink> : <span />}
+      {page < pages ? <AppLink href={query(page + 1)} rel="next">{act("next")}</AppLink> : <span />}
     </Box> : null}
   </Box>
 }

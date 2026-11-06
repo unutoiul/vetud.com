@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl"
+import { translateAction } from "@/i18n/actions"
 import Box from "@mui/material/Box"
 import type { ReactNode } from "react"
 import Typography from "@mui/material/Typography"
@@ -33,6 +35,7 @@ const bodyStyle = { fontSize: 14, lineHeight: 1.95, color: "text.secondary", max
  * yet, risks, and sources.
  */
 function Overview({ overview }: { overview: ProductOverview }) {
+  const act = useTranslations("Actions")
   const heading = { component: "h3", sx: { fontSize: 17, fontWeight: 650, color: "text.primary", mb: 1.25 } } as const
   const list = { m: 0, pl: 2.5, maxWidth: 800, "& li": { ...bodyStyle, fontSize: 15, lineHeight: 1.8, mb: .75 } }
   return <>
@@ -66,7 +69,7 @@ function Overview({ overview }: { overview: ProductOverview }) {
       <Typography variant="mono" component="h3" sx={{ mt: 3.5, mb: 1.5, fontSize: 10, color: "brand.blue", letterSpacing: ".12em" }}>SOURCES</Typography>
       <Box sx={{ display: "grid", gap: 1.75 }}>{overview.sources.map(source => <Box key={source.url} component="a" href={source.url} target="_blank" rel="noopener noreferrer" sx={{ display: "flex", gap: 2, alignItems: "flex-start", textDecoration: "none", "&:hover": { color: "brand.blue" } }}><Icon name="document" sx={{ color: "brand.blue", fontSize: 20, mt: .3, flexShrink: 0 }} /><Box><Typography sx={{ fontSize: 13, lineHeight: 1.7, fontWeight: 600 }}>{source.title} ↗</Typography><Typography sx={{ mt: .25, fontSize: 11.5, color: "text.secondary" }}>{source.detail}</Typography></Box></Box>)}</Box>
     </> : null}
-    {overview.guides.length === 1 ? <AppLink href={`/learn/${overview.guides[0].slug}`} sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 3, minHeight: 44, fontSize: 14, fontWeight: 600 }}>Read the full {overview.guides[0].name} guide <Icon name="arrowRight" sx={{ fontSize: 16 }} /></AppLink> : null}
+    {overview.guides.length === 1 ? <AppLink href={`/learn/${overview.guides[0].slug}`} sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 3, minHeight: 44, fontSize: 14, fontWeight: 600 }}>{act("fullGuide", { product: overview.guides[0].name })} <Icon name="arrowRight" sx={{ fontSize: 16 }} /></AppLink> : null}
   </>
 }
 
@@ -81,12 +84,13 @@ export default function ProductDossier({ overview, description, specs, meta, tit
   /** Shown in small type under the specifications rather than as a table row. */
   skus?: string
 }) {
+  const act = useTranslations("Actions")
   const money = useMoney()
   const items = formats ? [{ id: "formats", label: formatsLabel }, ...sections] : sections
   return <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "230px minmax(0, 1fr)" }, gap: { xs: 3, md: 8 }, mt: { xs: 5, md: 9 } }}>
-    <Box component="nav" aria-label="Product dossier" sx={{ minWidth: 0, width: "100%", alignSelf: "start", position: { md: "sticky" }, top: 125 }}>
+    <Box component="nav" aria-label={act("productDossier")} sx={{ minWidth: 0, width: "100%", alignSelf: "start", position: { md: "sticky" }, top: 125 }}>
       <Typography variant="mono" component="p" sx={{ fontSize: 10, letterSpacing: ".14em", color: "brand.blue", mb: 2 }}>THE PRODUCT DOSSIER</Typography>
-      <Box sx={{ display: "flex", flexDirection: { xs: "row", md: "column" }, overflowX: "auto", gap: { xs: 2.5, md: 0 }, pb: 1 }}>{items.map((section, i) => <Box key={section.id} component="a" href={`#${section.id}`} sx={{ display: "flex", alignItems: "center", gap: 1.5, py: 1.3, textDecoration: "none", fontSize: 12, whiteSpace: "nowrap", color: "text.secondary", "&:hover": { color: "brand.blue" } }}><Typography variant="mono" sx={{ fontSize: 9, color: "brand.blue" }}>0{i + 1}</Typography>{section.label}</Box>)}</Box>
+      <Box sx={{ display: "flex", flexDirection: { xs: "row", md: "column" }, overflowX: "auto", gap: { xs: 2.5, md: 0 }, pb: 1 }}>{items.map((section, i) => <Box key={section.id} component="a" href={`#${section.id}`} sx={{ display: "flex", alignItems: "center", gap: 1.5, py: 1.3, textDecoration: "none", fontSize: 12, whiteSpace: "nowrap", color: "text.secondary", "&:hover": { color: "brand.blue" } }}><Typography variant="mono" sx={{ fontSize: 9, color: "brand.blue" }}>0{i + 1}</Typography>{translateAction(act, section.label)}</Box>)}</Box>
     </Box>
     <Box sx={{ minWidth: 0 }}>
       {formats ? <Box component="section" id="formats" aria-labelledby="formats-heading" sx={sectionStyle}>{formats}</Box> : null}
@@ -97,14 +101,14 @@ export default function ProductDossier({ overview, description, specs, meta, tit
       </Box>
       <Box component="section" id="specifications" aria-labelledby="specifications-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="specifications-heading" sx={{ mb: 2.5 }}>The material, in detail.</Typography>
-        <Table size="small" aria-label={`${title} specifications`} sx={{ maxWidth: 680 }}><TableBody>{specs.map(spec => <TableRow key={spec.label}><TableCell component="th" scope="row" sx={{ color: "text.secondary", fontSize: 12.5, width: { xs: "40%", sm: "34%" }, pl: 0, py: 1.25, verticalAlign: "top" }}>{spec.label}</TableCell><TableCell sx={{ fontSize: 13.5, lineHeight: 1.6, pr: 0, py: 1.25, overflowWrap: "anywhere", whiteSpace: "pre-line" }}>{spec.value}</TableCell></TableRow>)}</TableBody></Table>
+        <Table size="small" aria-label={act("specifications", { product: title })} sx={{ maxWidth: 680 }}><TableBody>{specs.map(spec => <TableRow key={spec.label}><TableCell component="th" scope="row" sx={{ color: "text.secondary", fontSize: 12.5, width: { xs: "40%", sm: "34%" }, pl: 0, py: 1.25, verticalAlign: "top" }}>{spec.label}</TableCell><TableCell sx={{ fontSize: 13.5, lineHeight: 1.6, pr: 0, py: 1.25, overflowWrap: "anywhere", whiteSpace: "pre-line" }}>{spec.value}</TableCell></TableRow>)}</TableBody></Table>
         {skus ? <Typography variant="mono" sx={{ display: "block", mt: 1.5, fontSize: 10, color: "text.secondary", overflowWrap: "anywhere", lineHeight: 1.8 }}>SKU {skus}</Typography> : null}
       </Box>
       <Box component="section" id="quality" aria-labelledby="quality-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="quality-heading" sx={{ mb: 2.5 }}>Know the batch behind the label.</Typography>
         <Typography sx={{ ...bodyStyle, mb: 2.5 }}>Use the lot number on your packaging to match the material to its analytical documentation. A purity percentage describes a reported analytical measurement; consult the certificate for the method, identity results and scope of testing.</Typography>
         <LotTable lots={meta.lots} productTitle={title} reports={lotReports} />
-        <AppLink href="/documentation" sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 2.5, fontSize: 12 }}>Open the lot register <Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></AppLink>
+        <AppLink href="/documentation" sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 2.5, fontSize: 12 }}>{act("lotRegister")} <Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></AppLink>
       </Box>
       <Box component="section" id="storage" aria-labelledby="storage-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="storage-heading" sx={{ mb: 2.5 }}>Preserve the integrity of your material.</Typography>
@@ -117,8 +121,8 @@ export default function ProductDossier({ overview, description, specs, meta, tit
           <Box sx={{ p: 3, border: "1px solid", borderColor: "divider", borderRadius: "5px" }}><Icon name="truck" sx={{ color: "brand.blue", mb: 1.5 }} /><Typography component="h3" sx={{ fontSize: 14, fontWeight: 600 }}>Standard delivery</Typography><Typography sx={{ ...bodyStyle, mt: .75 }}>3–5 business days, tracked.{freeShippingThreshold ? ` Free on orders over ${money(freeShippingThreshold, currencyCode, { whole: true })}.` : ""}</Typography></Box>
           <Box sx={{ p: 3, border: "1px solid", borderColor: "divider", borderRadius: "5px" }}><Icon name="clock" sx={{ color: "brand.blue", mb: 1.5 }} /><Typography component="h3" sx={{ fontSize: 14, fontWeight: 600 }}>Express delivery</Typography><Typography sx={{ ...bodyStyle, mt: .75 }}>1–2 business days, tracked. Available services and charges appear at checkout.</Typography></Box>
         </Box>
-        <Typography sx={bodyStyle}>Orders dispatch after payment confirmation. Products travel in protective packaging; follow the supplied storage requirements when they arrive. See our <AppLink href="/legal/shipping">shipping policy</AppLink> and <AppLink href="/legal/returns">returns policy</AppLink> for full details.</Typography>
-        <AppLink href={`/contact?subject=${encodeURIComponent(`Product enquiry: ${title}`)}`} sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 2.5, fontSize: 13 }}>Ask the VETUD team about this product <Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></AppLink>
+        <Typography sx={bodyStyle}>Orders dispatch after payment confirmation. Products travel in protective packaging; follow the supplied storage requirements when they arrive. See our <AppLink href="/legal/shipping">{act("shippingPolicy")}</AppLink> and <AppLink href="/legal/returns">{act("returnsPolicy")}</AppLink> for full details.</Typography>
+        <AppLink href={`/contact?subject=${encodeURIComponent(`Product enquiry: ${title}`)}`} sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 2.5, fontSize: 13 }}>{act("productHelp")} <Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></AppLink>
       </Box>
     </Box>
   </Box>

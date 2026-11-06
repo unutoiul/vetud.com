@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import { DownloadIcon } from "@/components/brand/Icon"
 import Skeleton from "@mui/material/Skeleton"
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
 }
 
 export default async function DocumentationPage() {
+  const act = await getTranslations("Actions")
   const { region } = await getCurrentRegion()
   const products = await listProducts({ regionId: region.id })
   const rows = products
@@ -58,7 +60,7 @@ export default async function DocumentationPage() {
           <Table aria-label="Lot register">
             <TableHead>
               <TableRow>
-                <TableCell scope="col">Lot</TableCell>
+                <TableCell scope="col">{act("lot")}</TableCell>
                 <TableCell scope="col">Product</TableCell>
                 <TableCell scope="col">Batch date</TableCell>
                 <TableCell scope="col">Purity</TableCell>
@@ -81,15 +83,15 @@ export default async function DocumentationPage() {
                   <TableCell>{lot.date ?? "—"}</TableCell>
                   <TableCell sx={{ fontVariantNumeric: "tabular-nums" }}>{lot.purity ?? "—"}</TableCell>
                   <TableCell sx={{ whiteSpace: "nowrap" }}>
-                    {reports[lot.lot] ? <AppLink href={`/community?lot=${encodeURIComponent(lot.lot)}`}>{reports[lot.lot]} {reports[lot.lot] === 1 ? "report" : "reports"}</AppLink> : "—"}
+                    {reports[lot.lot] ? <AppLink href={`/community?lot=${encodeURIComponent(lot.lot)}`}>{act("reports", { count: reports[lot.lot] })}</AppLink> : "—"}
                   </TableCell>
                   <TableCell align="right">
                     {lot.coaUrl ? (
                       <Box component="a" href={lot.coaUrl} target="_blank" rel="noopener" sx={{ display: "inline-flex", gap: 0.75, alignItems: "center", color: "secondary.main", fontWeight: 600 }}>
-                        <DownloadIcon sx={{ fontSize: 17 }} /> Download
+                        <DownloadIcon sx={{ fontSize: 17 }} /> {act("downloadCoa")}
                       </Box>
                     ) : (
-                      <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>Request</AppLink>
+                      <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>{act("request")}</AppLink>
                     )}
                   </TableCell>
                 </TableRow>
@@ -97,7 +99,7 @@ export default async function DocumentationPage() {
               {!rows.length ? (
                 <TableRow>
                   <TableCell colSpan={6} sx={{ py: 5, color: "text.secondary", textAlign: "center" }}>
-                    No lot records are published yet. <AppLink href="/contact">Contact the team</AppLink> for documentation.
+                    No lot records are published yet. <AppLink href="/contact">{act("contact")}</AppLink> for documentation.
                   </TableCell>
                 </TableRow>
               ) : null}

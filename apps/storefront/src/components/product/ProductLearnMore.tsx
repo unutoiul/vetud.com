@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Icon from "@/components/brand/Icon"
@@ -28,6 +29,7 @@ function Group({ id, title, link, children }: { id: string; title: string; link?
  * compound of a blend). Products the library doesn't cover get the guides to reading research.
  */
 export default function ProductLearnMore({ title, guides }: { title: string; guides: PeptideProfile[] }) {
+  const act = useTranslations("Actions")
   const slugs = guides.map((guide) => guide.slug)
   const articles = ARTICLES.filter((article) => !LEARNING_GUIDES.includes(article) && article.peptides.some((slug) => slugs.includes(slug))).slice(0, 3)
   const readingGuides = articles.length ? [] : LEARNING_GUIDES.slice(0, 2)
@@ -48,7 +50,7 @@ export default function ProductLearnMore({ title, guides }: { title: string; gui
       </Typography>
 
       {guides.length ? (
-        <Group id="product-guides-title" title={guides.length > 1 ? "Guides to each compound" : "The guide"} link={{ href: "/learn", label: "All peptide guides" }}>
+        <Group id="product-guides-title" title={guides.length > 1 ? act("compoundGuides") : act("theGuide")} link={{ href: "/learn", label: "All peptide guides" }}>
           <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))", md: "repeat(4, minmax(0, 1fr))" }, gap: 3 }}>
             {guides.slice(0, 4).map((guide) => <PeptideCard key={guide.slug} peptide={guide} />)}
           </Box>
@@ -56,7 +58,7 @@ export default function ProductLearnMore({ title, guides }: { title: string; gui
       ) : null}
 
       {articles.length || readingGuides.length ? (
-        <Group id="product-news-title" title={articles.length ? "In the news" : "Reading the research"} link={{ href: "/news", label: "All news" }}>
+        <Group id="product-news-title" title={articles.length ? act("inNews") : act("readingResearch")} link={{ href: "/news", label: "All news" }}>
           <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" }, gap: 4 }}>
             {(articles.length ? articles : readingGuides).map((article) => <ArticleCard key={article.slug} article={article} />)}
           </Box>
@@ -64,7 +66,7 @@ export default function ProductLearnMore({ title, guides }: { title: string; gui
       ) : null}
 
       {videos.length ? (
-        <Group id="product-videos-title" title="Videos" link={{ href: "/videos", label: "All videos" }}>
+        <Group id="product-videos-title" title={act("videos")} link={{ href: "/videos", label: "All videos" }}>
           <VideoGallery videos={videos} connections={connections} columns={videos.length <= 2 ? 2 : 3} />
         </Group>
       ) : null}

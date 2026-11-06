@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -23,6 +25,7 @@ const ACCEPT = "image/jpeg,image/png,image/webp"
  * backend strips location data and resizes each photo.
  */
 export default function ImagePicker({ images, onChange, disabled = false }: { images: ForumImage[]; onChange: (images: ForumImage[]) => void; disabled?: boolean }) {
+  const act = useTranslations("Actions")
   const input = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(0)
   const [error, setError] = useState<string | null>(null)
@@ -57,15 +60,15 @@ export default function ImagePicker({ images, onChange, disabled = false }: { im
     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5, alignItems: "center" }}>
       {images.map((image, index) => <Box key={image.id} sx={{ position: "relative", width: 96, height: 96, borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: "brand.mintWash" }}>
         <Image src={image.url} alt={`Photo ${index + 1}`} fill sizes="96px" unoptimized style={{ objectFit: "cover" }} />
-        <IconButton size="small" aria-label={`Remove photo ${index + 1}`} onClick={() => onChange(images.filter(entry => entry.id !== image.id))} disabled={disabled}
+        <IconButton size="small" aria-label={act("removePhoto", { number: index + 1 })} onClick={() => onChange(images.filter(entry => entry.id !== image.id))} disabled={disabled}
           sx={{ position: "absolute", top: 4, right: 4, bgcolor: "rgba(255,255,255,.92)", "&:hover": { bgcolor: "#fff" } }}>
           <Icon name="close" sx={{ fontSize: 16 }} />
         </IconButton>
       </Box>)}
-      {Array.from({ length: uploading }, (_, index) => <Box key={`uploading-${index}`} role="status" aria-label="Uploading photo"
+      {Array.from({ length: uploading }, (_, index) => <Box key={`uploading-${index}`} role="status" aria-label={act("uploadingPhoto")}
         sx={{ width: 96, height: 96, borderRadius: "8px", border: "1px dashed", borderColor: "divider", display: "grid", placeItems: "center" }}><CircularProgress size={22} /></Box>)}
       {room > 0 && !uploading ? <Button variant="outlined" onClick={() => input.current?.click()} disabled={disabled} startIcon={<Icon name="plus" sx={{ fontSize: 18 }} />}>
-        {images.length ? "Add more photos" : "Add photos"}
+        {images.length ? act("addPhotos") : act("addPhotos")}
       </Button> : null}
       <input ref={input} type="file" accept={ACCEPT} multiple hidden onChange={event => void upload(event.target.files)} />
     </Box>

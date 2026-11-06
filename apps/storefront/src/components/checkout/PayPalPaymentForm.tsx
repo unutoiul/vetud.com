@@ -1,5 +1,7 @@
 "use client"
 
+import { useLocale, useTranslations } from "next-intl"
+
 import { DISPATCH_ACTION, PayPalButtons, PayPalScriptProvider, usePayPalScriptReducer } from "@paypal/react-paypal-js"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -15,10 +17,19 @@ type Props = {
   onApprove: (orderId: string) => Promise<void>
 }
 
+// PayPal's supported locales: https://developer.paypal.com/api/codes/locale/
+const PAYPAL_LOCALES: Record<string, string> = {
+  en: "en_US", cs: "cs_CZ", da: "da_DK", de: "de_DE", el: "el_GR", es: "es_ES",
+  fi: "fi_FI", fr: "fr_FR", hu: "hu_HU", it: "it_IT", nl: "nl_NL", nb: "no_NO",
+  pl: "pl_PL", pt: "pt_PT", sv: "sv_SE",
+}
+
 export default function PayPalPaymentForm(props: Props) {
+  const locale = useLocale()
   return (
     <PayPalScriptProvider options={{
       clientId: props.config.client_id,
+      locale: locale === "en-GB" ? "en_GB" : PAYPAL_LOCALES[locale.split("-")[0]],
       currency: props.config.currency.toUpperCase(),
       intent: props.config.intent || "capture",
       components: "buttons",
@@ -31,6 +42,7 @@ export default function PayPalPaymentForm(props: Props) {
 }
 
 function WalletButtons({ config, busy, createOrder, onApprove }: Props) {
+  const act = useTranslations("Actions")
   const [{ isPending, isRejected, options }, dispatch] = usePayPalScriptReducer()
   const [message, setMessage] = useState<string | null>(null)
   const [processing, setProcessing] = useState(false)
@@ -38,9 +50,9 @@ function WalletButtons({ config, busy, createOrder, onApprove }: Props) {
   return (
     <Box sx={{ maxWidth: 420 }}>
       {config.environment === "sandbox" ? <Alert severity="warning" sx={{ mb: 2 }}>PayPal sandbox — no real payment.</Alert> : null}
-      {isPending ? <Skeleton variant="rounded" height={48} aria-label="Loading PayPal" /> : null}
+      {isPending ? <Skeleton variant="rounded" height={48} aria-label={act("loadingPayPal")} /> : null}
       {isRejected ? (
-        <Alert severity="warning" action={<Button onClick={() => dispatch({ type: DISPATCH_ACTION.RESET_OPTIONS, value: options })}>Retry</Button>}>
+        <Alert severity="warning" action={<Button onClick={() => dispatch({ type: DISPATCH_ACTION.RESET_OPTIONS, value: options })}>{act("retry")}</Button>}>
           PayPal could not load. Try again or choose another payment method.
         </Alert>
       ) : null}

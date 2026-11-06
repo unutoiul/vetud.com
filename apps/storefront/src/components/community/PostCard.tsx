@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -34,6 +36,7 @@ const HIGHLIGHTS = {
 
 /** One post with its actions: helpful vote, report, best answer, and edit or delete for the author. */
 export default function PostCard({ post, thread, highlight, canAccept, canInteract, onChange, onDeleted, onAccept }: PostCardProps) {
+  const act = useTranslations("Actions")
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [editing, setEditing] = useState(false)
@@ -98,11 +101,11 @@ export default function PostCard({ post, thread, highlight, canAccept, canIntera
     </Alert> : null}
 
     {editing ? <Box>
-      <TextField value={draft} onChange={event => setDraft(event.target.value.slice(0, post.is_opening ? 10000 : 5000))} multiline minRows={4} fullWidth label="Edit your post" />
+      <TextField value={draft} onChange={event => setDraft(event.target.value.slice(0, post.is_opening ? 10000 : 5000))} multiline minRows={4} fullWidth label={act("editPost")} />
       {dose ? <Alert severity="warning" sx={{ mt: 1.5 }}>“{dose}” looks like a dose amount. The community doesn&apos;t share doses, so this post would wait for a moderator.</Alert> : null}
       <Box sx={{ display: "flex", gap: 1, mt: 1.5 }}>
-        <Button variant="contained" size="small" onClick={() => void saveEdit()} disabled={busy === "edit" || draft.trim().length < 2}>{busy === "edit" ? "Saving…" : "Save"}</Button>
-        <Button size="small" onClick={() => { setEditing(false); setDraft(post.body) }}>Cancel</Button>
+        <Button variant="contained" size="small" onClick={() => void saveEdit()} disabled={busy === "edit" || draft.trim().length < 2}>{busy === "edit" ? act("saving") : act("save")}</Button>
+        <Button size="small" onClick={() => { setEditing(false); setDraft(post.body) }}>{act("cancel")}</Button>
       </Box>
     </Box> : <PostBody body={post.body} size={post.is_opening ? 17 : 16} />}
     <PostImages images={post.images ?? []} author={post.author.display_name} />
@@ -112,20 +115,20 @@ export default function PostCard({ post, thread, highlight, canAccept, canIntera
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1, mt: 1.75 }}>
       <Button size="small" variant={post.voted ? "contained" : "outlined"} color="primary" onClick={() => void toggleHelpful()}
         disabled={!canInteract || post.mine || busy === "helpful" || post.status !== undefined && post.status !== "published"}
-        aria-pressed={post.voted} title={post.mine ? "You can't vote for your own post" : canInteract ? undefined : "Sign in and join the community to vote"}
+        aria-pressed={post.voted} title={post.mine ? act("ownVote") : canInteract ? undefined : act("joinToVote")}
         startIcon={<Icon name="check" sx={{ fontSize: 16 }} />} sx={{ minHeight: 34 }}>
-        Helpful{post.helpful_count ? ` · ${post.helpful_count}` : ""}
+        {act("helpful")}{post.helpful_count ? ` · ${post.helpful_count}` : ""}
       </Button>
       {canAccept && !post.is_opening && !post.mine && onAccept ? <Button size="small" variant={isAccepted ? "contained" : "text"} color="success" disabled={busy === "accept"}
         onClick={() => void run("accept", () => onAccept(isAccepted ? null : post.id), "We couldn't update the best answer.")}>
-        {isAccepted ? "Best answer ✓" : "Mark as best answer"}
+        {isAccepted ? act("bestAnswer") : act("markBestAnswer")}
       </Button> : null}
       {canInteract && !post.mine ? <Button size="small" color="inherit" disabled={reported} onClick={() => setReporting(true)} sx={{ color: "brand.navySoft", ml: "auto" }}>
-        {reported ? "Reported" : "Report"}
+        {reported ? act("reported") : act("reportPost")}
       </Button> : null}
       {post.mine && !editing ? <Box sx={{ ml: "auto", display: "flex", gap: .5 }}>
-        <Button size="small" onClick={() => { setDraft(post.body); setEditing(true) }}>Edit</Button>
-        <Button size="small" color="error" onClick={remove} disabled={busy === "delete"}>{busy === "delete" ? "Deleting…" : "Delete"}</Button>
+        <Button size="small" onClick={() => { setDraft(post.body); setEditing(true) }}>{act("edit")}</Button>
+        <Button size="small" color="error" onClick={remove} disabled={busy === "delete"}>{busy === "delete" ? act("deleting") : act("delete")}</Button>
       </Box> : null}
     </Box>
     {reporting ? <ReportDialog postId={post.id} open={reporting} onClose={() => setReporting(false)} onReported={() => setReported(true)} /> : null}

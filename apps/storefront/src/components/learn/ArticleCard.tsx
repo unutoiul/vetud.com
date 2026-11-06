@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { formatArticleDate, type Article } from "@/content/learn/articles"
@@ -15,6 +16,7 @@ export function ArticleHeadline({ headline, highlight = "brand.cyan" }: { headli
  * cropped. The featured card sets the image beside a larger headline from tablet width up.
  */
 export default function ArticleCard({ article, featured = false }: { article: Article; featured?: boolean }) {
+  const act = useTranslations("Actions")
   return (
     <Box component="article" sx={{ position: "relative", height: "100%", display: featured ? { xs: "flex", md: "grid" } : "flex", flexDirection: "column", gridTemplateColumns: { md: "minmax(0, 1.4fr) minmax(0, 1fr)" }, columnGap: { md: 5 }, alignItems: { md: featured ? "center" : undefined }, "&:hover .article-art": { transform: "scale(1.03)" }, "&:focus-within": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 5 } }}>
       <Box sx={{ position: "relative", borderRadius: featured ? "14px" : "8px", overflow: "hidden", aspectRatio: "16 / 9", border: "1px solid", borderColor: "divider", boxShadow: featured ? "0 24px 50px -32px rgba(21,38,94,.45)" : "none" }}>
@@ -32,7 +34,7 @@ export default function ArticleCard({ article, featured = false }: { article: Ar
           </AppLink>
         </Typography>
         <Typography sx={{ mt: featured ? 1.75 : 1, color: "text.secondary", fontSize: featured ? { xs: 16, md: 17 } : 14.5, lineHeight: 1.7 }}>{article.dek}</Typography>
-        {featured ? <Typography aria-hidden sx={{ mt: 2.5, fontSize: 15, fontWeight: 700, color: "brand.blue" }}>Read the article →</Typography> : null}
+        {featured ? <Typography aria-hidden sx={{ mt: 2.5, fontSize: 15, fontWeight: 700, color: "brand.blue" }}>{act("readArticle")}</Typography> : null}
       </Box>
     </Box>
   )

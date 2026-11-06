@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import type { Metadata } from "next"
@@ -15,13 +16,14 @@ export const metadata: Metadata = communityMetadata({
 })
 
 export default function ExpertApplicationPage() {
+  const act = useTranslations("Actions")
   return <>
     <PageHeader eyebrow="Community" title="Bring your expertise to the conversation." description="Help members understand peptide research. Tell us about your work and share a public credential we can check." />
     <Section tone="white" sx={{ py: { xs: 4, md: 7 } }}>
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, 1fr) 300px" }, gap: { xs: 5, md: 7 }, alignItems: "start" }}>
         <Box sx={{ minWidth: 0 }}>
-          <AppLink href="/community" sx={{ display: "inline-flex", alignItems: "center", gap: 1, minHeight: 44, mb: 2, fontSize: 14 }}><Icon name="arrowRight" sx={{ fontSize: 17, transform: "rotate(180deg)" }} /> Back to community</AppLink>
-          <Typography component="h2" variant="h4" sx={{ mb: 1 }}>Verified expert application</Typography>
+          <AppLink href="/community" sx={{ display: "inline-flex", alignItems: "center", gap: 1, minHeight: 44, mb: 2, fontSize: 14 }}><Icon name="arrowRight" sx={{ fontSize: 17, transform: "rotate(180deg)" }} /> {act("backCommunity")}</AppLink>
+          <Typography component="h2" variant="h4" sx={{ mb: 1 }}>{act("expertApplication")}</Typography>
           <Typography sx={{ color: "text.secondary", mb: 4 }}>Fields marked * are required. Your application is sent privately to the Vetud team for review.</Typography>
           <ExpertApplicationForm />
         </Box>
@@ -39,7 +41,7 @@ export default function ExpertApplicationPage() {
           <Typography variant="body2" sx={{ color: "text.secondary", lineHeight: 1.75 }}>Our team reviews your background and the link you provide. We’ll follow up by email if we need more information and to let you know the outcome.</Typography>
           <Box sx={{ borderTop: "1px solid", borderColor: "divider", mt: 3, pt: 3 }}>
             <Typography variant="body2" sx={{ color: "text.secondary", mb: 1 }}>Experts follow the same community rules: cite sources, disclose relevant interests, and leave out doses and personal protocols.</Typography>
-            <AppLink href="/community/guidelines" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14 }}>Read the community guidelines</AppLink>
+            <AppLink href="/community/guidelines" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14 }}>{act("communityGuidelines")}</AppLink>
           </Box>
         </Box>
       </Box>

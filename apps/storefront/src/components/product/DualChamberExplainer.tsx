@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
@@ -97,11 +98,14 @@ export function ExplainerVideo({ title = "The reusable VETUD dual-chamber pen" }
   )
 }
 
-const GUIDE_LINK = (
-  <AppLink href="/dual-chamber-pen" sx={{ mt: 1.5, display: "inline-flex", alignItems: "center", gap: 0.75, minHeight: 44, fontSize: 15, fontWeight: 600 }}>
-    Read the full guide: the reusable dual-chamber pen <Icon name="arrowRight" sx={{ fontSize: 18 }} />
-  </AppLink>
-)
+function GuideLink() {
+  const act = useTranslations("Actions")
+  return (
+    <AppLink href="/dual-chamber-pen" sx={{ mt: 1.5, display: "inline-flex", alignItems: "center", gap: 0.75, minHeight: 44, fontSize: 15, fontWeight: 600 }}>
+      {act("penGuide")} <Icon name="arrowRight" sx={{ fontSize: 18 }} />
+    </AppLink>
+  )
+}
 
 const HEADING = { component: "h2", variant: "h3", id: "formats-heading", sx: { mb: 2.5 } } as const
 
@@ -112,6 +116,7 @@ const HEADING = { component: "h2", variant: "h3", id: "formats-heading", sx: { m
  * pen kit box's place (Selank, Semax).
  */
 export default function DualChamberExplainer({ prices, photos, supply, spray }: { prices?: FormatPrices; photos?: FormatPhotos; supply?: boolean; spray?: boolean }) {
+  const act = useTranslations("Actions")
   if (supply) {
     return (
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "minmax(0, 5fr) minmax(0, 7fr)" }, gap: { xs: 3, md: 5 }, alignItems: "center" }}>
@@ -120,7 +125,7 @@ export default function DualChamberExplainer({ prices, photos, supply, spray }: 
           <Typography sx={{ fontSize: 15, lineHeight: 1.8, color: "text.secondary" }}>
             The cartridge fits the reusable VETUD dual-chamber pen. The vial is the lower-cost, multi-use option for your own lab supplies. The video shows how the pen holds a cartridge.
           </Typography>
-          {GUIDE_LINK}
+          {<GuideLink />}
         </Box>
         <ExplainerVideo />
       </Box>
@@ -129,16 +134,16 @@ export default function DualChamberExplainer({ prices, photos, supply, spray }: 
   const points = spray ? POINTS.map((point, index) => (index === 1 ? { ...point, text: SPRAY.pen } : point)) : POINTS
   return (
     <Box>
-      <Typography {...HEADING}>{spray ? "Nasal spray" : "Pen kit box"}, dual-chamber vial or vial?</Typography>
+      <Typography {...HEADING}>{spray ? act("nasalSpray") : act("penKit")}, dual-chamber vial or vial?</Typography>
       <Typography sx={{ maxWidth: 680, fontSize: 15, lineHeight: 1.8, color: "text.secondary" }}>
         {spray ? SPRAY.intro : "Every product comes three ways. It's the same peptide and the same amounts; what changes is the packaging, what's included and the price. Start with the pen kit box, which has the reusable pen, then refill it with dual-chamber vials."}
       </Typography>
 
       {photos ? (
         <Box sx={{ mt: { xs: 3, md: 4 }, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(3, minmax(0, 1fr))" }, gap: { xs: 2, md: 2.5 } }}>
-          <FormatCard id="format-box-title" title={spray ? SPRAY.title : "Pen kit box"} price={prices?.box} facts={spray ? SPRAY.facts : FACTS.box} photos={[photos.kit]} />
-          <FormatCard id="format-pen-title" title="Dual-chamber vial" price={prices?.pen} facts={FACTS.pen} photos={[{ ...photos.pen, slim: true }]} />
-          <FormatCard id="format-vial-title" title="Vial" price={prices?.vial} facts={FACTS.vial} photos={[photos.vial]} />
+          <FormatCard id="format-box-title" title={spray ? SPRAY.title : act("penKit")} price={prices?.box} facts={spray ? SPRAY.facts : FACTS.box} photos={[photos.kit]} />
+          <FormatCard id="format-pen-title" title={act("dualChamber")} price={prices?.pen} facts={FACTS.pen} photos={[{ ...photos.pen, slim: true }]} />
+          <FormatCard id="format-vial-title" title={act("vial")} price={prices?.vial} facts={FACTS.vial} photos={[photos.vial]} />
         </Box>
       ) : (
         <Box sx={{ mt: { xs: 3, md: 4 } }}><FormatComparison prices={prices} /></Box>
@@ -158,7 +163,7 @@ export default function DualChamberExplainer({ prices, photos, supply, spray }: 
         </Box>
         <Box>
           <ExplainerVideo />
-          {GUIDE_LINK}
+          {<GuideLink />}
         </Box>
       </Box>
     </Box>

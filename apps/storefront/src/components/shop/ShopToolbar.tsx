@@ -1,4 +1,7 @@
 "use client"
+import { translateAction } from "@/i18n/actions"
+import { useTranslations } from "next-intl"
+
 
 import { CloseIcon, SearchIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
@@ -40,6 +43,7 @@ type ShopToolbarProps = {
 }
 
 export default function ShopToolbar({ categories, selectedCategories, sort, query, count }: ShopToolbarProps) {
+  const act = useTranslations("Actions")
   const router = useRouter()
   const pathname = usePathname()
   const [search, setSearch] = useState(query ?? "")
@@ -57,7 +61,7 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
           method="get"
           action={pathname}
           role="search"
-          aria-label="Product search"
+          aria-label={act("productSearch")}
           sx={{ minWidth: 0 }}
           onSubmit={(event) => {
             event.preventDefault()
@@ -66,12 +70,12 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
         >
           {selectedCategories.map(handle => <input key={handle} type="hidden" name="category" value={handle} />)}
           {sort !== "relevance" ? <input type="hidden" name="sort" value={sort} /> : null}
-          <Typography component="label" htmlFor="catalog-search" sx={controlLabel}>Search products</Typography>
+          <Typography component="label" htmlFor="catalog-search" sx={controlLabel}>{act("searchProducts")}</Typography>
           <TextField
             id="catalog-search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Name, code or lot"
+            placeholder={act("nameCodeLot")}
             size="small"
             sx={{ "& .MuiOutlinedInput-root": { ...controlStyles, pr: .25 } }}
             slotProps={{
@@ -85,7 +89,7 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
                 endAdornment: (
                   <InputAdornment position="end" sx={{ ml: .5 }}>
                     <Button type="submit" variant="contained" disableElevation sx={{ minWidth: 72, height: 44, minHeight: 44, px: 1.5, py: 0, fontSize: 13, transform: "none", "&:hover, &:active": { transform: "none" } }}>
-                      Search
+                      {act("search")}
                     </Button>
                   </InputAdornment>
                 ),
@@ -94,7 +98,7 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
           />
         </Stack>
         <FormControl size="small" sx={{ minWidth: 0 }}>
-          <Typography component="span" id="catalog-sort-label" sx={controlLabel}>Sort by</Typography>
+          <Typography component="span" id="catalog-sort-label" sx={controlLabel}>{act("sortBy")}</Typography>
           <Select
             id="catalog-sort"
             labelId="catalog-sort-label"
@@ -105,7 +109,7 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
           >
             {SORTS.map((option) => (
               <MenuItem key={option.value} value={option.value}>
-                {option.label}
+                {translateAction(act, option.label)}
               </MenuItem>
             ))}
           </Select>
@@ -116,14 +120,14 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
         <Typography variant="body2" sx={{ color: "text.secondary", fontSize: 13, fontVariantNumeric: "tabular-nums" }} aria-live="polite" aria-atomic="true">
           {count} {count === 1 ? "product" : "products"}
         </Typography>
-        {selectedCategories.length || query ? <Button size="small" onClick={() => { setSearch(""); navigate({ query: undefined, categories: [] }) }} sx={{ minHeight: 44, px: 1, py: .5 }}>Clear filters</Button> : null}
+        {selectedCategories.length || query ? <Button size="small" onClick={() => { setSearch(""); navigate({ query: undefined, categories: [] }) }} sx={{ minHeight: 44, px: 1, py: .5 }}>{act("clearFilters")}</Button> : null}
       </Stack>
 
-      {selectedCategories.length || query ? <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: "wrap", alignItems: "center" }} role="group" aria-label="Active filters">
+      {selectedCategories.length || query ? <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: "wrap", alignItems: "center" }} role="group" aria-label={act("activeFilters")}>
         {selectedCategories.map(handle => (
           <Chip
             key={handle}
-            label={categories.find(category => category.handle === handle)?.name ?? "Unknown category"}
+            label={translateAction(act, categories.find(category => category.handle === handle)?.name ?? act("unknownCategory"))}
             variant="outlined"
             onDelete={() => navigate({ categories: selectedCategories.filter(item => item !== handle) })}
             deleteIcon={<CloseIcon />}
@@ -132,7 +136,7 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
         ))}
         {query ? (
           <Chip
-            label={`Search: “${query}”`}
+            label={act("searchFilter", { query })}
             onDelete={() => {
               setSearch("")
               navigate({ query: undefined })

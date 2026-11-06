@@ -1,4 +1,7 @@
 "use client"
+import { translateAction } from "@/i18n/actions"
+import { useTranslations } from "next-intl"
+
 
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -28,6 +31,7 @@ const PAGE_SIZE = 100
  * it reloads with the reader's votes and own posts waiting for review, and adds the controls.
  */
 export default function ThreadView({ threadId, initial }: { threadId: string; initial: ForumThreadDetail | null }) {
+  const act = useTranslations("Actions")
   const router = useRouter()
   const localize = useLocalizedHref()
   const { customer, loading: accountLoading } = useAccount()
@@ -76,13 +80,13 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
   }, [detail])
 
   if (state === "loading" && !detail) {
-    return <Box role="status" aria-label="Loading thread" sx={{ display: "grid", gap: 2 }}><Skeleton variant="text" height={64} /><Skeleton variant="rounded" height={240} /></Box>
+    return <Box role="status" aria-label={act("loadingThread")} sx={{ display: "grid", gap: 2 }}><Skeleton variant="text" height={64} /><Skeleton variant="rounded" height={240} /></Box>
   }
   if (!detail) {
     return <Box sx={{ py: 6, textAlign: "center" }}>
       <Typography component="h1" sx={{ fontSize: 28, fontWeight: 650 }}>This thread isn&apos;t available</Typography>
       <Typography sx={{ mt: 1.5, color: "brand.navySoft" }}>It may have been removed, or it&apos;s waiting for a moderator to review it.</Typography>
-      <ButtonLink href="/community" variant="contained" sx={{ mt: 3 }}>Back to the community</ButtonLink>
+      <ButtonLink href="/community" variant="contained" sx={{ mt: 3 }}>{act("backCommunity")}</ButtonLink>
     </Box>
   }
 
@@ -121,15 +125,15 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
   }
 
   return <Box>
-    <Box component="nav" aria-label="Breadcrumb" sx={{ display: "flex", flexWrap: "wrap", gap: 1, fontSize: 14, color: "brand.navySoft", mb: 2 }}>
-      <AppLink href="/community">Community</AppLink><span aria-hidden>/</span>
-      {getTopic(thread.topic) ? <><AppLink href={`/community?topic=${thread.topic}`}>{getTopic(thread.topic)?.name}</AppLink><span aria-hidden>/</span></> : null}
-      <AppLink href={`/community?${getTopic(thread.topic) ? `topic=${thread.topic}&` : ""}kind=${thread.kind}`}>{KIND_PLURALS[thread.kind]}</AppLink>
+    <Box component="nav" aria-label={act("breadcrumb")} sx={{ display: "flex", flexWrap: "wrap", gap: 1, fontSize: 14, color: "brand.navySoft", mb: 2 }}>
+      <AppLink href="/community">{act("community")}</AppLink><span aria-hidden>/</span>
+      {getTopic(thread.topic) ? <><AppLink href={`/community?topic=${thread.topic}`}>{translateAction(act, getTopic(thread.topic)?.name ?? "")}</AppLink><span aria-hidden>/</span></> : null}
+      <AppLink href={`/community?${getTopic(thread.topic) ? `topic=${thread.topic}&` : ""}kind=${thread.kind}`}>{translateAction(act, KIND_PLURALS[thread.kind])}</AppLink>
     </Box>
 
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: .75, mb: 1.5 }}>
       {thread.pinned ? <Pill tone="moderator">Pinned</Pill> : null}
-      <Pill tone={thread.kind === "question" ? "expert" : "neutral"}>{KIND_LABELS[thread.kind]}</Pill>
+      <Pill tone={thread.kind === "question" ? "expert" : "neutral"}>{translateAction(act, KIND_LABELS[thread.kind])}</Pill>
       {question && thread.accepted_post_id ? <Pill tone="accepted" icon="check">Answered</Pill> : null}
       {thread.locked ? <Pill>Closed</Pill> : null}
     </Box>
@@ -139,8 +143,8 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
       <Typography component="time" dateTime={thread.created_at} sx={{ fontSize: 14, color: "brand.navySoft" }}>Started {formatForumDate(thread.created_at)}</Typography>
     </Box>
     {peptide || thread.product_handle || thread.lot ? <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", gap: 1, "& a": { display: "inline-flex", alignItems: "center", minHeight: 36, px: 1.5, border: "1px solid", borderColor: "divider", borderRadius: 999, fontSize: 13.5, bgcolor: "#fff" } }}>
-      {peptide ? <AppLink href={`/learn/${peptide.slug}`} underline="none">About {peptide.name}</AppLink> : null}
-      {thread.lot ? <AppLink href={`/documentation?lot=${encodeURIComponent(thread.lot)}`} underline="none">Lot {thread.lot} · batch record</AppLink> : null}
+      {peptide ? <AppLink href={`/learn/${peptide.slug}`} underline="none">{act("about")} {peptide.name}</AppLink> : null}
+      {thread.lot ? <AppLink href={`/documentation?lot=${encodeURIComponent(thread.lot)}`} underline="none">{act("lot")} {thread.lot} {act("batchRecord")}</AppLink> : null}
     </Box> : null}
 
     {thread.status && thread.status !== "published" ? <Alert severity="info" sx={{ mt: 3 }}>
@@ -157,16 +161,16 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
       {expert ? <PostCard post={expert} highlight="expert" {...shared} /> : null}
       {others.map(post => <PostCard key={post.id} post={post} {...shared} />)}
       {detail.posts.length < detail.count ? <Button variant="outlined" onClick={() => void loadMore()} disabled={loadingMore} sx={{ mt: 2 }}>
-        {loadingMore ? "Loading…" : `Show more (${detail.count - detail.posts.length})`}
+        {loadingMore ? act("loading") : act("moreItems", { count: detail.count - detail.posts.length })}
       </Button> : null}
     </Box>
 
-    <Box component="section" aria-label={question ? "Your answer" : "Your reply"} sx={{ mt: 4, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
+    <Box component="section" aria-label={question ? act("yourAnswer") : act("yourReply")} sx={{ mt: 4, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
       {thread.locked ? <Typography sx={{ color: "brand.navySoft" }}>This thread is closed to new replies.</Typography>
         : community.loading ? <Skeleton variant="rounded" height={150} />
           : !community.signedIn ? <Box sx={{ p: { xs: 2.5, md: 3 }, bgcolor: "brand.mintWash", borderRadius: 2, display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
             <Typography sx={{ fontSize: 16, color: "brand.navySoft", lineHeight: 1.7 }}>Sign in to your Vetud account to {question ? "answer" : "reply"}, vote and report.</Typography>
-            <ButtonLink href="/account" variant="contained" sx={{ flexShrink: 0 }}>Sign in</ButtonLink>
+            <ButtonLink href="/account" variant="contained" sx={{ flexShrink: 0 }}>{act("signIn")}</ButtonLink>
           </Box>
             : !community.profile ? <JoinCommunity suggested={community.suggested} onJoined={community.setProfile} />
               : community.profile.status !== "active" ? <Alert severity="info">Your community account can&apos;t post right now. Contact us if you think this is a mistake.</Alert>

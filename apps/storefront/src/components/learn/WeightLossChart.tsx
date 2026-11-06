@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+
 import Box from "@mui/material/Box"
 import Link from "@mui/material/Link"
 import Tooltip from "@mui/material/Tooltip"
@@ -30,6 +32,7 @@ function Bar({ trial, value, color, series }: { trial: WeightLossTrial; value: n
 }
 
 export default function WeightLossChart({ highlight }: { highlight?: string }) {
+  const act = useTranslations("Actions")
   const hasHumanHighlight = WEIGHT_LOSS_TRIALS.some((trial) => trial.peptide === highlight)
   return (
     <Box component="figure" sx={{ m: 0, minWidth: 0, maxWidth: "100%", bgcolor: "#fff", border: "1px solid", borderColor: "divider", borderRadius: "10px", p: { xs: 2.5, md: 4 } }}>
@@ -103,8 +106,8 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
             </Box>
             <Typography sx={{ mt: 2, fontSize: 13.5, color: "text.secondary", lineHeight: 1.7 }}>{research.limitation}</Typography>
             <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", columnGap: 2, rowGap: .5, "& a": { display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 13.5, fontWeight: 600 } }}>
-              <AppLink href={`/learn/${research.peptide}`}>Read the profile →</AppLink>
-              <AppLink href={`/news/${research.article}`}>Read the article →</AppLink>
+              <AppLink href={`/learn/${research.peptide}`}>{act("readProfile")}</AppLink>
+              <AppLink href={`/news/${research.article}`}>{act("readArticle")}</AppLink>
               <Link href={research.source.url} target="_blank" rel="noopener noreferrer">{research.sourceLabel} ↗</Link>
             </Box>
           </Box>)}
