@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
@@ -18,6 +20,7 @@ type ProductGalleryProps = {
 }
 
 export default function ProductGallery({ title, images, aspectRatio }: ProductGalleryProps) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const { format } = useProductSelection()
   const [selected, setSelected] = useState(() => Math.max(0, images.findIndex(image => image.format && image.format === format)))
@@ -61,7 +64,7 @@ export default function ProductGallery({ title, images, aspectRatio }: ProductGa
           <Image
             key={active.url}
             src={active.url}
-            alt={photoLabel(active, selected)}
+            alt={ct(photoLabel(active, selected))}
             fill
             sizes="(max-width: 600px) 90vw, (max-width: 900px) 85vw, 45vw"
             style={{ objectFit: "contain" }}
@@ -70,7 +73,7 @@ export default function ProductGallery({ title, images, aspectRatio }: ProductGa
         </Box>
         {images.length > 1 ? (
           <Typography aria-live="polite" sx={{ position: "absolute", right: 12, bottom: 12, px: 1.2, py: 0.4, borderRadius: 10, bgcolor: "#ffffffdd", color: "text.secondary", fontSize: 11 }}>
-            {selected + 1} / {images.length}
+            {ct(selected + 1)} / {ct(images.length)}
           </Typography>
         ) : null}
       </Box>

@@ -11,6 +11,7 @@ import { articleUrl } from "@/lib/article-seo"
 import { communityMetadata } from "@/lib/community/seo"
 import type { ForumAuthor, ForumThreadDetail } from "@/lib/community/types"
 import { getForumThread, listForumThreadIds } from "@/lib/medusa/forum"
+import { getPageLocalization } from "@/i18n/metadata"
 
 // Prerendered only so the route's static shell is validated; real threads render on first visit.
 const PLACEHOLDER = "__placeholder__"
@@ -58,39 +59,41 @@ async function ThreadContent({ params }: Pick<PageProps<"/[countryCode]/communit
   if (id !== PLACEHOLDER && !THREAD_ID.test(id)) notFound()
   const detail = await load(id)
   return <>
-    {detail ? <ArticleJsonLd data={structuredData(detail)} /> : null}
+    {detail ? <ArticleJsonLd data={await structuredData(detail)} /> : null}
     {/* Unknown threads, and threads waiting for review (visible to their author), resolve in the browser. */}
     <ThreadView key={id} threadId={id} initial={detail} />
   </>
 }
 
-function person(author: ForumAuthor) {
-  return { "@type": "Person", name: author.display_name, ...(author.handle ? { url: articleUrl(`/community/members/${author.handle}`) } : {}) }
+function person(author: ForumAuthor, country: string) {
+  return { "@type": "Person", name: author.display_name, ...(author.handle ? { url: articleUrl(`/community/members/${author.handle}`, country) } : {}) }
 }
 
 /** Google's discussion forum markup: the opening post, its replies and their counts. */
-function structuredData({ thread, opening, posts }: ForumThreadDetail) {
-  const url = articleUrl(`/community/${thread.id}`)
+async function structuredData({ thread, opening, posts }: ForumThreadDetail) {
+  const { country, locale, ct } = await getPageLocalization()
+  const url = articleUrl(`/community/${thread.id}`, country)
   return {
     "@context": "https://schema.org",
     "@type": "DiscussionForumPosting",
     "@id": url,
     url,
     mainEntityOfPage: url,
-    headline: thread.title,
-    text: opening.body,
+    headline: ct(thread.title),
+    text: ct(opening.body),
+    inLanguage: locale,
     datePublished: thread.created_at,
     ...(opening.edited_at ? { dateModified: opening.edited_at } : {}),
-    author: person(thread.author),
+    author: person(thread.author, country),
     interactionStatistic: [
       { "@type": "InteractionCounter", interactionType: "https://schema.org/CommentAction", userInteractionCount: thread.reply_count },
       { "@type": "InteractionCounter", interactionType: "https://schema.org/LikeAction", userInteractionCount: opening.helpful_count },
     ],
     comment: posts.slice(0, 25).map(post => ({
       "@type": "Comment",
-      text: post.body,
+      text: ct(post.body),
       datePublished: post.created_at,
-      author: person(post.author),
+      author: person(post.author, country),
       interactionStatistic: { "@type": "InteractionCounter", interactionType: "https://schema.org/LikeAction", userInteractionCount: post.helpful_count },
     })),
   }

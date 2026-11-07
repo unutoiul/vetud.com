@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -49,16 +51,17 @@ export function PasswordField({ label, value, onChange, autoComplete, helperText
   helperText?: string
   error?: boolean
 }) {
+  const ct = useContentTranslator()
   const t = useTranslations("Account")
   const [visible, setVisible] = useState(false)
   return (
     <TextField
-      label={label}
+      label={ct(label)}
       type={visible ? "text" : "password"}
       required
       value={value}
       onChange={(event) => onChange(event.target.value)}
-      helperText={helperText}
+      helperText={ct(helperText)}
       error={error}
       slotProps={{
         htmlInput: { autoComplete, minLength: 8, spellCheck: false, autoCapitalize: "none" },
@@ -78,6 +81,7 @@ export function PasswordField({ label, value, onChange, autoComplete, helperText
 
 /** Emails a one-time reset link. Medusa replies the same way whether or not the account exists. */
 export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?: string; onBack?: () => void }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Account")
   const { countryCode } = useStore()
@@ -105,11 +109,11 @@ export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?:
   return (
     <Box component="form" onSubmit={submit} noValidate>
       {sentTo ? <Alert severity="success" role="status" sx={{ mb: 2 }}>{t("resetSent", { email: sentTo })}</Alert> : null}
-      {formError ? <Alert severity="error" sx={{ mb: 2 }}>{formError}</Alert> : null}
+      {formError ? <Alert severity="error" sx={{ mb: 2 }}>{ct(formError)}</Alert> : null}
       <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" } }}>
         <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" sx={{ fontSize: 17 }} />}>
-          {sentTo ? t("resendLink") : t("sendLink")}
+          {ct(sentTo ? t("resendLink") : t("sendLink"))}
         </Button>
         {onBack ? <Button type="button" onClick={onBack}>{t("backToSignin")}</Button> : null}
       </Stack>
@@ -118,6 +122,7 @@ export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?:
 }
 
 export function AuthPanel({ context = "account" }: { context?: "account" | "checkout" }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
@@ -170,17 +175,17 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
     <Grid container spacing={{ xs: 3, md: 6 }}>
       <Grid size={{ xs: 12, md: 5 }}>
         <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
-          {atCheckout ? t("required") : mode === "signin" ? t("welcome") : t("account")}
+          {ct(atCheckout ? t("required") : mode === "signin" ? t("welcome") : t("account"))}
         </Typography>
         <Typography variant="h3" component="h2" sx={{ mt: 1.5, mb: 2 }}>
-          {mode === "reset" ? t("resetTitle") : atCheckout ? t("checkoutTitle") : mode === "signin" ? t("signinTitle") : t("signupTitle")}
+          {ct(mode === "reset" ? t("resetTitle") : atCheckout ? t("checkoutTitle") : mode === "signin" ? t("signinTitle") : t("signupTitle"))}
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          {mode === "reset"
+          {ct(mode === "reset"
             ? t("resetIntro")
             : atCheckout
             ? t("checkoutIntro")
-            : t("intro")}
+            : t("intro"))}
         </Typography>
         <Stack spacing={1.5} sx={{ mt: 4 }}>
           {(atCheckout
@@ -189,7 +194,7 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
           ).map((item) => (
             <Stack key={item} direction="row" spacing={1.25} sx={{ alignItems: "center" }}>
               <Icon name="checkCircle" sx={{ color: "secondary.main", fontSize: 19 }} />
-              <Typography variant="body2">{item}</Typography>
+              <Typography variant="body2">{ct(item)}</Typography>
             </Stack>
           ))}
         </Stack>
@@ -213,7 +218,7 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
               {t("signup")}
             </Button>
           </Stack>
-          {formError || error ? <Alert severity="error" sx={{ mb: 2 }}>{formError || error}</Alert> : null}
+          {formError || error ? <Alert severity="error" sx={{ mb: 2 }}>{ct(formError || error)}</Alert> : null}
           <Box component="form" onSubmit={submit} noValidate>
             {mode === "signup" ? (
               <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -224,11 +229,11 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
             <Stack spacing={2}>
               <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
               {mode === "signup" ? <PhoneField country={countryCode} value={phone} onChange={setPhone} /> : null}
-              <PasswordField label={t("password")} value={password} onChange={setPassword} helperText={mode === "signup" ? t("passwordHelp") : undefined} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
+              <PasswordField label={t("password")} value={password} onChange={setPassword} helperText={ct(mode === "signup" ? t("passwordHelp") : undefined)} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
             </Stack>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
               <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ width: { xs: "100%", sm: "auto" } }}>
-                {mode === "signin" ? t("signin") : t("signup")}
+                {ct(mode === "signin" ? t("signin") : t("signup"))}
               </Button>
               {mode === "signin" ? <Button type="button" onClick={() => switchMode("reset")} sx={{ alignSelf: { xs: "center", sm: "auto" } }}>{t("forgot")}</Button> : null}
             </Stack>
@@ -244,6 +249,7 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
 }
 
 function AccountDashboard({ view }: { view: "profile" | "orders" }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Account")
   const { customer, signOut, pending, error } = useAccount()
@@ -255,7 +261,7 @@ function AccountDashboard({ view }: { view: "profile" | "orders" }) {
           <Box>
             <Typography variant="eyebrow" sx={{ color: "brand.mint" }}>{t("account")}</Typography>
             <Typography variant="h3" component="h2" sx={{ mt: 1 }}>{customer.first_name ? t("greeting", { name: customer.first_name }) : t("account")}</Typography>
-            <Typography sx={{ color: "rgba(255,255,255,.72)", mt: 1 }}>{customer.email}</Typography>
+            <Typography sx={{ color: "rgba(255,255,255,.72)", mt: 1 }}>{ct(customer.email)}</Typography>
           </Box>
           <Button variant="outlined" disabled={pending} onClick={() => void signOut().catch(() => undefined)} sx={{ color: "#fff", borderColor: "rgba(255,255,255,.45)", alignSelf: { xs: "flex-start", sm: "center" } }}>{t("signout")}</Button>
         </Stack>
@@ -264,7 +270,7 @@ function AccountDashboard({ view }: { view: "profile" | "orders" }) {
         <ButtonLink href="/account" variant={view === "profile" ? "contained" : "outlined"} aria-current={view === "profile" ? "page" : undefined}>{t("profile")}</ButtonLink>
         <ButtonLink href="/account/orders" variant={view === "orders" ? "contained" : "outlined"} aria-current={view === "orders" ? "page" : undefined} startIcon={<Icon name="package" sx={{ fontSize: 18 }} />}>{t("orders")}</ButtonLink>
       </Stack>
-      {view === "orders" ? <>{error ? <Alert severity="error">{error}</Alert> : null}<OrderHistory key={customer.id} /></> : (
+      {view === "orders" ? <>{error ? <Alert severity="error">{ct(error)}</Alert> : null}<OrderHistory key={customer.id} /></> : (
         <Grid container spacing={{ xs: 3, md: 4 }}>
           <Grid size={{ xs: 12, md: 5 }}><ProfileSection /></Grid>
           <Grid size={{ xs: 12, md: 7 }}><AddressBook /></Grid>
@@ -275,6 +281,7 @@ function AccountDashboard({ view }: { view: "profile" | "orders" }) {
 }
 
 function ProfileSection() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
@@ -311,10 +318,10 @@ function ProfileSection() {
 
   return (
     <Paper variant="outlined" sx={{ p: { xs: 2.5, md: 3.5 }, borderRadius: 3, height: "100%" }}>
-      <Typography variant="h5" component="h2">Profile</Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5, mb: 2.5 }}>Keep your order contact details up to date.</Typography>
-      {error ? <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert> : null}
-      {saved ? <Alert severity="success" sx={{ mb: 2 }}>Profile saved.</Alert> : null}
+      <Typography variant="h5" component="h2">{ct("Profile")}</Typography>
+      <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5, mb: 2.5 }}>{ct("Keep your order contact details up to date.")}</Typography>
+      {error ? <Alert severity="error" sx={{ mb: 2 }}>{ct(error)}</Alert> : null}
+      {saved ? <Alert severity="success" sx={{ mb: 2 }}>{ct("Profile saved.")}</Alert> : null}
       <Box component="form" onSubmit={submit}>
         <Stack spacing={2}>
           <TextField label={act("email")} value={customer?.email ?? ""} disabled />
@@ -323,7 +330,7 @@ function ProfileSection() {
           <PhoneField country={countryCode} value={values.phone} onChange={phone => setValues({ ...values, phone })} error={!isValidPhone(values.phone, countryCode) ? ta("invalidPhone") : undefined} />
           <TextField label={t("institution")} value={values.company_name} onChange={(event) => setValues({ ...values, company_name: event.target.value })} autoComplete="organization" />
         </Stack>
-        <Button type="submit" variant="contained" disabled={pending} sx={{ mt: 2.5 }}>{pending ? t("saving") : t("saveProfile")}</Button>
+        <Button type="submit" variant="contained" disabled={pending} sx={{ mt: 2.5 }}>{ct(pending ? t("saving") : t("saveProfile"))}</Button>
       </Box>
       <Divider sx={{ my: 3 }} />
       <Typography variant="h6" component="h3">{t("password")}</Typography>
@@ -335,6 +342,7 @@ function ProfileSection() {
 }
 
 function AddressBook() {
+  const ct = useContentTranslator()
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
   const { deliveryCountries, countryCode } = useStore()
@@ -401,7 +409,7 @@ function AddressBook() {
         <Box><Typography variant="h5" component="h2">{t("savedAddresses")}</Typography><Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>{t("addressesHelp")}</Typography></Box>
         {!showForm ? <Button variant="outlined" startIcon={<Icon name="plus" sx={{ fontSize: 17 }} />} onClick={openNew}>{t("addAddress")}</Button> : null}
       </Stack>
-      {account.error ? <Alert severity="error" sx={{ mt: 2 }}>{account.error}</Alert> : null}
+      {account.error ? <Alert severity="error" sx={{ mt: 2 }}>{ct(account.error)}</Alert> : null}
       {showForm ? (
         <Box component="form" onSubmit={save} noValidate sx={{ mt: 3 }}>
           <Stack spacing={2}>
@@ -415,7 +423,7 @@ function AddressBook() {
             />
           </Stack>
           <Stack direction="row" spacing={1.5} sx={{ mt: 2.5 }}>
-            <Button type="submit" variant="contained" disabled={account.pending}>{account.pending ? t("saving") : t("saveAddress")}</Button>
+            <Button type="submit" variant="contained" disabled={account.pending}>{ct(account.pending ? t("saving") : t("saveAddress"))}</Button>
             <Button type="button" onClick={() => setShowForm(false)}>{t("cancel")}</Button>
           </Stack>
         </Box>
@@ -426,10 +434,10 @@ function AddressBook() {
               <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "space-between" }}>
                 <Box>
                   <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 0.5 }}>
-                    <Typography sx={{ fontWeight: 700 }}>{address.address_name || t("savedAddress")}</Typography>
+                    <Typography sx={{ fontWeight: 700 }}>{ct(address.address_name || t("savedAddress"))}</Typography>
                     {customer.default_shipping_address_id === address.id ? <Chip label={t("default")} size="small" color="secondary" /> : null}
                   </Stack>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>{addressSummary(address)}</Typography>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>{ct(addressSummary(address))}</Typography>
                 </Box>
                 <Stack direction="row" spacing={0.5} sx={{ alignSelf: { xs: "flex-start", sm: "center" } }}>
                   <Button size="small" onClick={() => openEdit(address)}>{t("edit")}</Button>

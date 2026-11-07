@@ -1,3 +1,4 @@
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import { useTranslations } from "next-intl"
 import { translateAction } from "@/i18n/actions"
 import Box from "@mui/material/Box"
@@ -24,6 +25,7 @@ export function ReadingHeader({ title, description, breadcrumbs, image, variant 
   title: string; description: string; breadcrumbs: { label: string; href?: string }[]
   image?: LearnIllustration; variant?: ArticleArtVariant; uid: string; minutes: number; meta?: ReactNode; children?: ReactNode
 }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const dot = <Box component="span" aria-hidden sx={{ width: 3, height: 3, borderRadius: "50%", bgcolor: "brand.lineStrong" }} />
   return <Box component="header">
@@ -33,14 +35,14 @@ export function ReadingHeader({ title, description, breadcrumbs, image, variant 
           {breadcrumbs.map(item => item.href ? <AppLink key={item.label} href={item.href}>{translateAction(act, item.label)}</AppLink> : <Typography key={item.label} component="span" sx={{ fontSize: "inherit", color: "brand.navySoft" }} aria-current="page">{translateAction(act, item.label)}</Typography>)}
         </Breadcrumbs>
         <Box sx={{ maxWidth: 880 }}>
-          {meta ? <Box sx={{ mb: { xs: 2, md: 2.5 }, display: "flex", flexWrap: "wrap", gap: 1.5, alignItems: "center", fontSize: 13.5, color: "brand.navySoft" }}>{meta}</Box> : null}
-          <Typography id="article-title" component="h1" sx={{ fontSize: { xs: 34, sm: 46, md: 56 }, lineHeight: { xs: 1.12, md: 1.06 }, fontWeight: 700, letterSpacing: "-.045em", textWrap: "balance", overflowWrap: "break-word", color: "brand.navy" }}>{title}</Typography>
-          <Typography sx={{ mt: { xs: 2, md: 3 }, fontSize: { xs: 18, md: 21 }, lineHeight: 1.6, color: "brand.navySoft", maxWidth: "62ch", textWrap: "pretty" }}>{description}</Typography>
+          {meta ? <Box sx={{ mb: { xs: 2, md: 2.5 }, display: "flex", flexWrap: "wrap", gap: 1.5, alignItems: "center", fontSize: 13.5, color: "brand.navySoft" }}>{ct(meta)}</Box> : null}
+          <Typography id="article-title" component="h1" sx={{ fontSize: { xs: 34, sm: 46, md: 56 }, lineHeight: { xs: 1.12, md: 1.06 }, fontWeight: 700, letterSpacing: "-.045em", textWrap: "balance", overflowWrap: "break-word", color: "brand.navy" }}>{ct(title)}</Typography>
+          <Typography sx={{ mt: { xs: 2, md: 3 }, fontSize: { xs: 18, md: 21 }, lineHeight: 1.6, color: "brand.navySoft", maxWidth: "62ch", textWrap: "pretty" }}>{ct(description)}</Typography>
           {children}
           <Box sx={{ mt: { xs: 2.5, md: 3.5 }, display: "flex", flexWrap: "wrap", columnGap: 1.5, rowGap: .5, fontSize: 14, color: "brand.navySoft", alignItems: "center" }}>
             <AppLink href="/learn" sx={{ fontSize: "inherit", color: "brand.navy", minHeight: 32, display: "inline-flex", alignItems: "center", fontWeight: 700 }}>{act("byLearn")}</AppLink>
-            {dot}<span>{minutes} min read</span>
-            {dot}<AppLink href="#sources" sx={{ fontSize: "inherit", minHeight: 32, display: "inline-flex", alignItems: "center" }}>{act("viewSources")}</AppLink>
+            {ct(dot)}<span>{ct.icu("{minutes, plural, one {# minute of reading} other {# minutes of reading}}", { minutes })}</span>
+            {ct(dot)}<AppLink href="#sources" sx={{ fontSize: "inherit", minHeight: 32, display: "inline-flex", alignItems: "center" }}>{act("viewSources")}</AppLink>
           </Box>
         </Box>
       </Box>
@@ -49,7 +51,7 @@ export function ReadingHeader({ title, description, breadcrumbs, image, variant 
     <Box sx={{ px: gutter, background: `linear-gradient(to bottom, ${brand.paper} 50%, #fff 50%)` }}>
       <Box component="figure" sx={{ m: 0, maxWidth: READING_WIDTH, mx: { xs: -2.5, sm: "auto" } }}>
         <Box sx={{ position: "relative", aspectRatio: "16 / 9", overflow: "hidden", bgcolor: "brand.mintWash", borderRadius: { xs: 0, sm: "16px" }, border: { xs: 0, sm: "1px solid" }, borderColor: { sm: "divider" }, boxShadow: { sm: "0 28px 60px -34px rgba(21,38,94,.45)" } }}>
-          {image ? <Image src={image.src} alt={image.alt} fill preload sizes={`(max-width: 600px) 100vw, (max-width: 1240px) 92vw, ${READING_WIDTH}px`} style={{ objectFit: "cover" }} />
+          {image ? <Image src={image.src} alt={ct(image.alt)} fill preload sizes={`(max-width: 600px) 100vw, (max-width: 1240px) 92vw, ${READING_WIDTH}px`} style={{ objectFit: "cover" }} />
             : <ArticleArt variant={variant} uid={uid} sx={{ position: "absolute", inset: 0 }} />}
         </Box>
       </Box>
@@ -67,8 +69,9 @@ export function ReadingLayout({ items, children }: { items: ContentsItem[]; chil
 }
 
 export function ReadingSection({ id, title, children, first = false }: { id: string; title: string; children: ReactNode; first?: boolean }) {
+  const ct = useContentTranslator()
   return <Box component="section" id={id} aria-labelledby={`${id}-title`} sx={{ scrollMarginTop: 8, ...(first ? {} : { mt: { xs: 4.5, md: 6 }, pt: { xs: 4, md: 5 }, borderTop: "1px solid", borderColor: "divider" }) }}>
-    <Typography id={`${id}-title`} component="h2" sx={{ fontSize: { xs: 24, md: 28 }, fontWeight: 650, lineHeight: 1.3, letterSpacing: "-.025em", color: "brand.navy", mb: 2 }}>{title}</Typography>
+    <Typography id={`${id}-title`} component="h2" sx={{ fontSize: { xs: 24, md: 28 }, fontWeight: 650, lineHeight: 1.3, letterSpacing: "-.025em", color: "brand.navy", mb: 2 }}>{ct(title)}</Typography>
     {children}
   </Box>
 }

@@ -1,3 +1,4 @@
+import { getContentTranslator } from "@/i18n/server-content"
 import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
@@ -15,6 +16,7 @@ import { ArticleHeadline } from "../learn/ArticleCard"
 
 /** Learning-first homepage hero: the promise on the left, the newest article on the right, topics below. */
 export default async function LearnHero() {
+  const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const t = await getTranslations("LearnHero")
   const latest = ARTICLES[0]
@@ -43,14 +45,14 @@ export default async function LearnHero() {
               <Box sx={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "flex-end", p: { xs: 2.5, md: 4 }, color: "#fff", background: "linear-gradient(0deg, rgba(5,9,26,.92), rgba(5,9,26,.35) 55%, transparent)" }}>
                 <Typography sx={{ fontSize: 12.5, color: "brand.onNavyMuted", display: "flex", gap: 1.5, flexWrap: "wrap" }}>
                   <Box component="span" sx={{ color: "brand.cyan", fontWeight: 700 }}>{t("latest")}</Box>
-                  <Box component="time" dateTime={latest.date}>{formatArticleDate(latest.date)}</Box>
+                  <Box component="time" dateTime={latest.date}>{ct(formatArticleDate(latest.date, ct.locale))}</Box>
                 </Typography>
                 <Typography component="h2" sx={{ mt: 1, fontSize: { xs: 24, md: 32 }, fontWeight: 700, lineHeight: 1.12, letterSpacing: "-.03em", textWrap: "balance" }}>
                   <Box component={LocalizedNextLink} href={`/news/${latest.slug}`} sx={{ color: "inherit", textDecoration: "none", "&::after": { content: '""', position: "absolute", inset: 0 }, "&:focus-visible": { outline: "none" } }}>
                     <ArticleHeadline headline={latest.headline} />
                   </Box>
                 </Typography>
-                <Typography sx={{ mt: 1.25, fontSize: 14.5, lineHeight: 1.6, color: "rgba(255,255,255,.82)", display: { xs: "none", sm: "block" } }}>{latest.dek}</Typography>
+                <Typography sx={{ mt: 1.25, fontSize: 14.5, lineHeight: 1.6, color: "rgba(255,255,255,.82)", display: { xs: "none", sm: "block" } }}>{ct(latest.dek)}</Typography>
               </Box>
             </Box>
           ) : null}

@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useLocale, useTranslations } from "next-intl"
 
@@ -42,6 +44,7 @@ export default function PayPalPaymentForm(props: Props) {
 }
 
 function WalletButtons({ config, busy, createOrder, onApprove }: Props) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [{ isPending, isRejected, options }, dispatch] = usePayPalScriptReducer()
   const [message, setMessage] = useState<string | null>(null)
@@ -49,11 +52,11 @@ function WalletButtons({ config, busy, createOrder, onApprove }: Props) {
 
   return (
     <Box sx={{ maxWidth: 420 }}>
-      {config.environment === "sandbox" ? <Alert severity="warning" sx={{ mb: 2 }}>PayPal sandbox — no real payment.</Alert> : null}
+      {config.environment === "sandbox" ? <Alert severity="warning" sx={{ mb: 2 }}>{ct("PayPal sandbox — no real payment.")}</Alert> : null}
       {isPending ? <Skeleton variant="rounded" height={48} aria-label={act("loadingPayPal")} /> : null}
       {isRejected ? (
         <Alert severity="warning" action={<Button onClick={() => dispatch({ type: DISPATCH_ACTION.RESET_OPTIONS, value: options })}>{act("retry")}</Button>}>
-          PayPal could not load. Try again or choose another payment method.
+          {ct("PayPal could not load. Try again or choose another payment method.")}
         </Alert>
       ) : null}
       <PayPalButtons
@@ -68,8 +71,8 @@ function WalletButtons({ config, busy, createOrder, onApprove }: Props) {
         onCancel={() => setMessage("PayPal checkout was cancelled. You can try again or choose another payment method.")}
         onError={() => setMessage("PayPal could not finish this checkout. Check your orders if you approved a payment, or try another payment method.")}
       />
-      {processing ? <Box role="status" sx={{ mt: 1 }}>Confirming your payment…</Box> : null}
-      {message ? <Alert severity="info" sx={{ mt: 2 }} role="status">{message}</Alert> : null}
+      {processing ? <Box role="status" sx={{ mt: 1 }}>{ct("Confirming your payment…")}</Box> : null}
+      {message ? <Alert severity="info" sx={{ mt: 2 }} role="status">{ct(message)}</Alert> : null}
     </Box>
   )
 }

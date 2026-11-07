@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import type { HttpTypes } from "@medusajs/types"
 import { TrashIcon as DeleteOutlinedIcon } from "@/components/brand/Icon"
@@ -23,6 +25,7 @@ type CartLineItemProps = {
 }
 
 export default function CartLineItem({ item, currencyCode, readOnly, onNavigate }: CartLineItemProps) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const money = useMoney()
   const t = useTranslations("Checkout")
@@ -65,17 +68,17 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
               onClick={onNavigate}
               sx={{ fontWeight: 600, textDecoration: "none", overflowWrap: "anywhere", "&:hover": { color: "secondary.main" } }}
             >
-              {item.product_title}
+              {ct(item.product_title)}
             </Typography>
             <Typography variant="body2" sx={{ color: "text.secondary" }}>
-              {item.variant_title} · {money(Number(item.unit_price), currencyCode)}
+              {ct(item.variant_title)} · {ct(money(Number(item.unit_price), currencyCode))}
             </Typography>
             <Typography variant="mono" sx={{ color: "text.secondary", fontSize: 11 }}>
-              {item.variant_sku ?? meta.code}
+              {ct(item.variant_sku ?? meta.code)}
             </Typography>
           </Box>
           <Typography sx={{ fontWeight: 700, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
-            {money(lineTotal, currencyCode)}
+            {ct(money(lineTotal, currencyCode))}
           </Typography>
         </Stack>
         {readOnly ? (

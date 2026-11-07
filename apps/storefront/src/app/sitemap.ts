@@ -41,31 +41,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   )
 
-  // English article bodies are shared across storefronts; list the same preferred
-  // URLs used in their canonical tags, with reciprocal regional alternates.
   const editorial = [
     ...PEPTIDES.map(peptide => ({ path: `/learn/${peptide.slug}`, slug: peptide.slug })),
     ...ARTICLES.map(article => ({ path: `/news/${article.slug}`, slug: article.slug })),
-  ].map(({ path, slug }) => {
+  ].flatMap(({ path, slug }) => countries.map(country => {
     const image = getLearnIllustration(slug)
-    return { url: articleUrl(path), changeFrequency: "monthly" as const, priority: 0.7,
+    return { url: articleUrl(path, country), changeFrequency: "monthly" as const, priority: 0.7,
       alternates: { languages: articleLanguages(path) }, ...(image ? { images: [`${BASE_URL}${image.src}`] } : {}),
     }
-  })
-  const collections = ["/learn", "/news", "/videos", "/community", "/community/guidelines", "/community/apply"].map(path => ({
-    url: articleUrl(path), changeFrequency: "weekly" as const, priority: 0.8,
-    alternates: { languages: articleLanguages(path) },
   }))
-  // Community threads are English too, and share the same preferred URLs.
+  const collections = ["/learn", "/news", "/videos", "/community", "/community/guidelines", "/community/apply"].flatMap(path => countries.map(country => ({
+    url: articleUrl(path, country), changeFrequency: "weekly" as const, priority: 0.8,
+    alternates: { languages: articleLanguages(path) },
+  })))
   let threads: string[] = []
   try {
     threads = await listForumThreadIds(500)
   } catch {
     threads = []
   }
-  const community = threads.map(id => ({
-    url: articleUrl(`/community/${id}`), changeFrequency: "weekly" as const, priority: 0.5,
+  const community = threads.flatMap(id => countries.map(country => ({
+    url: articleUrl(`/community/${id}`, country), changeFrequency: "weekly" as const, priority: 0.5,
     alternates: { languages: articleLanguages(`/community/${id}`) },
-  }))
+  })))
   return [...storefront, ...collections, ...editorial, ...community]
 }

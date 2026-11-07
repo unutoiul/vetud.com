@@ -1,3 +1,4 @@
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
@@ -12,16 +13,17 @@ const principles = [
 ]
 
 export default function ResearchStandard() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   return <Section tone="wash" sx={{ borderTop: "1px solid", borderBottom: "1px solid", borderColor: "divider" }}>
     <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: ".85fr 1.15fr" }, gap: { xs: 5, md: 12 } }}>
       <Box>
-        <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".15em", textTransform: "uppercase" }}>02 / The VETUD standard</Typography>
-        <Typography component="h2" variant="h2" sx={{ mt: 2.5, maxWidth: 460, fontWeight: 400 }}>Confidence begins<br />with clarity.</Typography>
-        <Typography sx={{ mt: 2.5, color: "text.secondary", maxWidth: 390, fontSize: 14 }}>Good research starts with knowing your materials. We make the information easier to find, read and verify.</Typography>
+        <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".15em", textTransform: "uppercase" }}>{ct("02 / The VETUD standard")}</Typography>
+        <Typography component="h2" variant="h2" sx={{ mt: 2.5, maxWidth: 460, fontWeight: 400 }}>{ct("Confidence begins")}<br />{ct("with clarity.")}</Typography>
+        <Typography sx={{ mt: 2.5, color: "text.secondary", maxWidth: 390, fontSize: 14 }}>{ct("Good research starts with knowing your materials. We make the information easier to find, read and verify.")}</Typography>
         <ButtonLink href="/documentation" variant="outlined" endIcon={<Icon name="arrowUpRight" />} sx={{ mt: 3.5 }}>{act("exploreDocs")}</ButtonLink>
       </Box>
-      <Box>{principles.map((item) => <Box key={item.number} sx={{ display: "flex", gap: 3, py: 3, borderTop: "1px solid", borderColor: "brand.lineStrong", "&:first-of-type": { pt: 0, borderTop: 0 } }}><Typography variant="mono" sx={{ color: "brand.blue", fontSize: 10, pt: .8 }}>{item.number}</Typography><Box><Typography component="h3" sx={{ fontSize: 23, letterSpacing: "-.03em", fontWeight: 500 }}>{item.title}</Typography><Typography sx={{ color: "text.secondary", mt: 1, maxWidth: 550, fontSize: 14, lineHeight: 1.85 }}>{item.text}</Typography></Box></Box>)}</Box>
+      <Box>{principles.map((item) => <Box key={item.number} sx={{ display: "flex", gap: 3, py: 3, borderTop: "1px solid", borderColor: "brand.lineStrong", "&:first-of-type": { pt: 0, borderTop: 0 } }}><Typography variant="mono" sx={{ color: "brand.blue", fontSize: 10, pt: .8 }}>{ct(item.number)}</Typography><Box><Typography component="h3" sx={{ fontSize: 23, letterSpacing: "-.03em", fontWeight: 500 }}>{ct(item.title)}</Typography><Typography sx={{ color: "text.secondary", mt: 1, maxWidth: 550, fontSize: 14, lineHeight: 1.85 }}>{ct(item.text)}</Typography></Box></Box>)}</Box>
     </Box>
   </Section>
 }

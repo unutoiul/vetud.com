@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 import { translateAction } from "@/i18n/actions"
@@ -11,6 +13,7 @@ import { useEffect, useState } from "react"
 export type ContentsItem = { id: string; label: string }
 
 export default function TableOfContents({ items }: { items: ContentsItem[] }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [active, setActive] = useState(items[0]?.id)
   useEffect(() => {
@@ -36,11 +39,11 @@ export default function TableOfContents({ items }: { items: ContentsItem[] }) {
   return <Box component="aside" sx={{ minWidth: 0, alignSelf: "start", position: { lg: "sticky" }, top: 120 }}>
     <Box component="nav" aria-label={act("onThisPage")} sx={{ display: { xs: "none", lg: "block" }, maxHeight: "calc(100dvh - 150px)", overflowY: "auto", pr: 1 }}>
       <Typography sx={{ fontSize: 14, fontWeight: 700, mb: 2, color: "brand.navy" }}>{act("onThisPage")}</Typography>
-      {links}
+      {ct(links)}
     </Box>
     <Box component="details" sx={{ display: { lg: "none" }, border: "1px solid", borderColor: "divider", borderRadius: "8px", px: 2, bgcolor: "brand.paper", "& summary": { minHeight: 52, display: "list-item", alignContent: "center", cursor: "pointer", fontSize: 15, fontWeight: 650, color: "brand.navy" }, "&[open]": { pb: 2 } }}>
       <summary>{act("onThisPage")}</summary>
-      <nav aria-label={act("articleSections")}>{links}</nav>
+      <nav aria-label={act("articleSections")}>{ct(links)}</nav>
     </Box>
   </Box>
 }

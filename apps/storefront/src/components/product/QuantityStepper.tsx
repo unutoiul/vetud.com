@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -25,12 +27,13 @@ export default function QuantityStepper({
   size = "medium",
   label,
 }: QuantityStepperProps) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const small = size === "small"
   return (
     <Box
       role="group"
-      aria-label={label ?? act("quantity")}
+      aria-label={ct(label ?? act("quantity"))}
       sx={{
         display: "inline-flex",
         alignItems: "center",
@@ -55,7 +58,7 @@ export default function QuantityStepper({
         aria-live="polite"
         sx={{ minWidth: small ? 24 : 32, textAlign: "center", fontWeight: 600, fontSize: small ? 14 : 15, fontVariantNumeric: "tabular-nums" }}
       >
-        {value}
+        {ct(value)}
       </Box>
       <IconButton
         size="small"

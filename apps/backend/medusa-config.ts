@@ -37,6 +37,7 @@ const makePayOptions = {
 }
 
 const modules: ModuleConfig[] = [
+  { resolve: "./src/modules/localized-content" },
   // Comments signed-in customers leave on storefront articles.
   { resolve: "./src/modules/article-comment" },
   // Community forum: profiles, threads, research logs, votes and reports.

@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import type { HttpTypes } from "@medusajs/types"
 import Box from "@mui/material/Box"
@@ -18,6 +20,7 @@ import ProductPhoto from "../product/ProductPhoto"
 
 /** Product cards share the hero's alpine stage; the active card sits above its neighbours. */
 export default function CollectionCarousel({ products }: { products: HttpTypes.StoreProduct[] }) {
+  const ct = useContentTranslator()
   const t = useTranslations("Common")
   const money = useMoney()
   const photos = products.filter(product => getProductImages(product).length > 0)
@@ -92,15 +95,15 @@ export default function CollectionCarousel({ products }: { products: HttpTypes.S
           <Box component={LocalizedNextLink} href={`/products/${product.handle}`} sx={{ display: "flex", flexDirection: "column", minHeight: { xs: 340, sm: 380, md: 395, lg: 405 }, p: { xs: 1.75, md: 2 }, gap: { xs: 1.75, md: 2 }, boxSizing: "border-box", overflow: "hidden", border: "1px solid", borderColor: active ? brand.lineStrong : brand.line, borderRadius: "14px", bgcolor: "#fff", color: "inherit", textDecoration: "none", boxShadow: active ? "0 24px 64px -20px rgba(21,38,94,.28), 0 4px 12px rgba(21,38,94,.04)" : "0 14px 40px -18px rgba(21,38,94,.2)", "&:focus-visible": { outline: `3px solid ${brand.blue}`, outlineOffset: 4 }, "&:hover .hero-product-arrow": { bgcolor: brand.navy, color: "#fff" } }}>
             <Box sx={{ height: { xs: 150, sm: 185, md: 190, lg: 205 }, flexShrink: 0, p: .5, borderRadius: "8px", bgcolor: "#fff" }}>
               <Box sx={{ position: "relative", height: "100%" }}>
-                <ProductPhoto images={images} title={product.title} sizes="(max-width: 600px) 65vw, 340px" preload={productIndex === 0} />
+                <ProductPhoto images={images} title={ct(product.title)} sizes="(max-width: 600px) 65vw, 340px" preload={productIndex === 0} />
               </Box>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", flex: 1, px: .5, pb: .5 }}>
-              <Typography component="h2" translate="no" sx={{ fontSize: { xs: 21, md: 25 }, fontWeight: 500, letterSpacing: "-.04em", lineHeight: 1.2, overflowWrap: "anywhere" }}>{product.title}</Typography>
-              <Typography sx={{ mt: 1, fontSize: 12, color: "text.secondary", lineHeight: 1.6 }}>{shortAvailability(product)}</Typography>
-              {hasFormats(product) ? null : <Typography sx={{ fontSize: 12, color: "text.secondary", lineHeight: 1.6 }}>{meta.form}</Typography>}
+              <Typography component="h2" translate="no" sx={{ fontSize: { xs: 21, md: 25 }, fontWeight: 500, letterSpacing: "-.04em", lineHeight: 1.2, overflowWrap: "anywhere" }}>{ct(product.title)}</Typography>
+              <Typography sx={{ mt: 1, fontSize: 12, color: "text.secondary", lineHeight: 1.6 }}>{shortAvailability(product, ct)}</Typography>
+              {hasFormats(product) ? null : <Typography sx={{ fontSize: 12, color: "text.secondary", lineHeight: 1.6 }}>{ct(meta.form)}</Typography>}
               <Stack direction="row" sx={{ mt: "auto", pt: 2, alignItems: "center", justifyContent: "space-between", gap: 1 }}>
-                <Typography sx={{ fontSize: 14, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{price ? `${t("from")} ${money(price.amount, price.currencyCode)}` : t("viewProduct")}</Typography>
+                <Typography sx={{ fontSize: 14, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{ct(price ? `${t("from")} ${money(price.amount, price.currencyCode)}` : t("viewProduct"))}</Typography>
                 <Box className="hero-product-arrow" sx={{ display: "grid", placeItems: "center", width: 34, height: 34, border: "1px solid", borderColor: "divider", borderRadius: "50%", color: "brand.blue", transition: "background-color .2s, color .2s" }}><Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></Box>
               </Stack>
             </Box>
@@ -111,9 +114,9 @@ export default function CollectionCarousel({ products }: { products: HttpTypes.S
 
     {count > 1 ? <Stack direction="row" sx={{ justifyContent: "center", alignItems: "center", gap: 1, mt: { xs: 2, sm: 2.5 } }}>
       <IconButton aria-label={t("previous")} onFocus={() => setPlaying(false)} onClick={() => select(current - 1)} sx={{ width: 44, height: 44, bgcolor: "#ffffffd9", border: "1px solid", borderColor: "divider", color: "brand.navy" }}><Icon name="arrowRight" sx={{ fontSize: 18, transform: "rotate(180deg)" }} /></IconButton>
-      <Typography aria-label={t("slide", { current: current + 1, total: count })} sx={{ minWidth: 65, textAlign: "center", fontSize: 12, color: "brand.navySoft", fontVariantNumeric: "tabular-nums" }}>{String(current + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}</Typography>
+      <Typography aria-label={t("slide", { current: current + 1, total: count })} sx={{ minWidth: 65, textAlign: "center", fontSize: 12, color: "brand.navySoft", fontVariantNumeric: "tabular-nums" }}>{ct(String(current + 1).padStart(2, "0"))} / {ct(String(count).padStart(2, "0"))}</Typography>
       <IconButton aria-label={t("next")} onFocus={() => setPlaying(false)} onClick={() => select(current + 1)} sx={{ width: 44, height: 44, bgcolor: "#ffffffd9", border: "1px solid", borderColor: "divider", color: "brand.navy" }}><Icon name="arrowRight" sx={{ fontSize: 18 }} /></IconButton>
-      <IconButton aria-label={playing && motionAllowed ? t("pause") : t("play")} aria-pressed={playing && motionAllowed} onClick={() => setPlaying(value => !value)} disabled={!motionAllowed} sx={{ width: 44, height: 44, bgcolor: "#ffffffd9", color: "brand.navy" }}>
+      <IconButton aria-label={ct(playing && motionAllowed ? t("pause") : t("play"))} aria-pressed={playing && motionAllowed} onClick={() => setPlaying(value => !value)} disabled={!motionAllowed} sx={{ width: 44, height: 44, bgcolor: "#ffffffd9", color: "brand.navy" }}>
         <Box component="svg" viewBox="0 0 24 24" aria-hidden="true" sx={{ width: 16, height: 16, fill: "currentColor" }}>{playing && motionAllowed ? <path d="M7 5h3v14H7zm7 0h3v14h-3z" /> : <path d="m8 5 11 7-11 7z" />}</Box>
       </IconButton>
     </Stack> : null}

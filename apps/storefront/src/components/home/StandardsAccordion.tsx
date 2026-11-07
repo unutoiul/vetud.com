@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { PlusIcon as AddIcon } from "@/components/brand/Icon"
 import Accordion from "@mui/material/Accordion"
@@ -43,6 +45,7 @@ export const STANDARD_STEPS: StandardStep[] = [
 ]
 
 export default function StandardsAccordion({ steps = STANDARD_STEPS }: { steps?: StandardStep[] }) {
+  const ct = useContentTranslator()
   const stepIcons: IconName[] = ["document", "flask", "package", "support"]
   const [expanded, setExpanded] = useState<number | false>(0)
 
@@ -61,16 +64,16 @@ export default function StandardsAccordion({ steps = STANDARD_STEPS }: { steps?:
             <Icon name={stepIcons[index] ?? "shield"} sx={{ color: "brand.blue", fontSize: 28, flexShrink: 0 }} />
             <Box>
               <Typography variant="h6" component="h3" sx={{ mb: 0.5 }}>
-                {step.title}
+                {ct(step.title)}
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                {step.summary}
+                {ct(step.summary)}
               </Typography>
             </Box>
           </AccordionSummary>
           <AccordionDetails sx={{ pl: { xs: 0, sm: "48px" } }}>
             <Typography variant="body2" sx={{ color: "text.primary", maxWidth: 560 }}>
-              {step.detail}
+              {ct(step.detail)}
             </Typography>
           </AccordionDetails>
         </Accordion>

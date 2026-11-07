@@ -1,3 +1,5 @@
+import { localizeMetadata } from "@/i18n/metadata"
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import { CheckIcon, DocumentIcon as DescriptionOutlinedIcon, PackageIcon as Inventory2OutlinedIcon, SupportIcon as SupportAgentOutlinedIcon, SlidersIcon as TuneOutlinedIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
@@ -12,9 +14,11 @@ import SectionHeading from "@/components/common/SectionHeading"
 import Manifesto from "@/components/home/Manifesto"
 import StandardsAccordion from "@/components/home/StandardsAccordion"
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return localizeMetadata({
   title: "Our standards",
   description: "How Vetud documents, describes, packs and supports every research material it sells.",
+})
 }
 
 const PRINCIPLES = [
@@ -85,12 +89,13 @@ const FAQ: FaqItem[] = [
 ]
 
 export default function StandardsPage() {
+  const ct = useContentTranslator()
   return (
     <>
       <PageHeader
-        eyebrow="Our standards"
-        title="Precision is a practice."
-        description="Clear information is part of the material. These are the commitments behind every product we list."
+        eyebrow={ct("Our standards")}
+        title={ct("Precision is a practice.")}
+        description={ct("Clear information is part of the material. These are the commitments behind every product we list.")}
       />
 
       <Section tone="white">
@@ -103,14 +108,14 @@ export default function StandardsPage() {
                     <Icon fontSize="small" />
                   </Box>
                   <Typography variant="mono" sx={{ color: "text.secondary" }}>
-                    {String(index + 1).padStart(2, "0")}
+                    {ct(String(index + 1).padStart(2, "0"))}
                   </Typography>
                 </Stack>
                 <Typography variant="h5" component="h2" sx={{ mb: 1 }}>
-                  {title}
+                  {ct(title)}
                 </Typography>
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  {text}
+                  {ct(text)}
                 </Typography>
               </Paper>
             </Grid>
@@ -121,13 +126,13 @@ export default function StandardsPage() {
       <Section tone="wash">
         <Grid container spacing={{ xs: 5, md: 10 }}>
           <Grid size={{ xs: 12, md: 5 }}>
-            <SectionHeading eyebrow="How we work" title="From batch to bench." />
-            <Typography sx={{ color: "text.secondary", mb: 3 }}>Every product page lists:</Typography>
+            <SectionHeading eyebrow={ct("How we work")} title={ct("From batch to bench.")} />
+            <Typography sx={{ color: "text.secondary", mb: 3 }}>{ct("Every product page lists:")}</Typography>
             <Stack component="ul" spacing={1.25} sx={{ listStyle: "none", p: 0, m: 0 }}>
               {LISTING_CHECKLIST.map((item) => (
                 <Stack component="li" key={item} direction="row" spacing={1.25} sx={{ alignItems: "center" }}>
                   <CheckIcon fontSize="small" sx={{ color: "secondary.main" }} />
-                  <Typography>{item}</Typography>
+                  <Typography>{ct(item)}</Typography>
                 </Stack>
               ))}
             </Stack>
@@ -141,7 +146,7 @@ export default function StandardsPage() {
       <Section tone="white">
         <Grid container spacing={{ xs: 4, md: 10 }}>
           <Grid size={{ xs: 12, md: 4 }}>
-            <SectionHeading eyebrow="FAQ" title="Good questions." />
+            <SectionHeading eyebrow={ct("FAQ")} title={ct("Good questions.")} />
           </Grid>
           <Grid size={{ xs: 12, md: 8 }}>
             <FaqAccordion items={FAQ} />

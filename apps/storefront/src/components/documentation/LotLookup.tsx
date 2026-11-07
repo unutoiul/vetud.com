@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -39,6 +41,7 @@ async function findLot(lot: string): Promise<Match[]> {
 const normalize = (raw: string) => raw.trim().toUpperCase()
 
 export default function LotLookup() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const searchParams = useSearchParams()
   const initial = normalize(searchParams.get("lot") ?? "")
@@ -92,7 +95,7 @@ export default function LotLookup() {
       >
         <TextField
           label={act("lotNumber")}
-          placeholder="e.g. VTD01-2609A…"
+          placeholder={ct("e.g. VTD01-2609A…")}
           name="lot"
           value={value}
           onChange={(event) => setValue(event.target.value)}
@@ -110,11 +113,11 @@ export default function LotLookup() {
       </Stack>
 
       <Box aria-live="polite" sx={{ mt: 3 }}>
-        {failed ? <Alert severity="error">Lookup is unavailable right now. Please try again shortly.</Alert> : null}
+        {failed ? <Alert severity="error">{ct("Lookup is unavailable right now. Please try again shortly.")}</Alert> : null}
         {!failed && searched && !loading && !matches.length ? (
           <Alert severity="info">
-            No documented lot matches <strong>{searched}</strong>. Check the label for typos, or{" "}
-            <AppLink href={`/contact?subject=${encodeURIComponent(`Lot enquiry: ${searched}`)}`}>{act("contact")}</AppLink> with a photo of the label.
+            {ct("No documented lot matches")} <strong>{ct(searched)}</strong>{ct(". Check the label for typos, or")}{" "}
+            <AppLink href={`/contact?subject=${encodeURIComponent(`Lot enquiry: ${searched}`)}`}>{act("contact")}</AppLink> {ct("with a photo of the label.")}
           </Alert>
         ) : null}
         <Grid container spacing={2}>
@@ -129,24 +132,21 @@ export default function LotLookup() {
                   <Box sx={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", color: "success.main" }}>
                       <VerifiedOutlinedIcon fontSize="small" />
-                      <Typography variant="eyebrow">Documented lot</Typography>
+                      <Typography variant="eyebrow">{ct("Documented lot")}</Typography>
                     </Stack>
                     <Typography sx={{ fontFamily: "var(--font-dm-mono), monospace", fontSize: 20, fontWeight: 500, mt: 0.5 }}>
                       {lot.lot}
                     </Typography>
                     <Typography sx={{ mt: 0.5 }}>
-                      <AppLink href={`/products/${product.handle}`}>{product.title}</AppLink> · {meta.code}
+                      <AppLink href={`/products/${product.handle}`}>{ct(product.title)}</AppLink> · {ct(meta.code)}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-                      Batch {lot.date ?? "—"} · Purity {lot.purity ?? "—"} ·{" "}
-                      {lot.coaUrl ? (
+                    <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>{ct.rich("Batch {v0} · Purity {v1} · {v2}", { v0: ct(lot.date ?? "—"), v1: ct(lot.purity ?? "—"), v2: lot.coaUrl ? (
                         <a href={lot.coaUrl} target="_blank" rel="noopener">
                           {act("downloadCoa")}
                         </a>
                       ) : (
                         <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>{act("requestCoa")}</AppLink>
-                      )}
-                    </Typography>
+                      ) }, {  })}</Typography>
                     <LotReportsLink lot={lot.lot} />
                   </Box>
                 </Paper>

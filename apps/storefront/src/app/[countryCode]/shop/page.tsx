@@ -1,3 +1,5 @@
+import { getContentTranslator } from "@/i18n/server-content"
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import { getTranslations } from "next-intl/server"
 import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
@@ -44,6 +46,7 @@ function first(value: string | string[] | undefined) {
 }
 
 async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countryCode]/shop">["searchParams"] }) {
+  const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const params = await searchParams
   const query = first(params.q)?.trim() || undefined
@@ -83,10 +86,10 @@ async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countr
           {query || selectedCategories.length ? (
             <>
               <Typography variant="h4" component="p">
-                {query ? `No products match “${query}”.` : "No products in these categories yet."}
+                {ct(query ? `No products match “${query}”.` : "No products in these categories yet.")}
               </Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                {query ? "Try another search or remove a category filter." : "Choose another research area or browse the full collection."}
+                {ct(query ? "Try another search or remove a category filter." : "Choose another research area or browse the full collection.")}
               </Typography>
               <ButtonLink href="/shop" variant="outlined">
                 {act("clearFilters")}
@@ -95,10 +98,10 @@ async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countr
           ) : (
             <>
               <Typography variant="h4" component="p">
-                Our catalog is being updated.
+                {ct("Our catalog is being updated.")}
               </Typography>
               <Typography sx={{ color: "text.secondary" }}>
-                Contact us for availability of research materials.
+                {ct("Contact us for availability of research materials.")}
               </Typography>
               <ButtonLink href="/contact" variant="outlined">
                 {act("contact")}
@@ -128,10 +131,11 @@ function ResultsSkeleton() {
 }
 
 export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/shop">) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   return (
     <>
-      <VideoHero video={SHOP_HERO_VIDEO} eyebrow="The collection" title="Research peptides & laboratory materials." description="Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.">
+      <VideoHero video={SHOP_HERO_VIDEO} eyebrow={ct("The collection")} title={ct("Research peptides & laboratory materials.")} description={ct("Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.")}>
         <AppLink href="/dual-chamber-pen" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}>{act("compareFormats")}</AppLink>
       </VideoHero>
       <Section tone="white" tight sx={{ pt: { xs: 3, md: 5 } }}>

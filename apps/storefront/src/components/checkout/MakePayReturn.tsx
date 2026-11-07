@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -39,6 +41,7 @@ function write(key: string, value: string | null) {
  * it only carries an opaque state that we exchange for the real status from the backend.
  */
 export default function MakePayReturn() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const { countryCode } = useStore()
   const [message, setMessage] = useState<string | null>(null)
@@ -138,14 +141,14 @@ export default function MakePayReturn() {
     return (
       <Stack spacing={2} sx={{ py: 8, alignItems: "center" }} role="status" aria-live="polite">
         <CircularProgress color="secondary" />
-        <Typography>Confirming your payment…</Typography>
+        <Typography>{ct("Confirming your payment…")}</Typography>
       </Stack>
     )
   }
 
   return (
     <Stack spacing={3} sx={{ py: 4, alignItems: "flex-start" }}>
-      <Alert severity={outcome === "retry" ? "warning" : "info"}>{message}</Alert>
+      <Alert severity={outcome === "retry" ? "warning" : "info"}>{ct(message)}</Alert>
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
         {outcome === "retry" ? (
           <ButtonLink href="/checkout" variant="contained">

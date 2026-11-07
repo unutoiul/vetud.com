@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
@@ -32,6 +34,7 @@ export type PurchaseAddOn = { variantId: string; title: string; detail: string; 
 const ADD_ON_FORMATS = ["Vial"]
 
 export default function PurchasePanel({ product, addOns = [] }: { product: HttpTypes.StoreProduct; addOns?: PurchaseAddOn[] }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const { addItem, pending, error, clearError, region } = useStore()
   const { setFormat } = useProductSelection()
@@ -92,30 +95,25 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
         {price ? (
           <Stack direction="row" spacing={1.5} sx={{ alignItems: "baseline" }}>
             <Typography sx={{ fontSize: 34, fontWeight: 600, letterSpacing: "-0.03em", fontVariantNumeric: "tabular-nums" }}>
-              {money(price.amount, price.currencyCode)}
+              {ct(money(price.amount, price.currencyCode))}
             </Typography>
             {price.original > price.amount ? (
-              <Typography sx={{ color: "text.secondary", textDecoration: "line-through" }}>
-                <Box component="span" sx={{ position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>Regular price </Box>
-                {money(price.original, price.currencyCode)}
-              </Typography>
+              <Typography sx={{ color: "text.secondary", textDecoration: "line-through" }}>{ct.rich("<slot0>Regular price </slot0>{v0}", { v0: ct(money(price.original, price.currencyCode)) }, { slot0: chunks => <Box component="span" sx={{ position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }} key="slot0">{chunks}</Box> })}</Typography>
             ) : null}
             {off ? (
               <Typography component="span" sx={{ alignSelf: "center", fontSize: 13, fontWeight: 700, color: "#fff", bgcolor: "brand.navy", borderRadius: "4px", px: 1, py: 0.25 }}>
-                {act("save")} {off}%
+                {act("save")} {ct(off)}%
               </Typography>
             ) : null}
           </Stack>
         ) : (
-          <Typography sx={{ fontSize: 20, fontWeight: 600 }}>Not available in your region</Typography>
+          <Typography sx={{ fontSize: 20, fontWeight: 600 }}>{ct("Not available in your region")}</Typography>
         )}
         {options.length > 1 && variant ? (
-          <Typography sx={{ color: "text.secondary", fontSize: 14, mt: 0.25 }}>{variant.title}</Typography>
+          <Typography sx={{ color: "text.secondary", fontSize: 14, mt: 0.25 }}>{ct(variant.title)}</Typography>
         ) : null}
         {threshold ? (
-          <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-            Free standard shipping on orders over {money(threshold, region.currencyCode, { whole: true })}
-          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>{ct.rich("Free standard shipping on orders over {v0}", { v0: ct(money(threshold, region.currencyCode, { whole: true })) }, {  })}</Typography>
         ) : null}
       </Box>
 
@@ -170,7 +168,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
                         {from ? (
                           <Typography component="span" sx={{ fontSize: 14, fontWeight: 650, color: "brand.ink", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums", textAlign: "right" }}>
                             <Box component="span" sx={{ display: "block", fontSize: 11, fontWeight: 500, color: "text.secondary" }}>{act("from")}</Box>
-                            {money(from.amount, from.currencyCode)}
+                            {ct(money(from.amount, from.currencyCode))}
                           </Typography>
                         ) : null}
                       </Box>
@@ -227,7 +225,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
                           {translateAction(act, value)}
                           {matchPrice ? (
                             <Box component="span" sx={{ fontSize: 12, fontWeight: 500, color: "text.secondary" }}>
-                              {money(matchPrice.amount, matchPrice.currencyCode)}
+                              {ct(money(matchPrice.amount, matchPrice.currencyCode))}
                             </Box>
                           ) : null}
                         </ToggleButton>
@@ -243,15 +241,15 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
         <Stack direction="row" spacing={1.5} sx={{ border: "1px solid", borderColor: "divider", borderRadius: "5px", p: 2 }}>
           <Icon name="package" fontSize="small" sx={{ color: "brand.blue", mt: "2px" }} />
           <Box>
-            <Typography sx={{ fontSize: 13, fontWeight: 700, color: "brand.ink" }}>In the box · {format}</Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.25 }}>{contents}</Typography>
+            <Typography sx={{ fontSize: 13, fontWeight: 700, color: "brand.ink" }}>{ct.rich("In the box · {v0}", { v0: ct(format) }, {  })}</Typography>
+            <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.25 }}>{ct(contents)}</Typography>
           </Box>
         </Stack>
       ) : null}
 
       {offered.length ? (
         <Box component="fieldset" sx={{ m: 0, p: 2, border: "1px solid", borderColor: "divider", borderRadius: "5px", minWidth: 0 }}>
-          <Typography component="legend" sx={{ px: 0.5, fontSize: 13, fontWeight: 700, color: "brand.ink" }}>Add what you need for the vial</Typography>
+          <Typography component="legend" sx={{ px: 0.5, fontSize: 13, fontWeight: 700, color: "brand.ink" }}>{ct("Add what you need for the vial")}</Typography>
           <Box sx={{ display: "grid", gap: 1, mt: 0.5 }}>
             {offered.map((addOn) => {
               const count = extras[addOn.variantId] ?? 0
@@ -263,15 +261,15 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
                     {addOn.image ? <Image src={addOn.image} alt="" fill sizes="44px" style={{ objectFit: "contain" }} /> : null}
                   </Box>
                   <Box component="label" htmlFor={id} sx={{ minWidth: 0, cursor: "pointer" }}>
-                    <Typography component="span" sx={{ display: "block", fontSize: 14, fontWeight: 650, color: "brand.ink" }}>{addOn.title}</Typography>
-                    <Typography component="span" sx={{ display: "block", fontSize: 12.5, color: "text.secondary" }}>{addOn.detail} · {money(addOn.price.amount, addOn.price.currencyCode)} each</Typography>
+                    <Typography component="span" sx={{ display: "block", fontSize: 14, fontWeight: 650, color: "brand.ink" }}>{ct(addOn.title)}</Typography>
+                    <Typography component="span" sx={{ display: "block", fontSize: 12.5, color: "text.secondary" }}>{ct(addOn.detail)} · {ct(money(addOn.price.amount, addOn.price.currencyCode))} {ct("each")}</Typography>
                   </Box>
-                  <Typography sx={{ fontSize: 14, fontWeight: 650, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>+{money(addOn.price.amount * Math.max(count, 1), addOn.price.currencyCode)}</Typography>
+                  <Typography sx={{ fontSize: 14, fontWeight: 650, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>+{ct(money(addOn.price.amount * Math.max(count, 1), addOn.price.currencyCode))}</Typography>
                   {/* Once ticked, choose how many: more water for more vials. */}
                   {count ? (
                     <Box sx={{ gridColumn: "3 / -1", display: "flex", alignItems: "center", gap: 1.25 }}>
                       <QuantityStepper value={count} onChange={(value) => setExtra(addOn.variantId, value)} min={1} max={20} size="small" label={act("quantityAddOn", { product: addOn.title })} />
-                      <Typography sx={{ fontSize: 12.5, color: "text.secondary" }}>{addOn.unit ? `${count} ${addOn.unit}${count > 1 ? "s" : ""}` : null}</Typography>
+                      <Typography sx={{ fontSize: 12.5, color: "text.secondary" }}>{ct(addOn.unit ? `${count} ${addOn.unit}${count > 1 ? "s" : ""}` : null)}</Typography>
                     </Box>
                   ) : null}
                 </Box>
@@ -284,9 +282,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
       <Stack direction="row" spacing={1.5} useFlexGap role="status" aria-live="polite" aria-atomic="true" sx={{ alignItems: "center", flexWrap: "wrap" }}>
         <StockBadge inStock={inStock} />
         {inStock && variant?.manage_inventory && (variant.inventory_quantity ?? 0) < 10 ? (
-          <Typography variant="body2" sx={{ color: "text.secondary", fontSize: 13 }}>
-            Only {variant.inventory_quantity} left
-          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary", fontSize: 13 }}>{ct.rich("Only {v0} left", { v0: ct(variant.inventory_quantity) }, {  })}</Typography>
         ) : null}
       </Stack>
 
@@ -300,19 +296,19 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
           disabled={!inStock || !price || pending}
           sx={{ flex: 1 }}
         >
-          {pending ? act("adding") : extraCount ? act("addItems", { count: extraCount + 1 }) : act("addCart")}
+          {ct(pending ? act("adding") : extraCount ? act("addItems", { count: extraCount + 1 }) : act("addCart"))}
         </Button>
       </Stack>
 
       {added ? (
         <Alert severity="success" role="status" onClose={() => setAdded(false)}>
-          Added to your cart.
+          {ct("Added to your cart.")}
         </Alert>
       ) : null}
       <AcceptedPaymentMethods />
       {error ? (
         <Alert severity="error" onClose={clearError}>
-          {error}
+          {ct(error)}
         </Alert>
       ) : null}
 
@@ -323,7 +319,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
       >
         <ScienceOutlinedIcon fontSize="small" sx={{ color: "secondary.main", mt: "2px" }} />
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          <strong>{SITE.productDisclaimer}.</strong> {SITE.ruoNotice}
+          <strong>{ct(SITE.productDisclaimer)}.</strong> {ct(SITE.ruoNotice)}
         </Typography>
       </Stack>
     </Stack>

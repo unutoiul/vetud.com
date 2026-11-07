@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -15,6 +17,7 @@ export type HeroVideoSource = { src: string; poster: string }
  * Below md it is a band under the hero text; from md it fills the hero behind the text.
  */
 export default function HeroVideo({ src, poster }: HeroVideoSource) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const video = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(false)
@@ -38,7 +41,7 @@ export default function HeroVideo({ src, poster }: HeroVideoSource) {
       }}>
       <source src={src} type="video/mp4" />
     </Box>
-    <IconButton onClick={() => (playing ? video.current?.pause() : video.current?.play())} aria-label={playing ? act("pauseVideo") : act("playVideo")}
+    <IconButton onClick={() => (playing ? video.current?.pause() : video.current?.play())} aria-label={ct(playing ? act("pauseVideo") : act("playVideo"))}
       sx={{ position: "absolute", zIndex: 2, right: { xs: 12, md: 20 }, bottom: { xs: 12, md: 20 }, width: 36, height: 36, color: "brand.navy", bgcolor: "rgba(255,255,255,.82)", border: "1px solid", borderColor: "divider", "&:hover": { bgcolor: "#fff" } }}>
       <Icon name={playing ? "pause" : "play"} sx={{ fontSize: 16 }} />
     </IconButton>

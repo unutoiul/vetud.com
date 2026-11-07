@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Autocomplete from "@mui/material/Autocomplete"
 import Box from "@mui/material/Box"
@@ -34,6 +36,7 @@ const DEBOUNCE_MS = 250
  * field keeps working as a normal text input.
  */
 export default function PlaceAutocomplete({ id, name, label, value, required, error, helperText, autoComplete, suggest, onTextChange, onPick, minCharacters = 3 }: Props) {
+  const ct = useContentTranslator()
   const t = useTranslations("Address")
   const [options, setOptions] = useState<PlaceSuggestion[]>([])
   const [open, setOpen] = useState(false)
@@ -107,8 +110,8 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
           return (
             <li key={key} {...rest}>
               <Box sx={{ minWidth: 0 }}>
-                <Typography sx={{ fontWeight: 600, fontSize: 14 }}>{option.main}</Typography>
-                {option.secondary ? <Typography variant="body2" sx={{ color: "text.secondary" }}>{option.secondary}</Typography> : null}
+                <Typography sx={{ fontWeight: 600, fontSize: 14 }}>{ct(option.main)}</Typography>
+                {option.secondary ? <Typography variant="body2" sx={{ color: "text.secondary" }}>{ct(option.secondary)}</Typography> : null}
               </Box>
             </li>
           )
@@ -118,10 +121,10 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
             {...params}
             id={id}
             name={name}
-            label={label}
+            label={ct(label)}
             required={required}
             error={error}
-            helperText={helperText}
+            helperText={ct(helperText)}
             // MUI only reports a close while the list is showing. Suggestions that arrive after the
             // visitor has moved to another field must not open this list there.
             onBlur={() => setOpen(false)}

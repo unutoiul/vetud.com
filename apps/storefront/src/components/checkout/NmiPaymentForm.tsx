@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -25,11 +27,12 @@ const FIELDS = {
 }
 
 export default function NmiPaymentForm({ session, busy, onToken }: { session: NmiSession; busy: boolean; onToken: (token: NmiToken) => Promise<void> }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [method, setMethod] = useState<"card" | "ach">("card")
   return <Stack spacing={2} sx={{ mt: 3 }}>
-    <Typography variant="h6">Secure payment details</Typography>
-    {session.sandbox ? <Alert severity="warning">Sandbox checkout — use NMI test details only.</Alert> : null}
+    <Typography variant="h6">{ct("Secure payment details")}</Typography>
+    {session.sandbox ? <Alert severity="warning">{ct("Sandbox checkout — use NMI test details only.")}</Alert> : null}
     {session.ach ? <TextField select label={act("paymentType")} value={method} disabled={busy} onChange={(event) => setMethod(event.target.value === "ach" ? "ach" : "card")}>
       <MenuItem value="card">{act("card")}</MenuItem><MenuItem value="ach">{act("usBank")}</MenuItem>
     </TextField> : null}
@@ -38,6 +41,7 @@ export default function NmiPaymentForm({ session, busy, onToken }: { session: Nm
 }
 
 function HostedFields({ session, method, busy, onToken }: { session: NmiSession; method: "card" | "ach"; busy: boolean; onToken: (token: NmiToken) => Promise<void> }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [ready, setReady] = useState(false)
   const [validity, setValidity] = useState<Record<string, boolean>>({})
@@ -123,12 +127,12 @@ function HostedFields({ session, method, busy, onToken }: { session: NmiSession;
     && (method === "card" || (consent && accountType && holderType))
   const locked = busy || processing || submitted
   return <Stack spacing={2}>
-    <Typography variant="body2" color="text.secondary">{method === "card" ? "Card details are securely collected by NMI. We use the billing address you already entered." : "Bank details are securely collected by NMI. Bank debits can take several business days to settle; your order will be held until then."}</Typography>
+    <Typography variant="body2" color="text.secondary">{ct(method === "card" ? "Card details are securely collected by NMI. We use the billing address you already entered." : "Bank details are securely collected by NMI. Bank debits can take several business days to settle; your order will be held until then.")}</Typography>
     <Box aria-busy={!ready} sx={{ pointerEvents: locked ? "none" : "auto" }}>
       {Object.entries(fields).map(([name, title]) => <Box key={name} sx={{ mb: 1.5 }}>
-        <Typography id={`vetud-nmi-label-${name}`} variant="body2" sx={{ mb: 0.75 }}>{title}</Typography>
+        <Typography id={`vetud-nmi-label-${name}`} variant="body2" sx={{ mb: 0.75 }}>{ct(title)}</Typography>
         <Box id={`vetud-nmi-${name}`} aria-labelledby={`vetud-nmi-label-${name}`} sx={{ minHeight: 52, border: "1px solid", borderColor: validity[name] === false ? "error.main" : "divider", borderRadius: 1.5, bgcolor: "#fff", overflow: "hidden", "& iframe": { display: "block", width: "100%", border: 0 } }} />
-        {validity[name] === false ? <Typography variant="caption" color="error">Check this field.</Typography> : null}
+        {validity[name] === false ? <Typography variant="caption" color="error">{ct("Check this field.")}</Typography> : null}
       </Box>)}
     </Box>
     {method === "ach" ? <>
@@ -140,8 +144,8 @@ function HostedFields({ session, method, busy, onToken }: { session: NmiSession;
       </TextField>
       <FormControlLabel control={<Checkbox checked={consent} disabled={locked} onChange={(event) => setConsent(event.target.checked)} />} label={<>{act("achAgreement", { amount: amountLabel })}{holderType === "business" ? <> {act("achBusinessAgreement")}</> : null}</>} />
     </> : null}
-    {error ? <Alert severity="error">{error}</Alert> : null}
-    {submitted && !busy && !processing ? <Alert severity="info">Your payment attempt was submitted. Check the message above and your order history before trying again. If you need to change payment details, return to the Payment step.</Alert> : null}
+    {error ? <Alert severity="error">{ct(error)}</Alert> : null}
+    {submitted && !busy && !processing ? <Alert severity="info">{ct("Your payment attempt was submitted. Check the message above and your order history before trying again. If you need to change payment details, return to the Payment step.")}</Alert> : null}
     <Button variant="contained" size="large" disabled={!valid || locked} startIcon={!ready || processing || busy ? <CircularProgress size={16} color="inherit" /> : undefined} onClick={() => {
       if (!valid || locked || activeRequest.current || attempted.current || !window.CollectJS) return
       activeRequest.current = true
@@ -156,6 +160,6 @@ function HostedFields({ session, method, busy, onToken }: { session: NmiSession;
         setError("Tokenization timed out. No payment token was sent by this form. Return to Payment to reload the secure fields.")
       }, 18000)
       try { window.CollectJS.startPaymentRequest() } catch { activeRequest.current = false; clearTimeout(requestTimeout.current); setProcessing(false); setError("The secure payment form could not start. Return to Payment to reload it.") }
-    }}>{processing || busy ? act("processingSecurely") : !ready ? act("loadingFields") : act("authorizeOrder", { action: method === "ach" ? act("authorizeDebit") : act("authorizeCard"), amount: amountLabel })}</Button>
+    }}>{ct(processing || busy ? act("processingSecurely") : !ready ? act("loadingFields") : act("authorizeOrder", { action: method === "ach" ? act("authorizeDebit") : act("authorizeCard"), amount: amountLabel }))}</Button>
   </Stack>
 }

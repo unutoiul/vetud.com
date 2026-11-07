@@ -2,6 +2,7 @@ import Link from "@mui/material/Link"
 import type { ReactNode } from "react"
 import { AppLink } from "@/components/common/links"
 import type { ShopLinks } from "@/lib/learn-shop"
+import { useContentTranslator } from "@/i18n/use-content-translator"
 
 const LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g
 
@@ -10,7 +11,9 @@ const LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g
  * ("/learn/bpc-157"), external URLs, or "shop:<peptide slug>", which opens that peptide's
  * product page when the visitor's region carries it and the shop otherwise.
  */
-export default function RichText({ text, shop = {} }: { text: string; shop?: ShopLinks }) {
+export default function RichText({ text: source, shop = {} }: { text: string; shop?: ShopLinks }) {
+  const ct = useContentTranslator()
+  const text = ct(source)
   const parts: ReactNode[] = []
   let last = 0
   for (const match of text.matchAll(LINK)) {

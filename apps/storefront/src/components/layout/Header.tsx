@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import AppBar from "@mui/material/AppBar"
 import { useTranslations } from "next-intl"
@@ -38,6 +40,7 @@ function ActiveMainNav() {
 }
 
 export default function Header() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Common")
   const { itemCount, openDrawer } = useStore()
@@ -54,7 +57,7 @@ export default function Header() {
         <IconButton
           component={LocalizedNextLink}
           href="/account"
-          aria-label={customer ? act("openAccount") : act("signInCreate")}
+          aria-label={ct(customer ? act("openAccount") : act("signInCreate"))}
           sx={{ display: { xs: "none", sm: "inline-flex" } }}
         >
           <Icon name="account" sx={{ fontSize: 22 }} />
@@ -82,19 +85,19 @@ export default function Header() {
           sx={{ display: "flex", alignItems: "center", gap: 1.5, mt: 4, color: "brand.navy", textDecoration: "none", fontWeight: 700 }}
         >
           <Icon name="account" sx={{ fontSize: 20 }} />
-          {customer ? act("yourAccount") : act("signInCreate")}
+          {ct(customer ? act("yourAccount") : act("signInCreate"))}
         </Box>
         <Box component={LocalizedNextLink} href="/account/orders" onClick={() => setMenuOpen(false)} sx={{ display: "flex", alignItems: "center", gap: 1.5, mt: 2.5, minHeight: 44, color: "brand.navy", textDecoration: "none", fontWeight: 700 }}>
           <Icon name="package" sx={{ fontSize: 20 }} />{act("ordersTracking")}
         </Box>
         <Box sx={{ mt: 3 }}><CountrySelect fullWidth /></Box>
-        <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 3 }}>Peptide science. A clearer perspective.</Typography>
+        <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 3 }}>{ct("Peptide science. A clearer perspective.")}</Typography>
       </Box>
     </Drawer>
     <Dialog open={searchOpen} onClose={() => setSearchOpen(false)} fullWidth maxWidth="sm" aria-labelledby="search-title" slotProps={{ paper: { sx: { alignSelf: "flex-start", mt: 10, p: { xs: 2.5, sm: 4 } } }, transition: { onEntered: () => searchInput.current?.focus() } }}>
-      <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", mb: 2 }}><Typography component="h2" variant="h4" id="search-title">Find your research materials</Typography><IconButton aria-label={act("closeSearch")} onClick={() => setSearchOpen(false)}><Icon name="close" /></IconButton></Stack>
+      <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", mb: 2 }}><Typography component="h2" variant="h4" id="search-title">{ct("Find your research materials")}</Typography><IconButton aria-label={act("closeSearch")} onClick={() => setSearchOpen(false)}><Icon name="close" /></IconButton></Stack>
       <SearchBox autoFocus inputRef={searchInput} onNavigate={() => setSearchOpen(false)} />
-      <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>Search products (name, code or lot number), peptide guides and news.</Typography>
+      <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>{ct("Search products (name, code or lot number), peptide guides and news.")}</Typography>
     </Dialog>
   </>
 }

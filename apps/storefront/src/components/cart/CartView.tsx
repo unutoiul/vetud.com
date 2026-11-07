@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -19,6 +21,7 @@ import OrderTotals from "./OrderTotals"
 import PromoCodeField from "./PromoCodeField"
 
 export default function CartView() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const { cart, cartReady, error, clearError, region } = useStore()
 
@@ -44,9 +47,9 @@ export default function CartView() {
     return (
       <Stack spacing={2} sx={{ py: 6, alignItems: "flex-start" }}>
         <Typography variant="h4" component="h2">
-          Your cart is empty.
+          {ct("Your cart is empty.")}
         </Typography>
-        <Typography sx={{ color: "text.secondary" }}>Add products from the catalog to get started.</Typography>
+        <Typography sx={{ color: "text.secondary" }}>{ct("Add products from the catalog to get started.")}</Typography>
         <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>
           {act("shopCatalog")}
         </ButtonLink>
@@ -61,7 +64,7 @@ export default function CartView() {
       <Grid size={{ xs: 12, md: 7.5 }}>
         {error ? (
           <Alert severity="error" onClose={clearError} sx={{ mb: 2 }}>
-            {error}
+            {ct(error)}
           </Alert>
         ) : null}
         <FreeShippingProgress itemTotal={Number(cart.item_total ?? 0)} currencyCode={currency} />
@@ -77,7 +80,7 @@ export default function CartView() {
       <Grid size={{ xs: 12, md: 4.5 }}>
         <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#f7f9fa", borderRadius: 3, position: { md: "sticky" }, top: { md: 110 } }}>
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
-            Order summary
+            {ct("Order summary")}
           </Typography>
           <Box sx={{ mb: 2 }}><PromoCodeField /></Box>
           <OrderTotals totals={{ ...cart, currency_code: currency }} shippingKnown={false} />
@@ -86,7 +89,7 @@ export default function CartView() {
           </ButtonLink>
           <Box sx={{ mt: 2.5 }}><AcceptedPaymentMethods regionId={cart.region_id || undefined} currency={currency} /></Box>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 2 }}>
-            Choose your payment method at checkout.
+            {ct("Choose your payment method at checkout.")}
           </Typography>
         </Paper>
       </Grid>

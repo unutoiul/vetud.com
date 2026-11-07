@@ -8,6 +8,7 @@
     "start": "next start -p 8000",
     "lint": "eslint",
     "check:i18n": "node scripts/check-i18n.mjs",
+    "test:content": "node scripts/test-content-translator.mjs",
     "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {

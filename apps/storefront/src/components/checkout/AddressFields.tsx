@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
@@ -22,6 +24,7 @@ type Props = {
 }
 
 export default function AddressFields({ prefix, values, errors, countries, onChange }: Props) {
+  const ct = useContentTranslator()
   const t = useTranslations("Address")
   const locale = useLocale()
   const rules = getCountryRules(values.country_code)
@@ -71,7 +74,7 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
     }
   }
   const postalHelp = rules.postalExample ? t("postalHelp", { example: rules.postalExample }) : undefined
-  const postalField = suggestionsOn ? <PlaceAutocomplete key={`${prefix}-postal-${country}`} id={`${prefix}-postal_code`} name={`${prefix}-postal_code`} label={t(rules.postalLabel as "postal" | "zip" | "postcode")} value={values.postal_code} required={!rules.postalOptional} error={Boolean(errors.postal_code)} helperText={errors.postal_code || postalHelp} autoComplete={autocomplete("postal-code")} minCharacters={2} suggest={(text, token, signal) => suggestPostalCodes(text, token, country, signal, locale)} onTextChange={text => set({ postal_code: text })} onPick={(picked, token) => void pick(picked, token, true)} /> : <TextField {...field("postal_code", t(rules.postalLabel as "postal" | "zip" | "postcode"), "postal-code", !rules.postalOptional)} helperText={errors.postal_code || postalHelp} onBlur={() => set({ postal_code: normalizePostal(values.postal_code, country) })} />
+  const postalField = suggestionsOn ? <PlaceAutocomplete key={`${prefix}-postal-${country}`} id={`${prefix}-postal_code`} name={`${prefix}-postal_code`} label={t(rules.postalLabel as "postal" | "zip" | "postcode")} value={values.postal_code} required={!rules.postalOptional} error={Boolean(errors.postal_code)} helperText={ct(errors.postal_code || postalHelp)} autoComplete={autocomplete("postal-code")} minCharacters={2} suggest={(text, token, signal) => suggestPostalCodes(text, token, country, signal, locale)} onTextChange={text => set({ postal_code: text })} onPick={(picked, token) => void pick(picked, token, true)} /> : <TextField {...field("postal_code", t(rules.postalLabel as "postal" | "zip" | "postcode"), "postal-code", !rules.postalOptional)} helperText={ct(errors.postal_code || postalHelp)} onBlur={() => set({ postal_code: normalizePostal(values.postal_code, country) })} />
   const cityField = <TextField {...field("city", t(rules.cityLabel as "city" | "town"), "address-level2", true)} />
   return <Box>
     <Typography sx={{ fontSize: 12, color: "text.secondary", mb: 2 }}>{t("autofill")}</Typography>
@@ -80,14 +83,14 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
         requestVersion.current += 1
         setNear(undefined)
         onChange({ ...values, country_code: event.target.value, province: "", postal_code: "", city: "", address_1: "", address_2: "" })
-      }}>{sortedCountries.map(option => <MenuItem key={option.code} value={option.code}>{option.label}</MenuItem>)}</TextField></Grid>
+      }}>{sortedCountries.map(option => <MenuItem key={option.code} value={option.code}>{ct(option.label)}</MenuItem>)}</TextField></Grid>
       <Grid size={{ xs: 12, sm: 6 }}><TextField {...field("first_name", t("firstName"), "given-name", true)} /></Grid>
       <Grid size={{ xs: 12, sm: 6 }}><TextField {...field("last_name", t("lastName"), "family-name", true)} /></Grid>
-      <Grid size={12}>{suggestionsOn ? <PlaceAutocomplete key={`${prefix}-address-${country}`} id={`${prefix}-address_1`} name={`${prefix}-address_1`} label={t("address")} value={values.address_1} required error={Boolean(errors.address_1)} helperText={errors.address_1 || t("addressHelp")} autoComplete={autocomplete("address-line1")} suggest={(text, token, signal) => suggestAddresses(text, token, country, signal, near, locale)} onTextChange={text => set({ address_1: text })} onPick={(picked, token) => void pick(picked, token)} /> : <TextField {...field("address_1", t("address"), "address-line1", true)} helperText={errors.address_1 || t("addressHelp")} />}</Grid>
+      <Grid size={12}>{suggestionsOn ? <PlaceAutocomplete key={`${prefix}-address-${country}`} id={`${prefix}-address_1`} name={`${prefix}-address_1`} label={t("address")} value={values.address_1} required error={Boolean(errors.address_1)} helperText={ct(errors.address_1 || t("addressHelp"))} autoComplete={autocomplete("address-line1")} suggest={(text, token, signal) => suggestAddresses(text, token, country, signal, near, locale)} onTextChange={text => set({ address_1: text })} onPick={(picked, token) => void pick(picked, token)} /> : <TextField {...field("address_1", t("address"), "address-line1", true)} helperText={ct(errors.address_1 || t("addressHelp"))} />}</Grid>
       <Grid size={12}><TextField {...field("address_2", t("address2"), "address-line2")} /></Grid>
-      <Grid size={{ xs: 12, sm: rules.postalBeforeCity ? 5 : 7 }}>{rules.postalBeforeCity ? postalField : cityField}</Grid>
-      <Grid size={{ xs: 12, sm: rules.postalBeforeCity ? 7 : 5 }}>{rules.postalBeforeCity ? cityField : postalField}</Grid>
-      {rules.provinceRequired ? <Grid size={12}><TextField select {...field("province", t(country === "us" ? "state" : "region"), "address-level1", true)}>{Object.entries(provincesOf(country)).map(([code, name]) => <MenuItem key={code} value={code}>{name}</MenuItem>)}</TextField></Grid>
+      <Grid size={{ xs: 12, sm: rules.postalBeforeCity ? 5 : 7 }}>{ct(rules.postalBeforeCity ? postalField : cityField)}</Grid>
+      <Grid size={{ xs: 12, sm: rules.postalBeforeCity ? 7 : 5 }}>{ct(rules.postalBeforeCity ? cityField : postalField)}</Grid>
+      {rules.provinceRequired ? <Grid size={12}><TextField select {...field("province", t(country === "us" ? "state" : "region"), "address-level1", true)}>{Object.entries(provincesOf(country)).map(([code, name]) => <MenuItem key={code} value={code}>{ct(name)}</MenuItem>)}</TextField></Grid>
         : rules.provinceOptional ? <Grid size={12}><TextField {...field("province", t("region"), "address-level1")} /></Grid> : null}
       <Grid size={12}><PhoneField id={`${prefix}-phone`} name={`${prefix}-phone`} country={country || "us"} value={values.phone} onChange={phone => set({ phone })} error={errors.phone} autoComplete={autocomplete("tel")} /></Grid>
     </Grid>

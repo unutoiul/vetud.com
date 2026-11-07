@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import type { HttpTypes } from "@medusajs/types"
 import Badge from "@mui/material/Badge"
@@ -17,6 +19,7 @@ import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
 import ProductThumb from "../product/ProductThumb"
 
 export default function CheckoutOrderSummary({ cart, place, arrival, compact = false }: { cart: HttpTypes.StoreCart; place: string; arrival: string | null; compact?: boolean }) {
+  const ct = useContentTranslator()
   const t = useTranslations("Checkout")
   const money = useMoney()
   const count = (cart.items ?? []).reduce((sum, item) => sum + Number(item.quantity), 0)
@@ -44,10 +47,10 @@ export default function CheckoutOrderSummary({ cart, place, arrival, compact = f
                 </Box>
               </Badge>
               <Box sx={{ flex: 1, minWidth: 0, pt: 0.25 }}>
-                <Typography sx={{ fontSize: 15, fontWeight: 600, lineHeight: 1.45, overflowWrap: "anywhere" }}>{item.product_title || item.title}</Typography>
-                <Typography sx={{ fontSize: 12.5, color: "text.secondary", mt: 0.5, lineHeight: 1.55 }}>{item.variant_title}</Typography>
+                <Typography sx={{ fontSize: 15, fontWeight: 600, lineHeight: 1.45, overflowWrap: "anywhere" }}>{ct(item.product_title || item.title)}</Typography>
+                <Typography sx={{ fontSize: 12.5, color: "text.secondary", mt: 0.5, lineHeight: 1.55 }}>{ct(item.variant_title)}</Typography>
               </Box>
-              <Typography sx={{ pt: 0.25, fontSize: 15, fontWeight: 600, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>{money(Number(item.unit_price) * quantity, cart.currency_code)}</Typography>
+              <Typography sx={{ pt: 0.25, fontSize: 15, fontWeight: 600, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>{ct(money(Number(item.unit_price) * quantity, cart.currency_code))}</Typography>
             </Stack>
           )
         })}
@@ -70,7 +73,7 @@ export default function CheckoutOrderSummary({ cart, place, arrival, compact = f
           <Icon name="lock" sx={{ fontSize: 14 }} />
           <Typography sx={{ fontSize: 12 }}>{t("secureCheckout")}</Typography>
         </Stack>
-        <Box component="a" href={`mailto:${SITE.email}`} sx={{ color: "secondary.main", fontSize: 12, textUnderlineOffset: "3px", overflowWrap: "anywhere" }}>{SITE.email}</Box>
+        <Box component="a" href={`mailto:${SITE.email}`} sx={{ color: "secondary.main", fontSize: 12, textUnderlineOffset: "3px", overflowWrap: "anywhere" }}>{ct(SITE.email)}</Box>
       </Stack>
       <Box sx={{ mt: 2.5 }}><AcceptedPaymentMethods regionId={cart.region_id || undefined} currency={cart.currency_code} /></Box>
     </Box>

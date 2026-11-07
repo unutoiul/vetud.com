@@ -1,0 +1,144 @@
+import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
+import Box from "@mui/material/Box"
+import Grid from "@mui/material/Grid"
+import Skeleton from "@mui/material/Skeleton"
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
+import type { Metadata } from "next"
+import { Suspense } from "react"
+import { ButtonLink } from "@/components/common/links"
+import Section from "@/components/common/Section"
+import { AppLink } from "@/components/common/links"
+import VideoHero, { SHOP_HERO_VIDEO } from "@/components/common/VideoHero"
+import ProductGrid from "@/components/product/ProductGrid"
+import ShopToolbar from "@/components/shop/ShopToolbar"
+import CategoryFilters from "@/components/shop/CategoryFilters"
+import { categoryFacets, filterByCategories } from "@/lib/catalog-filters"
+import { getCurrentRegion } from "@/lib/medusa/current-region"
+import {
+  listCategories,
+  listCatalogProducts,
+  searchProducts,
+  type ProductSort,
+} from "@/lib/medusa/products"
+import { sortProducts } from "@/lib/product"
+import { parseStoreSegment } from "@/lib/store-segment"
+import { storefrontMetadata } from "@/lib/storefront-seo"
+
+export async function generateMetadata({ params, searchParams }: PageProps<"/[countryCode]/shop">): Promise<Metadata> {
+  const [segment, search] = await Promise.all([params, searchParams])
+  const countryCode = parseStoreSegment(segment.countryCode).country
+  return storefrontMetadata({
+    title: `Research Peptides & Laboratory Materials | VETUD ${countryCode === "gb" ? "UK" : countryCode.toUpperCase()}`,
+    description: "Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare amounts, regional prices, stock and lot documentation. Laboratory use only.",
+    country: countryCode, path: "/shop", noindex: Boolean(first(search.q) || first(search.category) || first(search.sort)),
+  })
+}
+
+// Older links with sort=featured fall back to relevance, the default.
+const SORT_VALUES: ProductSort[] = ["relevance", "price-asc", "price-desc", "name"]
+
+function first(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value
+}
+
+async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countryCode]/shop">["searchParams"] }) {
+  const act = await getTranslations("Actions")
+  const params = await searchParams
+  const query = first(params.q)?.trim() || undefined
+  // One category at a time; older links with several keep only the first.
+  const selectedCategory = first(params.category) || undefined
+  const selectedCategories = selectedCategory ? [selectedCategory] : []
+  const sortParam = first(params.sort) as ProductSort | undefined
+  const sort = sortParam && SORT_VALUES.includes(sortParam) ? sortParam : "relevance"
+
+  const { region } = await getCurrentRegion()
+  const [categories, catalog, matches] = await Promise.all([
+    listCategories(),
+    listCatalogProducts(region.id),
+    query ? searchProducts(query, region.id) : Promise.resolve(null),
+  ])
+  const facets = categoryFacets(categories, catalog)
+  const filtered = filterByCategories(matches ?? catalog, facets, selectedCategories)
+  // When searching, relevance keeps Meilisearch's order (best match first).
+  const sorted = matches && sort === "relevance" ? filtered : sortProducts(filtered, sort)
+
+  return (
+    <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "300px minmax(0, 1fr)" }, alignItems: "start", gap: { xs: 2.5, lg: 5 } }}>
+      <CategoryFilters categories={facets} selected={selectedCategory} total={catalog.length} query={query} sort={sort} />
+      <Box sx={{ minWidth: 0 }}>
+      <ShopToolbar
+        key={query ?? ""}
+        categories={facets}
+        selectedCategories={selectedCategories}
+        sort={sort}
+        query={query}
+        count={sorted.length}
+      />
+      {sorted.length ? (
+        <ProductGrid products={sorted} />
+      ) : (
+        <Stack spacing={2} sx={{ py: 8, alignItems: "center", textAlign: "center" }}>
+          {query || selectedCategories.length ? (
+            <>
+              <Typography variant="h4" component="p">
+                {query ? `No products match “${query}”.` : "No products in these categories yet."}
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {query ? "Try another search or remove a category filter." : "Choose another research area or browse the full collection."}
+              </Typography>
+              <ButtonLink href="/shop" variant="outlined">
+                {act("clearFilters")}
+              </ButtonLink>
+            </>
+          ) : (
+            <>
+              <Typography variant="h4" component="p">
+                Our catalog is being updated.
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                Contact us for availability of research materials.
+              </Typography>
+              <ButtonLink href="/contact" variant="outlined">
+                {act("contact")}
+              </ButtonLink>
+            </>
+          )}
+        </Stack>
+      )}
+      </Box>
+    </Box>
+  )
+}
+
+function ResultsSkeleton() {
+  return (
+    <Box>
+      <Skeleton variant="rounded" height={44} sx={{ mb: 3, maxWidth: 420 }} />
+      <Grid container spacing={2}>
+        {Array.from({ length: 6 }).map((_, index) => (
+          <Grid key={index} size={{ xs: 12, sm: 6, md: 4 }}>
+            <Skeleton variant="rounded" height={380} />
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  )
+}
+
+export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/shop">) {
+  const act = useTranslations("Actions")
+  return (
+    <>
+      <VideoHero video={SHOP_HERO_VIDEO} eyebrow="The collection" title="Research peptides & laboratory materials." description="Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.">
+        <AppLink href="/dual-chamber-pen" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}>{act("compareFormats")}</AppLink>
+      </VideoHero>
+      <Section tone="white" tight sx={{ pt: { xs: 3, md: 5 } }}>
+        <Suspense fallback={<ResultsSkeleton />}>
+          <ShopResults searchParams={searchParams} />
+        </Suspense>
+      </Section>
+    </>
+  )
+}

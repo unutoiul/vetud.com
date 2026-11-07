@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -60,6 +62,7 @@ function remember(storage: "local" | "session", key: string, value: string) {
 }
 
 function Countdown({ endsAt }: { endsAt: string }) {
+  const ct = useContentTranslator()
   const t = useTranslations("Offer")
   const [now, setNow] = useState(() => Date.now())
   useEffect(() => {
@@ -77,8 +80,8 @@ function Countdown({ endsAt }: { endsAt: string }) {
     <Box role="timer" aria-label={`${t("endsIn")} ${parts.map(([value, label]) => `${value} ${label}`).join(", ")}`} sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1 }}>
       {parts.map(([value, label]) => (
         <Box key={label} aria-hidden sx={{ textAlign: "center", py: 1.25, borderRadius: "10px", border: "1px solid", borderColor: "divider", bgcolor: "brand.mintWash" }}>
-          <Typography sx={{ fontSize: 24, fontWeight: 700, color: "brand.navy", lineHeight: 1.2, fontVariantNumeric: "tabular-nums" }}>{String(value).padStart(2, "0")}</Typography>
-          <Typography sx={{ fontSize: 11, color: "text.secondary", fontWeight: 600 }}>{label}</Typography>
+          <Typography sx={{ fontSize: 24, fontWeight: 700, color: "brand.navy", lineHeight: 1.2, fontVariantNumeric: "tabular-nums" }}>{ct(String(value).padStart(2, "0"))}</Typography>
+          <Typography sx={{ fontSize: 11, color: "text.secondary", fontWeight: 600 }}>{ct(label)}</Typography>
         </Box>
       ))}
     </Box>
@@ -92,6 +95,7 @@ function Countdown({ endsAt }: { endsAt: string }) {
  * (in this browser, or signed in with marketing consent). The code itself is only sent by email.
  */
 export default function OfferPopup() {
+  const ct = useContentTranslator()
   const t = useTranslations("Offer")
   const pathname = usePathname()
   const localize = useLocalizedHref()
@@ -152,7 +156,7 @@ export default function OfferPopup() {
         <Image src="/images/vetud-alpine-landscape.webp" alt="" fill sizes="440px" style={{ objectFit: "cover", objectPosition: "center 80%", opacity: .55 }} />
         <Box sx={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(21,38,94,.85), rgba(21,38,94,.15))" }} />
         <IconButton aria-label={t("close")} onClick={close} sx={{ position: "absolute", top: 10, right: 10, color: "#fff", bgcolor: "rgba(10,20,48,.45)", "&:hover": { bgcolor: "rgba(10,20,48,.7)" } }}><Icon name="close" /></IconButton>
-        <Typography sx={{ position: "absolute", left: 24, bottom: 16, px: 1.5, py: .5, borderRadius: 999, bgcolor: "rgba(255,255,255,.16)", color: "#fff", fontSize: 12, fontWeight: 700, letterSpacing: ".06em" }}>{offer.headline || t("label")}</Typography>
+        <Typography sx={{ position: "absolute", left: 24, bottom: 16, px: 1.5, py: .5, borderRadius: 999, bgcolor: "rgba(255,255,255,.16)", color: "#fff", fontSize: 12, fontWeight: 700, letterSpacing: ".06em" }}>{ct(offer.headline || t("label"))}</Typography>
       </Box>
 
       <Box sx={{ p: { xs: 2.5, sm: 3 }, overflowY: "auto" }}>
@@ -166,9 +170,9 @@ export default function OfferPopup() {
         ) : (
           <Box component="form" onSubmit={submit} noValidate>
             <Typography id="offer-title" component="h2" sx={{ fontSize: { xs: 26, sm: 30 }, fontWeight: 700, letterSpacing: "-.03em", lineHeight: 1.15 }}>{t("cta", { discount: offer.discount })}</Typography>
-            {offer.description ? <Typography sx={{ mt: 1, color: "text.secondary", lineHeight: 1.65 }}>{offer.description}</Typography> : null}
+            {offer.description ? <Typography sx={{ mt: 1, color: "text.secondary", lineHeight: 1.65 }}>{ct(offer.description)}</Typography> : null}
             {offer.ends_at ? <Box sx={{ mt: 2.5 }}><Typography sx={{ fontSize: 13, fontWeight: 650, color: "text.secondary", mb: 1 }}>{t("endsIn")}</Typography><Countdown endsAt={offer.ends_at} /></Box> : null}
-            <TextField sx={{ mt: 2.5 }} label={t("email")} type="email" name="email" required value={email} onChange={(event) => setEmail(event.target.value)} error={showErrors && Boolean(emailError)} helperText={showErrors ? emailError : undefined} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
+            <TextField sx={{ mt: 2.5 }} label={t("email")} type="email" name="email" required value={email} onChange={(event) => setEmail(event.target.value)} error={showErrors && Boolean(emailError)} helperText={ct(showErrors ? emailError : undefined)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
             {/* Honeypot: hidden from people, filled by bots. */}
             <Box aria-hidden sx={{ position: "absolute", left: -9999, width: 1, height: 1, overflow: "hidden" }}>
               <input type="text" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
@@ -181,7 +185,7 @@ export default function OfferPopup() {
             {showErrors && !consent ? <FormHelperText error>{t("consentRequired")}</FormHelperText> : null}
             {status === "error" ? <Alert severity="error" sx={{ mt: 1.5 }}>{t("error")}</Alert> : null}
             <Button type="submit" variant="contained" size="large" fullWidth disabled={status === "sending"} startIcon={status === "sending" ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" />} sx={{ mt: 2.5, minHeight: 52 }}>
-              {status === "sending" ? t("sending") : t("cta", { discount: offer.discount })}
+              {ct(status === "sending" ? t("sending") : t("cta", { discount: offer.discount }))}
             </Button>
             <Button onClick={close} fullWidth sx={{ mt: 1, color: "text.secondary" }}>{t("noThanks")}</Button>
           </Box>

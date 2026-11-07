@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Box from "@mui/material/Box"
 import { keyframes } from "@mui/material/styles"
@@ -55,6 +57,7 @@ function Ridge({ side }: { side: "left" | "right" }) {
  * when the countdown reaches zero, before the server stops sending the sale.
  */
 export default function SaleBanner({ sale, endLabel }: { sale: LiveSale; endLabel: string | null }) {
+  const ct = useContentTranslator()
   const t = useTranslations("Offer")
   const locale = useLocale()
   const now = useSyncExternalStore(subscribe, clientNow, serverNow)
@@ -96,7 +99,7 @@ export default function SaleBanner({ sale, endLabel }: { sale: LiveSale; endLabe
         }}
       >
         <Box component="span" sx={{ fontFamily: fonts.mono, fontSize: 10.5, fontWeight: 500, letterSpacing: ".14em", textTransform: "uppercase", color: "brand.cyan", lineHeight: 1, px: 1, py: 0.6, borderRadius: 999, border: `1px solid ${glacier}0.45)`, bgcolor: `${glacier}0.1)`, whiteSpace: "nowrap" }}>
-          {sale.title}
+          {ct(sale.title)}
         </Box>
 
         <Box component="span" sx={{ fontSize: { xs: 13.5, sm: 14 }, fontWeight: 600, letterSpacing: "-.005em" }}>
@@ -104,7 +107,7 @@ export default function SaleBanner({ sale, endLabel }: { sale: LiveSale; endLabe
             percent: sale.percent_off,
             b: (chunks) => (
               <Box component="strong" sx={{ fontSize: { xs: 15, sm: 16 }, fontWeight: 800, color: "#fff", fontVariantNumeric: "tabular-nums", pb: "1px", background: `linear-gradient(transparent 84%, ${brand.cyan} 84%, ${brand.cyan} 96%, transparent 96%)` }}>
-                {chunks}
+                {ct(chunks)}
               </Box>
             ),
           })}
@@ -119,8 +122,8 @@ export default function SaleBanner({ sale, endLabel }: { sale: LiveSale; endLabe
               <>
                 {t("endsIn")}
                 {/* The brand sans, not the mono: unit letters are Greek or Cyrillic on some pages. */}
-                <Box component="span" sx={{ fontSize: 13, fontWeight: 700, color: "brand.onNavy", fontVariantNumeric: "tabular-nums" }}>{countdown}</Box>
-                <Box component="span" sx={{ display: { sm: "none", lg: "inline" } }}>· {ends}</Box>
+                <Box component="span" sx={{ fontSize: 13, fontWeight: 700, color: "brand.onNavy", fontVariantNumeric: "tabular-nums" }}>{ct(countdown)}</Box>
+                <Box component="span" sx={{ display: { sm: "none", lg: "inline" } }}>· {ct(ends)}</Box>
               </>
             ) : t("bannerEnds", { date: ends })}
           </Box>

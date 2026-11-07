@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -24,6 +26,7 @@ function isUnauthorized(error: unknown) {
 
 /** Sets a new password from the emailed link, then signs the customer in. */
 export default function ResetPasswordForm() {
+  const ct = useContentTranslator()
   const t = useTranslations("Account")
   const params = useSearchParams()
   const token = params.get("token") ?? ""
@@ -69,27 +72,27 @@ export default function ResetPasswordForm() {
     <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3, maxWidth: 560 }}>
       {status === "expired" ? (
         <>
-          <Alert severity="warning" sx={{ mb: 3 }}>{token ? t("resetExpired") : t("resetMissing")}</Alert>
+          <Alert severity="warning" sx={{ mb: 3 }}>{ct(token ? t("resetExpired") : t("resetMissing"))}</Alert>
           <ResetRequestForm initialEmail={email} />
         </>
       ) : status === "done" || status === "signedIn" ? (
         <Stack spacing={3} sx={{ alignItems: "flex-start" }}>
           <Alert severity="success" role="status" sx={{ alignSelf: "stretch" }}>
-            {status === "signedIn" ? t("resetDone") : t("resetDoneSignin")}
+            {ct(status === "signedIn" ? t("resetDone") : t("resetDoneSignin"))}
           </Alert>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ alignSelf: { xs: "stretch", sm: "flex-start" } }}>
             {status === "signedIn" && itemCount ? (
               <ButtonLink href="/checkout" variant="contained" startIcon={<Icon name="lock" sx={{ fontSize: 17 }} />}>{t("continueCheckout")}</ButtonLink>
             ) : null}
             <ButtonLink href="/account" variant={status === "signedIn" && itemCount ? "outlined" : "contained"}>
-              {status === "signedIn" ? t("goToAccount") : t("signin")}
+              {ct(status === "signedIn" ? t("goToAccount") : t("signin"))}
             </ButtonLink>
           </Stack>
         </Stack>
       ) : (
         <Box component="form" onSubmit={submit} noValidate>
           {email ? <Typography sx={{ color: "text.secondary", mb: 3, overflowWrap: "anywhere" }}>{t("resetFor", { email })}</Typography> : null}
-          {formError ? <Alert severity="error" sx={{ mb: 2 }}>{formError}</Alert> : null}
+          {formError ? <Alert severity="error" sx={{ mb: 2 }}>{ct(formError)}</Alert> : null}
           <Stack spacing={2}>
             <PasswordField
               label={t("newPassword")}
@@ -97,7 +100,7 @@ export default function ResetPasswordForm() {
               onChange={setPassword}
               autoComplete="new-password"
               error={showErrors && Boolean(passwordError)}
-              helperText={showErrors && passwordError ? passwordError : t("passwordHelp")}
+              helperText={ct(showErrors && passwordError ? passwordError : t("passwordHelp"))}
             />
             <PasswordField
               label={t("confirmPassword")}
@@ -105,7 +108,7 @@ export default function ResetPasswordForm() {
               onChange={setConfirm}
               autoComplete="new-password"
               error={showErrors && Boolean(confirmError)}
-              helperText={showErrors ? confirmError : undefined}
+              helperText={ct(showErrors ? confirmError : undefined)}
             />
           </Stack>
           <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}>

@@ -1,3 +1,4 @@
+import { getContentTranslator } from "@/i18n/server-content"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import Skeleton from "@mui/material/Skeleton"
@@ -16,9 +17,10 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps<"/[countryCode]/legal/[slug]">): Promise<Metadata> {
+  const ct = await getContentTranslator()
   const { slug } = await params
   const document = getLegalDocument(slug)
-  return document ? { title: document.title, description: document.summary } : { title: "Not found" }
+  return document ? { title: ct(document.title), description: ct(document.summary) } : { title: ct("Not found") }
 }
 
 export default function LegalPage({ params }: PageProps<"/[countryCode]/legal/[slug]">) {
@@ -30,17 +32,18 @@ export default function LegalPage({ params }: PageProps<"/[countryCode]/legal/[s
 }
 
 async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[slug]">, "params">) {
+  const ct = await getContentTranslator()
   const { slug } = await params
   const document = getLegalDocument(slug)
   if (!document) notFound()
 
   return (
     <>
-      <PageHeader eyebrow={`Legal · Last updated ${document.updated}`} title={document.title} description={document.summary} />
+      <PageHeader eyebrow={ct.template("Legal · Last updated {v0}", { v0: document.updated })} title={ct(document.title)} description={ct(document.summary)} />
       <Section tone="white">
         <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 3 }}>
-            <Stack component="nav" aria-label="Legal documents" spacing={0.5} sx={{ bgcolor: "#f7f9fa", border: "1px solid", borderColor: "divider", borderRadius: 3, p: 2.5, position: { md: "sticky" }, top: { md: 110 } }}>
+            <Stack component="nav" aria-label={ct("Legal documents")} spacing={0.5} sx={{ bgcolor: "#f7f9fa", border: "1px solid", borderColor: "divider", borderRadius: 3, p: 2.5, position: { md: "sticky" }, top: { md: 110 } }}>
               {LEGAL_DOCUMENTS.map((item) => (
                 <AppLink
                   key={item.slug}
@@ -56,7 +59,7 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
                     bgcolor: item.slug === document.slug ? "#eff5f6" : "transparent",
                   }}
                 >
-                  {item.title}
+                  {ct(item.title)}
                 </AppLink>
               ))}
             </Stack>
@@ -66,11 +69,11 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
               {document.sections.map((section) => (
                 <Box key={section.heading} component="section" sx={{ mb: 4 }}>
                   <Typography variant="h5" component="h2" sx={{ mb: 1.5 }}>
-                    {section.heading}
+                    {ct(section.heading)}
                   </Typography>
                   {section.paragraphs.map((paragraph) => (
                     <Typography key={paragraph.slice(0, 40)} sx={{ mb: 1.5, color: "text.primary" }}>
-                      {paragraph}
+                      {ct(paragraph)}
                     </Typography>
                   ))}
                 </Box>

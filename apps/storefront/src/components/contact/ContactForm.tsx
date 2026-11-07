@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { SendIcon as SendOutlinedIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
@@ -23,6 +25,7 @@ export default function ContactForm() {
 }
 
 function ContactFormInner({ initialSubject }: { initialSubject: string }) {
+  const ct = useContentTranslator()
   const t = useTranslations("Contact")
   const common = useTranslations("Common")
   const [values, setValues] = useState(() => ({ ...EMPTY, subject: initialSubject }))
@@ -83,7 +86,7 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
     <Box component="form" noValidate onSubmit={submit} aria-busy={sending}>
       {error ? (
         <Alert severity="error" sx={{ mb: 3 }} onClose={() => setError(null)}>
-          {error}
+          {ct(error)}
         </Alert>
       ) : null}
       <Grid container spacing={2}>
@@ -105,7 +108,7 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
         {/* Honeypot for bots: hidden from people and assistive tech. */}
         <Box aria-hidden sx={{ position: "absolute", left: -10000, width: 1, height: 1, overflow: "hidden" }}>
           <label>
-            Website
+            {ct("Website")}
             <input
               tabIndex={-1}
               autoComplete="off"
@@ -124,7 +127,7 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
         startIcon={sending ? <CircularProgress size={16} color="inherit" /> : <SendOutlinedIcon />}
         sx={{ mt: 3 }}
       >
-        {sending ? t("sending") : t("send")}
+        {ct(sending ? t("sending") : t("send"))}
       </Button>
       <Snackbar
         open={sent}

@@ -4,14 +4,16 @@
  */
 /** `about` is searched but not shown, so "GLP-1" finds Semaglutide. */
 export type GuideEntry = { slug: string; name: string; aka?: string; line: string; category: string; about: string }
-/** `date` is ready to show ("November 2, 2026"); entries come newest first. `peptides` holds slugs, names and brand names. */
+/** `date` is ISO so the reader's locale formats it; entries come newest first. */
 export type ArticleEntry = { slug: string; title: string; dek: string; kind: string; date: string; peptides: string[] }
-export type SearchIndex = { guides: GuideEntry[]; articles: ArticleEntry[] }
+export type ProductEntry = { id: string; title: string; handle: string; description: string }
+export type SearchIndex = { guides: GuideEntry[]; articles: ArticleEntry[]; products?: ProductEntry[] }
 
 /** The text to search: the name or title, then the closer fields, then the background text. */
 export type SearchFields = [main: string, near: string[], far?: string[]]
 
-const normalize = (value: string) => value.toLowerCase().normalize("NFKD").replace(/[^a-z0-9+]+/g, " ").trim()
+const SEARCH_LETTERS: Record<string, string> = { ł: "l", ø: "o", æ: "ae", œ: "oe", ð: "d", þ: "th", ß: "ss" }
+const normalize = (value: string) => value.toLowerCase().normalize("NFKD").replace(/\p{M}+/gu, "").replace(/[łøæœðþß]/g, letter => SEARCH_LETTERS[letter]).replace(/[^\p{L}\p{N}+]+/gu, " ").trim()
 
 /**
  * Ranks entries whose fields contain every word of the query. Matches in the main field come

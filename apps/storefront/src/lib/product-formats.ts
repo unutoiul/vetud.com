@@ -104,12 +104,12 @@ export function boxedFormat(product: HttpTypes.StoreProduct) {
 }
 
 /** One short line for cards: "Pen kit, dual-chamber vial or vial · 5 mg / 10 mg", or the variant titles. */
-export function shortAvailability(product: HttpTypes.StoreProduct) {
+export function shortAvailability(product: HttpTypes.StoreProduct, translate: (text: string) => string = text => text) {
   const options = readOptions(product)
-  if (!options.some((option) => option.title === FORMAT_OPTION)) return sortedVariants(product).map((variant) => variant.title).join(" / ")
+  if (!options.some((option) => option.title === FORMAT_OPTION)) return sortedVariants(product).map((variant) => translate(variant.title ?? "")).join(" / ")
   const formats = options.find((option) => option.title === FORMAT_OPTION)?.values ?? []
   const amounts = options.find((option) => option.title !== FORMAT_OPTION)?.values ?? []
   const label = formats.includes(SPRAY_FORMAT) ? "Nasal spray, dual-chamber vial or vial"
     : formats.includes(KIT_FORMAT) ? "Pen kit, dual-chamber vial or vial" : "Dual-chamber vial or vial"
-  return `${label}${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
+  return `${translate(label)}${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
 }

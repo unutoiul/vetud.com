@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Icon from "@/components/brand/Icon"
 import { useLocale, useTranslations } from "next-intl"
@@ -20,6 +22,7 @@ import { useStore } from "../store/StoreProvider"
  * remembers both and reloads the page so prices, cart and checkout switch together.
  */
 export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Common")
   const locale = useLocale()
@@ -89,7 +92,7 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
           "&:hover": { transform: "none" },
         }}
       >
-        {region.currencyCode.toUpperCase()} · {countryCode.toUpperCase()}
+        {ct(region.currencyCode.toUpperCase())} · {ct(countryCode.toUpperCase())}
       </Button>
       <Popover
         id="currency-country-panel"
@@ -108,14 +111,14 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
             slotProps={{ select: { MenuProps: { slotProps: { paper: { sx: { maxHeight: 360 } } } } } }}>
             {sortedCountries.map((item) => (
               <MenuItem key={item.code} value={item.code}>
-                {countryName.of(item.code.toUpperCase()) ?? item.name}
+                {ct(countryName.of(item.code.toUpperCase()) ?? item.name)}
               </MenuItem>
             ))}
           </TextField>
           <TextField select size="small" label={t("currency")} value={currency} onChange={(event) => { setCurrency(event.target.value); setCurrencyPicked(true) }}>
             {currencies.map((code) => (
               <MenuItem key={code} value={code}>
-                {code.toUpperCase()} · {currencyName.of(code.toUpperCase())}
+                {ct(code.toUpperCase())} · {ct(currencyName.of(code.toUpperCase()))}
               </MenuItem>
             ))}
           </TextField>

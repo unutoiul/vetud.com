@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -19,6 +21,7 @@ import { forumError } from "./useCommunityProfile"
 
 /** First visit: choose a public community name and accept the guidelines. */
 export default function JoinCommunity({ suggested, onJoined }: { suggested: string; onJoined: (profile: OwnForumProfile) => void }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [name, setName] = useState(suggested)
   const [agreed, setAgreed] = useState(false)
@@ -48,18 +51,18 @@ export default function JoinCommunity({ suggested, onJoined }: { suggested: stri
 
   return <Box component="form" noValidate onSubmit={submit} sx={{ p: { xs: 2.5, md: 3 }, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "10px" }}>
     <Typography component="h2" sx={{ fontSize: 20, fontWeight: 650, color: "brand.navy" }}>{act("joinCommunity")}</Typography>
-    <Typography sx={{ mt: .75, fontSize: 15, color: "brand.navySoft", lineHeight: 1.7 }}>Choose the name other members will see. It doesn&apos;t have to be your real name, and you can change it later.</Typography>
+    <Typography sx={{ mt: .75, fontSize: 15, color: "brand.navySoft", lineHeight: 1.7 }}>{ct("Choose the name other members will see. It doesn't have to be your real name, and you can change it later.")}</Typography>
     <TextField label={act("communityName")} value={name} onChange={event => setName(event.target.value.slice(0, 32))} required fullWidth sx={{ mt: 2.5, maxWidth: 420, bgcolor: "#fff" }}
-      helperText="3 to 32 characters: letters, numbers, spaces, dots or dashes." slotProps={{ htmlInput: { maxLength: 32, autoComplete: "nickname" } }} />
+      helperText={ct("3 to 32 characters: letters, numbers, spaces, dots or dashes.")} slotProps={{ htmlInput: { maxLength: 32, autoComplete: "nickname" } }} />
     <Box component="ul" sx={{ mt: 2.5, mb: 1, pl: 2.5, display: "grid", gap: .75, fontSize: 14.5, lineHeight: 1.6, color: "brand.ink" }}>
-      {GUIDELINE_SUMMARY.map(line => <li key={line}>{line}</li>)}
+      {GUIDELINE_SUMMARY.map(line => <li key={line}>{ct(line)}</li>)}
     </Box>
     <FormControlLabel control={<Checkbox checked={agreed} onChange={event => setAgreed(event.target.checked)} />}
-      label={<Typography sx={{ fontSize: 14.5 }}>{act.rich("guidelineAgreement", { link: chunks => <AppLink href="/community/guidelines" target="_blank">{chunks}</AppLink> })}</Typography>} />
-    {error ? <Alert severity="error" sx={{ mt: 1.5 }} onClose={() => setError(null)}>{error}</Alert> : null}
+      label={<Typography sx={{ fontSize: 14.5 }}>{act.rich("guidelineAgreement", { link: chunks => <AppLink href="/community/guidelines" target="_blank">{ct(chunks)}</AppLink> })}</Typography>} />
+    {error ? <Alert severity="error" sx={{ mt: 1.5 }} onClose={() => setError(null)}>{ct(error)}</Alert> : null}
     <Box sx={{ mt: 2 }}>
       <Button type="submit" variant="contained" disabled={saving || name.trim().length < 3} startIcon={saving ? <CircularProgress size={16} color="inherit" /> : null}>
-        {saving ? act("joining") : act("joinCommunity")}
+        {ct(saving ? act("joining") : act("joinCommunity"))}
       </Button>
     </Box>
   </Box>

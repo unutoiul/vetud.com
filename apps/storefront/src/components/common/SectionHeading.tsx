@@ -1,3 +1,4 @@
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
@@ -21,6 +22,7 @@ export default function SectionHeading({
   tone = "dark",
   as = "h2",
 }: SectionHeadingProps) {
+  const ct = useContentTranslator()
   const light = tone === "light"
   return (
     <Stack
@@ -30,24 +32,24 @@ export default function SectionHeading({
     >
       <Box sx={{ maxWidth: 820 }}>
         <Typography variant="eyebrow" sx={{ color: light ? "brand.onNavyMuted" : "brand.blue", letterSpacing: ".06em" }}>
-          {eyebrow}
+          {ct(eyebrow)}
         </Typography>
         <Typography
           variant="h2"
           component={as}
           sx={{ mt: 2, color: light ? "brand.onNavy" : "text.primary", textWrap: "balance", maxWidth: 780 }}
         >
-          {title}
+          {ct(title)}
         </Typography>
         {description ? (
           <Typography sx={{ mt: 2, maxWidth: 640, color: light ? "brand.onNavyMuted" : "text.secondary", lineHeight: 1.8 }}>
-            {description}
+            {ct(description)}
           </Typography>
         ) : null}
       </Box>
       {action ? (
         <Box sx={{ flexShrink: 0, pb: { md: 0.5 } }}>
-          {action}
+          {ct(action)}
         </Box>
       ) : null}
     </Stack>

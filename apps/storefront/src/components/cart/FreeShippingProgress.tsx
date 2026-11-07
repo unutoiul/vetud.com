@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { TruckIcon as LocalShippingOutlinedIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
@@ -15,6 +17,7 @@ export default function FreeShippingProgress({
   itemTotal: number
   currencyCode: string
 }) {
+  const ct = useContentTranslator()
   const money = useMoney()
   const { region } = useStore()
   // The threshold belongs to the visitor's region; the cart is always in that region's currency.
@@ -30,16 +33,16 @@ export default function FreeShippingProgress({
       <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1 }}>
         <LocalShippingOutlinedIcon fontSize="small" sx={{ color: "secondary.main" }} />
         <Typography variant="body2" sx={{ fontWeight: 600 }}>
-          {remaining > 0
+          {ct(remaining > 0
             ? `${money(remaining, currencyCode)} away from free standard shipping`
-            : "Your order ships free (standard)"}
+            : "Your order ships free (standard)")}
         </Typography>
       </Stack>
       <LinearProgress
         variant="determinate"
         value={progress}
         color="secondary"
-        aria-label="Progress towards free shipping"
+        aria-label={ct("Progress towards free shipping")}
         sx={{ height: 6, borderRadius: 3, bgcolor: "brand.line" }}
       />
     </Box>

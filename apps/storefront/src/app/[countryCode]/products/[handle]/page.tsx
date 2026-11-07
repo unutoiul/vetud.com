@@ -1,3 +1,4 @@
+import { getContentTranslator } from "@/i18n/server-content"
 import { getTranslations } from "next-intl/server"
 import type { HttpTypes } from "@medusajs/types"
 import Box from "@mui/material/Box"
@@ -97,6 +98,7 @@ export default function ProductPage({ params }: PageProps<"/[countryCode]/produc
 }
 
 async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/products/[handle]">, "params">) {
+  const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const { handle } = await params
   const [{ product, region, countryCode }, money] = await Promise.all([loadProduct(handle), getMoney()])
@@ -160,7 +162,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
   const overview = getProductOverview(product)
 
   const images = getProductImages(product)
-  const jsonLd = productStructuredData(product, countryCode)
+  const jsonLd = await productStructuredData(product, countryCode)
   const guides = getProductGuides(product)
 
   return (
@@ -176,11 +178,11 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
           </AppLink>
           {category ? (
             <AppLink href={`/shop?category=${category.handle}`} color="inherit">
-              {category.name}
+              {ct(category.name)}
             </AppLink>
           ) : null}
           <Typography sx={{ fontSize: 14, color: "text.primary" }} aria-current="page">
-            {product.title}
+            {ct(product.title)}
           </Typography>
         </Breadcrumbs>
 
@@ -189,11 +191,11 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
           <Grid size={{ xs: 12, md: 6 }}>
             <Box sx={{ position: { md: "sticky" }, top: { md: 110 }, border: "1px solid", borderColor: "divider", borderRadius: "5px", overflow: "hidden" }}>
               {images.length ? (
-                <ProductGallery title={product.title} images={images} aspectRatio={getProductPhotography(product.handle)?.aspectRatio ?? meta.imageAspectRatio ?? "4 / 3"} />
+                <ProductGallery title={ct(product.title)} images={images} aspectRatio={getProductPhotography(product.handle)?.aspectRatio ?? meta.imageAspectRatio ?? "4 / 3"} />
               ) : (
                 <ArtStage height={{ xs: 320, sm: 420, md: 520 }}>
                   <Box sx={{ width: "90%", maxWidth: 500, position: "relative", zIndex: 1 }}>
-                    <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} title={`${product.title} product image`} />
+                    <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} title={ct.template("{v0} product image", { v0: product.title })} />
                   </Box>
                 </ArtStage>
               )}
@@ -201,7 +203,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
                 {[meta.purity?.endsWith("%") ? `${meta.purity} purity` : meta.purity, meta.testing, ...meta.features, meta.lots.length ? `${meta.lots.length} documented lot${meta.lots.length > 1 ? "s" : ""}` : null]
                   .filter(Boolean)
                   .map((label) => (
-                    <Chip key={label} label={label} size="small" variant="outlined" />
+                    <Chip key={label} label={ct(label)} size="small" variant="outlined" />
                   ))}
               </Stack>
             </Box>
@@ -209,15 +211,15 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
 
           <Grid size={{ xs: 12, md: 6 }}>
             <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".1em" }}>
-              {meta.code}
-              {category ? ` · ${category.name}` : ""}
+              {ct(meta.code)}
+              {ct(category ? ` · ${category.name}` : "")}
             </Typography>
             <Typography variant="h2" component="h1" sx={{ mt: 1.75, mb: 1.5, fontWeight: 400, fontSize: { xs: 40, md: 52 } }}>
-              {product.title}
+              {ct(product.title)}
             </Typography>
             {product.subtitle ? (
               <Typography variant="lead" sx={{ color: "text.secondary", mb: 3 }}>
-                {product.subtitle}
+                {ct(product.subtitle)}
               </Typography>
             ) : null}
             <PurchasePanel product={product} addOns={addOns} />
@@ -226,19 +228,19 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </ProductSelectionProvider>
 
         <Box>
-          <ProductDossier overview={overview} skus={formats.length ? skus : undefined} description={product.description} specs={specs} meta={meta} title={product.title} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
+          <ProductDossier overview={overview} skus={formats.length ? skus : undefined} description={ct(product.description)} specs={specs} meta={meta} title={ct(product.title)} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
         </Box>
       </Section>
 
       {related.length ? (
         <Section tone="paper">
-          <SectionHeading eyebrow="Related" title="From the same series." />
+          <SectionHeading eyebrow={ct("Related")} title={ct("From the same series.")} />
           <ProductGrid products={related} />
         </Section>
       ) : null}
 
       {/* Supplies without a library guide (water, syringes) don't need a reading list. */}
-      {guides.length || meta.artKind !== "supply" ? <ProductLearnMore title={product.title} guides={guides} /> : null}
+      {guides.length || meta.artKind !== "supply" ? <ProductLearnMore title={ct(product.title)} guides={guides} /> : null}
     </>
   )
 }

@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Box from "@mui/material/Box"
 import { useState } from "react"
@@ -10,6 +12,7 @@ import { useStore } from "../store/StoreProvider"
  * The first count after mounting is recorded, not announced.
  */
 export default function CartAnnouncer() {
+  const ct = useContentTranslator()
   const { itemCount, cartReady } = useStore()
   const [seen, setSeen] = useState<number | null>(null)
   const [message, setMessage] = useState("")
@@ -19,7 +22,7 @@ export default function CartAnnouncer() {
   }
   return (
     <Box component="span" role="status" sx={{ position: "absolute", top: 0, left: 0, width: 1, height: 1, overflow: "hidden", clipPath: "inset(50%)", whiteSpace: "nowrap" }}>
-      {message}
+      {ct(message)}
     </Box>
   )
 }

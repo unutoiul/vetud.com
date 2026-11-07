@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -14,6 +16,7 @@ import { useCallback, useEffect, useState, type FormEvent } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { useAccount } from "../account/AccountProvider"
 import { ButtonLink } from "../common/links"
+import PostBody from "../community/PostBody"
 
 type ArticleComment = { id: string; author_name: string; body: string; created_at: string; mine: boolean }
 type CommentsResponse = { comments: ArticleComment[]; count: number; offset: number; limit: number }
@@ -27,12 +30,13 @@ function errorMessage(error: unknown, fallback: string) {
   return fallback
 }
 
-function formatCommentDate(date: string) {
-  return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(new Date(date))
+function formatCommentDate(date: string, locale: string) {
+  return new Intl.DateTimeFormat(locale, { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(date))
 }
 
 /** Public discussion under an article. Anyone can read; signed-in customers can post and delete their own comments. */
 export default function ArticleComments({ article }: { article: string }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const { customer, loading: accountLoading } = useAccount()
   const [comments, setComments] = useState<ArticleComment[]>([])
@@ -106,7 +110,7 @@ export default function ArticleComments({ article }: { article: string }) {
   }
 
   const remove = async (comment: ArticleComment) => {
-    if (!window.confirm("Delete your comment? This can't be undone.")) return
+    if (!window.confirm(ct("Delete your comment? This can't be undone."))) return
     setDeleting(comment.id)
     setFormError(null)
     try {
@@ -127,44 +131,44 @@ export default function ArticleComments({ article }: { article: string }) {
           label={act("commentAs", { name: customer.first_name || act("reader") })}
           multiline minRows={3} fullWidth value={body}
           onChange={event => { setBody(event.target.value.slice(0, MAX_LENGTH)); if (formError) setFormError(null) }}
-          helperText={`${body.length}/${MAX_LENGTH} · Comments are public and show your first name and last initial. Please don’t share doses or personal medical advice; we remove comments that do.`}
+          helperText={ct.template("{v0}/{v1} · Comments are public and show your first name and last initial. Please don’t share doses or personal medical advice; we remove comments that do.", { v0: body.length, v1: MAX_LENGTH })}
           slotProps={{ htmlInput: { maxLength: MAX_LENGTH } }}
         />
         <Button type="submit" variant="contained" disabled={posting || !body.trim()} startIcon={posting ? <CircularProgress size={16} color="inherit" /> : null} sx={{ mt: 2 }}>
-          {posting ? act("posting") : act("postComment")}
+          {ct(posting ? act("posting") : act("postComment"))}
         </Button>
       </Box>
     ) : (
       <Box sx={{ p: { xs: 2.5, md: 3 }, bgcolor: "brand.mintWash", borderRadius: 2, display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
-        <Typography sx={{ fontSize: 16, color: "brand.navySoft", lineHeight: 1.7 }}>Sign in to your Vetud account to join the discussion.</Typography>
+        <Typography sx={{ fontSize: 16, color: "brand.navySoft", lineHeight: 1.7 }}>{ct("Sign in to your Vetud account to join the discussion.")}</Typography>
         <ButtonLink href="/account" variant="contained" sx={{ flexShrink: 0, alignSelf: { xs: "flex-start", sm: "center" } }}>{act("signInComment")}</ButtonLink>
       </Box>
     )}
 
-    {formError ? <Alert severity="error" onClose={() => setFormError(null)}>{formError}</Alert> : null}
+    {formError ? <Alert severity="error" onClose={() => setFormError(null)}>{ct(formError)}</Alert> : null}
 
     {status === "loading" ? (
       <Stack spacing={2} role="status" aria-label={act("loadingComments")}><Skeleton variant="rounded" height={88} /><Skeleton variant="rounded" height={88} /></Stack>
     ) : status === "error" ? (
-      <Alert severity="error" action={<Button color="inherit" onClick={retry}>{act("retry")}</Button>}>We couldn&apos;t load the comments.</Alert>
+      <Alert severity="error" action={<Button color="inherit" onClick={retry}>{act("retry")}</Button>}>{ct("We couldn't load the comments.")}</Alert>
     ) : comments.length ? (
       <Box component="ol" aria-label={`${count} ${count === 1 ? "comment" : "comments"}`} sx={{ m: 0, p: 0, listStyle: "none", display: "grid", gap: 0 }}>
         {comments.map(comment => <Box component="li" key={comment.id} sx={{ py: 2.5, borderTop: "1px solid", borderColor: "divider", "&:first-of-type": { borderTop: 0, pt: 0 } }}>
           <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 1.5, rowGap: .5, mb: 1 }}>
-            <Typography component="span" sx={{ fontSize: 15, fontWeight: 700, color: "brand.navy" }}>{comment.author_name}{comment.mine ? " (you)" : ""}</Typography>
-            <Typography component="time" dateTime={comment.created_at} sx={{ fontSize: 13.5, color: "brand.navySoft" }}>{formatCommentDate(comment.created_at)}</Typography>
+            <Typography component="span" sx={{ fontSize: 15, fontWeight: 700, color: "brand.navy" }}>{comment.author_name}{ct(comment.mine ? " (you)" : "")}</Typography>
+            <Typography component="time" dateTime={comment.created_at} sx={{ fontSize: 13.5, color: "brand.navySoft" }}>{ct(formatCommentDate(comment.created_at, ct.locale))}</Typography>
             {comment.mine ? <Button size="small" color="error" onClick={() => void remove(comment)} disabled={deleting === comment.id} sx={{ ml: "auto", minHeight: 32 }}>{deleting === comment.id ? act("deleting") : act("delete")}</Button> : null}
           </Box>
-          <Typography sx={{ fontSize: 16, lineHeight: 1.75, color: "brand.navySoft", whiteSpace: "pre-wrap", overflowWrap: "anywhere" }}>{comment.body}</Typography>
+          <PostBody body={comment.body} color="brand.navySoft" />
         </Box>)}
       </Box>
     ) : (
-      <Typography sx={{ fontSize: 16, color: "brand.navySoft" }}>No comments yet.{customer ? " Start the discussion." : ""}</Typography>
+      <Typography sx={{ fontSize: 16, color: "brand.navySoft" }}>{ct.rich("No comments yet.{v0}", { v0: ct(customer ? " Start the discussion." : "") }, {  })}</Typography>
     )}
 
     {status === "ready" && comments.length < count ? (
       <Button variant="outlined" onClick={() => void loadMore()} disabled={loadingMore} sx={{ alignSelf: "flex-start" }}>
-        {loadingMore ? act("loading") : act("moreComments", { count: count - comments.length })}
+        {ct(loadingMore ? act("loading") : act("moreComments", { count: count - comments.length }))}
       </Button>
     ) : null}
   </Stack>

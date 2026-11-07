@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
@@ -35,6 +37,7 @@ const PEPTIDE_OPTIONS = [...PEPTIDES].sort((a, b) => a.name.localeCompare(b.name
 
 /** Start a question or discussion. Signs the member in and creates their profile first if needed. */
 export default function Composer() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const router = useRouter()
   const params = useSearchParams()
@@ -59,12 +62,12 @@ export default function Composer() {
   if (community.loading) return <Skeleton variant="rounded" height={420} />
   if (!community.signedIn) {
     return <Box>
-      <Typography sx={{ mb: 2.5, fontSize: 16, color: "brand.navySoft", lineHeight: 1.7, maxWidth: 560 }}>Sign in or create a Vetud account to post. Reading the community is open to everyone.</Typography>
+      <Typography sx={{ mb: 2.5, fontSize: 16, color: "brand.navySoft", lineHeight: 1.7, maxWidth: 560 }}>{ct("Sign in or create a Vetud account to post. Reading the community is open to everyone.")}</Typography>
       <AuthPanel />
     </Box>
   }
   if (!community.profile) return <JoinCommunity suggested={community.suggested} onJoined={community.setProfile} />
-  if (community.profile.status !== "active") return <Alert severity="info">Your community account can&apos;t post right now. Contact us if you think this is a mistake.</Alert>
+  if (community.profile.status !== "active") return <Alert severity="info">{ct("Your community account can't post right now. Contact us if you think this is a mistake.")}</Alert>
 
   const submit = async (event: FormEvent) => {
     event.preventDefault()
@@ -85,7 +88,7 @@ export default function Composer() {
 
   return <Box component="form" noValidate onSubmit={submit} aria-busy={posting} sx={{ display: "grid", gap: 3.5 }}>
     <Box>
-      <Typography component="h2" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>What are you posting?</Typography>
+      <Typography component="h2" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>{ct("What are you posting?")}</Typography>
       <Box role="radiogroup" aria-label={act("threadType")} sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)" }, gap: 1.5 }}>
         {THREAD_KINDS.map(option => {
           const selected = option === kind
@@ -104,10 +107,10 @@ export default function Composer() {
         if (!topicPicked) setTopic(topicForPeptide(option?.slug))
       }}
       getOptionLabel={option => option.name} isOptionEqualToValue={(option, value) => option.slug === value.slug}
-      renderInput={inputProps => <TextField {...inputProps} label={act("peptideOptional")} helperText="Helps others find your thread, and picks its topic." />} />
+      renderInput={inputProps => <TextField {...inputProps} label={act("peptideOptional")} helperText={ct("Helps others find your thread, and picks its topic.")} />} />
 
     <Box>
-      <Typography component="h2" id="topic-label" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>Topic</Typography>
+      <Typography component="h2" id="topic-label" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>{ct("Topic")}</Typography>
       <Box role="radiogroup" aria-labelledby="topic-label" sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
         {COMMUNITY_TOPICS.map(option => {
           const selected = option.id === topic
@@ -117,31 +120,31 @@ export default function Composer() {
           </Box>
         })}
       </Box>
-      <Typography sx={{ mt: 1, fontSize: 13, color: "brand.navySoft" }}>{getTopic(topic)?.description}</Typography>
+      <Typography sx={{ mt: 1, fontSize: 13, color: "brand.navySoft" }}>{ct(getTopic(topic)?.description)}</Typography>
     </Box>
 
     <TextField label={act("title")} value={title} onChange={event => setTitle(event.target.value.slice(0, 140))} required fullWidth
-      placeholder={kind === "question" ? "e.g. How do you store vials after opening?" : ""}
+      placeholder={ct(kind === "question" ? "e.g. How do you store vials after opening?" : "")}
       helperText={`${title.length}/140`} slotProps={{ htmlInput: { maxLength: 140 } }} />
 
-    <TextField label={kind === "question" ? act("questionPrompt") : act("discussionPrompt")} value={body} onChange={event => setBody(event.target.value.slice(0, 10000))} required multiline minRows={6} fullWidth
-      helperText="Plain text. Links from new members are checked by a moderator first." />
+    <TextField label={ct(kind === "question" ? act("questionPrompt") : act("discussionPrompt"))} value={body} onChange={event => setBody(event.target.value.slice(0, 10000))} required multiline minRows={6} fullWidth
+      helperText={ct("Plain text. Links from new members are checked by a moderator first.")} />
 
     <Box>
       <Typography component="h2" sx={{ fontSize: 15, fontWeight: 650, mb: 1.25 }}>{act("photos")}</Typography>
       <ImagePicker images={images} onChange={setImages} disabled={posting} />
     </Box>
 
-    {dose ? <Alert severity="warning">“{dose}” looks like a dose amount. The community doesn&apos;t share doses or protocols, so posts with them wait for a moderator. Remove it to publish straight away.</Alert> : null}
+    {dose ? <Alert severity="warning">“{ct(dose)}{ct("” looks like a dose amount. The community doesn't share doses or protocols, so posts with them wait for a moderator. Remove it to publish straight away.")}</Alert> : null}
 
-    {error ? <Alert severity="error" onClose={() => setError(null)}>{error}</Alert> : null}
+    {error ? <Alert severity="error" onClose={() => setError(null)}>{ct(error)}</Alert> : null}
 
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 2 }}>
       <Button type="submit" variant="contained" size="large" disabled={posting || title.trim().length < 8 || body.trim().length < 20}
         startIcon={posting ? <CircularProgress size={16} color="inherit" /> : null}>
-        {posting ? act("posting") : kind === "question" ? act("postQuestion") : act("postDiscussion")}
+        {ct(posting ? act("posting") : kind === "question" ? act("postQuestion") : act("postDiscussion"))}
       </Button>
-      <Typography sx={{ fontSize: 13.5, color: "brand.navySoft" }}>Posting as {community.profile.display_name}. Titles need 8 characters and the text 20.</Typography>
+      <Typography sx={{ fontSize: 13.5, color: "brand.navySoft" }}>{ct.rich("Posting as {v0}. Titles need 8 characters and the text 20.", { v0: community.profile.display_name }, {  })}</Typography>
     </Box>
   </Box>
 }

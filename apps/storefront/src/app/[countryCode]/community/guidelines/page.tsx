@@ -1,3 +1,4 @@
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
@@ -7,11 +8,13 @@ import Section from "@/components/common/Section"
 import { COMMUNITY_DISCLAIMER } from "@/components/community/CommunityDisclaimer"
 import { communityMetadata } from "@/lib/community/seo"
 
-export const metadata = communityMetadata({
+export async function generateMetadata() {
+  return communityMetadata({
   path: "/community/guidelines",
   title: "Community guidelines",
   description: "How the Vetud community works: no doses, no medical advice, and how moderation, experts and reputation work.",
 })
+}
 
 const RULES: { title: string; points: string[] }[] = [
   {
@@ -49,26 +52,25 @@ const HOW = [
 ]
 
 export default function GuidelinesPage() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   return <>
-    <PageHeader eyebrow="Community" title="Community guidelines." description="A professional space for peptide research: cited sources and respectful discussion." />
+    <PageHeader eyebrow={ct("Community")} title={ct("Community guidelines.")} description={ct("A professional space for peptide research: cited sources and respectful discussion.")} />
     <Section tone="white" sx={{ py: { xs: 5, md: 8 } }}>
       <Box sx={{ maxWidth: 820, display: "grid", gap: { xs: 4, md: 5 } }}>
         {RULES.map(rule => <Box component="section" key={rule.title}>
-          <Typography component="h2" sx={{ fontSize: { xs: 22, md: 26 }, fontWeight: 650, color: "brand.navy" }}>{rule.title}</Typography>
+          <Typography component="h2" sx={{ fontSize: { xs: 22, md: 26 }, fontWeight: 650, color: "brand.navy" }}>{ct(rule.title)}</Typography>
           <Box component="ul" sx={{ m: 0, mt: 1.5, pl: 2.5, display: "grid", gap: 1.25, fontSize: 16, lineHeight: 1.75, color: "brand.ink", "& li::marker": { color: "brand.blue" } }}>
-            {rule.points.map(point => <li key={point}>{point}</li>)}
+            {rule.points.map(point => <li key={point}>{ct(point)}</li>)}
           </Box>
         </Box>)}
         <Box component="section" sx={{ pt: { xs: 3, md: 4 }, borderTop: "1px solid", borderColor: "divider" }}>
-          <Typography component="h2" sx={{ fontSize: { xs: 22, md: 26 }, fontWeight: 650, color: "brand.navy", mb: 2 }}>How the community works</Typography>
+          <Typography component="h2" sx={{ fontSize: { xs: 22, md: 26 }, fontWeight: 650, color: "brand.navy", mb: 2 }}>{ct("How the community works")}</Typography>
           <Box component="dl" sx={{ m: 0, display: "grid", gap: 2.5, "& dt": { fontWeight: 700, color: "brand.navy" }, "& dd": { m: 0, mt: .5, fontSize: 15.5, lineHeight: 1.75, color: "brand.navySoft" } }}>
-            {HOW.map(item => <div key={item.title}><dt>{item.title}</dt><dd>{item.text}</dd></div>)}
+            {HOW.map(item => <div key={item.title}><dt>{ct(item.title)}</dt><dd>{ct(item.text)}</dd></div>)}
           </Box>
         </Box>
-        <Typography sx={{ fontSize: 14, lineHeight: 1.7, color: "text.secondary" }}>
-          {COMMUNITY_DISCLAIMER} Questions about these guidelines? <AppLink href="/contact">{act("contact")}</AppLink>. Read the <AppLink href="/legal/research-use">{act("researchPolicy")}</AppLink> and <AppLink href="/legal/privacy">{act("privacyPolicy")}</AppLink>.
-        </Typography>
+        <Typography sx={{ fontSize: 14, lineHeight: 1.7, color: "text.secondary" }}>{ct.rich("{v0} Questions about these guidelines? <slot0>{v1}</slot0>. Read the <slot1>{v2}</slot1> and <slot2>{v3}</slot2>.", { v0: ct(COMMUNITY_DISCLAIMER), v1: act("contact"), v2: act("researchPolicy"), v3: act("privacyPolicy") }, { slot0: chunks => <AppLink href="/contact" key="slot0">{chunks}</AppLink>, slot1: chunks => <AppLink href="/legal/research-use" key="slot1">{chunks}</AppLink>, slot2: chunks => <AppLink href="/legal/privacy" key="slot2">{chunks}</AppLink> })}</Typography>
         <Box><ButtonLink href="/community" variant="contained">{act("community")}</ButtonLink></Box>
       </Box>
     </Section>

@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -13,6 +15,7 @@ import { CART_FIELDS, useStore } from "../store/StoreProvider"
 
 /** Discount codes (for example from the sign-up pop-up), applied to the cart through Medusa promotions. */
 export default function PromoCodeField() {
+  const ct = useContentTranslator()
   const t = useTranslations("Offer")
   const { cart, setCart, isCurrentCart } = useStore()
   const [code, setCode] = useState("")
@@ -58,19 +61,19 @@ export default function PromoCodeField() {
     <Box>
       <Box component="form" onSubmit={apply} noValidate sx={{ display: "flex", gap: 1 }}>
         <TextField size="small" label={t("codeLabel")} name="promo_code" value={code} onChange={(event) => setCode(event.target.value)} slotProps={{ htmlInput: { autoComplete: "off", autoCapitalize: "characters", spellCheck: false, maxLength: 40 } }} />
-        <Button type="submit" variant="outlined" disabled={busy || !code.trim()} sx={{ flexShrink: 0, height: 40, py: 0 }}>{busy ? t("applying") : t("apply")}</Button>
+        <Button type="submit" variant="outlined" disabled={busy || !code.trim()} sx={{ flexShrink: 0, height: 40, py: 0 }}>{ct(busy ? t("applying") : t("apply"))}</Button>
       </Box>
       {applied.length ? (
         <Stack spacing={.5} sx={{ mt: 1.5 }}>
           {applied.map((promoCode) => (
             <Stack key={promoCode} direction="row" sx={{ alignItems: "center", justifyContent: "space-between", gap: 1 }}>
-              <Chip label={promoCode} size="small" color="success" variant="outlined" sx={{ fontWeight: 650, letterSpacing: ".04em" }} />
+              <Chip label={ct(promoCode)} size="small" color="success" variant="outlined" sx={{ fontWeight: 650, letterSpacing: ".04em" }} />
               <Button size="small" onClick={() => void remove(promoCode)} disabled={busy} aria-label={`${t("remove")} ${promoCode}`}>{t("remove")}</Button>
             </Stack>
           ))}
         </Stack>
       ) : null}
-      {error ? <Alert severity="warning" sx={{ mt: 1.5 }}>{error}</Alert> : null}
+      {error ? <Alert severity="warning" sx={{ mt: 1.5 }}>{ct(error)}</Alert> : null}
     </Box>
   )
 }

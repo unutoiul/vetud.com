@@ -1,15 +1,15 @@
 import type { Metadata } from "next"
 import { BASE_URL, SUPPORTED_COUNTRIES } from "@/lib/config"
 import type { LearnIllustration } from "@/content/learn/illustrations"
+import { getCountryRules } from "@/i18n/config"
+import { getPageLocalization } from "@/i18n/metadata"
 
-// The article body is English in every storefront. Consolidate identical regional
-// copies on one preferred URL, while retaining the visitor's regional navigation.
 export const ARTICLE_COUNTRY = "us"
-export const articleUrl = (path: string) => `${BASE_URL}/${ARTICLE_COUNTRY}${path}`
+export const articleUrl = (path: string, country = ARTICLE_COUNTRY) => `${BASE_URL}/${country}${path}`
 
 export function articleLanguages(path: string) {
   return Object.fromEntries([
-    ...SUPPORTED_COUNTRIES.map(country => [`en-${country.toUpperCase()}`, `${BASE_URL}/${country}${path}`]),
+    ...SUPPORTED_COUNTRIES.map(country => [getCountryRules(country).locale, `${BASE_URL}/${country}${path}`]),
     ["x-default", articleUrl(path)],
   ])
 }
@@ -22,50 +22,53 @@ export function plainText(text: string) {
   return text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
 }
 
-export function articleMetadata({ title, description, path, image }: {
+export async function articleMetadata({ title, description, path, image }: {
   title: string; description: string; path: string; image?: LearnIllustration
-}): Metadata {
-  const url = articleUrl(path)
-  const images = image ? [{ url: `${BASE_URL}${image.src}`, alt: image.alt }] : undefined
+}): Promise<Metadata> {
+  const { country, ct, openGraphLocale } = await getPageLocalization()
+  title = ct(title)
+  description = ct(description)
+  const url = articleUrl(path, country)
+  const images = image ? [{ url: `${BASE_URL}${image.src}`, alt: ct(image.alt) }] : undefined
   return {
     title: { absolute: `${title} | VETUD Learn` }, description,
     alternates: { canonical: url, languages: articleLanguages(path) },
-    authors: [{ name: "VETUD Learn", url: `${BASE_URL}/us/learn` }],
-    openGraph: { type: "article", siteName: "VETUD Peptides Education", locale: "en_US", title, description, url, images },
+    authors: [{ name: "VETUD Learn", url: articleUrl("/learn", country) }],
+    openGraph: { type: "article", siteName: "VETUD Peptides Education", locale: openGraphLocale, title, description, url, images },
     twitter: { card: "summary_large_image", title, description, images: images?.map(image => image.url) },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   }
 }
 
-/** Shared English library pages consolidate on the same preferred region as articles. */
-export function collectionMetadata(input: { title: string; description: string; path: string }): Metadata {
-  const metadata = articleMetadata(input)
+export async function collectionMetadata(input: { title: string; description: string; path: string }): Promise<Metadata> {
+  const metadata = await articleMetadata(input)
   return { ...metadata, openGraph: { ...metadata.openGraph, type: "website" },
-    twitter: { card: "summary", title: input.title, description: input.description } }
+    twitter: { card: "summary", title: metadata.title ?? undefined, description: metadata.description ?? undefined } }
 }
 
-export function articleStructuredData({ title, description, path, image, breadcrumbs, sources, text }: {
+export async function articleStructuredData({ title, description, path, image, breadcrumbs, sources, text }: {
   title: string; description: string; path: string; image?: LearnIllustration
   breadcrumbs: { name: string; path: string }[]; sources: { url: string }[]; text: string[]
 }) {
-  const url = articleUrl(path)
+  const { country, ct, locale } = await getPageLocalization()
+  const url = articleUrl(path, country)
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Article", "@id": `${url}#article`, url,
-        headline: title, description, inLanguage: "en", isAccessibleForFree: true,
+        headline: ct(title), description: ct(description), inLanguage: locale, isAccessibleForFree: true,
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         ...(image ? { image: [`${BASE_URL}${image.src}`] } : {}),
-        author: { "@type": "Organization", name: "VETUD Learn", url: `${BASE_URL}/us/learn` },
+        author: { "@type": "Organization", name: "VETUD Learn", url: articleUrl("/learn", country) },
         publisher: { "@type": "Organization", name: "VETUD", url: BASE_URL, logo: { "@type": "ImageObject", url: `${BASE_URL}/brand/vetud-logo.svg` } },
         citation: sources.map(source => source.url),
-        wordCount: plainText(text.join(" ")).split(/\s+/).filter(Boolean).length,
+        wordCount: plainText(text.map(part => ct(part)).join(" ")).split(/\s+/).filter(Boolean).length,
       },
       {
         "@type": "BreadcrumbList", "@id": `${url}#breadcrumbs`,
         itemListElement: breadcrumbs.map((item, index) => ({
-          "@type": "ListItem", position: index + 1, name: item.name, item: articleUrl(item.path),
+          "@type": "ListItem", position: index + 1, name: ct(item.name), item: articleUrl(item.path, country),
         })),
       },
     ],

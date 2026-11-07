@@ -1,10 +1,11 @@
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Icon from "../brand/Icon"
 import { AppLink } from "../common/links"
-import { formatForumDate, plural } from "@/lib/community/format"
+import { formatForumDate } from "@/lib/community/format"
 import { COMMUNITY_TOPICS, type CommunityTopic } from "@/lib/community/topics"
 import type { ForumStats } from "@/lib/community/types"
 
@@ -17,11 +18,12 @@ const topicHref = (topic?: CommunityTopic) => topic ? `/community?topic=${topic.
  * above them on small ones. The current topic is marked with aria-current.
  */
 export function TopicNav({ current, counts, total }: { current?: string; counts?: Counts; total?: number }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const items = [{ id: undefined, name: "All topics", icon: "globe" as const, count: total }, ...COMMUNITY_TOPICS.map((topic) => ({ id: topic.id, name: topic.name, icon: topic.icon, count: counts?.[topic.id]?.threads ?? 0 }))]
   return (
     <Box component="nav" aria-label={act("communityTopics")} sx={{ minWidth: 0 }}>
-      <Typography variant="mono" component="h2" sx={{ display: { xs: "none", lg: "block" }, fontSize: 10, letterSpacing: ".14em", color: "brand.blue", mb: 1.25 }}>TOPICS</Typography>
+      <Typography variant="mono" component="h2" sx={{ display: { xs: "none", lg: "block" }, fontSize: 10, letterSpacing: ".14em", color: "brand.blue", mb: 1.25 }}>{ct("TOPICS")}</Typography>
       <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "flex", flexDirection: { xs: "row", lg: "column" }, gap: { xs: 1, lg: .25 }, overflowX: { xs: "auto", lg: "visible" }, pb: { xs: 1, lg: 0 }, mx: { xs: -2.5, sm: 0 }, px: { xs: 2.5, sm: 0 } }}>
         {items.map((item) => {
           const active = item.id === current
@@ -37,7 +39,7 @@ export function TopicNav({ current, counts, total }: { current?: string; counts?
               }}>
                 <Icon name={item.icon} sx={{ fontSize: 18, color: "brand.blue", flexShrink: 0 }} />
                 <Box component="span" sx={{ flex: 1 }}>{translateAction(act, item.name)}</Box>
-                {item.count ? <Box component="span" sx={{ fontSize: 12.5, color: "brand.navySoft", fontVariantNumeric: "tabular-nums" }}>{item.count}</Box> : null}
+                {item.count ? <Box component="span" sx={{ fontSize: 12.5, color: "brand.navySoft", fontVariantNumeric: "tabular-nums" }}>{ct(item.count)}</Box> : null}
               </AppLink>
             </Box>
           )
@@ -49,10 +51,11 @@ export function TopicNav({ current, counts, total }: { current?: string; counts?
 
 /** "Browse by topic": a card per topic with its threads and latest activity, or an invitation to post first. */
 export function TopicGrid({ counts }: { counts?: Counts }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   return (
     <Box component="section" aria-labelledby="browse-topics" sx={{ mb: { xs: 5, md: 6 } }}>
-      <Typography component="h2" id="browse-topics" sx={{ fontSize: { xs: 20, md: 22 }, fontWeight: 650, letterSpacing: "-.01em", mb: 2 }}>Browse by topic</Typography>
+      <Typography component="h2" id="browse-topics" sx={{ fontSize: { xs: 20, md: 22 }, fontWeight: 650, letterSpacing: "-.01em", mb: 2 }}>{ct("Browse by topic")}</Typography>
       <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))", xl: "repeat(3, minmax(0, 1fr))" }, gap: 1.5 }}>
         {COMMUNITY_TOPICS.map((topic) => {
           const stats = counts?.[topic.id]
@@ -64,9 +67,9 @@ export function TopicGrid({ counts }: { counts?: Counts }) {
                   {/* The whole card is the link's target area. */}
                   <AppLink href={topicHref(topic)} underline="none" sx={{ color: "brand.navy", "&::after": { content: '""', position: "absolute", inset: 0, borderRadius: "10px" }, "&:focus-visible": { outline: "none" }, "&:focus-visible::after": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>{translateAction(act, topic.name)}</AppLink>
                 </Typography>
-                <Typography sx={{ mt: .5, fontSize: 13.5, lineHeight: 1.55, color: "brand.navySoft" }}>{topic.description}</Typography>
+                <Typography sx={{ mt: .5, fontSize: 13.5, lineHeight: 1.55, color: "brand.navySoft" }}>{ct(topic.description)}</Typography>
                 <Typography sx={{ mt: 1, fontSize: 12.5, color: stats?.threads ? "brand.navySoft" : "brand.blue", fontWeight: stats?.threads ? 400 : 600 }}>
-                  {stats?.threads ? `${plural(stats.threads, "thread")}${stats.last_activity_at ? ` · active ${formatForumDate(stats.last_activity_at)}` : ""}` : "Be the first to post"}
+                  {stats?.threads ? <>{ct.count(stats.threads, "thread")}{stats.last_activity_at ? ct.template(" · active {v0}", { v0: formatForumDate(stats.last_activity_at, ct.locale) }) : ""}</> : ct("Be the first to post")}
                 </Typography>
               </Box>
             </Box>

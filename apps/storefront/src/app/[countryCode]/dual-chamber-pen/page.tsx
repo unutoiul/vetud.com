@@ -1,3 +1,4 @@
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
@@ -14,7 +15,9 @@ import { PEN_EXPLAINER_IMAGE, REUSABLE_PEN_IMAGE } from "@/lib/product-images"
 const TITLE = "The dual-chamber pen, explained"
 const DESCRIPTION = "How the reusable VETUD dual-chamber pen works: freeze-dried peptide and bacteriostatic water kept apart in one cartridge, the pen kit box, refill dual-chamber vials, and how they compare with a vial."
 
-export const metadata = collectionMetadata({ path: "/dual-chamber-pen", title: `${TITLE}: pen kit box, dual-chamber vial or vial`, description: DESCRIPTION })
+export async function generateMetadata() {
+  return collectionMetadata({ path: "/dual-chamber-pen", title: `${TITLE}: pen kit box, dual-chamber vial or vial`, description: DESCRIPTION })
+}
 
 const PARTS = [
   { name: "Cartridge holder", text: "The clear sleeve at the top of the pen. The cartridge sits inside it, so you can see both chambers." },
@@ -42,27 +45,28 @@ const FAQ: FaqItem[] = [
 ]
 
 export default function DualChamberPenPage() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   return (
     <>
-      <PageHeader eyebrow="Formats" title={TITLE} description="Every VETUD peptide comes as a dual-chamber vial, a vial or a pen kit box with the reusable pen. Here's how the pen works, what each one includes, and how to choose.">
+      <PageHeader eyebrow={ct("Formats")} title={ct(TITLE)} description={ct("Every VETUD peptide comes as a dual-chamber vial, a vial or a pen kit box with the reusable pen. Here's how the pen works, what each one includes, and how to choose.")}>
         <ButtonLink href="/shop" variant="contained" size="large">{act("shopPens")}</ButtonLink>
       </PageHeader>
 
       <Section tone="paper" tight aria-labelledby="parts-title">
         <Box sx={{ maxWidth: 1040, mx: "auto", display: "grid", gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1fr) minmax(0, 1fr)" }, gap: { xs: 4, md: 7 }, alignItems: "center" }}>
           <Box sx={{ position: "relative", aspectRatio: "1 / 1", borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: "#eef4fb" }}>
-            <Image src={PEN_EXPLAINER_IMAGE} alt="The dual-chamber cartridge on its own and inside the pen, labelled: cartridge holder, lyophilized peptide, BAC water and pen body" fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "contain" }} />
+            <Image src={PEN_EXPLAINER_IMAGE} alt={ct("The dual-chamber cartridge on its own and inside the pen, labelled: cartridge holder, lyophilized peptide, BAC water and pen body")} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "contain" }} />
           </Box>
           <Box>
-            <Typography id="parts-title" component="h2" sx={{ fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em" }}>How it&apos;s built</Typography>
+            <Typography id="parts-title" component="h2" sx={{ fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em" }}>{ct("How it's built")}</Typography>
             <Box component="dl" sx={{ mt: 2.5, mb: 0, display: "grid", gap: 2.25 }}>
               {PARTS.map((part, index) => (
                 <Box key={part.name} sx={{ display: "grid", gridTemplateColumns: "32px 1fr", gap: 1.5 }}>
-                  <Box aria-hidden sx={{ width: 32, height: 32, borderRadius: "50%", bgcolor: "brand.navy", color: "#fff", display: "grid", placeItems: "center", fontSize: 14, fontWeight: 700 }}>{index + 1}</Box>
+                  <Box aria-hidden sx={{ width: 32, height: 32, borderRadius: "50%", bgcolor: "brand.navy", color: "#fff", display: "grid", placeItems: "center", fontSize: 14, fontWeight: 700 }}>{ct(index + 1)}</Box>
                   <Box>
-                    <Typography component="dt" sx={{ fontWeight: 650, fontSize: 17, color: "brand.ink" }}>{part.name}</Typography>
-                    <Typography component="dd" sx={{ m: 0, mt: 0.25, fontSize: 15, lineHeight: 1.7, color: "text.secondary" }}>{part.text}</Typography>
+                    <Typography component="dt" sx={{ fontWeight: 650, fontSize: 17, color: "brand.ink" }}>{ct(part.name)}</Typography>
+                    <Typography component="dd" sx={{ m: 0, mt: 0.25, fontSize: 15, lineHeight: 1.7, color: "text.secondary" }}>{ct(part.text)}</Typography>
                   </Box>
                 </Box>
               ))}
@@ -74,21 +78,21 @@ export default function DualChamberPenPage() {
       <Section tone="white" tight aria-labelledby="reusable-title">
         <Box sx={{ maxWidth: 1040, mx: "auto", display: "grid", gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1fr) minmax(0, 1fr)" }, gap: { xs: 4, md: 7 }, alignItems: "center" }}>
           <Box sx={{ order: { md: 2 }, position: "relative", aspectRatio: "1 / 1", borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: "#eef4fb" }}>
-            <Image src={REUSABLE_PEN_IMAGE} alt="The reusable VETUD dual-chamber pen, labelled: graduated holder, freeze-dried peptide, diluent and reusable pen body" fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "contain" }} />
+            <Image src={REUSABLE_PEN_IMAGE} alt={ct("The reusable VETUD dual-chamber pen, labelled: graduated holder, freeze-dried peptide, diluent and reusable pen body")} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "contain" }} />
           </Box>
           <Box>
-            <Typography variant="eyebrow" component="p" sx={{ color: "brand.blue" }}>Reusable</Typography>
-            <Typography id="reusable-title" component="h2" sx={{ mt: 1, fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em" }}>One pen body, many cartridges</Typography>
+            <Typography variant="eyebrow" component="p" sx={{ color: "brand.blue" }}>{ct("Reusable")}</Typography>
+            <Typography id="reusable-title" component="h2" sx={{ mt: 1, fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em" }}>{ct("One pen body, many cartridges")}</Typography>
             <Typography sx={{ mt: 1.5, fontSize: 16, lineHeight: 1.75, color: "text.secondary" }}>
-              The VETUD dual-chamber pen is reusable. It comes in the pen kit box; keep the pen body and replace the cartridge with a new dual-chamber vial when it&apos;s empty.
+              {ct("The VETUD dual-chamber pen is reusable. It comes in the pen kit box; keep the pen body and replace the cartridge with a new dual-chamber vial when it's empty.")}
             </Typography>
             <Box component="ul" sx={{ listStyle: "none", m: 0, mt: 3, p: 0, display: "grid", gap: 2.25 }}>
               {REUSABLE.map((point) => (
                 <Box component="li" key={point.name} sx={{ display: "grid", gridTemplateColumns: "28px 1fr", gap: 1.5 }}>
                   <Icon name="checkCircle" sx={{ fontSize: 22, color: "brand.blue", mt: 0.25 }} />
                   <Box>
-                    <Typography component="h3" sx={{ fontWeight: 650, fontSize: 17, color: "brand.ink" }}>{point.name}</Typography>
-                    <Typography sx={{ mt: 0.25, fontSize: 15, lineHeight: 1.7, color: "text.secondary" }}>{point.text}</Typography>
+                    <Typography component="h3" sx={{ fontWeight: 650, fontSize: 17, color: "brand.ink" }}>{ct(point.name)}</Typography>
+                    <Typography sx={{ mt: 0.25, fontSize: 15, lineHeight: 1.7, color: "text.secondary" }}>{ct(point.text)}</Typography>
                   </Box>
                 </Box>
               ))}
@@ -99,9 +103,9 @@ export default function DualChamberPenPage() {
 
       <Section tone="paper" tight aria-labelledby="compare-title">
         <Box sx={{ maxWidth: 840, mx: "auto" }}>
-          <Typography id="compare-title" component="h2" sx={{ fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em" }}>Dual-chamber vial, vial or pen kit box: which to choose</Typography>
+          <Typography id="compare-title" component="h2" sx={{ fontSize: { xs: 26, md: 32 }, fontWeight: 500, letterSpacing: "-.03em" }}>{ct("Dual-chamber vial, vial or pen kit box: which to choose")}</Typography>
           <Typography sx={{ mt: 1.5, mb: 3, fontSize: 16, lineHeight: 1.75, color: "text.secondary" }}>
-            Same peptide, same amounts. New to the pen? Start with the pen kit box: the reusable pen, a dual-chamber vial, needles and a booklet. Already have the pen? Order dual-chamber vials to refill it. Choose the vial if you already have bacteriostatic water and your own supplies; it&apos;s the lowest price.
+            {ct("Same peptide, same amounts. New to the pen? Start with the pen kit box: the reusable pen, a dual-chamber vial, needles and a booklet. Already have the pen? Order dual-chamber vials to refill it. Choose the vial if you already have bacteriostatic water and your own supplies; it's the lowest price.")}
           </Typography>
           <FormatComparison />
         </Box>

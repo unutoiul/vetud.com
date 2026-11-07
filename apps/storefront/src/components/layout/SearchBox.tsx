@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 import { translateAction } from "@/i18n/actions"
 
 import { useTranslations } from "next-intl"
@@ -18,6 +20,7 @@ import { cheapestPrice, readProductMeta } from "@/lib/product"
 import { useMoney } from "@/lib/money"
 import { shortAvailability } from "@/lib/product-formats"
 import { loadSearchIndex, rank, type ArticleEntry, type GuideEntry } from "@/lib/site-search"
+import { formatArticleDate } from "@/content/learn/articles"
 import { useStore } from "../store/StoreProvider"
 
 const SEARCH_FIELDS = "id,title,handle,+metadata,*categories,*options,*variants.options,*variants.calculated_price"
@@ -37,6 +40,7 @@ type SearchBoxProps = {
 
 /** Searches products (Meilisearch), the peptide guides and the news, grouped by kind. */
 export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: SearchBoxProps) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const router = useRouter()
   const { countryCode, region } = useStore()
@@ -62,14 +66,19 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
     setLoading(true)
     timer.current = window.setTimeout(async () => {
       // Each source can fail on its own; the others still show.
-      const [products, index] = await Promise.all([
+      const [searchProducts, index] = await Promise.all([
         sdk.client.fetch<{ products: HttpTypes.StoreProduct[] }>("/store/meilisearch/products", { query: { query, limit: 5, region_id: region.id, fields: SEARCH_FIELDS } })
           .then((result) => result.products).catch(() => []),
-        loadSearchIndex().catch(() => ({ guides: [], articles: [] })),
+        loadSearchIndex().catch(() => ({ guides: [], articles: [], products: [] })),
       ])
       if (requestId !== latest.current) return
-      const guides = rank(index.guides, query, (guide) => [guide.name, [guide.aka ?? "", guide.slug], [guide.category, guide.line, guide.about]], 4)
-      const articles = rank(index.articles, query, (article) => [article.title, [article.kind, ...article.peptides], [article.dek]], 4)
+      const translatedMatches = rank(index.products ?? [], query, product => [ct(product.title), [ct(product.description)], [product.title, product.description]], 5)
+      const missingIds = translatedMatches.map(product => product.id).filter(id => !searchProducts.some(product => product.id === id))
+      const additionalProducts = missingIds.length ? await sdk.store.product.list({ id: missingIds, region_id: region.id, fields: SEARCH_FIELDS, limit: 5 }).then(result => result.products).catch(() => []) : []
+      if (requestId !== latest.current) return
+      const products = [...searchProducts, ...additionalProducts].slice(0, 5)
+      const guides = rank(index.guides, query, (guide) => [ct(guide.name), [guide.aka ?? "", guide.slug], [ct(guide.category), ct(guide.line), ct(guide.about), guide.name, guide.line]], 4)
+      const articles = rank(index.articles, query, (article) => [ct(article.title), [ct(article.kind), ...article.peptides], [ct(article.dek), article.title, article.dek]], 4)
       setOptions([
         ...products.map((product): Result => ({ group: "Products", key: `p-${product.id}`, label: product.title, href: `/products/${product.handle}`, product })),
         ...guides.map((guide): Result => ({ group: "Peptide guides", key: `g-${guide.slug}`, label: guide.name, href: `/learn/${guide.slug}`, guide })),
@@ -110,7 +119,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
       renderGroup={(params) => (
         <Box component="li" key={params.key} sx={{ listStyle: "none" }}>
           <Typography component="div" sx={{ position: "sticky", top: -8, zIndex: 1, px: 2, py: 1, bgcolor: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "brand.blue", borderTop: "1px solid", borderColor: "divider" }}>{translateAction(act, params.group)}</Typography>
-          <Box component="ul" sx={{ p: 0 }}>{params.children}</Box>
+          <Box component="ul" sx={{ p: 0 }}>{ct(params.children)}</Box>
         </Box>
       )}
       renderOption={(props, option) => {
@@ -118,8 +127,8 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
         return (
           <Box component="li" key={key} {...rest} sx={{ gap: 1.5, alignItems: "flex-start !important" }}>
             {option.group === "Products" ? <ProductRow product={option.product} />
-              : option.group === "Peptide guides" ? <ContentRow icon="molecule" title={option.guide.name} detail={option.guide.aka ? `${option.guide.aka} · ${option.guide.line}` : option.guide.line} />
-              : <ContentRow icon="news" title={option.article.title} detail={`${option.article.kind} · ${option.article.date}`} />}
+              : option.group === "Peptide guides" ? <ContentRow icon="molecule" title={ct(option.guide.name)} detail={option.guide.aka ? `${option.guide.aka} · ${ct(option.guide.line)}` : ct(option.guide.line)} />
+              : <ContentRow icon="news" title={ct(option.article.title)} detail={`${ct(option.article.kind)} · ${formatArticleDate(option.article.date, ct.locale)}`} />}
           </Box>
         )
       }}
@@ -136,7 +145,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
             ...params.slotProps,
             htmlInput: {
               ...params.slotProps.htmlInput,
-              "aria-label": "Search products, peptide guides and news",
+              "aria-label": ct("Search products, peptide guides and news"),
               name: "search",
               type: "search",
               autoComplete: "off",
@@ -152,7 +161,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
               endAdornment: (
                 <>
                   {loading ? <CircularProgress color="inherit" size={16} /> : null}
-                  {params.slotProps.input.endAdornment}
+                  {ct(params.slotProps.input.endAdornment)}
                 </>
               ),
             },
@@ -164,6 +173,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense }: Se
 }
 
 function ProductRow({ product }: { product: HttpTypes.StoreProduct }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const money = useMoney()
   const meta = readProductMeta(product)
@@ -171,24 +181,25 @@ function ProductRow({ product }: { product: HttpTypes.StoreProduct }) {
   return <>
     <Box aria-hidden sx={{ width: 10, height: 10, mt: 0.75, borderRadius: "50%", bgcolor: meta.accent, flexShrink: 0 }} />
     <Box sx={{ flex: 1, minWidth: 0 }}>
-      <Typography sx={{ fontWeight: 600, fontSize: 14 }} noWrap>{product.title}</Typography>
-      <Typography sx={{ color: "text.secondary", fontSize: 12 }} noWrap>{meta.code} · {shortAvailability(product)}</Typography>
+      <Typography sx={{ fontWeight: 600, fontSize: 14 }} noWrap>{ct(product.title)}</Typography>
+      <Typography sx={{ color: "text.secondary", fontSize: 12 }} noWrap>{ct(meta.code)} · {shortAvailability(product, ct)}</Typography>
     </Box>
     {price ? (
       <Typography sx={{ fontSize: 13, color: "text.secondary", whiteSpace: "nowrap" }}>
-        {price.hasRange ? act("from") : ""}
-        {money(price.amount, price.currencyCode)}
+        {ct(price.hasRange ? act("from") : "")}
+        {ct(money(price.amount, price.currencyCode))}
       </Typography>
     ) : null}
   </>
 }
 
 function ContentRow({ icon, title, detail }: { icon: "molecule" | "news"; title: string; detail: string }) {
+  const ct = useContentTranslator()
   return <>
     <Icon name={icon} aria-hidden sx={{ fontSize: 18, mt: 0.25, color: "brand.blue", flexShrink: 0 }} />
     <Box sx={{ flex: 1, minWidth: 0 }}>
-      <Typography sx={{ fontWeight: 600, fontSize: 14, lineHeight: 1.4 }}>{title}</Typography>
-      <Typography sx={{ color: "text.secondary", fontSize: 12, lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{detail}</Typography>
+      <Typography sx={{ fontWeight: 600, fontSize: 14, lineHeight: 1.4 }}>{ct(title)}</Typography>
+      <Typography sx={{ color: "text.secondary", fontSize: 12, lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{ct(detail)}</Typography>
     </Box>
   </>
 }

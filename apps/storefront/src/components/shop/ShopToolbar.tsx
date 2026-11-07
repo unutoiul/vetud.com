@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
@@ -43,6 +45,7 @@ type ShopToolbarProps = {
 }
 
 export default function ShopToolbar({ categories, selectedCategories, sort, query, count }: ShopToolbarProps) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const router = useRouter()
   const pathname = usePathname()
@@ -118,7 +121,7 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
 
       <Stack direction="row" sx={{ minHeight: 40, alignItems: "center", justifyContent: "space-between", gap: 2, pb: 1.5, borderBottom: "1px solid", borderColor: "divider" }}>
         <Typography variant="body2" sx={{ color: "text.secondary", fontSize: 13, fontVariantNumeric: "tabular-nums" }} aria-live="polite" aria-atomic="true">
-          {count} {count === 1 ? "product" : "products"}
+          {ct(count)} {ct(count === 1 ? "product" : "products")}
         </Typography>
         {selectedCategories.length || query ? <Button size="small" onClick={() => { setSearch(""); navigate({ query: undefined, categories: [] }) }} sx={{ minHeight: 44, px: 1, py: .5 }}>{act("clearFilters")}</Button> : null}
       </Stack>

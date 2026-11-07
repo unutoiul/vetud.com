@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import Divider from "@mui/material/Divider"
 import Stack from "@mui/material/Stack"
@@ -27,15 +29,17 @@ type OrderTotalsProps = {
 }
 
 function Row({ label, value, strong, checkout }: { label: string; value: string; strong?: boolean; checkout?: boolean }) {
+  const ct = useContentTranslator()
   return (
     <Stack direction="row" spacing={2} sx={{ justifyContent: "space-between", py: 0.75 }}>
-      <Typography component="dt" sx={{ m: 0, color: strong ? "text.primary" : "text.secondary", fontSize: checkout ? strong ? 16 : 14 : undefined, fontWeight: strong ? checkout ? 600 : 700 : checkout ? 400 : 500 }}>{label}</Typography>
-      <Typography component="dd" sx={{ m: 0, fontWeight: strong ? 700 : checkout ? 500 : 600, fontSize: strong ? checkout ? 24 : 18 : checkout ? 14 : undefined, maxWidth: checkout ? "60%" : undefined, textAlign: "right", fontVariantNumeric: "tabular-nums", lineHeight: strong ? 1.3 : undefined }}>{value}</Typography>
+      <Typography component="dt" sx={{ m: 0, color: strong ? "text.primary" : "text.secondary", fontSize: checkout ? strong ? 16 : 14 : undefined, fontWeight: strong ? checkout ? 600 : 700 : checkout ? 400 : 500 }}>{ct(label)}</Typography>
+      <Typography component="dd" sx={{ m: 0, fontWeight: strong ? 700 : checkout ? 500 : 600, fontSize: strong ? checkout ? 24 : 18 : checkout ? 14 : undefined, maxWidth: checkout ? "60%" : undefined, textAlign: "right", fontVariantNumeric: "tabular-nums", lineHeight: strong ? 1.3 : undefined }}>{ct(value)}</Typography>
     </Stack>
   )
 }
 
 export default function OrderTotals({ totals, shippingKnown, variant, pendingShippingLabel }: OrderTotalsProps) {
+  const ct = useContentTranslator()
   const money = useMoney()
   const t = useTranslations("Checkout")
   const currency = totals.currency_code
@@ -58,7 +62,7 @@ export default function OrderTotals({ totals, shippingKnown, variant, pendingShi
       </Stack>
       <Divider sx={{ my: 1.5 }} />
       <Stack component="dl" sx={{ m: 0 }}>
-        <Row checkout={checkout} label={shippingKnown ? t("total") : t("estimatedTotal")} value={money(Number(totals.total ?? 0), currency)} strong />
+        <Row checkout={checkout} label={ct(shippingKnown ? t("total") : t("estimatedTotal"))} value={money(Number(totals.total ?? 0), currency)} strong />
       </Stack>
     </Stack>
   )

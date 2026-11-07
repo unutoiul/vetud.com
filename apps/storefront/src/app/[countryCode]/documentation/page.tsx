@@ -1,3 +1,5 @@
+import { localizeMetadata } from "@/i18n/metadata"
+import { getContentTranslator } from "@/i18n/server-content"
 import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import { DownloadIcon } from "@/components/brand/Icon"
@@ -20,12 +22,15 @@ import { getLotReportCounts } from "@/lib/medusa/forum"
 import { listProducts } from "@/lib/medusa/products"
 import { readProductMeta } from "@/lib/product"
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return localizeMetadata({
   title: "Lot documentation",
   description: "Look up any Vetud lot number to see its batch date, purity result and certificate of analysis.",
+})
 }
 
 export default async function DocumentationPage() {
+  const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const { region } = await getCurrentRegion()
   const products = await listProducts({ regionId: region.id })
@@ -41,9 +46,9 @@ export default async function DocumentationPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Documentation"
-        title="Every lot, on the record."
-        description="Enter the lot number printed on your packaging to find a published batch record. Request any additional analytical documentation from our team."
+        eyebrow={ct("Documentation")}
+        title={ct("Every lot, on the record.")}
+        description={ct("Enter the lot number printed on your packaging to find a published batch record. Request any additional analytical documentation from our team.")}
       />
       <Section tone="white" tight>
         <Suspense fallback={<Skeleton variant="rounded" height={56} sx={{ maxWidth: 640 }} />}>
@@ -52,20 +57,20 @@ export default async function DocumentationPage() {
       </Section>
       <Section tone="paper">
         <SectionHeading
-          eyebrow={`Lot register · ${rows.length} lots`}
-          title="Current and recent batches."
-          description="Lots currently in circulation across the catalog, newest first."
+          eyebrow={ct.template("Lot register · {v0} lots", { v0: rows.length })}
+          title={ct("Current and recent batches.")}
+          description={ct("Lots currently in circulation across the catalog, newest first.")}
         />
         <Box sx={{ overflowX: "auto", bgcolor: "#fff", border: "1px solid", borderColor: "divider", borderRadius: 1 }}>
-          <Table aria-label="Lot register">
+          <Table aria-label={ct("Lot register")}>
             <TableHead>
               <TableRow>
                 <TableCell scope="col">{act("lot")}</TableCell>
-                <TableCell scope="col">Product</TableCell>
-                <TableCell scope="col">Batch date</TableCell>
-                <TableCell scope="col">Purity</TableCell>
-                <TableCell scope="col">Member reports</TableCell>
-                <TableCell scope="col" align="right">Certificate</TableCell>
+                <TableCell scope="col">{ct("Product")}</TableCell>
+                <TableCell scope="col">{ct("Batch date")}</TableCell>
+                <TableCell scope="col">{ct("Purity")}</TableCell>
+                <TableCell scope="col">{ct("Member reports")}</TableCell>
+                <TableCell scope="col" align="right">{ct("Certificate")}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -75,13 +80,13 @@ export default async function DocumentationPage() {
                     {lot.lot}
                   </TableCell>
                   <TableCell>
-                    <AppLink href={`/products/${product.handle}`}>{product.title}</AppLink>
+                    <AppLink href={`/products/${product.handle}`}>{ct(product.title)}</AppLink>
                     <Typography variant="mono" component="span" sx={{ color: "text.secondary", ml: 1, fontSize: 11 }}>
-                      {meta.code}
+                      {ct(meta.code)}
                     </Typography>
                   </TableCell>
-                  <TableCell>{lot.date ?? "—"}</TableCell>
-                  <TableCell sx={{ fontVariantNumeric: "tabular-nums" }}>{lot.purity ?? "—"}</TableCell>
+                  <TableCell>{ct(lot.date ?? "—")}</TableCell>
+                  <TableCell sx={{ fontVariantNumeric: "tabular-nums" }}>{ct(lot.purity ?? "—")}</TableCell>
                   <TableCell sx={{ whiteSpace: "nowrap" }}>
                     {reports[lot.lot] ? <AppLink href={`/community?lot=${encodeURIComponent(lot.lot)}`}>{act("reports", { count: reports[lot.lot] })}</AppLink> : "—"}
                   </TableCell>
@@ -99,7 +104,7 @@ export default async function DocumentationPage() {
               {!rows.length ? (
                 <TableRow>
                   <TableCell colSpan={6} sx={{ py: 5, color: "text.secondary", textAlign: "center" }}>
-                    No lot records are published yet. <AppLink href="/contact">{act("contact")}</AppLink> for documentation.
+                    {ct("No lot records are published yet.")} <AppLink href="/contact">{act("contact")}</AppLink> {ct("for documentation.")}
                   </TableCell>
                 </TableRow>
               ) : null}

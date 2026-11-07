@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import type { HttpTypes } from "@medusajs/types"
 import { useLocale, useTranslations } from "next-intl"
@@ -165,6 +167,7 @@ function CheckoutRoute() {
 }
 
 function CheckoutContent() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const { cart, cartReady } = useStore()
   const { customer, loading: accountLoading } = useAccount()
@@ -174,7 +177,7 @@ function CheckoutContent() {
     return (
       <Stack spacing={2} sx={{ py: 8, alignItems: "center" }}>
         <CircularProgress color="secondary" />
-        <Typography>Order placed. Opening your confirmation…</Typography>
+        <Typography>{ct("Order placed. Opening your confirmation…")}</Typography>
       </Stack>
     )
   }
@@ -187,7 +190,7 @@ function CheckoutContent() {
     return (
       <Stack spacing={2} sx={{ py: 6, alignItems: "flex-start" }}>
         <Typography variant="h4" component="h2">
-          Your cart is empty.
+          {ct("Your cart is empty.")}
         </Typography>
         <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>
           {act("shopCatalog")}
@@ -205,6 +208,7 @@ function CheckoutContent() {
 }
 
 function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; customer: HttpTypes.StoreCustomer; onCompleted: (orderId: string) => void }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Checkout")
   const locale = useLocale()
@@ -498,7 +502,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         <Accordion disableGutters sx={{ display: { md: "none" }, mb: 3, px: 2, bgcolor: "background.paper", border: "1px solid", borderColor: "divider", borderRadius: 3, boxShadow: "none", "&::before": { display: "none" } }}>
           <AccordionSummary expandIcon={<Icon name="chevronDown" />} aria-controls="checkout-summary-content" id="checkout-summary-header" sx={{ minHeight: 64, "& .MuiAccordionSummary-content": { my: 2 } }}>
             <Typography sx={{ fontWeight: 600, flex: 1 }}>{t("summary")}</Typography>
-            <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{money(Number(cart.total ?? 0), currency)}</Typography>
+            <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{ct(money(Number(cart.total ?? 0), currency))}</Typography>
           </AccordionSummary>
           <AccordionDetails sx={{ px: 0 }}><CheckoutOrderSummary {...summaryProps} compact /></AccordionDetails>
         </Accordion>
@@ -514,7 +518,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
 
         {error ? (
           <Alert ref={errorRef} severity="error" onClose={() => setError(null)} sx={{ mb: 3 }}>
-            {error}
+            {ct(error)}
           </Alert>
         ) : null}
 
@@ -548,7 +552,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
                           <Box sx={{ flex: 1, py: 0.75 }}>
                             <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                               <Icon name={label.icon ?? "lock"} fontSize="small" sx={{ color: "secondary.main" }} />
-                              <Typography sx={{ fontWeight: 600 }}>{label.titleKey ? t(label.titleKey) : translateAction(act, label.title)}</Typography>
+                              <Typography sx={{ fontWeight: 600 }}>{ct(label.titleKey ? t(label.titleKey) : translateAction(act, label.title))}</Typography>
                             </Stack>
                             {selected && label.description ? (
                               <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
@@ -575,7 +579,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
                   ) : (
                     <Stack direction="row" spacing={1.5} sx={{ mt: 3, alignItems: "center", color: "text.secondary" }}>
                       {busy ? <CircularProgress size={18} color="secondary" /> : null}
-                      <Typography variant="body2">{busy ? t("preparingPayment") : t("paymentRetry")}</Typography>
+                      <Typography variant="body2">{ct(busy ? t("preparingPayment") : t("paymentRetry"))}</Typography>
                       {busy ? null : (
                         <Button size="small" color="secondary" onClick={() => void startPayment(chosenProvider)}>
                           {t("tryAgain")}
@@ -619,8 +623,9 @@ function Step({
   action?: React.ReactNode
   children?: React.ReactNode
 }) {
+  const ct = useContentTranslator()
   return (
-    <Paper component="section" variant="outlined" aria-label={title} sx={{ p: { xs: 2.5, sm: 3.5 }, borderRadius: 3, bgcolor: locked ? "brand.paper" : "#fff" }}>
+    <Paper component="section" variant="outlined" aria-label={ct(title)} sx={{ p: { xs: 2.5, sm: 3.5 }, borderRadius: 3, bgcolor: locked ? "brand.paper" : "#fff" }}>
       <Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
         <Box
           aria-hidden
@@ -640,14 +645,14 @@ function Step({
           {done ? <Icon name="check" sx={{ fontSize: 16 }} /> : index}
         </Box>
         <Typography variant="h6" component="h2" sx={{ flex: 1, fontWeight: 600, color: locked ? "text.secondary" : "text.primary" }}>
-          {title}
+          {ct(title)}
         </Typography>
-        {action}
+        {ct(action)}
       </Stack>
       {locked ? (
         lockedHint ? (
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 1, pl: 5.5 }}>
-            {lockedHint}
+            {ct(lockedHint)}
           </Typography>
         ) : null
       ) : children ? (
@@ -678,6 +683,7 @@ function AddressSection({
   busy: boolean
   onSubmit: (body: AddressBody) => Promise<boolean>
 }) {
+  const ct = useContentTranslator()
   const t = useTranslations("Checkout")
   const ta = useTranslations("Address")
   const locale = useLocale()
@@ -759,7 +765,7 @@ function AddressSection({
         <Box sx={{ overflowWrap: "anywhere" }}>
           {[...formatAddressLines(current).slice(0, -1), countryName(current.country_code, locale), current.phone].filter(Boolean).map((line, index) => (
             <Typography key={`${index}:${line}`} sx={{ fontWeight: index === 0 ? 600 : 400, color: index === 0 ? "text.primary" : "text.secondary" }}>
-              {line}
+              {ct(line)}
             </Typography>
           ))}
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 1.5 }}>
@@ -805,7 +811,7 @@ function AddressSection({
                       {address.id === defaultAddress?.id ? <Chip label={t("defaultAddress")} size="small" sx={{ height: 20, fontSize: 11, fontWeight: 600 }} /> : null}
                     </Stack>
                     <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.25, overflowWrap: "anywhere" }}>
-                      {[...formatAddressLines(address).slice(1, -1), countryName(address.country_code, locale)].join(", ")}
+                      {ct([...formatAddressLines(address).slice(1, -1), countryName(address.country_code, locale)].join(", "))}
                     </Typography>
                   </Box>
                 </Box>
@@ -863,6 +869,7 @@ function DeliverySection({
   busy: boolean
   onSelect: (optionId: string) => void
 }) {
+  const ct = useContentTranslator()
   const t = useTranslations("Checkout")
   const locale = useLocale()
   const money = useMoney()
@@ -898,15 +905,15 @@ function DeliverySection({
                   <Radio value={option.id} disabled={busy} />
                   <Box sx={{ flex: 1, minWidth: 0, py: 0.5 }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", flexWrap: "wrap" }}>
-                      <Typography sx={{ fontWeight: 600 }}>{name(option)}</Typography>
+                      <Typography sx={{ fontWeight: 600 }}>{ct(name(option))}</Typography>
                       {tracked ? <Chip label={t("tracked")} size="small" sx={{ height: 20, fontSize: 11, fontWeight: 600 }} /> : null}
                     </Stack>
                     <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                      {arrival ? t("arrives", { date: arrival }) : description}
+                      {ct(arrival ? t("arrives", { date: arrival }) : description)}
                     </Typography>
                   </Box>
                   <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
-                    {amount === 0 ? t("free") : money(amount, cart.currency_code)}
+                    {ct(amount === 0 ? t("free") : money(amount, cart.currency_code))}
                   </Typography>
                 </Box>
               )
@@ -943,6 +950,7 @@ function PayPanel({
   createPayPalOrder: () => Promise<string>
   onPayPalApprove: (orderId: string) => Promise<void>
 }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const money = useMoney()
   const total = money(Number(cart.total ?? 0), cart.currency_code)
@@ -953,13 +961,13 @@ function PayPanel({
     <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
       {provider === NMI_PROVIDER_ID ? (
         nmiSession ? <NmiPaymentForm key={`${nmiSession.id}:${nmiCartFingerprint(cart)}`} session={nmiSession} busy={busy} onToken={onNmiToken} />
-          : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>Your secure payment session needs refreshing.</Alert>
+          : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>{ct("Your secure payment session needs refreshing.")}</Alert>
       ) : provider === STRIPE_PROVIDER_ID ? (
         stripeSecret ? <StripePaymentForm key={stripeSecret} clientSecret={stripeSecret} amountLabel={total} billingDetails={stripeBillingDetails(cart)} busy={busy} onPay={onStripePay} />
-          : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>Your card payment session needs refreshing.</Alert>
+          : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>{ct("Your card payment session needs refreshing.")}</Alert>
       ) : provider === PAYPAL_PROVIDER_ID ? (
         payPalConfig ? <PayPalPaymentForm key={`${cart.id}:${payPalConfig.client_id}:${payPalConfig.currency}:${payPalConfig.intent}`} config={payPalConfig} busy={busy} createOrder={createPayPalOrder} onApprove={onPayPalApprove} />
-          : <Alert severity="warning">PayPal is unavailable. Please choose another payment method.</Alert>
+          : <Alert severity="warning">{ct("PayPal is unavailable. Please choose another payment method.")}</Alert>
       ) : (
         <Button
           variant="contained"
@@ -969,15 +977,15 @@ function PayPanel({
           startIcon={busy ? <CircularProgress size={16} color="inherit" /> : <LockOutlinedIcon />}
           sx={{ minWidth: { xs: 0, sm: 260 }, width: { xs: "100%", sm: "auto" } }}
         >
-          {busy
+          {ct(busy
             ? provider === PAYPAL_PROVIDER_ID
               ? act("openingPayPal")
               : act("placingOrder")
-            : act("orderAmount", { action: provider === PAYPAL_PROVIDER_ID ? act("payPal") : act("placeOrder"), amount: total })}
+            : act("orderAmount", { action: provider === PAYPAL_PROVIDER_ID ? act("payPal") : act("placeOrder"), amount: total }))}
         </Button>
       )}
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 2, fontSize: 13 }}>
-        {provider === NMI_PROVIDER_ID
+        {ct(provider === NMI_PROVIDER_ID
           ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
           : provider === STRIPE_PROVIDER_ID
           ? "By paying and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Your card is authorized now and charged when your order is ready to ship."
@@ -985,7 +993,7 @@ function PayPanel({
           ? "By paying with PayPal you agree to our terms of sale and confirm the products are for laboratory research use only. We ship after payment is confirmed."
           : provider === MAKEPAY_PROVIDER_ID
           ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to MakePay to complete your payment; we ship as soon as it is confirmed."
-          : "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will receive payment instructions by email; we ship as soon as payment is received."}
+          : "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will receive payment instructions by email; we ship as soon as payment is received.")}
       </Typography>
     </Box>
   )

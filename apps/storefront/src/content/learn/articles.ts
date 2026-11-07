@@ -357,8 +357,8 @@ export function getArticle(slug: string) {
 }
 
 /** "October 2026" or "July 24, 2026". */
-export function formatArticleDate(date: string) {
+export function formatArticleDate(date: string, locale = "en-US") {
   const [year, month, day] = date.split("-").map(Number)
-  return new Intl.DateTimeFormat("en-US", day ? { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" } : { month: "long", year: "numeric", timeZone: "UTC" })
+  return new Intl.DateTimeFormat(locale, day ? { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" } : { month: "long", year: "numeric", timeZone: "UTC" })
     .format(new Date(Date.UTC(year, month - 1, day || 1)))
 }

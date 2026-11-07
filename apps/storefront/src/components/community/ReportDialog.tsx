@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
@@ -21,6 +23,7 @@ import { forumError } from "./useCommunityProfile"
 
 /** Tells the moderators about a post. Three reports hide it until they review it. */
 export default function ReportDialog({ postId, open, onClose, onReported }: { postId: string; open: boolean; onClose: () => void; onReported: () => void }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [reason, setReason] = useState<string>("dose")
   const [note, setNote] = useState("")
@@ -42,18 +45,18 @@ export default function ReportDialog({ postId, open, onClose, onReported }: { po
   }
 
   return <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs" aria-labelledby={`report-${postId}`}>
-    <DialogTitle id={`report-${postId}`}>Report this post</DialogTitle>
+    <DialogTitle id={`report-${postId}`}>{ct("Report this post")}</DialogTitle>
     <DialogContent>
-      <Typography sx={{ fontSize: 14.5, color: "brand.navySoft", mb: 1.5 }}>Moderators review every report. The author isn&apos;t told who reported them.</Typography>
+      <Typography sx={{ fontSize: 14.5, color: "brand.navySoft", mb: 1.5 }}>{ct("Moderators review every report. The author isn't told who reported them.")}</Typography>
       <RadioGroup value={reason} onChange={event => setReason(event.target.value)} aria-label={act("reason")}>
         {REPORT_REASONS.map(option => <FormControlLabel key={option.value} value={option.value} control={<Radio />} label={translateAction(act, option.label)} />)}
       </RadioGroup>
       <TextField label={act("extraDetails")} value={note} onChange={event => setNote(event.target.value.slice(0, 500))} multiline minRows={2} fullWidth sx={{ mt: 1.5 }} />
-      {error ? <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert> : null}
+      {error ? <Alert severity="error" sx={{ mt: 2 }}>{ct(error)}</Alert> : null}
     </DialogContent>
     <DialogActions sx={{ px: 3, pb: 2.5 }}>
       <Button onClick={onClose}>{act("cancel")}</Button>
-      <Button variant="contained" onClick={() => void send()} disabled={sending}>{sending ? act("sending") : act("sendReport")}</Button>
+      <Button variant="contained" onClick={() => void send()} disabled={sending}>{ct(sending ? act("sending") : act("sendReport"))}</Button>
     </DialogActions>
   </Dialog>
 }

@@ -50,8 +50,8 @@ export function threadHref(thread: Pick<ForumThread, "id">) {
   return `/community/${thread.id}`
 }
 
-export function formatForumDate(date: string) {
-  return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(date))
+export function formatForumDate(date: string, locale = "en-US") {
+  return new Intl.DateTimeFormat(locale, { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(date))
 }
 
 /** "3 minutes ago", "2 days ago", or a date after a month. */

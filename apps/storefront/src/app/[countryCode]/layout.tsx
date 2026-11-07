@@ -1,3 +1,4 @@
+import { localizeMetadata } from "@/i18n/metadata"
 import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import type { Metadata, Viewport } from "next"
@@ -17,7 +18,7 @@ import { getStoreRegion, listCountryCodes, listCountryOptions } from "@/lib/medu
 import { parseStoreSegment } from "@/lib/store-segment"
 import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
-import { getCountryI18n } from "@/i18n/config"
+import { getCountryI18n } from "@/i18n/server-config"
 
 // latin-ext covers Polish, Czech, Baltic, Romanian and Hungarian letters; Greek and Bulgarian need their own scripts.
 const manrope = Manrope({ subsets: ["latin", "latin-ext", "greek", "cyrillic"], variable: "--font-manrope", display: "swap" })
@@ -28,7 +29,8 @@ const dmMono = DM_Mono({
   display: "swap",
 })
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return localizeMetadata({
   metadataBase: new URL(BASE_URL),
   title: {
     default: `${SITE.name}: a clearer perspective on peptide science`,
@@ -36,6 +38,7 @@ export const metadata: Metadata = {
   },
   description: SITE.description,
   openGraph: { siteName: SITE.name, type: "website" },
+})
 }
 
 export const viewport: Viewport = {

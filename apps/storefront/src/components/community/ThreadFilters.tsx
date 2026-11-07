@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
@@ -40,6 +42,7 @@ export default function ThreadFilters() {
 
 /** Shareable URL filters. Changing a filter always returns to the first page. */
 function ThreadFilterControls() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const router = useRouter()
   const params = useSearchParams()
@@ -69,9 +72,9 @@ function ThreadFilterControls() {
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
       <Tabs value={kind} onChange={(_, value: string) => update({ kind: value === "all" ? null : value, sort: value !== "question" && sort === "unanswered" ? null : sort === "latest" ? null : sort })}
         variant="fullWidth" aria-label={act("threadType")} sx={{ width: { xs: "100%", sm: "auto" }, minHeight: 44, p: .5, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "12px", "& .MuiTabs-indicator": { display: "none" }, "& .MuiTabs-list": { gap: .5 } }}>
-        {KINDS.map(value => <Tab key={value} value={value} label={value === "all" ? act("allThreads") : translateAction(act, KIND_PLURALS[value])} sx={{ minHeight: 40, minWidth: 0, px: { xs: 1, sm: 2.25 }, py: 1, mr: 0, borderRadius: "8px", fontSize: 14, color: "brand.navySoft", "&.Mui-selected": { bgcolor: "background.paper", color: "brand.navy", boxShadow: "0 1px 4px rgba(21,38,94,.10)" }, "&.Mui-focusVisible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: "-2px" } }} />)}
+        {KINDS.map(value => <Tab key={value} value={value} label={ct(value === "all" ? act("allThreads") : translateAction(act, KIND_PLURALS[value]))} sx={{ minHeight: 40, minWidth: 0, px: { xs: 1, sm: 2.25 }, py: 1, mr: 0, borderRadius: "8px", fontSize: 14, color: "brand.navySoft", "&.Mui-selected": { bgcolor: "background.paper", color: "brand.navy", boxShadow: "0 1px 4px rgba(21,38,94,.10)" }, "&.Mui-focusVisible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: "-2px" } }} />)}
       </Tabs>
-      <Typography role="status" sx={{ fontSize: 13, color: "text.secondary", ...(pending ? {} : { position: "absolute", width: 1, height: 1, p: 0, overflow: "hidden", clipPath: "inset(50%)", whiteSpace: "nowrap" }) }}>{pending ? act("updatingThreads") : ""}</Typography>
+      <Typography role="status" sx={{ fontSize: 13, color: "text.secondary", ...(pending ? {} : { position: "absolute", width: 1, height: 1, p: 0, overflow: "hidden", clipPath: "inset(50%)", whiteSpace: "nowrap" }) }}>{ct(pending ? act("updatingThreads") : "")}</Typography>
     </Box>
     <Box component="fieldset" disabled={pending} sx={{ m: 0, p: { xs: 2, sm: 2.5 }, minWidth: 0, border: "1px solid", borderColor: "divider", borderRadius: "14px", bgcolor: "brand.paper", display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "repeat(2, minmax(0, 1fr))", md: "minmax(220px, 1fr) minmax(170px, .55fr) minmax(210px, .6fr)" }, gap: 2 }}>
       <Box component="form" role="search" aria-label={act("searchThreads")} onSubmit={event => { event.preventDefault(); update({ q: q.trim() || null }) }} sx={{ minWidth: 0, gridColumn: { sm: "1 / -1", md: "auto" } }}>
@@ -102,9 +105,9 @@ function ThreadFilterControls() {
       </Box>
     </Box>
     {filtered ? <Box role="group" aria-label={act("activeFilters")} sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1 }}>
-      <Typography sx={{ fontSize: 13, color: "text.secondary", mr: .5 }}>Filtered by</Typography>
+      <Typography sx={{ fontSize: 13, color: "text.secondary", mr: .5 }}>{ct("Filtered by")}</Typography>
       {search ? <Chip label={act("titleFilter", { title: search })} disabled={pending} onDelete={() => { setQ(""); update({ q: null }) }} deleteIcon={<CloseIcon />} variant="outlined" sx={{ minHeight: 36, maxWidth: "100%" }} /> : null}
-      {peptide ? <Chip label={peptide.name} disabled={pending} onDelete={() => update({ peptide: null })} deleteIcon={<CloseIcon />} variant="outlined" sx={{ minHeight: 36 }} /> : null}
+      {peptide ? <Chip label={ct(peptide.name)} disabled={pending} onDelete={() => update({ peptide: null })} deleteIcon={<CloseIcon />} variant="outlined" sx={{ minHeight: 36 }} /> : null}
       {lot ? <Chip label={act("lotFilter", { lot: lot })} disabled={pending} onDelete={() => update({ lot: null })} deleteIcon={<CloseIcon />} variant="outlined" sx={{ minHeight: 36 }} /> : null}
       <Button size="small" disabled={pending} onClick={() => { setQ(""); update({ q: null, peptide: null, lot: null }) }} sx={{ minHeight: 36 }}>{act("clearFilters")}</Button>
     </Box> : null}

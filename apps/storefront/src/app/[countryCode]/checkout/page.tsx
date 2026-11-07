@@ -1,3 +1,5 @@
+import { localizeMetadata } from "@/i18n/metadata"
+import { getContentTranslator } from "@/i18n/server-content"
 import type { Metadata } from "next"
 import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
@@ -8,12 +10,15 @@ import CheckoutFlow from "@/components/checkout/CheckoutFlow"
 import Section from "@/components/common/Section"
 import { gutter } from "@/theme/tokens"
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> {
+  return localizeMetadata({
   title: "Checkout",
   robots: { index: false },
+})
 }
 
 export default async function CheckoutPage() {
+  const ct = await getContentTranslator()
   const t = await getTranslations("Checkout")
   return (
     <>
@@ -21,9 +26,7 @@ export default async function CheckoutPage() {
       <Box component="header" sx={{ bgcolor: "brand.paper", borderBottom: "1px solid", borderColor: "divider", px: gutter, py: { xs: 3, md: 4 } }}>
         <Stack direction="row" sx={{ maxWidth: 1360, mx: "auto", alignItems: "flex-end", justifyContent: "space-between", gap: 2 }}>
           <Box>
-            <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase" }}>
-              VETUD / {t("secureCheckout")}
-            </Typography>
+            <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase" }}>{ct.rich("VETUD / {v0}", { v0: t("secureCheckout") }, {  })}</Typography>
             <Typography variant="h1" sx={{ mt: 1.25, fontSize: { xs: 30, md: 38 }, fontWeight: 400, lineHeight: 1.15, letterSpacing: "-.04em" }}>
               {t("title")}
             </Typography>

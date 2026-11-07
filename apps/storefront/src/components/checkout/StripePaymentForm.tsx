@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useLocale, useTranslations } from "next-intl"
 import type { StripeElementLocale } from "@stripe/stripe-js"
@@ -49,6 +51,7 @@ export default function StripePaymentForm(props: Props) {
 }
 
 function CardForm({ amountLabel, billingDetails, busy, onPay }: Props) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const stripe = useStripe()
   const elements = useElements()
@@ -88,17 +91,17 @@ function CardForm({ amountLabel, billingDetails, busy, onPay }: Props) {
       }}
     >
       <Typography variant="h6" sx={{ mb: 2 }}>
-        Card details
+        {ct("Card details")}
       </Typography>
       {stripeSandbox ? (
         <Alert severity="warning" sx={{ mb: 2 }}>
-          Stripe sandbox: no real charge. Use test card 4242 4242 4242 4242, any future expiry and any CVC.
+          {ct("Stripe sandbox: no real charge. Use test card 4242 4242 4242 4242, any future expiry and any CVC.")}
         </Alert>
       ) : null}
       <PaymentElement options={{ layout: "tabs", defaultValues: { billingDetails } }} />
       {fieldError ? (
         <Typography role="alert" variant="body2" sx={{ color: "error.main", mt: 1.5 }}>
-          {fieldError}
+          {ct(fieldError)}
         </Typography>
       ) : null}
       <Button
@@ -109,7 +112,7 @@ function CardForm({ amountLabel, billingDetails, busy, onPay }: Props) {
         startIcon={busy ? <CircularProgress size={16} color="inherit" /> : <LockIcon />}
         sx={{ mt: 3, minWidth: { xs: 0, sm: 260 }, width: { xs: "100%", sm: "auto" } }}
       >
-        {busy ? act("processingPayment") : act("payAmount", { amount: amountLabel })}
+        {ct(busy ? act("processingPayment") : act("payAmount", { amount: amountLabel }))}
       </Button>
     </Box>
   )

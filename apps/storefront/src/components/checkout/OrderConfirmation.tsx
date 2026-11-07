@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -33,6 +35,7 @@ function readStoredOrder(id: string, customerId?: string): CustomerOrder | null 
 }
 
 export default function OrderConfirmation() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const { customer } = useAccount()
   const params = useSearchParams()
@@ -66,7 +69,7 @@ export default function OrderConfirmation() {
   if (!order) {
     return current || !id ? (
       <Alert severity="warning">
-        We couldn&apos;t load this order. Sign in to the account used at checkout, or check your confirmation email.
+        {ct("We couldn't load this order. Sign in to the account used at checkout, or check your confirmation email.")}
       </Alert>
     ) : (
       <Skeleton variant="rounded" height={360} />
@@ -84,33 +87,31 @@ export default function OrderConfirmation() {
         <Stack direction="row" spacing={1.5} sx={{ alignItems: "center", mb: 2 }}>
           <CheckCircleIcon sx={{ color: "success.main", fontSize: 32 }} />
           <Typography variant="h3" component="h2">
-            {paid ? `Payment received for order ${number}.` : `Order ${number} received.`}
+            {ct(paid ? `Payment received for order ${number}.` : `Order ${number} received.`)}
           </Typography>
         </Stack>
-        <Typography sx={{ color: "text.secondary", mb: 4 }}>
-          A confirmation is on its way to <strong>{order.email}</strong>. {message}
-        </Typography>
+        <Typography sx={{ color: "text.secondary", mb: 4 }}>{ct.rich("A confirmation is on its way to <slot0>{v0}</slot0>. {v1}", { v0: ct(order.email), v1: ct(message) }, { slot0: chunks => <strong key="slot0">{chunks}</strong> })}</Typography>
 
         {manual ? (
         <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#eff5f6", borderRadius: 3, borderColor: "divider", mb: 4 }}>
           <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
-            How to pay
+            {ct("How to pay")}
           </Typography>
           <Grid container spacing={2} sx={{ mt: 1 }}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Amount due
+                {ct("Amount due")}
               </Typography>
               <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
-                {money(Number(order.total ?? 0), order.currency_code)}
+                {ct(money(Number(order.total ?? 0), order.currency_code))}
               </Typography>
             </Grid>
             <Grid size={{ xs: 12, sm: 6 }}>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                Payment reference
+                {ct("Payment reference")}
               </Typography>
               <Typography sx={{ fontSize: 24, fontWeight: 700, fontFamily: "var(--font-dm-mono), monospace" }}>
-                {number}
+                {ct(number)}
               </Typography>
             </Grid>
           </Grid>
@@ -118,19 +119,19 @@ export default function OrderConfirmation() {
             <Box sx={{ mt: 2, pt: 2, borderTop: "1px solid", borderColor: "brand.mint" }}>
               {bankLines.map((line) => (
                 <Typography key={line} variant="body2" sx={{ fontFamily: "var(--font-dm-mono), monospace" }}>
-                  {line}
+                  {ct(line)}
                 </Typography>
               ))}
             </Box>
           ) : null}
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 2 }}>
-            Please include the payment reference so we can match your transfer.
+            {ct("Please include the payment reference so we can match your transfer.")}
           </Typography>
         </Paper>
         ) : null}
 
         <Typography variant="h5" component="h3" sx={{ mb: 2 }}>
-          What happens next
+          {ct("What happens next")}
         </Typography>
         <Stack spacing={2}>
           {[
@@ -146,12 +147,12 @@ export default function OrderConfirmation() {
           ].map(([step, title, text]) => (
             <Stack key={step} direction="row" spacing={2}>
               <Typography variant="mono" sx={{ color: "secondary.main", pt: "2px" }}>
-                {step}
+                {ct(step)}
               </Typography>
               <Box>
-                <Typography sx={{ fontWeight: 600 }}>{title}</Typography>
+                <Typography sx={{ fontWeight: 600 }}>{ct(title)}</Typography>
                 <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                  {text}
+                  {ct(text)}
                 </Typography>
               </Box>
             </Stack>
@@ -159,7 +160,7 @@ export default function OrderConfirmation() {
         </Stack>
         <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 4 }}>
           <ButtonLink href={customer ? "/account/orders" : "/tracking"} variant="outlined">
-            {customer ? act("ordersTracking") : act("trackParcel")}
+            {ct(customer ? act("ordersTracking") : act("trackParcel"))}
           </ButtonLink>
           <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>
             {act("continueShopping")}
@@ -172,9 +173,7 @@ export default function OrderConfirmation() {
 
       <Grid size={{ xs: 12, md: 5 }}>
         <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#f7f9fa", borderRadius: 3 }}>
-          <Typography variant="h5" component="h3" sx={{ mb: 1 }}>
-            Order {number}
-          </Typography>
+          <Typography variant="h5" component="h3" sx={{ mb: 1 }}>{ct.rich("Order {v0}", { v0: ct(number) }, {  })}</Typography>
           <Box sx={{ mb: 2 }}>
             {(order.items ?? []).map((item) => (
               <Stack
@@ -183,13 +182,13 @@ export default function OrderConfirmation() {
                 sx={{ justifyContent: "space-between", py: 1.25, borderBottom: "1px solid", borderColor: "divider" }}
               >
                 <Box>
-                  <Typography sx={{ fontWeight: 600 }}>{item.product_title ?? item.title}</Typography>
+                  <Typography sx={{ fontWeight: 600 }}>{ct(item.product_title ?? item.title)}</Typography>
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {item.variant_title} · Qty {item.quantity}
+                    {ct(item.variant_title)} {ct("· Qty")} {ct(item.quantity)}
                   </Typography>
                 </Box>
                 <Typography sx={{ fontWeight: 600 }}>
-                  {money(Number(item.unit_price) * Number(item.quantity), order.currency_code)}
+                  {ct(money(Number(item.unit_price) * Number(item.quantity), order.currency_code))}
                 </Typography>
               </Stack>
             ))}
@@ -198,14 +197,14 @@ export default function OrderConfirmation() {
           {address ? (
             <Box sx={{ mt: 3 }}>
               <Typography variant="eyebrow" sx={{ color: "text.secondary" }}>
-                Shipping to
+                {ct("Shipping to")}
               </Typography>
               <Typography sx={{ mt: 0.5, whiteSpace: "pre-line" }}>
-                {formatAddressLines(address).join("\n")}
+                {ct(formatAddressLines(address).join("\n"))}
               </Typography>
               {order.shipping_methods?.[0]?.name ? (
                 <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
-                  {order.shipping_methods[0].name}
+                  {ct(order.shipping_methods[0].name)}
                 </Typography>
               ) : null}
             </Box>

@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -36,6 +38,7 @@ const HIGHLIGHTS = {
 
 /** One post with its actions: helpful vote, report, best answer, and edit or delete for the author. */
 export default function PostCard({ post, thread, highlight, canAccept, canInteract, onChange, onDeleted, onAccept }: PostCardProps) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -78,7 +81,7 @@ export default function PostCard({ post, thread, highlight, canAccept, canIntera
 
   const remove = () => {
     const message = post.is_opening ? "Delete this thread, including every reply? This can't be undone." : "Delete your post? This can't be undone."
-    if (!window.confirm(message)) return
+    if (!window.confirm(ct(message))) return
     void run("delete", async () => {
       await sdk.client.fetch(`/store/forum/posts/${encodeURIComponent(post.id)}`, { method: "DELETE" })
       onDeleted(post)
@@ -87,48 +90,48 @@ export default function PostCard({ post, thread, highlight, canAccept, canIntera
 
   return <Box component="article" id={`post-${post.id}`} sx={{ scrollMarginTop: 96, py: 2.5, ...(style ? { px: { xs: 2, md: 2.5 }, my: 1.5, border: "1px solid", borderColor: style.border, borderLeftWidth: 4, borderRadius: "8px", bgcolor: style.bg } : { borderTop: "1px solid", borderColor: "divider" }) }}>
     {/* The thread header already names the opening post's author and date. */}
-    {post.is_opening ? (post.edited_at ? <Typography sx={{ fontSize: 13, color: "brand.navySoft", mb: 1 }}>Edited {formatForumDate(post.edited_at)}</Typography> : null) : <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 1.5, rowGap: .75, mb: 1.25 }}>
-      {style ? <Pill tone={style.tone} icon={highlight === "accepted" ? "checkCircle" : "shield"}>{style.label}</Pill> : null}
+    {post.is_opening ? (post.edited_at ? <Typography sx={{ fontSize: 13, color: "brand.navySoft", mb: 1 }}>{ct.rich("Edited {v0}", { v0: ct(formatForumDate(post.edited_at, ct.locale)) }, {  })}</Typography> : null) : <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 1.5, rowGap: .75, mb: 1.25 }}>
+      {style ? <Pill tone={style.tone} icon={highlight === "accepted" ? "checkCircle" : "shield"}>{ct(style.label)}</Pill> : null}
       <AuthorLine author={post.author} size="small" />
       <Typography component="time" dateTime={post.created_at} sx={{ fontSize: 13, color: "brand.navySoft" }}>
-        {formatForumDate(post.created_at)}{post.edited_at ? " · edited" : ""}
+        {ct(formatForumDate(post.created_at, ct.locale))}{ct(post.edited_at ? " · edited" : "")}
       </Typography>
     </Box>}
 
     {/* The opening post's status mirrors the thread's, which the thread header already explains. */}
     {post.status && post.status !== "published" && !post.is_opening ? <Alert severity="info" sx={{ mb: 1.5 }}>
-      <strong>Only you can see this {post.is_opening ? "thread" : "post"} for now.</strong> {HOLD_MESSAGES[post.hold_reason ?? ""] ?? "A moderator will review it."}
+      <strong>{ct.rich("Only you can see this {v0} for now.", { v0: ct(post.is_opening ? "thread" : "post") }, {  })}</strong> {ct(HOLD_MESSAGES[post.hold_reason ?? ""] ?? "A moderator will review it.")}
     </Alert> : null}
 
     {editing ? <Box>
       <TextField value={draft} onChange={event => setDraft(event.target.value.slice(0, post.is_opening ? 10000 : 5000))} multiline minRows={4} fullWidth label={act("editPost")} />
-      {dose ? <Alert severity="warning" sx={{ mt: 1.5 }}>“{dose}” looks like a dose amount. The community doesn&apos;t share doses, so this post would wait for a moderator.</Alert> : null}
+      {dose ? <Alert severity="warning" sx={{ mt: 1.5 }}>“{ct(dose)}{ct("” looks like a dose amount. The community doesn't share doses, so this post would wait for a moderator.")}</Alert> : null}
       <Box sx={{ display: "flex", gap: 1, mt: 1.5 }}>
-        <Button variant="contained" size="small" onClick={() => void saveEdit()} disabled={busy === "edit" || draft.trim().length < 2}>{busy === "edit" ? act("saving") : act("save")}</Button>
+        <Button variant="contained" size="small" onClick={() => void saveEdit()} disabled={busy === "edit" || draft.trim().length < 2}>{ct(busy === "edit" ? act("saving") : act("save"))}</Button>
         <Button size="small" onClick={() => { setEditing(false); setDraft(post.body) }}>{act("cancel")}</Button>
       </Box>
     </Box> : <PostBody body={post.body} size={post.is_opening ? 17 : 16} />}
     <PostImages images={post.images ?? []} author={post.author.display_name} />
 
-    {error ? <Alert severity="error" sx={{ mt: 1.5 }} onClose={() => setError(null)}>{error}</Alert> : null}
+    {error ? <Alert severity="error" sx={{ mt: 1.5 }} onClose={() => setError(null)}>{ct(error)}</Alert> : null}
 
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1, mt: 1.75 }}>
       <Button size="small" variant={post.voted ? "contained" : "outlined"} color="primary" onClick={() => void toggleHelpful()}
         disabled={!canInteract || post.mine || busy === "helpful" || post.status !== undefined && post.status !== "published"}
-        aria-pressed={post.voted} title={post.mine ? act("ownVote") : canInteract ? undefined : act("joinToVote")}
+        aria-pressed={post.voted} title={ct(post.mine ? act("ownVote") : canInteract ? undefined : act("joinToVote"))}
         startIcon={<Icon name="check" sx={{ fontSize: 16 }} />} sx={{ minHeight: 34 }}>
-        {act("helpful")}{post.helpful_count ? ` · ${post.helpful_count}` : ""}
+        {act("helpful")}{ct(post.helpful_count ? ` · ${post.helpful_count}` : "")}
       </Button>
       {canAccept && !post.is_opening && !post.mine && onAccept ? <Button size="small" variant={isAccepted ? "contained" : "text"} color="success" disabled={busy === "accept"}
         onClick={() => void run("accept", () => onAccept(isAccepted ? null : post.id), "We couldn't update the best answer.")}>
-        {isAccepted ? act("bestAnswer") : act("markBestAnswer")}
+        {ct(isAccepted ? act("bestAnswer") : act("markBestAnswer"))}
       </Button> : null}
       {canInteract && !post.mine ? <Button size="small" color="inherit" disabled={reported} onClick={() => setReporting(true)} sx={{ color: "brand.navySoft", ml: "auto" }}>
-        {reported ? act("reported") : act("reportPost")}
+        {ct(reported ? act("reported") : act("reportPost"))}
       </Button> : null}
       {post.mine && !editing ? <Box sx={{ ml: "auto", display: "flex", gap: .5 }}>
         <Button size="small" onClick={() => { setDraft(post.body); setEditing(true) }}>{act("edit")}</Button>
-        <Button size="small" color="error" onClick={remove} disabled={busy === "delete"}>{busy === "delete" ? act("deleting") : act("delete")}</Button>
+        <Button size="small" color="error" onClick={remove} disabled={busy === "delete"}>{ct(busy === "delete" ? act("deleting") : act("delete"))}</Button>
       </Box> : null}
     </Box>
     {reporting ? <ReportDialog postId={post.id} open={reporting} onClose={() => setReporting(false)} onReported={() => setReported(true)} /> : null}

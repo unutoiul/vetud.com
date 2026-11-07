@@ -1,3 +1,4 @@
+import { getContentTranslator } from "@/i18n/server-content"
 import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Skeleton from "@mui/material/Skeleton"
@@ -10,7 +11,7 @@ import Section from "@/components/common/Section"
 import { Pill } from "@/components/community/Badges"
 import CommunityDisclaimer from "@/components/community/CommunityDisclaimer"
 import ThreadCard from "@/components/community/ThreadCard"
-import { formatForumDate, plural } from "@/lib/community/format"
+import { formatForumDate } from "@/lib/community/format"
 import { communityMetadata } from "@/lib/community/seo"
 import { getForumMember } from "@/lib/medusa/forum"
 
@@ -32,10 +33,11 @@ async function load(handle: string) {
 }
 
 export async function generateMetadata({ params }: PageProps<"/[countryCode]/community/members/[handle]">): Promise<Metadata> {
+  const ct = await getContentTranslator()
   const { handle } = await params
   const page = await load(handle)
   if (!page) return { title: "Community member", robots: { index: false, follow: true } }
-  return communityMetadata({ title: `${page.member.display_name} in the Vetud community`, description: `${page.member.level} · ${plural(page.totals.threads, "thread")} and ${plural(page.totals.replies, "reply", "replies")}.`, path: `/community/members/${handle}`, index: page.totals.threads > 0 })
+  return communityMetadata({ title: ct.template("{v0} in the Vetud community", { v0: page.member.display_name }), description: ct.template("{v0} · {v1} and {v2}.", { v0: ct(page.member.level), v1: ct.count(page.totals.threads, "thread"), v2: ct.count(page.totals.replies, "reply", "replies") }), path: `/community/members/${handle}`, index: page.totals.threads > 0 })
 }
 
 export default function MemberPage({ params }: PageProps<"/[countryCode]/community/members/[handle]">) {
@@ -50,6 +52,7 @@ export default function MemberPage({ params }: PageProps<"/[countryCode]/communi
 }
 
 async function MemberContent({ params }: Pick<PageProps<"/[countryCode]/community/members/[handle]">, "params">) {
+  const ct = await getContentTranslator()
   const { handle } = await params
   const page = await load(handle)
   if (!page) notFound()
@@ -60,19 +63,19 @@ async function MemberContent({ params }: Pick<PageProps<"/[countryCode]/communit
       <Box>
         <Typography component="h1" sx={{ fontSize: { xs: 30, md: 38 }, fontWeight: 500, letterSpacing: "-.03em", color: "brand.navy" }}>{member.display_name}</Typography>
         <Box sx={{ mt: 1, display: "flex", flexWrap: "wrap", gap: .75, alignItems: "center" }}>
-          {member.role === "expert" ? <Pill tone="expert" icon="shield">Expert{member.credentials ? ` · ${member.credentials}` : ""}</Pill> : null}
-          {member.role === "moderator" ? <Pill tone="moderator">Moderator</Pill> : null}
-          <Pill>{member.level} · {plural(member.reputation, "point")}</Pill>
-          <Typography component="span" sx={{ fontSize: 14, color: "brand.navySoft" }}>Joined {formatForumDate(member.joined_at)}</Typography>
+          {member.role === "expert" ? <Pill tone="expert" icon="shield">{ct("Expert")}{ct(member.credentials ? ` · ${member.credentials}` : "")}</Pill> : null}
+          {member.role === "moderator" ? <Pill tone="moderator">{ct("Moderator")}</Pill> : null}
+          <Pill>{ct(member.level)} · {ct(ct.count(member.reputation, "point"))}</Pill>
+          <Typography component="span" sx={{ fontSize: 14, color: "brand.navySoft" }}>{ct.rich("Joined {v0}", { v0: ct(formatForumDate(member.joined_at, ct.locale)) }, {  })}</Typography>
         </Box>
       </Box>
     </Box>
-    {member.bio ? <Typography sx={{ mt: 3, fontSize: 16, lineHeight: 1.75, whiteSpace: "pre-wrap" }}>{member.bio}</Typography> : null}
+    {member.bio ? <Typography sx={{ mt: 3, fontSize: 16, lineHeight: 1.75, whiteSpace: "pre-wrap" }}>{ct(member.bio)}</Typography> : null}
     <Box component="dl" sx={{ mt: 3, display: "flex", flexWrap: "wrap", gap: { xs: 3, md: 5 }, "& dt": { fontSize: 13, color: "brand.navySoft" }, "& dd": { m: 0, fontSize: 26, fontWeight: 650, color: "brand.navy", fontVariantNumeric: "tabular-nums" } }}>
-      <div><dt>Threads</dt><dd>{totals.threads}</dd></div>
-      <div><dt>Replies</dt><dd>{totals.replies}</dd></div>
+      <div><dt>{ct("Threads")}</dt><dd>{ct(totals.threads)}</dd></div>
+      <div><dt>{ct("Replies")}</dt><dd>{ct(totals.replies)}</dd></div>
     </Box>
-    <Typography component="h2" sx={{ mt: 5, mb: 1, fontSize: 22, fontWeight: 650 }}>Latest threads</Typography>
-    {threads.length ? threads.map(thread => <ThreadCard key={thread.id} thread={thread} />) : <Typography sx={{ color: "brand.navySoft" }}>No threads yet.</Typography>}
+    <Typography component="h2" sx={{ mt: 5, mb: 1, fontSize: 22, fontWeight: 650 }}>{ct("Latest threads")}</Typography>
+    {threads.length ? threads.map(thread => <ThreadCard key={thread.id} thread={thread} />) : <Typography sx={{ color: "brand.navySoft" }}>{ct("No threads yet.")}</Typography>}
   </>
 }

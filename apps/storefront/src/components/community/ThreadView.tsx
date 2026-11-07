@@ -1,6 +1,7 @@
 "use client"
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
+import { useContentTranslator } from "@/i18n/use-content-translator"
 
 
 import Alert from "@mui/material/Alert"
@@ -12,7 +13,7 @@ import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { revalidateCommunity } from "@/lib/community/actions"
-import { formatForumDate, HOLD_MESSAGES, KIND_LABELS, KIND_PLURALS, plural } from "@/lib/community/format"
+import { formatForumDate, HOLD_MESSAGES, KIND_LABELS, KIND_PLURALS } from "@/lib/community/format"
 import type { ForumPost, ForumThreadDetail } from "@/lib/community/types"
 import { getPeptide } from "@/content/learn/peptides"
 import { useAccount } from "../account/AccountProvider"
@@ -31,6 +32,7 @@ const PAGE_SIZE = 100
  * it reloads with the reader's votes and own posts waiting for review, and adds the controls.
  */
 export default function ThreadView({ threadId, initial }: { threadId: string; initial: ForumThreadDetail | null }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const router = useRouter()
   const localize = useLocalizedHref()
@@ -84,8 +86,8 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
   }
   if (!detail) {
     return <Box sx={{ py: 6, textAlign: "center" }}>
-      <Typography component="h1" sx={{ fontSize: 28, fontWeight: 650 }}>This thread isn&apos;t available</Typography>
-      <Typography sx={{ mt: 1.5, color: "brand.navySoft" }}>It may have been removed, or it&apos;s waiting for a moderator to review it.</Typography>
+      <Typography component="h1" sx={{ fontSize: 28, fontWeight: 650 }}>{ct("This thread isn't available")}</Typography>
+      <Typography sx={{ mt: 1.5, color: "brand.navySoft" }}>{ct("It may have been removed, or it's waiting for a moderator to review it.")}</Typography>
       <ButtonLink href="/community" variant="contained" sx={{ mt: 3 }}>{act("backCommunity")}</ButtonLink>
     </Box>
   }
@@ -132,48 +134,48 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
     </Box>
 
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: .75, mb: 1.5 }}>
-      {thread.pinned ? <Pill tone="moderator">Pinned</Pill> : null}
+      {thread.pinned ? <Pill tone="moderator">{ct("Pinned")}</Pill> : null}
       <Pill tone={thread.kind === "question" ? "expert" : "neutral"}>{translateAction(act, KIND_LABELS[thread.kind])}</Pill>
-      {question && thread.accepted_post_id ? <Pill tone="accepted" icon="check">Answered</Pill> : null}
-      {thread.locked ? <Pill>Closed</Pill> : null}
+      {question && thread.accepted_post_id ? <Pill tone="accepted" icon="check">{ct("Answered")}</Pill> : null}
+      {thread.locked ? <Pill>{ct("Closed")}</Pill> : null}
     </Box>
-    <Typography component="h1" sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 500, lineHeight: 1.15, letterSpacing: "-.035em", textWrap: "balance", color: "brand.navy" }}>{thread.title}</Typography>
+    <Typography component="h1" sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 500, lineHeight: 1.15, letterSpacing: "-.035em", textWrap: "balance", color: "brand.navy" }}>{ct(thread.title)}</Typography>
     <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 2, rowGap: 1 }}>
       <AuthorLine author={thread.author} verified={thread.verified_purchase} verifiedLot={thread.lot} />
-      <Typography component="time" dateTime={thread.created_at} sx={{ fontSize: 14, color: "brand.navySoft" }}>Started {formatForumDate(thread.created_at)}</Typography>
+      <Typography component="time" dateTime={thread.created_at} sx={{ fontSize: 14, color: "brand.navySoft" }}>{ct.rich("Started {v0}", { v0: ct(formatForumDate(thread.created_at, ct.locale)) }, {  })}</Typography>
     </Box>
     {peptide || thread.product_handle || thread.lot ? <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", gap: 1, "& a": { display: "inline-flex", alignItems: "center", minHeight: 36, px: 1.5, border: "1px solid", borderColor: "divider", borderRadius: 999, fontSize: 13.5, bgcolor: "#fff" } }}>
-      {peptide ? <AppLink href={`/learn/${peptide.slug}`} underline="none">{act("about")} {peptide.name}</AppLink> : null}
+      {peptide ? <AppLink href={`/learn/${peptide.slug}`} underline="none">{act("about")} {ct(peptide.name)}</AppLink> : null}
       {thread.lot ? <AppLink href={`/documentation?lot=${encodeURIComponent(thread.lot)}`} underline="none">{act("lot")} {thread.lot} {act("batchRecord")}</AppLink> : null}
     </Box> : null}
 
     {thread.status && thread.status !== "published" ? <Alert severity="info" sx={{ mt: 3 }}>
-      <strong>Only you can see this thread for now.</strong> {HOLD_MESSAGES[thread.hold_reason ?? ""] ?? "A moderator will review it."}
+      <strong>{ct("Only you can see this thread for now.")}</strong> {ct(HOLD_MESSAGES[thread.hold_reason ?? ""] ?? "A moderator will review it.")}
     </Alert> : null}
 
     <Box sx={{ mt: 1 }}><PostCard post={opening} {...shared} /></Box>
 
     <Box component="section" aria-labelledby="replies-heading" sx={{ mt: 4 }}>
       <Typography id="replies-heading" component="h2" sx={{ fontSize: 22, fontWeight: 650, mb: 1 }}>
-        {detail.count ? plural(detail.count, question ? "answer" : "reply", question ? "answers" : "replies") : question ? "No answers yet" : "No replies yet"}
+        {ct(detail.count ? ct.count(detail.count, question ? "answer" : "reply", question ? "answers" : "replies") : question ? "No answers yet" : "No replies yet")}
       </Typography>
       {highlighted ? <PostCard post={highlighted} highlight="accepted" {...shared} /> : null}
       {expert ? <PostCard post={expert} highlight="expert" {...shared} /> : null}
       {others.map(post => <PostCard key={post.id} post={post} {...shared} />)}
       {detail.posts.length < detail.count ? <Button variant="outlined" onClick={() => void loadMore()} disabled={loadingMore} sx={{ mt: 2 }}>
-        {loadingMore ? act("loading") : act("moreItems", { count: detail.count - detail.posts.length })}
+        {ct(loadingMore ? act("loading") : act("moreItems", { count: detail.count - detail.posts.length }))}
       </Button> : null}
     </Box>
 
-    <Box component="section" aria-label={question ? act("yourAnswer") : act("yourReply")} sx={{ mt: 4, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
-      {thread.locked ? <Typography sx={{ color: "brand.navySoft" }}>This thread is closed to new replies.</Typography>
+    <Box component="section" aria-label={ct(question ? act("yourAnswer") : act("yourReply"))} sx={{ mt: 4, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
+      {thread.locked ? <Typography sx={{ color: "brand.navySoft" }}>{ct("This thread is closed to new replies.")}</Typography>
         : community.loading ? <Skeleton variant="rounded" height={150} />
           : !community.signedIn ? <Box sx={{ p: { xs: 2.5, md: 3 }, bgcolor: "brand.mintWash", borderRadius: 2, display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: 2, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
-            <Typography sx={{ fontSize: 16, color: "brand.navySoft", lineHeight: 1.7 }}>Sign in to your Vetud account to {question ? "answer" : "reply"}, vote and report.</Typography>
+            <Typography sx={{ fontSize: 16, color: "brand.navySoft", lineHeight: 1.7 }}>{ct.rich("Sign in to your Vetud account to {v0}, vote and report.", { v0: ct(question ? "answer" : "reply") }, {  })}</Typography>
             <ButtonLink href="/account" variant="contained" sx={{ flexShrink: 0 }}>{act("signIn")}</ButtonLink>
           </Box>
             : !community.profile ? <JoinCommunity suggested={community.suggested} onJoined={community.setProfile} />
-              : community.profile.status !== "active" ? <Alert severity="info">Your community account can&apos;t post right now. Contact us if you think this is a mistake.</Alert>
+              : community.profile.status !== "active" ? <Alert severity="info">{ct("Your community account can't post right now. Contact us if you think this is a mistake.")}</Alert>
                 : <ReplyForm threadId={thread.id} profile={community.profile} question={question} onPosted={post => {
                   setDetail(current => current && ({ ...current, posts: [...current.posts, post], count: current.count + (post.status === "published" ? 1 : 0) }))
                   if (post.status === "published") refresh()

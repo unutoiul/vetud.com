@@ -1,3 +1,4 @@
+import { getContentTranslator } from "@/i18n/server-content"
 import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import Link from "@mui/material/Link"
@@ -48,6 +49,7 @@ export default function PeptidePage({ params }: PageProps<"/[countryCode]/learn/
 }
 
 async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/learn/[slug]">, "params">) {
+  const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const { slug } = await params
   const peptide = getPeptide(slug)
@@ -78,7 +80,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
     { id: "sources", label: "Sources and references" },
     { id: "research-shop", label: "Related research products" },
   ]
-  const data = articleStructuredData({
+  const data = await articleStructuredData({
     title, description: peptide.oneLiner, path: `/learn/${peptide.slug}`, image, sources: peptide.sources, text,
     breadcrumbs: [{ name: "Home", path: "" }, { name: "Learn", path: "/learn" }, { name: category.name, path: `/learn#${category.id}` }, { name: peptide.name, path: `/learn/${peptide.slug}` }],
   })
@@ -86,58 +88,58 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
   return <>
     <Box component="article" lang="en" aria-labelledby="article-title">
       <ArticleJsonLd data={data} />
-      <ReadingHeader title={title} description={peptide.oneLiner} image={image} uid={`hero-${peptide.slug}`} minutes={readingMinutes(text)}
+      <ReadingHeader title={ct(title)} description={ct(peptide.oneLiner)} image={image} uid={`hero-${peptide.slug}`} minutes={readingMinutes(text)}
         breadcrumbs={[{ label: "Learn", href: "/learn" }, { label: category.name, href: `/learn#${category.id}` }, { label: peptide.name }]}
-        meta={<><StatusBadge status={peptide.status} /><span>Research guide</span></>}>
-        {peptide.aka ? <Typography sx={{ mt: 1.5, color: "brand.navySoft", fontSize: 14 }}>Also known as {peptide.aka}</Typography> : null}
+        meta={<><StatusBadge status={peptide.status} /><span>{ct("Research guide")}</span></>}>
+        {peptide.aka ? <Typography sx={{ mt: 1.5, color: "brand.navySoft", fontSize: 14 }}>{ct.rich("Also known as {v0}", { v0: ct(peptide.aka) }, {  })}</Typography> : null}
       </ReadingHeader>
 
       <ReadingLayout items={contents}>
-        <ReadingSection id="at-a-glance" title="At a glance" first>
+        <ReadingSection id="at-a-glance" title={ct("At a glance")} first>
           <Box sx={{ p: { xs: 2.5, md: 3 }, bgcolor: "brand.mintWash", borderLeft: "3px solid", borderColor: "brand.blue", borderRadius: "0 8px 8px 0" }}>
             {peptide.keyResult ? <>
-              <Typography sx={{ fontSize: { xs: 26, md: 30 }, fontWeight: 700, lineHeight: 1.25, color: "brand.navy", overflowWrap: "break-word" }}>{peptide.keyResult.value}</Typography>
-              <Typography sx={{ mt: 1, fontSize: 18, fontWeight: 600, color: "brand.navy" }}>{peptide.keyResult.label}</Typography>
-              <Typography sx={{ mt: 1, fontSize: 14, lineHeight: 1.7, color: "brand.navySoft" }}>{peptide.keyResult.detail}</Typography>
+              <Typography sx={{ fontSize: { xs: 26, md: 30 }, fontWeight: 700, lineHeight: 1.25, color: "brand.navy", overflowWrap: "break-word" }}>{ct(peptide.keyResult.value)}</Typography>
+              <Typography sx={{ mt: 1, fontSize: 18, fontWeight: 600, color: "brand.navy" }}>{ct(peptide.keyResult.label)}</Typography>
+              <Typography sx={{ mt: 1, fontSize: 14, lineHeight: 1.7, color: "brand.navySoft" }}>{ct(peptide.keyResult.detail)}</Typography>
             </> : null}
-            <Typography sx={{ ...readingProse, mt: peptide.keyResult ? 2 : 0, fontSize: 16 }}>{peptide.statusNote}</Typography>
-            {peptide.notAPeptide ? <Typography sx={{ mt: 1.5, fontSize: 14, fontWeight: 650, color: "brand.navy" }}>This compound is not a peptide, but is often discussed alongside them.</Typography> : null}
+            <Typography sx={{ ...readingProse, mt: peptide.keyResult ? 2 : 0, fontSize: 16 }}>{ct(peptide.statusNote)}</Typography>
+            {peptide.notAPeptide ? <Typography sx={{ mt: 1.5, fontSize: 14, fontWeight: 650, color: "brand.navy" }}>{ct("This compound is not a peptide, but is often discussed alongside them.")}</Typography> : null}
           </Box>
           {peptide.evidence ? <Box sx={{ mt: 3 }}><EvidenceLadder evidence={peptide.evidence} name={peptide.name} /></Box> : null}
         </ReadingSection>
 
-        <ReadingSection id="what-it-is" title={`What is ${peptide.name}?`}><Typography sx={readingProse}>{peptide.whatItIs}</Typography></ReadingSection>
-        <ReadingSection id="how-it-works" title={`How does ${peptide.name} work?`}>
-          <Typography sx={readingProse}>{peptide.howItWorks}</Typography>
+        <ReadingSection id="what-it-is" title={ct.template("What is {v0}?", { v0: peptide.name })}><Typography sx={readingProse}>{ct(peptide.whatItIs)}</Typography></ReadingSection>
+        <ReadingSection id="how-it-works" title={ct.template("How does {v0} work?", { v0: peptide.name })}>
+          <Typography sx={readingProse}>{ct(peptide.howItWorks)}</Typography>
           {peptide.pubchem ? <Box component="details" sx={{ mt: 2.5, p: 2, border: "1px solid", borderColor: "divider", borderRadius: "8px", "& summary": { cursor: "pointer", minHeight: 44, alignContent: "center", color: "brand.blue", fontSize: 15, fontWeight: 600 } }}>
-            <summary>View the chemical structure</summary>
-            <Box sx={{ position: "relative", height: 300, mt: 2 }}><Image src={`/images/learn/structures/${peptide.slug}.webp`} alt={`Chemical structure of ${peptide.name}, from PubChem`} fill sizes="(max-width: 600px) 85vw, 600px" style={{ objectFit: "contain" }} /></Box>
+            <summary>{ct("View the chemical structure")}</summary>
+            <Box sx={{ position: "relative", height: 300, mt: 2 }}><Image src={`/images/learn/structures/${peptide.slug}.webp`} alt={ct.template("Chemical structure of {v0}, from PubChem", { v0: peptide.name })} fill sizes="(max-width: 600px) 85vw, 600px" style={{ objectFit: "contain" }} /></Box>
             <Link href={`https://pubchem.ncbi.nlm.nih.gov/compound/${peptide.pubchem}`} target="_blank" rel="noopener noreferrer" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14 }}>{act("chemicalSource")}</Link>
           </Box> : null}
         </ReadingSection>
-        <ReadingSection id="research" title="What does the research show?">
+        <ReadingSection id="research" title={ct("What does the research show?")}>
           {peptide.results?.length ? <Box sx={{ mb: 3 }}><StudyResults results={peptide.results} sources={peptide.sources} /></Box> : null}
-          <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{peptide.findings.map(finding => <li key={finding}>{finding}</li>)}</Box>
+          <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{peptide.findings.map(finding => <li key={finding}>{ct(finding)}</li>)}</Box>
           <AppLink href="#sources" sx={{ mt: 2, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>{act("readStudies")}</AppLink>
         </ReadingSection>
-        {inChart ? <ReadingSection id="comparison" title="How do the weight-loss results compare?"><WeightLossChart highlight={peptide.slug} /></ReadingSection> : null}
-        {unknowns.length ? <ReadingSection id="unknowns" title="What we don't know yet">
-          <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{unknowns.map(item => <li key={item}>{item}</li>)}</Box>
+        {inChart ? <ReadingSection id="comparison" title={ct("How do the weight-loss results compare?")}><WeightLossChart highlight={peptide.slug} /></ReadingSection> : null}
+        {unknowns.length ? <ReadingSection id="unknowns" title={ct("What we don't know yet")}>
+          <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{unknowns.map(item => <li key={item}>{ct(item)}</li>)}</Box>
         </ReadingSection> : null}
-        <ReadingSection id="risks" title="Known risks and side effects">
-          <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{peptide.risks.map(risk => <li key={risk}>{risk}</li>)}</Box>
+        <ReadingSection id="risks" title={ct("Known risks and side effects")}>
+          <Box component="ul" sx={{ ...readingProse, m: 0, pl: 2.5, display: "grid", gap: 2, "& li::marker": { color: "brand.blue" } }}>{peptide.risks.map(risk => <li key={risk}>{ct(risk)}</li>)}</Box>
         </ReadingSection>
-        <ReadingSection id="approval" title={`Is ${peptide.name} approved?`}>
-          <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1.5, mb: 2 }}><StatusBadge status={peptide.status} /><Typography sx={{ fontSize: 15, color: "brand.navySoft" }}>{status.explain}</Typography></Box>
-          <Typography sx={readingProse}>{peptide.statusNote}</Typography>
+        <ReadingSection id="approval" title={ct.template("Is {v0} approved?", { v0: peptide.name })}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1.5, mb: 2 }}><StatusBadge status={peptide.status} /><Typography sx={{ fontSize: 15, color: "brand.navySoft" }}>{ct(status.explain)}</Typography></Box>
+          <Typography sx={readingProse}>{ct(peptide.statusNote)}</Typography>
         </ReadingSection>
-        <ReadingSection id="community" title="From the community">
+        <ReadingSection id="community" title={ct("From the community")}>
           <Suspense fallback={<Skeleton variant="rounded" height={220} />}><PeptideCommunity peptide={peptide} /></Suspense>
         </ReadingSection>
-        <ReadingSection id="videos" title={`Watch: ${peptide.name} and related science`}><VideoResources videos={videos.videos} connections={videos.connections} introduction={videos.introduction} /></ReadingSection>
-        <ReadingSection id="sources" title="Sources and references">
+        <ReadingSection id="videos" title={ct.template("Watch: {v0} and related science", { v0: peptide.name })}><VideoResources videos={videos.videos} connections={videos.connections} introduction={videos.introduction} /></ReadingSection>
+        <ReadingSection id="sources" title={ct("Sources and references")}>
           <SourceList sources={peptide.sources} />
-          <Typography sx={{ mt: 3, fontSize: 14, lineHeight: 1.8, color: "brand.navySoft" }}>{LEARN_DISCLAIMER}</Typography>
+          <Typography sx={{ mt: 3, fontSize: 14, lineHeight: 1.8, color: "brand.navySoft" }}>{ct(LEARN_DISCLAIMER)}</Typography>
         </ReadingSection>
         <Box id="research-shop" sx={{ scrollMarginTop: 8 }}><ResearchCatalog peptides={[peptide.slug]} /></Box>
       </ReadingLayout>
@@ -145,10 +147,10 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
 
     <Section tone="paper" sx={{ py: { xs: 5, md: 7 }, borderTop: "1px solid", borderColor: "divider" }}>
       {articles.length ? <Box sx={{ mb: { xs: 5, md: 7 } }}>
-        <Typography component="h2" sx={{ fontSize: { xs: 25, md: 30 }, fontWeight: 650, mb: 3, color: "brand.navy" }}>More about {peptide.name}</Typography>
+        <Typography component="h2" sx={{ fontSize: { xs: 25, md: 30 }, fontWeight: 650, mb: 3, color: "brand.navy" }}>{ct.rich("More about {v0}", { v0: ct(peptide.name) }, {  })}</Typography>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" }, gap: 4 }}>{articles.map(article => <ArticleCard key={article.slug} article={article} />)}</Box>
       </Box> : null}
-      <Typography component="h2" sx={{ fontSize: { xs: 25, md: 30 }, fontWeight: 650, mb: 3, color: "brand.navy" }}>Continue exploring</Typography>
+      <Typography component="h2" sx={{ fontSize: { xs: 25, md: 30 }, fontWeight: 650, mb: 3, color: "brand.navy" }}>{ct("Continue exploring")}</Typography>
       <Suspense fallback={<Skeleton height={360} />}><RelatedProfiles slugs={related.map(other => other.slug)} /></Suspense>
       <AppLink href="/learn" sx={{ mt: 3, display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>{act("peptideLibrary")}</AppLink>
     </Section>

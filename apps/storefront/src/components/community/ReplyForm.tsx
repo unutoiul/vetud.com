@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -17,6 +19,7 @@ import { forumError } from "./useCommunityProfile"
 const MAX_LENGTH = 5000
 
 export default function ReplyForm({ threadId, profile, question, onPosted }: { threadId: string; profile: OwnForumProfile; question: boolean; onPosted: (post: ForumPost) => void }) {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [body, setBody] = useState("")
   const [images, setImages] = useState<ForumImage[]>([])
@@ -44,13 +47,13 @@ export default function ReplyForm({ threadId, profile, question, onPosted }: { t
   return <Box component="form" noValidate onSubmit={submit} aria-busy={posting}>
     <TextField label={act(question ? "answerAs" : "replyAs", { name: profile.display_name })} value={body} multiline minRows={4} fullWidth
       onChange={event => { setBody(event.target.value.slice(0, MAX_LENGTH)); if (error) setError(null) }}
-      helperText={`${body.length}/${MAX_LENGTH} · Share what you observed or what the research says. Please don't share doses or personal medical advice.`}
+      helperText={ct.template("{v0}/{v1} · Share what you observed or what the research says. Please don't share doses or personal medical advice.", { v0: body.length, v1: MAX_LENGTH })}
       slotProps={{ htmlInput: { maxLength: MAX_LENGTH } }} />
     <Box sx={{ mt: 2 }}><ImagePicker images={images} onChange={setImages} disabled={posting} /></Box>
-    {dose ? <Alert severity="warning" sx={{ mt: 1.5 }}>“{dose}” looks like a dose amount. The community doesn&apos;t share doses, so a reply with one waits for a moderator. Remove it to publish straight away.</Alert> : null}
-    {error ? <Alert severity="error" sx={{ mt: 1.5 }} onClose={() => setError(null)}>{error}</Alert> : null}
+    {dose ? <Alert severity="warning" sx={{ mt: 1.5 }}>“{ct(dose)}{ct("” looks like a dose amount. The community doesn't share doses, so a reply with one waits for a moderator. Remove it to publish straight away.")}</Alert> : null}
+    {error ? <Alert severity="error" sx={{ mt: 1.5 }} onClose={() => setError(null)}>{ct(error)}</Alert> : null}
     <Button type="submit" variant="contained" disabled={posting || body.trim().length < 2} startIcon={posting ? <CircularProgress size={16} color="inherit" /> : null} sx={{ mt: 2 }}>
-      {posting ? act("posting") : question ? act("postAnswer") : act("postReply")}
+      {ct(posting ? act("posting") : question ? act("postAnswer") : act("postReply"))}
     </Button>
   </Box>
 }

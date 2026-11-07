@@ -63,7 +63,7 @@ const messages = {
 type MessageLocale = keyof typeof messages
 
 /** "de-AT" → de, "en-CA" → en-GB (British spelling outside the US), "fr" → fr. */
-function messageLocale(locale: string): MessageLocale {
+export function messageLocale(locale: string): MessageLocale {
   if (Object.hasOwn(messages, locale)) return locale as MessageLocale
   const language = locale.split("-")[0]
   if (language === "en") return "en-GB"

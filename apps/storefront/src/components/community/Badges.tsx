@@ -1,3 +1,4 @@
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import Box from "@mui/material/Box"
 import type { ReactNode } from "react"
 import Icon, { type IconName } from "../brand/Icon"
@@ -17,8 +18,9 @@ export type BadgeTone = keyof typeof TONES
 
 /** A small labelled pill; the words carry the meaning, the color only repeats it. */
 export function Pill({ tone = "neutral", icon, children, title }: { tone?: BadgeTone; icon?: IconName; children: ReactNode; title?: string }) {
+  const ct = useContentTranslator()
   const { color, bg } = TONES[tone]
-  return <Box component="span" title={title} sx={{ display: "inline-flex", alignItems: "center", gap: .5, px: 1, py: .25, borderRadius: 999, bgcolor: bg, color, fontSize: 12, fontWeight: 650, lineHeight: 1.5, whiteSpace: "nowrap", maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis" }}>
+  return <Box component="span" title={ct(title)} sx={{ display: "inline-flex", alignItems: "center", gap: .5, px: 1, py: .25, borderRadius: 999, bgcolor: bg, color, fontSize: 12, fontWeight: 650, lineHeight: 1.5, whiteSpace: "nowrap", maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis" }}>
     {icon ? <Icon name={icon} sx={{ fontSize: 14 }} /> : null}
     {children}
   </Box>
@@ -26,12 +28,13 @@ export function Pill({ tone = "neutral", icon, children, title }: { tone?: Badge
 
 /** Name (linked to the member page), role badge with credentials, and level. */
 export function AuthorLine({ author, verifiedLot, verified, size = "medium" }: { author: ForumAuthor; verified?: boolean; verifiedLot?: string | null; size?: "small" | "medium" }) {
+  const ct = useContentTranslator()
   const name = <Box component="span" sx={{ fontWeight: 700, color: "brand.navy", fontSize: size === "small" ? 14 : 15 }}>{author.display_name}</Box>
   return <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 1, rowGap: .5, minWidth: 0 }}>
-    {author.handle ? <AppLink href={`/community/members/${author.handle}`} underline="hover" sx={{ color: "inherit" }}>{name}</AppLink> : name}
-    {author.role === "expert" ? <Pill tone="expert" icon="shield" title="Verified by the Vetud team">Expert{author.credentials ? ` · ${author.credentials}` : ""}</Pill> : null}
-    {author.role === "moderator" ? <Pill tone="moderator">Moderator</Pill> : null}
-    {author.role === "member" && author.level_id !== "member" ? <Pill>{author.level}</Pill> : null}
-    {verified ? <Pill tone="verified" icon="checkCircle" title="Has a paid Vetud order for this product. The lot is the member's report, checked against our lot records.">Verified buyer{verifiedLot ? ` · Lot ${verifiedLot}` : ""}</Pill> : null}
+    {author.handle ? <AppLink href={`/community/members/${author.handle}`} underline="hover" sx={{ color: "inherit" }}>{ct(name)}</AppLink> : name}
+    {author.role === "expert" ? <Pill tone="expert" icon="shield" title={ct("Verified by the Vetud team")}>{ct("Expert")}{ct(author.credentials ? ` · ${author.credentials}` : "")}</Pill> : null}
+    {author.role === "moderator" ? <Pill tone="moderator">{ct("Moderator")}</Pill> : null}
+    {author.role === "member" && author.level_id !== "member" ? <Pill>{ct(author.level)}</Pill> : null}
+    {verified ? <Pill tone="verified" icon="checkCircle" title={ct("Has a paid Vetud order for this product. The lot is the member's report, checked against our lot records.")}>{ct("Verified buyer")}{ct(verifiedLot ? ` · Lot ${verifiedLot}` : "")}</Pill> : null}
   </Box>
 }

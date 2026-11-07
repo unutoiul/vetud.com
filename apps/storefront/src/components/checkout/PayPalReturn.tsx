@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -20,6 +22,7 @@ import { useAccount } from "../account/AccountProvider"
  * The backend still checks approval and capture with PayPal; the URL never proves payment.
  */
 export default function PayPalReturn() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const router = useRouter()
   const params = useSearchParams()
@@ -80,14 +83,14 @@ export default function PayPalReturn() {
     return (
       <Stack spacing={2} sx={{ py: 8, alignItems: "center" }} role="status" aria-live="polite">
         <CircularProgress color="secondary" />
-        <Typography>Confirming your PayPal payment…</Typography>
+        <Typography>{ct("Confirming your PayPal payment…")}</Typography>
       </Stack>
     )
   }
 
   return (
     <Stack spacing={3} sx={{ py: 4, alignItems: "flex-start" }}>
-      <Alert severity={message.severity}>{message.text}</Alert>
+      <Alert severity={message.severity}>{ct(message.text)}</Alert>
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
         <ButtonLink href="/checkout" variant="contained">
           {act("backCheckout")}

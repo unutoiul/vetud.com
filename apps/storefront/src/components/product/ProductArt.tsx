@@ -1,3 +1,4 @@
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import { useId } from "react"
 import type { ArtKind } from "@/lib/product"
 
@@ -40,6 +41,7 @@ function AlpinePrint({ color }: { color: string }) {
 function ResearchVial({ x, y, accent, id, code, scale = 1, supply = false }: {
   x: number; y: number; accent: string; id: string; code: string; scale?: number; supply?: boolean
 }) {
+  const ct = useContentTranslator()
   return (
     <g transform={`translate(${x} ${y}) scale(${scale})`}>
       <ellipse cx="37" cy="173" rx="37" ry="7" fill="#254257" opacity=".06" />
@@ -53,10 +55,10 @@ function ResearchVial({ x, y, accent, id, code, scale = 1, supply = false }: {
       <rect x="10" y="27" width="54" height="6" rx="2" fill={`url(#${id}-silver)`} stroke="#aabac1" strokeWidth=".6" />
       <rect x="5" y="64" width="64" height="82" rx="1" fill={`url(#${id}-label)`} />
       <AlpineMark x={28} y={74} color={accent} scale={0.68} />
-      <text x="37" y="106" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontWeight="700" fontSize="9.7" letterSpacing="2.1" fill="#12334c">VETUD</text>
-      <text x="37" y="118" textAnchor="middle" fontFamily="var(--font-dm-mono), monospace" fontSize="5.7" letterSpacing=".7" fill={accent}>{code}</text>
+      <text x="37" y="106" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontWeight="700" fontSize="9.7" letterSpacing="2.1" fill="#12334c">{ct("VETUD")}</text>
+      <text x="37" y="118" textAnchor="middle" fontFamily="var(--font-dm-mono), monospace" fontSize="5.7" letterSpacing=".7" fill={accent}>{ct(code)}</text>
       <path d="M27 126h20" stroke={accent} strokeWidth=".65" opacity=".7" />
-      <text x="37" y="135" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="4.5" letterSpacing=".65" fill="#506875">RESEARCH USE ONLY</text>
+      <text x="37" y="135" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="4.5" letterSpacing=".65" fill="#506875">{ct("RESEARCH USE ONLY")}</text>
       <path d="M5 145h64v9c-22 4-43 4-64 0Z" fill={tint(accent, 0.77)} />
       <g fill="none" stroke={accent} strokeWidth=".7" opacity=".65">
         <path d="m5 151 13-7 8 4 15-11 14 12 14-5M35 143l6-6 8 8M41 137l-2 9 5-4" />
@@ -68,14 +70,15 @@ function ResearchVial({ x, y, accent, id, code, scale = 1, supply = false }: {
 
 /** Upright alpine packaging and laboratory vials, with a distinct material finish per range. */
 export default function ProductArt({ code, accent, kind = "series", label, title }: ProductArtProps) {
+  const ct = useContentTranslator()
   const instance = useId().replace(/[^a-z0-9]/gi, "")
   const id = `vetud-art-${instance}`
   const series = label ?? (kind === "supply" ? "LAB ESSENTIALS" : kind === "blend" ? "BLEND COLLECTION" : "PEPTIDE COLLECTION")
 
   return (
-    <svg viewBox="0 0 340 300" role={title ? "img" : undefined} aria-hidden={title ? undefined : true} aria-label={title}
+    <svg viewBox="0 0 340 300" role={title ? "img" : undefined} aria-hidden={title ? undefined : true} aria-label={ct(title)}
       style={{ width: "100%", height: "auto", display: "block", overflow: "visible" }}>
-      {title ? <title>{title}</title> : null}
+      {title ? <title>{ct(title)}</title> : null}
       <defs>
         <linearGradient id={`${id}-box`} x1="0" y1="0" x2="1" y2="0">
           <stop stopColor="#f0f4f4" /><stop offset=".12" stopColor="#fff" /><stop offset=".8" stopColor="#fbfcfc" /><stop offset="1" stopColor="#e8eff0" />
@@ -108,14 +111,14 @@ export default function ProductArt({ code, accent, kind = "series", label, title
         <g transform="translate(83 55)">
           <AlpinePrint color={accent} />
           <AlpineMark x={42} y={20} color={accent} scale={0.85} />
-          <text x="53" y="65" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontWeight="650" fontSize="13.4" letterSpacing="3" fill="#12334c">VETUD</text>
-          <text x="53" y="79" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="5.4" letterSpacing="1.2" fill="#617784">{series}</text>
+          <text x="53" y="65" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontWeight="650" fontSize="13.4" letterSpacing="3" fill="#12334c">{ct("VETUD")}</text>
+          <text x="53" y="79" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="5.4" letterSpacing="1.2" fill="#617784">{ct(series)}</text>
           <path d="M42 91h22" stroke={accent} strokeWidth=".7" />
-          <text x="53" y="107" textAnchor="middle" fontFamily="var(--font-dm-mono), monospace" fontSize="7.4" letterSpacing="1" fill={accent}>{code}</text>
-          <text x="53" y="197" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="4.8" letterSpacing=".75" fill="#365566">FOR LABORATORY RESEARCH</text>
+          <text x="53" y="107" textAnchor="middle" fontFamily="var(--font-dm-mono), monospace" fontSize="7.4" letterSpacing="1" fill={accent}>{ct(code)}</text>
+          <text x="53" y="197" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="4.8" letterSpacing=".75" fill="#365566">{ct("FOR LABORATORY RESEARCH")}</text>
         </g>
         <path d="M86 59v198" stroke="#fff" strokeWidth="1.5" opacity=".8" />
-        <text x="198" y="157" transform="rotate(-90 198 157)" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="4.5" letterSpacing="2.2" fill="#607887">SCIENCE. WITH CLARITY.</text>
+        <text x="198" y="157" transform="rotate(-90 198 157)" textAnchor="middle" fontFamily="var(--font-manrope), sans-serif" fontSize="4.5" letterSpacing="2.2" fill="#607887">{ct("SCIENCE. WITH CLARITY.")}</text>
       </g>
       <g filter={`url(#${id}-shadow)`}>
         {kind === "blend" ? (

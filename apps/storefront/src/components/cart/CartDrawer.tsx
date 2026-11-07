@@ -1,4 +1,6 @@
 "use client"
+import { useContentTranslator } from "@/i18n/use-content-translator"
+
 
 import { useTranslations } from "next-intl"
 
@@ -18,6 +20,7 @@ import FreeShippingProgress from "./FreeShippingProgress"
 import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
 
 export default function CartDrawer() {
+  const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const money = useMoney()
   const { cart, drawerOpen, closeDrawer, itemCount, error, clearError, region } = useStore()
@@ -42,9 +45,7 @@ export default function CartDrawer() {
           direction="row"
           sx={{ alignItems: "center", justifyContent: "space-between", px: 3, py: 2, borderBottom: "1px solid", borderColor: "divider" }}
         >
-          <Typography variant="h5" component="h2" id="cart-drawer-title">
-            Your cart{itemCount ? ` (${itemCount})` : ""}
-          </Typography>
+          <Typography variant="h5" component="h2" id="cart-drawer-title">{ct.rich("Your cart{v0}", { v0: ct(itemCount ? ` (${itemCount})` : "") }, {  })}</Typography>
           <IconButton aria-label={act("closeCart")} onClick={closeDrawer}>
             <CloseIcon />
           </IconButton>
@@ -53,7 +54,7 @@ export default function CartDrawer() {
         <Box sx={{ flex: 1, overflowY: "auto", overscrollBehavior: "contain", px: 3 }}>
           {error ? (
             <Alert severity="error" onClose={clearError} sx={{ mt: 2 }}>
-              {error}
+              {ct(error)}
             </Alert>
           ) : null}
           {items.length ? (
@@ -68,10 +69,10 @@ export default function CartDrawer() {
           ) : (
             <Stack spacing={2} sx={{ py: 8, alignItems: "center", textAlign: "center" }}>
               <Typography variant="h5" component="p">
-                Your cart is empty
+                {ct("Your cart is empty")}
               </Typography>
               <Typography sx={{ color: "text.secondary", maxWidth: 280 }}>
-                Browse the collection to find documented research materials.
+                {ct("Browse the collection to find documented research materials.")}
               </Typography>
               <ButtonLink href="/shop" variant="contained" onClick={closeDrawer} endIcon={<NorthEastIcon />}>
                 {act("shopCatalog")}
@@ -83,17 +84,17 @@ export default function CartDrawer() {
         {items.length ? (
           <Box sx={{ flexShrink: 0, px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
             <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
-              <Typography sx={{ fontWeight: 600 }}>Subtotal</Typography>
-              <Typography sx={{ fontWeight: 700 }}>{money(subtotal, currency)}</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{ct("Subtotal")}</Typography>
+              <Typography sx={{ fontWeight: 700 }}>{ct(money(subtotal, currency))}</Typography>
             </Stack>
             {discount > 0 ? (
               <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
-                <Typography sx={{ color: "text.secondary" }}>Discount</Typography>
-                <Typography sx={{ fontWeight: 600 }}>−{money(discount, currency)}</Typography>
+                <Typography sx={{ color: "text.secondary" }}>{ct("Discount")}</Typography>
+                <Typography sx={{ fontWeight: 600 }}>−{ct(money(discount, currency))}</Typography>
               </Stack>
             ) : null}
             <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
-              Shipping and taxes are calculated at checkout.
+              {ct("Shipping and taxes are calculated at checkout.")}
             </Typography>
             <Stack direction="row" spacing={1.5}>
               <ButtonLink href="/cart" variant="outlined" color="primary" onClick={closeDrawer} sx={{ flex: 1 }}>
@@ -103,7 +104,7 @@ export default function CartDrawer() {
                 {act("checkout")}
               </ButtonLink>
             </Stack>
-            <Box sx={{ mt: 1.75, minHeight: 24 }}><AcceptedPaymentMethods enabled={drawerOpen} regionId={cart?.region_id || region.id} currency={currency} caption={false} /></Box>
+            <Box sx={{ mt: 1.75, minHeight: 24 }}><AcceptedPaymentMethods enabled={drawerOpen} regionId={cart?.region_id || region.id} currency={currency} caption={ct(false)} /></Box>
           </Box>
         ) : null}
       </Stack>
