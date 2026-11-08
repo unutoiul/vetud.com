@@ -1,5 +1,6 @@
 import type { HttpTypes } from "@medusajs/types"
 import { initialProductVariant, isVariantInStock, sortedVariants } from "./product"
+import { isUnsupportedInjectionFormat } from "./product-format-policy"
 
 type Variant = HttpTypes.StoreProductVariant
 
@@ -15,7 +16,7 @@ export const FORMAT_INFO: Record<string, { line: string; key: "pen" | "box" | "v
   "Dual-chamber vial": { line: "Powder and BAC water in one two-chamber cartridge. Refills the reusable pen", key: "pen" },
   // The cartridge's name until 2026-11-04, kept so older carts and the catalog in between still read well.
   "Dual-chamber pen": { line: "Powder and BAC water in one two-chamber cartridge", key: "pen" },
-  Vial: { line: "Freeze-dried powder in a sealed vial, the lowest price", key: "vial" },
+  Vial: { line: "Sealed research vial; no diluent or administration supplies included", key: "vial" },
 }
 
 export const KIT_FORMAT = "Pen kit box"
@@ -33,6 +34,7 @@ const optionValue = (variant: Variant, title: string) =>
 export function readOptions(product: HttpTypes.StoreProduct): ProductOption[] {
   const options: ProductOption[] = []
   for (const variant of sortedVariants(product)) {
+    if (isUnsupportedInjectionFormat(optionValue(variant, FORMAT_OPTION) ?? variant.title ?? "")) continue
     for (const option of variant.options ?? []) {
       const title = option.option?.title
       if (!title || !option.value) continue
@@ -109,7 +111,6 @@ export function shortAvailability(product: HttpTypes.StoreProduct, translate: (t
   if (!options.some((option) => option.title === FORMAT_OPTION)) return sortedVariants(product).map((variant) => translate(variant.title ?? "")).join(" / ")
   const formats = options.find((option) => option.title === FORMAT_OPTION)?.values ?? []
   const amounts = options.find((option) => option.title !== FORMAT_OPTION)?.values ?? []
-  const label = formats.includes(SPRAY_FORMAT) ? "Nasal spray, dual-chamber vial or vial"
-    : formats.includes(KIT_FORMAT) ? "Pen kit, dual-chamber vial or vial" : "Dual-chamber vial or vial"
-  return `${translate(label)}${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
+  const label = formats.map(translate).join(" / ")
+  return `${label}${amounts.length ? ` · ${amounts.join(" / ")}` : ""}`
 }

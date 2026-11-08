@@ -4,6 +4,8 @@
  * dual-chamber pen and as a vial at its own price. Artwork lives in the storefront at
  * /images/products/<handle>-pen.webp and <handle>-vial.webp (scripts/prepare-dual-chamber-images.mjs).
  */
+import { RESEARCH_WATER_SUBTITLE, reviewedResearchDescription } from "../lib/product-format-review"
+
 export const DUAL_CHAMBER_REVISION = "dual-chamber-2026-11-04-v1"
 export const DUAL_CHAMBER_IMAGE_ORIGIN = process.env.DUAL_CHAMBER_IMAGE_ORIGIN || "https://www.vetud.com"
 
@@ -292,7 +294,7 @@ export const DUAL_CHAMBER_PRODUCTS: DualChamberProduct[] = [
     pen: [offer("10 mg (5 mg + 5 mg)", 148), offer("20 mg (10 mg + 10 mg)", 228)],
     vial: [offer("10 mg (5 mg + 5 mg)", 98), offer("20 mg (10 mg + 10 mg)", 158)],
   },
-]
+].map(product => ({ ...product, summary: product.handle === "bacteriostatic-water" ? RESEARCH_WATER_SUBTITLE : product.summary, description: reviewedResearchDescription(product.handle, product.description) }))
 
 /** Earlier products on the same handles are kept as drafts under this suffix (e.g. retatrutide-pen-kit-2026). */
 export const REPLACED_SUFFIX = "-pen-kit-2026"

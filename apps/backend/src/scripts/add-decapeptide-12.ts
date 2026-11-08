@@ -5,6 +5,7 @@ import { addPenKitBoxesWorkflow } from "../workflows/add-pen-kit-boxes"
 import { importDualChamberCatalogWorkflow } from "../workflows/import-dual-chamber-catalog"
 import { syncCurrencyPrices } from "../workflows/sync-currency-prices"
 import syncStorewideSales from "../jobs/sync-storewide-sales"
+import { catalogFormatAllowed, PRODUCT_FORMAT_REVIEW } from "../lib/product-format-review"
 
 const HANDLE = "decapeptide-12"
 
@@ -15,8 +16,8 @@ type VerifiedProduct = {
 }
 
 /**
- * Adds Decapeptide-12 (owner request 2026-11-09): 200 mg as a dual-chamber vial ($350), a vial ($250)
- * and a pen kit box ($390), in the same shape as the rest of the dual-chamber catalog. The other
+ * Adds Decapeptide-12 (owner request 2026-11-09): a 200 mg research vial ($250).
+ * The format review excludes pen kits, dual-chamber cartridges and diluent add-ons. The other
  * products are already at this catalog revision, so they are left alone. Then converts the USD
  * prices into the other currencies and adds the product to the running sale straight away, rather
  * than waiting for the hourly and 15-minute jobs. Run with
@@ -51,14 +52,14 @@ export default async function addDecapeptide12({ container }: ExecArgs, { syncPr
     filters: { handle: HANDLE },
   })
   const product = (data as unknown as VerifiedProduct[])[0]
-  if (!product || product.status !== "published" || product.metadata?.catalog_revision !== DUAL_CHAMBER_REVISION || product.metadata?.pen_kit_box_revision !== PEN_KIT_BOX.revision) {
+  if (!product || product.status !== "published" || product.metadata?.catalog_revision !== DUAL_CHAMBER_REVISION || product.metadata?.format_review_revision !== PRODUCT_FORMAT_REVIEW) {
     return fail(`${HANDLE} was not published in full.`)
   }
   const box = boxFormat(HANDLE).title
   const wanted = [
-    ...expected.pen.map((offer) => ({ title: `Dual-chamber vial · ${offer.amount}`, usd: offer.usd })),
+    ...(catalogFormatAllowed(HANDLE, "Dual-chamber vial") ? expected.pen.map((offer) => ({ title: `Dual-chamber vial · ${offer.amount}`, usd: offer.usd })) : []),
     ...expected.vial.map((offer) => ({ title: `Vial · ${offer.amount}`, usd: offer.usd })),
-    ...expected.pen.map((offer) => ({ title: `${box} · ${offer.amount}`, usd: offer.usd + PEN_KIT_BOX.premium })),
+    ...(catalogFormatAllowed(HANDLE, box) ? expected.pen.map((offer) => ({ title: `${box} · ${offer.amount}`, usd: offer.usd + PEN_KIT_BOX.premium })) : []),
   ]
   const variants = product.variants ?? []
   if (variants.length !== wanted.length) fail(`${HANDLE} has ${variants.length} variants, expected ${wanted.length}.`)

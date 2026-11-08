@@ -20,17 +20,16 @@ import ProductGrid from "@/components/product/ProductGrid"
 import ProductGallery from "@/components/product/ProductGallery"
 import ProductDossier from "@/components/product/ProductDossier"
 import ProductLearnMore from "@/components/product/ProductLearnMore"
-import DualChamberExplainer from "@/components/product/DualChamberExplainer"
 import { ProductSelectionProvider } from "@/components/product/ProductSelection"
 import { getProductGuides, getProductOverview } from "@/content/product-overview"
 import PurchasePanel, { type PurchaseAddOn } from "@/components/product/PurchasePanel"
 import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
+import { preparationAddOnsAllowed } from "@/lib/product-format-policy"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
-import { getMoney } from "@/lib/money-server"
 import { isVariantInStock, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
-import { availabilitySummary, boxedFormat, defaultVariant, FORMAT_OPTION, formatContents, formatOf, hasFormats, readOptions, SPRAY_FORMAT, variantsWith } from "@/lib/product-formats"
-import { getFormatPhotos, getProductImages, getProductPhotography } from "@/lib/product-images"
+import { availabilitySummary, defaultVariant, FORMAT_OPTION, formatContents, formatOf, readOptions, variantsWith } from "@/lib/product-formats"
+import { getProductImages, getProductPhotography } from "@/lib/product-images"
 
 const PLACEHOLDER = "__placeholder__"
 
@@ -100,17 +99,20 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
   const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const { handle } = await params
-  const [{ product, region, countryCode }, money] = await Promise.all([loadProduct(handle), getMoney()])
+  const { product, region, countryCode } = await loadProduct(handle)
   if (!product || !region) notFound()
 
   const meta = readProductMeta(product)
+  const offersLabAccessories = !ADD_ON_HANDLES.includes(handle) && preparationAddOnsAllowed(product)
   const category = product.categories?.[0]
   const [catalog, water, syringes] = await Promise.all([
     listProducts({ regionId: region.id, categoryId: category?.id }),
-    ADD_ON_HANDLES.includes(handle) ? null : getProductByHandle("bacteriostatic-water", region.id),
-    ADD_ON_HANDLES.includes(handle) ? null : getProductByHandle("u-100-syringes", region.id),
+    offersLabAccessories ? getProductByHandle("bacteriostatic-water", region.id) : null,
+    offersLabAccessories ? getProductByHandle("u-100-syringes", region.id) : null,
   ])
-  const addOns = [addOn(water, "Vial · 10 ml", "Bacteriostatic water", "10 ml multi-use vial", "vial"), addOn(syringes, undefined, "U-100 insulin syringes", "Box of 10, single use", "box")].filter((item): item is PurchaseAddOn => item !== null)
+  const addOns = meta.artKind !== "supply" && offersLabAccessories
+    ? [addOn(water, "Vial · 10 ml", "Bacteriostatic water", "10 ml multi-use vial", "vial"), addOn(syringes, undefined, "U-100 insulin syringes", "Box of 10, single use", "box")].filter((item): item is PurchaseAddOn => item !== null)
+    : []
   const related = sortProducts(catalog, "featured")
     .filter((item) => item.id !== product.id)
     .slice(0, 3)
@@ -146,13 +148,6 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     ...(skus ? [{ label: "SKU", value: skus }] : []),
     { label: "Intended use", value: "Laboratory research only" },
   ]
-  // "Pen kit box", or "Nasal spray" for Selank and Semax.
-  const boxed = boxedFormat(product)
-  // "From" prices per format for the pen-vs-vial comparison.
-  const fromPrice = (format: string) => {
-    const amounts = variantsWith(product, FORMAT_OPTION, format).flatMap((variant) => variantPrice(variant)?.amount ?? [])
-    return amounts.length ? money(Math.min(...amounts), region.currency_code) : undefined
-  }
   const overview = getProductOverview(product)
 
   const images = getProductImages(product)
@@ -222,7 +217,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </ProductSelectionProvider>
 
         <Box>
-          <ProductDossier overview={overview} description={ct(product.description)} specs={specs} skus={formats.length ? skus : undefined} meta={meta} title={ct(product.title)} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} />
+          <ProductDossier overview={overview} description={ct(product.description)} specs={specs} skus={formats.length ? skus : undefined} meta={meta} title={ct(product.title)} />
         </Box>
       </Section>
 

@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-09",
+  "published_products_reviewed": 29,
+  "variants_before": 157,
+  "variants_soft_deleted": 99,
+  "variants_retained": 58,
+  "retained_base_price_records_unchanged": true,
+  "displayed_prices_checked_against_current_backend_calculations": true,
+  "deployment": {
+    "id": "dpl_BMowRqyrf8mx6sUmcNEHRRDQHEBP",
+    "url": "vetud-storefront-cb6xqp71x-bluetrendy.vercel.app",
+    "projectId": "prj_Hwd1R9Fms00l0cmVhFnAoBQA7Ehj",
+    "target": "production",
+    "readyState": "READY",
+    "errorCode": null,
+    "errorMessage": null
+  },
+  "verification": {
+    "staged_pages": 38,
+    "live_pages": 15,
+    "desktop_mobile_browser_checks": 8,
+    "backend_focused_tests": 3,
+    "storefront_focused_tests": 4,
+    "backend_lint_types_build": "passed",
+    "storefront_lint_types_build": "passed"
+  },
+  "decapeptide_12": "Not present in live database; pending source restricted to original 200 mg research-vial offer",
+  "scope": "Unsupported pen/dual-chamber offers and injection-supply upsells removed; laboratory research presentation retained",
+  "limitation": "No certification of retained materials for human or veterinary administration; manufacturer documentation unavailable"
+}

@@ -2,8 +2,9 @@ import type { CreateProductVariantWorkflowInputDTO, UpsertProductDTO } from "@me
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createProductVariantsWorkflow, updateProductOptionValuesOnProductStep, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
-import { boxFormat, boxSku, DUAL_CHAMBER_PRODUCTS, FORMAT_CONTENTS, PEN_KIT_BOX } from "../seed/dual-chamber-catalog"
+import { boxFormat, boxSku, DUAL_CHAMBER_PRODUCTS, PEN_KIT_BOX } from "../seed/dual-chamber-catalog"
 import { usdPrice } from "./import-dual-chamber-catalog"
+import { catalogFormatAllowed } from "../lib/product-format-review"
 
 type ProductRow = {
   id: string
@@ -24,7 +25,7 @@ const planPenKitBoxesStep = createStep(
   "plan-pen-kit-boxes",
   async (_input: Record<string, never>, { container }) => {
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
-    const catalog = DUAL_CHAMBER_PRODUCTS.filter((product) => !(PEN_KIT_BOX.excluded as readonly string[]).includes(product.handle))
+    const catalog = DUAL_CHAMBER_PRODUCTS.filter((product) => catalogFormatAllowed(product.handle, boxFormat(product.handle).title))
     const { data } = await query.graph({ entity: "product", fields: ["id", "handle", "metadata", "options.id", "options.title", "options.values.value"], filters: { handle: catalog.map((product) => product.handle) } })
     const rows = data as unknown as ProductRow[]
     const pending = catalog.filter((product) => rows.find((row) => row.handle === product.handle)?.metadata?.pen_kit_box_revision !== PEN_KIT_BOX.revision)
@@ -60,7 +61,7 @@ const planPenKitBoxesStep = createStep(
         id: row.id,
         metadata: {
           ...(row.metadata ?? {}),
-          contents_pen: product.contents?.pen ?? FORMAT_CONTENTS.pen,
+          contents_pen: null,
           contents_box: box.contents,
           pen_kit_box_revision: PEN_KIT_BOX.revision,
         },

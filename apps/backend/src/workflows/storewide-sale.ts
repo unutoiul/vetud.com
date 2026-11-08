@@ -2,7 +2,7 @@ import type { PriceListStatus } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, MedusaError, Modules } from "@medusajs/framework/utils"
 import { createStep, createWorkflow, StepResponse, transform, when, type WorkflowData, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { batchPriceListPricesWorkflow, createPriceListsWorkflow, deletePriceListsWorkflow, updatePriceListsWorkflow } from "@medusajs/medusa/core-flows"
-import { MAX_PERCENT_OFF, MIN_PERCENT_OFF, planSalePrices, readSaleSettings, SALE_METADATA_KEY, saleDescription, type PriceRow, type SalePricePlan, type VariantPrices } from "../lib/storewide-sale"
+import { isSaleExcluded, MAX_PERCENT_OFF, MIN_PERCENT_OFF, planSalePrices, readSaleSettings, SALE_METADATA_KEY, saleDescription, type PriceRow, type SalePricePlan, type VariantPrices } from "../lib/storewide-sale"
 
 type SaleFields = {
   title: string
@@ -75,7 +75,7 @@ const planStorewideSalePricesStep = createStep(
     // A price set's `prices` holds only its regular prices, so the sale's own prices are read separately.
     const { data } = await query.graph({
       entity: "product_variant",
-      fields: ["id", "price_set.id", ...PRICE_FIELDS.map((field) => `price_set.prices.${field}`)],
+      fields: ["id", "price_set.id", "product.metadata", ...PRICE_FIELDS.map((field) => `price_set.prices.${field}`)],
     })
     const listed = new Map<string, PriceRow[]>()
     if (input.price_list_id) {
@@ -92,8 +92,9 @@ const planStorewideSalePricesStep = createStep(
         if (page.length < PAGE) break
       }
     }
-    const variants: VariantPrices[] = (data as unknown as (VariantPrices & { price_set?: { id?: string } | null })[]).map((variant) => ({
+    const variants: VariantPrices[] = (data as unknown as (VariantPrices & { price_set?: { id?: string } | null; product?: { metadata?: Record<string, unknown> | null } | null })[]).map((variant) => ({
       id: variant.id,
+      excluded: isSaleExcluded(variant.product?.metadata),
       price_set: { prices: [...(variant.price_set?.prices ?? []), ...(listed.get(variant.price_set?.id ?? "") ?? [])] },
     }))
     return new StepResponse(planSalePrices(variants, input.price_list_id, input.percent_off))

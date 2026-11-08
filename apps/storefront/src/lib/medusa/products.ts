@@ -1,6 +1,7 @@
 import type { HttpTypes } from "@medusajs/types"
 import { cacheLife, cacheTag } from "next/cache"
 import { sdk } from "./sdk"
+import { reviewedProductFormats } from "../product-format-policy"
 
 export const PRODUCT_FIELDS = [
   "id",
@@ -50,7 +51,7 @@ export async function listProducts({
     ...(categoryId ? { category_id: [categoryId] } : {}),
     ...(collectionId ? { collection_id: [collectionId] } : {}),
   })
-  return products
+  return products.map(reviewedProductFormats)
 }
 
 export async function getProductByHandle(
@@ -67,7 +68,7 @@ export async function getProductByHandle(
     fields: PRODUCT_FIELDS,
     limit: 1,
   })
-  return products[0] ?? null
+  return products[0] ? reviewedProductFormats(products[0]) : null
 }
 
 /** Complete regional catalog for category counts, including catalogs larger than one API page. */
@@ -79,7 +80,7 @@ export async function listCatalogProducts(regionId: string): Promise<HttpTypes.S
   let count = 0
   do {
     const page = await sdk.store.product.list({ region_id: regionId, fields: PRODUCT_FIELDS, limit: 100, offset: products.length, order: "created_at" })
-    products.push(...page.products)
+    products.push(...page.products.map(reviewedProductFormats))
     count = page.count
     if (!page.products.length) break
   } while (products.length < count)
@@ -112,7 +113,7 @@ export async function searchProducts(
     "/store/meilisearch/products",
     { query: { query, region_id: regionId, fields: PRODUCT_FIELDS, limit } }
   )
-  return products
+  return products.map(reviewedProductFormats)
 }
 
 export async function listCategories(): Promise<HttpTypes.StoreProductCategory[]> {

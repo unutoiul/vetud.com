@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-09",
+  "task": "Optional laboratory accessories for eligible peptide powder vials",
+  "enabled_product_count": 22,
+  "excluded_live_product_count": 7,
+  "variants_preserved": 58,
+  "retained_price_records_unchanged": true,
+  "default_selected_accessories": 0,
+  "selected_format_required": "Vial",
+  "injection_suitability_asserted": false,
+  "purchase_button_waits_for_existing_cart_to_load": true,
+  "deployment": {
+    "id": "dpl_BKkQ2GwnVXZsPwguUa9FSEZzAs26",
+    "url": "vetud-storefront-5g8jlyfqk-bluetrendy.vercel.app",
+    "projectId": "prj_Hwd1R9Fms00l0cmVhFnAoBQA7Ehj",
+    "readyState": "READY"
+  },
+  "verification": {
+    "backend_focused_tests": 4,
+    "storefront_focused_tests": 4,
+    "backend_lint_and_types": "passed",
+    "storefront_lint_and_production_build": "passed",
+    "staged_pages": 12,
+    "live_pages": 12,
+    "desktop_mobile_checks": 8,
+    "live_cart_scenarios": 3,
+    "test_cart_emptied": true
+  },
+  "enabled_handles": [
+    "dsip",
+    "kpv",
+    "glutathione",
+    "aod-9604",
+    "ara-290",
+    "ipamorelin",
+    "melanotan-ii",
+    "mots-c",
+    "cjc-1295-ipamorelin",
+    "bpc-157",
+    "igf-1-lr3",
+    "retatrutide",
+    "melanotan-i",
+    "tesamorelin",
+    "semax",
+    "pt-141",
+    "ss-31",
+    "wolverine-blend",
+    "tb-500",
+    "tirzepatide",
+    "selank",
+    "semaglutide"
+  ],
+  "excluded_handles": [
+    "glow-blend",
+    "5-amino-1mq",
+    "klow-blend",
+    "ghk-cu",
+    "bacteriostatic-water",
+    "nad-plus",
+    "u-100-syringes"
+  ]
+}

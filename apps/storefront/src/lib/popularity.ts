@@ -36,6 +36,8 @@ export const POPULARITY: Record<string, number> = {
   dsip: 34,
   "melanotan-i": 32, // afamelanotide (Scenesse)
   "decapeptide-12": 30, // skin-brightening cosmetic peptide (Lumixyl)
+  "anua-niacinamide-10-txa-4-serum": 50, // Anua, a best-selling Korean skincare brand
+  "anua-azelaic-acid-10-hyaluron-serum": 48,
   "ara-290": 22,
   "bacteriostatic-water": 20,
   "u-100-syringes": 15,

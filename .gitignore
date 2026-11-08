@@ -46,3 +46,4 @@ output/releases/
 output/qa/
 output/archives/
 output/swc-native/
+.tmp/product-format-audit/

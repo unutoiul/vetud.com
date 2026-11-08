@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl"
 
 
 import type { HttpTypes } from "@medusajs/types"
-import Icon, { FlaskIcon as ScienceOutlinedIcon, BagIcon as ShoppingBagOutlinedIcon } from "@/components/brand/Icon"
+import Icon, { FlaskIcon as ScienceOutlinedIcon, BagIcon as ShoppingBagOutlinedIcon, ShieldIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -17,8 +17,8 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
 import { useState } from "react"
-import { SITE } from "@/lib/config"
-import { isVariantInStock, percentOff, sortedVariants, variantPrice } from "@/lib/product"
+import { preparationAddOnsAllowed } from "@/lib/product-format-policy"
+import { isVariantInStock, percentOff, readProductNotice, sortedVariants, variantPrice } from "@/lib/product"
 import { useMoney } from "@/lib/money"
 import { defaultVariant, findVariant, FORMAT_OPTION, formatContents, formatLine, readOptions, selectionOf, variantsWith } from "@/lib/product-formats"
 import { useStore } from "../store/StoreProvider"
@@ -30,15 +30,14 @@ import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
 /** A supply offered next to the vial format: bacteriostatic water, U-100 syringes. */
 export type PurchaseAddOn = { variantId: string; title: string; detail: string; unit?: string; image?: string; price: { amount: number; currencyCode: string } }
 
-/** Formats that need water and syringes on the side. */
-const ADD_ON_FORMATS = ["Vial"]
-
 export default function PurchasePanel({ product, addOns = [] }: { product: HttpTypes.StoreProduct; addOns?: PurchaseAddOn[] }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
-  const { addItem, pending, error, clearError, region } = useStore()
+  const { addItem, cartReady, pending, error, clearError, region } = useStore()
   const { setFormat } = useProductSelection()
   const variants = sortedVariants(product)
+  // Research-use notice by default; per product from its metadata (notice_title / notice_text).
+  const notice = readProductNotice(product.metadata)
   const options = readOptions(product)
   const firstAvailable = defaultVariant(product)
   const [variantId, setVariantId] = useState(firstAvailable?.id ?? "")
@@ -69,20 +68,23 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
     setVariantId(next.id)
     setQuantity(1)
     setAdded(false)
-    if (title === FORMAT_OPTION) setFormat(value)
+    if (title === FORMAT_OPTION) {
+      setFormat(value)
+      setExtras({})
+    }
   }
   const lowestPrice = (title: string, value: string) => {
     const prices = variantsWith(product, title, value).flatMap((item) => variantPrice(item) ?? [])
     return prices.length ? prices.reduce((min, item) => (item.amount < min.amount ? item : min)) : null
   }
 
-  const offered = format && ADD_ON_FORMATS.includes(format) ? addOns : []
+  const offered = preparationAddOnsAllowed(product, format ?? "") ? addOns : []
   const chosen = offered.filter((addOn) => (extras[addOn.variantId] ?? 0) > 0)
   const extraCount = chosen.reduce((total, addOn) => total + extras[addOn.variantId], 0)
   const setExtra = (variantId: string, count: number) => setExtras((current) => ({ ...current, [variantId]: count }))
 
   const onAdd = async () => {
-    if (!variant) return
+    if (!variant || !cartReady || pending) return
     setAdded(false)
     let ok = await addItem(variant.id, quantity)
     for (const addOn of chosen) if (ok) ok = await addItem(addOn.variantId, extras[addOn.variantId])
@@ -249,7 +251,8 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
 
       {offered.length ? (
         <Box component="fieldset" sx={{ m: 0, p: 2, border: "1px solid", borderColor: "divider", borderRadius: "5px", minWidth: 0 }}>
-          <Typography component="legend" sx={{ px: 0.5, fontSize: 13, fontWeight: 700, color: "brand.ink" }}>{ct("Add what you need for the vial")}</Typography>
+          <Typography component="legend" sx={{ px: 0.5, fontSize: 13, fontWeight: 700, color: "brand.ink" }}>{ct("Optional laboratory accessories")}</Typography>
+          <Typography sx={{ fontSize: 12.5, color: "text.secondary", lineHeight: 1.5 }}>{ct("Select only what your laboratory protocol specifies. Check diluent compatibility before use.")}</Typography>
           <Box sx={{ display: "grid", gap: 1, mt: 0.5 }}>
             {offered.map((addOn) => {
               const count = extras[addOn.variantId] ?? 0
@@ -293,7 +296,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
           size="large"
           startIcon={<ShoppingBagOutlinedIcon />}
           onClick={onAdd}
-          disabled={!inStock || !price || pending}
+          disabled={!inStock || !price || !cartReady || pending}
           sx={{ flex: 1 }}
         >
           {ct(pending ? act("adding") : extraCount ? act("addItems", { count: extraCount + 1 }) : act("addCart"))}
@@ -312,16 +315,22 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
         </Alert>
       ) : null}
 
-      <Stack
-        direction="row"
-        spacing={1.5}
-        sx={{ bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "5px", p: 2 }}
-      >
-        <ScienceOutlinedIcon fontSize="small" sx={{ color: "secondary.main", mt: "2px" }} />
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          <strong>{ct(SITE.productDisclaimer)}.</strong> {ct(SITE.ruoNotice)}
-        </Typography>
-      </Stack>
+      {notice ? (
+        <Stack
+          direction="row"
+          spacing={1.5}
+          sx={{ bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "5px", p: 2 }}
+        >
+          {notice.research
+            ? <ScienceOutlinedIcon fontSize="small" sx={{ color: "secondary.main", mt: "2px" }} />
+            : <ShieldIcon fontSize="small" sx={{ color: "secondary.main", mt: "2px" }} />}
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            {notice.title ? <strong>{ct(notice.title)}{/[.!?:]$/.test(notice.title) ? "" : "."}</strong> : null}
+            {notice.title && notice.text ? " " : null}
+            {notice.text ? ct(notice.text) : null}
+          </Typography>
+        </Stack>
+      ) : null}
     </Stack>
   )
 }

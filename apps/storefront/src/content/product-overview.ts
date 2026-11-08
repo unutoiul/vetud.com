@@ -41,6 +41,31 @@ const OWN_OVERVIEWS: Record<string, Pick<ProductOverview, "summary" | "sections"
     ],
     sources: [{ title: "Glutathione metabolism and its implications for health", detail: "Wu et al. · Journal of Nutrition · 2004", url: "https://pubmed.ncbi.nlm.nih.gov/14988435/" }],
   },
+  "anua-azelaic-acid-10-hyaluron-serum": {
+    summary: "A lightweight serum with 10% azelaic acid and hyaluronic acid, made for skin prone to redness.",
+    sections: [
+      { title: "What it is", text: "A serum from the Korean skincare brand Anua, in a 30 ml dropper bottle. Its main active ingredient is azelaic acid at 10%, an acid that occurs in nature, with hyaluronic acid to help the skin hold water. It is a cosmetic for use on the skin." },
+      { title: "How it works", text: "Azelaic acid calms inflammation, works against the bacteria involved in acne and helps the skin shed dead cells evenly. It also slows tyrosinase, the enzyme that makes skin pigment, which is why it is used for dark marks too. Dermatologists prescribe stronger creams and gels (up to 20%) for rosacea and acne; cosmetic serums like this one use lower strengths." },
+      { title: "Good to know", text: "Azelaic acid is generally well tolerated. The usual side effect is mild, short-lived skin irritation. Patch-test first, keep it away from the eyes, and use sunscreen during the day." },
+    ],
+    sources: [
+      { title: "The multiple uses of azelaic acid in dermatology: mechanism of action, preparations, and potential therapeutic applications", detail: "Sauer et al. · Postępy Dermatologii i Alergologii · 2023", url: "https://pubmed.ncbi.nlm.nih.gov/38282869/" },
+      { title: "Azelaic Acid: Evidence-based Update on Mechanism of Action and Clinical Application", detail: "Schulte, Wu & Rosen · Journal of Drugs in Dermatology · 2015", url: "https://pubmed.ncbi.nlm.nih.gov/26355614/" },
+    ],
+  },
+  "anua-niacinamide-10-txa-4-serum": {
+    summary: "A brightening serum with 10% niacinamide and 4% tranexamic acid, made for dark spots and uneven skin tone.",
+    sections: [
+      { title: "What it is", text: "A serum from the Korean skincare brand Anua, in a 30 ml dropper bottle. It combines 10% niacinamide, a form of vitamin B3, with 4% tranexamic acid (TXA). It is a cosmetic for use on the skin." },
+      { title: "How it works", text: "Pigment is made in pigment cells and then handed on to the skin cells around them. Niacinamide slows that hand-over, so less pigment reaches the surface; in a 2002 study, a niacinamide cream faded dark spots more than a plain cream within 4 weeks. Tranexamic acid blocks plasmin, a signal that sunlight switches on in skin and that encourages pigment cells to make more. Dermatologists use it for melasma, a stubborn kind of dark patch." },
+      { title: "Good to know", text: "Results build over weeks of regular use, and dark spots come back with sun exposure, so daily sunscreen matters. Patch-test first and keep it away from the eyes." },
+    ],
+    sources: [
+      { title: "The effect of niacinamide on reducing cutaneous pigmentation and suppression of melanosome transfer", detail: "Hakozaki et al. · British Journal of Dermatology · 2002", url: "https://pubmed.ncbi.nlm.nih.gov/12100180/" },
+      { title: "Tranexamic Acid in the Treatment of Melasma: A Review of the Literature", detail: "Perper et al. · American Journal of Clinical Dermatology · 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28283893/" },
+      { title: "The uses of tranexamic acid in dermatology: a review", detail: "Kim & Lim · International Journal of Dermatology · 2023", url: "https://pubmed.ncbi.nlm.nih.gov/35323992/" },
+    ],
+  },
   "u-100-syringes": {
     summary: "Sterile, single-use U-100 insulin syringes, 10 to a box.",
     sections: [
@@ -50,10 +75,10 @@ const OWN_OVERVIEWS: Record<string, Pick<ProductOverview, "summary" | "sections"
     sources: [],
   },
   "bacteriostatic-water": {
-    summary: "Sterile water with a little benzyl alcohol, used to dissolve freeze-dried materials in the lab.",
+    summary: "A water-based research diluent with a bacteriostatic preservative.",
     sections: [
-      { title: "What it is", text: "Bacteriostatic water is sterile water with 0.9% benzyl alcohol. The benzyl alcohol slows the growth of bacteria, so a vial can be opened more than once." },
-      { title: "How it's used", text: "Laboratories use it to reconstitute (dissolve) freeze-dried powders. The VETUD dual-chamber cartridge already holds it in its second chamber; the vial is for your own lab supplies." },
+      { title: "What it is", text: "A bottled laboratory diluent. Check the supplied label for its composition and storage instructions. Product-specific sterility and endotoxin records have not been supplied for this catalog review." },
+      { title: "Research use", text: "For laboratory work where the supplied diluent meets the study's requirements. No pen or cartridge is included. This listing does not establish suitability for human or veterinary administration." },
     ],
     sources: [],
   },

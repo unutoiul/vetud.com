@@ -1,5 +1,6 @@
 import type { HttpTypes } from "@medusajs/types"
 import type { ProductSort } from "./medusa/products"
+import { SITE } from "./config"
 import { popularity } from "./popularity"
 
 export type ProductLot = {
@@ -10,6 +11,23 @@ export type ProductLot = {
 }
 
 export type ArtKind = "series" | "blend" | "supply"
+
+/**
+ * The notice on a product's purchase panel, card and overview. It lives in the product's metadata,
+ * so it can be changed per product in Medusa Admin: `notice_title` (the bold lead) and `notice_text`.
+ * Products with neither show the research-use notice; `notice_title: "none"` shows no notice.
+ */
+export type ProductNotice = { title: string; text: string; research: boolean }
+
+export const RESEARCH_NOTICE: ProductNotice = { title: SITE.productDisclaimer, text: SITE.ruoNotice, research: true }
+
+export function readProductNotice(metadata: Record<string, unknown> | null | undefined): ProductNotice | null {
+  const text = (value: unknown) => (typeof value === "string" && value.trim() ? value.trim() : undefined)
+  const title = text(metadata?.notice_title)
+  const body = text(metadata?.notice_text)
+  if (title?.toLowerCase() === "none") return null
+  return title || body ? { title: title ?? "", text: body ?? "", research: false } : RESEARCH_NOTICE
+}
 
 export type ProductMeta = {
   code: string
@@ -27,6 +45,8 @@ export type ProductMeta = {
   concentration?: string
   lots: ProductLot[]
   artKind: ArtKind
+  /** null when the product shows no notice. */
+  notice: ProductNotice | null
 }
 
 const DEFAULT_ACCENT = "#3cc7c2"
@@ -92,6 +112,7 @@ export function readProductMeta(
     concentration: str(metadata.concentration),
     lots: parseLots(metadata.lots),
     artKind,
+    notice: readProductNotice(metadata),
   }
 }
 

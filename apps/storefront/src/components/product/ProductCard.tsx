@@ -7,7 +7,6 @@ import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import Icon from "@/components/brand/Icon"
-import { SITE } from "@/lib/config"
 import { cheapestPrice, isProductInStock, percentOff, readProductMeta } from "@/lib/product"
 import { useMoney } from "@/lib/money"
 import { hasFormats, shortAvailability } from "@/lib/product-formats"
@@ -50,7 +49,7 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
         <Typography sx={{ fontWeight: 600, fontSize: 16 }}>{price ? <>{price.hasRange ? <Box component="span" sx={{ color: "text.secondary", fontWeight: 400, fontSize: 11, mr: .5 }}>{ct("From")}</Box> : null}{ct(money(price.amount, price.currencyCode))}{off ? <Box component="span" sx={{ ml: .75, color: "text.secondary", fontWeight: 400, fontSize: 12, textDecoration: "line-through" }}>{ct.rich("<slot0>regular price </slot0>{v0}", { v0: ct(money(price.original, price.currencyCode)) }, { slot0: chunks => <Box component="span" sx={visuallyHidden} key="slot0">{chunks}</Box> })}</Box> : null}</> : "Price on request"}</Typography>
         <StockBadge inStock={inStock} />
       </Stack>
-      <Typography sx={{ color: "text.secondary", fontSize: 10, mt: 1.5, lineHeight: 1.5 }}>{ct(SITE.productDisclaimer)}</Typography>
+      {meta.notice?.title ? <Typography sx={{ color: "text.secondary", fontSize: 10, mt: 1.5, lineHeight: 1.5 }}>{ct(meta.notice.title)}</Typography> : null}
     </Box>
   </Box>
 }

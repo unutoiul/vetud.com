@@ -88,7 +88,9 @@ export default function ProductDossier({ overview, description, specs, skus, met
       <Box component="section" id="research-overview" aria-labelledby="research-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="research-heading" sx={{ mb: 2.5 }}>{ct.rich("Understanding {v0}.", { v0: ct(overview?.name ?? title) }, {  })}</Typography>
         {overview ? <Overview overview={overview} /> : <Typography sx={{ ...bodyStyle, whiteSpace: "pre-line" }}>{ct(description ?? "Consult the specifications and lot documentation for the identity and composition of this research material. Contact the team if further analytical information is needed.")}</Typography>}
-        <Typography sx={{ ...bodyStyle, fontSize: 11.5, mt: 3 }}>{ct.rich("Scientific background concerns the named molecule. Batch composition and analytical results must be established from the product documentation. {v0}", { v0: ct(SITE.ruoNotice) }, {  })}</Typography>
+        {meta.notice?.research
+          ? <Typography sx={{ ...bodyStyle, fontSize: 11.5, mt: 3 }}>{ct.rich("Scientific background concerns the named molecule. Batch composition and analytical results must be established from the product documentation. {v0}", { v0: ct(SITE.ruoNotice) }, {  })}</Typography>
+          : meta.notice?.text ? <Typography sx={{ ...bodyStyle, fontSize: 11.5, mt: 3 }}>{ct(meta.notice.text)}</Typography> : null}
       </Box>
       <Box component="section" id="specifications" aria-labelledby="specifications-heading" sx={sectionStyle}>
         <ProductSpecifications specs={specs} skus={skus} />

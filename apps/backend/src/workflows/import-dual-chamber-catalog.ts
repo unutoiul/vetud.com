@@ -3,10 +3,11 @@ import { ContainerRegistrationKeys, MedusaError, ProductStatus } from "@medusajs
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createProductsWorkflow, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
 import {
-  boxFormat, DUAL_CHAMBER_PRODUCTS, DUAL_CHAMBER_REVISION, EXPLAINER_IMAGE, FORMAT_CONTENTS, FORMATS, imageUrl,
-  PEN_KIT_BOX, REPLACED_SUFFIX, RETIRED_HANDLES, variantSku, variantTitle, type DualChamberProduct, type FormatKey,
+  DUAL_CHAMBER_PRODUCTS, DUAL_CHAMBER_REVISION, FORMATS, imageUrl,
+  REPLACED_SUFFIX, RETIRED_HANDLES, variantSku, variantTitle, type DualChamberProduct, type FormatKey,
 } from "../seed/dual-chamber-catalog"
 import { BASE_CURRENCY } from "../lib/currencies"
+import { catalogFormatAllowed, NASAL_RESEARCH_HANDLES, OPTIONAL_VIAL_ACCESSORIES_SCOPE, optionalVialAccessoriesAllowed, PRODUCT_FORMAT_REVIEW, RESEARCH_VIAL_CONTENTS } from "../lib/product-format-review"
 
 type ExistingProduct = {
   id: string
@@ -29,10 +30,11 @@ function productInput(
   product: DualChamberProduct,
   context: { categoryIds: Map<string, string>; salesChannelId: string; shippingProfileId: string; previous?: ExistingProduct },
 ): CreateProductWorkflowInputDTO {
-  const formats = (["pen", "vial"] as FormatKey[]).filter((format) => product[format].length)
+  const formats = (["pen", "vial"] as FormatKey[]).filter((format) => product[format].length && catalogFormatAllowed(product.handle, FORMATS[format]))
   const amounts = [...new Set(formats.flatMap((format) => product[format].map((offer) => offer.amount)))]
   const carried = Object.fromEntries(Object.entries(context.previous?.metadata ?? {}).filter(([key]) => CARRIED_KEYS.includes(key)))
-  const images = [imageUrl(product.handle, "pen"), imageUrl(product.handle, "vial"), EXPLAINER_IMAGE()].map((url) => ({ url }))
+  const nasal = (NASAL_RESEARCH_HANDLES as readonly string[]).includes(product.handle)
+  const images = [imageUrl(product.handle, "vial"), ...(nasal ? [imageUrl(product.handle, "vial").replace(/-vial\.webp$/, "-front.webp")] : [])].map((url) => ({ url }))
   return {
     title: product.title,
     handle: product.handle,
@@ -54,12 +56,17 @@ function productInput(
       code: product.code,
       brand: "VETUD",
       // The boxed format (pen kit box or nasal spray) follows in the same deploy; see add-pen-kit-boxes.
-      form: (PEN_KIT_BOX.excluded as readonly string[]).includes(product.handle) ? "Dual-chamber vial or vial" : boxFormat(product.handle).form,
+      form: nasal ? "Research vial or nasal spray" : "Research vial",
       image_aspect_ratio: "1 / 1",
-      contents_pen: product.contents?.pen ?? FORMAT_CONTENTS.pen,
-      contents_vial: product.contents?.vial ?? FORMAT_CONTENTS.vial,
-      ...(product.lines?.pen ? { format_line_pen: product.lines.pen } : {}),
-      ...(product.lines?.vial ? { format_line_vial: product.lines.vial } : {}),
+      contents_pen: null,
+      contents_vial: product.handle === "bacteriostatic-water" ? product.contents?.vial : RESEARCH_VIAL_CONTENTS,
+      format_line_vial: product.handle === "bacteriostatic-water" ? "Bottled laboratory research diluent" : "Sealed research vial; no diluent or administration supplies included",
+      preparation_addons_allowed: optionalVialAccessoriesAllowed(product.handle),
+      preparation_addons_scope: OPTIONAL_VIAL_ACCESSORIES_SCOPE,
+      preparation_addons_basis: "Optional laboratory accessories only. The research protocol must specify diluent compatibility and supplies; no injection suitability is established.",
+      injection_format_verified: false,
+      format_review_revision: PRODUCT_FORMAT_REVIEW,
+      allowed_formats: nasal ? ["Vial", "Nasal spray"] : ["Vial"],
       research_use_only: true,
       catalog_revision: DUAL_CHAMBER_REVISION,
       ...(product.learn.length ? { learn_peptides: product.learn } : {}),
@@ -110,7 +117,7 @@ const planDualChamberCatalogStep = createStep(
     }
 
     // The replaced products stay (as drafts), so a new SKU must not exist anywhere yet.
-    const skus = pending.flatMap((product) => (["pen", "vial"] as FormatKey[]).flatMap((format) => product[format].map((offer) => variantSku(product, format, offer.amount))))
+    const skus = pending.flatMap((product) => (["pen", "vial"] as FormatKey[]).filter(format => catalogFormatAllowed(product.handle, FORMATS[format])).flatMap((format) => product[format].map((offer) => variantSku(product, format, offer.amount))))
     if (new Set(skus).size !== skus.length) throw new MedusaError(MedusaError.Types.INVALID_DATA, "The catalog repeats a SKU.")
     if (skus.length) {
       const { data: clashes } = await query.graph({ entity: "product_variant", fields: ["sku"], filters: { sku: skus } })

@@ -63,8 +63,8 @@ const formatPhotos = (handle: string, title: string) => {
 export type FormatPhotos = ReturnType<typeof formatPhotos>
 
 const formatPhotography = (handle: string, title: string): ProductPhotography => {
-  const { pen, box, openBox, vial, reusable } = formatPhotos(handle, title)
-  return { aspectRatio: "1 / 1", images: [pen, vial, ...(box ? [box] : []), ...(openBox ? [openBox] : []), reusable] }
+  const { box, vial } = formatPhotos(handle, title)
+  return { aspectRatio: "1 / 1", images: [vial, ...(NASAL_SPRAYS.has(handle) && box ? [box] : [])] }
 }
 
 /** The products sold as a dual-chamber vial, a vial and (most of them) a pen kit box (prepare-dual-chamber-images.mjs makes the photos). */
@@ -100,8 +100,16 @@ const FORMAT_PRODUCTS: Record<string, string> = {
   "wolverine-blend": "Wolverine Blend",
 }
 
-/** Lab supplies with their own photos. */
+/** Lab supplies and retail skincare with their own photos. */
 const SUPPLY_PHOTOGRAPHY: Record<string, ProductPhotography> = {
+  "anua-azelaic-acid-10-hyaluron-serum": {
+    aspectRatio: "1 / 1",
+    images: [{ url: "/images/products/anua-azelaic-acid-10-hyaluron-serum.webp", alt: "Anua Azelaic Acid 10 + Hyaluron Redness Soothing Serum, 30 ml green dropper bottle", label: "Serum" }],
+  },
+  "anua-niacinamide-10-txa-4-serum": {
+    aspectRatio: "1 / 1",
+    images: [{ url: "/images/products/anua-niacinamide-10-txa-4-serum.webp", alt: "Anua Niacinamide 10 + TXA 4 Serum, 30 ml pink dropper bottle", label: "Serum" }],
+  },
   "u-100-syringes": {
     aspectRatio: "1 / 1",
     images: [

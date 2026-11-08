@@ -1,4 +1,4 @@
-import { planSalePrices, readSaleSettings, saleAmount, saleState, SALE_METADATA_KEY, type VariantPrices } from "../storewide-sale"
+import { isSaleExcluded, planSalePrices, readSaleSettings, saleAmount, saleState, SALE_METADATA_KEY, type VariantPrices } from "../storewide-sale"
 
 const regular = (id: string, currency: string, amount: number) => ({ id, currency_code: currency, amount, price_list_id: null, min_quantity: null, max_quantity: null, rules_count: 0 })
 const listed = (id: string, currency: string, amount: number, list = "plist_sale") => ({ ...regular(id, currency, amount), price_list_id: list })
@@ -10,6 +10,21 @@ describe("storewide sale", () => {
     expect(saleAmount(88, 30, "EUR")).toBe(61.6)
     expect(saleAmount(14462, 30, "jpy")).toBe(10123)
     expect(saleAmount(19.99, 25, "usd")).toBe(14.99)
+  })
+
+  it("leaves products marked sale_excluded at full price, removing sale prices they already had", () => {
+    expect(isSaleExcluded({ sale_excluded: true })).toBe(true)
+    expect(isSaleExcluded({ sale_excluded: "true" })).toBe(false)
+    expect(isSaleExcluded(null)).toBe(false)
+    const variants: VariantPrices[] = [
+      { id: "variant_serum", excluded: true, price_set: { prices: [regular("p1", "usd", 25), listed("s1", "usd", 17.5)] } },
+      { id: "variant_peptide", price_set: { prices: [regular("p2", "usd", 100)] } },
+    ]
+    expect(planSalePrices(variants, "plist_sale", 30)).toEqual({
+      create: [{ variant_id: "variant_peptide", currency_code: "usd", amount: 70 }],
+      update: [],
+      delete: ["s1"],
+    })
   })
 
   it("creates one sale price per variant and currency for a new sale", () => {

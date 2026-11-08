@@ -8,6 +8,14 @@ import { roundMoney } from "./currencies"
  */
 export const SALE_METADATA_KEY = "storewide_sale"
 
+/**
+ * Products with `sale_excluded: true` in their metadata stay at full price: the sale gives their
+ * variants no price, and removes any it gave them before (owner request 2026-11-09, retail serums).
+ */
+export const SALE_EXCLUDED_KEY = "sale_excluded"
+
+export const isSaleExcluded = (metadata: Record<string, unknown> | null | undefined) => metadata?.[SALE_EXCLUDED_KEY] === true
+
 export const MIN_PERCENT_OFF = 1
 export const MAX_PERCENT_OFF = 90
 
@@ -36,7 +44,7 @@ export type PriceRow = {
   rules_count?: number | null
 }
 
-export type VariantPrices = { id: string; price_set?: { prices?: (PriceRow | null)[] | null } | null }
+export type VariantPrices = { id: string; price_set?: { prices?: (PriceRow | null)[] | null } | null; excluded?: boolean }
 
 export type SalePricePlan = {
   create: CreatePriceListPriceWorkflowDTO[]
@@ -60,7 +68,7 @@ export function planSalePrices(variants: VariantPrices[], priceListId: string | 
     const regular = new Map<string, number>()
     for (const price of prices) {
       const currency = price.currency_code.toLowerCase()
-      if (isRegularPrice(price) && !regular.has(currency)) regular.set(currency, Number(price.amount))
+      if (!variant.excluded && isRegularPrice(price) && !regular.has(currency)) regular.set(currency, Number(price.amount))
     }
     const current = new Map<string, PriceRow>()
     for (const price of priceListId ? prices.filter((item) => item.price_list_id === priceListId) : []) {
