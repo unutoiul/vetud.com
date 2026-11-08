@@ -48,7 +48,7 @@ export function validateContentBundle(input: ReviewedContentInput) {
   const locale = contentLocale(input.locale)
   if (!locale || locale !== input.locale) throw new MedusaError(MedusaError.Types.INVALID_DATA, "Unsupported content locale.")
   if (!input.review?.reviewed || !input.review.model || !Number.isFinite(Date.parse(input.review.reviewed_at))) {
-    throw new MedusaError(MedusaError.Types.INVALID_DATA, "An independent review is required before importing translations.")
+    throw new MedusaError(MedusaError.Types.INVALID_DATA, "A completed translation review is required before importing translations.")
   }
   const keys = Object.keys(input.sources)
   if (!keys.length || contentSourceHash(input.sources) !== input.source_hash || Object.keys(input.translations).length !== keys.length) {
@@ -65,9 +65,9 @@ export function validateContentBundle(input: ReviewedContentInput) {
       links: [...text.matchAll(/\]\(([^)]+)\)/g)].map(match => match[1]).sort(),
       urls: text.match(/https?:\/\/[^\s<>\])]+/g)?.sort() ?? [],
       tags: [...text.matchAll(/<\/?([A-Za-z][\w-]*)(?:\s[^<>]*?)?>/g)].map(match => match[1]).sort(),
-      numbers: text.replace(/https?:\/\/\S+|\{[A-Za-z_]\w*\}/g, "").match(/\d+(?:[.,]\d+)*/g)?.sort() ?? [],
-      signed: [...text.matchAll(/(?<![\p{L}\p{N}])[-−+]\s*\d+(?:[.,]\d+)*/gu)].map(match => match[0].replaceAll("−", "-").replace(/\s/g, "")).sort(),
-      comparisons: [...text.matchAll(/[≤≥±]\s*\d+(?:[.,]\d+)*/g)].map(match => match[0].replace(/\s/g, "")).sort(),
+      numbers: text.replace(/https?:\/\/\S+|\{[A-Za-z_]\w*\}/g, "").replace(/(?<=\d)[\u00a0\u202f](?=\d{3}(?:\D|$))/g, ",").match(/\d+(?:[.,]\d+)*/g)?.map(number => number.replaceAll(",", ".")).sort() ?? [],
+      signed: [...text.matchAll(/(?<![\p{L}\p{N}])[-−+]\s*\d+(?:[.,]\d+)*/gu)].map(match => match[0].replaceAll("−", "-").replaceAll(",", ".").replace(/\s/g, "")).sort(),
+      comparisons: [...text.matchAll(/[≤≥±]\s*\d+(?:[.,]\d+)*/g)].map(match => match[0].replaceAll(",", ".").replace(/\s/g, "")).sort(),
       percentages: text.replace(/https?:\/\/\S+/g, "").match(/%/g)?.length ?? 0,
     })
     if (tokens(source) !== tokens(target)) throw new MedusaError(MedusaError.Types.INVALID_DATA, `Protected tokens changed: ${key}.`)

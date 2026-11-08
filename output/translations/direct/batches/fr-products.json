@@ -1,0 +1,638 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      120,
+      "KLOW est un mélange destiné à la recherche, composé de GHK-Cu, de BPC-157, de TB-500 et de KPV, avec des quantités indiquées de 50 mg, 10 mg, 10 mg et 10 mg. Ces composants sont étudiés séparément dans les recherches sur la peau, la réparation des tissus et l’inflammation ; le mélange lui-même n’a pas été étudié.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      157,
+      "ARA-290 (cibinetide) est un petit peptide conçu à partir d’une partie de l’érythropoïétine. Ses effets sur le récepteur de réparation innée sont étudiés dans les recherches sur la protection des nerfs et des tissus.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      332,
+      "L’ipamoréline est un peptide de cinq acides aminés qui active le récepteur de la ghréline. Elle est étudiée comme sécrétagogue sélectif de l’hormone de croissance.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      334,
+      "Le tirzépatide, étiqueté TZ-2, est un peptide qui active deux récepteurs hormonaux, GIP et GLP-1. Il est étudié dans les recherches sur l’obésité et le diabète de type 2.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      475,
+      "SS-31 (élamiprétide) est un petit peptide qui se lie à la membrane interne des mitochondries. Il est étudié dans les recherches sur les maladies mitochondriales et l’énergie cellulaire.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      481,
+      "Le glutathion est un tripeptide produit par chaque cellule humaine et le principal antioxydant de l’organisme. Il est étudié dans les recherches sur le stress oxydatif, le foie et la peau.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      740,
+      "AOD-9604 est un fragment modifié de l’extrémité de l’hormone de croissance humaine. Il a été étudié dans les recherches sur le métabolisme des graisses et le cartilage.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      783,
+      "IGF-1 LR3 est une forme modifiée du facteur de croissance analogue à l’insuline 1, qui se lie moins à ses protéines de transport et reste donc active plus longtemps. Il est principalement utilisé dans les recherches sur la croissance en culture cellulaire.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      973,
+      "DSIP (peptide inducteur du sommeil delta) est un peptide de neuf acides aminés isolé pour la première fois dans les années 1970. Il est étudié dans les recherches sur la régulation du sommeil et le stress, avec des résultats contrastés.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      1412,
+      "Le mélanotan I (afamélanotide) est un analogue synthétique de l’alpha-MSH qui active principalement le récepteur MC1. Il est étudié dans les recherches sur la pigmentation cutanée et la sensibilité à la lumière.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      1907,
+      "Semax est un peptide synthétique conçu à partir d’un fragment d’ACTH. Développé en Russie, il est étudié dans les recherches sur la cognition, les accidents vasculaires cérébraux et la protection des nerfs.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      1916,
+      "Selank est un peptide synthétique de sept acides aminés conçu à partir de la tuftsine, un fragment d’une protéine immunitaire. Développé en Russie, il est étudié dans les recherches sur l’anxiété et le stress.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      1930,
+      "MOTS-c est un peptide de 16 acides aminés codé par l’ADN mitochondrial. Il est étudié dans les recherches sur le métabolisme, l’exercice physique et le vieillissement, principalement chez l’animal.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      2027,
+      "Le rétatrutide est un peptide expérimental qui active trois récepteurs hormonaux : GIP, GLP-1 et glucagon. Il fait l’objet d’essais cliniques sur l’obésité et le diabète de type 2.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      2224,
+      "Un mélange de CJC-1295 sans DAC (un analogue de l’hormone de libération de l’hormone de croissance) et d’ipamoréline (un agoniste du récepteur de la ghréline), étiqueté comme contenant des parts égales. Ces deux composants sont étudiés dans les recherches sur la libération de l’hormone de croissance.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      2233,
+      "La tésamoréline est un analogue stabilisé de l’hormone de libération de l’hormone de croissance (GHRH). Elle est étudiée dans les recherches sur l’hormone de croissance et la graisse viscérale.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      2315,
+      "KPV correspond aux trois derniers acides aminés de l’alpha-MSH. Il est étudié dans les recherches sur l’inflammation intestinale et cutanée, principalement sur des cellules et chez l’animal.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      2468,
+      "5-Amino-1MQ est une petite molécule qui bloque l’enzyme NNMT. Elle est étudiée dans les recherches sur les cellules adipeuses et le métabolisme énergétique, principalement sur des cellules et chez l’animal. Ce n’est pas un peptide.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      2845,
+      "GHK-Cu est un petit peptide qui se lie au cuivre et qui est naturellement présent dans le plasma humain. Il est étudié dans les recherches sur la peau, le collagène et la cicatrisation des plaies.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      2984,
+      "BPC-157 est un peptide synthétique de 15 acides aminés conçu à partir d’une protéine présente dans le suc gastrique. Il est principalement étudié sur des modèles animaux de réparation des tendons, de l’intestin et des tissus.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      3038,
+      "Le mélanotan II est un analogue synthétique de l’alpha-MSH qui active plusieurs récepteurs de la mélanocortine. Il est étudié dans les recherches sur la pigmentation cutanée.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      3219,
+      "Le sémaglutide, étiqueté SM-1, est un agoniste du récepteur GLP-1 à longue durée d’action. C’est l’un des peptides les plus étudiés dans les recherches sur l’obésité et le diabète de type 2.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      3265,
+      "TB-500 est un peptide synthétique conçu à partir de la région active de la thymosine bêta-4, une protéine impliquée dans le mouvement cellulaire. Il est étudié dans les recherches sur la cicatrisation des plaies et la réparation des tissus, principalement chez l’animal.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      3517,
+      "NAD+ (nicotinamide adénine dinucléotide) est une coenzyme que chaque cellule utilise pour transformer les aliments en énergie. Ses taux diminuent avec l’âge, ce qui en fait un sujet de recherche sur le vieillissement. Ce n’est pas un peptide.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      3555,
+      "PT-141 (brémélanotide) est un agoniste des récepteurs de la mélanocortine dérivé du mélanotan II. Il est étudié dans les recherches sur le désir sexuel.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      3675,
+      "Wolverine est un mélange destiné à la recherche, composé de BPC-157 et de TB-500 à parts égales. Ces composants sont étudiés séparément dans les recherches sur la réparation des tissus ; le mélange lui-même n’a pas été étudié.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      3685,
+      "GLOW est un mélange destiné à la recherche, composé de GHK-Cu, de BPC-157 et de TB-500, avec des quantités indiquées de 50 mg, 10 mg et 10 mg. Ces composants sont étudiés séparément dans les recherches sur la peau et la réparation des tissus ; le mélange lui-même n’a pas été étudié.\n\nChoisissez un stylo à double chambre, dont la poudre et l’eau bactériostatique sont conservées dans deux compartiments distincts d’une même cartouche, ou un flacon de poudre lyophilisée. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      188,
+      "VETUD Melanotan est fourni sous forme de poudre de peptide lyophilisée dans un stylo à double chambre. Une chambre contient la poudre et l’autre de l’eau bactériostatique (eau BAC), qui restent ainsi séparées jusqu’à la préparation. Quantité totale : 10 mg.\n\nPureté de 99%. Pureté testée en laboratoire. Chaque kit comprend un stylo, 12 aiguilles jetables et un livret d’instructions.\n\nIngrédients : Peptide Melanotan en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète.\n\nStockage et stabilité : Respectez les consignes de température de stockage et la date de péremption indiquées par le fabricant pour le lot concerné. Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive. La poudre lyophilisée et l’eau BAC restent dans des chambres séparées jusqu’à la préparation. Consultez la date de péremption du lot pour connaître la durée de conservation.\n\nRéservé à la recherche."
+    ],
+    [
+      2879,
+      "VETUD Ipamorelin est fourni sous forme de poudre de peptide lyophilisée dans un stylo à double chambre. Une chambre contient la poudre et l’autre de l’eau bactériostatique (eau BAC), qui restent ainsi séparées jusqu’à la préparation. Quantité totale : 5 mg.\n\nPureté de 99%. Pureté testée en laboratoire. Chaque kit comprend un stylo, 12 aiguilles jetables et un livret d’instructions.\n\nIngrédients : Peptide Ipamorelin en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète.\n\nStockage et stabilité : Respectez les consignes de température de stockage et la date de péremption indiquées par le fabricant pour le lot concerné. Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive. La poudre lyophilisée et l’eau BAC restent dans des chambres séparées jusqu’à la préparation. Consultez la date de péremption du lot pour connaître la durée de conservation.\n\nRéservé à la recherche."
+    ],
+    [
+      3553,
+      "VETUD Tesamorelin est fourni sous forme de poudre de peptide lyophilisée dans un stylo à double chambre. Une chambre contient la poudre et l’autre de l’eau bactériostatique (eau BAC), qui restent ainsi séparées jusqu’à la préparation. Quantité totale : 20 mg.\n\nPureté de 99%. Pureté testée en laboratoire. Chaque kit comprend un stylo, 12 aiguilles jetables et un livret d’instructions.\n\nIngrédients : Peptide Tesamorelin en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète.\n\nStockage et stabilité : Respectez les consignes de température de stockage et la date de péremption indiquées par le fabricant pour le lot concerné. Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive. La poudre lyophilisée et l’eau BAC restent dans des chambres séparées jusqu’à la préparation. Consultez la date de péremption du lot pour connaître la durée de conservation.\n\nRéservé à la recherche."
+    ],
+    [
+      2361,
+      "VETUD NAD+ est fourni sous forme de poudre lyophilisée dans un stylo à double chambre. Une chambre contient la poudre et l’autre de l’eau bactériostatique (eau BAC), qui restent ainsi séparées jusqu’à la préparation. Quantité totale : 1000 mg. NAD+ (nicotinamide adénine dinucléotide) est une coenzyme, pas un peptide.\n\nPureté de 99%. Pureté testée en laboratoire. Chaque kit comprend un stylo, 12 aiguilles jetables et un livret d’instructions.\n\nIngrédients : NAD+ en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète.\n\nStockage et stabilité : Respectez les consignes de température de stockage et la date de péremption indiquées par le fabricant pour le lot concerné. Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive. La poudre lyophilisée et l’eau BAC restent dans des chambres séparées jusqu’à la préparation. Consultez la date de péremption du lot pour connaître la durée de conservation.\n\nRéservé à la recherche."
+    ],
+    [
+      1429,
+      "VETUD Tirzepatide est fourni sous forme de poudre de peptide lyophilisée dans un stylo à double chambre. Une chambre contient la poudre et l’autre de l’eau bactériostatique (eau BAC), qui restent ainsi séparées jusqu’à la préparation. Disponible en quantités totales de peptide de 10 mg, 20 mg et 40 mg.\n\nPureté de 99%. Pureté testée en laboratoire. Chaque kit comprend un stylo, 12 aiguilles jetables et un livret d’instructions. Les photos montrent le kit de 40 mg pour toutes les quantités.\n\nIngrédients : Peptide Tirzepatide en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète.\n\nStockage et stabilité : Respectez les consignes de température de stockage et la date de péremption indiquées par le fabricant pour le lot concerné. Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive. La poudre lyophilisée et l’eau BAC restent dans des chambres séparées jusqu’à la préparation. Consultez la date de péremption du lot pour connaître la durée de conservation.\n\nRéservé à la recherche."
+    ],
+    [
+      3024,
+      "VETUD Retatrutide est fourni sous forme de poudre de peptide lyophilisée dans un stylo à double chambre. Une chambre contient la poudre et l’autre de l’eau bactériostatique (eau BAC), qui restent ainsi séparées jusqu’à la préparation. Disponible en quantités totales de peptide de 10 mg, 20 mg et 40 mg.\n\nPureté de 99%. Pureté testée en laboratoire. Chaque kit comprend un stylo, 12 aiguilles jetables et un livret d’instructions. Les photos montrent le kit de 40 mg pour toutes les quantités.\n\nIngrédients : Peptide Retatrutide en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète.\n\nStockage et stabilité : Respectez les consignes de température de stockage et la date de péremption indiquées par le fabricant pour le lot concerné. Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive. La poudre lyophilisée et l’eau BAC restent dans des chambres séparées jusqu’à la préparation. Consultez la date de péremption du lot pour connaître la durée de conservation.\n\nRéservé à la recherche."
+    ],
+    [
+      3534,
+      "VETUD Semaglutide est fourni sous forme de poudre de peptide lyophilisée dans un stylo à double chambre. Une chambre contient la poudre et l’autre de l’eau bactériostatique (eau BAC), qui restent ainsi séparées jusqu’à la préparation. Disponible en quantités totales de peptide de 10 mg, 20 mg et 40 mg.\n\nPureté de 99%. Pureté testée en laboratoire. Chaque kit comprend un stylo, 12 aiguilles jetables et un livret d’instructions. Les photos montrent le kit de 40 mg pour toutes les quantités.\n\nIngrédients : Peptide Semaglutide en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète.\n\nStockage et stabilité : Respectez les consignes de température de stockage et la date de péremption indiquées par le fabricant pour le lot concerné. Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive. La poudre lyophilisée et l’eau BAC restent dans des chambres séparées jusqu’à la préparation. Consultez la date de péremption du lot pour connaître la durée de conservation.\n\nRéservé à la recherche."
+    ],
+    [
+      557,
+      "Peptide Retatrutide en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète."
+    ],
+    [
+      615,
+      "Peptide Tesamorelin en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète."
+    ],
+    [
+      1889,
+      "Peptide Semaglutide en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète."
+    ],
+    [
+      2194,
+      "Peptide Ipamorelin en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète."
+    ],
+    [
+      2218,
+      "Peptide Melanotan en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète."
+    ],
+    [
+      2983,
+      "Peptide Tirzepatide en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète."
+    ],
+    [
+      1008,
+      "NAD+ en poudre ; eau bactériostatique (eau BAC) dans une chambre séparée. Consultez les spécifications du fabricant pour le lot concerné afin de connaître la formulation complète."
+    ],
+    [
+      141,
+      "Peptide Semax (mentionné sur l’étiquette). Le véhicule liquide, les conservateurs et tout autre ingrédient restent à confirmer par le fabricant."
+    ],
+    [
+      2783,
+      "Peptide Selank (mentionné sur l’étiquette). Le véhicule liquide, les conservateurs et tout autre ingrédient restent à confirmer par le fabricant."
+    ],
+    [
+      2143,
+      "VETUD Semax est présenté dans un flacon de spray nasal de 10 ml avec sa boîte assortie. Semax est un peptide synthétique, une courte chaîne d’acides aminés, étudié pour la signalisation des cellules nerveuses et les protéines impliquées dans leur croissance et leur maintien. Pureté de 99%. Pureté testée en laboratoire. La mention 10 ml sur l’étiquette décrit la quantité de liquide dans le flacon, pas la quantité de peptide. Informations sur les ingrédients : peptide Semax (mentionné sur l’étiquette). Le véhicule liquide, les conservateurs et tout autre ingrédient restent à confirmer par le fabricant. La concentration et la quantité totale de peptide ne sont pas encore confirmées. Fourni exclusivement pour la recherche en laboratoire ; non destiné à un usage humain ou vétérinaire.\n\nStockage et stabilité : Respectez les consignes de température de stockage et la date de péremption indiquées par le fabricant pour le lot concerné. Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive."
+    ],
+    [
+      2256,
+      "VETUD Selank est présenté dans un flacon de spray nasal de 10 ml avec sa boîte assortie. Selank est un peptide synthétique, une courte chaîne d’acides aminés, étudié pour la signalisation liée au stress et la communication entre les cellules nerveuses. Pureté de 99%. Pureté testée en laboratoire. La mention 10 ml sur l’étiquette décrit la quantité de liquide dans le flacon, pas la quantité de peptide. Informations sur les ingrédients : peptide Selank (mentionné sur l’étiquette). Le véhicule liquide, les conservateurs et tout autre ingrédient restent à confirmer par le fabricant. La concentration et la quantité totale de peptide ne sont pas encore confirmées. Fourni exclusivement pour la recherche en laboratoire ; non destiné à un usage humain ou vétérinaire.\n\nStockage et stabilité : Respectez les consignes de température de stockage et la date de péremption indiquées par le fabricant pour le lot concerné. Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive."
+    ],
+    [
+      179,
+      "Cheveux : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      499,
+      "Soutien immunitaire : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      707,
+      "Gestion du poids : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      989,
+      "Peau et peptides de cuivre : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      1291,
+      "Récupération et mobilité : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      1952,
+      "Fournitures de laboratoire : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      2133,
+      "Pigmentation : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      2180,
+      "Énergie et métabolisme : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      2243,
+      "Calme et équilibre : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      2627,
+      "Santé sexuelle : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      3129,
+      "Performance et croissance : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      3314,
+      "Concentration et attention : produits de recherche regroupés par thème pour faciliter la navigation. Réservés à la recherche en laboratoire."
+    ],
+    [
+      44,
+      "non précisé"
+    ],
+    [
+      213,
+      "Triple agoniste des récepteurs GIP, GLP-1 et du glucagon en recherche clinique sur le métabolisme."
+    ],
+    [
+      329,
+      "Peptide dérivé de l’ACTH étudié dans les recherches sur la cognition et les nerfs."
+    ],
+    [
+      356,
+      "Boîte VETUD contenant un flacon de spray nasal de 10 ml"
+    ],
+    [
+      397,
+      "Mélange Wolverine"
+    ],
+    [
+      429,
+      "En attente de confirmation du fabricant"
+    ],
+    [
+      448,
+      "Mélange KLOW"
+    ],
+    [
+      472,
+      "Consultez la date de péremption du lot et les données de stabilité du fabricant."
+    ],
+    [
+      480,
+      "Agoniste de la mélanocortine (brémélanotide) étudié dans les recherches sur la fonction sexuelle."
+    ],
+    [
+      537,
+      "Paliers de prix de détail en USD expressément approuvés par l’utilisateur le 2026-10-13."
+    ],
+    [
+      637,
+      "Eau bactériostatique (H2O)"
+    ],
+    [
+      647,
+      "Préparations de recherche à plusieurs séquences."
+    ],
+    [
+      700,
+      "Qualité USP"
+    ],
+    [
+      749,
+      "Diluant stérile pour la reconstitution"
+    ],
+    [
+      779,
+      "En attente de la liste complète des ingrédients et du dosage du peptide"
+    ],
+    [
+      781,
+      "La poudre lyophilisée et l’eau BAC restent dans des chambres séparées jusqu’à la préparation. Consultez la date de péremption du lot pour connaître la durée de conservation."
+    ],
+    [
+      815,
+      "1 flacon en verre scellé de peptide lyophilisé (séché à froid). L’eau bactériostatique est vendue séparément."
+    ],
+    [
+      838,
+      "Fragment de l’hormone de croissance humaine étudié dans les recherches sur le métabolisme des graisses."
+    ],
+    [
+      867,
+      "1 flacon en verre multidose scellé d’eau bactériostatique"
+    ],
+    [
+      904,
+      "Pureté testée en laboratoire"
+    ],
+    [
+      956,
+      "Fourniture de laboratoire"
+    ],
+    [
+      986,
+      "1 stylo (20 mg) ; 12 aiguilles jetables ; 1 livret d’instructions"
+    ],
+    [
+      998,
+      "Peptide lyophilisé"
+    ],
+    [
+      1033,
+      "Fragment synthétique de peptide gastrique étudié dans les recherches sur la réparation des tissus."
+    ],
+    [
+      1052,
+      "Eau BAC séparée"
+    ],
+    [
+      1065,
+      "Mélange d’un analogue de la GHRH et d’un agoniste du récepteur de la ghréline pour la recherche sur l’hormone de croissance."
+    ],
+    [
+      1120,
+      "Préparation de recherche à plusieurs séquences fournie dans un unique flacon lyophilisé pour les travaux en laboratoire. La pureté et l’identité de chaque composant sont documentées pour chaque lot."
+    ],
+    [
+      1271,
+      "Une cartouche d’eau BAC pour le stylo VETUD"
+    ],
+    [
+      1338,
+      "Seringues à insuline U-100 stériles et à usage unique, avec aiguille fixe et capuchon d’aiguille orange. Le corps est gradué en unités pour les solutions U-100 (100 unités par ml). Conditionnées par 10 dans une boîte VETUD.\n\nPour une utilisation en laboratoire. Chaque seringue est à usage unique ; jetez-la dans un collecteur pour objets piquants et tranchants."
+    ],
+    [
+      1380,
+      "1 cartouche à double chambre d’eau bactériostatique pour le stylo VETUD"
+    ],
+    [
+      1499,
+      "10 seringues à insuline U-100 stériles et à usage unique dans une boîte VETUD"
+    ],
+    [
+      1507,
+      "Tripeptide de l’alpha-MSH étudié dans les recherches sur l’inflammation."
+    ],
+    [
+      1525,
+      "Solution stérile"
+    ],
+    [
+      1537,
+      "CJC-1295 + Ipamorelin (sans DAC)"
+    ],
+    [
+      1631,
+      "Conservez dans l’emballage d’origine, à l’abri de la lumière directe du soleil et d’une chaleur excessive."
+    ],
+    [
+      1666,
+      "Préparation de recherche à deux séquences"
+    ],
+    [
+      1703,
+      "Agoniste synthétique de la mélanocortine étudié dans les recherches sur la pigmentation."
+    ],
+    [
+      1769,
+      "À la une"
+    ],
+    [
+      1770,
+      "Paliers en USD approuvés par l’utilisateur ; les autres devises ont été augmentées proportionnellement au prix en USD existant de chaque variante. Les montants en HUF et ISK ont été arrondis à l’unité ; ceux des autres devises à deux décimales."
+    ],
+    [
+      1774,
+      "Principal tripeptide antioxydant de l’organisme, étudié dans les recherches sur le stress oxydatif."
+    ],
+    [
+      1793,
+      "Peptide ciblant les mitochondries (élamiprétide) étudié dans les recherches sur l’énergie."
+    ],
+    [
+      1810,
+      "Mélange de GHK-Cu, BPC-157 et TB-500 pour la recherche sur la peau et les tissus."
+    ],
+    [
+      1817,
+      "Seringues à insuline U-100"
+    ],
+    [
+      1873,
+      "Peptides de recherche à séquence unique."
+    ],
+    [
+      1940,
+      "Double agoniste des récepteurs GIP et GLP-1 étudié dans les recherches sur le métabolisme."
+    ],
+    [
+      1950,
+      "Analogue de la GHRH étudié dans les recherches sur l’hormone de croissance et la graisse viscérale."
+    ],
+    [
+      1979,
+      "Solution pour spray nasal"
+    ],
+    [
+      2039,
+      "Mélange de GHK-Cu, BPC-157, TB-500 et KPV pour la recherche sur la peau et les tissus."
+    ],
+    [
+      2049,
+      "Analogue synthétique de la tuftsine étudié dans les recherches sur l’anxiété et le stress."
+    ],
+    [
+      2066,
+      "Spray nasal Semax"
+    ],
+    [
+      2103,
+      "Flacon multidose, le prix au ml le plus bas"
+    ],
+    [
+      2142,
+      "Peptide inducteur du sommeil delta, étudié dans les recherches sur le sommeil et le stress."
+    ],
+    [
+      2150,
+      "Mélange de recherche A"
+    ],
+    [
+      2164,
+      "Prix provisoire en USD par flacon de 10 ml, établi par comparaison avec les offres de sprays aux États-Unis. À réévaluer une fois la quantité totale de peptide et la formule confirmées ; le volume du flacon ne permet pas, à lui seul, d’établir une concentration équivalente."
+    ],
+    [
+      2271,
+      "Livraison standard"
+    ],
+    [
+      2287,
+      "Flacon à double chambre, flacon ou coffret avec stylo"
+    ],
+    [
+      2298,
+      "Poudre lyophilisée"
+    ],
+    [
+      2318,
+      "approuvé"
+    ],
+    [
+      2334,
+      "Mélange GLOW"
+    ],
+    [
+      2419,
+      "1 stylo (10 mg) ; 12 aiguilles jetables ; 1 livret d’instructions"
+    ],
+    [
+      2472,
+      "Mélange de BPC-157 et TB-500 pour la recherche sur la réparation des tissus."
+    ],
+    [
+      2482,
+      "thème"
+    ],
+    [
+      2503,
+      "Peptide d’origine mitochondriale étudié dans les recherches sur le métabolisme et le vieillissement."
+    ],
+    [
+      2646,
+      "1 stylo (5 mg) ; 12 aiguilles jetables ; 1 livret d’instructions"
+    ],
+    [
+      2679,
+      "Peptide dérivé de l’érythropoïétine étudié dans les recherches sur la protection des nerfs et des tissus."
+    ],
+    [
+      2701,
+      "Livraison express"
+    ],
+    [
+      2706,
+      "Spray nasal Selank"
+    ],
+    [
+      2707,
+      "format"
+    ],
+    [
+      2716,
+      "Seringues à insuline U-100 stériles et à usage unique, par boîte de 10."
+    ],
+    [
+      2717,
+      "Respectez la température et les conditions de stockage indiquées par le fabricant pour le lot concerné."
+    ],
+    [
+      2770,
+      "Spray peptidique de 10 ml · pour la recherche en laboratoire"
+    ],
+    [
+      2782,
+      "Analogue de l’alpha-MSH (afamélanotide) étudié dans les recherches sur la pigmentation."
+    ],
+    [
+      2810,
+      "Petite molécule inhibitrice de NNMT étudiée dans les recherches sur le métabolisme cellulaire."
+    ],
+    [
+      2873,
+      "Eau stérile contenant 0,9% d’alcool benzylique, fournie dans des flacons multidoses scellés pour la reconstitution de produits de recherche lyophilisés."
+    ],
+    [
+      2918,
+      "Boîte VETUD contenant le corps du stylo réutilisable, 1 flacon à double chambre (peptide lyophilisé dans une chambre, eau bactériostatique dans l’autre), 12 aiguilles jetables et un livret d’instructions"
+    ],
+    [
+      2939,
+      "Conditionnement"
+    ],
+    [
+      2952,
+      "Tripeptide se liant au cuivre étudié dans les recherches sur la peau et la cicatrisation."
+    ],
+    [
+      2966,
+      "Agoniste sélectif du récepteur de la ghréline étudié dans les recherches sur l’hormone de croissance."
+    ],
+    [
+      2987,
+      "Fragment de thymosine bêta-4 étudié dans les recherches sur la réparation des tissus."
+    ],
+    [
+      3005,
+      "Agoniste du récepteur GLP-1 étudié dans les recherches sur le métabolisme."
+    ],
+    [
+      3028,
+      "Coenzyme étudiée dans les recherches sur l’énergie cellulaire et le vieillissement."
+    ],
+    [
+      3033,
+      "Sprays nasaux exclus de l’augmentation du prix des coffrets avec stylo demandée par l’utilisateur ; prix de détail d’origine rétablis."
+    ],
+    [
+      3131,
+      "Eau bactériostatique"
+    ],
+    [
+      3159,
+      "1 stylo (1000 mg) ; 12 aiguilles jetables ; 1 livret d’instructions"
+    ],
+    [
+      3171,
+      "Eau stérile contenant 0,9% d’alcool benzylique, pour la reconstitution en laboratoire."
+    ],
+    [
+      3267,
+      "À température ambiante, à l’abri de la lumière directe"
+    ],
+    [
+      3405,
+      "Analogue de l’IGF-1 à longue durée d’action utilisé dans les recherches sur la croissance cellulaire."
+    ],
+    [
+      3421,
+      "-20 °C, au sec, à l’abri de la lumière"
+    ],
+    [
+      3451,
+      "1 flacon à double chambre : une cartouche contenant le peptide lyophilisé dans une chambre et l’eau bactériostatique dans l’autre. Elle s’adapte au stylo VETUD réutilisable du coffret avec stylo."
+    ],
+    [
+      3487,
+      "Poudre lyophilisée"
+    ],
+    [
+      3552,
+      "L’eau bactériostatique est une eau stérile contenant 0,9% d’alcool benzylique, qui ralentit la croissance bactérienne après l’ouverture du flacon. Elle est utilisée en laboratoire pour reconstituer des produits lyophilisés.\n\nChoisissez une cartouche d’eau à double chambre pour le stylo VETUD ou un flacon multidose. Fourni exclusivement pour la recherche en laboratoire. Non destiné à un usage humain ou vétérinaire."
+    ],
+    [
+      3582,
+      "Flacon à double chambre ou flacon"
+    ],
+    [
+      3713,
+      "Spray nasal, flacon à double chambre ou flacon"
+    ],
+    [
+      3716,
+      "1 stylo contenant la quantité sélectionnée ; 12 aiguilles jetables ; 1 livret d’instructions"
+    ],
+    [
+      57,
+      "Peptide lyophilisé · stylo à double chambre · 5 mg"
+    ],
+    [
+      2114,
+      "Poudre lyophilisée · stylo à double chambre · 1000 mg"
+    ],
+    [
+      2388,
+      "Spray nasal · 5 mg"
+    ],
+    [
+      2686,
+      "Spray nasal · 10 mg"
+    ],
+    [
+      2974,
+      "Peptide lyophilisé · stylo à double chambre · 10 mg / 20 mg / 40 mg"
+    ],
+    [
+      3034,
+      "Peptide lyophilisé · stylo à double chambre · 20 mg"
+    ],
+    [
+      3362,
+      "Peptide lyophilisé · stylo à double chambre · 10 mg"
+    ]
+  ]
+}

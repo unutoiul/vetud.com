@@ -67,13 +67,14 @@ const formatPhotography = (handle: string, title: string): ProductPhotography =>
   return { aspectRatio: "1 / 1", images: [pen, vial, ...(box ? [box] : []), ...(openBox ? [openBox] : []), reusable] }
 }
 
-/** The 28 products sold as a dual-chamber pen or a vial (prepare-dual-chamber-images.mjs makes the photos). */
+/** The products sold as a dual-chamber vial, a vial and (most of them) a pen kit box (prepare-dual-chamber-images.mjs makes the photos). */
 const FORMAT_PRODUCTS: Record<string, string> = {
   "5-amino-1mq": "5-Amino-1MQ",
   "aod-9604": "AOD-9604",
   "ara-290": "ARA-290",
   "bpc-157": "BPC-157",
   "cjc-1295-ipamorelin": "CJC-1295 + Ipamorelin",
+  "decapeptide-12": "Decapeptide-12",
   dsip: "DSIP",
   "ghk-cu": "GHK-Cu",
   "glow-blend": "GLOW Blend",

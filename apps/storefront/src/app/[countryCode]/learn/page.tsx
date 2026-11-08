@@ -45,7 +45,7 @@ export default function LearnPage() {
   const act = useTranslations("Actions")
   return (
     <>
-      <PageHeader eyebrow={ct("Learn")} title={ct("Peptides, explained simply.")} description={ct.template("Plain-language guides to {v0} peptides and related compounds, from approved medicines to early research. What they are, what studies found, how far they’ve got, and what’s still unknown.", { v0: PROFILE_COUNT })} />
+      <PageHeader eyebrow={ct("Education")} title={ct("Peptides, explained simply.")} description={ct.template("Plain-language guides to {v0} peptides and related compounds, from approved medicines to early research. What they are, what studies found, how far they’ve got, and what’s still unknown.", { v0: PROFILE_COUNT })} />
 
       <Section tone="white" id="library" sx={{ py: { xs: 5, md: 8 } }}>
         <Suspense fallback={<LearnLibrary />}>

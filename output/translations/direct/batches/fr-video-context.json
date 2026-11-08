@@ -1,0 +1,198 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      39,
+      "Biologie associée"
+    ],
+    [
+      148,
+      "Des médecins expliquent le rétatrutide, avec une leçon sur les méthodes de recherche. Les sources originales de l’article précisent les résultats exacts de TRIUMPH-2 et TRIUMPH-3."
+    ],
+    [
+      380,
+      "Présente le composé"
+    ],
+    [
+      565,
+      "Discussion passée de la FDA d’octobre 2024. La kisspeptine-10 et l’ipamoréline y sont abordées ; les autres formes et les décisions ultérieures peuvent différer."
+    ],
+    [
+      608,
+      "La discussion originale de la FDA du 24 juillet 2026 sur DSIP, Semax et Epitalon ; elle documente un examen consultatif."
+    ],
+    [
+      624,
+      "Découvrez ce que signifie l’apoptose, pourquoi la reprise de poids est étudiée et comment lire une étude humaine. Ces vidéos donnent du contexte ; elles ne démontrent pas que CBL-514 prévient la reprise de poids chez l’être humain."
+    ],
+    [
+      651,
+      "Présente {v0} ou son contexte clinique. Consultez les études originales liées ici pour connaître la formulation, la population et les résultats exacts."
+    ],
+    [
+      729,
+      "biologie associée"
+    ],
+    [
+      751,
+      "Discussion passée de la FDA sur CJC-1295, AOD-9604 et la thymosine alpha-1. Une réunion consultative ne constitue ni une autorisation ni une preuve de bénéfice clinique."
+    ],
+    [
+      851,
+      "La discussion originale de la FDA du 23 juillet 2026 sur BPC-157, KPV, TB-500 et MOTS-c ; elle documente un examen consultatif."
+    ],
+    [
+      985,
+      "biologie des neurotransmetteurs"
+    ],
+    [
+      1016,
+      "Des leçons associées sur la biologie et l’interprétation des données de cet article. Aucune n’est un essai du composé."
+    ],
+    [
+      1060,
+      "Commencez par la présentation du composé, puis utilisez la leçon de contexte pour comprendre sa biologie. Chaque fiche explique son lien avec le sujet. Les enregistrements peuvent être antérieurs à des résultats ou changements réglementaires ultérieurs."
+    ],
+    [
+      1195,
+      "télomères et vieillissement cellulaire"
+    ],
+    [
+      1223,
+      "Ces leçons expliquent l’une des voies proposées pour PTT-A et les différences entre les études humaines et les travaux précliniques. Aucune n’est un essai humain de PTT-A."
+    ],
+    [
+      1320,
+      "Ces réunions officielles apportent le contexte réglementaire de plusieurs composés cités dans l’article. Ce sont des enregistrements passés, pas des annonces d’autorisation des composés."
+    ],
+    [
+      1423,
+      "Présente l’octréotide dans l’hyperinsulinisme de l’enfant. Cet exemple clinique spécialisé ne couvre pas toutes les indications du médicament."
+    ],
+    [
+      1479,
+      "Contexte sur le vieillissement cellulaire, la recherche clinique et un autre ingrédient de soin cutané. Ces vidéos ne testent pas RLX-201 et les peptides de cuivre ne sont pas l’inhibiteur de TORC1 étudié dans l’article."
+    ],
+    [
+      1489,
+      "cellules immunitaires et inflammation"
+    ],
+    [
+      1561,
+      "Deux médecins spécialistes de la douleur examinent les données sur BPC-157 (à partir de 16:08), TB-500 (24:04), ARA-290 (4:54), MOTS-c (25:51) et GHK-Cu (24:56), ainsi que les risques des produits non réglementés."
+    ],
+    [
+      1771,
+      "Utilisez ces leçons pour identifier la question posée par une étude et distinguer un résultat mesuré d’une affirmation thérapeutique plus large."
+    ],
+    [
+      1778,
+      "métabolisme de NAD"
+    ],
+    [
+      1797,
+      "Contexte réglementaire"
+    ],
+    [
+      1947,
+      "Nous n’avons pas sélectionné de vidéo fiable consacrée à {v0}. Ces leçons présentent la biologie et les méthodes de recherche pertinentes ; les données propres au composé figurent dans les sources ci-dessous."
+    ],
+    [
+      2000,
+      "biologie du follicule pileux"
+    ],
+    [
+      2060,
+      "physiologie de l’hormone de croissance"
+    ],
+    [
+      2073,
+      "Suivez le développement du rétatrutide avec des explications sur la signalisation GLP-1. Les vidéos peuvent concerner une autre phase d’essai ; utilisez les liens des sources pour les chiffres de TRIUMPH-1."
+    ],
+    [
+      2172,
+      "Des vidéos sur les composés de cet article, ainsi que sur la biologie ou les méthodes de recherche. Chaque fiche explique son lien avec le sujet ; les enregistrements peuvent être antérieurs aux résultats décrits ici."
+    ],
+    [
+      2357,
+      "Présente l’association du sémaglutide et du cagrilintide ainsi que les premiers résultats. Nos liens sources couvrent l’essai comparatif direct ultérieur."
+    ],
+    [
+      2402,
+      "Vous aide à évaluer la conception de l’étude ou l’incertitude des recherches sur {v0} ; il ne s’agit pas d’un essai du composé."
+    ],
+    [
+      2425,
+      "maintien du poids après un traitement GLP-1"
+    ],
+    [
+      2525,
+      "Comprendre les méthodes de recherche"
+    ],
+    [
+      2721,
+      "signalisation de l’hypothalamus et de l’hypophyse"
+    ],
+    [
+      2749,
+      "Des explications des NIH pour accompagner le guide : ce qu’est la recherche, les questions posées par les différentes études et le consentement éclairé."
+    ],
+    [
+      2808,
+      "soins cutanés aux peptides de cuivre en application locale"
+    ],
+    [
+      2884,
+      "ce sujet"
+    ],
+    [
+      2909,
+      "Les chercheurs décrivent une étude exploratoire d’imagerie cérébrale sur la kisspeptine. Elle ne démontre pas de bénéfice thérapeutique général."
+    ],
+    [
+      3164,
+      "Comprenez l’association CagriSema et les noms sémaglutide et tirzépatide. La présentation antérieure de CagriSema n’est pas un compte rendu du résultat comparatif direct ultérieur de REDEFINE 4."
+    ],
+    [
+      3236,
+      "mort cellulaire programmée"
+    ],
+    [
+      3263,
+      "Regardez les réunions originales abordées dans l’article. La leçon sur la recherche aide à distinguer une discussion réglementaire d’un résultat clinique de sécurité ou d’efficacité."
+    ],
+    [
+      3284,
+      "Contexte sur le sémaglutide et GLP-1, ainsi que sur l’évaluation de la recherche clinique. Ces enregistrements n’établissent pas d’équivalence entre comprimés, injections et produits de laboratoire ; l’essai OASIS 4 est lié ci-dessous."
+    ],
+    [
+      3350,
+      "Des informations sur le tériparatide prescrit, présentées par une personne traitée et un membre du personnel infirmier. Elles concernent les médicaments autorisés contre l’ostéoporose."
+    ],
+    [
+      3462,
+      "Des bases sur {v0} pour comprendre {v1}. Cette vidéo ne démontre pas de bénéfices de ce composé ou de cette formulation."
+    ],
+    [
+      3541,
+      "mitochondries et énergie cellulaire"
+    ],
+    [
+      3567,
+      "Explique le déficit diagnostiqué en hormone de croissance. Cela diffère des affirmations anti-âge ou concernant les composés non autorisés qui stimulent la libération d’hormone de croissance."
+    ],
+    [
+      3630,
+      "signalisation GLP-1"
+    ],
+    [
+      3634,
+      "Enregistrement réglementaire officiel"
+    ],
+    [
+      2327,
+      "Une personne traitée et un membre du personnel infirmier discutent du tériparatide prescrit. Les informations concernent les médicaments autorisés, pas les produits de recherche en laboratoire."
+    ]
+  ]
+}

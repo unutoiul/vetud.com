@@ -4,28 +4,21 @@ import { translateAction } from "@/i18n/actions"
 import Box from "@mui/material/Box"
 import type { ReactNode } from "react"
 import Typography from "@mui/material/Typography"
-import Table from "@mui/material/Table"
-import TableBody from "@mui/material/TableBody"
-import TableCell from "@mui/material/TableCell"
-import TableRow from "@mui/material/TableRow"
 import Icon from "../brand/Icon"
+import ProductSpecifications, { type ProductSpecification } from "./ProductSpecifications"
 import { AppLink } from "../common/links"
-import LotTable from "./LotTable"
 import EvidenceLadder from "../learn/EvidenceLadder"
 import StatusBadge from "../learn/StatusBadge"
 import StudyResults from "../learn/StudyResults"
 import { EVIDENCE_STEPS } from "@/content/learn/categories"
 import type { ProductOverview } from "@/content/product-overview"
-import { useMoney } from "@/lib/money"
 import type { ProductMeta } from "@/lib/product"
 import { SITE } from "@/lib/config"
 
 const sections = [
   { id: "research-overview", label: "Research overview" },
   { id: "specifications", label: "Specifications" },
-  { id: "quality", label: "Quality & certificates" },
   { id: "storage", label: "Storage & handling" },
-  { id: "delivery", label: "Delivery & support" },
 ]
 const sectionStyle = { pt: { xs: 4, md: 5 }, pb: { xs: 4, md: 5 }, borderTop: "1px solid", borderColor: "divider", scrollMarginTop: 115 }
 const bodyStyle = { fontSize: 14, lineHeight: 1.95, color: "text.secondary", maxWidth: 800 }
@@ -59,7 +52,7 @@ function Overview({ overview }: { overview: ProductOverview }) {
         <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, maxWidth: 800, display: "grid", gap: 1.5 }}>{overview.components.map(component => <Box component="li" key={component.href} sx={{ p: 2, border: "1px solid", borderColor: "divider", borderRadius: "8px" }}>
           <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", columnGap: 1.5, rowGap: .5 }}>
             <AppLink href={component.href} sx={{ fontSize: 15.5, fontWeight: 650 }}>{ct(component.name)}</AppLink>
-            {component.evidence ? <Typography component="span" sx={{ fontSize: 12.5, color: "text.secondary" }}>{ct.rich("Evidence: {v0}", { v0: EVIDENCE_STEPS.find(step => step.id === component.evidence)?.label.toLowerCase() }, {  })}</Typography> : null}
+            {component.evidence ? <Typography component="span" sx={{ fontSize: 12.5, color: "text.secondary" }}>{ct.rich("Evidence: {v0}", { v0: ct(EVIDENCE_STEPS.find(step => step.id === component.evidence)?.label) }, {  })}</Typography> : null}
           </Box>
           <Typography sx={{ ...bodyStyle, fontSize: 14.5, lineHeight: 1.7, mt: .5 }}>{ct(component.text)}</Typography>
         </Box>)}</Box>
@@ -71,24 +64,19 @@ function Overview({ overview }: { overview: ProductOverview }) {
       <Typography variant="mono" component="h3" sx={{ mt: 3.5, mb: 1.5, fontSize: 10, color: "brand.blue", letterSpacing: ".12em" }}>{ct("SOURCES")}</Typography>
       <Box sx={{ display: "grid", gap: 1.75 }}>{overview.sources.map(source => <Box key={source.url} component="a" href={source.url} target="_blank" rel="noopener noreferrer" sx={{ display: "flex", gap: 2, alignItems: "flex-start", textDecoration: "none", "&:hover": { color: "brand.blue" } }}><Icon name="document" sx={{ color: "brand.blue", fontSize: 20, mt: .3, flexShrink: 0 }} /><Box><Typography sx={{ fontSize: 13, lineHeight: 1.7, fontWeight: 600 }}>{ct(source.title)} ↗</Typography><Typography sx={{ mt: .25, fontSize: 11.5, color: "text.secondary" }}>{ct(source.detail)}</Typography></Box></Box>)}</Box>
     </> : null}
-    {overview.guides.length === 1 ? <AppLink href={`/learn/${overview.guides[0].slug}`} sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 3, minHeight: 44, fontSize: 14, fontWeight: 600 }}>{act("fullGuide", { product: overview.guides[0].name })} <Icon name="arrowRight" sx={{ fontSize: 16 }} /></AppLink> : null}
+    {overview.guides.length === 1 ? <AppLink href={`/learn/${overview.guides[0].slug}`} sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 3, minHeight: 44, fontSize: 14, fontWeight: 600 }}>{act("fullGuide", { product: ct(overview.guides[0].name) })} <Icon name="arrowRight" sx={{ fontSize: 16 }} /></AppLink> : null}
   </>
 }
 
-export default function ProductDossier({ overview, description, specs, meta, title, currencyCode, freeShippingThreshold, lotReports, formats, formatsLabel = "Vial, dual-chamber or pen kit", skus }: {
-  overview?: ProductOverview; description?: string | null; specs: { label: string; value: string }[]; meta: ProductMeta; title: string; currencyCode: string; freeShippingThreshold?: number
-  /** Community posts per lot number, when the community is reachable. */
-  lotReports?: Record<string, number>
+export default function ProductDossier({ overview, description, specs, skus, meta, title, formats, formatsLabel = "Vial, dual-chamber or pen kit" }: {
+  overview?: ProductOverview; description?: string | null; specs: ProductSpecification[]; skus?: string; meta: ProductMeta; title: string
   /** The "Dual-chamber pen or vial?" part, first in the dossier, for products sold in both formats. */
   formats?: ReactNode
   /** The menu entry for `formats`. */
   formatsLabel?: string
-  /** Shown in small type under the specifications rather than as a table row. */
-  skus?: string
 }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
-  const money = useMoney()
   const items = formats ? [{ id: "formats", label: formatsLabel }, ...sections] : sections
   return <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "230px minmax(0, 1fr)" }, gap: { xs: 3, md: 8 }, mt: { xs: 5, md: 9 } }}>
     <Box component="nav" aria-label={act("productDossier")} sx={{ minWidth: 0, width: "100%", alignSelf: "start", position: { md: "sticky" }, top: 125 }}>
@@ -103,29 +91,12 @@ export default function ProductDossier({ overview, description, specs, meta, tit
         <Typography sx={{ ...bodyStyle, fontSize: 11.5, mt: 3 }}>{ct.rich("Scientific background concerns the named molecule. Batch composition and analytical results must be established from the product documentation. {v0}", { v0: ct(SITE.ruoNotice) }, {  })}</Typography>
       </Box>
       <Box component="section" id="specifications" aria-labelledby="specifications-heading" sx={sectionStyle}>
-        <Typography component="h2" variant="h3" id="specifications-heading" sx={{ mb: 2.5 }}>{ct("The material, in detail.")}</Typography>
-        <Table size="small" aria-label={act("specifications", { product: title })} sx={{ maxWidth: 680 }}><TableBody>{specs.map(spec => <TableRow key={spec.label}><TableCell component="th" scope="row" sx={{ color: "text.secondary", fontSize: 12.5, width: { xs: "40%", sm: "34%" }, pl: 0, py: 1.25, verticalAlign: "top" }}>{ct(spec.label)}</TableCell><TableCell sx={{ fontSize: 13.5, lineHeight: 1.6, pr: 0, py: 1.25, overflowWrap: "anywhere", whiteSpace: "pre-line" }}>{ct(spec.value)}</TableCell></TableRow>)}</TableBody></Table>
-        {skus ? <Typography variant="mono" sx={{ display: "block", mt: 1.5, fontSize: 10, color: "text.secondary", overflowWrap: "anywhere", lineHeight: 1.8 }}>{ct("SKU")} {ct(skus)}</Typography> : null}
-      </Box>
-      <Box component="section" id="quality" aria-labelledby="quality-heading" sx={sectionStyle}>
-        <Typography component="h2" variant="h3" id="quality-heading" sx={{ mb: 2.5 }}>{ct("Know the batch behind the label.")}</Typography>
-        <Typography sx={{ ...bodyStyle, mb: 2.5 }}>{ct("Use the lot number on your packaging to match the material to its analytical documentation. A purity percentage describes a reported analytical measurement; consult the certificate for the method, identity results and scope of testing.")}</Typography>
-        <LotTable lots={meta.lots} productTitle={title} reports={lotReports} />
-        <AppLink href="/documentation" sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 2.5, fontSize: 12 }}>{act("lotRegister")} <Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></AppLink>
+        <ProductSpecifications specs={specs} skus={skus} />
       </Box>
       <Box component="section" id="storage" aria-labelledby="storage-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="storage-heading" sx={{ mb: 2.5 }}>{ct("Preserve the integrity of your material.")}</Typography>
         {[{ label: "Storage conditions", value: meta.storage ?? "Follow the storage conditions supplied on the batch label and certificate." }, { label: "Handling", value: meta.handling ?? "Keep the material in its original, sealed packaging. Follow your laboratory’s handling procedures and the supplied product documentation." }, { label: "Stability & shelf life", value: meta.stability ?? "Refer to the lot-specific expiry date and stability documentation. Shelf life should not be inferred from the product name alone." }].map(item => <Box key={item.label} sx={{ display: "flex", gap: 2, mb: 2.5 }}><Icon name={item.label === "Storage conditions" ? "snowflake" : item.label === "Handling" ? "package" : "clock"} sx={{ color: "brand.blue", fontSize: 21, mt: .3, flexShrink: 0 }} /><Box><Typography component="h3" sx={{ fontSize: 13, fontWeight: 600, mb: .5 }}>{ct(item.label)}</Typography><Typography sx={bodyStyle}>{ct(item.value)}</Typography></Box></Box>)}
         <Typography sx={{ ...bodyStyle, fontSize: 12 }}>{ct("For solvent compatibility or preparation specifications, request the manufacturer’s batch documentation. Research protocols should be established by qualified laboratory personnel.")}</Typography>
-      </Box>
-      <Box component="section" id="delivery" aria-labelledby="delivery-heading" sx={sectionStyle}>
-        <Typography component="h2" variant="h3" id="delivery-heading" sx={{ mb: 2.5 }}>{ct("From our collection to your laboratory.")}</Typography>
-        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 3, mb: 3 }}>
-          <Box sx={{ p: 3, border: "1px solid", borderColor: "divider", borderRadius: "5px" }}><Icon name="truck" sx={{ color: "brand.blue", mb: 1.5 }} /><Typography component="h3" sx={{ fontSize: 14, fontWeight: 600 }}>{ct("Standard delivery")}</Typography><Typography sx={{ ...bodyStyle, mt: .75 }}>{ct.rich("3–5 business days, tracked.{v0}", { v0: ct(freeShippingThreshold ? ` Free on orders over ${money(freeShippingThreshold, currencyCode, { whole: true })}.` : "") }, {  })}</Typography></Box>
-          <Box sx={{ p: 3, border: "1px solid", borderColor: "divider", borderRadius: "5px" }}><Icon name="clock" sx={{ color: "brand.blue", mb: 1.5 }} /><Typography component="h3" sx={{ fontSize: 14, fontWeight: 600 }}>{ct("Express delivery")}</Typography><Typography sx={{ ...bodyStyle, mt: .75 }}>{ct("1–2 business days, tracked. Available services and charges appear at checkout.")}</Typography></Box>
-        </Box>
-        <Typography sx={bodyStyle}>{ct.rich("Orders dispatch after payment confirmation. Products travel in protective packaging; follow the supplied storage requirements when they arrive. See our <slot0>{v0}</slot0> and <slot1>{v1}</slot1> for full details.", { v0: act("shippingPolicy"), v1: act("returnsPolicy") }, { slot0: chunks => <AppLink href="/legal/shipping" key="slot0">{chunks}</AppLink>, slot1: chunks => <AppLink href="/legal/returns" key="slot1">{chunks}</AppLink> })}</Typography>
-        <AppLink href={`/contact?subject=${encodeURIComponent(`Product enquiry: ${title}`)}`} sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 2.5, fontSize: 13 }}>{act("productHelp")} <Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></AppLink>
       </Box>
     </Box>
   </Box>

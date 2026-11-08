@@ -1,0 +1,61 @@
+{
+  "updated_at": "2026-11-08T21:35:45.154Z",
+  "project_id": "e04f2eac-45d2-4854-9f2b-c523f5cff113",
+  "service_id": "236671ed-00e2-4810-92b8-72471cd42807",
+  "source_hash": "5c1a3b5b804f3e01882ce8c5af9df753a5721a09bc64f82ae687e3dae34a6cae",
+  "locales": [
+    {
+      "locale": "en-GB",
+      "id": "lcb_01M6W821QZVV7MN3NEDNSGA9SC",
+      "entry_count": 3727,
+      "public_entry_count": 3659
+    },
+    {
+      "locale": "fr",
+      "id": "lcb_01M6W821YNY5WAKH2VDYC5YEJ5",
+      "entry_count": 3727,
+      "public_entry_count": 3659
+    }
+  ],
+  "payload_sha256": "085060cb94573abbb5188e6dbf911fefe71658a9b04a651d5bab8d4454e99d09",
+  "community_messages_translated": false,
+  "community_comments_translated": false,
+  "original_tables_unchanged": true,
+  "original_tables": {
+    "product": {
+      "count": 47,
+      "digest": "3203b98de03a498a10fa4722ef2fefb5"
+    },
+    "product_variant": {
+      "count": 190,
+      "digest": "1f9c44a70212a57156e52288555c2685"
+    },
+    "price": {
+      "count": 7042,
+      "digest": "8eccd00c45a866ef58496ed57e507ac7"
+    },
+    "price_list": {
+      "count": 2,
+      "digest": "a0965e9783cfd0898237534d20ab09a5"
+    },
+    "promotion": {
+      "count": 1,
+      "digest": "cd962031e631b40f741278291239113e"
+    },
+    "forum_thread": {
+      "count": 2,
+      "digest": "a0ced5a60ac6c25f6281cf091994047c"
+    },
+    "forum_post": {
+      "count": 2,
+      "digest": "8c1aa3236562bef4c456d28abfb14aa2"
+    },
+    "article_comment": {
+      "count": 0,
+      "digest": "d751713988987e9331980363e24189ce"
+    }
+  },
+  "translation_database_writes": 2,
+  "translations_release_complete": false,
+  "application_deployed": false
+}

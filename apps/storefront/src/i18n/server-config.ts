@@ -8,7 +8,6 @@ async function getReviewedContent(locale: string): Promise<{ translations: Conte
   "use cache"
   cacheLife("minutes")
   cacheTag("localized-content", `localized-content:${locale}`)
-  if (locale === "en-US") return { translations: {}, templates: {} }
   try {
     const bundle = await sdk.client.fetch<{ locale: string; source_hash: string; translations: ContentDictionary; templates?: ContentTemplates }>("/store/localized-content", { query: { locale } })
     if (bundle.locale !== locale || !/^[a-f0-9]{64}$/.test(bundle.source_hash)) throw new Error("Invalid content bundle")

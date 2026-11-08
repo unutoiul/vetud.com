@@ -102,7 +102,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
             ) : null}
             {off ? (
               <Typography component="span" sx={{ alignSelf: "center", fontSize: 13, fontWeight: 700, color: "#fff", bgcolor: "brand.navy", borderRadius: "4px", px: 1, py: 0.25 }}>
-                {act("save")} {ct(off)}%
+                {new Intl.NumberFormat(ct.locale, { style: "percent" }).format(off / 100)} {ct("off")}
               </Typography>
             ) : null}
           </Stack>
@@ -162,8 +162,8 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
                           {selected ? <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "brand.blue" }} /> : null}
                         </Box>
                         <Box sx={{ minWidth: 0, overflowWrap: "anywhere" }}>
-                          <Typography component="span" sx={{ display: "block", fontWeight: 700, fontSize: 15.5, color: "brand.ink" }}>{translateAction(act, value)}</Typography>
-                          {line ? <Typography component="span" sx={{ display: "block", mt: 0.25, fontSize: 13, lineHeight: 1.45, color: "text.secondary" }}>{translateAction(act, line)}</Typography> : null}
+                          <Typography component="span" sx={{ display: "block", fontWeight: 700, fontSize: 15.5, color: "brand.ink" }}>{ct(translateAction(act, value))}</Typography>
+                          {line ? <Typography component="span" sx={{ display: "block", mt: 0.25, fontSize: 13, lineHeight: 1.45, color: "text.secondary" }}>{ct(translateAction(act, line))}</Typography> : null}
                         </Box>
                         {from ? (
                           <Typography component="span" sx={{ fontSize: 14, fontWeight: 650, color: "brand.ink", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums", textAlign: "right" }}>
@@ -179,7 +179,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
             ) : (
               <Box key={option.title}>
                 <Typography variant="eyebrow" component="p" id={`option-${option.title}`} sx={{ mb: 1.25, color: "text.secondary" }}>
-                  {translateAction(act, option.title)}
+                  {ct(translateAction(act, option.title))}
                 </Typography>
                 <ToggleButtonGroup
                   exclusive
@@ -222,7 +222,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
                             ...(available ? {} : { color: "text.disabled", textDecoration: "line-through" }),
                           }}
                         >
-                          {translateAction(act, value)}
+                          {ct(translateAction(act, value))}
                           {matchPrice ? (
                             <Box component="span" sx={{ fontSize: 12, fontWeight: 500, color: "text.secondary" }}>
                               {ct(money(matchPrice.amount, matchPrice.currencyCode))}
@@ -268,7 +268,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
                   {/* Once ticked, choose how many: more water for more vials. */}
                   {count ? (
                     <Box sx={{ gridColumn: "3 / -1", display: "flex", alignItems: "center", gap: 1.25 }}>
-                      <QuantityStepper value={count} onChange={(value) => setExtra(addOn.variantId, value)} min={1} max={20} size="small" label={act("quantityAddOn", { product: addOn.title })} />
+                      <QuantityStepper value={count} onChange={(value) => setExtra(addOn.variantId, value)} min={1} max={20} size="small" label={act("quantityAddOn", { product: ct(addOn.title) })} />
                       <Typography sx={{ fontSize: 12.5, color: "text.secondary" }}>{ct(addOn.unit ? `${count} ${addOn.unit}${count > 1 ? "s" : ""}` : null)}</Typography>
                     </Box>
                   ) : null}

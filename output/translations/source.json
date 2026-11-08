@@ -1,6 +1,6 @@
 {
-  "version": "content-2026-11-08-v1",
-  "source_hash": "1c35a9bfc923683eed44781a13be08bcf07cb3fca0d5012576398832d636afe5",
+  "version": "website-content-2026-11-08-v2",
+  "source_hash": "5c1a3b5b804f3e01882ce8c5af9df753a5721a09bc64f82ae687e3dae34a6cae",
   "entries": {
     "s0026b68bbd9e48bb": "Control comparison",
     "s00322b1d431ae81f": "Discuss {peptide} in the community",
@@ -1021,7 +1021,6 @@
     "s443dc34ea0d5892e": "Related lessons on the biology and on understanding the evidence in this article. None of them is a trial of the compound.",
     "s44539655ccaa259b": "Posting…",
     "s446015b9c8f7f7a1": "<slot0>PubMed</slot0>",
-    "s448bd420d500939c": "I used reta for a couple of weeks now, like 5-6 week, but from the first week my girlfriend is complains about the bad smell",
     "s44d0643d29714057": "Approved as a prescription medicine for female infertility and some other conditions. It is not approved for weight loss, and the FDA warns against “hCG diet” products.",
     "s44d9dbc263e12d6e": "(max-width: 600px) 65vw, 340px",
     "s44e042fc34f43bdc": "In July 2026, FDA advisers discussed DSIP (also called emideltide) as a possible compounding ingredient for opioid withdrawal, insomnia and narcolepsy. That discussion is not an approval ([read our report](/news/fda-advisers-review-bpc-157-and-six-peptides)).",
@@ -1100,7 +1099,6 @@
     "s4935daacc902ea7c": "{v0} | VETUD Community",
     "s4935e1c3b60cd519": "Comprehensive Review of the Safety and Efficacy of Thymosin Alpha 1 in Human Clinical Trials",
     "s49394e6a5095147a": "Professional background:\n{v0}",
-    "s4943b5ac1fbf95ca": "Most Selank studies are small and from Russia. Has anyone found an independent trial or a review from elsewhere?",
     "s49560b812f0b0367": "Conceptual illustration of CBL-514: research into targeted fat-cell removal.",
     "s49614572e1206628": "Semax is a lab-made fragment of ACTH, a hormone from the pituitary gland, with a short tail added so it lasts longer. It doesn’t have ACTH’s hormone effects.",
     "s496707e3ab8ae699": "Why only the middle dose reached significance, whether the effect lasts, and whether it helps other kinds of nerve damage are unknown.",
@@ -1149,7 +1147,6 @@
     "s4c1ca3fd34e37b49": "FDA advisers reviewed it for insomnia in July 2026 as a possible compounding ingredient.",
     "s4c2f74d6c0733ad6": "A small molecule, not a peptide, studied for reducing local fat deposits by triggering fat-cell death.",
     "s4c39d15c5288c46c": "Teichman et al. · Journal of Clinical Endocrinology & Metabolism · 2006",
-    "s4c41e4bf7503774d": "Show translation",
     "s4c4a57a583d82015": "Pickart & Margolina · International Journal of Molecular Sciences · 2018",
     "s4c71a922406e9f34": "Russian study, 2015 · 70 adults with anxiety disorders: 40 took Selank with phenazepam (a prescription anti-anxiety medicine), 30 took phenazepam alone",
     "s4c752994441bb726": "{v0}{v1} {v2}",
@@ -1861,7 +1858,6 @@
     "s7d31ffebccef9577": "What is known about keeping weight off afterwards?",
     "s7d3c0f62f006605c": "What is missing is the result that matters most. Among the 23 PubMed records that mention AOD-9604, we found no full peer-reviewed report of a human weight-loss trial. It was never approved as a medicine.",
     "s7d3ecee592be1b53": "The “tanning peptides”. One is an approved medicine for a rare disease; the other is an unapproved tanning injection that doctors warn about.",
-    "s7d693439a85dabc7": "Translated from the original post.",
     "s7d8dbfbf2893bf83": "PTT-A targets four receptors. <highlight>The evidence is still in animals</highlight>",
     "s7d8f216d60039843": "Sosne et al. · Clinical Ophthalmology · 2015",
     "s7d96597f6f5f2447": "History",
@@ -2293,7 +2289,6 @@
     "s9bf48ffd63265d4f": "Save profile",
     "s9c01790f4ea0a68d": "Not approved. A lab version of IGF-1 used mainly in cell culture. A different form of IGF-1, mecasermin, is approved for a rare growth disorder.",
     "s9c058f97cebed7a3": "{v0} product photo {v1}",
-    "s9c14c4457fc558e9": "Every time i had reta my girlfriend is complaining about my bad breath, anyone else experience the same?",
     "s9c1b0f489f526002": "Tirzepatide is a single molecule that acts like two hormones your gut releases after meals: GLP-1 and GIP. Both help control appetite and blood sugar.",
     "s9c36e51d232b7933": "It can over-stimulate the ovaries (ovarian hyperstimulation syndrome) and raises the chance of twins or more, so dosing is closely monitored.",
     "s9c3c38599d0d7aa3": "Shop the sale",
@@ -2710,7 +2705,6 @@
     "sb990a071f6e08147": "AOD-9604: Growth Hormone Fragment Research",
     "sb99c5ca39f0c93e3": "Selank Nasal Spray",
     "sb99d855250b63326": "format",
-    "sb9aefad3092d1edf": "Show original",
     "sb9af5827f9d2b13f": "Write your own",
     "sb9b18440a2a8ecae": "Address accuracy",
     "sb9e948c770b858a3": "Prakash & Goa · BioDrugs · 1999",
@@ -3733,7 +3727,8 @@
     "sff95204e24e18b22": "Your card payment is authorized. We will capture it when your order is ready to ship. No bank transfer is needed.",
     "sffb0ff7296fb7806": "Format",
     "sffebf552b93aa588": "Dual-chamber vial · 10 mg",
-    "sfff22786dc6f1ff4": "Customs and duties"
+    "sfff22786dc6f1ff4": "Customs and duties",
+    "s1697d2358e53296f": "Education"
   },
   "public_keys": [
     "s0026b68bbd9e48bb",
@@ -4054,6 +4049,7 @@
     "s167a2bc17af8cc9d",
     "s16844bf7f4cabe57",
     "s168741969a80b25e",
+    "s1697d2358e53296f",
     "s16a30836028fb31a",
     "s16a701cb4628a9c5",
     "s16a71bff6ac9c35f",
@@ -4736,7 +4732,6 @@
     "s443dc34ea0d5892e",
     "s44539655ccaa259b",
     "s446015b9c8f7f7a1",
-    "s448bd420d500939c",
     "s44d0643d29714057",
     "s44d9dbc263e12d6e",
     "s44e042fc34f43bdc",
@@ -4814,7 +4809,6 @@
     "s4935daacc902ea7c",
     "s4935e1c3b60cd519",
     "s49394e6a5095147a",
-    "s4943b5ac1fbf95ca",
     "s49560b812f0b0367",
     "s49614572e1206628",
     "s496707e3ab8ae699",
@@ -4862,7 +4856,6 @@
     "s4c1ca3fd34e37b49",
     "s4c2f74d6c0733ad6",
     "s4c39d15c5288c46c",
-    "s4c41e4bf7503774d",
     "s4c4a57a583d82015",
     "s4c71a922406e9f34",
     "s4c752994441bb726",
@@ -5567,7 +5560,6 @@
     "s7d31ffebccef9577",
     "s7d3c0f62f006605c",
     "s7d3ecee592be1b53",
-    "s7d693439a85dabc7",
     "s7d8dbfbf2893bf83",
     "s7d8f216d60039843",
     "s7d96597f6f5f2447",
@@ -5986,7 +5978,6 @@
     "s9bf48ffd63265d4f",
     "s9c01790f4ea0a68d",
     "s9c058f97cebed7a3",
-    "s9c14c4457fc558e9",
     "s9c1b0f489f526002",
     "s9c36e51d232b7933",
     "s9c3c38599d0d7aa3",
@@ -6173,7 +6164,6 @@
     "sa8c32dd0d0b9e1ea",
     "sa8c4741112ab4d1b",
     "sa8cfc6b1c74db145",
-    "sa8f277f20aeb8434",
     "sa9105cca6bd2fdd6",
     "sa9136cf0d52ddefe",
     "sa9152bc97133ca75",
@@ -6396,8 +6386,6 @@
     "sb9630826622b1114",
     "sb97d8f48288e18a2",
     "sb990a071f6e08147",
-    "sb99d855250b63326",
-    "sb9aefad3092d1edf",
     "sb9af5827f9d2b13f",
     "sb9b18440a2a8ecae",
     "sb9e948c770b858a3",
@@ -19920,6 +19908,18 @@
     ],
     "s2e9e7320f20bad60": [
       "store.locale-aware-count"
+    ],
+    "s1697d2358e53296f": [
+      "messages.en-US.Common.learn",
+      "components/layout/nav.ts:18",
+      "app/[countryCode]/learn/page.tsx:48"
     ]
+  },
+  "scope": {
+    "owner_content": true,
+    "community_messages": false,
+    "community_comments": false,
+    "member_biographies": false,
+    "approach": "Editorial localization: clear, idiomatic website copy for each locale; preserve scientific meaning, evidence limitations, numeric data, legal obligations, product identity and research-use restrictions."
   }
 }

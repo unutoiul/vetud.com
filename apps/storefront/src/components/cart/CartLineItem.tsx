@@ -92,10 +92,10 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
               value={Number(item.quantity)}
               disabled={pending}
               onChange={(quantity) => updateItem(item.id, quantity)}
-              label={act("quantityProduct", { product: item.product_title ?? item.title })}
+              label={act("quantityProduct", { product: ct(item.product_title ?? item.title) })}
             />
             <IconButton
-              aria-label={act("removeFromCart", { product: item.product_title ?? item.title })}
+              aria-label={act("removeFromCart", { product: ct(item.product_title ?? item.title) })}
               disabled={pending}
               onClick={() => removeItem(item.id)}
               size="small"

@@ -105,7 +105,7 @@ export default function PostCard({ post, thread, highlight, canAccept, canIntera
 
     {editing ? <Box>
       <TextField value={draft} onChange={event => setDraft(event.target.value.slice(0, post.is_opening ? 10000 : 5000))} multiline minRows={4} fullWidth label={act("editPost")} />
-      {dose ? <Alert severity="warning" sx={{ mt: 1.5 }}>“{ct(dose)}{ct("” looks like a dose amount. The community doesn't share doses, so this post would wait for a moderator.")}</Alert> : null}
+      {dose ? <Alert severity="warning" sx={{ mt: 1.5 }}>“{dose}{ct("” looks like a dose amount. The community doesn't share doses, so this post would wait for a moderator.")}</Alert> : null}
       <Box sx={{ display: "flex", gap: 1, mt: 1.5 }}>
         <Button variant="contained" size="small" onClick={() => void saveEdit()} disabled={busy === "edit" || draft.trim().length < 2}>{ct(busy === "edit" ? act("saving") : act("save"))}</Button>
         <Button size="small" onClick={() => { setEditing(false); setDraft(post.body) }}>{act("cancel")}</Button>

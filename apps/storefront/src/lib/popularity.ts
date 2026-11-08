@@ -35,6 +35,7 @@ export const POPULARITY: Record<string, number> = {
   kpv: 36,
   dsip: 34,
   "melanotan-i": 32, // afamelanotide (Scenesse)
+  "decapeptide-12": 30, // skin-brightening cosmetic peptide (Lumixyl)
   "ara-290": 22,
   "bacteriostatic-water": 20,
   "u-100-syringes": 15,

@@ -46,7 +46,7 @@ export default function ProductLearnMore({ title, guides }: { title: string; gui
 
   return (
     <Section tone="white" aria-labelledby="product-learn-title" sx={{ borderTop: "1px solid", borderColor: "divider" }}>
-      <Typography variant="eyebrow" component="p" sx={{ color: "brand.blue" }}>{ct("Learn")}</Typography>
+      <Typography variant="eyebrow" component="p" sx={{ color: "brand.blue" }}>{ct("Education")}</Typography>
       <Typography component="h2" variant="h3" id="product-learn-title" sx={{ mt: 1 }}>{ct.rich("Read and watch: {v0}", { v0: ct(title) }, {  })}</Typography>
       <Typography sx={{ mt: 1.5, maxWidth: 740, color: "text.secondary", lineHeight: 1.8 }}>
         {ct("Plain-language guides, news about new studies and selected videos from doctors and researchers. Published studies are about the named compound; they don't establish the safety or performance of this research product.")}

@@ -14,7 +14,7 @@ export default function EvidenceLadder({ evidence, name }: { evidence: Evidence;
   const current = EVIDENCE_STEPS[reached]
   return (
     <Box component="figure" sx={{ m: 0, maxWidth: 800 }}>
-      <Typography component="figcaption" sx={{ fontSize: 15, fontWeight: 650, mb: 1.5 }}>{ct.rich("How strong is the evidence?<slot0>{v0} has reached <slot1>{v1}</slot1>: {v2}.</slot0>", { v0: ct(name), v1: ct(current.label.toLowerCase()), v2: ct(current.explain.toLowerCase()) }, { slot0: chunks => <Box component="span" sx={{ display: "block", fontSize: 14, fontWeight: 400, color: "text.secondary", mt: .25 }} key="slot0">{chunks}</Box>, slot1: chunks => <strong key="slot1">{chunks}</strong> })}</Typography>
+      <Typography component="figcaption" sx={{ fontSize: 15, fontWeight: 650, mb: 1.5 }}>{ct.rich("How strong is the evidence?<slot0>{v0} has reached <slot1>{v1}</slot1>: {v2}.</slot0>", { v0: ct(name), v1: ct(current.label), v2: ct(current.explain) }, { slot0: chunks => <Box component="span" sx={{ display: "block", fontSize: 14, fontWeight: 400, color: "text.secondary", mt: .25 }} key="slot0">{chunks}</Box>, slot1: chunks => <strong key="slot1">{chunks}</strong> })}</Typography>
       <Box component="ol" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(5, minmax(0, 1fr))" }, gap: { xs: .75, sm: .5 } }}>
         {EVIDENCE_STEPS.map((step, index) => {
           const done = index <= reached

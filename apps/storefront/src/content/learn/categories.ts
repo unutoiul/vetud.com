@@ -8,7 +8,7 @@ export type CategoryId =
 export const CATEGORIES: { id: CategoryId; name: string; blurb: string; icon: IconName }[] = [
   { id: "weight", name: "Weight management", blurb: "Medicines and experimental compounds studied for appetite, body weight and body fat.", icon: "scale" },
   { id: "skin", name: "Skin & copper peptides", blurb: "Peptides used in skin care, led by copper peptide GHK-Cu.", icon: "leaf" },
-  { id: "pigmentation", name: "Pigmentation", blurb: "The tanning peptides, one approved and one that doctors warn about.", icon: "sun" },
+  { id: "pigmentation", name: "Pigmentation", blurb: "Peptides that change skin color: the tanning peptides, and a skin-care peptide studied for dark patches.", icon: "sun" },
   { id: "hair", name: "Hair", blurb: "Copper peptides studied for hair growth.", icon: "leaf" },
   { id: "recovery", name: "Recovery & mobility", blurb: "Peptides studied for repairing tendons, muscles, skin and the gut.", icon: "plus" },
   { id: "energy", name: "Energy & metabolism", blurb: "Molecules studied for how cells make and use energy.", icon: "molecule" },

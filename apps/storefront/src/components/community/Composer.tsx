@@ -135,7 +135,7 @@ export default function Composer() {
       <ImagePicker images={images} onChange={setImages} disabled={posting} />
     </Box>
 
-    {dose ? <Alert severity="warning">“{ct(dose)}{ct("” looks like a dose amount. The community doesn't share doses or protocols, so posts with them wait for a moderator. Remove it to publish straight away.")}</Alert> : null}
+    {dose ? <Alert severity="warning">“{dose}{ct("” looks like a dose amount. The community doesn't share doses or protocols, so posts with them wait for a moderator. Remove it to publish straight away.")}</Alert> : null}
 
     {error ? <Alert severity="error" onClose={() => setError(null)}>{ct(error)}</Alert> : null}
 

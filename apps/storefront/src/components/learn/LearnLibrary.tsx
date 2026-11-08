@@ -75,7 +75,7 @@ export default function LearnLibrary({ shop = {} }: { shop?: Record<string, stri
 
       <Box>
         <Typography aria-live="polite" sx={{ fontSize: 14, color: "text.secondary", mb: 2.5 }}>
-          {active ? `${CATEGORIES.find((category) => category.id === active)?.name}: ${shown.length} ${shown.length === 1 ? "guide" : "guides"}` : `All ${shown.length} guides`}
+          {ct.template("{v0}: {v1}", { v0: active ? ct(CATEGORIES.find((category) => category.id === active)?.name) : ct("All peptide guides"), v1: shown.length.toLocaleString(ct.locale) }, { translateValues: false })}
         </Typography>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", xl: "repeat(3, 1fr)" }, gap: 2.5 }}>
           {shown.map((peptide) => <PeptideCard key={peptide.slug} peptide={peptide} shopHref={shop[peptide.slug]} />)}

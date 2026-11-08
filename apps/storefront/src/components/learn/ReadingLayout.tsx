@@ -32,7 +32,7 @@ export function ReadingHeader({ title, description, breadcrumbs, image, variant 
     <Box sx={{ px: gutter, pt: { xs: 3, md: 5 }, pb: { xs: 3.5, md: 5 }, bgcolor: "brand.paper" }}>
       <Box sx={{ maxWidth: READING_WIDTH, mx: "auto" }}>
         <Breadcrumbs aria-label={act("breadcrumb")} sx={{ fontSize: 13, mb: { xs: 2.5, md: 4 }, "& a": { minHeight: 32, display: "inline-flex", alignItems: "center" } }}>
-          {breadcrumbs.map(item => item.href ? <AppLink key={item.label} href={item.href}>{translateAction(act, item.label)}</AppLink> : <Typography key={item.label} component="span" sx={{ fontSize: "inherit", color: "brand.navySoft" }} aria-current="page">{translateAction(act, item.label)}</Typography>)}
+          {breadcrumbs.map(item => item.href ? <AppLink key={item.label} href={item.href}>{ct(translateAction(act, item.label))}</AppLink> : <Typography key={item.label} component="span" sx={{ fontSize: "inherit", color: "brand.navySoft" }} aria-current="page">{ct(translateAction(act, item.label))}</Typography>)}
         </Breadcrumbs>
         <Box sx={{ maxWidth: 880 }}>
           {meta ? <Box sx={{ mb: { xs: 2, md: 2.5 }, display: "flex", flexWrap: "wrap", gap: 1.5, alignItems: "center", fontSize: 13.5, color: "brand.navySoft" }}>{ct(meta)}</Box> : null}

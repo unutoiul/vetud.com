@@ -1,0 +1,434 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      40,
+      "Les conditions applicables à vos commandes auprès de Vetud Peptides."
+    ],
+    [
+      47,
+      "Si une contestation est ouverte pour une commande livrée conformément à sa description sans que vous nous ayez contactés au préalable, nous la contesterons à l’aide des éléments mentionnés ci-dessus. Nous pouvons suspendre un compte qui ouvre à plusieurs reprises des contestations injustifiées et refuser ses commandes futures. Lorsque la loi le permet, nous pouvons également demander le remboursement des frais et coûts raisonnables engagés."
+    ],
+    [
+      55,
+      "Les données personnelles que nous recueillons, les raisons de leur utilisation et vos droits."
+    ],
+    [
+      104,
+      "Les délais de livraison sont estimatifs. Les risques vous sont transférés à la livraison. Consultez notre politique de livraison pour plus de détails."
+    ],
+    [
+      145,
+      "Notre droit de refus"
+    ],
+    [
+      201,
+      "26 octobre 2026"
+    ],
+    [
+      248,
+      "Nous remboursons les commandes annulées avant leur expédition, les retours acceptés au titre de notre politique de retour, les articles livrés endommagés, défectueux ou non conformes à la commande, ainsi que les commandes non livrées et introuvables."
+    ],
+    [
+      254,
+      "Ces conditions s’appliquent aux achats auprès de {v0} (« Vetud », « nous »). Vous pouvez nous contacter à l’adresse {v1}."
+    ],
+    [
+      275,
+      "Les prix sont affichés dans la devise de la région sélectionnée. Les taxes et droits applicables sont indiqués lors du paiement ; le transporteur peut vous facturer les droits d’importation de votre pays."
+    ],
+    [
+      299,
+      "Pour traiter et livrer les commandes et envoyer les courriels associés (contrat), répondre à vos messages (intérêt légitime) et respecter nos obligations comptables et légales (obligation légale)."
+    ],
+    [
+      309,
+      "Vous êtes responsable du respect de l’ensemble des lois et règles d’importation qui s’appliquent à vous et au pays de destination, y compris les autorisations, licences et formalités douanières requises pour les produits de recherche."
+    ],
+    [
+      378,
+      "Les dossiers de commande sont conservés pendant 6 ans à des fins comptables et fiscales. Les messages de contact sont conservés pendant 30 jours."
+    ],
+    [
+      427,
+      "10. Droit applicable"
+    ],
+    [
+      447,
+      "En passant commande et en saisissant vos informations de paiement sur ce site, vous autorisez {v0} et ses prestataires de paiement à débiter le moyen de paiement fourni du montant total affiché lors du paiement, comprenant le prix des produits, la livraison et les taxes applicables. Cette autorisation est donnée électroniquement sur Internet et produit les mêmes effets que votre signature manuscrite."
+    ],
+    [
+      451,
+      "Données recueillies"
+    ],
+    [
+      496,
+      "Pour traiter les contestations de manière équitable, nous conservons un dossier pour chaque commande. Il comprend votre compte, les informations fournies sur votre entreprise et vos recherches, votre acceptation de nos conditions et la confirmation de l’usage réservé à la recherche, la date et l’heure de la commande, les informations de paiement que nous sommes autorisés à conserver, les données d’expédition et de suivi, la confirmation de livraison et nos échanges avec vous. Nous pouvons transmettre ces éléments à notre prestataire de paiement et à l’émetteur de votre carte pour répondre à une contestation."
+    ],
+    [
+      523,
+      "Pays desservis"
+    ],
+    [
+      526,
+      "Ces conditions sont régies par le droit de l’Angleterre et du pays de Galles. Les tribunaux d’Angleterre et du pays de Galles sont compétents."
+    ],
+    [
+      558,
+      "Dans les limites autorisées par la loi, notre responsabilité concernant une commande est limitée au prix payé pour celle-ci. Aucune disposition des présentes conditions ne limite une responsabilité qui ne peut légalement être limitée."
+    ],
+    [
+      623,
+      "Modalités de remboursement"
+    ],
+    [
+      645,
+      "5. Autorisation de paiement en ligne"
+    ],
+    [
+      664,
+      "Nous pouvons refuser ou annuler une commande, demander une vérification de l’usage prévu et signaler un usage abusif présumé lorsque la commande indique une utilisation contraire à cette politique ou ne peut pas être légalement expédiée à destination."
+    ],
+    [
+      681,
+      "Finalités d’utilisation"
+    ],
+    [
+      737,
+      "Éléments conservés"
+    ],
+    [
+      803,
+      "Prestataires de services"
+    ],
+    [
+      834,
+      "Nous livrons actuellement dans les pays figurant dans le sélecteur de pays. Certains produits peuvent être indisponibles dans certains pays, et nous pouvons refuser une expédition vers une destination où ils ne peuvent pas être légalement fournis."
+    ],
+    [
+      845,
+      "Les produits ne sont destinés à aucune consommation, injection, ingestion, inhalation ou application cutanée humaine ou vétérinaire. Ils ne doivent être utilisés ni chez l’être humain ni chez l’animal, ni à des fins cliniques."
+    ],
+    [
+      871,
+      "Les pays desservis, les délais et les frais de livraison."
+    ],
+    [
+      898,
+      "Nous faisons appel à des prestataires qui traitent des données pour notre compte : hébergement du site (Vercel), hébergement du système de commerce (Railway), courriels transactionnels (Resend) et notre banque. Ils peuvent traiter des données en dehors de votre pays dans le cadre de garanties appropriées."
+    ],
+    [
+      900,
+      "Cas donnant lieu à un remboursement"
+    ],
+    [
+      926,
+      "Stockage à réception"
+    ],
+    [
+      938,
+      "Montants remboursés"
+    ],
+    [
+      1013,
+      "Les spécifications décrivent le produit fourni. Nous ne garantissons pas son adéquation à une application particulière, et aucune information de ce site ne constitue un conseil médical."
+    ],
+    [
+      1024,
+      "Les conditions et la procédure de retour d’une commande."
+    ],
+    [
+      1081,
+      "Les articles scellés et non ouverts, dans leur emballage d’origine avec le témoin d’intégrité intact, peuvent être retournés dans les 14 jours suivant la livraison."
+    ],
+    [
+      1119,
+      "Nos politiques de retour, de remboursement et de rétrofacturation font partie intégrante de ces conditions."
+    ],
+    [
+      1139,
+      "Nos produits sont fournis exclusivement pour la recherche en laboratoire in vitro par des personnes et des établissements qualifiés. En commandant, vous confirmez avoir au moins 21 ans, disposer de la formation et des installations nécessaires pour manipuler les produits de recherche en toute sécurité, et ne pas utiliser les produits à des fins thérapeutiques humaines ni pour une consommation, une administration de doses ou une injection humaine ou vétérinaire."
+    ],
+    [
+      1178,
+      "Contestations que nous considérons comme injustifiées"
+    ],
+    [
+      1189,
+      "Réservé à la recherche"
+    ],
+    [
+      1192,
+      "Suspicion de fraude"
+    ],
+    [
+      1272,
+      "Sauf si l’article est défectueux ou si nous avons envoyé le mauvais article, les frais de retour sont à votre charge. Utilisez un service avec suivi et conservez la preuve d’envoi."
+    ],
+    [
+      1287,
+      "2. Compte, admissibilité et usage prévu"
+    ],
+    [
+      1319,
+      "Pour toute question concernant un remboursement, contactez-nous à l’adresse {v0} en indiquant votre numéro de commande."
+    ],
+    [
+      1329,
+      "Nous vous envoyons un numéro de suivi par courriel lors de l’expédition. Vous pouvez suivre votre commande depuis la rubrique Commandes de votre compte."
+    ],
+    [
+      1408,
+      "Il ne s’agit ni de médicaments, ni de compléments alimentaires, ni d’aliments, ni de cosmétiques, ni de dispositifs médicaux. Ils n’ont été ni évalués ni autorisés par la FDA, l’EMA ou toute autre autorité réglementaire à des fins diagnostiques, préventives ou thérapeutiques."
+    ],
+    [
+      1416,
+      "Vérifiez votre adresse de livraison et le nom de votre entreprise ou établissement avant de commander. Nous ne sommes pas responsables des retards ou pertes dus à une adresse incorrecte. Si une commande est perdue ou retardée, contactez-nous à l’adresse {v0} en indiquant votre numéro de commande."
+    ],
+    [
+      1450,
+      "Nous remboursons le prix de l’article. Les frais de livraison ne sont remboursés que si la commande a été annulée avant l’expédition ou si le problème résulte de notre erreur. Les articles ouverts qui ne sont pas défectueux ne peuvent pas être remboursés."
+    ],
+    [
+      1503,
+      "Procédure de retour"
+    ],
+    [
+      1579,
+      "Après réception de votre retour"
+    ],
+    [
+      1588,
+      "Délai de traitement"
+    ],
+    [
+      1609,
+      "27 octobre 2026"
+    ],
+    [
+      1695,
+      "1. Qui sommes-nous ?"
+    ],
+    [
+      1733,
+      "Vous pouvez payer avec les moyens proposés lors du paiement, notamment, selon les options disponibles, par carte, PayPal, cryptomonnaie ou virement bancaire. Pour les commandes réglées par virement, le stock est réservé pendant 3 jours ouvrés après la commande. Les commandes non réglées dans ce délai peuvent être annulées."
+    ],
+    [
+      1780,
+      "Si vous ne reconnaissez pas un débit ou si votre commande présente un problème, contactez-nous à l’adresse {v0} avant d’ouvrir une contestation auprès de votre banque ou de l’émetteur de votre carte. Nous répondons sous 2 jours ouvrés et pouvons généralement résoudre le problème plus rapidement qu’une procédure de contestation, notamment par un remboursement conforme à notre politique de remboursement."
+    ],
+    [
+      1883,
+      "Toutes les ventes sont soumises à nos conditions de vente."
+    ],
+    [
+      1982,
+      "Documentation du produit"
+    ],
+    [
+      2002,
+      "Vous confirmez utiliser les produits uniquement pour des recherches de laboratoire licites, avec des mesures de protection appropriées, et ne pas les revendre ni les transmettre pour un usage humain ou animal."
+    ],
+    [
+      2005,
+      "Contactez-nous d’abord à l’adresse {v0} en indiquant votre numéro de commande et le motif du retour. Nous vous transmettrons les instructions. Les retours effectués sans autorisation préalable peuvent être refusés."
+    ],
+    [
+      2018,
+      "La marche à suivre en cas de problème de paiement et notre gestion des contestations."
+    ],
+    [
+      2044,
+      "Cookies et stockage"
+    ],
+    [
+      2109,
+      "Les cas dans lesquels nous remboursons une commande et les délais applicables."
+    ],
+    [
+      2174,
+      "Les données de carte sont traitées par notre prestataire de paiement et ne sont pas conservées sur nos serveurs. Nous ne débiterons pas votre moyen de paiement au-delà du montant total approuvé lors du paiement sans votre autorisation distincte. En cas de problème concernant un débit, contactez-nous à l’adresse {v0} avant de contacter votre banque afin que nous puissions le résoudre rapidement. Consultez notre politique de rétrofacturation."
+    ],
+    [
+      2204,
+      "Les commandes sont expédiées sous 1–2 jours ouvrés après confirmation du paiement."
+    ],
+    [
+      2211,
+      "Un compte est nécessaire pour commander. Nous n’acceptons pas les commandes sans compte. Lors de la commande, vous indiquez votre entreprise ou établissement et votre domaine de recherche, et confirmez que les produits sont exclusivement destinés à la recherche en laboratoire. Nous conservons ces informations avec votre commande."
+    ],
+    [
+      2237,
+      "En achetant, vous confirmez avoir au moins 21 ans et être un chercheur ou un établissement qualifié, ou agir pour le compte de l’un d’eux, avec la formation et les installations nécessaires pour manipuler les produits de recherche en toute sécurité."
+    ],
+    [
+      2250,
+      "Dès réception de votre commande, respectez les conditions de stockage indiquées sur l’étiquette et dans la documentation du produit."
+    ],
+    [
+      2265,
+      "Les envois internationaux peuvent être soumis à des droits et taxes d’importation à la charge du destinataire. Il vous appartient de connaître les règles d’importation des produits de recherche dans votre pays."
+    ],
+    [
+      2286,
+      "8. Informations sur les produits"
+    ],
+    [
+      2362,
+      "Responsable du traitement"
+    ],
+    [
+      2365,
+      "Articles défectueux, endommagés ou non conformes à la commande"
+    ],
+    [
+      2428,
+      "2 novembre 2026"
+    ],
+    [
+      2429,
+      "{v0} traite vos données personnelles. Contact : {v1}."
+    ],
+    [
+      2433,
+      "Délais"
+    ],
+    [
+      2489,
+      "Nous traitons un remboursement approuvé sous 5 jours ouvrés. Votre banque ou l’émetteur de votre carte peut nécessiter quelques jours supplémentaires pour le faire apparaître sur votre relevé."
+    ],
+    [
+      2552,
+      "Nous inspectons les articles retournés à leur réception. Si le retour est accepté, nous vous remboursons conformément à notre politique de remboursement."
+    ],
+    [
+      2588,
+      "Votre responsabilité en matière de conformité"
+    ],
+    [
+      2634,
+      "Articles pouvant être retournés"
+    ],
+    [
+      2710,
+      "Exactitude de l’adresse"
+    ],
+    [
+      2802,
+      "Nous conservons un identifiant de panier dans le stockage local de votre navigateur afin de préserver votre panier entre les visites. Nous n’utilisons pas de cookies publicitaires."
+    ],
+    [
+      2813,
+      "Tous les produits vendus par Vetud Peptides sont fournis strictement pour la recherche en laboratoire et l’analyse in vitro par des professionnels qualifiés."
+    ],
+    [
+      2869,
+      "Vérification des commandes"
+    ],
+    [
+      2893,
+      "Passer commande constitue une offre d’achat. Le contrat est conclu lorsque nous confirmons votre paiement et expédions les marchandises. Jusque-là, nous pouvons refuser une commande, par exemple en raison d’une erreur de prix, d’un problème de stock ou d’un échec de vérification, et nous rembourserons tout paiement reçu."
+    ],
+    [
+      2900,
+      "Standard : 3–5 jours ouvrés, avec suivi. Gratuit au-delà du seuil indiqué lors du paiement. Express : 1–2 jours ouvrés, avec suivi. Les tarifs de votre région sont affichés lors du paiement."
+    ],
+    [
+      2975,
+      "Vos droits"
+    ],
+    [
+      3000,
+      "Acheteurs qualifiés"
+    ],
+    [
+      3124,
+      "4. Prix et paiement"
+    ],
+    [
+      3170,
+      "Si vous pensez qu’un paiement a été effectué sans votre autorisation, prévenez-nous et informez immédiatement l’émetteur de votre carte. Nous prenons la fraude au sérieux et coopérerons pleinement en cas de réclamation fondée pour fraude."
+    ],
+    [
+      3208,
+      "6. Livraison"
+    ],
+    [
+      3210,
+      "Contactez-nous d’abord"
+    ],
+    [
+      3240,
+      "Les remboursements sont effectués sur le moyen de paiement d’origine. Les remboursements de virements bancaires sont versés sur le compte dont provenait le paiement. Les paiements en cryptomonnaie sont remboursés manuellement ; nous vous contacterons pour obtenir une adresse de remboursement."
+    ],
+    [
+      3261,
+      "Non destiné à un usage humain ou vétérinaire"
+    ],
+    [
+      3291,
+      "7. Retours, remboursements et rétrofacturations"
+    ],
+    [
+      3293,
+      "Nous ne fournissons ni posologie, ni instructions d’administration, ni protocoles pour un usage personnel, et nous ne donnons pas de conseils médicaux. Notre équipe ne répondra pas à ces questions."
+    ],
+    [
+      3391,
+      "Avis « Réservé à la recherche » (RUO) : les conditions dans lesquelles nous fournissons des produits de recherche."
+    ],
+    [
+      3396,
+      "Vous confirmez être le titulaire autorisé du moyen de paiement, ou avoir son autorisation de l’utiliser, et fournir des informations de facturation exactes et complètes. Nous pouvons vous demander de vérifier votre identité ou votre moyen de paiement avant l’expédition et retarder ou annuler une commande qui ne satisfait pas à cette vérification."
+    ],
+    [
+      3483,
+      "Nous pouvons refuser ou annuler une commande si nous estimons raisonnablement que ces conditions ne sont pas remplies ou qu’un produit ne peut pas être légalement fourni dans le pays de livraison. Consultez notre politique d’usage réservé à la recherche pour plus de détails."
+    ],
+    [
+      3491,
+      "9. Responsabilité"
+    ],
+    [
+      3512,
+      "Durée de conservation"
+    ],
+    [
+      3558,
+      "Avant l’expédition, nous pouvons vous demander de vérifier votre identité, votre établissement ou l’usage prévu pour vos recherches. Les commandes qui ne peuvent pas être vérifiées peuvent être retardées ou annulées et remboursées."
+    ],
+    [
+      3568,
+      "Selon votre lieu de résidence, vous pouvez disposer d’un droit d’accès, de rectification, de suppression ou d’exportation de vos données, d’opposition à leur traitement et de réclamation auprès d’une autorité de protection des données. Écrivez-nous par courriel pour exercer ces droits."
+    ],
+    [
+      3579,
+      "Si un article arrive endommagé ou non conforme à la commande, contactez-nous dans les 7 jours suivant la livraison en indiquant votre numéro de commande, le numéro de lot et en joignant des photos. Nous le remplacerons ou le rembourserons et prendrons en charge les frais de retour si nous vous demandons de le renvoyer."
+    ],
+    [
+      3601,
+      "3. Commandes et contrat"
+    ],
+    [
+      3638,
+      "Les articles ouverts ou utilisés, ainsi que ceux qui ont été stockés de manière inappropriée, ne peuvent pas être retournés pour des raisons de sécurité et d’intégrité, sauf s’ils sont défectueux."
+    ],
+    [
+      3665,
+      "Options de livraison et suivi"
+    ],
+    [
+      3672,
+      "Données de commande : nom, courriel, adresses de livraison et de facturation, numéro de téléphone (facultatif) et contenu de la commande. Données de contact : les informations envoyées via le formulaire de contact. Données techniques : un identifiant de panier conservé dans votre navigateur et les journaux du serveur."
+    ],
+    [
+      3710,
+      "Chaque produit est identifié par son numéro de lot et un certificat d’analyse correspondant à ce lot. Les informations de ce site sont fournies uniquement comme référence pour la recherche et ne constituent pas un conseil médical."
+    ],
+    [
+      3731,
+      "Douane et droits"
+    ]
+  ]
+}

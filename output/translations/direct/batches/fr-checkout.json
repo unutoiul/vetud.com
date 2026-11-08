@@ -1,0 +1,330 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      43,
+      "Coordonnées de paiement sécurisées"
+    ],
+    [
+      115,
+      "En autorisant le paiement et en passant commande, vous acceptez nos conditions de vente et confirmez que les produits sont exclusivement destinés à la recherche en laboratoire. Les cartes sont débitées lorsque la commande est prête à être expédiée. Les prélèvements bancaires doivent être définitivement encaissés avant l’expédition."
+    ],
+    [
+      132,
+      "Nous n’avons pas retrouvé votre paiement. Si vous avez payé, vérifiez vos e-mails pour retrouver la confirmation de commande."
+    ],
+    [
+      206,
+      "Montant à régler"
+    ],
+    [
+      255,
+      "Paiement reçu pour la commande {v0}."
+    ],
+    [
+      261,
+      "Votre commande a changé. Vérifiez-la, puis autorisez à nouveau le paiement PayPal."
+    ],
+    [
+      264,
+      "Le paiement PayPal a été annulé. Vous pouvez réessayer ou choisir un autre moyen de paiement."
+    ],
+    [
+      298,
+      "Vérifiez les informations de votre carte."
+    ],
+    [
+      308,
+      "La commande n’a pas pu être passée. Vérifiez vos informations."
+    ],
+    [
+      321,
+      "En payant et en passant commande, vous acceptez nos conditions de vente et confirmez que les produits sont exclusivement destinés à la recherche en laboratoire. Une autorisation est demandée sur votre carte dès maintenant ; le débit aura lieu lorsque la commande sera prête à être expédiée."
+    ],
+    [
+      459,
+      "Comment payer"
+    ],
+    [
+      581,
+      "NMI recueille les informations de votre carte de manière sécurisée. Nous utilisons l’adresse de facturation déjà renseignée."
+    ],
+    [
+      587,
+      "Indiquez la référence de paiement pour que nous puissions identifier votre virement."
+    ],
+    [
+      610,
+      "statut non valide"
+    ],
+    [
+      671,
+      "Numéro de carte"
+    ],
+    [
+      843,
+      "En passant commande, vous acceptez nos conditions de vente et confirmez que les produits sont exclusivement destinés à la recherche en laboratoire. Vous recevrez les instructions de paiement par e-mail ; nous expédierons la commande dès réception du paiement."
+    ],
+    [
+      859,
+      "Nous n’avons pas retrouvé votre panier. Si vous avez déjà payé, vérifiez vos e-mails pour retrouver la confirmation de commande."
+    ],
+    [
+      921,
+      "Le formulaire de paiement sécurisé n’a pas pu démarrer. Revenez à l’étape Paiement pour le recharger."
+    ],
+    [
+      949,
+      "Effectuer le paiement"
+    ],
+    [
+      976,
+      "Le délai de sécurisation des coordonnées a expiré. Aucun jeton de paiement n’a été envoyé par ce formulaire. Revenez à l’étape Paiement pour recharger les champs sécurisés."
+    ],
+    [
+      1053,
+      "· Qté"
+    ],
+    [
+      1137,
+      "Votre tentative de paiement a été transmise. Consultez le message ci-dessus et votre historique de commandes avant de réessayer. Pour modifier vos coordonnées de paiement, revenez à l’étape Paiement."
+    ],
+    [
+      1156,
+      "Numéro de compte"
+    ],
+    [
+      1168,
+      "Les champs de paiement sécurisés n’ont pas pu se connecter. Vérifiez votre connexion, puis revenez à l’étape Paiement pour les recharger."
+    ],
+    [
+      1177,
+      "Confirmation du paiement…"
+    ],
+    [
+      1184,
+      "Vérifiez ce champ."
+    ],
+    [
+      1187,
+      "Nous ne pouvons pas confirmer votre paiement pour le moment. Consultez vos e-mails avant de réessayer."
+    ],
+    [
+      1208,
+      "Commande passée. Ouverture de la confirmation…"
+    ],
+    [
+      1404,
+      "En payant avec PayPal, vous acceptez nos conditions de vente et confirmez que les produits sont exclusivement destinés à la recherche en laboratoire. Nous expédierons la commande après confirmation du paiement."
+    ],
+    [
+      1539,
+      "Votre carte a été refusée."
+    ],
+    [
+      1544,
+      "Une confirmation sera envoyée à <slot0>{v0}</slot0>. {v1}"
+    ],
+    [
+      1567,
+      "Le paiement PayPal a été annulé. Si vous avez déjà autorisé un paiement, consultez votre historique de commandes avant de réessayer."
+    ],
+    [
+      1634,
+      "Les tarifs de votre compte ont été appliqués. Vérifiez le nouveau total avant de payer."
+    ],
+    [
+      1648,
+      "Paiement en environnement de test — utilisez uniquement les coordonnées de test NMI."
+    ],
+    [
+      1662,
+      "Adresse"
+    ],
+    [
+      1715,
+      "Commande {v0} reçue."
+    ],
+    [
+      1727,
+      "Vous recevrez un lien de suivi dès l’expédition du colis."
+    ],
+    [
+      1731,
+      "Le paiement par carte n’a pas été finalisé. Réessayez."
+    ],
+    [
+      1775,
+      "Le total ou les informations de livraison ont changé. Vérifiez votre commande avant de payer."
+    ],
+    [
+      1879,
+      "Code de sécurité"
+    ],
+    [
+      1963,
+      "À réception du paiement, nous vous envoyons une confirmation par e-mail et préparons votre commande avec sa documentation de lot."
+    ],
+    [
+      1968,
+      "Vérifiez votre commande avant de payer avec PayPal."
+    ],
+    [
+      2072,
+      "En passant commande, vous acceptez nos conditions de vente et confirmez que les produits sont exclusivement destinés à la recherche en laboratoire. Vous serez redirigé vers MakePay pour effectuer le paiement ; nous expédierons la commande dès sa confirmation."
+    ],
+    [
+      2147,
+      "Ce lien de paiement n’est plus valide."
+    ],
+    [
+      2181,
+      "Livraison suivie"
+    ],
+    [
+      2266,
+      "Votre panier est vide."
+    ],
+    [
+      2331,
+      "PayPal n’a pas pu préparer votre paiement. Réessayez."
+    ],
+    [
+      2366,
+      "PayPal est indisponible. Choisissez un autre moyen de paiement."
+    ],
+    [
+      2383,
+      "Ce retour de PayPal ne correspond pas à votre commande actuelle. Revenez au paiement pour le vérifier, ou consultez votre historique de commandes si vous avez déjà payé."
+    ],
+    [
+      2391,
+      "Référence de paiement"
+    ],
+    [
+      2448,
+      "La suite"
+    ],
+    [
+      2478,
+      "Confirmation et préparation"
+    ],
+    [
+      2485,
+      "Le paiement a été {v0}. Aucun montant n’a été débité pour cette tentative."
+    ],
+    [
+      2541,
+      "PayPal n’a pas pu finaliser ce paiement. Si vous l’avez autorisé, consultez vos commandes ; sinon, essayez un autre moyen de paiement."
+    ],
+    [
+      2601,
+      "Environnement de test PayPal — aucun paiement réel."
+    ],
+    [
+      2694,
+      "Numéro d’acheminement bancaire"
+    ],
+    [
+      2724,
+      "Expiration (MM / AA)"
+    ],
+    [
+      2748,
+      "Ce paiement PayPal ne correspond pas à votre commande."
+    ],
+    [
+      2751,
+      "Informations de carte"
+    ],
+    [
+      2765,
+      "Confirmation du paiement PayPal…"
+    ],
+    [
+      2784,
+      "PayPal n’a pas pu se charger. Réessayez ou choisissez un autre moyen de paiement."
+    ],
+    [
+      2836,
+      "Vos coordonnées de paiement n’ont pas pu être sécurisées. Vérifiez les champs."
+    ],
+    [
+      2902,
+      "Nous confirmons votre commande par e-mail et la préparons avec sa documentation de lot."
+    ],
+    [
+      2929,
+      "Environnement de test Stripe : aucun débit réel. Utilisez la carte de test 4242 4242 4242 4242, une date d’expiration future et un CVC quelconque."
+    ],
+    [
+      2964,
+      "Votre commande a changé. Vérifiez-la, puis saisissez à nouveau les informations de votre carte."
+    ],
+    [
+      3035,
+      "Virez le montant dû en indiquant votre numéro de commande en référence."
+    ],
+    [
+      3086,
+      "Votre paiement est toujours en attente. Vous pouvez fermer cette page ; nous vous écrirons dès sa confirmation."
+    ],
+    [
+      3153,
+      "Votre session de paiement par carte doit être actualisée."
+    ],
+    [
+      3196,
+      "Paiement confirmé. Votre confirmation de commande sera envoyée par e-mail."
+    ],
+    [
+      3245,
+      "Votre commande a changé. Vérifiez-la, puis saisissez à nouveau vos coordonnées de paiement sécurisées."
+    ],
+    [
+      3323,
+      "Livraison à"
+    ],
+    [
+      3440,
+      "statut indisponible"
+    ],
+    [
+      3493,
+      "Nous n’avons pas encore pu confirmer le résultat du paiement. Consultez votre historique de commandes ou votre e-mail de confirmation avant de réessayer."
+    ],
+    [
+      3500,
+      "Votre session de paiement sécurisé doit être actualisée."
+    ],
+    [
+      3536,
+      "NMI recueille vos coordonnées bancaires de manière sécurisée. Les prélèvements peuvent prendre plusieurs jours ouvrés avant d’être définitivement encaissés ; votre commande restera en attente jusque-là."
+    ],
+    [
+      3544,
+      "Titulaire du compte bancaire"
+    ],
+    [
+      3554,
+      "Votre panier a changé."
+    ],
+    [
+      3663,
+      "Votre panier a changé. Revenez à l’étape de paiement."
+    ],
+    [
+      3673,
+      "Cette commande n’a pas pu être chargée. Connectez-vous au compte utilisé pour la commande ou consultez votre e-mail de confirmation."
+    ],
+    [
+      3679,
+      "Commande {v0}"
+    ],
+    [
+      3700,
+      "Votre commande a changé. Vérifiez-la avant de payer avec PayPal."
+    ]
+  ]
+}

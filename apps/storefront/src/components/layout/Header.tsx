@@ -96,7 +96,7 @@ export default function Header() {
     </Drawer>
     <Dialog open={searchOpen} onClose={() => setSearchOpen(false)} fullWidth maxWidth="sm" aria-labelledby="search-title" slotProps={{ paper: { sx: { alignSelf: "flex-start", mt: 10, p: { xs: 2.5, sm: 4 } } }, transition: { onEntered: () => searchInput.current?.focus() } }}>
       <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", mb: 2 }}><Typography component="h2" variant="h4" id="search-title">{ct("Find your research materials")}</Typography><IconButton aria-label={act("closeSearch")} onClick={() => setSearchOpen(false)}><Icon name="close" /></IconButton></Stack>
-      <SearchBox autoFocus inputRef={searchInput} onNavigate={() => setSearchOpen(false)} />
+      <SearchBox autoFocus inline inputRef={searchInput} onNavigate={() => setSearchOpen(false)} />
       <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>{ct("Search products (name, code or lot number), peptide guides and news.")}</Typography>
     </Dialog>
   </>

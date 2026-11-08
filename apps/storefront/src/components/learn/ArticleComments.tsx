@@ -155,7 +155,7 @@ export default function ArticleComments({ article }: { article: string }) {
       <Box component="ol" aria-label={`${count} ${count === 1 ? "comment" : "comments"}`} sx={{ m: 0, p: 0, listStyle: "none", display: "grid", gap: 0 }}>
         {comments.map(comment => <Box component="li" key={comment.id} sx={{ py: 2.5, borderTop: "1px solid", borderColor: "divider", "&:first-of-type": { borderTop: 0, pt: 0 } }}>
           <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 1.5, rowGap: .5, mb: 1 }}>
-            <Typography component="span" sx={{ fontSize: 15, fontWeight: 700, color: "brand.navy" }}>{comment.author_name}{ct(comment.mine ? " (you)" : "")}</Typography>
+            <Typography component="span" sx={{ fontSize: 15, fontWeight: 700, color: "brand.navy" }}><span translate="no">{comment.author_name}</span>{ct(comment.mine ? " (you)" : "")}</Typography>
             <Typography component="time" dateTime={comment.created_at} sx={{ fontSize: 13.5, color: "brand.navySoft" }}>{ct(formatCommentDate(comment.created_at, ct.locale))}</Typography>
             {comment.mine ? <Button size="small" color="error" onClick={() => void remove(comment)} disabled={deleting === comment.id} sx={{ ml: "auto", minHeight: 32 }}>{deleting === comment.id ? act("deleting") : act("delete")}</Button> : null}
           </Box>

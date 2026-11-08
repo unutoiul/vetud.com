@@ -1,0 +1,358 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      8,
+      "Partiellement réglé"
+    ],
+    [
+      13,
+      "Vos commandes et leur suivi"
+    ],
+    [
+      36,
+      "Trouvez vos produits de recherche"
+    ],
+    [
+      37,
+      "Tous les produits vendus sur ce site sont exclusivement destinés à la recherche et à l’identification. Ils ne sont destinés ni à l’administration, ni à l’injection, ni à l’ingestion chez l’être humain."
+    ],
+    [
+      46,
+      "Votre paiement doit être vérifié. Les articles non expédiés sont mis en attente. Contactez l’assistance avant de tenter un nouveau paiement."
+    ],
+    [
+      62,
+      "Flacon multidose de 10 ml"
+    ],
+    [
+      65,
+      "Mélanges de BPC-157, TB-500 et GHK-Cu : état des connaissances"
+    ],
+    [
+      86,
+      "Lot documenté"
+    ],
+    [
+      94,
+      "Ne partagez jamais de dosages, de calendriers de prise ou de sources d’approvisionnement extérieures à Vetud."
+    ],
+    [
+      107,
+      "Les photos des nouveaux membres sont d’abord vérifiées par un modérateur. Dès le niveau Contributeur, elles sont publiées immédiatement."
+    ],
+    [
+      108,
+      "Illustration de l’article Poids, graisse et muscle : comprendre ce que les résultats mesurent"
+    ],
+    [
+      133,
+      "15 mg par semaine (Zepbound)"
+    ],
+    [
+      155,
+      "Tésamoréline : recherche sur la graisse viscérale et hépatique"
+    ],
+    [
+      159,
+      "Découverte de peptides tétra-agonistes à longue durée d’action dans des modèles animaux d’obésité (299-OR)"
+    ],
+    [
+      163,
+      "Aucune adresse de livraison nécessaire."
+    ],
+    [
+      168,
+      "{count, plural, one {# semaine} other {# semaines}}"
+    ],
+    [
+      180,
+      "Les liens des nouveaux membres sont d’abord vérifiés par un modérateur. Dès le niveau Contributeur, ils sont publiés immédiatement."
+    ],
+    [
+      193,
+      "Sous-groupe humain : volume de graisse · communication de congrès"
+    ],
+    [
+      217,
+      "Aucun produit dans ces catégories pour le moment."
+    ],
+    [
+      227,
+      "Date indisponible"
+    ],
+    [
+      243,
+      "Guide de recherche"
+    ],
+    [
+      272,
+      "Documentation"
+    ],
+    [
+      277,
+      "BPC-157 : données humaines, sécurité et recherche"
+    ],
+    [
+      288,
+      "CagriSema face à Zepbound : résultats de l’essai comparatif"
+    ],
+    [
+      314,
+      "Spray nasal de {v0}, 10 ml : le coffret VETUD et le flacon pulvérisateur"
+    ],
+    [
+      327,
+      "Peptides de cuivre et pousse des cheveux : les données scientifiques"
+    ],
+    [
+      331,
+      "Encore {v0} pour la livraison standard offerte"
+    ],
+    [
+      350,
+      "STEP 1"
+    ],
+    [
+      366,
+      "Informations sur les ingrédients"
+    ],
+    [
+      369,
+      "Efficacité et sécurité de l’injection de CBL-514 pour réduire la graisse sous-cutanée abdominale"
+    ],
+    [
+      394,
+      "Soyez précis : citez vos sources et signalez ce qui relève d’une hypothèse."
+    ],
+    [
+      400,
+      "Votre commande n’a pas encore été expédiée. Les informations de suivi apparaîtront ici dès la préparation d’une expédition."
+    ],
+    [
+      403,
+      "Saisissez un numéro de téléphone valide"
+    ],
+    [
+      407,
+      "Les commandes les plus récentes apparaissent en premier, dans leur devise d’origine. Ouvrez une commande pour consulter ses détails."
+    ],
+    [
+      442,
+      "Coffret VETUD ouvert contenant 10 seringues à insuline U-100"
+    ],
+    [
+      453,
+      "VETUD : comprendre les peptides"
+    ],
+    [
+      477,
+      "Versant Ventures présente Pep2Tango Therapeutics"
+    ],
+    [
+      507,
+      "{v0} : contenu"
+    ],
+    [
+      509,
+      "Impossible de récupérer les détails de l’adresse ({v0})"
+    ],
+    [
+      521,
+      "Voir les détails de la commande"
+    ],
+    [
+      527,
+      "Aucune autre commande sur cette page."
+    ],
+    [
+      532,
+      "En savoir plus sur {v0}"
+    ],
+    [
+      560,
+      "Recherche animale · résumé de congrès"
+    ],
+    [
+      563,
+      "Usage prévu"
+    ],
+    [
+      570,
+      "Ex. : VTD01-2609A…"
+    ],
+    [
+      571,
+      "Des produits accompagnés de leur documentation de lot, exclusivement destinés à la recherche en laboratoire."
+    ],
+    [
+      604,
+      "{v0} : ce que montre la recherche"
+    ],
+    [
+      638,
+      "Gardez à jour les coordonnées utilisées pour vos commandes."
+    ],
+    [
+      641,
+      "Votre panier est vide"
+    ],
+    [
+      655,
+      "CBL-514 : sous-groupe sur la graisse viscérale et recherche sur la reprise de poids à l’EASD 2026"
+    ],
+    [
+      658,
+      "Comprimé quotidien de 25 mg (Wegovy oral)"
+    ],
+    [
+      659,
+      "Peptides de recherche et matériel de laboratoire | VETUD {v0}"
+    ],
+    [
+      662,
+      "Dans la même série."
+    ],
+    [
+      665,
+      "Pays et devise"
+    ],
+    [
+      674,
+      "CJC-1295, ipamoréline et sermoréline : recherche chez l’être humain"
+    ],
+    [
+      691,
+      "Index de recherche : {v0}"
+    ],
+    [
+      701,
+      "{count, plural, one {# personne} other {# personnes}}"
+    ],
+    [
+      717,
+      "Consultez vos commandes Vetud, les informations de livraison et le suivi des expéditions."
+    ],
+    [
+      736,
+      "Vos articles sont réservés. Suivez les instructions de virement ci-dessous ; nous expédierons la commande après confirmation du paiement."
+    ],
+    [
+      738,
+      "Actualités et articles."
+    ],
+    [
+      739,
+      "{count, plural, one {# expert vérifié} other {# experts vérifiés}}"
+    ],
+    [
+      747,
+      "{count, plural, one {# réponse} other {# réponses}}"
+    ],
+    [
+      768,
+      "Expédition annulée"
+    ],
+    [
+      788,
+      "Kisspeptine et FIV : comprendre la recherche clinique"
+    ],
+    [
+      790,
+      "En cours de traitement"
+    ],
+    [
+      795,
+      "Conservation"
+    ],
+    [
+      804,
+      "Vidéos sur les peptides, la biologie et la recherche"
+    ],
+    [
+      820,
+      "Cette page a été déplacée ou n’a jamais existé. Consultez le catalogue ou recherchez un nom de produit, un code ou un numéro de lot."
+    ],
+    [
+      821,
+      "Aucun produit ne correspond à « {v0} »."
+    ],
+    [
+      824,
+      "Expédié le {v0}"
+    ],
+    [
+      828,
+      "CBL-514 : recherche sur les cellules graisseuses et données cliniques"
+    ],
+    [
+      832,
+      "{count, plural, one {# question} other {# questions}}"
+    ],
+    [
+      846,
+      "Suivi de commande"
+    ],
+    [
+      847,
+      "Les frais de livraison et les taxes sont calculés lors du paiement."
+    ],
+    [
+      861,
+      "Vos questions sur un produit, un lot ou une commande sont traitées par notre équipe. Indiquez votre numéro de commande ou de lot pour obtenir une réponse plus rapide."
+    ],
+    [
+      863,
+      "Chaque commande. Chaque expédition."
+    ],
+    [
+      866,
+      "{count, plural, one {# discussion} other {# discussions}}"
+    ],
+    [
+      889,
+      "Votre paiement a été remboursé, partiellement remboursé ou annulé. Consultez votre historique de commandes pour connaître son statut actuel, ou contactez l’assistance."
+    ],
+    [
+      890,
+      "{count, plural, one {# point} other {# points}}"
+    ],
+    [
+      910,
+      "Erreur 404"
+    ],
+    [
+      941,
+      "{v0}{v1}. Quantités disponibles, tarifs régionaux, stock et documentation de lot. Exclusivement pour la recherche en laboratoire, sans usage humain."
+    ],
+    [
+      953,
+      "La recherche est temporairement indisponible. Réessayez dans un instant."
+    ],
+    [
+      961,
+      "Les peptides, sous un éclairage plus clair."
+    ],
+    [
+      992,
+      "Réinitialiser votre mot de passe"
+    ],
+    [
+      996,
+      "Remboursé"
+    ],
+    [
+      999,
+      "Parcourez notre collection de produits de recherche documentés."
+    ],
+    [
+      1001,
+      "Ressources VETUD"
+    ],
+    [
+      1034,
+      "Paiements"
+    ]
+  ]
+}

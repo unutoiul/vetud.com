@@ -32,10 +32,10 @@ export default function ThreadCard({ thread, showTopic = false }: { thread: Foru
         {peptide ? <Typography component="span" sx={{ fontSize: 13, color: "brand.navySoft" }}>{ct(peptide.name)}</Typography> : null}
         {thread.lot ? <Typography component="span" variant="mono" sx={{ fontSize: 12, color: "brand.navySoft" }}>{act("lot")} {thread.lot}</Typography> : null}
       </Box>
-      <Typography component="h3" sx={{ fontSize: { xs: 18, md: 20 }, fontWeight: 650, lineHeight: 1.35, letterSpacing: "-.01em", textWrap: "pretty" }}>
-        <AppLink href={threadHref(thread)} underline="hover" sx={{ color: "brand.navy" }}>{ct(thread.title)}</AppLink>
+      <Typography component="h3" translate="no" sx={{ fontSize: { xs: 18, md: 20 }, fontWeight: 650, lineHeight: 1.35, letterSpacing: "-.01em", textWrap: "pretty" }}>
+        <AppLink href={threadHref(thread)} underline="hover" sx={{ color: "brand.navy" }}>{thread.title}</AppLink>
       </Typography>
-      <Typography sx={{ mt: .75, fontSize: 15, lineHeight: 1.65, color: "brand.navySoft", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{ct(thread.excerpt)}</Typography>
+      <Typography translate="no" sx={{ mt: .75, fontSize: 15, lineHeight: 1.65, color: "brand.navySoft", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{thread.excerpt}</Typography>
       <Box sx={{ mt: 1.25 }}><AuthorLine author={thread.author} verified={thread.verified_purchase} verifiedLot={thread.lot} size="small" /></Box>
     </Box>
     <Box sx={{ display: "flex", flexDirection: { xs: "row", md: "column" }, alignItems: { md: "flex-end" }, justifyContent: { md: "center" }, gap: { xs: 2, md: .5 }, fontSize: 13, color: "brand.navySoft", whiteSpace: "nowrap" }}>

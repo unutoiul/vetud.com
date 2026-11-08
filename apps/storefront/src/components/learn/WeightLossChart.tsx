@@ -19,16 +19,16 @@ const PLACEBO = "#8794a8"
 const SCALE_MAX = 30
 const TICKS = [0, 10, 20, 30]
 
-const pct = (value: number) => `${value.toFixed(1)}%`
+const pct = (value: number, locale: string) => new Intl.NumberFormat(locale, { style: "percent", minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value / 100)
 
 function Bar({ trial, value, color, series }: { trial: WeightLossTrial; value: number; color: string; series: "Medicine" | "Placebo" }) {
   const ct = useContentTranslator()
-  const description = `${series === "Medicine" ? `${trial.medicine} ${trial.dose}` : "Placebo"}: ${pct(value)} average weight lost (${trial.trial}, ${trial.weeks} weeks)`
+  const description = ct.template("{v0}: {v1} average weight lost ({v2}, {v3} weeks)", { v0: series === "Medicine" ? `${ct(trial.medicine)} ${ct(trial.dose)}` : ct("Placebo"), v1: pct(value, ct.locale), v2: trial.trial, v3: trial.weeks }, { translateValues: false })
   return (
-    <Tooltip arrow placement="top" title={<Box sx={{ py: .25 }}><Box component="strong" sx={{ display: "block", fontSize: 14 }}>{ct(pct(value))}</Box><Box component="span" sx={{ fontSize: 12, opacity: .85 }}>{ct(series === "Medicine" ? `${trial.medicine}, ${trial.dose}` : `Placebo, ${trial.trial}`)}</Box></Box>}>
-      <Box tabIndex={0} aria-label={ct(description)} sx={{ position: "relative", height: 22, display: "flex", alignItems: "center", cursor: "default", borderRadius: "4px", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 }, "&:hover .bar-fill, &:focus-visible .bar-fill": { filter: "brightness(1.12)" } }}>
+    <Tooltip arrow placement="top" title={<Box sx={{ py: .25 }}><Box component="strong" sx={{ display: "block", fontSize: 14 }}>{pct(value, ct.locale)}</Box><Box component="span" sx={{ fontSize: 12, opacity: .85 }}>{series === "Medicine" ? `${ct(trial.medicine)}, ${ct(trial.dose)}` : `${ct("Placebo")}, ${trial.trial}`}</Box></Box>}>
+      <Box tabIndex={0} aria-label={description} sx={{ position: "relative", height: 22, display: "flex", alignItems: "center", cursor: "default", borderRadius: "4px", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 }, "&:hover .bar-fill, &:focus-visible .bar-fill": { filter: "brightness(1.12)" } }}>
         <Box className="bar-fill" sx={{ height: 18, width: `${(value / SCALE_MAX) * 100}%`, bgcolor: color, borderRadius: "0 4px 4px 0", transition: "filter .15s ease" }} />
-        <Typography component="span" sx={{ ml: 1, fontSize: 12.5, fontWeight: series === "Medicine" ? 700 : 500, color: series === "Medicine" ? "text.primary" : "text.secondary", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>{ct(pct(value))}</Typography>
+        <Typography component="span" sx={{ ml: 1, fontSize: 12.5, fontWeight: series === "Medicine" ? 700 : 500, color: series === "Medicine" ? "text.primary" : "text.secondary", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>{pct(value, ct.locale)}</Typography>
       </Box>
     </Tooltip>
   )
@@ -72,7 +72,7 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
         })}
         <Box sx={{ display: { xs: "none", md: "block" } }} />
         <Box aria-hidden sx={{ position: "relative", height: 34, borderTop: "1px solid #cbd6e6", mr: 6, mt: { xs: 1, md: 0 } }}>
-          {TICKS.map((tick) => <Typography key={tick} component="span" sx={{ position: "absolute", top: 6, left: `${(tick / SCALE_MAX) * 100}%`, translate: tick === 0 ? "0" : "-50%", fontSize: 12, color: "#67758b", fontVariantNumeric: "tabular-nums" }}>{ct(tick)}%</Typography>)}
+          {TICKS.map((tick) => <Typography key={tick} component="span" sx={{ position: "absolute", top: 6, left: `${(tick / SCALE_MAX) * 100}%`, translate: tick === 0 ? "0" : "-50%", fontSize: 12, color: "#67758b", fontVariantNumeric: "tabular-nums" }}>{new Intl.NumberFormat(ct.locale, { style: "percent" }).format(tick / 100)}</Typography>)}
         </Box>
       </Box>
       <Typography sx={{ fontSize: 12.5, color: "text.secondary", textAlign: { md: "right" }, mr: { md: 6 } }}>{ct("Average body weight lost")}</Typography>
@@ -88,7 +88,7 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
             <thead><tr><th>{ct("Medicine")}</th><th>{ct("Trial")}</th><th className="num">{ct("People")}</th><th className="num">{ct("Weeks")}</th><th className="num">{ct("Medicine")}</th><th className="num">{ct("Placebo")}</th><th>{ct("Source")}</th></tr></thead>
             <tbody>
               {WEIGHT_LOSS_TRIALS.map((trial) => <tr key={`${trial.trial}-${trial.dose}`}>
-                <td>{ct(trial.medicine)}, {ct(trial.dose)}</td><td>{ct(trial.trial)}</td><td className="num">{trial.people.toLocaleString(ct.locale)}</td><td className="num">{trial.weeks.toLocaleString(ct.locale)}</td><td className="num">{ct(pct(trial.medicineLoss))}</td><td className="num">{ct(pct(trial.placeboLoss))}</td>
+                <td>{ct(trial.medicine)}, {ct(trial.dose)}</td><td>{ct(trial.trial)}</td><td className="num">{trial.people.toLocaleString(ct.locale)}</td><td className="num">{trial.weeks.toLocaleString(ct.locale)}</td><td className="num">{pct(trial.medicineLoss, ct.locale)}</td><td className="num">{pct(trial.placeboLoss, ct.locale)}</td>
                 <td>{ct.rich("<slot0>PubMed</slot0>", {  }, { slot0: chunks => <Link href={trial.source} target="_blank" rel="noopener noreferrer" key="slot0">{chunks}</Link> })}</td>
               </tr>)}
             </tbody>

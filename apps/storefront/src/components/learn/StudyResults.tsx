@@ -8,7 +8,7 @@ const WHO = { people: "In people", animals: "In animals", cells: "In cells", rev
 const COMPOUND = "#3268aa"
 const COMPARISON = "#8794a8"
 
-const shown = (bar: { value: number; display?: string }, unit = "") => bar.display ?? `${bar.value.toLocaleString("en-US")}${unit}`
+const shown = (bar: { value: number; display?: string }, unit = "", locale = "en-US") => bar.display ?? (unit === "%" ? new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 3 }).format(bar.value / 100) : `${bar.value.toLocaleString(locale)}${unit}`)
 
 function Bars({ result }: { result: StudyResult }) {
   const ct = useContentTranslator()
@@ -21,7 +21,7 @@ function Bars({ result }: { result: StudyResult }) {
           <Typography sx={{ fontSize: 13, fontWeight: index === 0 ? 650 : 500, color: index === 0 ? "text.primary" : "text.secondary" }}>{ct(bar.label)}</Typography>
           <Box sx={{ display: "flex", alignItems: "center", minWidth: 0 }}>
             <Box aria-hidden sx={{ height: 16, width: `${Math.max(2, (bar.value / max) * 100)}%`, bgcolor: index === 0 ? COMPOUND : COMPARISON, borderRadius: "0 4px 4px 0", flexShrink: 0, maxWidth: "calc(100% - 64px)" }} />
-            <Typography component="span" sx={{ ml: 1, fontSize: 13, fontWeight: index === 0 ? 700 : 500, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>{ct(shown(bar, result.unit))}</Typography>
+            <Typography component="span" sx={{ ml: 1, fontSize: 13, fontWeight: index === 0 ? 700 : 500, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>{ct(shown(bar, result.unit, ct.locale))}</Typography>
           </Box>
         </Box>
       ))}
@@ -43,7 +43,7 @@ export default function StudyResults({ results, sources, framing }: { results: S
         {results.map((result) => {
           const source = sources[result.source]
           const bars = result.bars ?? []
-          const description = bars.length ? `${result.title}: ${bars.map((bar) => `${bar.label} ${shown(bar, result.unit)}`).join(", ")}${result.lowerIsBetter ? " (lower is better)" : ""}` : result.title
+          const description = bars.length ? ct.template("{v0}: {v1}", { v0: ct(result.title), v1: bars.map((bar) => `${ct(bar.label)} ${ct(shown(bar, result.unit, ct.locale))}`).join(", ") }, { translateValues: false }) + (result.lowerIsBetter ? ` (${ct("Lower is better")})` : "") : ct(result.title)
           return (
             <Box component="figure" key={result.title} aria-label={ct(description)} sx={{ m: 0, p: { xs: 2, md: 2.5 }, border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: "#fff" }}>
               <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1, mb: 1 }}>
@@ -53,7 +53,7 @@ export default function StudyResults({ results, sources, framing }: { results: S
               <Typography component="figcaption" sx={{ fontSize: 15.5, fontWeight: 650, lineHeight: 1.4 }}>{ct(result.title)}</Typography>
               <Typography sx={{ fontSize: 13, color: "text.secondary", lineHeight: 1.6, mt: .25, mb: bars.length || result.finding ? 1.5 : 0 }}>{ct(result.study)}</Typography>
               {bars.length > 1 ? <Bars result={result} /> : bars.length === 1 ? (
-                <Typography sx={{ fontSize: { xs: 30, md: 34 }, fontWeight: 650, letterSpacing: "-.02em", color: COMPOUND, lineHeight: 1.1, fontVariantNumeric: "tabular-nums" }}>{ct(shown(bars[0], result.unit))}</Typography>
+                <Typography sx={{ fontSize: { xs: 30, md: 34 }, fontWeight: 650, letterSpacing: "-.02em", color: COMPOUND, lineHeight: 1.1, fontVariantNumeric: "tabular-nums" }}>{ct(shown(bars[0], result.unit, ct.locale))}</Typography>
               ) : null}
               {result.finding ? <Typography sx={{ fontSize: 14, lineHeight: 1.7, mt: bars.length ? 1.25 : 0 }}>{ct(result.finding)}</Typography> : null}
               {source ? (

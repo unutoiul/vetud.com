@@ -1,0 +1,41 @@
+{
+  "owner_content": true,
+  "community_messages": false,
+  "community_comments": false,
+  "member_biographies": false,
+  "approach": "Editorial localization: clear, idiomatic website copy for each locale; preserve scientific meaning, evidence limitations, numeric data, legal obligations, product identity and research-use restrictions.",
+  "navigation_labels": {
+    "en-US": "Education",
+    "en-GB": "Education",
+    "bg": "Знания",
+    "cs": "Vzdělávání",
+    "da": "Viden",
+    "de": "Wissen",
+    "el": "Γνώση",
+    "es": "Educación",
+    "et": "Teadmised",
+    "fi": "Tietoa",
+    "fr": "Ressources",
+    "hr": "Znanje",
+    "hu": "Tudástár",
+    "is": "Fræðsla",
+    "it": "Approfondimenti",
+    "lt": "Žinių bazė",
+    "lv": "Zināšanu bāze",
+    "nb": "Kunnskap",
+    "nl": "Kennisbank",
+    "pl": "Wiedza",
+    "pt": "Conhecimento",
+    "ro": "Resurse",
+    "sk": "Vzdelávanie",
+    "sl": "Znanje",
+    "sv": "Kunskap"
+  },
+  "review_order": [
+    "Meaning and factual fidelity",
+    "Natural local phrasing and terminology",
+    "Grammar in full-page context",
+    "Numbers, links, placeholders and formatting",
+    "Rendered website and database coverage"
+  ]
+}

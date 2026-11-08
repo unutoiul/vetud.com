@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]/com
   const { thread: id } = await params
   const detail = await load(id)
   if (!detail) return { title: "Community thread", robots: { index: false, follow: true } }
-  return communityMetadata({ title: detail.thread.title, description: detail.thread.excerpt, path: `/community/${id}`, type: "article" })
+  return communityMetadata({ title: detail.thread.title, description: detail.thread.excerpt, path: `/community/${id}`, type: "article", memberContent: true })
 }
 
 export default function ThreadPage({ params }: PageProps<"/[countryCode]/community/[thread]">) {
@@ -71,7 +71,7 @@ function person(author: ForumAuthor, country: string) {
 
 /** Google's discussion forum markup: the opening post, its replies and their counts. */
 async function structuredData({ thread, opening, posts }: ForumThreadDetail) {
-  const { country, locale, ct } = await getPageLocalization()
+  const { country } = await getPageLocalization()
   const url = articleUrl(`/community/${thread.id}`, country)
   return {
     "@context": "https://schema.org",
@@ -79,9 +79,8 @@ async function structuredData({ thread, opening, posts }: ForumThreadDetail) {
     "@id": url,
     url,
     mainEntityOfPage: url,
-    headline: ct(thread.title),
-    text: ct(opening.body),
-    inLanguage: locale,
+    headline: thread.title,
+    text: opening.body,
     datePublished: thread.created_at,
     ...(opening.edited_at ? { dateModified: opening.edited_at } : {}),
     author: person(thread.author, country),
@@ -91,7 +90,7 @@ async function structuredData({ thread, opening, posts }: ForumThreadDetail) {
     ],
     comment: posts.slice(0, 25).map(post => ({
       "@type": "Comment",
-      text: ct(post.body),
+      text: post.body,
       datePublished: post.created_at,
       author: person(post.author, country),
       interactionStatistic: { "@type": "InteractionCounter", interactionType: "https://schema.org/LikeAction", userInteractionCount: post.helpful_count },

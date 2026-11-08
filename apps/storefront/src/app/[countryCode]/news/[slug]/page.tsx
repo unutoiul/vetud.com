@@ -63,7 +63,7 @@ async function ArticleContent({ params }: Pick<PageProps<"/[countryCode]/news/[s
   })
 
   return <>
-    <Box component="article" lang="en" aria-labelledby="article-title">
+    <Box component="article" lang={ct.locale} aria-labelledby="article-title">
       <ArticleJsonLd data={data} />
       <ReadingHeader title={ct(title)} description={ct(article.dek)} image={image} variant={article.art} uid={`hero-${article.slug}`} minutes={readingMinutes(text)}
         breadcrumbs={[{ label: "News and articles", href: "/news" }, { label: article.topic }]}

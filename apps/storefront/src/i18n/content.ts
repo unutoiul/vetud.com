@@ -86,8 +86,8 @@ export function createContentTranslator(dictionary: ContentDictionary = {}, loca
       const formatter = createTranslator({ locale, messages: { message: text(source) } })
       return formatter("message", { count })
     },
-    template(source: string, values: Record<string, unknown>) {
-      return text(source).replace(/\{(v\d+)\}/g, (whole, key: string) => Object.hasOwn(values, key) ? String(text(values[key])) : whole)
+    template(source: string, values: Record<string, unknown>, options: { translateValues?: boolean } = {}) {
+      return text(source).replace(/\{(v\d+)\}/g, (whole, key: string) => Object.hasOwn(values, key) ? String(options.translateValues === false ? values[key] : text(values[key])) : whole)
     },
     has(source: string) { return Object.hasOwn(dictionary, contentKey(source)) },
   })

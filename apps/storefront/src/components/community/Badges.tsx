@@ -29,10 +29,10 @@ export function Pill({ tone = "neutral", icon, children, title }: { tone?: Badge
 /** Name (linked to the member page), role badge with credentials, and level. */
 export function AuthorLine({ author, verifiedLot, verified, size = "medium" }: { author: ForumAuthor; verified?: boolean; verifiedLot?: string | null; size?: "small" | "medium" }) {
   const ct = useContentTranslator()
-  const name = <Box component="span" sx={{ fontWeight: 700, color: "brand.navy", fontSize: size === "small" ? 14 : 15 }}>{author.display_name}</Box>
+  const name = <Box component="span" translate="no" sx={{ fontWeight: 700, color: "brand.navy", fontSize: size === "small" ? 14 : 15 }}>{author.display_name}</Box>
   return <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 1, rowGap: .5, minWidth: 0 }}>
     {author.handle ? <AppLink href={`/community/members/${author.handle}`} underline="hover" sx={{ color: "inherit" }}>{ct(name)}</AppLink> : name}
-    {author.role === "expert" ? <Pill tone="expert" icon="shield" title={ct("Verified by the Vetud team")}>{ct("Expert")}{ct(author.credentials ? ` · ${author.credentials}` : "")}</Pill> : null}
+    {author.role === "expert" ? <Pill tone="expert" icon="shield" title={ct("Verified by the Vetud team")}>{ct("Expert")}{author.credentials ? <span translate="no"> · {author.credentials}</span> : null}</Pill> : null}
     {author.role === "moderator" ? <Pill tone="moderator">{ct("Moderator")}</Pill> : null}
     {author.role === "member" && author.level_id !== "member" ? <Pill>{ct(author.level)}</Pill> : null}
     {verified ? <Pill tone="verified" icon="checkCircle" title={ct("Has a paid Vetud order for this product. The lot is the member's report, checked against our lot records.")}>{ct("Verified buyer")}{ct(verifiedLot ? ` · Lot ${verifiedLot}` : "")}</Pill> : null}

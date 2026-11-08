@@ -35,12 +35,13 @@ export async function storefrontMetadata({ title, description, country, path, im
 }
 
 export async function productMetadata(product: HttpTypes.StoreProduct, country: string): Promise<Metadata> {
+  const { ct } = await getPageLocalization()
   const meta = readProductMeta(product)
-  const form = meta.form && !product.title.toLowerCase().includes(meta.form.replace(/ solution$/i, "").toLowerCase()) ? ` ${meta.form}` : ""
+  const form = meta.form && !product.title.toLowerCase().includes(meta.form.replace(/ solution$/i, "").toLowerCase()) ? ` ${ct(meta.form)}` : ""
   const market = country === "gb" ? "UK" : country.toUpperCase()
   return storefrontMetadata({
-    title: `${product.title}${form} for Research | VETUD ${market}`,
-    description: `${product.title}${form}. Available amounts, regional prices, stock and lot documentation. Laboratory research only; not for human use.`,
+    title: ct.template("{v0}{v1} for Research | VETUD {v2}", { v0: ct(product.title), v1: form, v2: market }, { translateValues: false }),
+    description: ct.template("{v0}{v1}. Available amounts, regional prices, stock and lot documentation. Laboratory research only; not for human use.", { v0: ct(product.title), v1: form }, { translateValues: false }),
     country, path: `/products/${product.handle}`,
     images: getProductImages(product).map(image => ({ ...image, url: new URL(image.url, BASE_URL).href })),
   })

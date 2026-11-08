@@ -13,7 +13,7 @@ export default function PostImages({ images, author }: { images: ForumImage[]; a
     {images.map((image, index) => <li key={image.id}>
       <Box component="a" href={image.url} target="_blank" rel="noopener noreferrer" aria-label={act("photoOpen", { number: index + 1, author: author })}
         sx={{ display: "block", position: "relative", aspectRatio: images.length === 1 ? "4 / 3" : "1 / 1", borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: "brand.mintWash", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
-        <Image src={image.url} alt={ct.template("Photo {v0} from {v1}", { v0: index + 1, v1: author })} fill unoptimized sizes="(max-width: 600px) 50vw, 240px" style={{ objectFit: "cover" }} />
+        <Image src={image.url} alt={ct.template("Photo {v0} from {v1}", { v0: index + 1, v1: author }, { translateValues: false })} fill unoptimized sizes="(max-width: 600px) 50vw, 240px" style={{ objectFit: "cover" }} />
       </Box>
     </li>)}
   </Box>

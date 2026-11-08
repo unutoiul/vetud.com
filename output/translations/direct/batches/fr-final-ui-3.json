@@ -1,0 +1,390 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      1996,
+      "SS-31 (élamiprétide) : recherche et autorisation, en clair"
+    ],
+    [
+      2007,
+      "De l’eau stérile contenant un peu d’alcool benzylique, utilisée en laboratoire pour dissoudre les produits lyophilisés."
+    ],
+    [
+      2010,
+      "{count, plural, one {# réponse} other {# réponses}}"
+    ],
+    [
+      2015,
+      "Examen des peptides par la FDA : BPC-157 et six autres composés"
+    ],
+    [
+      2021,
+      "Comprendre les peptides et la science."
+    ],
+    [
+      2025,
+      "Comprendre les peptides : guides et produits de recherche | VETUD"
+    ],
+    [
+      2026,
+      "Ce paiement a été annulé. Contactez l’assistance avant de tenter un nouveau paiement."
+    ],
+    [
+      2046,
+      "Il mentionne un dosage : un modérateur doit donc l’examiner avant publication. La communauté ne partage pas de dosages ; vous pouvez modifier le message pour le retirer."
+    ],
+    [
+      2048,
+      "Utilisation"
+    ],
+    [
+      2064,
+      "Le glutathion est un tripeptide : trois acides aminés, le glutamate, la cystéine et la glycine, assemblés entre eux. Les cellules le fabriquent elles-mêmes, et le foie en contient des concentrations particulièrement élevées."
+    ],
+    [
+      2071,
+      "Une diminution de 12,01% de la graisse viscérale n’est pas une baisse de 12,01% du poids corporel. Le CBL-514 est une petite molécule expérimentale, pas un peptide."
+    ],
+    [
+      2074,
+      "Une question sur un produit, un lot ou une commande ? Écrivez à l’équipe Vetud."
+    ],
+    [
+      2080,
+      "Saisissez le numéro de suivi indiqué dans votre confirmation d’expédition. Le numéro de commande et le numéro de suivi du colis sont différents."
+    ],
+    [
+      2081,
+      "Lot {v0} · Pureté {v1} · {v2}"
+    ],
+    [
+      2096,
+      "Vous cherchez un certificat d’analyse ?"
+    ],
+    [
+      2098,
+      "Les thèmes facilitent la navigation ; les produits restent destinés à la recherche en laboratoire."
+    ],
+    [
+      2101,
+      "Coffret VETUD ouvert avec le stylo réutilisable, 12 aiguilles et le livret d’instructions"
+    ],
+    [
+      2111,
+      "Les commandes passées après connexion apparaissent ici. Pour une ancienne commande passée sans compte, utilisez le lien de suivi de l’e-mail d’expédition ou contactez-nous."
+    ],
+    [
+      2112,
+      "Partagez des observations, pas des conseils médicaux. Encouragez les autres à consulter un médecin."
+    ],
+    [
+      2129,
+      "Rétatrutide : résultats des essais TRIUMPH-2 et TRIUMPH-3"
+    ],
+    [
+      2139,
+      "Poids et perte de graisse : bien lire les résultats de recherche"
+    ],
+    [
+      2153,
+      "Il neutralise les molécules réactives de l’oxygène susceptibles d’endommager les cellules et aide le foie à transformer et à éliminer de nombreuses substances. Les chercheurs l’étudient dans le stress oxydatif, la fonction hépatique et la pigmentation cutanée."
+    ],
+    [
+      2158,
+      "Expédition {v0} · {v1}"
+    ],
+    [
+      2201,
+      "Les laboratoires l’utilisent pour reconstituer, c’est-à-dire dissoudre, les poudres lyophilisées. La cartouche VETUD à double chambre en contient déjà dans sa seconde chambre ; le flacon est destiné à votre propre matériel de laboratoire."
+    ],
+    [
+      2219,
+      "Que montre la recherche ?"
+    ],
+    [
+      2240,
+      "{v0} | Ressources VETUD"
+    ],
+    [
+      2257,
+      "Notre catalogue est en cours de mise à jour."
+    ],
+    [
+      2263,
+      "avec une photo de l’étiquette."
+    ],
+    [
+      2269,
+      "Structure chimique de {v0}, issue de PubChem"
+    ],
+    [
+      2274,
+      "Image du produit {v0}"
+    ],
+    [
+      2277,
+      "Le volume de graisse viscérale a diminué de 12,01% ; il a augmenté de 5,68% sous placebo. Ce petit sous-groupe de phase 2 comptait 40 participants disposant de données de suivi ultérieur."
+    ],
+    [
+      2283,
+      "Total de la commande"
+    ],
+    [
+      2297,
+      "Partiellement autorisé"
+    ],
+    [
+      2303,
+      "Semax et Selank : recherche et limites des données"
+    ],
+    [
+      2308,
+      "Illustration de l’article 12 peptides populaires retirés de la liste de la FDA déconseillant les préparations magistrales : ce que cela signifie"
+    ],
+    [
+      2329,
+      "Compte rendu du congrès de l’EASD"
+    ],
+    [
+      2338,
+      "article"
+    ],
+    [
+      2344,
+      "Registre des lots · {v0} lots"
+    ],
+    [
+      2348,
+      "Le suivi apparaît dès la préparation de votre expédition. Les premières informations du transporteur peuvent mettre du temps à s’afficher après l’envoi. Les commandes passées sans compte ne sont pas automatiquement rattachées à un compte par l’adresse e-mail."
+    ],
+    [
+      2367,
+      "Votre commande a été reçue. Consultez votre historique de commandes ou votre e-mail de confirmation pour connaître le statut actuel du paiement. N’effectuez pas de nouveau paiement pendant sa vérification."
+    ],
+    [
+      2408,
+      "Suivez votre colis."
+    ],
+    [
+      2412,
+      "{v0}. Exclusivement pour la recherche en laboratoire."
+    ],
+    [
+      2417,
+      "Découvrez le rétatrutide, le tirzépatide, le sémaglutide et d’autres produits de recherche. Comparez les quantités, les tarifs régionaux, les stocks et la documentation de lot. Usage en laboratoire uniquement."
+    ],
+    [
+      2446,
+      "Quantités disponibles"
+    ],
+    [
+      2452,
+      "à l’instant"
+    ],
+    [
+      2453,
+      "Phase 2"
+    ],
+    [
+      2466,
+      "Paiement en cours de traitement"
+    ],
+    [
+      2467,
+      "{v0}–{v1} sur {v2} commandes"
+    ],
+    [
+      2471,
+      "Mélanotan I et II : recherche sur le bronzage et risques"
+    ],
+    [
+      2480,
+      "Registre des lots"
+    ],
+    [
+      2497,
+      "Recherche, réglementation et guides pédagogiques, expliqués simplement. Chaque article propose des vidéos associées et des liens vers les sources."
+    ],
+    [
+      2504,
+      "Aucun numéro de suivi pour le moment. Revenez après l’expédition."
+    ],
+    [
+      2513,
+      "Paiement à vérifier"
+    ],
+    [
+      2524,
+      "Découvrez le rétatrutide, le tirzépatide, le sémaglutide et d’autres produits de recherche. Comparez les quantités disponibles, les tarifs régionaux, les stocks et la documentation de lot. Exclusivement pour la recherche en laboratoire."
+    ],
+    [
+      2526,
+      "Poursuivre la lecture"
+    ],
+    [
+      2528,
+      "{v0} lot(s) documenté(s){v1}"
+    ],
+    [
+      2535,
+      "Premiers repères, lecture des études, réglementation, actualités, lots et qualité."
+    ],
+    [
+      2542,
+      "Recherche sur les peptides, réglementation et guides pédagogiques, avec vidéos associées et sources originales."
+    ],
+    [
+      2564,
+      "Formats et quantités"
+    ],
+    [
+      2565,
+      "Votre prélèvement bancaire a été transmis et attend son encaissement définitif. Aucun virement séparé n’est nécessaire. Votre commande reste en attente jusqu’à confirmation de l’encaissement."
+    ],
+    [
+      2569,
+      "Illustration de l’article Des cellules à l’être humain : comprendre les étapes de la recherche"
+    ],
+    [
+      2581,
+      "NAD+, MOTS-c, SS-31 et la recherche sur le vieillissement, l’énergie et l’immunité."
+    ],
+    [
+      2589,
+      "PT-141, kisspeptine, hormones de la fertilité et recherches associées."
+    ],
+    [
+      2598,
+      "Réparation tissulaire, BPC-157 et TB-500, et recherche sur l’hormone de croissance."
+    ],
+    [
+      2614,
+      "Ce composé n’est pas un peptide, mais il est souvent évoqué à leurs côtés."
+    ],
+    [
+      2637,
+      "Panier mis à jour : {v0} article(s){v1}"
+    ],
+    [
+      2640,
+      "Montant restant pour la livraison offerte"
+    ],
+    [
+      2657,
+      "Le total inclut {v0} de taxe(s){v1}."
+    ],
+    [
+      2667,
+      "Recherchez des produits par nom, code ou numéro de lot, des guides sur les peptides et des actualités."
+    ],
+    [
+      2678,
+      "L’étude en bref"
+    ],
+    [
+      2681,
+      "Un modérateur l’a masqué."
+    ],
+    [
+      2688,
+      "Des vidéos choisies avec soin, principalement de médecins, dont certains portent un regard critique."
+    ],
+    [
+      2697,
+      "Les questions encore ouvertes"
+    ],
+    [
+      2705,
+      "AOD-9604 : recherche sur un fragment de l’hormone de croissance"
+    ],
+    [
+      2740,
+      "Expédié"
+    ],
+    [
+      2744,
+      "Volume de graisse viscérale mesuré par IRM, quatre semaines après le dernier traitement"
+    ],
+    [
+      2750,
+      "Consultez le"
+    ],
+    [
+      2762,
+      "Illustration de l’article Les conseillers de la FDA se prononcent sur le BPC-157 et six autres peptides"
+    ],
+    [
+      2763,
+      "{v0} Aucun contenu de ce site ne constitue un conseil médical. La disponibilité des produits varie selon la région."
+    ],
+    [
+      2775,
+      "La collection de peptides VETUD."
+    ],
+    [
+      2776,
+      "%s · {v0}"
+    ],
+    [
+      2816,
+      "Forme"
+    ],
+    [
+      2817,
+      "Lots actuels et récents."
+    ],
+    [
+      2833,
+      "Ce paiement a été annulé. Contactez-nous si vous souhaitez toujours poursuivre votre commande."
+    ],
+    [
+      2847,
+      "Votre paiement bancaire a été rejeté et doit être vérifié. Les articles non expédiés sont en attente. Contactez-nous avant de payer à nouveau ; le suivi d’un colis déjà expédié reste disponible ci-dessous."
+    ],
+    [
+      2854,
+      "Selank, Semax, DSIP et la recherche sur le sommeil, le stress et la concentration."
+    ],
+    [
+      2862,
+      "Cette séquence n’est pas répertoriée."
+    ],
+    [
+      2867,
+      "OASIS 4"
+    ],
+    [
+      2874,
+      "DSIP et sommeil : ce que la recherche montre et ne montre pas"
+    ],
+    [
+      2876,
+      "Partiellement emballé"
+    ],
+    [
+      2883,
+      "Recherche en laboratoire uniquement"
+    ],
+    [
+      2888,
+      "{count, plural, one {# discussion} other {# discussions}}"
+    ],
+    [
+      2896,
+      "Analyse de pureté"
+    ],
+    [
+      2898,
+      "Autorisé"
+    ],
+    [
+      2908,
+      "Paiement annulé"
+    ],
+    [
+      2915,
+      "Plusieurs membres l’ont signalé : il est masqué jusqu’à la vérification d’un modérateur."
+    ]
+  ]
+}

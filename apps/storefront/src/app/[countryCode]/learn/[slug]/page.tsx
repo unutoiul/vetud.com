@@ -68,7 +68,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
   const text = [peptide.oneLiner, peptide.whatItIs, peptide.howItWorks, ...peptide.findings, ...unknowns, ...peptide.risks, peptide.statusNote]
   const contents = [
     { id: "at-a-glance", label: "At a glance" },
-    { id: "what-it-is", label: act("whatIsPeptide", { peptide: peptide.name }) },
+    { id: "what-it-is", label: act("whatIsPeptide", { peptide: ct(peptide.name) }) },
     { id: "how-it-works", label: "How it works" },
     { id: "research", label: "Research findings" },
     ...(inChart ? [{ id: "comparison", label: "Weight-loss comparison" }] : []),
@@ -82,14 +82,14 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[countryCode]/lea
   ]
   const data = await articleStructuredData({
     title, description: peptide.oneLiner, path: `/learn/${peptide.slug}`, image, sources: peptide.sources, text,
-    breadcrumbs: [{ name: "Home", path: "" }, { name: "Learn", path: "/learn" }, { name: category.name, path: `/learn#${category.id}` }, { name: peptide.name, path: `/learn/${peptide.slug}` }],
+    breadcrumbs: [{ name: "Home", path: "" }, { name: "Education", path: "/learn" }, { name: category.name, path: `/learn#${category.id}` }, { name: peptide.name, path: `/learn/${peptide.slug}` }],
   })
 
   return <>
-    <Box component="article" lang="en" aria-labelledby="article-title">
+    <Box component="article" lang={ct.locale} aria-labelledby="article-title">
       <ArticleJsonLd data={data} />
       <ReadingHeader title={ct(title)} description={ct(peptide.oneLiner)} image={image} uid={`hero-${peptide.slug}`} minutes={readingMinutes(text)}
-        breadcrumbs={[{ label: "Learn", href: "/learn" }, { label: category.name, href: `/learn#${category.id}` }, { label: peptide.name }]}
+        breadcrumbs={[{ label: "Education", href: "/learn" }, { label: category.name, href: `/learn#${category.id}` }, { label: peptide.name }]}
         meta={<><StatusBadge status={peptide.status} /><span>{ct("Research guide")}</span></>}>
         {peptide.aka ? <Typography sx={{ mt: 1.5, color: "brand.navySoft", fontSize: 14 }}>{ct.rich("Also known as {v0}", { v0: ct(peptide.aka) }, {  })}</Typography> : null}
       </ReadingHeader>

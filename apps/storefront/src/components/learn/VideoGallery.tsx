@@ -24,7 +24,7 @@ export default function VideoGallery({ videos, columns = 3, connections }: { vid
     <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: `repeat(${columns}, 1fr)` }, gap: { xs: 3.5, md: 4 } }}>
       {videos.map((video) => (
         <Box component="article" key={video.id}>
-          <Box component="button" type="button" onClick={() => setPlaying(video)} aria-label={act("playVideoTitle", { title: video.title, creator: video.creator })} sx={{ display: "block", position: "relative", width: "100%", aspectRatio: "16 / 9", overflow: "hidden", p: 0, border: 0, borderRadius: "6px", bgcolor: "brand.navyDeep", cursor: "pointer", "&:focus-visible": { outline: "3px solid", outlineColor: "brand.blue", outlineOffset: 3 }, "&:hover .video-play": { transform: "scale(1.08)", bgcolor: "brand.blue" }, "@media (prefers-reduced-motion: reduce)": { "& .video-play": { transition: "none" }, "&:hover .video-play": { transform: "none" } } }}>
+          <Box component="button" type="button" onClick={() => setPlaying(video)} aria-label={act("playVideoTitle", { title: ct(video.title), creator: video.creator })} sx={{ display: "block", position: "relative", width: "100%", aspectRatio: "16 / 9", overflow: "hidden", p: 0, border: 0, borderRadius: "6px", bgcolor: "brand.navyDeep", cursor: "pointer", "&:focus-visible": { outline: "3px solid", outlineColor: "brand.blue", outlineOffset: 3 }, "&:hover .video-play": { transform: "scale(1.08)", bgcolor: "brand.blue" }, "@media (prefers-reduced-motion: reduce)": { "& .video-play": { transition: "none" }, "&:hover .video-play": { transform: "none" } } }}>
             <Image src={thumbnailUrl(video.id)} alt="" fill sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" style={{ objectFit: "cover" }} loading="lazy" />
             <Box sx={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(5,9,26,.55), transparent 55%)" }} />
             <Box className="video-play" sx={{ position: "absolute", top: "50%", left: "50%", translate: "-50% -50%", width: 58, height: 58, display: "grid", placeItems: "center", borderRadius: "50%", bgcolor: "brand.navy", color: "#fff", border: "1px solid rgba(255,255,255,.4)", transition: "transform 250ms ease, background-color 250ms ease" }}><Icon name="play" sx={{ fontSize: 26, ml: .5 }} /></Box>
@@ -34,10 +34,10 @@ export default function VideoGallery({ videos, columns = 3, connections }: { vid
           <Typography sx={{ mt: .75, fontSize: 14, color: "text.secondary", lineHeight: 1.6 }}>{ct(video.summary)}</Typography>
           <Typography sx={{ mt: .75, fontSize: 12.5, color: "text.secondary" }}>{ct(video.credential)}</Typography>
           {connections?.[video.id] ? <Box sx={{ mt: 1.5, p: 1.5, bgcolor: "brand.mintWash", borderRadius: "6px" }}>
-            <Typography sx={{ fontSize: 12, fontWeight: 700, color: "brand.blue" }}>{connections[video.id].label}</Typography>
-            <Typography sx={{ mt: .5, fontSize: 13, color: "text.secondary", lineHeight: 1.65 }}>{connections[video.id].explanation}</Typography>
+            <Typography sx={{ fontSize: 12, fontWeight: 700, color: "brand.blue" }}>{ct(connections[video.id].label)}</Typography>
+            <Typography sx={{ mt: .5, fontSize: 13, color: "text.secondary", lineHeight: 1.65 }}>{ct(connections[video.id].explanation)}</Typography>
           </Box> : null}
-          <Link href={watchUrl(video.id)} target="_blank" rel="noopener noreferrer" aria-label={act("watchVideo", { title: video.title })} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, mt: .5, fontSize: 14, fontWeight: 600 }}>{act("watchYouTube")}</Link>
+          <Link href={watchUrl(video.id)} target="_blank" rel="noopener noreferrer" aria-label={act("watchVideo", { title: ct(video.title) })} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, mt: .5, fontSize: 14, fontWeight: 600 }}>{act("watchYouTube")}</Link>
         </Box>
       ))}
     </Box>

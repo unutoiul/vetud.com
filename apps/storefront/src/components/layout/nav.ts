@@ -15,7 +15,7 @@ export type NavHref = keyof typeof NAV_LABEL_KEYS
 
 /** Learning comes first; the shop is one section of the site. */
 export const NAV_LINKS: { label: string; href: NavHref }[] = [
-  { label: "Learn", href: "/learn" },
+  { label: "Education", href: "/learn" },
   { label: "News", href: "/news" },
   { label: "Videos", href: "/videos" },
   { label: "Community", href: "/community" },

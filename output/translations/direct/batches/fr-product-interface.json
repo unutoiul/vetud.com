@@ -1,0 +1,362 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      22,
+      "Ajoutez le matériel nécessaire pour le flacon"
+    ],
+    [
+      30,
+      "Inutile : le spray est déjà liquide"
+    ],
+    [
+      49,
+      "Documentation : {v0}"
+    ],
+    [
+      64,
+      "Le numéro de lot figurant sur votre emballage permet de retrouver la documentation analytique du produit. Le pourcentage de pureté correspond à une mesure analytique rapportée ; consultez le certificat pour connaître la méthode, les résultats d’identification et l’étendue des analyses."
+    ],
+    [
+      85,
+      "MATÉRIEL DE LABORATOIRE"
+    ],
+    [
+      91,
+      "Chaque produit est proposé en trois formats. Le peptide et les quantités sont identiques ; seuls le conditionnement, le contenu et le prix changent. Choisissez le spray nasal dans son coffret VETUD, le flacon à double chambre pour le stylo réutilisable ou le flacon simple."
+    ],
+    [
+      102,
+      "Conservez le produit dans son emballage d’origine, scellé. Respectez les procédures de manipulation de votre laboratoire et la documentation fournie."
+    ],
+    [
+      103,
+      "Pour connaître la compatibilité avec les solvants ou les spécifications de préparation, demandez la documentation de lot du fabricant. Les protocoles de recherche doivent être établis par du personnel de laboratoire qualifié."
+    ],
+    [
+      209,
+      "Le produit en détail."
+    ],
+    [
+      290,
+      "Livraison standard offerte pour toute commande supérieure à {v0}"
+    ],
+    [
+      294,
+      "l’unité"
+    ],
+    [
+      375,
+      "Comparatif : coffret avec stylo, flacon à double chambre et flacon simple"
+    ],
+    [
+      408,
+      "Données scientifiques : {v0}"
+    ],
+    [
+      465,
+      "Composition du mélange"
+    ],
+    [
+      489,
+      "3–5 jours ouvrés, avec suivi.{v0}"
+    ],
+    [
+      524,
+      "Deux chambres, une cartouche"
+    ],
+    [
+      591,
+      "{v0} : emballage ouvert"
+    ],
+    [
+      609,
+      "RÉSERVÉ À LA RECHERCHE"
+    ],
+    [
+      669,
+      "À partir de {v0}"
+    ],
+    [
+      676,
+      "Le flacon à double chambre est compatible avec le stylo VETUD réutilisable, fourni dans les coffrets des autres peptides VETUD. Le mécanisme, la molette et la fenêtre d’indication se conservent : il suffit de remplacer la cartouche vide par un nouveau flacon à double chambre."
+    ],
+    [
+      741,
+      "Le stylo VETUD réutilisable à double chambre"
+    ],
+    [
+      762,
+      "<slot0>Prix habituel </slot0>{v0}"
+    ],
+    [
+      773,
+      "COLLECTION DE PEPTIDES"
+    ],
+    [
+      786,
+      "Risques connus"
+    ],
+    [
+      848,
+      "Retrouvez les informations du lot figurant sur l’étiquette."
+    ],
+    [
+      885,
+      "Offerte pour toute commande supérieure à {v0}."
+    ],
+    [
+      888,
+      "Le flacon simple coûte moins cher"
+    ],
+    [
+      915,
+      "Manipulation"
+    ],
+    [
+      967,
+      "Demandez la documentation du lot actuel."
+    ],
+    [
+      970,
+      "Le coffret contient le corps du stylo réutilisable, un flacon à double chambre, 12 aiguilles jetables et un livret. Le mécanisme, la molette et la fenêtre d’indication se conservent : il suffit de remplacer la cartouche vide par un nouveau flacon à double chambre."
+    ],
+    [
+      1038,
+      "De notre collection à votre laboratoire."
+    ],
+    [
+      1122,
+      "Respectez les conditions de conservation indiquées sur l’étiquette du lot et le certificat."
+    ],
+    [
+      1136,
+      "Certificat"
+    ],
+    [
+      1242,
+      "Des guides accessibles, l’actualité des études et une sélection de vidéos de médecins et de chercheurs. Les études publiées portent sur la molécule citée ; elles n’établissent ni la sécurité ni les performances de ce produit de recherche."
+    ],
+    [
+      1252,
+      "Indisponible dans votre région"
+    ],
+    [
+      1325,
+      "{v0} : emballage fermé"
+    ],
+    [
+      1386,
+      "Le plus bas"
+    ],
+    [
+      1458,
+      "Vendu séparément"
+    ],
+    [
+      1508,
+      "Le peptide lyophilisé et l’eau bactériostatique se trouvent dans deux chambres séparées par un bouchon en caoutchouc. Ils n’entrent en contact qu’à l’utilisation de la cartouche."
+    ],
+    [
+      1538,
+      "Demande de certificat d’analyse : {v0}"
+    ],
+    [
+      1550,
+      "1 flacon scellé de poudre lyophilisée"
+    ],
+    [
+      1576,
+      "Toute l’actualité"
+    ],
+    [
+      1605,
+      "Pureté"
+    ],
+    [
+      1615,
+      "Consultez la date de péremption et la documentation de stabilité propres au lot. La durée de conservation ne doit pas être déduite du seul nom du produit."
+    ],
+    [
+      1623,
+      "À lire et à voir : {v0}"
+    ],
+    [
+      1650,
+      "{v0} en flacon"
+    ],
+    [
+      1730,
+      "Ces résultats proviennent d’études publiées sur {v0}, et non d’analyses de ce produit de recherche."
+    ],
+    [
+      1850,
+      "Plus que {v0} en stock"
+    ],
+    [
+      1870,
+      "Prix intermédiaire"
+    ],
+    [
+      1900,
+      "La cartouche est compatible avec le stylo VETUD réutilisable à double chambre. Le flacon simple est l’option multidose la moins chère, à utiliser avec votre propre matériel de laboratoire. La vidéo montre comment le stylo accueille une cartouche."
+    ],
+    [
+      1926,
+      "Chaque produit est proposé en trois formats. Le peptide et les quantités sont identiques ; seuls le conditionnement, le contenu et le prix changent. Commencez par le coffret avec stylo réutilisable, puis rechargez-le avec des flacons à double chambre."
+    ],
+    [
+      1927,
+      "Emballage VETUD de {v0}"
+    ],
+    [
+      2008,
+      "Consultez les spécifications et la documentation de lot pour connaître l’identité et la composition de ce produit de recherche. Contactez notre équipe si vous avez besoin d’informations analytiques supplémentaires."
+    ],
+    [
+      2019,
+      "Contenu"
+    ],
+    [
+      2070,
+      "Date du lot"
+    ],
+    [
+      2086,
+      "Retours des membres"
+    ],
+    [
+      2102,
+      "Préservez l’intégrité du produit."
+    ],
+    [
+      2186,
+      "Les commandes sont expédiées après confirmation du paiement. Les produits sont protégés par leur emballage ; à réception, respectez les conditions de conservation fournies. Consultez nos <slot0>{v0}</slot0> et nos <slot1>{v1}</slot1> pour en savoir plus."
+    ],
+    [
+      2192,
+      "Le plus élevé"
+    ],
+    [
+      2215,
+      "Aucun certificat n’est actuellement publié ici pour ce produit. Contactez notre équipe en indiquant votre numéro de lot pour demander la documentation disponible."
+    ],
+    [
+      2290,
+      "{v0} : photo du produit {v1}"
+    ],
+    [
+      2306,
+      "Ajouté au panier."
+    ],
+    [
+      2325,
+      "<slot0>prix habituel </slot0>{v0}"
+    ],
+    [
+      2337,
+      "Dans le coffret · {v0}"
+    ],
+    [
+      2374,
+      "COLLECTION DE MÉLANGES"
+    ],
+    [
+      2418,
+      "Stabilité et durée de conservation"
+    ],
+    [
+      2423,
+      "Produit de recherche"
+    ],
+    [
+      2445,
+      "Un stylo réutilisable"
+    ],
+    [
+      2511,
+      "de réduction"
+    ],
+    [
+      2566,
+      "Choisissez le flacon simple si vous disposez déjà d’eau bactériostatique et de votre propre matériel de laboratoire. C’est le prix le plus bas pour une même quantité."
+    ],
+    [
+      2587,
+      "Le stylo réutilisable, 1 flacon à double chambre, 12 aiguilles et un livret, dans le coffret VETUD"
+    ],
+    [
+      2600,
+      "Incluse dans la cartouche"
+    ],
+    [
+      2727,
+      "{v0}, flacon à double chambre ou flacon simple ?"
+    ],
+    [
+      2959,
+      "Cartouche à double chambre de {v0}"
+    ],
+    [
+      3027,
+      "1 flacon à double chambre (cartouche), pour recharger le stylo réutilisable"
+    ],
+    [
+      3029,
+      "POUR LA RECHERCHE EN LABORATOIRE"
+    ],
+    [
+      3136,
+      "Les informations scientifiques concernent la molécule citée. La composition du lot et les résultats analytiques doivent être vérifiés dans la documentation du produit. {v0}"
+    ],
+    [
+      3175,
+      "Cartouche ou flacon simple ?"
+    ],
+    [
+      3176,
+      "Question sur le produit : {v0}"
+    ],
+    [
+      3217,
+      "LA SCIENCE, EN TOUTE CLARTÉ."
+    ],
+    [
+      3229,
+      "Prix"
+    ],
+    [
+      3255,
+      "LE DOSSIER PRODUIT"
+    ],
+    [
+      3276,
+      "Eau bactériostatique"
+    ],
+    [
+      3292,
+      "Comprendre {v0}."
+    ],
+    [
+      3414,
+      "Prix sur demande"
+    ],
+    [
+      3420,
+      "51 secondes"
+    ],
+    [
+      3610,
+      "Résultats des études"
+    ],
+    [
+      3612,
+      "1–2 jours ouvrés, avec suivi. Les services disponibles et les frais sont indiqués lors du paiement."
+    ],
+    [
+      3715,
+      "Tous les guides sur les peptides"
+    ]
+  ]
+}

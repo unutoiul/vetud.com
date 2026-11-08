@@ -25,7 +25,7 @@ export default async function PeptideCommunity({ peptide }: { peptide: PeptidePr
   return <Box>
     {threads.threads.map(thread => <ThreadCard key={thread.id} thread={thread} />)}
     <AppLink href={`/community?peptide=${peptide.slug}`} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>
-      {ct(threads.count > threads.threads.length ? act("threadsAbout", { count: threads.count, peptide: peptide.name }) : act("discussPeptide", { peptide: peptide.name }))}
+      {ct(threads.count > threads.threads.length ? act("threadsAbout", { count: threads.count, peptide: ct(peptide.name) }) : act("discussPeptide", { peptide: ct(peptide.name) }))}
     </AppLink>
   </Box>
 }

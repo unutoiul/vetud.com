@@ -4,15 +4,15 @@ import { MedusaError } from "@medusajs/framework/utils"
 import { CONTENT_LOCALES, validateContentBundle, type ReviewedContentInput } from "../lib/localized-content"
 import { importLocalizedContentWorkflow } from "../workflows/import-localized-content"
 
-/** Run only with a complete, independently reviewed export in a private file. */
+/** Import the base website copy separately, or a complete reviewed language release. */
 export default async function importLocalizedContent({ container }: ExecArgs) {
   const file = process.env.CONTENT_TRANSLATIONS_FILE
   if (!file) throw new MedusaError(MedusaError.Types.INVALID_DATA, "Set CONTENT_TRANSLATIONS_FILE to the private reviewed export path.")
-  const document = JSON.parse(await readFile(file, "utf8")) as { bundles: ReviewedContentInput[] }
-  const required = CONTENT_LOCALES.filter(locale => locale !== "en-US")
+  const document = JSON.parse(await readFile(file, "utf8")) as { mode?: "base" | "release"; bundles: ReviewedContentInput[] }
+  const required = document.mode === "base" ? ["en-US"] : [...CONTENT_LOCALES]
   const received = document.bundles?.map(bundle => bundle.locale).sort()
   if (JSON.stringify(received) !== JSON.stringify([...required].sort())) {
-    throw new MedusaError(MedusaError.Types.INVALID_DATA, "The import must contain one complete reviewed bundle for every target store locale, including British English.")
+    throw new MedusaError(MedusaError.Types.INVALID_DATA, "Import the base English website copy alone, or one complete reviewed bundle for every store locale.")
   }
   // Validate the entire export before writing the first locale.
   for (const bundle of document.bundles) validateContentBundle(bundle)

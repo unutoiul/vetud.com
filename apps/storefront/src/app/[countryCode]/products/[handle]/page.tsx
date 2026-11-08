@@ -26,7 +26,6 @@ import { getProductGuides, getProductOverview } from "@/content/product-overview
 import PurchasePanel, { type PurchaseAddOn } from "@/components/product/PurchasePanel"
 import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
-import { getLotReportCounts } from "@/lib/medusa/forum"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
 import { getMoney } from "@/lib/money-server"
 import { isVariantInStock, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
@@ -105,7 +104,6 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
   if (!product || !region) notFound()
 
   const meta = readProductMeta(product)
-  const lotReports = meta.lots.length ? await getLotReportCounts(meta.lots.map(lot => lot.lot)).catch(() => undefined) : undefined
   const category = product.categories?.[0]
   const [catalog, water, syringes] = await Promise.all([
     listProducts({ regionId: region.id, categoryId: category?.id }),
@@ -117,27 +115,16 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     .filter((item) => item.id !== product.id)
     .slice(0, 3)
 
-  const skus = sortedVariants(product)
-    .map((variant) => variant.sku)
-    .filter(Boolean)
-    .join(", ")
-  const formats = readOptions(product).find((option) => option.title === FORMAT_OPTION)?.values ?? []
-  // "Pen kit box", or "Nasal spray" for Selank and Semax.
-  const boxed = boxedFormat(product)
-  const included = formats.flatMap((format) => {
+  const skus = sortedVariants(product).map(variant => variant.sku).filter(Boolean).join(", ")
+  const formats = readOptions(product).find(option => option.title === FORMAT_OPTION)?.values ?? []
+  const included = formats.flatMap(format => {
     const contents = formatContents(product, format)
     return contents ? [{ format, contents }] : []
   })
-  // "From" prices per format for the pen-vs-vial comparison.
-  const fromPrice = (format: string) => {
-    const amounts = variantsWith(product, FORMAT_OPTION, format).flatMap((variant) => variantPrice(variant)?.amount ?? [])
-    return amounts.length ? money(Math.min(...amounts), region.currency_code) : undefined
-  }
-  // Products sold in both formats get a short table: what's included and storage have their own sections.
   const specs = formats.length ? [
     { label: "Product code", value: meta.code },
     { label: "Category", value: category?.name ?? "Research material" },
-    ...formats.map((format) => ({ label: format, value: variantsWith(product, FORMAT_OPTION, format).map((variant) => variant.options?.find((option) => option.option?.title === "Amount")?.value ?? variant.title).join(", ") })),
+    ...formats.map(format => ({ label: format, value: variantsWith(product, FORMAT_OPTION, format).map(variant => variant.options?.find(option => option.option?.title === "Amount")?.value ?? variant.title).join(", ") })),
     ...(meta.purity ? [{ label: "Purity", value: meta.purity }] : []),
     ...(meta.testing ? [{ label: "Purity testing", value: meta.testing }] : []),
     { label: "Intended use", value: "Laboratory research only" },
@@ -155,10 +142,17 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     { label: "Storage", value: meta.storage ?? "—" },
     ...(meta.stability ? [{ label: "Stability", value: meta.stability }] : []),
     ...(meta.handling ? [{ label: "Handling", value: meta.handling }] : []),
-    { label: formats.length ? "Formats and amounts" : "Available amounts", value: availabilitySummary(product) },
+    { label: "Available amounts", value: availabilitySummary(product) },
     ...(skus ? [{ label: "SKU", value: skus }] : []),
     { label: "Intended use", value: "Laboratory research only" },
   ]
+  // "Pen kit box", or "Nasal spray" for Selank and Semax.
+  const boxed = boxedFormat(product)
+  // "From" prices per format for the pen-vs-vial comparison.
+  const fromPrice = (format: string) => {
+    const amounts = variantsWith(product, FORMAT_OPTION, format).flatMap((variant) => variantPrice(variant)?.amount ?? [])
+    return amounts.length ? money(Math.min(...amounts), region.currency_code) : undefined
+  }
   const overview = getProductOverview(product)
 
   const images = getProductImages(product)
@@ -212,7 +206,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
           <Grid size={{ xs: 12, md: 6 }}>
             <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".1em" }}>
               {ct(meta.code)}
-              {ct(category ? ` · ${category.name}` : "")}
+              {category ? ` · ${ct(category.name)}` : ""}
             </Typography>
             <Typography variant="h2" component="h1" sx={{ mt: 1.75, mb: 1.5, fontWeight: 400, fontSize: { xs: 40, md: 52 } }}>
               {ct(product.title)}
@@ -228,7 +222,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </ProductSelectionProvider>
 
         <Box>
-          <ProductDossier overview={overview} skus={formats.length ? skus : undefined} description={ct(product.description)} specs={specs} meta={meta} title={ct(product.title)} lotReports={lotReports} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} currencyCode={region.currency_code} freeShippingThreshold={typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : undefined} />
+          <ProductDossier overview={overview} description={ct(product.description)} specs={specs} skus={formats.length ? skus : undefined} meta={meta} title={ct(product.title)} formats={hasFormats(product) ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} />
         </Box>
       </Section>
 

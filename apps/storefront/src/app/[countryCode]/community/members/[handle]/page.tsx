@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]/com
   const { handle } = await params
   const page = await load(handle)
   if (!page) return { title: "Community member", robots: { index: false, follow: true } }
-  return communityMetadata({ title: ct.template("{v0} in the Vetud community", { v0: page.member.display_name }), description: ct.template("{v0} · {v1} and {v2}.", { v0: ct(page.member.level), v1: ct.count(page.totals.threads, "thread"), v2: ct.count(page.totals.replies, "reply", "replies") }), path: `/community/members/${handle}`, index: page.totals.threads > 0 })
+  return communityMetadata({ title: ct.template("{v0} in the Vetud community", { v0: page.member.display_name }, { translateValues: false }), description: ct.template("{v0} · {v1} and {v2}.", { v0: ct(page.member.level), v1: ct.count(page.totals.threads, "thread"), v2: ct.count(page.totals.replies, "reply", "replies") }, { translateValues: false }), path: `/community/members/${handle}`, index: page.totals.threads > 0, memberContent: true })
 }
 
 export default function MemberPage({ params }: PageProps<"/[countryCode]/community/members/[handle]">) {
@@ -61,16 +61,16 @@ async function MemberContent({ params }: Pick<PageProps<"/[countryCode]/communit
     <Box component="header" sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "72px 1fr" }, gap: 2.5, alignItems: "center" }}>
       <Box aria-hidden sx={{ width: 72, height: 72, borderRadius: "50%", bgcolor: "brand.mintWash", color: "brand.blue", display: "grid", placeItems: "center", fontSize: 28, fontWeight: 700 }}>{member.display_name.charAt(0).toUpperCase()}</Box>
       <Box>
-        <Typography component="h1" sx={{ fontSize: { xs: 30, md: 38 }, fontWeight: 500, letterSpacing: "-.03em", color: "brand.navy" }}>{member.display_name}</Typography>
+        <Typography component="h1" translate="no" sx={{ fontSize: { xs: 30, md: 38 }, fontWeight: 500, letterSpacing: "-.03em", color: "brand.navy" }}>{member.display_name}</Typography>
         <Box sx={{ mt: 1, display: "flex", flexWrap: "wrap", gap: .75, alignItems: "center" }}>
-          {member.role === "expert" ? <Pill tone="expert" icon="shield">{ct("Expert")}{ct(member.credentials ? ` · ${member.credentials}` : "")}</Pill> : null}
+          {member.role === "expert" ? <Pill tone="expert" icon="shield">{ct("Expert")}{member.credentials ? <span translate="no"> · {member.credentials}</span> : null}</Pill> : null}
           {member.role === "moderator" ? <Pill tone="moderator">{ct("Moderator")}</Pill> : null}
           <Pill>{ct(member.level)} · {ct(ct.count(member.reputation, "point"))}</Pill>
           <Typography component="span" sx={{ fontSize: 14, color: "brand.navySoft" }}>{ct.rich("Joined {v0}", { v0: ct(formatForumDate(member.joined_at, ct.locale)) }, {  })}</Typography>
         </Box>
       </Box>
     </Box>
-    {member.bio ? <Typography sx={{ mt: 3, fontSize: 16, lineHeight: 1.75, whiteSpace: "pre-wrap" }}>{ct(member.bio)}</Typography> : null}
+    {member.bio ? <Typography translate="no" sx={{ mt: 3, fontSize: 16, lineHeight: 1.75, whiteSpace: "pre-wrap" }}>{member.bio}</Typography> : null}
     <Box component="dl" sx={{ mt: 3, display: "flex", flexWrap: "wrap", gap: { xs: 3, md: 5 }, "& dt": { fontSize: 13, color: "brand.navySoft" }, "& dd": { m: 0, fontSize: 26, fontWeight: 650, color: "brand.navy", fontVariantNumeric: "tabular-nums" } }}>
       <div><dt>{ct("Threads")}</dt><dd>{ct(totals.threads)}</dd></div>
       <div><dt>{ct("Replies")}</dt><dd>{ct(totals.replies)}</dd></div>

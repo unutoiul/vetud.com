@@ -1,0 +1,438 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      2981,
+      "Chez des souris rendues obèses par une alimentation riche en graisses, il a réduit le poids corporel et la graisse (étude de 2018)."
+    ],
+    [
+      2994,
+      "Il peut provoquer une augmentation passagère de la pression artérielle après chaque dose."
+    ],
+    [
+      2999,
+      "Études chez l’être humain"
+    ],
+    [
+      3003,
+      "Sandostatin, Mycapssa"
+    ],
+    [
+      3014,
+      "Données animales"
+    ],
+    [
+      3022,
+      "Y6smr1o-f9o"
+    ],
+    [
+      3031,
+      "GHK est un minuscule peptide composé de trois acides aminés (glycine, histidine et lysine), naturellement présent dans le sang et la salive. Il se lie au cuivre ; cette forme liée au cuivre s’appelle GHK-Cu. Ses taux dans l’organisme diminuent avec l’âge."
+    ],
+    [
+      3046,
+      "Octréotide oral : revue des essais cliniques récents et recommandations pratiques"
+    ],
+    [
+      3048,
+      "Lys-Pro-Val"
+    ],
+    [
+      3053,
+      "Les produits vendus en ligne ne sont pas réglementés ; leur contenu et leur pureté varient donc."
+    ],
+    [
+      3054,
+      "La FDA accorde une autorisation accélérée au premier traitement contre le syndrome de Barth"
+    ],
+    [
+      3062,
+      "Pharmacologie de l’octréotide : implications cliniques pour les anesthésistes et risques associés"
+    ],
+    [
+      3068,
+      "Testé dans de petites études chez des adultes en bonne santé en 2006. Jamais autorisé."
+    ],
+    [
+      3071,
+      "Administrée en perfusion, l’ocytocine synthétique est un moyen habituel de déclencher ou d’accélérer le travail et de prévenir les saignements importants après l’accouchement (revue de 2024)."
+    ],
+    [
+      3075,
+      "Effet du complexe tripeptide-cuivre sur la croissance des cheveux humains in vitro"
+    ],
+    [
+      3078,
+      "NAD+ est une coenzyme, une molécule auxiliaire présente dans chaque cellule vivante. L’organisme la produit à partir de la vitamine B3."
+    ],
+    [
+      3091,
+      "Il agit sur le même récepteur qu’IGF-1 naturel, mais les protéines sanguines qui régulent normalement IGF-1 s’y lient très peu, ce qui prolonge son activité."
+    ],
+    [
+      3093,
+      "Les chercheurs ont rapporté une réduction de la masse grasse avec préservation des mesures musculaires dans les groupes PTT-A. Il s’agit d’une observation chez l’animal, pas d’une preuve de préservation musculaire chez l’être humain."
+    ],
+    [
+      3113,
+      "Un médicament sur ordonnance autorisé pour les enfants présentant certains troubles de la croissance et les adultes présentant un déficit démontré en hormone de croissance."
+    ],
+    [
+      3115,
+      "La perte de poids corporel chez l’être humain n’est pas établie"
+    ],
+    [
+      3122,
+      "Gk1D4VgM8jY"
+    ],
+    [
+      3132,
+      "Thymalfasine, Zadaxin"
+    ],
+    [
+      3148,
+      "Placebo"
+    ],
+    [
+      3154,
+      "Egrifta est autorisé aux États-Unis pour une indication sur ordonnance strictement définie impliquant un excès de graisse abdominale. Il n’est pas autorisé pour la gestion générale de la perte de poids."
+    ],
+    [
+      3158,
+      "63% des personnes sous liraglutide ont perdu au moins 5% de leur poids corporel, contre 27% sous placebo."
+    ],
+    [
+      3191,
+      "Le peptide Selank renforce l’effet du diazépam sur la réduction de l’anxiété dans des conditions de stress léger chronique imprévisible chez le rat"
+    ],
+    [
+      3192,
+      "Ses effets indésirables et sa sécurité à long terme chez l’être humain."
+    ],
+    [
+      3199,
+      "Dans un essai de 2014 portant sur 114 personnes en convalescence après une chirurgie intestinale, l’ipamoréline n’a pas nettement accéléré la récupération. Le premier repas toléré sans vomissement survenait à 25,3 heures sous ipamoréline, contre 32,6 heures sous placebo ; cette différence pouvait être due au hasard."
+    ],
+    [
+      3215,
+      "Une copie à longue durée d’action d’une hormone naturelle de « freinage », utilisée pour contrôler certains troubles hormonaux et certaines tumeurs."
+    ],
+    [
+      3218,
+      "Aucun test chez l’être humain."
+    ],
+    [
+      3220,
+      "Tésamoréline : essai clinique randomisé de 26 semaines"
+    ],
+    [
+      3239,
+      "8,4 kg"
+    ],
+    [
+      3241,
+      "La kisspeptine est une hormone naturelle produite dans le cerveau. Son nom vient des chocolats Hershey’s Kisses fabriqués dans la ville où elle a été découverte. La kisspeptine-54 et la kisspeptine-10 sont deux de ses formes."
+    ],
+    [
+      3258,
+      "Une possible réduction de la reprise de poids après l’arrêt du tirzépatide a été rapportée chez le rat. Elle n’a pas été établie chez l’être humain par les études citées."
+    ],
+    [
+      3260,
+      "Un médicament expérimental de petite taille moléculaire étudié chez l’être humain, pas un médicament peptidique autorisé. Ses résultats sur le volume de graisse diffèrent de la perte de poids corporel total."
+    ],
+    [
+      3270,
+      "SLU-PP-332 est une petite molécule chimique, pas un peptide. Il active les récepteurs ERR, qui contribuent à contrôler la dépense énergétique des muscles."
+    ],
+    [
+      3294,
+      "GLP-1 indique au cerveau que l’on est rassasié, ralentit la vidange gastrique et aide l’organisme à libérer de l’insuline lorsque la glycémie augmente. Le sémaglutide agit de la même manière, beaucoup plus longtemps."
+    ],
+    [
+      3295,
+      "Essai de phase 2, 338 adultes · placebo : 2,1%"
+    ],
+    [
+      3296,
+      "Autorisé aux États-Unis, dans l’UE et dans de nombreux autres pays. Ozempic et Rybelsus traitent le diabète de type 2 ; Wegovy est destiné à la gestion du poids. Un comprimé quotidien de Wegovy a été autorisé aux États-Unis en décembre 2025."
+    ],
+    [
+      3306,
+      "GHK en application cutanée comme peptide antirides : avantages, problèmes et perspectives"
+    ],
+    [
+      3308,
+      "PTT-A"
+    ],
+    [
+      3317,
+      "Les recommandations d’experts soutiennent le traitement des adultes présentant un déficit confirmé en hormone de croissance, après des examens appropriés, avec des doses ajustées aux taux sanguins d’IGF-1."
+    ],
+    [
+      3318,
+      "Traitement de l’anxiété chez l’être humain"
+    ],
+    [
+      3330,
+      "Une revue de 2006 le décrivait comme « une énigme toujours non résolue »."
+    ],
+    [
+      3333,
+      "Peptide inducteur du sommeil delta (DSIP) : une énigme toujours non résolue"
+    ],
+    [
+      3341,
+      "Les chercheurs espéraient que ce fragment conserverait l’effet de l’hormone de croissance sur la dégradation des graisses sans ses effets sur la croissance et la glycémie."
+    ],
+    [
+      3344,
+      "Dans la première petite étude de Melanotan II chez l’être humain, les hommes ont rapporté des nausées, de la fatigue et des érections spontanées pouvant durer jusqu’à cinq heures."
+    ],
+    [
+      3352,
+      "Sous-groupe préliminaire évalué par IRM · quatre semaines après le dernier traitement · placebo : +5,68%"
+    ],
+    [
+      3354,
+      "LY3298176, un nouvel agoniste double des récepteurs GIP et GLP-1 : de la découverte à la preuve de concept clinique"
+    ],
+    [
+      3364,
+      "NAD+ lui-même n’est pas un médicament autorisé. Des composés apparentés de vitamine B3, comme le nicotinamide riboside, sont vendus comme compléments alimentaires."
+    ],
+    [
+      3365,
+      "L’insuline est une hormone produite par le pancréas. C’est une petite protéine composée de deux chaînes, totalisant 51 acides aminés."
+    ],
+    [
+      3368,
+      "L’octréotide est une version de huit acides aminés de la somatostatine, une hormone qui inhibe la libération de nombreuses autres hormones."
+    ],
+    [
+      3370,
+      "Autorisé aux États-Unis, dans l’UE et dans d’autres pays. Mounjaro traite le diabète de type 2 et est également utilisé dans l’UE pour la gestion du poids. Zepbound est autorisé aux États-Unis pour la gestion du poids et l’apnée du sommeil chez les adultes atteints d’obésité."
+    ],
+    [
+      3371,
+      "SS-31 est un petit peptide de quatre unités qui pénètre dans les mitochondries, les parties de nos cellules qui produisent de l’énergie."
+    ],
+    [
+      3377,
+      "Il bloque l’excès d’hormone de croissance dans l’acromégalie et atténue les libérations massives d’hormones de certaines tumeurs intestinales, soulageant des symptômes tels que la diarrhée sévère et les bouffées vasomotrices."
+    ],
+    [
+      3385,
+      "Gonadotrophine chorionique humaine, Pregnyl, Ovidrel"
+    ],
+    [
+      3386,
+      "Thymosine β4 : un peptide régénérateur multifonctionnel"
+    ],
+    [
+      3387,
+      "On ignore s’il améliore l’anxiété dans de grands essais bien contrôlés. Les études humaines disponibles sont de petite taille et proviennent de Russie."
+    ],
+    [
+      3392,
+      "Ocytocine : physiologie, pharmacologie et application clinique dans la prise en charge du travail obstétrical"
+    ],
+    [
+      3403,
+      "La sécurité à long terme reste à l’étude et ce n’est pas un médicament autorisé."
+    ],
+    [
+      3415,
+      "La FDA l’a autorisé contre le syndrome de Barth, une maladie rare qui affaiblit le cœur et les muscles, sur la base d’une amélioration de la force des jambes (au niveau du genou) dans un essai contrôlé par placebo."
+    ],
+    [
+      3424,
+      "Découverte du sémaglutide, analogue de GLP-1 à administration hebdomadaire"
+    ],
+    [
+      3432,
+      "CBL-514 est un médicament injectable expérimental développé par Caliway. Les études examinent la graisse abdominale sous-cutanée et, dans un sous-groupe plus restreint, la graisse viscérale autour des organes."
+    ],
+    [
+      3433,
+      "Ce n’est pas un peptide : un composé de laboratoire qui fait fonctionner les muscles des souris comme après un exercice physique."
+    ],
+    [
+      3441,
+      "Élamiprétide, Forzinity"
+    ],
+    [
+      3453,
+      "Évaluation de melanotan-II dans une étude clinique pilote de phase I"
+    ],
+    [
+      3471,
+      "moins de nouvelles fractures vertébrales"
+    ],
+    [
+      3476,
+      "Chez la souris, il active une partie de la réponse naturelle de l’organisme à l’exercice aérobie, sans exercice."
+    ],
+    [
+      3477,
+      "Aviptadil dans le syndrome de détresse respiratoire aiguë : promesse ou mirage ?"
+    ],
+    [
+      3481,
+      "Effet de la parathormone (1-34) sur les fractures et la densité minérale osseuse chez des femmes ménopausées atteintes d’ostéoporose"
+    ],
+    [
+      3489,
+      "Il relâche les muscles lisses, dilate les vaisseaux sanguins et atténue l’inflammation, en particulier dans les poumons."
+    ],
+    [
+      3504,
+      "Les effets indésirables fréquents dans les études comprenaient des réactions au point d’injection."
+    ],
+    [
+      3516,
+      "Aux deux doses les plus élevées, environ la moitié ou davantage ont perdu au moins 20% de leur poids corporel (50% et 57%), contre 3% sous placebo."
+    ],
+    [
+      3521,
+      "Enregistré comme médicament en Russie, où il est utilisé contre l’anxiété. Non autorisé aux États-Unis, au Royaume-Uni ou dans l’UE."
+    ],
+    [
+      3525,
+      "L’absorption du tripeptide KPV par PepT1 réduit l’inflammation intestinale"
+    ],
+    [
+      3527,
+      "La protéine entière, la thymosine bêta-4, a été testée dans de petits essais chez l’être humain, par exemple en collyre contre la sécheresse oculaire et en gel pour les ulcères de jambe cicatrisant lentement, avec des résultats préliminaires ou contrastés."
+    ],
+    [
+      3533,
+      "En février 2026, un essai comparatif direct a rapporté que le tirzépatide (Zepbound) entraînait une perte de poids plus importante que CagriSema, le produit expérimental de Novo Nordisk : environ 25% contre 23% sur 84 semaines."
+    ],
+    [
+      3542,
+      "Dans l’essai LEADER chez des personnes atteintes de diabète de type 2, le liraglutide a réduit le risque d’infarctus, d’accident vasculaire cérébral ou de décès d’origine cardiaque."
+    ],
+    [
+      3543,
+      "Utilisé comme ingrédient cosmétique dans de nombreuses crèmes et sérums cutanés. Non autorisé comme médicament ; son utilisation injectable n’est pas réglementée."
+    ],
+    [
+      3547,
+      "Cagrilintide"
+    ],
+    [
+      3548,
+      "Une version de laboratoire à longue durée d’action d’IGF-1, l’hormone par laquelle agit l’hormone de croissance."
+    ],
+    [
+      3561,
+      "Les revues des essais chez l’être humain le décrivent comme généralement bien toléré."
+    ],
+    [
+      3565,
+      "Il active les récepteurs de la mélanocortine du cerveau impliqués dans le désir. Il n’agit pas sur la circulation sanguine comme le Viagra."
+    ],
+    [
+      3575,
+      "Les essais rigoureux chez l’être humain font défaut."
+    ],
+    [
+      3586,
+      "Une hormone de fertilité autorisée qui favorise le développement des ovocytes pendant la FIV."
+    ],
+    [
+      3589,
+      "Elle provoque les contractions de l’utérus pendant le travail et aide à l’écoulement du lait lors de l’allaitement. Elle joue également un rôle dans le lien social."
+    ],
+    [
+      3595,
+      "Une petite étude rétrospective · 12 personnes présentant des douleurs chroniques du genou · aucun groupe de comparaison"
+    ],
+    [
+      3600,
+      "Les études chez l’être humain sur les substances augmentant NAD+ sont surtout de petite taille, avec des résultats contrastés."
+    ],
+    [
+      3603,
+      "Elle active le récepteur de la ghréline. Dans les premières études, elle provoquait des pics d’hormone de croissance sans augmenter également les hormones du stress telles que le cortisol, contrairement aux médicaments antérieurs de ce type."
+    ],
+    [
+      3605,
+      "Sécurité et efficacité des traitements peptidiques autorisés et non autorisés pour les lésions musculosquelettiques et les performances sportives"
+    ],
+    [
+      3611,
+      "La densité osseuse de la colonne vertébrale a augmenté de 9 points de pourcentage de plus que sous placebo."
+    ],
+    [
+      3623,
+      "La kisspeptine comme déclencheur prometteur de maturation ovocytaire pour la fécondation in vitro chez l’être humain"
+    ],
+    [
+      3626,
+      "Mélanome associé à l’utilisation de melanotan-II"
+    ],
+    [
+      3627,
+      "Sermoréline : revue de son utilisation dans le diagnostic et le traitement des enfants présentant un déficit idiopathique en hormone de croissance"
+    ],
+    [
+      3645,
+      "perte de poids moyenne en 56 semaines"
+    ],
+    [
+      3652,
+      "Afamélanotide (Melanotan I)"
+    ],
+    [
+      3662,
+      "Un médicament stimulant la libération d’hormone de croissance, étudié pour les variations de la graisse viscérale, la graisse profonde autour des organes."
+    ],
+    [
+      3666,
+      "Autorisé contre l’ostéoporose chez les personnes à haut risque de fractures."
+    ],
+    [
+      3670,
+      "Les effets sur plusieurs décennies. Les plus grands essais ont suivi les participants pendant quelques années."
+    ],
+    [
+      3676,
+      "Environ la moitié des personnes sous sémaglutide ont perdu 15% ou plus de leur poids corporel. Sous placebo, moins de 1 personne sur 20 a obtenu ce résultat."
+    ],
+    [
+      3684,
+      "Une revue de 2025 en médecine sportive a jugé les résultats chez l’animal encourageants, mais trouvé très peu de données chez l’être humain."
+    ],
+    [
+      3690,
+      "L’afamélanotide (Melanotan I) aide les personnes atteintes de protoporphyrie érythropoïétique, une maladie rare qui rend l’exposition au soleil douloureuse. Dans un essai américain, elles ont passé une durée médiane de 69 heures sans douleur à la lumière du jour sur 6 mois, contre 41 heures sous placebo."
+    ],
+    [
+      3697,
+      "Argireline et Snap-8"
+    ],
+    [
+      3702,
+      "Une revue de 2024 explique comment les taux de NAD+ diminuent avec l’âge et dans certaines maladies, ainsi que les moyens étudiés pour les augmenter."
+    ],
+    [
+      3705,
+      "L’hormone qui active le système reproducteur, étudiée comme moyen plus doux de déclencher la maturation des ovocytes en FIV."
+    ],
+    [
+      3706,
+      "Epitalon"
+    ],
+    [
+      3711,
+      "Dans un essai de phase 2 de 2023, 338 adultes atteints d’obésité ont reçu du rétatrutide pendant 48 semaines. Les personnes recevant la dose la plus élevée (12 mg) ont perdu en moyenne 24,2% de leur poids corporel, contre 2,1% sous placebo."
+    ],
+    [
+      3719,
+      "L’hormone de croissance est une petite protéine (191 acides aminés) produite par l’hypophyse à la base du cerveau. Sa forme médicamenteuse, la somatropine, est produite par des bactéries et est identique à l’hormone humaine."
+    ]
+  ]
+}

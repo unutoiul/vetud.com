@@ -1,0 +1,66 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      3526,
+      "{v0} : de quoi s’agit-il ?"
+    ],
+    [
+      1803,
+      "{v0} : quel mode d’action ?"
+    ],
+    [
+      3460,
+      "{v0} : quel statut d’autorisation ?"
+    ],
+    [
+      2269,
+      "Structure chimique : {v0}, d’après PubChem"
+    ],
+    [
+      532,
+      "Pour approfondir : {v0}"
+    ],
+    [
+      1282,
+      "En vidéo : {v0} et les recherches associées"
+    ],
+    [
+      936,
+      "Aucune discussion sur le sujet « {v0} » pour le moment. Posez une question ou lancez une discussion : les experts vérifiés et les autres membres pourront vous répondre."
+    ],
+    [
+      931,
+      "{peptide} : de quoi s’agit-il ?"
+    ],
+    [
+      2954,
+      "Guide complet : {product}"
+    ],
+    [
+      1920,
+      "Quantité : {product}"
+    ],
+    [
+      379,
+      "Retirer du panier : {product}"
+    ],
+    [
+      2222,
+      "Caractéristiques : {product}"
+    ],
+    [
+      176,
+      "Structure chimique : {v0}"
+    ],
+    [
+      3001,
+      "Ghosh et al. · Diabetes · résumé du congrès de l’ADA · 2025"
+    ],
+    [
+      3551,
+      "Diabetes · résumé du congrès de l’ADA · 2024"
+    ]
+  ]
+}

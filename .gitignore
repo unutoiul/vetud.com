@@ -44,3 +44,5 @@ Thumbs.db
 # agent release snapshots and QA output (deploys upload from the working tree)
 output/releases/
 output/qa/
+output/archives/
+output/swc-native/

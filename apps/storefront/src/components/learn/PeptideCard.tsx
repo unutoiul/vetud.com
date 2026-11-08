@@ -44,7 +44,7 @@ export default function PeptideCard({ peptide, shopHref }: { peptide: PeptidePro
           <StatusBadge status={peptide.status} size="small" />
           {shopHref
             // Sits above the card-wide profile link, so it opens the product instead.
-            ? <AppLink href={shopHref} aria-label={act("productInShop", { product: peptide.name })} sx={{ position: "relative", zIndex: 1, minHeight: 32, display: "inline-flex", alignItems: "center", gap: .5, fontSize: 13, fontWeight: 650 }}>{act("shop")}<Icon name="arrowUpRight" aria-hidden sx={{ fontSize: 16 }} /></AppLink>
+            ? <AppLink href={shopHref} aria-label={act("productInShop", { product: ct(peptide.name) })} sx={{ position: "relative", zIndex: 1, minHeight: 32, display: "inline-flex", alignItems: "center", gap: .5, fontSize: 13, fontWeight: 650 }}>{act("shop")}<Icon name="arrowUpRight" aria-hidden sx={{ fontSize: 16 }} /></AppLink>
             : <Icon name="arrowUpRight" aria-hidden sx={{ fontSize: 18, color: "brand.navy" }} />}
         </Box>
       </Box>

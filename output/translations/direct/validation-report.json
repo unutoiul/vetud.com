@@ -1,0 +1,177 @@
+{
+  "checked_at": "2026-11-08T21:40:15.570Z",
+  "source_hash": "5c1a3b5b804f3e01882ce8c5af9df753a5721a09bc64f82ae687e3dae34a6cae",
+  "protected_values_valid": true,
+  "batch_provenance_valid": true,
+  "complete": false,
+  "locales": [
+    {
+      "locale": "en-GB",
+      "prepared": 3727,
+      "remaining": 0,
+      "product_entries_remaining": 0,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "bg",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "cs",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "da",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "de",
+      "prepared": 1341,
+      "remaining": 2386,
+      "product_entries_remaining": 0,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "el",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "es",
+      "prepared": 1341,
+      "remaining": 2386,
+      "product_entries_remaining": 0,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "et",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "fi",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "fr",
+      "prepared": 3727,
+      "remaining": 0,
+      "product_entries_remaining": 0,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "hr",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "hu",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "is",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "it",
+      "prepared": 1341,
+      "remaining": 2386,
+      "product_entries_remaining": 0,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "lt",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "lv",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "nb",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "nl",
+      "prepared": 1341,
+      "remaining": 2386,
+      "product_entries_remaining": 0,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "pl",
+      "prepared": 1341,
+      "remaining": 2386,
+      "product_entries_remaining": 0,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "pt",
+      "prepared": 1341,
+      "remaining": 2386,
+      "product_entries_remaining": 0,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "ro",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "sk",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "sl",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    },
+    {
+      "locale": "sv",
+      "prepared": 1210,
+      "remaining": 2517,
+      "product_entries_remaining": 131,
+      "community_entries_remaining": 0
+    }
+  ]
+}

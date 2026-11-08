@@ -1,0 +1,314 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      410,
+      "Les conditions de conservation et la stabilité dépendent du produit. Respectez les conditions et la date de péremption indiquées sur l’étiquette et dans la documentation du lot."
+    ],
+    [
+      544,
+      "Du lot au laboratoire."
+    ],
+    [
+      716,
+      "Disponibilité en temps réel"
+    ],
+    [
+      735,
+      "Une équipe à votre écoute"
+    ],
+    [
+      822,
+      "Les commandes réglées sont expédiées sous 1–2 jours ouvrés. La livraison standard prend 3–5 jours ouvrés et la livraison express, 1–2 jours ouvrés. Un lien de suivi vous est envoyé par e-mail à l’expédition."
+    ],
+    [
+      969,
+      "Documentation, informations, emballage et assistance : nos engagements pour chaque produit de recherche vendu."
+    ],
+    [
+      1142,
+      "Conditions de conservation"
+    ],
+    [
+      1446,
+      "Nos engagements"
+    ],
+    [
+      1467,
+      "Quand ma commande sera-t-elle expédiée ?"
+    ],
+    [
+      1633,
+      "Un compte est nécessaire pour commander. Lors du paiement, vous choisissez parmi les moyens proposés dans votre région. Pour un virement bancaire, nous réservons les produits et vous envoyons les coordonnées bancaires ainsi que le numéro de commande à indiquer en référence. L’expédition a lieu après confirmation du paiement."
+    ],
+    [
+      1738,
+      "Toutes les quantités disponibles, aux tarifs de votre région"
+    ],
+    [
+      1742,
+      "Code produit et catégorie"
+    ],
+    [
+      1776,
+      "Comment conserver les produits ?"
+    ],
+    [
+      1842,
+      "Traçabilité"
+    ],
+    [
+      1941,
+      "Puis-je retourner une commande ?"
+    ],
+    [
+      2014,
+      "Une information claire fait partie intégrante du produit. Voici les engagements qui accompagnent chaque référence de notre catalogue."
+    ],
+    [
+      2079,
+      "Transparence"
+    ],
+    [
+      2089,
+      "Retrouvez les documents publiés à partir du numéro de lot figurant sur votre emballage, ou demandez les analyses disponibles."
+    ],
+    [
+      2110,
+      "Comment obtenir un certificat d’analyse ?"
+    ],
+    [
+      2177,
+      "Les caractéristiques sont présentées clairement : forme, pureté cible et conservation. Aucune allégation concernant les effets."
+    ],
+    [
+      2245,
+      "Les articles scellés et non ouverts peuvent être retournés dans les 14 jours suivant la livraison. Pour toute question de qualité, contactez-nous en précisant votre numéro de commande et de lot. Consultez les conditions de retour et de remboursement pour en savoir plus."
+    ],
+    [
+      2264,
+      "Chaque fiche produit précise :"
+    ],
+    [
+      2284,
+      "Recherchez votre numéro de lot sur la page de documentation. Si un certificat d’analyse est publié, vous pouvez le télécharger directement. Sinon, utilisez le lien de demande : nous vous l’enverrons par e-mail."
+    ],
+    [
+      2392,
+      "Vos questions sur les lots, la conservation ou les commandes sont traitées par une équipe en mesure de vous répondre."
+    ],
+    [
+      2950,
+      "Lots documentés avec date de production et pureté"
+    ],
+    [
+      2960,
+      "Vos questions, nos réponses."
+    ],
+    [
+      2973,
+      "À qui s’adressent vos produits ?"
+    ],
+    [
+      3010,
+      "Certificat d’analyse sur demande"
+    ],
+    [
+      3058,
+      "Forme physique et pureté cible"
+    ],
+    [
+      3090,
+      "Notre catalogue s’adresse aux chercheurs qualifiés et aux laboratoires. Tous les produits sont vendus exclusivement pour la recherche in vitro en laboratoire. Ils ne sont destinés ni à l’usage humain ni à l’usage vétérinaire. Nous ne fournissons aucun conseil de dosage ou d’utilisation."
+    ],
+    [
+      3126,
+      "Étiquetage clair : exclusivement réservé à la recherche"
+    ],
+    [
+      3128,
+      "Manipulation soignée"
+    ],
+    [
+      3178,
+      "Comment régler ma commande ?"
+    ],
+    [
+      3355,
+      "Emballages protecteurs, conseils de conservation propres à chaque produit et livraison suivie dans les régions desservies."
+    ],
+    [
+      19,
+      "Chambre d’eau bactériostatique"
+    ],
+    [
+      21,
+      "Porte-cartouche"
+    ],
+    [
+      92,
+      "Chaque peptide VETUD est proposé en flacon à double chambre, en flacon simple ou en coffret avec stylo réutilisable. Découvrez le fonctionnement du stylo, le contenu de chaque format et les critères pour choisir."
+    ],
+    [
+      112,
+      "Corps du stylo"
+    ],
+    [
+      161,
+      "Comprendre le stylo à double chambre"
+    ],
+    [
+      199,
+      "L’eau bactériostatique est-elle incluse ?"
+    ],
+    [
+      221,
+      "Flacon à double chambre, flacon simple ou coffret avec stylo : quel format choisir ?"
+    ],
+    [
+      374,
+      "Un stylo, des cartouches remplaçables"
+    ],
+    [
+      423,
+      "La chambre arrière contient de l’eau bactériostatique. Un bouchon en caoutchouc la sépare de la poudre jusqu’à l’utilisation de la cartouche."
+    ],
+    [
+      438,
+      "Le corps métallique est conçu pour durer. Le mécanisme, la molette arrière et la fenêtre d’indication restent avec le stylo ; seule la cartouche intérieure se remplace."
+    ],
+    [
+      616,
+      "Mélange à l’intérieur de la cartouche"
+    ],
+    [
+      652,
+      "Le porte-cartouche transparent maintient la cartouche et la relie au corps du stylo. Ses graduations laissent les deux chambres visibles pour observer la poudre, le liquide et le volume restant."
+    ],
+    [
+      656,
+      "Les éléments du stylo"
+    ],
+    [
+      697,
+      "Le peptide lyophilisé se trouve dans la chambre avant et le diluant, de l’eau bactériostatique, dans la chambre arrière. Un bouchon en caoutchouc les sépare : ils n’entrent en contact qu’à l’utilisation de la cartouche."
+    ],
+    [
+      798,
+      "Le peptide et les quantités sont identiques. Vous découvrez le stylo ? Choisissez le coffret : il contient le stylo réutilisable, un flacon à double chambre, des aiguilles et un livret. Vous avez déjà le stylo ? Commandez des flacons à double chambre pour le recharger. Si vous disposez d’eau bactériostatique et de votre propre matériel, le flacon simple est le format le moins cher."
+    ],
+    [
+      920,
+      "Le stylo est-il destiné à un usage personnel ?"
+    ],
+    [
+      922,
+      "La quantité de peptide est identique. Le coffret VETUD contient le stylo réutilisable, un flacon à double chambre, 12 aiguilles jetables et un livret d’instructions. Le flacon à double chambre correspond à la cartouche seule, destinée à recharger le stylo. Le flacon simple contient uniquement la poudre lyophilisée, au prix le plus bas."
+    ],
+    [
+      1121,
+      "À l’utilisation de la cartouche, le bouchon mobile atteint un petit canal de dérivation dans le verre. Le liquide contourne alors le bouchon et rejoint la chambre avant, où la poudre se dissout. Aucun flacon de mélange séparé n’est nécessaire."
+    ],
+    [
+      1162,
+      "Oui pour le flacon à double chambre et le coffret avec stylo : elle est déjà présente dans la seconde chambre de la cartouche. Non pour le flacon simple : ajoutez de l’eau bactériostatique de 10 ml ou 30 ml et des seringues U-100 depuis la fiche produit."
+    ],
+    [
+      1355,
+      "Pourquoi un stylo réutilisable ?"
+    ],
+    [
+      1388,
+      "Schéma légendé du stylo VETUD réutilisable à double chambre : porte-cartouche gradué, peptide lyophilisé, diluant et corps du stylo réutilisable"
+    ],
+    [
+      1430,
+      "Vous achetez le stylo une seule fois, dans le coffret. Les recharges coûtent ensuite moins cher qu’un nouveau coffret et produisent moins de déchets."
+    ],
+    [
+      1488,
+      "Quels produits existent dans les trois formats ?"
+    ],
+    [
+      1884,
+      "La partie transparente située en haut du stylo. Elle accueille la cartouche et permet de voir les deux chambres."
+    ],
+    [
+      1960,
+      "Formats"
+    ],
+    [
+      2438,
+      "Le stylo VETUD à double chambre est réutilisable. Fourni dans le coffret, il se conserve : lorsque la cartouche est vide, remplacez-la par un nouveau flacon à double chambre."
+    ],
+    [
+      2462,
+      "Non. Comme tous nos produits, le stylo et le flacon sont fournis exclusivement pour la recherche en laboratoire, sans usage humain ni vétérinaire. Cette page présente le conditionnement ; elle ne constitue pas un guide d’utilisation."
+    ],
+    [
+      2479,
+      "Oui. Achetez le coffret une seule fois, conservez le corps du stylo et remplacez la cartouche vide par un nouveau flacon à double chambre."
+    ],
+    [
+      2607,
+      "Réutilisable"
+    ],
+    [
+      2736,
+      "Retirez la cartouche vide et remplacez-la par un nouveau flacon à double chambre, vendu séparément. Les autres éléments sont conservés."
+    ],
+    [
+      2747,
+      "Chambre du peptide"
+    ],
+    [
+      2863,
+      "Remplacez la cartouche lorsqu’elle est vide"
+    ],
+    [
+      2922,
+      "Le corps métallique réutilisable situé sous le porte-cartouche. Il est fourni dans le coffret avec 12 aiguilles jetables et un livret d’instructions."
+    ],
+    [
+      2947,
+      "Un corps de stylo à conserver"
+    ],
+    [
+      2958,
+      "Fonctionnement du stylo VETUD réutilisable à double chambre : peptide lyophilisé et eau bactériostatique séparés dans une cartouche, coffret avec stylo, recharges à double chambre et comparaison avec le flacon simple."
+    ],
+    [
+      3056,
+      "Deux chambres dans chaque cartouche"
+    ],
+    [
+      3251,
+      "Porte-cartouche transparent et gradué"
+    ],
+    [
+      3425,
+      "Tous les peptides. Chaque fiche produit permet de choisir un flacon à double chambre, un flacon simple ou un coffret avec stylo, avec le prix de chaque quantité. Selank et Semax sont proposés en spray nasal à la place du coffret avec stylo. L’eau bactériostatique est disponible en cartouche ou en flacon."
+    ],
+    [
+      3518,
+      "Quelle est la différence entre les trois formats ?"
+    ],
+    [
+      3539,
+      "La cartouche à double chambre seule et insérée dans le stylo, avec les légendes : porte-cartouche, peptide lyophilisé, eau bactériostatique et corps du stylo"
+    ],
+    [
+      3608,
+      "{v0} : coffret avec stylo, flacon à double chambre ou flacon simple"
+    ],
+    [
+      3664,
+      "Le stylo est-il réutilisable ?"
+    ],
+    [
+      3695,
+      "La chambre avant contient le peptide lyophilisé sous forme de poudre sèche, ce qui préserve sa stabilité."
+    ]
+  ]
+}

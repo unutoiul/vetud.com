@@ -61,7 +61,7 @@ export default function ExpertApplicationForm() {
     value: values[name],
     onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setValues(previous => ({ ...previous, [name]: event.target.value })),
     error: showErrors && Boolean(errors[name]),
-    helperText: (showErrors && errors[name]) || helperText,
+    helperText: ct((showErrors && errors[name]) || helperText),
     slotProps: { htmlInput: { maxLength, autoComplete } },
   })
 

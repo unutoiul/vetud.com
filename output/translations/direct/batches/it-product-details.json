@@ -1,0 +1,422 @@
+{
+  "locale": "it",
+  "reviewed": true,
+  "translations": [
+    [
+      44,
+      "non specificato"
+    ],
+    [
+      213,
+      "Triplo agonista dei recettori GIP, GLP-1 e del glucagone nella ricerca clinica sul metabolismo."
+    ],
+    [
+      329,
+      "Peptide derivato dall’ACTH studiato nella ricerca sulla cognizione e sui nervi."
+    ],
+    [
+      356,
+      "Scatola VETUD con un flacone di spray nasale da 10 ml"
+    ],
+    [
+      397,
+      "Miscela Wolverine"
+    ],
+    [
+      429,
+      "In attesa di conferma del produttore"
+    ],
+    [
+      448,
+      "Miscela KLOW"
+    ],
+    [
+      472,
+      "Consultare la data di scadenza del lotto e i dati di stabilità del produttore."
+    ],
+    [
+      480,
+      "Agonista della melanocortina (bremelanotide) studiato nella ricerca sulla funzione sessuale."
+    ],
+    [
+      537,
+      "Fasce di prezzo al dettaglio in USD espressamente approvate dall’utente il 2026-10-13."
+    ],
+    [
+      637,
+      "Acqua batteriostatica (H2O)"
+    ],
+    [
+      647,
+      "Preparati per la ricerca con più sequenze."
+    ],
+    [
+      700,
+      "Grado USP"
+    ],
+    [
+      749,
+      "Diluente sterile per la ricostituzione"
+    ],
+    [
+      779,
+      "In attesa dell’elenco completo degli ingredienti e del dosaggio del peptide"
+    ],
+    [
+      815,
+      "1 flaconcino di vetro sigillato di peptide liofilizzato (essiccato a freddo). L’acqua batteriostatica è venduta separatamente."
+    ],
+    [
+      838,
+      "Frammento dell’ormone della crescita umano studiato nella ricerca sul metabolismo dei grassi."
+    ],
+    [
+      867,
+      "1 flaconcino di vetro multidose sigillato di acqua batteriostatica"
+    ],
+    [
+      904,
+      "Purezza verificata in laboratorio"
+    ],
+    [
+      956,
+      "Materiale da laboratorio"
+    ],
+    [
+      1033,
+      "Frammento sintetico di peptide gastrico studiato nella ricerca sulla riparazione dei tessuti."
+    ],
+    [
+      1052,
+      "Acqua BAC separata"
+    ],
+    [
+      1065,
+      "Miscela di un analogo del GHRH e di un agonista del recettore della grelina per la ricerca sull’ormone della crescita."
+    ],
+    [
+      1120,
+      "Preparato per la ricerca con più sequenze, fornito in un unico flaconcino liofilizzato per indagini di laboratorio. Per ogni lotto sono documentate la purezza e l’identità di ciascun componente."
+    ],
+    [
+      1271,
+      "Una cartuccia di acqua BAC per la penna VETUD"
+    ],
+    [
+      1338,
+      "Siringhe da insulina U-100 sterili e monouso, con ago fisso e cappuccio dell’ago arancione. Il cilindro è graduato in unità per soluzioni U-100 (100 unità per ml). Confezionate in scatole VETUD da 10.\n\nPer uso di laboratorio. Ogni siringa è monouso; smaltirla in un contenitore per rifiuti taglienti e pungenti."
+    ],
+    [
+      1380,
+      "1 cartuccia a doppia camera di acqua batteriostatica per la penna VETUD"
+    ],
+    [
+      1499,
+      "10 siringhe da insulina U-100 sterili e monouso in una scatola VETUD"
+    ],
+    [
+      1507,
+      "Tripeptide dell’alfa-MSH studiato nella ricerca sull’infiammazione."
+    ],
+    [
+      1525,
+      "Soluzione sterile"
+    ],
+    [
+      1537,
+      "CJC-1295 + Ipamorelin (senza DAC)"
+    ],
+    [
+      1666,
+      "Preparato per la ricerca con due sequenze"
+    ],
+    [
+      1703,
+      "Agonista sintetico della melanocortina studiato nella ricerca sulla pigmentazione."
+    ],
+    [
+      1769,
+      "In evidenza"
+    ],
+    [
+      1770,
+      "Fasce di prezzo in USD approvate dall’utente; le altre valute sono state aumentate proporzionalmente usando il prezzo in USD esistente di ogni variante. HUF e ISK arrotondati all’unità; le altre valute a due decimali."
+    ],
+    [
+      1774,
+      "Il principale tripeptide antiossidante dell’organismo, studiato nella ricerca sullo stress ossidativo."
+    ],
+    [
+      1793,
+      "Peptide mirato ai mitocondri (elamipretide) studiato nella ricerca sull’energia."
+    ],
+    [
+      1810,
+      "Miscela di GHK-Cu, BPC-157 e TB-500 per la ricerca sulla pelle e sui tessuti."
+    ],
+    [
+      1817,
+      "Siringhe da insulina U-100"
+    ],
+    [
+      1873,
+      "Peptidi per la ricerca a sequenza singola."
+    ],
+    [
+      1940,
+      "Doppio agonista dei recettori GIP e GLP-1 studiato nella ricerca sul metabolismo."
+    ],
+    [
+      1950,
+      "Analogo del GHRH studiato nella ricerca sull’ormone della crescita e sul grasso viscerale."
+    ],
+    [
+      1979,
+      "Soluzione per spray nasale"
+    ],
+    [
+      2039,
+      "Miscela di GHK-Cu, BPC-157, TB-500 e KPV per la ricerca sulla pelle e sui tessuti."
+    ],
+    [
+      2049,
+      "Analogo sintetico della tuftsina studiato nella ricerca sull’ansia e sullo stress."
+    ],
+    [
+      2066,
+      "Spray nasale Semax"
+    ],
+    [
+      2103,
+      "Flaconcino multidose, il prezzo più basso per ml"
+    ],
+    [
+      2142,
+      "Peptide che induce il sonno delta, studiato nella ricerca sul sonno e sullo stress."
+    ],
+    [
+      2150,
+      "Miscela per la ricerca A"
+    ],
+    [
+      2164,
+      "Prezzo provvisorio in USD per flacone da 10 ml, basato sul confronto con le offerte di spray negli Stati Uniti. Da rivalutare una volta confermati il contenuto totale di peptide e la formula; il solo volume del flacone non dimostra una concentrazione equivalente."
+    ],
+    [
+      2271,
+      "Spedizione standard"
+    ],
+    [
+      2287,
+      "Flaconcino a doppia camera, flaconcino o kit con penna in scatola"
+    ],
+    [
+      2298,
+      "Polvere liofilizzata"
+    ],
+    [
+      2318,
+      "approvato"
+    ],
+    [
+      2334,
+      "Miscela GLOW"
+    ],
+    [
+      2388,
+      "Spray nasale · 5 mg"
+    ],
+    [
+      2472,
+      "Miscela di BPC-157 e TB-500 per la ricerca sulla riparazione dei tessuti."
+    ],
+    [
+      2482,
+      "tema"
+    ],
+    [
+      2503,
+      "Peptide di origine mitocondriale studiato nella ricerca sul metabolismo e sull’invecchiamento."
+    ],
+    [
+      2679,
+      "Peptide derivato dall’eritropoietina studiato nella ricerca sulla protezione dei nervi e dei tessuti."
+    ],
+    [
+      2686,
+      "Spray nasale · 10 mg"
+    ],
+    [
+      2701,
+      "Spedizione espressa"
+    ],
+    [
+      2706,
+      "Spray nasale Selank"
+    ],
+    [
+      2707,
+      "formato"
+    ],
+    [
+      2716,
+      "Siringhe da insulina U-100 sterili e monouso, 10 per scatola."
+    ],
+    [
+      2717,
+      "Seguire la temperatura e le condizioni di conservazione indicate dal produttore per ciascun lotto."
+    ],
+    [
+      2770,
+      "Spray peptidico da 10 ml · per ricerca di laboratorio"
+    ],
+    [
+      2782,
+      "Analogo dell’alfa-MSH (afamelanotide) studiato nella ricerca sulla pigmentazione."
+    ],
+    [
+      2810,
+      "Piccola molecola inibitrice di NNMT studiata nella ricerca sul metabolismo cellulare."
+    ],
+    [
+      2873,
+      "Acqua sterile con 0,9% di alcol benzilico, fornita in flaconcini multidose sigillati per la ricostituzione di materiali di ricerca liofilizzati."
+    ],
+    [
+      2918,
+      "Scatola VETUD con il corpo della penna riutilizzabile, 1 flaconcino a doppia camera (peptide liofilizzato in una camera e acqua batteriostatica nell’altra), 12 aghi monouso e un libretto di istruzioni"
+    ],
+    [
+      2939,
+      "Confezione"
+    ],
+    [
+      2952,
+      "Tripeptide che lega il rame, studiato nella ricerca sulla pelle e sulle ferite."
+    ],
+    [
+      2966,
+      "Agonista selettivo del recettore della grelina studiato nella ricerca sull’ormone della crescita."
+    ],
+    [
+      2987,
+      "Frammento della timosina beta-4 studiato nella ricerca sulla riparazione dei tessuti."
+    ],
+    [
+      3005,
+      "Agonista del recettore GLP-1 studiato nella ricerca sul metabolismo."
+    ],
+    [
+      3028,
+      "Coenzima studiato nella ricerca sull’energia cellulare e sull’invecchiamento."
+    ],
+    [
+      3033,
+      "Spray nasali esclusi dall’aumento di prezzo dei kit con penna richiesto dall’utente; prezzi al dettaglio originali ripristinati."
+    ],
+    [
+      3131,
+      "Acqua batteriostatica"
+    ],
+    [
+      3171,
+      "Acqua sterile con 0,9% di alcol benzilico, per la ricostituzione in laboratorio."
+    ],
+    [
+      3267,
+      "A temperatura ambiente, al riparo dalla luce diretta"
+    ],
+    [
+      3405,
+      "Analogo dell’IGF-1 a lunga durata d’azione utilizzato nella ricerca sulla crescita cellulare."
+    ],
+    [
+      3421,
+      "-20 °C, in ambiente asciutto, al riparo dalla luce"
+    ],
+    [
+      3451,
+      "1 flaconcino a doppia camera: una cartuccia con il peptide liofilizzato in una camera e l’acqua batteriostatica nell’altra. È compatibile con la penna VETUD riutilizzabile inclusa nel kit con penna in scatola."
+    ],
+    [
+      3552,
+      "L’acqua batteriostatica è acqua sterile con 0,9% di alcol benzilico, che rallenta la crescita batterica dopo l’apertura del flaconcino. Viene utilizzata nei laboratori per ricostituire materiali liofilizzati.\n\nScegli una cartuccia d’acqua a doppia camera per la penna VETUD oppure un flaconcino multidose. Fornito esclusivamente per la ricerca di laboratorio. Non destinato all’uso umano o veterinario."
+    ],
+    [
+      3582,
+      "Flaconcino a doppia camera o flaconcino"
+    ],
+    [
+      3713,
+      "Spray nasale, flaconcino a doppia camera o flaconcino"
+    ],
+    [
+      3716,
+      "1 penna con la quantità selezionata; 12 aghi monouso; 1 libretto di istruzioni"
+    ],
+    [
+      179,
+      "Capelli: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      499,
+      "Supporto immunitario: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      707,
+      "Gestione del peso: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      989,
+      "Pelle e peptidi del rame: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      1291,
+      "Recupero e mobilità: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      1952,
+      "Materiale da laboratorio: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      2133,
+      "Pigmentazione: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      2180,
+      "Energia e metabolismo: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      2243,
+      "Calma ed equilibrio: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      2627,
+      "Salute sessuale: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      3129,
+      "Prestazioni e crescita: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      3314,
+      "Concentrazione e attenzione: materiali di ricerca raggruppati per tema per facilitare la consultazione. Solo per la ricerca di laboratorio."
+    ],
+    [
+      141,
+      "Peptide Semax (indicato sull’etichetta). Il veicolo liquido, i conservanti e gli eventuali altri ingredienti sono in attesa di conferma da parte del produttore."
+    ],
+    [
+      2783,
+      "Peptide Selank (indicato sull’etichetta). Il veicolo liquido, i conservanti e gli eventuali altri ingredienti sono in attesa di conferma da parte del produttore."
+    ],
+    [
+      2143,
+      "VETUD Semax è presentato in un flacone di spray nasale da 10 ml con la relativa scatola. Semax è un peptide sintetico, una breve catena di amminoacidi, studiato per la segnalazione delle cellule nervose e le proteine coinvolte nella loro crescita e nel loro mantenimento. Purezza del 99%. Purezza verificata in laboratorio. L’indicazione di 10 ml sull’etichetta descrive la quantità di liquido nel flacone, non la quantità di peptide. Informazioni sugli ingredienti: Peptide Semax (indicato sull’etichetta). Il veicolo liquido, i conservanti e gli eventuali altri ingredienti sono in attesa di conferma da parte del produttore. La concentrazione e il contenuto totale di peptide non sono ancora confermati. Fornito esclusivamente per la ricerca di laboratorio; non destinato all’uso umano o veterinario.\n\nConservazione e stabilità: Seguire le indicazioni di temperatura e la data di scadenza specifiche del lotto fornite dal produttore. Conservare nella confezione originale, al riparo dalla luce solare diretta e dal calore eccessivo."
+    ],
+    [
+      2256,
+      "VETUD Selank è presentato in un flacone di spray nasale da 10 ml con la relativa scatola. Selank è un peptide sintetico, una breve catena di amminoacidi, studiato per la segnalazione legata allo stress e la comunicazione tra cellule nervose. Purezza del 99%. Purezza verificata in laboratorio. L’indicazione di 10 ml sull’etichetta descrive la quantità di liquido nel flacone, non la quantità di peptide. Informazioni sugli ingredienti: Peptide Selank (indicato sull’etichetta). Il veicolo liquido, i conservanti e gli eventuali altri ingredienti sono in attesa di conferma da parte del produttore. La concentrazione e il contenuto totale di peptide non sono ancora confermati. Fornito esclusivamente per la ricerca di laboratorio; non destinato all’uso umano o veterinario.\n\nConservazione e stabilità: Seguire le indicazioni di temperatura e la data di scadenza specifiche del lotto fornite dal produttore. Conservare nella confezione originale, al riparo dalla luce solare diretta e dal calore eccessivo."
+    ]
+  ]
+}

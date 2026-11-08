@@ -3,8 +3,8 @@ import { ContainerRegistrationKeys, MedusaError, ProductStatus } from "@medusajs
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createProductsWorkflow, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
 import {
-  DUAL_CHAMBER_PRODUCTS, DUAL_CHAMBER_REVISION, EXPLAINER_IMAGE, FORMAT_CONTENTS, FORMATS, imageUrl,
-  REPLACED_SUFFIX, RETIRED_HANDLES, variantSku, variantTitle, type DualChamberProduct, type FormatKey,
+  boxFormat, DUAL_CHAMBER_PRODUCTS, DUAL_CHAMBER_REVISION, EXPLAINER_IMAGE, FORMAT_CONTENTS, FORMATS, imageUrl,
+  PEN_KIT_BOX, REPLACED_SUFFIX, RETIRED_HANDLES, variantSku, variantTitle, type DualChamberProduct, type FormatKey,
 } from "../seed/dual-chamber-catalog"
 import { BASE_CURRENCY } from "../lib/currencies"
 
@@ -53,7 +53,8 @@ function productInput(
       ...carried,
       code: product.code,
       brand: "VETUD",
-      form: "Dual-chamber vial or vial",
+      // The boxed format (pen kit box or nasal spray) follows in the same deploy; see add-pen-kit-boxes.
+      form: (PEN_KIT_BOX.excluded as readonly string[]).includes(product.handle) ? "Dual-chamber vial or vial" : boxFormat(product.handle).form,
       image_aspect_ratio: "1 / 1",
       contents_pen: product.contents?.pen ?? FORMAT_CONTENTS.pen,
       contents_vial: product.contents?.vial ?? FORMAT_CONTENTS.vial,

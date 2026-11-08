@@ -1,0 +1,210 @@
+{
+  "locale": "fr",
+  "reviewed": true,
+  "translations": [
+    [
+      285,
+      "Commencez par les étapes de la recherche, puis apprenez à comparer ce que les études ont réellement mesuré."
+    ],
+    [
+      411,
+      "Est-ce un médicament autorisé ?"
+    ],
+    [
+      515,
+      "Avant son autorisation, un médicament a fait l’objet de grands essais et d’un examen par une autorité comme la FDA. De nombreux peptides populaires n’ont été testés que sur des cellules ou chez l’animal. Chaque fiche précise où en sont les recherches."
+    ],
+    [
+      629,
+      "Les moyennes publiées d’essais humains, ainsi que les premiers résultats de PTT-A et CBL-514, avec le type de données clairement indiqué."
+    ],
+    [
+      642,
+      "L’actualité de la recherche, expliquée."
+    ],
+    [
+      774,
+      "Les bases."
+    ],
+    [
+      1056,
+      "Des fiches accessibles sur {v0} peptides et composés apparentés, des médicaments autorisés aux premières recherches. Comprenez leur rôle, les résultats des études, leur stade de développement et les questions encore ouvertes."
+    ],
+    [
+      1437,
+      "Comprendre les résultats."
+    ],
+    [
+      1590,
+      "Une courte chaîne d’acides aminés, les mêmes unités qui composent les protéines. L’insuline, l’ocytocine et les nouveaux médicaments pour la perte de poids sont tous des peptides."
+    ],
+    [
+      1765,
+      "Interpréter un résultat"
+    ],
+    [
+      1772,
+      "Des fiches accessibles sur {v0} peptides et composés apparentés, des médicaments autorisés aux premières recherches : leur rôle, les résultats des études, leur statut réglementaire et les risques connus."
+    ],
+    [
+      1991,
+      "Les études et décisions récentes, expliquées clairement, avec un lien vers chaque source."
+    ],
+    [
+      2162,
+      "{v0} vidéos YouTube sélectionnées auprès de médecins, de chercheurs, d’hôpitaux et de spécialistes de l’enseignement scientifique. Chaque fiche et chaque article proposent leur propre sélection en lien avec le sujet."
+    ],
+    [
+      2227,
+      "mg et ml"
+    ],
+    [
+      2304,
+      "Résultats"
+    ],
+    [
+      2356,
+      "Comprendre les peptides : recherche, données et guides pédagogiques"
+    ],
+    [
+      2380,
+      "Ce que montrent les essais sur la perte de poids."
+    ],
+    [
+      2487,
+      "Comprendre les peptides, simplement."
+    ],
+    [
+      2512,
+      "Guides pour comprendre"
+    ],
+    [
+      2521,
+      "Qu’est-ce qu’un peptide ?"
+    ],
+    [
+      2529,
+      "Une personne en tenue de salle blanche charge un plateau de petits flacons en verre dans une machine de remplissage"
+    ],
+    [
+      2641,
+      "Regardez, puis examinez les données."
+    ],
+    [
+      2804,
+      "Actualités et articles"
+    ],
+    [
+      3018,
+      "Les résultats sont des moyennes issues d’essais. Le groupe placebo, qui reçoit un traitement factice, montre les changements qui se produisent indépendamment du médicament. L’écart entre les deux groupes correspond à l’effet du médicament."
+    ],
+    [
+      3519,
+      "Les milligrammes (mg) mesurent le poids. Les millilitres (ml) mesurent le volume de liquide. Un flacon de 10 mg et une bouteille de 10 ml désignent deux choses différentes et ne se comparent pas directement."
+    ],
+    [
+      3723,
+      "Remplissage de flacons de peptides en salle blanche."
+    ],
+    [
+      80,
+      "Connaître le produit."
+    ],
+    [
+      683,
+      "02 / L’exigence VETUD"
+    ],
+    [
+      1232,
+      "Une recherche rigoureuse commence par une bonne connaissance des produits utilisés. Nous rendons leurs informations plus faciles à trouver, à comprendre et à vérifier."
+    ],
+    [
+      1387,
+      "Une équipe à votre écoute pour les questions sur les produits et leur documentation."
+    ],
+    [
+      1443,
+      "La confiance commence"
+    ],
+    [
+      1513,
+      "Des informations techniques claires, sans promesses de performance non étayées."
+    ],
+    [
+      1598,
+      "Un accompagnement attentif"
+    ],
+    [
+      1686,
+      "Vos commandes sont protégées par un emballage adapté et expédiées avec suivi. La livraison standard est offerte au-delà du seuil prévu pour votre région."
+    ],
+    [
+      1710,
+      "Pour toute question sur un lot, le stockage ou une commande, une personne de notre équipe vous répond. Utilisez le formulaire de contact et indiquez votre numéro de commande ou de lot pour obtenir une réponse plus rapidement."
+    ],
+    [
+      1722,
+      "La philosophie VETUD"
+    ],
+    [
+      1766,
+      "Des informations plus claires. Des produits choisis avec soin. Une exigence réfléchie."
+    ],
+    [
+      2118,
+      "Retrouver le lot."
+    ],
+    [
+      2253,
+      "Chaque fiche produit indique la forme, la pureté, les quantités disponibles et les conditions de stockage. Nous présentons les caractéristiques des produits, sans revendiquer d’effets chez l’être humain ou l’animal."
+    ],
+    [
+      2260,
+      "Des caractéristiques transparentes"
+    ],
+    [
+      2272,
+      "Aller au-delà de l’étiquette."
+    ],
+    [
+      2432,
+      "par des informations claires."
+    ],
+    [
+      2447,
+      "Forme, quantités disponibles, ingrédients et stockage : les informations utiles sur le produit, réunies au même endroit."
+    ],
+    [
+      2733,
+      "Explorez le contexte scientifique et consultez les publications originales. Replacez les données et les caractéristiques des produits dans leur contexte."
+    ],
+    [
+      2792,
+      "Une traçabilité par lot"
+    ],
+    [
+      3041,
+      "Les identifiants de lot et les documents associés figurent avec chaque produit."
+    ],
+    [
+      3180,
+      "Préparé avec soin"
+    ],
+    [
+      3223,
+      "Retrouvez la fiche du lot correspondant à votre produit. Téléchargez un certificat publié ou demandez directement la documentation à notre équipe."
+    ],
+    [
+      3266,
+      "Vérifiez le numéro de lot de votre emballage dans la fiche publiée correspondante. Consultez le certificat du lot pour les résultats de pureté, d’identité et les méthodes d’analyse. Si aucun certificat n’est publié, demandez à l’équipe la documentation disponible."
+    ],
+    [
+      3639,
+      "Des emballages protecteurs et une livraison suivie, adaptée à votre région."
+    ],
+    [
+      3653,
+      "La clarté fait partie de la science."
+    ]
+  ]
+}

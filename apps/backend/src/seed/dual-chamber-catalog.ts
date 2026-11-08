@@ -1,5 +1,6 @@
 /**
- * The dual-chamber catalog approved by the owner on 2026-11-04: 28 products, each sold as a
+ * The dual-chamber catalog approved by the owner on 2026-11-04 (28 products; Decapeptide-12 added
+ * 2026-11-09), each sold as a
  * dual-chamber pen and as a vial at its own price. Artwork lives in the storefront at
  * /images/products/<handle>-pen.webp and <handle>-vial.webp (scripts/prepare-dual-chamber-images.mjs).
  */
@@ -89,6 +90,15 @@ export const DUAL_CHAMBER_PRODUCTS: DualChamberProduct[] = [
     description: describe("A blend of CJC-1295 without DAC (a growth-hormone-releasing hormone analogue) and Ipamorelin (a ghrelin-receptor agonist), labelled as equal parts. Both are studied in growth-hormone release research."),
     pen: [offer("10 mg (5 mg + 5 mg)", 148)],
     vial: [offer("10 mg (5 mg + 5 mg)", 98)],
+  },
+  {
+    // Added 2026-11-09 (owner request): migration-scripts/vetud-product-25-decapeptide-12.ts.
+    handle: "decapeptide-12", title: "Decapeptide-12", code: "VTD-D12",
+    categories: ["beauty", "skin-copper-peptides"], learn: ["decapeptide-12"],
+    summary: "Tyrosinase-blocking peptide studied in skin-pigmentation research.",
+    description: describe("Decapeptide-12 is a lab-made chain of 10 amino acids that blocks tyrosinase, the enzyme that makes the skin pigment melanin. It is studied in skin-pigmentation research, mostly as an ingredient of skin creams."),
+    pen: [offer("200 mg", 350)],
+    vial: [offer("200 mg", 250)],
   },
   {
     handle: "dsip", title: "DSIP", code: "VTD-DSIP",

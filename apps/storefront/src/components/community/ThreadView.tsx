@@ -139,7 +139,7 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
       {question && thread.accepted_post_id ? <Pill tone="accepted" icon="check">{ct("Answered")}</Pill> : null}
       {thread.locked ? <Pill>{ct("Closed")}</Pill> : null}
     </Box>
-    <Typography component="h1" sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 500, lineHeight: 1.15, letterSpacing: "-.035em", textWrap: "balance", color: "brand.navy" }}>{ct(thread.title)}</Typography>
+    <Typography component="h1" translate="no" sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 500, lineHeight: 1.15, letterSpacing: "-.035em", textWrap: "balance", color: "brand.navy" }}>{thread.title}</Typography>
     <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", alignItems: "center", columnGap: 2, rowGap: 1 }}>
       <AuthorLine author={thread.author} verified={thread.verified_purchase} verifiedLot={thread.lot} />
       <Typography component="time" dateTime={thread.created_at} sx={{ fontSize: 14, color: "brand.navySoft" }}>{ct.rich("Started {v0}", { v0: ct(formatForumDate(thread.created_at, ct.locale)) }, {  })}</Typography>
