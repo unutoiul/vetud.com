@@ -85,6 +85,8 @@ Everything is editable in **Admin → Products**. The storefront also reads thes
 | `form` | `Lyophilized powder` | Specs table |
 | `storage` | `-20 °C, desiccated` | Specs table |
 | `lots` | `VTD01-2609A\|2026-09\|99.4%\|https://…/coa.pdf; VTD01-2607B\|2026-07\|99.2%` | Documentation tab, lot register, lot lookup, search |
+| `notice_title`, `notice_text` | `Cosmetic product for external use only` | The notice on the product page, its card and its overview. Without either key the product shows the research-use notice; set `notice_title` to `none` to show no notice |
+| `sale_excluded` | `true` | Keeps the product at full price during a storewide sale |
 
 The `lots` format is one lot per entry, with entries separated by `;` and fields by `|`: `LOT|YYYY-MM|PURITY|COA_URL`. The COA URL is optional. Without it, the site shows a "Request COA" link that goes to the contact form.
 

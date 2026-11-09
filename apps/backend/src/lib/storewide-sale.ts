@@ -14,7 +14,11 @@ export const SALE_METADATA_KEY = "storewide_sale"
  */
 export const SALE_EXCLUDED_KEY = "sale_excluded"
 
-export const isSaleExcluded = (metadata: Record<string, unknown> | null | undefined) => metadata?.[SALE_EXCLUDED_KEY] === true
+/** Admin's metadata editor may store the flag as the text "true", so both count. */
+export const isSaleExcluded = (metadata: Record<string, unknown> | null | undefined) => {
+  const value = metadata?.[SALE_EXCLUDED_KEY]
+  return value === true || (typeof value === "string" && value.trim().toLowerCase() === "true")
+}
 
 export const MIN_PERCENT_OFF = 1
 export const MAX_PERCENT_OFF = 90

@@ -23,6 +23,15 @@ export type SkincareSerum = {
 
 const USE = "For external use on the skin only. Patch-test before first use, avoid the eyes, and use sunscreen during the day."
 
+/**
+ * Shown on the product page and card in place of the research-use notice. The storefront reads it
+ * from the product metadata (`notice_title`, `notice_text`), so Admin can change it per product.
+ */
+export const COSMETIC_NOTICE = {
+  notice_title: "Cosmetic product for external use only",
+  notice_text: "Apply to the skin only; do not swallow or inject. Patch-test before first use, avoid the eyes, and stop using it if irritation occurs.",
+}
+
 export const SKINCARE_SERUMS: SkincareSerum[] = [
   {
     handle: "anua-azelaic-acid-10-hyaluron-serum",

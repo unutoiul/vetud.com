@@ -1,17 +1,20 @@
-import type { CreateProductWorkflowInputDTO } from "@medusajs/framework/types"
+import type { CreateProductWorkflowInputDTO, UpsertProductDTO } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, MedusaError, ProductStatus } from "@medusajs/framework/utils"
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
-import { createProductsWorkflow } from "@medusajs/medusa/core-flows"
+import { createProductsWorkflow, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
 import { SALE_EXCLUDED_KEY } from "../lib/storewide-sale"
-import { serumImageUrl, SKINCARE_SERUMS, SKINCARE_SERUMS_REVISION } from "../seed/skincare-serums"
+import { COSMETIC_NOTICE, serumImageUrl, SKINCARE_SERUMS, SKINCARE_SERUMS_REVISION } from "../seed/skincare-serums"
 
-/** Plans the missing serums; existing handles are left alone (Admin edits stay), so it can be repeated. */
+/**
+ * Plans the missing serums. Existing ones keep their Admin edits; they only get the cosmetic notice
+ * if they have no notice of their own yet. Safe to repeat.
+ */
 const planSkincareSerumsStep = createStep(
   "plan-skincare-serums",
   async (_input: Record<string, never>, { container }) => {
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
     const [{ data: existing }, { data: categories }, { data: stores }, { data: profiles }] = await Promise.all([
-      query.graph({ entity: "product", fields: ["handle"], filters: { handle: SKINCARE_SERUMS.map((serum) => serum.handle) } }),
+      query.graph({ entity: "product", fields: ["id", "handle", "metadata"], filters: { handle: SKINCARE_SERUMS.map((serum) => serum.handle) } }),
       query.graph({ entity: "product_category", fields: ["id", "handle"], filters: { handle: [...new Set(SKINCARE_SERUMS.flatMap((serum) => serum.categories))] } }),
       query.graph({ entity: "store", fields: ["default_sales_channel_id"] }),
       query.graph({ entity: "shipping_profile", fields: ["id"], filters: { type: "default" } }),
@@ -51,6 +54,7 @@ const planSkincareSerumsStep = createStep(
           image_aspect_ratio: "1 / 1",
           catalog_revision: SKINCARE_SERUMS_REVISION,
           [SALE_EXCLUDED_KEY]: true,
+          ...COSMETIC_NOTICE,
         },
         options: [{ title: "Size", values: [serum.size] }],
         variants: [{
@@ -63,7 +67,10 @@ const planSkincareSerumsStep = createStep(
         }],
       }
     })
-    return new StepResponse({ products, skipped: SKINCARE_SERUMS.filter((serum) => !pending.includes(serum)).map((serum) => serum.handle) })
+    const updates: UpsertProductDTO[] = (existing as { id: string; metadata?: Record<string, unknown> | null }[])
+      .filter((row) => !row.metadata?.notice_title && !row.metadata?.notice_text)
+      .map((row) => ({ id: row.id, metadata: { ...(row.metadata ?? {}), ...COSMETIC_NOTICE } }))
+    return new StepResponse({ products, updates, skipped: SKINCARE_SERUMS.filter((serum) => !pending.includes(serum)).map((serum) => serum.handle) })
   }
 )
 
@@ -75,8 +82,12 @@ export const importSkincareSerumsWorkflow = createWorkflow(
     const created = when("has-new-skincare-serums", plan, (data) => data.products.length > 0).then(() =>
       createProductsWorkflow.runAsStep({ input: transform(plan, (data) => ({ products: data.products })) })
     )
+    when("has-serum-notices", plan, (data) => data.updates.length > 0).then(() => {
+      updateProductsWorkflow.runAsStep({ input: transform(plan, (data) => ({ products: data.updates })) })
+    })
     return new WorkflowResponse(transform({ plan, created }, ({ plan: data, created: products }) => ({
       created: (products ?? []).map((product) => product.handle),
+      notices_added: data.updates.length,
       skipped: data.skipped,
     })))
   }

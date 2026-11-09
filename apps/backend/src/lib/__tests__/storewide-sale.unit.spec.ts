@@ -14,7 +14,9 @@ describe("storewide sale", () => {
 
   it("leaves products marked sale_excluded at full price, removing sale prices they already had", () => {
     expect(isSaleExcluded({ sale_excluded: true })).toBe(true)
-    expect(isSaleExcluded({ sale_excluded: "true" })).toBe(false)
+    expect(isSaleExcluded({ sale_excluded: "true" })).toBe(true)
+    expect(isSaleExcluded({ sale_excluded: false })).toBe(false)
+    expect(isSaleExcluded({ sale_excluded: "no" })).toBe(false)
     expect(isSaleExcluded(null)).toBe(false)
     const variants: VariantPrices[] = [
       { id: "variant_serum", excluded: true, price_set: { prices: [regular("p1", "usd", 25), listed("s1", "usd", 17.5)] } },
