@@ -3,7 +3,7 @@ import { ContainerRegistrationKeys, MedusaError, ProductStatus } from "@medusajs
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createProductsWorkflow, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
 import {
-  DUAL_CHAMBER_PRODUCTS, DUAL_CHAMBER_REVISION, FORMATS, imageUrl,
+  DUAL_CHAMBER_PRODUCTS, DUAL_CHAMBER_REVISION, FORMATS, FORMAT_CONTENTS, imageUrl,
   REPLACED_SUFFIX, RETIRED_HANDLES, variantSku, variantTitle, type DualChamberProduct, type FormatKey,
 } from "../seed/dual-chamber-catalog"
 import { BASE_CURRENCY } from "../lib/currencies"
@@ -34,7 +34,8 @@ function productInput(
   const amounts = [...new Set(formats.flatMap((format) => product[format].map((offer) => offer.amount)))]
   const carried = Object.fromEntries(Object.entries(context.previous?.metadata ?? {}).filter(([key]) => CARRIED_KEYS.includes(key)))
   const nasal = (NASAL_RESEARCH_HANDLES as readonly string[]).includes(product.handle)
-  const images = [imageUrl(product.handle, "vial"), ...(nasal ? [imageUrl(product.handle, "vial").replace(/-vial\.webp$/, "-front.webp")] : [])].map((url) => ({ url }))
+  const images = formats.map(format => imageUrl(product.handle, format)).map(url => ({ url }))
+  const onlyVial = product.handle === "decapeptide-12"
   return {
     title: product.title,
     handle: product.handle,
@@ -56,17 +57,17 @@ function productInput(
       code: product.code,
       brand: "VETUD",
       // The boxed format (pen kit box or nasal spray) follows in the same deploy; see add-pen-kit-boxes.
-      form: nasal ? "Research vial or nasal spray" : "Research vial",
+      form: onlyVial ? "Research vial" : nasal ? "Nasal spray, dual-chamber vial or vial" : product.handle === "bacteriostatic-water" ? "Dual-chamber vial or vial" : "Dual-chamber vial, vial or pen kit box",
       image_aspect_ratio: "1 / 1",
-      contents_pen: null,
-      contents_vial: product.handle === "bacteriostatic-water" ? product.contents?.vial : RESEARCH_VIAL_CONTENTS,
+      contents_pen: onlyVial ? null : product.contents?.pen ?? FORMAT_CONTENTS.pen,
+      contents_vial: onlyVial ? RESEARCH_VIAL_CONTENTS : product.contents?.vial ?? FORMAT_CONTENTS.vial,
       format_line_vial: product.handle === "bacteriostatic-water" ? "Bottled laboratory research diluent" : "Sealed research vial; no diluent or administration supplies included",
       preparation_addons_allowed: optionalVialAccessoriesAllowed(product.handle),
       preparation_addons_scope: OPTIONAL_VIAL_ACCESSORIES_SCOPE,
       preparation_addons_basis: "Optional laboratory accessories only. The research protocol must specify diluent compatibility and supplies; no injection suitability is established.",
       injection_format_verified: false,
       format_review_revision: PRODUCT_FORMAT_REVIEW,
-      allowed_formats: nasal ? ["Vial", "Nasal spray"] : ["Vial"],
+      allowed_formats: onlyVial ? ["Vial"] : [...formats.map(format => FORMATS[format]), ...(nasal ? ["Nasal spray"] : product.handle === "bacteriostatic-water" ? [] : ["Pen kit box"])],
       research_use_only: true,
       catalog_revision: DUAL_CHAMBER_REVISION,
       ...(product.learn.length ? { learn_peptides: product.learn } : {}),

@@ -78,7 +78,7 @@ const OWN_OVERVIEWS: Record<string, Pick<ProductOverview, "summary" | "sections"
     summary: "A water-based research diluent with a bacteriostatic preservative.",
     sections: [
       { title: "What it is", text: "A bottled laboratory diluent. Check the supplied label for its composition and storage instructions. Product-specific sterility and endotoxin records have not been supplied for this catalog review." },
-      { title: "Research use", text: "For laboratory work where the supplied diluent meets the study's requirements. No pen or cartridge is included. This listing does not establish suitability for human or veterinary administration." },
+      { title: "Research use", text: "For laboratory work where the supplied diluent meets the study's requirements. Available as a bottle or a dual-chamber cartridge; refer to the selected format for package contents. This listing does not establish suitability for human or veterinary administration." },
     ],
     sources: [],
   },

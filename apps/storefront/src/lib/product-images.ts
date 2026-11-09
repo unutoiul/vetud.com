@@ -63,8 +63,8 @@ const formatPhotos = (handle: string, title: string) => {
 export type FormatPhotos = ReturnType<typeof formatPhotos>
 
 const formatPhotography = (handle: string, title: string): ProductPhotography => {
-  const { box, vial } = formatPhotos(handle, title)
-  return { aspectRatio: "1 / 1", images: [vial, ...(NASAL_SPRAYS.has(handle) && box ? [box] : [])] }
+  const { pen, box, openBox, vial, reusable } = formatPhotos(handle, title)
+  return { aspectRatio: "1 / 1", images: handle === "decapeptide-12" ? [vial] : [pen, vial, ...(box ? [box] : []), ...(openBox ? [openBox] : []), reusable] }
 }
 
 /** The products sold as a dual-chamber vial, a vial and (most of them) a pen kit box (prepare-dual-chamber-images.mjs makes the photos). */

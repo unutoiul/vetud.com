@@ -5,12 +5,17 @@ describe("research product format review", () => {
     for (const handle of ["bpc-157", "semaglutide", "selank", "semax", "wolverine-blend"]) expect(optionalVialAccessoriesAllowed(handle)).toBe(true)
     for (const handle of ["decapeptide-12", "ghk-cu", "glow-blend", "klow-blend", "5-amino-1mq", "nad-plus", "bacteriostatic-water", "u-100-syringes", "anua-azelaic-acid-10-hyaluron-serum", "new-research-product"]) expect(optionalVialAccessoriesAllowed(handle)).toBe(false)
   })
-  it("does not infer pen or cartridge suitability from a molecule's name", () => {
-    for (const handle of ["decapeptide-12", "semaglutide", "bpc-157", "ghk-cu", "new-research-product"]) {
-      expect(catalogFormatAllowed(handle, "Pen kit box")).toBe(false)
-      expect(catalogFormatAllowed(handle, "Dual-chamber vial")).toBe(false)
+  it("keeps the original catalog formats and limits the exclusion to Decapeptide-12", () => {
+    for (const handle of ["retatrutide", "semaglutide", "bpc-157", "ghk-cu"]) {
+      expect(catalogFormatAllowed(handle, "Pen kit box")).toBe(true)
+      expect(catalogFormatAllowed(handle, "Dual-chamber vial")).toBe(true)
       expect(catalogFormatAllowed(handle, "Vial")).toBe(true)
     }
+    expect(catalogFormatAllowed("decapeptide-12", "Pen kit box")).toBe(false)
+    expect(catalogFormatAllowed("decapeptide-12", "Dual-chamber vial")).toBe(false)
+    expect(catalogFormatAllowed("decapeptide-12", "Vial")).toBe(true)
+    expect(catalogFormatAllowed("bacteriostatic-water", "Pen kit box")).toBe(false)
+    expect(catalogFormatAllowed("selank", "Pen kit box")).toBe(false)
     expect(catalogFormatAllowed("selank", "Nasal spray")).toBe(true)
     expect(catalogFormatAllowed("semax", "Nasal spray")).toBe(true)
     expect(catalogFormatAllowed("decapeptide-12", "Nasal spray")).toBe(false)
@@ -32,8 +37,7 @@ describe("research product format review", () => {
     const standard = reviewedResearchDescription("bpc-157", original)
     expect(reviewedResearchDescription("bpc-157", standard)).toBe(standard)
     const water = reviewedResearchDescription("bacteriostatic-water", "Water.\n\nChoose a dual-chamber cartridge of water for the VETUD pen, or a multi-use vial.")
-    expect(water).not.toContain("Choose a dual-chamber")
-    expect(water).not.toContain("sterile water")
+    expect(water).toContain("Choose a dual-chamber")
     expect(reviewedResearchDescription("bacteriostatic-water", water)).toBe(water)
   })
 })

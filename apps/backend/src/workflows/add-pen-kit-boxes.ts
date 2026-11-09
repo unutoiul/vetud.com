@@ -61,7 +61,6 @@ const planPenKitBoxesStep = createStep(
         id: row.id,
         metadata: {
           ...(row.metadata ?? {}),
-          contents_pen: null,
           contents_box: box.contents,
           pen_kit_box_revision: PEN_KIT_BOX.revision,
         },

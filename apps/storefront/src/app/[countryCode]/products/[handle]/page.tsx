@@ -20,16 +20,18 @@ import ProductGrid from "@/components/product/ProductGrid"
 import ProductGallery from "@/components/product/ProductGallery"
 import ProductDossier from "@/components/product/ProductDossier"
 import ProductLearnMore from "@/components/product/ProductLearnMore"
+import DualChamberExplainer from "@/components/product/DualChamberExplainer"
 import { ProductSelectionProvider } from "@/components/product/ProductSelection"
 import { getProductGuides, getProductOverview } from "@/content/product-overview"
 import PurchasePanel, { type PurchaseAddOn } from "@/components/product/PurchasePanel"
 import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
 import { preparationAddOnsAllowed } from "@/lib/product-format-policy"
+import { getMoney } from "@/lib/money-server"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
 import { isVariantInStock, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
-import { availabilitySummary, defaultVariant, FORMAT_OPTION, formatContents, formatOf, readOptions, variantsWith } from "@/lib/product-formats"
-import { getProductImages, getProductPhotography } from "@/lib/product-images"
+import { availabilitySummary, boxedFormat, defaultVariant, FORMAT_OPTION, formatContents, formatOf, readOptions, SPRAY_FORMAT, variantsWith } from "@/lib/product-formats"
+import { getFormatPhotos, getProductImages, getProductPhotography } from "@/lib/product-images"
 
 const PLACEHOLDER = "__placeholder__"
 
@@ -99,7 +101,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
   const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const { handle } = await params
-  const { product, region, countryCode } = await loadProduct(handle)
+  const [{ product, region, countryCode }, money] = await Promise.all([loadProduct(handle), getMoney()])
   if (!product || !region) notFound()
 
   const meta = readProductMeta(product)
@@ -149,6 +151,12 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     { label: "Intended use", value: "Laboratory research only" },
   ]
   const overview = getProductOverview(product)
+  const boxed = boxedFormat(product)
+  const hasPenFormats = formats.some(format => /dual[ -]chamber|pen kit/i.test(format))
+  const fromPrice = (format: string) => {
+    const amounts = variantsWith(product, FORMAT_OPTION, format).flatMap(variant => variantPrice(variant)?.amount ?? [])
+    return amounts.length ? money(Math.min(...amounts), region.currency_code) : undefined
+  }
 
   const images = getProductImages(product)
   const jsonLd = await productStructuredData(product, countryCode)
@@ -217,7 +225,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </ProductSelectionProvider>
 
         <Box>
-          <ProductDossier overview={overview} description={ct(product.description)} specs={specs} skus={formats.length ? skus : undefined} meta={meta} title={ct(product.title)} />
+          <ProductDossier overview={overview} description={ct(product.description)} specs={specs} skus={formats.length ? skus : undefined} meta={meta} title={ct(product.title)} formats={hasPenFormats ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} />
         </Box>
       </Section>
 

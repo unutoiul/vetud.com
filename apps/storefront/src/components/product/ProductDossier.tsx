@@ -70,21 +70,20 @@ function Overview({ overview }: { overview: ProductOverview }) {
 
 export default function ProductDossier({ overview, description, specs, skus, meta, title, formats, formatsLabel = "Vial, dual-chamber or pen kit" }: {
   overview?: ProductOverview; description?: string | null; specs: ProductSpecification[]; skus?: string; meta: ProductMeta; title: string
-  /** The "Dual-chamber pen or vial?" part, first in the dossier, for products sold in both formats. */
+  /** The "Dual-chamber pen or vial?" part, last in the dossier, for products sold in both formats. */
   formats?: ReactNode
   /** The menu entry for `formats`. */
   formatsLabel?: string
 }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
-  const items = formats ? [{ id: "formats", label: formatsLabel }, ...sections] : sections
+  const items = formats ? [...sections, { id: "formats", label: formatsLabel }] : sections
   return <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "230px minmax(0, 1fr)" }, gap: { xs: 3, md: 8 }, mt: { xs: 5, md: 9 } }}>
     <Box component="nav" aria-label={act("productDossier")} sx={{ minWidth: 0, width: "100%", alignSelf: "start", position: { md: "sticky" }, top: 125 }}>
       <Typography variant="mono" component="p" sx={{ fontSize: 10, letterSpacing: ".14em", color: "brand.blue", mb: 2 }}>{ct("THE PRODUCT DOSSIER")}</Typography>
       <Box sx={{ display: "flex", flexDirection: { xs: "row", md: "column" }, overflowX: "auto", gap: { xs: 2.5, md: 0 }, pb: 1 }}>{items.map((section, i) => <Box key={section.id} component="a" href={`#${section.id}`} sx={{ display: "flex", alignItems: "center", gap: 1.5, py: 1.3, textDecoration: "none", fontSize: 12, whiteSpace: "nowrap", color: "text.secondary", "&:hover": { color: "brand.blue" } }}><Typography variant="mono" sx={{ fontSize: 9, color: "brand.blue" }}>0{ct(i + 1)}</Typography>{translateAction(act, section.label)}</Box>)}</Box>
     </Box>
     <Box sx={{ minWidth: 0 }}>
-      {formats ? <Box component="section" id="formats" aria-labelledby="formats-heading" sx={sectionStyle}>{ct(formats)}</Box> : null}
       <Box component="section" id="research-overview" aria-labelledby="research-heading" sx={sectionStyle}>
         <Typography component="h2" variant="h3" id="research-heading" sx={{ mb: 2.5 }}>{ct.rich("Understanding {v0}.", { v0: ct(overview?.name ?? title) }, {  })}</Typography>
         {overview ? <Overview overview={overview} /> : <Typography sx={{ ...bodyStyle, whiteSpace: "pre-line" }}>{ct(description ?? "Consult the specifications and lot documentation for the identity and composition of this research material. Contact the team if further analytical information is needed.")}</Typography>}
@@ -100,6 +99,7 @@ export default function ProductDossier({ overview, description, specs, skus, met
         {[{ label: "Storage conditions", value: meta.storage ?? "Follow the storage conditions supplied on the batch label and certificate." }, { label: "Handling", value: meta.handling ?? "Keep the material in its original, sealed packaging. Follow your laboratory’s handling procedures and the supplied product documentation." }, { label: "Stability & shelf life", value: meta.stability ?? "Refer to the lot-specific expiry date and stability documentation. Shelf life should not be inferred from the product name alone." }].map(item => <Box key={item.label} sx={{ display: "flex", gap: 2, mb: 2.5 }}><Icon name={item.label === "Storage conditions" ? "snowflake" : item.label === "Handling" ? "package" : "clock"} sx={{ color: "brand.blue", fontSize: 21, mt: .3, flexShrink: 0 }} /><Box><Typography component="h3" sx={{ fontSize: 13, fontWeight: 600, mb: .5 }}>{ct(item.label)}</Typography><Typography sx={bodyStyle}>{ct(item.value)}</Typography></Box></Box>)}
         <Typography sx={{ ...bodyStyle, fontSize: 12 }}>{ct("For solvent compatibility or preparation specifications, request the manufacturer’s batch documentation. Research protocols should be established by qualified laboratory personnel.")}</Typography>
       </Box>
+      {formats ? <Box component="section" id="formats" aria-labelledby="formats-heading" sx={sectionStyle}>{ct(formats)}</Box> : null}
     </Box>
   </Box>
 }

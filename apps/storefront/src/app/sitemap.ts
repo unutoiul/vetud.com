@@ -11,7 +11,7 @@ import { listProductHandles } from "@/lib/medusa/products"
 import { listCountryCodes } from "@/lib/medusa/regions"
 import { storefrontLanguages } from "@/lib/storefront-seo"
 
-const STATIC_PATHS = ["", "/shop", "/tracking", "/standards", "/documentation", "/contact"]
+const STATIC_PATHS = ["", "/shop", "/dual-chamber-pen", "/tracking", "/standards", "/documentation", "/contact"]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   "use cache"

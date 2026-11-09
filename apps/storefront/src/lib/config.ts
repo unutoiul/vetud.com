@@ -40,9 +40,14 @@ export const SITE = {
   email: "contact@vetud.com",
   description:
     "Research-grade peptides with lot-level documentation. Precise information, traceable batches and responsive support for laboratory research.",
-  // Footer disclaimer (also shown on each product page). Keep this wording exact.
+  // The body of the research-use notice on research products. Keep this wording exact.
   ruoNotice:
     "All products sold on this website are intended for research and identification purposes only. These products are not intended for human dosing, injection, or ingestion.",
-  // Shown on every product page and product card. Keep this wording exact.
+  // The research-use notice on research products (page and card) unless a product sets its own
+  // notice in metadata (see readProductNotice). Keep this wording exact.
   productDisclaimer: "All Products listed on this site are for research purposes only",
+  // Site-wide statements (footer, homepage): since 2026-11-09 the shop also sells cosmetics.
+  siteNotice:
+    "Research peptides on this site are intended for laboratory research and identification only. They are not intended for human dosing, injection, or ingestion. Cosmetic products are labelled as such and are for external use on the skin only.",
+  catalogNotice: "Research peptides are for laboratory research purposes only. Cosmetic products are for external use on the skin.",
 }

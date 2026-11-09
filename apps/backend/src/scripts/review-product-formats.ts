@@ -20,7 +20,7 @@ export default async function reviewProductFormats({ container }: ExecArgs) {
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
   const { data } = await query.graph({ entity: "product", fields, filters: { status: "published" } })
   const products = data as unknown as Product[]
-  const ids = products.flatMap(product => (product.variants ?? []).filter(variant => isUnverifiedInjectionFormat(variant.options?.find(option => option.option?.title === "Format")?.value ?? "")).map(variant => variant.id))
+  const ids = products.filter(product => product.handle === "decapeptide-12").flatMap(product => (product.variants ?? []).filter(variant => isUnverifiedInjectionFormat(variant.options?.find(option => option.option?.title === "Format")?.value ?? "")).map(variant => variant.id))
   const { data: decapeptide } = await query.graph({ entity: "product", fields: ["id", "handle", "status", "metadata"], filters: { handle: "decapeptide-12" } })
   await emitSnapshot("VETUD_FORMAT_SNAPSHOT", { products: data, decapeptide, unsupported_variant_ids: ids })
   if (process.env.VETUD_FORMAT_REVIEW_APPLY !== "true") return

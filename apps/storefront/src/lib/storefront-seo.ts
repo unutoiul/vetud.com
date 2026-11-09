@@ -2,7 +2,8 @@ import type { Metadata } from "next"
 import type { HttpTypes } from "@medusajs/types"
 import { BASE_URL, SITE, SUPPORTED_COUNTRIES } from "@/lib/config"
 import { getProductImages } from "@/lib/product-images"
-import { initialProductVariant, isVariantInStock, readProductMeta, variantPrice } from "@/lib/product"
+import { isVariantInStock, readProductMeta, variantPrice } from "@/lib/product"
+import { defaultVariant } from "@/lib/product-formats"
 import { getCountryRules } from "@/i18n/config"
 import { getPageLocalization } from "@/i18n/metadata"
 
@@ -51,7 +52,7 @@ export async function productMetadata(product: HttpTypes.StoreProduct, country: 
 export async function productStructuredData(product: HttpTypes.StoreProduct, country: string) {
   const { ct, locale } = await getPageLocalization()
   const url = storefrontUrl(country, `/products/${product.handle}`)
-  const variant = initialProductVariant(product)
+  const variant = defaultVariant(product)
   const price = variantPrice(variant)
   const meta = readProductMeta(product)
   return {

@@ -34,7 +34,7 @@ const optionValue = (variant: Variant, title: string) =>
 export function readOptions(product: HttpTypes.StoreProduct): ProductOption[] {
   const options: ProductOption[] = []
   for (const variant of sortedVariants(product)) {
-    if (isUnsupportedInjectionFormat(optionValue(variant, FORMAT_OPTION) ?? variant.title ?? "")) continue
+    if (product.handle === "decapeptide-12" && isUnsupportedInjectionFormat(optionValue(variant, FORMAT_OPTION) ?? variant.title ?? "")) continue
     for (const option of variant.options ?? []) {
       const title = option.option?.title
       if (!title || !option.value) continue

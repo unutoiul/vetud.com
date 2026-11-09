@@ -74,7 +74,7 @@ export default async function HomePage() {
       </Box>
       {/* The carousel peeks past its edges by design; clip it to the section (clip, unlike hidden, adds no scroll container). */}
       {products.length ? <Box sx={{ overflowX: "clip" }}><CollectionCarousel products={products} /></Box> : <Typography sx={{ color: "text.secondary" }}>{ct("Our catalog is being updated. Contact us for availability.")}</Typography>}
-      <Typography sx={{ mt: 3, fontSize: 12.5, color: "text.secondary" }}>{ct(SITE.productDisclaimer)}</Typography>
+      <Typography sx={{ mt: 3, fontSize: 12.5, color: "text.secondary" }}>{ct(SITE.catalogNotice)}</Typography>
     </Section>
 
     <ResearchStandard />

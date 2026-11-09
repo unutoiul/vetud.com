@@ -1,6 +1,6 @@
 import type { HttpTypes } from "@medusajs/types"
 
-/** Product-specific sterility and cartridge compatibility have not been documented. */
+/** Recognize packaging labels for product-specific exclusions. */
 export function isUnsupportedInjectionFormat(format: string) {
   return /dual[ -]chamber|pen kit|injection pen/i.test(format)
 }
@@ -12,8 +12,9 @@ export function preparationAddOnsAllowed(product: Pick<HttpTypes.StoreProduct, "
     && (selectedFormat === undefined || selectedFormat === "Vial")
 }
 
-/** Also protects stale search results and cached product responses from offering retired formats. */
+/** Apply only the product-specific Decapeptide-12 exclusion, including stale responses. */
 export function reviewedProductFormats(product: HttpTypes.StoreProduct): HttpTypes.StoreProduct {
+  if (product.handle !== "decapeptide-12") return product
   return {
     ...product,
     variants: (product.variants ?? []).filter(variant => !isUnsupportedInjectionFormat(

@@ -236,7 +236,7 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Selank is a longer-lasting version of tuftsin, a tiny immune peptide. A 2015 Russian study compared 30 patients treated with phenazepam, a benzodiazepine tranquilizer, with 40 given phenazepam plus Selank. The authors reported that the combination worked sooner on a standard rating scale and reduced phenazepam’s side effects, such as sedation and memory problems.",
       "Both studies are small, published in Russian, and lack the large placebo-controlled design regulators elsewhere expect. Much of the supporting work is in animals, such as a 2017 study in stressed rats in which Selank strengthened the anti-anxiety effect of diazepam. FDA advisers discussed Semax in July 2026 as a possible compounding ingredient, which is not an approval.",
       "Some shops sell “Adamax”, presented as a stronger variant of Semax. We found no studies of it indexed in PubMed, so published research says nothing about its effects or safety.",
-      "[Semax](shop:semax) and [Selank](shop:selank) are listed in the research shop as vials and nasal-spray formats. They are laboratory materials, not the registered Russian medicines.",
+      "[Semax](shop:semax) and [Selank](shop:selank) are listed in the research shop as vials, dual-chamber cartridges and nasal-spray formats. They are laboratory materials, not the registered Russian medicines.",
     ],
     means: "Semax and Selank have more human data than many peptides, but it comes from small studies in one country. That is not enough to know how well they work or how safe they are.",
     unknowns: "Independent placebo-controlled trials outside Russia, long-term safety data, and any evidence in healthy people seeking better focus or calm are all missing.",

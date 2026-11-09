@@ -1,6 +1,7 @@
 import { getContentTranslator } from "@/i18n/server-content"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import Skeleton from "@mui/material/Skeleton"
@@ -10,6 +11,7 @@ import type { Metadata } from "next"
 import { Suspense } from "react"
 import { ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
+import { AppLink } from "@/components/common/links"
 import VideoHero, { SHOP_HERO_VIDEO } from "@/components/common/VideoHero"
 import ProductGrid from "@/components/product/ProductGrid"
 import ShopToolbar from "@/components/shop/ShopToolbar"
@@ -130,9 +132,11 @@ function ResultsSkeleton() {
 
 export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/shop">) {
   const ct = useContentTranslator()
+  const act = useTranslations("Actions")
   return (
     <>
       <VideoHero video={SHOP_HERO_VIDEO} eyebrow={ct("The collection")} title={ct("Research peptides & laboratory materials.")} description={ct("Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.")}>
+        <AppLink href="/dual-chamber-pen" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}>{act("compareFormats")}</AppLink>
       </VideoHero>
       <Section tone="white" tight sx={{ pt: { xs: 3, md: 5 } }}>
         <Suspense fallback={<ResultsSkeleton />}>

@@ -84,7 +84,7 @@ export default async function Footer() {
           spacing={2}
           sx={{ borderTop: "1px solid", borderColor: "#ffffff22", pt: 3, justifyContent: "space-between", color: "brand.onNavyMuted", fontSize: 11.5 }}
         >
-          <Typography sx={{ maxWidth: 760, fontSize: "inherit", lineHeight: 1.7 }}>{ct.rich("{v0} Nothing on this site is medical advice. Product availability varies by region.", { v0: ct(SITE.ruoNotice) }, {  })}</Typography>
+          <Typography sx={{ maxWidth: 760, fontSize: "inherit", lineHeight: 1.7 }}>{ct.rich("{v0} Nothing on this site is medical advice. Product availability varies by region.", { v0: ct(SITE.siteNotice) }, {  })}</Typography>
           <Typography sx={{ fontSize: "inherit", lineHeight: 1.7 }}>
             © <CopyrightYear /> {ct(SITE.name)}
             <br />

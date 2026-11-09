@@ -27,20 +27,23 @@ const formats = load(path.join(base, "product-formats.ts"))
 const images = load(path.join(base, "product-images.ts"))
 const variant = (id, format, amount, price) => ({ id, title: `${format} · ${amount}`, calculated_price: price, options: [{ value: format, option: { title: "Format" } }, { value: amount, option: { title: "Amount" } }] })
 
-test("stale catalog responses cannot offer retired formats or change retained variant prices", () => {
+test("the original Retatrutide catalog formats and prices remain available", () => {
   const price = { calculated_amount: 58, currency_code: "usd" }
-  const product = { id: "research", handle: "bpc-157", variants: [variant("retired-box", "Pen kit box", "5 mg"), variant("retired-cartridge", "Dual-chamber vial", "5 mg"), variant("kept", "Vial", "5 mg", price)] }
+  const product = { id: "research", handle: "retatrutide", variants: [variant("restored-box", "Pen kit box", "5 mg"), variant("restored-cartridge", "Dual-chamber vial", "5 mg"), variant("kept", "Vial", "5 mg", price)] }
   const reviewed = policy.reviewedProductFormats(product)
-  assert.deepEqual(reviewed.variants.map(v => v.id), ["kept"])
-  assert.equal(reviewed.variants[0].calculated_price, price)
+  assert.deepEqual(reviewed.variants.map(v => v.id), ["restored-box", "restored-cartridge", "kept"])
+  assert.equal(reviewed.variants[2].calculated_price, price)
   assert.equal(product.variants.length, 3)
-  assert.equal(formats.shortAvailability(product), "Vial · 5 mg")
+  assert.equal(formats.shortAvailability(product), "Pen kit box / Dual-chamber vial / Vial · 5 mg")
+  const topical = policy.reviewedProductFormats({ ...product, handle: "decapeptide-12" })
+  assert.deepEqual(topical.variants.map(v => v.id), ["kept"])
+  assert.equal(formats.shortAvailability({ ...product, handle: "decapeptide-12" }), "Vial · 5 mg")
 })
 
 test("nasal and supply variants remain distinct from pen compatibility", () => {
   const product = { handle: "selank", variants: [variant("retired", "Dual-chamber vial", "5 mg"), variant("vial", "Vial", "5 mg"), variant("spray", "Nasal spray", "5 mg")] }
-  assert.deepEqual(policy.reviewedProductFormats(product).variants.map(v => v.id), ["vial", "spray"])
-  assert.equal(formats.shortAvailability(product).includes("chamber"), false)
+  assert.deepEqual(policy.reviewedProductFormats(product).variants.map(v => v.id), ["retired", "vial", "spray"])
+  assert.equal(formats.shortAvailability(product).includes("chamber"), true)
   const supply = { handle: "u-100-syringes", variants: [{ id: "supply", title: "Box of 10" }] }
   assert.equal(policy.reviewedProductFormats(supply).variants[0].id, "supply")
 })
@@ -58,13 +61,17 @@ test("lab accessories require explicit product scope and never appear for other 
   assert.equal(policy.preparationAddOnsAllowed({ metadata: { ...product.metadata, preparation_addons_allowed: false } }, "Vial"), false)
 })
 
-test("research product galleries use retained formats and historical order thumbnails survive", () => {
-  for (const handle of ["decapeptide-12", "ghk-cu", "bpc-157", "glow-blend", "bacteriostatic-water"]) {
+test("original galleries are restored while Decapeptide-12 stays vial-only", () => {
+  for (const handle of ["decapeptide-12"]) {
     const photos = images.getProductImages({ handle })
     assert.equal(photos.length, 1)
     assert.equal(photos[0].format, "Vial")
     assert.equal(photos[0].url.endsWith("-vial.webp"), true)
   }
-  assert.deepEqual(images.getProductImages({ handle: "selank" }).map(i => i.format), ["Vial", "Nasal spray"])
-  assert.equal(images.getProductThumbnail("bpc-157", "/historic-order-photo.webp", "Pen kit box · 5 mg"), "/historic-order-photo.webp")
+  for (const handle of ["retatrutide", "ghk-cu", "bpc-157", "glow-blend"]) {
+    assert.equal(images.getProductImages({ handle }).some(i => i.format === "Dual-chamber vial"), true)
+    assert.equal(images.getProductImages({ handle }).some(i => i.format === "Pen kit box"), true)
+  }
+  assert.equal(images.getProductImages({ handle: "selank" }).some(i => i.format === "Nasal spray"), true)
+  assert.equal(images.getProductThumbnail("bpc-157", "/historic-order-photo.webp", "Historical kit · 5 mg"), "/historic-order-photo.webp")
 })
