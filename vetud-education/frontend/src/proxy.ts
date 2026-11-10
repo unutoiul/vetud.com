@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { DEFAULT_LANGUAGE, isLanguage, LANGUAGE_COOKIE, type Language } from "./i18n/languages"
+import { DEFAULT_LANGUAGE, isLanguage, LANGUAGE_COOKIE, PREPARED_LANGUAGES, type Language } from "./i18n/languages"
 
 const SECTIONS = new Set(["learn", "news", "videos", "community", "contact", "account", "legal", "newsletter"])
 
@@ -23,6 +23,11 @@ export function proxy(request: NextRequest) {
   if (isLanguage(first)) return NextResponse.next()
 
   const url = request.nextUrl.clone()
+  // A language that is prepared but not published yet: the same page in English, until it launches.
+  if ((PREPARED_LANGUAGES as readonly string[]).includes(first ?? "")) {
+    url.pathname = `/${DEFAULT_LANGUAGE}${pathname.slice(first!.length + 1)}`
+    return NextResponse.redirect(url, 307)
+  }
   if (pathname === "/") {
     url.pathname = `/${preferredLanguage(request)}`
     return NextResponse.redirect(url, 307)

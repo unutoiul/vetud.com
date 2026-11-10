@@ -38,5 +38,6 @@ function CurrentPageLinks() {
 
 /** Links to this page in each language. The current address needs a URL hook, so it sits in Suspense. */
 export default function LanguageSwitcher() {
+  if (LANGUAGES.length < 2) return null
   return <Suspense fallback={<Links rest="" />}><CurrentPageLinks /></Suspense>
 }

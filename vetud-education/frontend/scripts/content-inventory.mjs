@@ -147,6 +147,7 @@ export async function collectInventory() {
 /** The languages the site is published in, read from src/i18n/languages.ts. */
 export function launchedLanguages() {
   const source = readFileSync(join(SRC, "i18n", "languages.ts"), "utf8")
-  const list = /export const LANGUAGES = \[([^\]]*)\]/.exec(source)?.[1] ?? ""
+  const list = /export const LANGUAGES(?::[^=]*)? = \[([^\]]*)\]/.exec(source)?.[1]
+  if (list === undefined) throw new Error("Couldn't find the LANGUAGES list in src/i18n/languages.ts.")
   return [...list.matchAll(/"([a-z]{2})"/g)].map((match) => match[1])
 }
