@@ -7,6 +7,8 @@ import { ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import LearnHero from "@/components/home/LearnHero"
+import PeptideStories from "@/components/home/PeptideStories"
+import EvidenceChallenge from "@/components/home/EvidenceChallenge"
 import ArticleCard from "@/components/learn/ArticleCard"
 import VideoGallery from "@/components/learn/VideoGallery"
 import WeightLossChart from "@/components/learn/WeightLossChart"
@@ -30,6 +32,8 @@ export default async function HomePage() {
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(website).replace(/</g, "\\u003c") }} />
     <LearnHero />
+    <PeptideStories />
+    <EvidenceChallenge />
 
     <Section tone="white" sx={{ py: { xs: 6, md: 9 } }}>
       <SectionHeading eyebrow={ct("Results")} title={ct("What the weight-loss trials found.")} description={ct("Average weight lost in the main published trials of today’s leading medicines, each compared with a placebo.")} action={<ButtonLink href="/learn#weight" variant="outlined" endIcon={<Icon name="arrowRight" />}>{act("weightGuides")}</ButtonLink>} />
@@ -39,7 +43,7 @@ export default async function HomePage() {
     <Section tone="paper" sx={{ py: { xs: 6, md: 9 } }}>
       <SectionHeading eyebrow={ct("News & articles")} title={ct("New research, explained.")} description={ct("Recent studies and decisions, written so anyone can follow them, with every source linked.")} action={<ButtonLink href="/news" variant="outlined" endIcon={<Icon name="arrowRight" />}>{act("allArticles")}</ButtonLink>} />
       <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" }, gap: { xs: 4, md: 3.5 } }}>
-        {ARTICLES.slice(1, 4).map((article) => <ArticleCard key={article.slug} article={article} />)}
+        {ARTICLES.slice(0, 3).map((article) => <ArticleCard key={article.slug} article={article} />)}
       </Box>
     </Section>
 

@@ -2,6 +2,7 @@ import type { HttpTypes } from "@medusajs/types"
 import type { ProductSort } from "./medusa/products"
 import { SITE } from "./config"
 import { popularity } from "./popularity"
+import { merchandisingPriority } from "./product-merchandising"
 
 export type ProductLot = {
   lot: string
@@ -185,8 +186,8 @@ export function sortProducts(products: HttpTypes.StoreProduct[], sort: ProductSo
     case "name":
       return sorted.sort((a, b) => a.title.localeCompare(b.title, "en", { numeric: true }))
     case "relevance":
-      // Best-known products first; equal scores keep the featured order.
-      return sorted.sort((a, b) => popularity(b) - popularity(a) || featuredOrder(a, b))
+      // Store-selected labels lead; public prominence then breaks ties.
+      return sorted.sort((a, b) => merchandisingPriority(b) - merchandisingPriority(a) || popularity(b) - popularity(a) || featuredOrder(a, b))
     default:
       return sorted.sort(featuredOrder)
   }

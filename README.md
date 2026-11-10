@@ -88,6 +88,8 @@ Everything is editable in **Admin → Products**. The storefront also reads thes
 |---|---|---|
 | `code` | `VTD-01` | Product code on cards, art and search |
 | `accent` | `#3cc7c2` | Colour of the product's kit-box illustration |
+| `very_popular` | `true` | Independent “Very popular” badge on the carousel, catalog cards and product page |
+| `best_seller` | `true` | Independent “Best seller” badge; can be shown alongside “Very popular” |
 | `purity` | `≥ 99% (HPLC)` | Specs table and chips |
 | `form` | `Lyophilized powder` | Specs table |
 | `storage` | `-20 °C, desiccated` | Specs table |
@@ -96,6 +98,8 @@ Everything is editable in **Admin → Products**. The storefront also reads thes
 | `sale_excluded` | `true` | Keeps the product at full price during a storewide sale |
 
 The `lots` format is one lot per entry, with entries separated by `;` and fields by `|`: `LOT|YYYY-MM|PURITY|COA_URL`. The COA URL is optional. Without it, the site shows a "Request COA" link that goes to the contact form.
+
+**Product badges:** Admin → Products → a product → **Storefront badges** has two independent switches. Retatrutide, Tirzepatide, Semaglutide, Melanotan II, BPC-157 and GHK-Cu start with both labels; TB-500 and Ipamorelin start with “Very popular”. These are owner-selected labels, not calculated sales rankings. Both labels lead the homepage carousel and default catalog order, followed by best sellers, then popular selections. Migration `vetud-product-28-merchandising` fills missing flags on deploy; `npx medusa exec ./src/scripts/setup-product-merchandising.ts` does the same manually. Migration `vetud-product-29-expanded-merchandising` applies the expanded selection once, including previously disabled best-seller badges; run it manually with `npx medusa exec ./src/scripts/expand-product-merchandising.ts`. Its per-product revision marker preserves subsequent Admin edits on reruns. Catalog replacements carry the flags and marker forward. The frontend reads only stored flags, with no product-name fallback. Check this behavior with `node --experimental-strip-types tests/product-merchandising.test.mjs` from `vetud-shop/frontend`.
 
 ### Dual-chamber pens and vials
 

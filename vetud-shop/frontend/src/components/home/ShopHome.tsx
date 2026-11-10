@@ -46,7 +46,7 @@ export default async function ShopHome() {
           </Box>
           <ButtonLink href="/shop" variant="contained" endIcon={<Icon name="arrowUpRight" />} sx={{ flexShrink: 0 }}>{act("shopCatalog")}</ButtonLink>
         </Box>
-        {products.length ? <CollectionCarousel products={products} /> : <Typography sx={{ py: 6, color: "text.secondary" }}>{ct("Our catalog is being updated. Contact us for availability.")}</Typography>}
+        {products.length ? <CollectionCarousel products={sortProducts(products, "relevance")} /> : <Typography sx={{ py: 6, color: "text.secondary" }}>{ct("Our catalog is being updated. Contact us for availability.")}</Typography>}
         <Typography sx={{ mt: 3, fontSize: 12.5, color: "text.secondary", textAlign: "center" }}>{ct(SITE.catalogNotice)}</Typography>
       </Box>
     </Box>

@@ -7,6 +7,7 @@ import {
   REPLACED_SUFFIX, RETIRED_HANDLES, variantSku, variantTitle, type DualChamberProduct, type FormatKey,
 } from "../seed/dual-chamber-catalog"
 import { BASE_CURRENCY } from "../lib/currencies"
+import { withMerchandisingDefaults } from "../lib/product-merchandising"
 import { catalogFormatAllowed, NASAL_RESEARCH_HANDLES, OPTIONAL_VIAL_ACCESSORIES_SCOPE, optionalVialAccessoriesAllowed, PRODUCT_FORMAT_REVIEW, RESEARCH_VIAL_CONTENTS } from "../lib/product-format-review"
 
 type ExistingProduct = {
@@ -21,7 +22,7 @@ type ExistingProduct = {
  * Metadata carried over from the product being replaced: lot records and the quality notes that
  * belong to the compound. Format-specific keys (contents, features, pricing notes) are not.
  */
-const CARRIED_KEYS = ["lots", "purity", "testing", "storage", "handling", "research_source", "research_sources"]
+const CARRIED_KEYS = ["lots", "purity", "testing", "storage", "handling", "research_source", "research_sources", "very_popular", "best_seller", "merchandising_selection_revision"]
 
 /** New variants get their USD price; the other currencies follow from workflows/sync-currency-prices.ts. */
 export const usdPrice = (amount: number) => [{ currency_code: BASE_CURRENCY, amount }]
@@ -53,7 +54,7 @@ function productInput(
     thumbnail: images[0].url,
     images,
     metadata: {
-      ...carried,
+      ...withMerchandisingDefaults(product.handle, carried),
       code: product.code,
       brand: "VETUD",
       // The boxed format (pen kit box or nasal spray) follows in the same deploy; see add-pen-kit-boxes.

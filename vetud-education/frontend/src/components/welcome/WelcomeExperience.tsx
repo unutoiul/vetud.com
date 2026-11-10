@@ -4,39 +4,56 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { subscribedInBrowser } from "../newsletter/subscription"
 import WelcomeSplash from "./WelcomeSplash"
-import { dismissWelcomeForSession, welcomeDismissedInSession } from "./session"
+import { dismissWelcomeForSession, welcomeCooldownUntil } from "./session"
 
 // Pages opened from an email link, where a full-screen sign-up would get in the way.
 const QUIET_PATHS = /^\/[^/]+\/(newsletter|account\/reset-password)(\/|$)/
 
 /**
- * Offer the email list until dismissed for this tab's session or subscribed in this browser.
+ * Offer the email list again five minutes after dismissal, until subscribed in this browser.
  * Check browser preferences before opening so navigation and reloads cannot flash the splash.
  */
 export default function WelcomeExperience() {
   const pathname = usePathname()
   // null until read after hydration: the server can't know what this browser stored.
   const [subscribed, setSubscribed] = useState<boolean | null>(null)
-  const [skipped, setSkipped] = useState(false)
+  const [cooldownUntil, setCooldownUntil] = useState(0)
   const [thanking, setThanking] = useState(false)
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      setSkipped(value => value || welcomeDismissedInSession())
+      setCooldownUntil(value => Math.max(value, welcomeCooldownUntil()))
       setSubscribed(subscribedInBrowser())
     })
     return () => window.cancelAnimationFrame(frame)
   }, [])
 
+  useEffect(() => {
+    const refresh = () => {
+      // Check again before reopening, including signups completed in another tab.
+      setSubscribed(value => value === null ? null : value || subscribedInBrowser())
+      setCooldownUntil(value => value > Date.now() ? value : 0)
+    }
+    const timer = cooldownUntil ? window.setTimeout(refresh, Math.max(0, cooldownUntil - Date.now())) : undefined
+    window.addEventListener("focus", refresh)
+    window.addEventListener("storage", refresh)
+    document.addEventListener("visibilitychange", refresh)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener("focus", refresh)
+      window.removeEventListener("storage", refresh)
+      document.removeEventListener("visibilitychange", refresh)
+    }
+  }, [cooldownUntil])
+
   const asking = subscribed === false && !QUIET_PATHS.test(pathname)
   // After signing up, the thank-you stays until it is closed, and the splash doesn't return.
-  const open = !skipped && (asking || thanking)
+  const open = cooldownUntil === 0 && (asking || thanking)
 
   return <WelcomeSplash
     open={open}
     onDismiss={() => {
-      dismissWelcomeForSession()
-      setSkipped(true)
+      setCooldownUntil(dismissWelcomeForSession())
       setThanking(false)
     }}
     onSubscribed={() => {

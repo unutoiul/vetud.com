@@ -11,7 +11,6 @@ import FaqAccordion, { type FaqItem } from "@/components/standards/FaqAccordion"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
-import Manifesto from "@/components/home/Manifesto"
 import StandardsAccordion from "@/components/home/StandardsAccordion"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -153,8 +152,6 @@ export default function StandardsPage() {
           </Grid>
         </Grid>
       </Section>
-
-      <Manifesto />
     </>
   )
 }

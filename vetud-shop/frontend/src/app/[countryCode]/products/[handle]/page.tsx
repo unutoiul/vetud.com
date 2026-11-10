@@ -15,6 +15,7 @@ import { AppLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import ProductArt from "@/components/product/ProductArt"
+import ProductBadges from "@/components/product/ProductBadges"
 import { ArtStage } from "@/components/product/ProductCard"
 import ProductGrid from "@/components/product/ProductGrid"
 import ProductGallery from "@/components/product/ProductGallery"
@@ -205,6 +206,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
           </Grid>
 
           <Grid size={{ xs: 12, md: 6 }}>
+            <ProductBadges metadata={product.metadata} />
             <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".1em" }}>
               {ct(meta.code)}
               {category ? ` · ${ct(category.name)}` : ""}

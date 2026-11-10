@@ -15,6 +15,7 @@ import { LocalizedNextLink } from "../common/links"
 import ProductArt from "./ProductArt"
 import ProductPhoto from "./ProductPhoto"
 import StockBadge from "./StockBadge"
+import ProductBadges from "./ProductBadges"
 
 /** Read by screen readers only. */
 const visuallyHidden = { position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" } as const
@@ -39,6 +40,7 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
       {off ? <Typography component="span" sx={{ position: "absolute", right: 15, top: 14, fontSize: 12, fontWeight: 700, color: "#fff", bgcolor: "brand.navy", borderRadius: "4px", px: 1, py: .25 }}>−{ct(off)}%<Box component="span" sx={visuallyHidden}> {ct("off")}</Box></Typography> : null}
     </Box>
     <Box sx={{ pt: 2.5, pb: 2, flex: 1, display: "flex", flexDirection: "column" }}>
+      <ProductBadges metadata={product.metadata} />
       <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", gap: 1 }}>
         <Typography component="h3" sx={{ fontSize: 23, fontWeight: 500, letterSpacing: "-.04em" }}><Box component={LocalizedNextLink} href={`/products/${product.handle}`} sx={{ textDecoration: "none", "&::after": { content: '\"\"', position: "absolute", inset: 0, zIndex: 2 }, "&:focus-visible": { outline: "none" } }}>{ct(product.title)}</Box></Typography>
         <Box className="product-arrow" aria-hidden sx={{ width: 33, height: 33, flexShrink: 0, border: "1px solid", borderColor: "divider", borderRadius: "50%", display: "grid", placeItems: "center", transition: "background-color .2s, color .2s" }}><Icon name="arrowUpRight" sx={{ fontSize: 16 }} /></Box>

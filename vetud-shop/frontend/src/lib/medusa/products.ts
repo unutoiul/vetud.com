@@ -96,6 +96,18 @@ export async function listProductHandles(): Promise<string[]> {
   return products.map((product) => product.handle).filter((handle): handle is string => !!handle)
 }
 
+/** Each product's handle and when it last changed, for the sitemap's lastmod. */
+export async function listProductSitemapEntries(): Promise<{ handle: string; updatedAt?: string }[]> {
+  "use cache"
+  cacheLife("minutes")
+  cacheTag("products")
+
+  const { products } = await sdk.store.product.list({ fields: "handle,updated_at", limit: 500 })
+  return products.flatMap((product) => product.handle
+    ? [{ handle: product.handle, updatedAt: product.updated_at ? new Date(product.updated_at).toISOString() : undefined }]
+    : [])
+}
+
 /**
  * Full-text search through Meilisearch. The plugin's hydrated route returns regular store
  * products (with region prices and inventory) in relevance order.
