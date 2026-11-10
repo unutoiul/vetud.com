@@ -24,7 +24,7 @@ export default function CollectionCarousel({ products }: { products: HttpTypes.S
   const ct = useContentTranslator()
   const t = useTranslations("Common")
   const money = useMoney()
-  const photos = products.filter(product => getProductImages(product).length > 0)
+  const photos = products.filter(product => product.handle !== "u-100-syringes" && getProductImages(product).length > 0)
   const count = photos.length
   const root = useRef<HTMLDivElement>(null)
   const touchStart = useRef<{ x: number; y: number } | null>(null)
