@@ -3,50 +3,49 @@
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useAccount } from "../account/AccountProvider"
-import OfferPopup from "../newsletter/OfferPopup"
 import { subscribedInBrowser } from "../newsletter/subscription"
 import WelcomeSplash from "./WelcomeSplash"
 
-const VISIT_KEY = "vetud_welcome_v2"
+// Pages where a full-screen sign-up would get in the way of a purchase, a payment return or an email link.
+const QUIET_PATHS = /^\/[^/]+\/(cart|checkout|order|newsletter|account\/reset-password)(\/|$)/
 
-/** One welcome per tab. Deep links and transactional pages remain uninterrupted. */
+/**
+ * The newsletter splash opens on every page a visitor goes to until they subscribe in this browser
+ * (or, when signed in, have agreed to marketing email). Skipping it closes it for this page only.
+ * It replaces the timed offer pop-up, so visitors aren't asked twice on one page.
+ */
 export default function WelcomeExperience() {
   const pathname = usePathname()
   const { customer } = useAccount()
-  const [visit, setVisit] = useState<"checking" | "new" | "welcomed">("checking")
-  const [subscribed, setSubscribed] = useState(false)
-  const isHomepage = /^\/[^/]+\/?$/.test(pathname)
+  // null until read after hydration: the server can't know what this browser stored.
+  const [subscribed, setSubscribed] = useState<boolean | null>(null)
+  const [page, setPage] = useState(pathname)
+  const [skipped, setSkipped] = useState(false)
+  const [thanking, setThanking] = useState(false)
   const consented = customer?.metadata?.marketing_consent === true
 
+  // Each new page asks again.
+  if (page !== pathname) {
+    setPage(pathname)
+    setSkipped(false)
+    setThanking(false)
+  }
+
   useEffect(() => {
-    const isSubscriber = subscribedInBrowser()
-    let welcomed = isSubscriber
-    try {
-      welcomed ||= window.sessionStorage.getItem(VISIT_KEY) === "welcomed"
-    } catch {
-      // The in-memory state still remembers dismissal when browser storage is unavailable.
-    }
-    const frame = window.requestAnimationFrame(() => {
-      setSubscribed(isSubscriber)
-      setVisit(welcomed ? "welcomed" : "new")
-    })
+    const frame = window.requestAnimationFrame(() => setSubscribed(subscribedInBrowser()))
     return () => window.cancelAnimationFrame(frame)
   }, [])
 
-  const dismiss = () => {
-    try {
-      window.sessionStorage.setItem(VISIT_KEY, "welcomed")
-    } catch {
-      // Navigation and dismissal must work in privacy-restricted browsers too.
-    }
-    setVisit("welcomed")
-  }
+  const asking = subscribed === false && !consented && !QUIET_PATHS.test(pathname)
+  // After signing up, the thank-you stays until it is closed, and the splash doesn't return.
+  const open = !skipped && (asking || thanking)
 
-  const showWelcome = visit === "new" && isHomepage && !consented
-
-  return <>
-    <WelcomeSplash open={showWelcome} onDismiss={dismiss} onSubscribed={() => setSubscribed(true)} />
-    {/* Don't follow a declined welcome with a second signup request on the same visit. */}
-    <OfferPopup enabled={visit === "new" && !showWelcome && !subscribed && !consented} />
-  </>
+  return <WelcomeSplash
+    open={open}
+    onDismiss={() => setSkipped(true)}
+    onSubscribed={() => {
+      setSubscribed(true)
+      setThanking(true)
+    }}
+  />
 }

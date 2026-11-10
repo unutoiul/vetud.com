@@ -5,33 +5,43 @@ import { useEffect, useState } from "react"
 import { subscribedInBrowser } from "../newsletter/subscription"
 import WelcomeSplash from "./WelcomeSplash"
 
-const VISIT_KEY = "vetud_welcome_v2"
+// Pages opened from an email link, where a full-screen sign-up would get in the way.
+const QUIET_PATHS = /^\/[^/]+\/(newsletter|account\/reset-password)(\/|$)/
 
-/** One welcome per tab, on the home page only. Deep links remain uninterrupted. */
+/**
+ * The email-list splash opens on every page a visitor goes to until they sign up in this browser.
+ * Skipping it closes it for this page only.
+ */
 export default function WelcomeExperience() {
   const pathname = usePathname()
-  const [visit, setVisit] = useState<"checking" | "new" | "welcomed">("checking")
-  const isHomepage = /^\/[^/]+\/?$/.test(pathname)
+  // null until read after hydration: the server can't know what this browser stored.
+  const [subscribed, setSubscribed] = useState<boolean | null>(null)
+  const [page, setPage] = useState(pathname)
+  const [skipped, setSkipped] = useState(false)
+  const [thanking, setThanking] = useState(false)
+
+  // Each new page asks again.
+  if (page !== pathname) {
+    setPage(pathname)
+    setSkipped(false)
+    setThanking(false)
+  }
 
   useEffect(() => {
-    let welcomed = subscribedInBrowser()
-    try {
-      welcomed ||= window.sessionStorage.getItem(VISIT_KEY) === "welcomed"
-    } catch {
-      // The in-memory state still remembers dismissal when browser storage is unavailable.
-    }
-    const frame = window.requestAnimationFrame(() => setVisit(welcomed ? "welcomed" : "new"))
+    const frame = window.requestAnimationFrame(() => setSubscribed(subscribedInBrowser()))
     return () => window.cancelAnimationFrame(frame)
   }, [])
 
-  const dismiss = () => {
-    try {
-      window.sessionStorage.setItem(VISIT_KEY, "welcomed")
-    } catch {
-      // Navigation and dismissal must work in privacy-restricted browsers too.
-    }
-    setVisit("welcomed")
-  }
+  const asking = subscribed === false && !QUIET_PATHS.test(pathname)
+  // After signing up, the thank-you stays until it is closed, and the splash doesn't return.
+  const open = !skipped && (asking || thanking)
 
-  return <WelcomeSplash open={visit === "new" && isHomepage} onDismiss={dismiss} />
+  return <WelcomeSplash
+    open={open}
+    onDismiss={() => setSkipped(true)}
+    onSubscribed={() => {
+      setSubscribed(true)
+      setThanking(true)
+    }}
+  />
 }

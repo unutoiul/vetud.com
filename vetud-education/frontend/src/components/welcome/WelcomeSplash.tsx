@@ -2,7 +2,6 @@
 
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
 import Checkbox from "@mui/material/Checkbox"
 import CircularProgress from "@mui/material/CircularProgress"
 import Dialog from "@mui/material/Dialog"
@@ -13,6 +12,7 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { useRef, useState, type FormEvent } from "react"
 import { CATEGORIES } from "@/content/learn/categories"
 import { translateAction } from "@/i18n/actions"
@@ -20,9 +20,10 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
-import { AppLink, ButtonLink, LocalizedNextLink } from "../common/links"
+import { AppLink, useLocalizedHref } from "../common/links"
 import { EMAIL_LIST_CONSENT, subscribeToEmailList } from "../newsletter/subscription"
 import { useLanguage } from "../common/language"
+import HoldButton from "./HoldButton"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -76,9 +77,10 @@ const legalLinkSx: SxProps<Theme> = {
   "&:hover": { color: "brand.onNavy" },
 }
 
-export default function WelcomeSplash({ open, onDismiss }: {
+export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   open: boolean
   onDismiss: () => void
+  onSubscribed: () => void
 }) {
   const ct = useContentTranslator()
   const offerText = useTranslations("Offer")
@@ -92,14 +94,29 @@ export default function WelcomeSplash({ open, onDismiss }: {
   const [showErrors, setShowErrors] = useState(false)
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
   const submitting = useRef(false)
+  const form = useRef<HTMLFormElement>(null)
+  const joinButton = useRef<HTMLButtonElement>(null)
+  const router = useRouter()
+  const localize = useLocalizedHref()
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
 
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
+  // Every action on this screen is a three-second hold, so pressing Enter in the form only moves
+  // to the Join button, where holding Enter (or the button) sends it.
+  const holdToJoin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    joinButton.current?.focus()
+  }
+
+  const go = (href: string) => {
+    onDismiss()
+    router.push(localize(href))
+  }
+
+  const submit = async () => {
     if (submitting.current) return
     setShowErrors(true)
     if (emailInvalid || !consent) {
-      event.currentTarget.querySelector<HTMLInputElement>(emailInvalid ? 'input[type="email"]' : 'input[type="checkbox"]')?.focus()
+      form.current?.querySelector<HTMLInputElement>(emailInvalid ? 'input[type="email"]' : 'input[type="checkbox"]')?.focus()
       return
     }
     submitting.current = true
@@ -107,6 +124,7 @@ export default function WelcomeSplash({ open, onDismiss }: {
     try {
       await subscribeToEmailList({ email, consent: true, language, website })
       setStatus("success")
+      onSubscribed()
     } catch {
       setStatus("error")
     } finally {
@@ -138,15 +156,15 @@ export default function WelcomeSplash({ open, onDismiss }: {
     }}>
       <Box component="header" sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2, "& > span": { minWidth: 0 } }}>
         <Logo tone="light" />
-        <Button onClick={onDismiss} endIcon={<Icon name="close" />} sx={{
+        <HoldButton onConfirm={onDismiss} hint="short" fill={alpha(brand.cyan, .24)} startIcon={<Icon name="close" />} sx={{
           flexShrink: 0,
           p: { xs: "8px", sm: "8px 12px" },
           minHeight: 44,
           color: "brand.onNavyMuted",
           fontSize: { xs: 12, sm: 13 },
-          "& .MuiButton-endIcon": { ml: 1 },
+          "& .MuiButton-startIcon": { mr: 1 },
           "&:hover": { color: "brand.onNavy", bgcolor: "brand.navy" },
-        }}>{ct("Skip for now")}</Button>
+        }}>{ct("Skip for now")}</HoldButton>
       </Box>
 
       <Box sx={{
@@ -193,12 +211,12 @@ export default function WelcomeSplash({ open, onDismiss }: {
             <Box sx={{ display: "grid", placeItems: "center", width: 52, height: 52, my: 2.75, borderRadius: "50%", bgcolor: "brand.navy", color: "brand.cyan" }}><Icon name="check" sx={{ fontSize: 28 }} /></Box>
             <Typography id="welcome-description" sx={descriptionSx}>{ct("We've sent you a link to confirm your email. Explore our peptide guides and meet the community in the meantime.")}</Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 3.25 }}>
-              <ButtonLink href="/learn" onClick={onDismiss} variant="contained" endIcon={<Icon name="arrowRight" />} sx={primaryButtonSx}>{ct("Explore peptide education")}</ButtonLink>
-              <ButtonLink href="/community" onClick={onDismiss} variant="outlined" sx={{ color: "brand.onNavy", borderColor: "brand.cyan", "&:hover": { borderColor: "brand.cyan", bgcolor: "brand.navy" } }}>{ct("Visit the community")}</ButtonLink>
+              <HoldButton variant="contained" fill={alpha(brand.navy, .2)} onConfirm={() => go("/learn")} sx={primaryButtonSx}>{ct("Explore peptide education")}</HoldButton>
+              <HoldButton variant="outlined" fill={alpha(brand.cyan, .24)} onConfirm={() => go("/community")} sx={{ color: "brand.onNavy", borderColor: "brand.cyan", "&:hover": { borderColor: "brand.cyan", bgcolor: "brand.navy" } }}>{ct("Visit the community")}</HoldButton>
             </Box>
           </div> : <>
             <Typography id="welcome-description" sx={descriptionSx}>{ct("Get clear peptide explainers, research news and community updates in your inbox.")}</Typography>
-            <Box component="form" onSubmit={submit} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 3, md: 3.75 } }}>
+            <Box component="form" ref={form} onSubmit={holdToJoin} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 3, md: 3.75 } }}>
               <TextField
                 label={offerText("email")}
                 type="email"
@@ -240,12 +258,12 @@ export default function WelcomeSplash({ open, onDismiss }: {
                 {showErrors && !consent ? <FormHelperText error id="welcome-consent-error" sx={{ m: "0 0 8px 48px", lineHeight: 1.6, "&.Mui-error": { color: "error.light" } }}>{ct("Please tick the box to receive our emails.")}</FormHelperText> : null}
               </Box>
               {status === "error" ? <Alert severity="error" sx={{ mt: 2 }}>{ct("We couldn't save your signup. Please try again.")}</Alert> : null}
-              <Button type="submit" variant="contained" fullWidth size="large" disabled={status === "sending"}
+              <HoldButton ref={joinButton} variant="contained" fullWidth size="large" disabled={status === "sending"} onConfirm={() => void submit()} fill={alpha(brand.navy, .2)}
                 startIcon={status === "sending" ? <CircularProgress size={18} color="inherit" /> : <Icon name="mail" />}
-                endIcon={status === "sending" ? null : <Icon name="arrowRight" />}
-                sx={{ ...primaryButtonSx, minHeight: 54, mt: 2.5, justifyContent: "center", "& .MuiButton-startIcon": { mr: "auto" }, "& .MuiButton-endIcon": { ml: "auto" } }}>
+                counterSx={{ ml: "auto" }}
+                sx={{ ...primaryButtonSx, minHeight: 54, mt: 2.5, justifyContent: "center", "& .MuiButton-startIcon": { mr: "auto" } }}>
                 {ct(status === "sending" ? "Joining the newsletter..." : "Join the newsletter")}
-              </Button>
+              </HoldButton>
               <Typography sx={{ mt: 1.5, textAlign: "center", fontSize: 12, lineHeight: 1.6, color: "brand.onNavyMuted" }}>{ct("Free to join. Unsubscribe whenever you like.")}</Typography>
             </Box>
           </>}
@@ -269,27 +287,25 @@ export default function WelcomeSplash({ open, onDismiss }: {
           scrollbarColor: `${brand.navySoft} ${brand.navyDeep}`,
         }}>
           {CATEGORIES.map(topic => <Box component="li" key={topic.id} sx={{ flexShrink: 0 }}>
-            <Box component={LocalizedNextLink} href={`/learn#${topic.id}`} onClick={onDismiss} sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 1,
+            <HoldButton onConfirm={() => go(`/learn#${topic.id}`)} hint="short" fill={alpha(brand.cyan, .3)} startIcon={<Icon name={topic.icon} sx={{ width: 17, height: 17, color: "brand.cyan" }} />} counterSx={{ ml: 1, fontSize: 10, px: .6 }} sx={{
+              gap: 0,
               minHeight: 44,
-              p: "8px 14px",
+              p: "8px 10px 8px 14px",
               border: "1px solid",
               borderColor: "brand.navySoft",
               borderRadius: 999,
               color: "brand.onNavy",
               bgcolor: alpha(brand.onNavy, .04),
-              textDecoration: "none",
               whiteSpace: "nowrap",
               fontSize: { xs: 12, md: 13 },
               fontWeight: 500,
+              textTransform: "none",
               transition: "border-color 150ms ease, background-color 150ms ease",
+              "& .MuiButton-startIcon": { ml: 0, mr: 1 },
               "&:hover": { borderColor: "brand.cyan", bgcolor: alpha(brand.cyan, .12) },
             }}>
-              <Icon name={topic.icon} sx={{ width: 17, height: 17, color: "brand.cyan" }} />
               {translateAction(actions, topic.name)}
-            </Box>
+            </HoldButton>
           </Box>)}
         </Box>
       </Box>
