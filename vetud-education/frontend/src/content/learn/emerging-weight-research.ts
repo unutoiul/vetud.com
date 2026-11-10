@@ -10,15 +10,30 @@ export const CBL_514_SOURCES = [
   { title: "CBL-514: visceral-fat subgroup and weight-regain research at EASD 2026", detail: "EASD press-room report reproduced by Caliway · preliminary conference findings · October 2, 2026", url: "https://www.caliwaybiopharma.com/en/news-detail/-CBL-514-EASD-2026-subcutaneousfat-visceralfat-reduction-study-ENG/" },
 ]
 
+type EmergingWeightResearch = {
+  peptide: string
+  name: string
+  evidence: string
+  measured: string
+  finding: string
+  humanWeightLoss: string
+  limitation: string
+  profile?: string
+  article?: string
+  source: { title: string; detail: string; url: string }
+  sourceLabel: string
+  extraSource?: { label: string; url: string }
+}
+
 /** These are deliberately outside the numeric human body-weight trial dataset. */
-export const EMERGING_WEIGHT_RESEARCH = [
+export const EMERGING_WEIGHT_RESEARCH: EmergingWeightResearch[] = [
   {
     peptide: "ptt-a", name: "PTT-A", evidence: "Animal research · conference abstract",
     measured: "Body weight in diet-induced obese rats over 21 days",
     finding: "Body weight was 19.2% lower versus vehicle at the higher studied exposure; tirzepatide was 12.1% lower versus vehicle in the same experiment.",
     humanWeightLoss: "Not established in the cited research",
     limitation: "A difference versus vehicle in rats is not average weight lost by people. It cannot establish superiority to retatrutide in humans.",
-    article: "ptt-a-four-receptors-animal-evidence", source: PTT_A_SOURCES[0], sourceLabel: "ADA conference abstract",
+    profile: "ptt-a", article: "ptt-a-four-receptors-animal-evidence", source: PTT_A_SOURCES[0], sourceLabel: "ADA conference abstract",
   },
   {
     peptide: "cbl-514", name: "CBL-514", evidence: "Human fat-volume subgroup · conference report",
@@ -26,6 +41,16 @@ export const EMERGING_WEIGHT_RESEARCH = [
     finding: "Visceral-fat volume fell 12.01%; placebo rose 5.68%. The small phase 2 subgroup had 40 participants with later follow-up data.",
     humanWeightLoss: "Not established by this fat-volume result",
     limitation: "12.01% less visceral fat is not 12.01% less body weight. CBL-514 is an experimental small molecule, not a peptide.",
-    article: "cbl-514-fat-cells-self-destruct", source: CBL_514_SOURCES[1], sourceLabel: "EASD conference report",
+    profile: "cbl-514", article: "cbl-514-fat-cells-self-destruct", source: CBL_514_SOURCES[1], sourceLabel: "EASD conference report",
+  },
+  {
+    peptide: "adipotide", name: "Adipotide", evidence: "Animal research · peer-reviewed study",
+    measured: "Body weight, body fat and insulin resistance in obese monkeys",
+    finding: "A 2011 study reported weight loss and improved insulin resistance in obese monkeys. This is an animal result, not a measured weight-loss benefit in people.",
+    humanWeightLoss: "Not established; no results posted for the registered phase 1 study",
+    limitation: "The animal study also found kidney tubular injury. The registered phase 1 study in men with prostate cancer and obesity enrolled four people and was terminated. It does not establish safety or weight-loss effectiveness in people.",
+    source: { title: "A peptidomimetic targeting white fat causes weight loss and improved insulin resistance in obese monkeys", detail: "Barnhart et al. · Science Translational Medicine · 2011", url: "https://pubmed.ncbi.nlm.nih.gov/22072637/" },
+    sourceLabel: "Published monkey study",
+    extraSource: { label: "Phase 1 trial registry", url: "https://clinicaltrials.gov/study/NCT01262664" },
   },
 ]

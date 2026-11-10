@@ -43,7 +43,7 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: 2, mb: 3 }}>
         <Box>
           <Typography component="figcaption" sx={{ fontSize: { xs: 19, md: 22 }, fontWeight: 650, letterSpacing: "-.02em" }}>{ct("Average body weight lost in human trials")}</Typography>
-          <Typography sx={{ fontSize: 13.5, color: "text.secondary", mt: .5 }}>{ct("Each medicine compared with a placebo in its own trial. Ordered by reported average; this is not a head-to-head ranking.")}</Typography>
+          <Typography sx={{ fontSize: 13.5, color: "text.secondary", mt: .5 }}>{ct("Each medicine compared with its trial’s placebo group. Ordered by reported average; this is not a head-to-head ranking.")}</Typography>
         </Box>
         <Box component="ul" aria-label={ct("Legend")} sx={{ display: "flex", gap: 2.5, listStyle: "none", m: 0, p: 0 }}>
           {[["Medicine", MEDICINE], ["Placebo", PLACEBO]].map(([label, color]) => <Box component="li" key={label} sx={{ display: "flex", alignItems: "center", gap: 1, fontSize: 13, color: "text.secondary" }}><Box component="span" sx={{ width: 14, height: 14, borderRadius: "3px", bgcolor: color }} />{ct(label)}</Box>)}
@@ -96,13 +96,17 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
         </Box>
       </Box>
 
-      <Box component="section" aria-label={ct("PTT-A and CBL-514 evidence comparison")} sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
-        <Typography component="h2" sx={{ fontSize: { xs: 19, md: 22 }, fontWeight: 650, letterSpacing: "-.02em" }}>{ct("PTT-A and CBL-514: evidence so far")}</Typography>
-        <Typography sx={{ mt: 1, mb: 2.5, fontSize: 14, lineHeight: 1.7, color: "text.secondary", maxWidth: 880 }}>{ct("Neither has a comparable average human body-weight-loss result in the research below. Animal body weight and human fat volume measure different things, so they are shown separately from the bars.")}</Typography>
+      <Typography sx={{ mt: 2, fontSize: 13, color: "text.secondary", lineHeight: 1.7 }}>
+        {ct("CagriSema combines cagrilintide with semaglutide. Its row and the cagrilintide-alone row share the REDEFINE 1 trial and placebo group. Both use estimates that include participants regardless of whether they stayed on treatment. The 3,417 people shown is the total trial population: 2,108 received the combination, 302 cagrilintide alone, 302 semaglutide alone, and 705 placebo.")}
+      </Typography>
+
+      <Box component="section" aria-label={ct("Other weight and fat-loss research")} sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
+        <Typography component="h2" sx={{ fontSize: { xs: 19, md: 22 }, fontWeight: 650, letterSpacing: "-.02em" }}>{ct("PTT-A, CBL-514 and Adipotide: evidence so far")}</Typography>
+        <Typography sx={{ mt: 1, mb: 2.5, fontSize: 14, lineHeight: 1.7, color: "text.secondary", maxWidth: 880 }}>{ct("These findings do not provide comparable average human body-weight-loss results. Animal body weight and human fat volume measure different things, so they are shown separately from the bars.")}</Typography>
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 2 }}>
           {EMERGING_WEIGHT_RESEARCH.map((research) => <Box component="article" key={research.peptide} sx={{ p: { xs: 2, md: 2.5 }, minWidth: 0, border: "1px solid", borderColor: research.peptide === highlight ? "brand.blue" : "divider", borderRadius: "8px", bgcolor: "brand.paper" }}>
             <Typography sx={{ fontSize: 12, fontWeight: 600, color: "brand.blue" }}>{ct(research.evidence)}</Typography>
-            <Typography component="h3" sx={{ mt: .75, fontSize: 22, fontWeight: 650 }}><AppLink href={`/learn/${research.peptide}`} underline="hover" sx={{ fontWeight: "inherit", color: "inherit" }}>{ct(research.name)}</AppLink></Typography>
+            <Typography component="h3" sx={{ mt: .75, fontSize: 22, fontWeight: 650 }}>{research.profile ? <AppLink href={`/learn/${research.profile}`} underline="hover" sx={{ fontWeight: "inherit", color: "inherit" }}>{ct(research.name)}</AppLink> : ct(research.name)}</Typography>
             <Box component="dl" sx={{ m: 0, mt: 2, fontSize: 14, lineHeight: 1.7, "& dt": { fontWeight: 650, mt: 1.5 }, "& dd": { m: 0, color: "text.secondary" } }}>
               <dt>{ct("Average human body-weight loss")}</dt><dd>{ct(research.humanWeightLoss)}</dd>
               <dt>{ct("What was measured")}</dt><dd>{ct(research.measured)}</dd>
@@ -110,9 +114,10 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
             </Box>
             <Typography sx={{ mt: 2, fontSize: 13.5, color: "text.secondary", lineHeight: 1.7 }}>{ct(research.limitation)}</Typography>
             <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", columnGap: 2, rowGap: .5, "& a": { display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 13.5, fontWeight: 600 } }}>
-              <AppLink href={`/learn/${research.peptide}`}>{act("readProfile")}</AppLink>
-              <AppLink href={`/news/${research.article}`}>{act("readArticle")}</AppLink>
+              {research.profile ? <AppLink href={`/learn/${research.profile}`}>{act("readProfile")}</AppLink> : null}
+              {research.article ? <AppLink href={`/news/${research.article}`}>{act("readArticle")}</AppLink> : null}
               <Link href={research.source.url} target="_blank" rel="noopener noreferrer">{ct(research.sourceLabel)} ↗</Link>
+              {research.extraSource ? <Link href={research.extraSource.url} target="_blank" rel="noopener noreferrer">{ct(research.extraSource.label)} ↗</Link> : null}
             </Box>
           </Box>)}
         </Box>
