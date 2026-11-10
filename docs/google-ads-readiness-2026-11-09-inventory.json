@@ -1,0 +1,1938 @@
+{
+  "date": "2026-11-09",
+  "source": "Read-only live Medusa Store API",
+  "products": [
+    {
+      "id": "prod_01M6JWFP9X2PWWNVKQEGP4X43X",
+      "handle": "dsip",
+      "title": "DSIP",
+      "subtitle": "Delta sleep-inducing peptide, studied in sleep and stress research.",
+      "description": "DSIP (delta sleep-inducing peptide) is a nine-amino-acid peptide first isolated in the 1970s. It is studied in sleep-regulation and stress research, with mixed results.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Calm & balance"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGEGB4CYQXZDFZFMKWZ",
+          "sku": "VTD-DSIP-VIAL-5MG",
+          "title": "Vial · 5 mg",
+          "format": "Vial",
+          "price": 24.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGFWHW1MZEA9FJ4XRQ0",
+          "sku": "VTD-DSIP-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 49.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGETXZX9CDJBAQBFNZ5",
+          "sku": "VTD-DSIP-PEN-5MG",
+          "title": "Dual-chamber vial · 5 mg",
+          "format": "Dual-chamber vial",
+          "price": 48.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGEQ906AC1TSSBJTRA2",
+          "sku": "VTD-DSIP-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 81.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQNAGEDFB5PNBPFBQV5",
+          "sku": "VTD-DSIP-BOX-5MG",
+          "title": "Pen kit box · 5 mg",
+          "format": "Pen kit box",
+          "price": 80.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQN937K9DPTV87XCZZ3",
+          "sku": "VTD-DSIP-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 113.6,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9X8174Q8ZKMN9J5Y12",
+      "handle": "kpv",
+      "title": "KPV",
+      "subtitle": "Alpha-MSH tripeptide studied in inflammation research.",
+      "description": "KPV is the last three amino acids of alpha-MSH. It is studied in gut and skin inflammation research, mostly in cells and animals.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Immune support"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQP1V0QEW73Y0XVTYBS",
+          "sku": "VTD-KPV-BOX-5MG",
+          "title": "Pen kit box · 5 mg",
+          "format": "Pen kit box",
+          "price": 73.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQPMRNV7Q794WZ9NZZ8",
+          "sku": "VTD-KPV-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 99.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGGRWZK1XKF4YC3489F",
+          "sku": "VTD-KPV-VIAL-5MG",
+          "title": "Vial · 5 mg",
+          "format": "Vial",
+          "price": 17.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGGXAW43W7WSMDZJHMK",
+          "sku": "VTD-KPV-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 35.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGGCDQ1SKB9ADCH9J31",
+          "sku": "VTD-KPV-PEN-5MG",
+          "title": "Dual-chamber vial · 5 mg",
+          "format": "Dual-chamber vial",
+          "price": 41.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGGS3J4RTSHDMV9AAA4",
+          "sku": "VTD-KPV-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 67.2,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9X9XBS667S80082KFT",
+      "handle": "glutathione",
+      "title": "Glutathione",
+      "subtitle": "The body's main antioxidant tripeptide, studied in oxidative-stress research.",
+      "description": "Glutathione is a tripeptide made by every human cell and the body's main antioxidant. It is studied in oxidative-stress, liver and skin research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Energy & metabolism"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQN8HCQS2FDP0ED9RNZ",
+          "sku": "VTD-GSH-BOX-1500MG",
+          "title": "Pen kit box · 1500 mg",
+          "format": "Pen kit box",
+          "price": 137.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGF8J4DWEEJNXSYC7M3",
+          "sku": "VTD-GSH-PEN-600MG",
+          "title": "Dual-chamber vial · 600 mg",
+          "format": "Dual-chamber vial",
+          "price": 76.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGFK9G8SW1HBK95XKWF",
+          "sku": "VTD-GSH-PEN-1500MG",
+          "title": "Dual-chamber vial · 1500 mg",
+          "format": "Dual-chamber vial",
+          "price": 105.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGFTH6EQ7QZ20F78FQG",
+          "sku": "VTD-GSH-VIAL-600MG",
+          "title": "Vial · 600 mg",
+          "format": "Vial",
+          "price": 52.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGF5ET8MMH7SC2Q27B9",
+          "sku": "VTD-GSH-VIAL-1500MG",
+          "title": "Vial · 1500 mg",
+          "format": "Vial",
+          "price": 57.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQNH8YJPXCG6TQ8CR61",
+          "sku": "VTD-GSH-BOX-600MG",
+          "title": "Pen kit box · 600 mg",
+          "format": "Pen kit box",
+          "price": 108.8,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XC93R0A6QSW15Y1ZA",
+      "handle": "glow-blend",
+      "title": "GLOW Blend",
+      "subtitle": "Blend of GHK-Cu, BPC-157 and TB-500 for skin and tissue research.",
+      "description": "GLOW is a research blend of GHK-Cu, BPC-157 and TB-500, labelled as 50 mg, 10 mg and 10 mg. Each is studied separately in skin and tissue-repair research; the blend itself has not been studied.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Skin & copper peptides",
+        "Recovery & mobility"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGFRPAG7EVENHVSFSSS",
+          "sku": "VTD-GLOW-VIAL-70MG",
+          "title": "Vial · 70 mg",
+          "format": "Vial",
+          "price": 84.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGFXNEZ7YK958H4AZYK",
+          "sku": "VTD-GLOW-PEN-70MG",
+          "title": "Dual-chamber vial · 70 mg",
+          "format": "Dual-chamber vial",
+          "price": 148.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQN0WGTZDQRH3T26CHC",
+          "sku": "VTD-GLOW-BOX-70MG",
+          "title": "Pen kit box · 70 mg",
+          "format": "Pen kit box",
+          "price": 180.8,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XCT59QQXW1P8F0W7X",
+      "handle": "aod-9604",
+      "title": "AOD-9604",
+      "subtitle": "Fragment of human growth hormone studied in fat-metabolism research.",
+      "description": "AOD-9604 is a modified fragment of the end of human growth hormone. It has been studied in fat-metabolism and cartilage research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Weight management"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGDQANJE42PVVA56KJQ",
+          "sku": "VTD-AOD-PEN-5MG",
+          "title": "Dual-chamber vial · 5 mg",
+          "format": "Dual-chamber vial",
+          "price": 57.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGDHYJQMJQ7BYC88BVG",
+          "sku": "VTD-AOD-VIAL-5MG",
+          "title": "Vial · 5 mg",
+          "format": "Vial",
+          "price": 33.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGEJ67TPRHQ7MJ0KHCV",
+          "sku": "VTD-AOD-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 71.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGDFZ3X2349N8CZ1NVW",
+          "sku": "VTD-AOD-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 111.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQMGN71FPKN6GDJV53Z",
+          "sku": "VTD-AOD-BOX-5MG",
+          "title": "Pen kit box · 5 mg",
+          "format": "Pen kit box",
+          "price": 89.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQMT3R77VFYFAX8J21C",
+          "sku": "VTD-AOD-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 143.2,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XEW9V1NM9HSEB8JD7",
+      "handle": "5-amino-1mq",
+      "title": "5-Amino-1MQ",
+      "subtitle": "Small-molecule NNMT inhibitor studied in cell metabolism research.",
+      "description": "5-Amino-1MQ is a small molecule that blocks the enzyme NNMT. It is studied in fat-cell and energy-metabolism research, mostly in cells and animals. It is not a peptide.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Energy & metabolism",
+        "Weight management"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGDGG2BKKFRN27GKBH8",
+          "sku": "VTD-5AM-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 72,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGD76R3K6BZM6XWH0X1",
+          "sku": "VTD-5AM-PEN-50MG",
+          "title": "Dual-chamber vial · 50 mg",
+          "format": "Dual-chamber vial",
+          "price": 142.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGDSSV0W8N8B4V17619",
+          "sku": "VTD-5AM-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 48,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGDS9QS37NYPEPG30PM",
+          "sku": "VTD-5AM-VIAL-50MG",
+          "title": "Vial · 50 mg",
+          "format": "Vial",
+          "price": 94.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQMF7H4QWWPXTS6MPQ8",
+          "sku": "VTD-5AM-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 104,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQMA4VNRP0AQD5HAA3N",
+          "sku": "VTD-5AM-BOX-50MG",
+          "title": "Pen kit box · 50 mg",
+          "format": "Pen kit box",
+          "price": 174.4,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XG8P7RJDT9NHKJNPE",
+      "handle": "klow-blend",
+      "title": "KLOW Blend",
+      "subtitle": "Blend of GHK-Cu, BPC-157, TB-500 and KPV for skin and tissue research.",
+      "description": "KLOW is a research blend of GHK-Cu, BPC-157, TB-500 and KPV, labelled as 50 mg, 10 mg, 10 mg and 10 mg. Each is studied separately in skin, tissue-repair and inflammation research; the blend itself has not been studied.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Skin & copper peptides",
+        "Recovery & mobility"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQP9RPSSD13Z45A0D5W",
+          "sku": "VTD-KLOW-BOX-80MG",
+          "title": "Pen kit box · 80 mg",
+          "format": "Pen kit box",
+          "price": 200.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGG9CGYS82R311A0TXD",
+          "sku": "VTD-KLOW-VIAL-80MG",
+          "title": "Vial · 80 mg",
+          "format": "Vial",
+          "price": 104.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGG4VKTENTNB6S5322P",
+          "sku": "VTD-KLOW-PEN-80MG",
+          "title": "Dual-chamber vial · 80 mg",
+          "format": "Dual-chamber vial",
+          "price": 168.8,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XGSFC691SJHK00CBW",
+      "handle": "ghk-cu",
+      "title": "GHK-Cu",
+      "subtitle": "Copper-binding tripeptide studied in skin and wound research.",
+      "description": "GHK-Cu is a small copper-binding peptide found naturally in human plasma. It is studied in skin, collagen and wound-healing research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Skin & copper peptides"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGF2P3FFRHZFA9RCQ45",
+          "sku": "VTD-GHK-VIAL-50MG",
+          "title": "Vial · 50 mg",
+          "format": "Vial",
+          "price": 35.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGFP0P5YS9TAKWJWD49",
+          "sku": "VTD-GHK-VIAL-100MG",
+          "title": "Vial · 100 mg",
+          "format": "Vial",
+          "price": 48.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGF4ZT53ZSYNYCCZC31",
+          "sku": "VTD-GHK-PEN-50MG",
+          "title": "Dual-chamber vial · 50 mg",
+          "format": "Dual-chamber vial",
+          "price": 59.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGFBQGR45Q34VGR55AY",
+          "sku": "VTD-GHK-PEN-100MG",
+          "title": "Dual-chamber vial · 100 mg",
+          "format": "Dual-chamber vial",
+          "price": 80.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQNNCEFMAG7DGMY7P3Q",
+          "sku": "VTD-GHK-BOX-50MG",
+          "title": "Pen kit box · 50 mg",
+          "format": "Pen kit box",
+          "price": 91.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQN0DRS1E1M59TFX7NF",
+          "sku": "VTD-GHK-BOX-100MG",
+          "title": "Pen kit box · 100 mg",
+          "format": "Pen kit box",
+          "price": 112.8,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XKED208CSNZB5SZK0",
+      "handle": "ara-290",
+      "title": "ARA-290",
+      "subtitle": "Erythropoietin-derived peptide studied in nerve and tissue-protection research.",
+      "description": "ARA-290 (cibinetide) is a small peptide modelled on part of erythropoietin. It is studied for its effects on the innate repair receptor in nerve and tissue-protection research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Recovery & mobility"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGEDB9HJQ5WKT1F9M62",
+          "sku": "VTD-ARA-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 41.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGE2N8576D50M5EGKVW",
+          "sku": "VTD-ARA-VIAL-20MG",
+          "title": "Vial · 20 mg",
+          "format": "Vial",
+          "price": 79.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGEGZPN3EG8EZH635RM",
+          "sku": "VTD-ARA-PEN-20MG",
+          "title": "Dual-chamber vial · 20 mg",
+          "format": "Dual-chamber vial",
+          "price": 127.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQMQH6CSA3TM986515D",
+          "sku": "VTD-ARA-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 105.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQNAFY1YZ5JE20XX6ES",
+          "sku": "VTD-ARA-BOX-20MG",
+          "title": "Pen kit box · 20 mg",
+          "format": "Pen kit box",
+          "price": 159.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGETXDD2T6DVJ7MRJG5",
+          "sku": "VTD-ARA-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 73.6,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XKMWZTFKP6T74E7AC",
+      "handle": "ipamorelin",
+      "title": "Ipamorelin",
+      "subtitle": "Selective ghrelin-receptor agonist studied in growth-hormone research.",
+      "description": "Ipamorelin is a five-amino-acid peptide that activates the ghrelin receptor. It is studied as a selective growth-hormone secretagogue.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Performance & growth"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQPF1EJEJ2Y8HM9HYTM",
+          "sku": "VTD-IPA-BOX-5MG",
+          "title": "Pen kit box · 5 mg",
+          "format": "Pen kit box",
+          "price": 80.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQP154RMZ93GH15KWV1",
+          "sku": "VTD-IPA-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 111.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGG87YAGMAYNMVKA53P",
+          "sku": "VTD-IPA-PEN-5MG",
+          "title": "Dual-chamber vial · 5 mg",
+          "format": "Dual-chamber vial",
+          "price": 48.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGG1VD8KDMVZRM50H7J",
+          "sku": "VTD-IPA-VIAL-5MG",
+          "title": "Vial · 5 mg",
+          "format": "Vial",
+          "price": 24.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGGRZENH2CBWSPSNA0H",
+          "sku": "VTD-IPA-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 39.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGG2N9HJK145GE1VGS4",
+          "sku": "VTD-IPA-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 79.2,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XNB8KZ5S8Q22Y23K3",
+      "handle": "bacteriostatic-water",
+      "title": "Bacteriostatic Water (H2O)",
+      "subtitle": "Water-based diluent with a bacteriostatic preservative, for laboratory research.",
+      "description": "Water-based laboratory research diluent with a bacteriostatic preservative. Check the supplied label for composition and storage instructions.\n\nChoose a dual-chamber cartridge of water for the VETUD pen, or a multi-use vial. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Laboratory supplies"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial or vial",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGFHVJB7GY84DBP7SVX",
+          "sku": "VTD-H2O-PEN-3ML",
+          "title": "Dual-chamber vial · 3 ml",
+          "format": "Dual-chamber vial",
+          "price": 22.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGF18R239JKE944XWVZ",
+          "sku": "VTD-H2O-VIAL-10ML",
+          "title": "Vial · 10 ml",
+          "format": "Vial",
+          "price": 9.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGFE3AC5APBY47549M2",
+          "sku": "VTD-H2O-VIAL-30ML",
+          "title": "Vial · 30 ml",
+          "format": "Vial",
+          "price": 11.2,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XPA3G8SJENJHS24SN",
+      "handle": "melanotan-ii",
+      "title": "Melanotan II (MT-2)",
+      "subtitle": "Synthetic melanocortin agonist studied in pigmentation research.",
+      "description": "Melanotan II is a synthetic analogue of alpha-MSH that activates several melanocortin receptors. It is studied in skin-pigmentation research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Pigmentation"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQPFQVDC46DHD6DP0EJ",
+          "sku": "VTD-MT2-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 97.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGHXYEC3RHPEDEFXSA3",
+          "sku": "VTD-MT2-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 33.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGHD1EDF5KTF7GPX5VN",
+          "sku": "VTD-MT2-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 65.6,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XQSY30ZR2BFPQ0XJX",
+      "handle": "mots-c",
+      "title": "MOTS-c",
+      "subtitle": "Mitochondria-derived peptide studied in metabolism and ageing research.",
+      "description": "MOTS-c is a 16-amino-acid peptide encoded in mitochondrial DNA. It is studied in metabolism, exercise and ageing research, mostly in animals.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Energy & metabolism"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQPBEXFHN569W4CWVAG",
+          "sku": "VTD-MOTS-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 101.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQP11RQFEMV0FWTCNR1",
+          "sku": "VTD-MOTS-BOX-40MG",
+          "title": "Pen kit box · 40 mg",
+          "format": "Pen kit box",
+          "price": 227.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGGV5N876F4HKT9ZR5E",
+          "sku": "VTD-MOTS-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 37.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGGZ4HQSEZHC438314C",
+          "sku": "VTD-MOTS-VIAL-40MG",
+          "title": "Vial · 40 mg",
+          "format": "Vial",
+          "price": 115.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGGP73JCYSN3TZHWF21",
+          "sku": "VTD-MOTS-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 69.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGGSBH5S2XNDF4MX3B1",
+          "sku": "VTD-MOTS-PEN-40MG",
+          "title": "Dual-chamber vial · 40 mg",
+          "format": "Dual-chamber vial",
+          "price": 195.2,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XSSSZCYZSR72TDKS3",
+      "handle": "cjc-1295-ipamorelin",
+      "title": "CJC-1295 + Ipamorelin (no DAC)",
+      "subtitle": "Blend of a GHRH analogue and a ghrelin-receptor agonist for growth-hormone research.",
+      "description": "A blend of CJC-1295 without DAC (a growth-hormone-releasing hormone analogue) and Ipamorelin (a ghrelin-receptor agonist), labelled as equal parts. Both are studied in growth-hormone release research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Performance & growth"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGEEX2R4JS7QWCNQX4Y",
+          "sku": "VTD-CJI-VIAL-10MG",
+          "title": "Vial · 10 mg (5 mg + 5 mg)",
+          "format": "Vial",
+          "price": 67.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGEFYZ05DJVSTQS6A60",
+          "sku": "VTD-CJI-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg (5 mg + 5 mg)",
+          "format": "Dual-chamber vial",
+          "price": 107.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQNBM3GEBYYDG61X09F",
+          "sku": "VTD-CJI-BOX-10MG",
+          "title": "Pen kit box · 10 mg (5 mg + 5 mg)",
+          "format": "Pen kit box",
+          "price": 139.2,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XVE2R01GT51YXN860",
+      "handle": "bpc-157",
+      "title": "BPC-157",
+      "subtitle": "Synthetic gastric peptide fragment studied in tissue-repair research.",
+      "description": "BPC-157 is a synthetic 15-amino-acid peptide based on a protein found in gastric juice. Most of its research is in animal models of tendon, gut and tissue repair.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Recovery & mobility"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGEZ2Y4W6TPF3Z8TKBC",
+          "sku": "VTD-BPC-VIAL-5MG",
+          "title": "Vial · 5 mg",
+          "format": "Vial",
+          "price": 25.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGEZWQV69G2B0WN9KWX",
+          "sku": "VTD-BPC-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 48.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGEK8RQZZRPS4TCV6H2",
+          "sku": "VTD-BPC-PEN-5MG",
+          "title": "Dual-chamber vial · 5 mg",
+          "format": "Dual-chamber vial",
+          "price": 49.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGEYC7QHW08CCAVZN9E",
+          "sku": "VTD-BPC-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 80.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQNBJB3XSXW30P70FEN",
+          "sku": "VTD-BPC-BOX-5MG",
+          "title": "Pen kit box · 5 mg",
+          "format": "Pen kit box",
+          "price": 81.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQNBD3NKRR3XS68AQKG",
+          "sku": "VTD-BPC-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 112.8,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9XW61SGG9N29CY2089",
+      "handle": "igf-1-lr3",
+      "title": "IGF-1 LR3",
+      "subtitle": "Long-acting IGF-1 analogue used in cell-growth research.",
+      "description": "IGF-1 LR3 is a modified form of insulin-like growth factor 1 that binds less to its carrier proteins, so it stays active longer. It is mostly used in cell-culture growth research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Performance & growth"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQPF2G3CGDJ3CPGZ2CM",
+          "sku": "VTD-IGF-BOX-0_1MG",
+          "title": "Pen kit box · 0.1 mg",
+          "format": "Pen kit box",
+          "price": 78.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQP2DFS3BZ3PC2WXM17",
+          "sku": "VTD-IGF-BOX-1MG",
+          "title": "Pen kit box · 1 mg",
+          "format": "Pen kit box",
+          "price": 210.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGF15CJZDC73P14PPK4",
+          "sku": "VTD-IGF-PEN-0_1MG",
+          "title": "Dual-chamber vial · 0.1 mg",
+          "format": "Dual-chamber vial",
+          "price": 46.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGFMBK974GXNVQNSSM5",
+          "sku": "VTD-IGF-PEN-1MG",
+          "title": "Dual-chamber vial · 1 mg",
+          "format": "Dual-chamber vial",
+          "price": 178.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGG45YV7KCJS0S7WJCK",
+          "sku": "VTD-IGF-VIAL-0_1MG",
+          "title": "Vial · 0.1 mg",
+          "format": "Vial",
+          "price": 22.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGG63252PD9HG8TXJW0",
+          "sku": "VTD-IGF-VIAL-1MG",
+          "title": "Vial · 1 mg",
+          "format": "Vial",
+          "price": 98.4,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9Y0PQWJBSZX2H6B8ZW",
+      "handle": "retatrutide",
+      "title": "Retatrutide",
+      "subtitle": "Triple GIP, GLP-1 and glucagon receptor agonist in clinical metabolic research.",
+      "description": "Retatrutide is an investigational peptide that activates three hormone receptors: GIP, GLP-1 and glucagon. It is in clinical trials for obesity and type 2 diabetes.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Weight management"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQPZ7QJ2YYKENFFQ0ED",
+          "sku": "VTD-RT-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 173.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQP3KVTXSDP0DNSWGR2",
+          "sku": "VTD-RT-BOX-20MG",
+          "title": "Pen kit box · 20 mg",
+          "format": "Pen kit box",
+          "price": 276,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQ71NSF30VFRWMMAZD",
+          "sku": "VTD-RT-BOX-40MG",
+          "title": "Pen kit box · 40 mg",
+          "format": "Pen kit box",
+          "price": 364.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGHFA18W2PSA31C4QXZ",
+          "sku": "VTD-RT-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 61.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGHCR7MY66JXHPKRKSP",
+          "sku": "VTD-RT-VIAL-20MG",
+          "title": "Vial · 20 mg",
+          "format": "Vial",
+          "price": 116,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGH6W6NC03VFJDYZFSX",
+          "sku": "VTD-RT-VIAL-40MG",
+          "title": "Vial · 40 mg",
+          "format": "Vial",
+          "price": 156.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGH0965X6CQ72YFYR9J",
+          "sku": "VTD-RT-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 141.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGHT1Q5K2WB60F3E4P2",
+          "sku": "VTD-RT-PEN-20MG",
+          "title": "Dual-chamber vial · 20 mg",
+          "format": "Dual-chamber vial",
+          "price": 244,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGHKX8A6B9NYX89AR13",
+          "sku": "VTD-RT-PEN-40MG",
+          "title": "Dual-chamber vial · 40 mg",
+          "format": "Dual-chamber vial",
+          "price": 332.8,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9Y284MNR5Y48T85ZF9",
+      "handle": "melanotan-i",
+      "title": "Melanotan I (MT-1)",
+      "subtitle": "Alpha-MSH analogue (afamelanotide) studied in pigmentation research.",
+      "description": "Melanotan I (afamelanotide) is a synthetic analogue of alpha-MSH that mainly activates the MC1 receptor. It is studied in skin-pigmentation and light-sensitivity research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Pigmentation"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQPH6PSYNVBF3MQ6A98",
+          "sku": "VTD-MT1-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 103.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGH4NTXDZWAPTBJ352E",
+          "sku": "VTD-MT1-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 39.2,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGHJDR7AN3Z22KVVNNN",
+          "sku": "VTD-MT1-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 71.2,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9Y2S5CFXY6MFFRQV9G",
+      "handle": "tesamorelin",
+      "title": "Tesamorelin",
+      "subtitle": "GHRH analogue studied in growth-hormone and visceral-fat research.",
+      "description": "Tesamorelin is a stabilised analogue of growth-hormone-releasing hormone (GHRH). It is studied in growth-hormone and visceral-fat research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Performance & growth"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQRSD41QYV2AHG3X8B7",
+          "sku": "VTD-TES-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 132.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQR28YWA9NZS7VEKRQ0",
+          "sku": "VTD-TES-BOX-20MG",
+          "title": "Pen kit box · 20 mg",
+          "format": "Pen kit box",
+          "price": 192,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKS0N0MJFA8GXT1162",
+          "sku": "VTD-TES-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 68.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKJBSFP7YR98D9PBS8",
+          "sku": "VTD-TES-VIAL-20MG",
+          "title": "Vial · 20 mg",
+          "format": "Vial",
+          "price": 112,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKD0D2GGFD3FXMYW13",
+          "sku": "VTD-TES-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 100.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGK3RVBMDB4K7GM6NWZ",
+          "sku": "VTD-TES-PEN-20MG",
+          "title": "Dual-chamber vial · 20 mg",
+          "format": "Dual-chamber vial",
+          "price": 160,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9Y51P5CG2AS4A0NSXH",
+      "handle": "semax",
+      "title": "Semax",
+      "subtitle": "ACTH-derived peptide studied in cognition and nerve research.",
+      "description": "Semax is a synthetic peptide based on a fragment of ACTH. It was developed in Russia and is studied in cognition, stroke and nerve-protection research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Concentration & focus"
+      ],
+      "metadata": {
+        "form": "Nasal spray, dual-chamber vial or vial",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGKMF2T1PJ7XCVM007D",
+          "sku": "VTD-SMX-VIAL-5MG",
+          "title": "Vial · 5 mg",
+          "format": "Vial",
+          "price": 17.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKXSN9PJPQYVNGEN95",
+          "sku": "VTD-SMX-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 38.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJQVVTEADJ7QSXVKKP",
+          "sku": "VTD-SMX-PEN-5MG",
+          "title": "Dual-chamber vial · 5 mg",
+          "format": "Dual-chamber vial",
+          "price": 41.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJDC2V85P4X2P38R49",
+          "sku": "VTD-SMX-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 70.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQ6QV8HKZR8446A3Y3",
+          "sku": "VTD-SMX-BOX-5MG",
+          "title": "Nasal spray · 5 mg",
+          "format": "Nasal spray",
+          "price": 42.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQ1YGYTJN20KWX1768",
+          "sku": "VTD-SMX-BOX-10MG",
+          "title": "Nasal spray · 10 mg",
+          "format": "Nasal spray",
+          "price": 96,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9YAG2S2PTR41XGVGTY",
+      "handle": "pt-141",
+      "title": "PT-141",
+      "subtitle": "Melanocortin agonist (bremelanotide) studied in sexual-function research.",
+      "description": "PT-141 (bremelanotide) is a melanocortin-receptor agonist derived from Melanotan II. It is studied in sexual-desire research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Sexual health"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQP3M1BTXPMQGKJ64KG",
+          "sku": "VTD-PT141-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 96.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGH3JT739DG849B8ZN7",
+          "sku": "VTD-PT141-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 32.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGH6CAFB9TTDXQDPC7P",
+          "sku": "VTD-PT141-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 64.8,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9YBWWV34HGGC4YGTWD",
+      "handle": "ss-31",
+      "title": "SS-31",
+      "subtitle": "Mitochondria-targeted peptide (elamipretide) studied in energy research.",
+      "description": "SS-31 (elamipretide) is a small peptide that binds to the inner membrane of mitochondria. It is studied in mitochondrial disease and cellular-energy research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Energy & metabolism"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQQXJWCW70WKSWQ9RFR",
+          "sku": "VTD-SS31-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 118.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQTJK812Z3K7R0RMDV",
+          "sku": "VTD-SS31-BOX-50MG",
+          "title": "Pen kit box · 50 mg",
+          "format": "Pen kit box",
+          "price": 260.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJTTFH6FN0Z61DQ169",
+          "sku": "VTD-SS31-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 46.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJDRB7GC0EECCB3XDM",
+          "sku": "VTD-SS31-VIAL-50MG",
+          "title": "Vial · 50 mg",
+          "format": "Vial",
+          "price": 124.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJSXWZNH3P3X08049J",
+          "sku": "VTD-SS31-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 86.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJY35FNTKY2N2NA5VB",
+          "sku": "VTD-SS31-PEN-50MG",
+          "title": "Dual-chamber vial · 50 mg",
+          "format": "Dual-chamber vial",
+          "price": 228.8,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9YDBTWFRVB9MEGWSTC",
+      "handle": "wolverine-blend",
+      "title": "Wolverine Blend",
+      "subtitle": "Blend of BPC-157 and TB-500 for tissue-repair research.",
+      "description": "Wolverine is a research blend of BPC-157 and TB-500 in equal parts. Each is studied separately in tissue-repair research; the blend itself has not been studied.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Recovery & mobility"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQRYZ70F73G7WQSAM6T",
+          "sku": "VTD-WOLV-BOX-10MG",
+          "title": "Pen kit box · 10 mg (5 mg + 5 mg)",
+          "format": "Pen kit box",
+          "price": 120.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQR9KS2HEQXKY98ZSAX",
+          "sku": "VTD-WOLV-BOX-20MG",
+          "title": "Pen kit box · 20 mg (10 mg + 10 mg)",
+          "format": "Pen kit box",
+          "price": 164.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGME573YXFARJTJJAZ2",
+          "sku": "VTD-WOLV-VIAL-10MG",
+          "title": "Vial · 10 mg (5 mg + 5 mg)",
+          "format": "Vial",
+          "price": 48.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGMRYBJ5QZJG43YY2DR",
+          "sku": "VTD-WOLV-VIAL-20MG",
+          "title": "Vial · 20 mg (10 mg + 10 mg)",
+          "format": "Vial",
+          "price": 76.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGMDB1825CHJD90X97F",
+          "sku": "VTD-WOLV-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg (5 mg + 5 mg)",
+          "format": "Dual-chamber vial",
+          "price": 88.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGMSYSY7998MJSM94PZ",
+          "sku": "VTD-WOLV-PEN-20MG",
+          "title": "Dual-chamber vial · 20 mg (10 mg + 10 mg)",
+          "format": "Dual-chamber vial",
+          "price": 132.8,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9YQE6TSWX8DH319HMC",
+      "handle": "tb-500",
+      "title": "TB-500",
+      "subtitle": "Thymosin beta-4 fragment studied in tissue-repair research.",
+      "description": "TB-500 is a synthetic peptide based on the active region of thymosin beta-4, a protein involved in cell movement. It is studied in wound and tissue-repair research, mostly in animals.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Recovery & mobility"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQQX3TEX6NF7M7ATEBJ",
+          "sku": "VTD-TB5-BOX-5MG",
+          "title": "Pen kit box · 5 mg",
+          "format": "Pen kit box",
+          "price": 84.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQVE50Y88RPRJQY05J",
+          "sku": "VTD-TB5-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 124,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKQQVWP2GK1W1T70WS",
+          "sku": "VTD-TB5-VIAL-5MG",
+          "title": "Vial · 5 mg",
+          "format": "Vial",
+          "price": 28.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKAH880ARNEMYJZEET",
+          "sku": "VTD-TB5-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 52,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKNJR68JTRZ26PH6YG",
+          "sku": "VTD-TB5-PEN-5MG",
+          "title": "Dual-chamber vial · 5 mg",
+          "format": "Dual-chamber vial",
+          "price": 52.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGK0ER7FCYAND6G7X9N",
+          "sku": "VTD-TB5-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 92,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9YW9CDSJ1GWTBW61PT",
+      "handle": "tirzepatide",
+      "title": "Tirzepatide (TZ-2)",
+      "subtitle": "Dual GIP and GLP-1 receptor agonist studied in metabolic research.",
+      "description": "Tirzepatide, labelled TZ-2, is a peptide that activates two hormone receptors, GIP and GLP-1. It is studied in obesity and type 2 diabetes research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Weight management"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQQ2B0N7SGEWJCRJBXA",
+          "sku": "VTD-TZ2-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 148.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQ0ZYGAF02YMSFB3T7",
+          "sku": "VTD-TZ2-BOX-20MG",
+          "title": "Pen kit box · 20 mg",
+          "format": "Pen kit box",
+          "price": 200,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQEHYWNZ1FBFESWETN",
+          "sku": "VTD-TZ2-BOX-40MG",
+          "title": "Pen kit box · 40 mg",
+          "format": "Pen kit box",
+          "price": 308,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGK7GJNEW6ZEPXV68T1",
+          "sku": "VTD-TZ2-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 52.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKF0ES2BM05YX90JZV",
+          "sku": "VTD-TZ2-VIAL-20MG",
+          "title": "Vial · 20 mg",
+          "format": "Vial",
+          "price": 64,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGK1T16BRVG1DF0KEYV",
+          "sku": "VTD-TZ2-VIAL-40MG",
+          "title": "Vial · 40 mg",
+          "format": "Vial",
+          "price": 124,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGK4GMJ1DRFDR01Z43B",
+          "sku": "VTD-TZ2-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 116.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKYR6TZ4NJ8RR6EYNX",
+          "sku": "VTD-TZ2-PEN-20MG",
+          "title": "Dual-chamber vial · 20 mg",
+          "format": "Dual-chamber vial",
+          "price": 168,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGKPABFRTC9FAX9BN6A",
+          "sku": "VTD-TZ2-PEN-40MG",
+          "title": "Dual-chamber vial · 40 mg",
+          "format": "Dual-chamber vial",
+          "price": 276,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9YWCDDEDAFQ42PXJCF",
+      "handle": "nad-plus",
+      "title": "NAD+",
+      "subtitle": "Coenzyme studied in cellular energy and ageing research.",
+      "description": "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme every cell uses to turn food into energy. Its levels fall with age, which makes it a focus of ageing research. It is not a peptide.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Energy & metabolism"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQP7NXWNX77CFJD1EEQ",
+          "sku": "VTD-NAD-BOX-500MG",
+          "title": "Pen kit box · 500 mg",
+          "format": "Pen kit box",
+          "price": 133.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQPCEBV9B3FZCE8435D",
+          "sku": "VTD-NAD-BOX-1000MG",
+          "title": "Pen kit box · 1000 mg",
+          "format": "Pen kit box",
+          "price": 172,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGHFFXHGX9K619HKHX2",
+          "sku": "VTD-NAD-VIAL-500MG",
+          "title": "Vial · 500 mg",
+          "format": "Vial",
+          "price": 45.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGHJHNM1QGW65YMJ9NZ",
+          "sku": "VTD-NAD-VIAL-1000MG",
+          "title": "Vial · 1000 mg",
+          "format": "Vial",
+          "price": 60,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGH5GMKVMEN1VSR6R43",
+          "sku": "VTD-NAD-PEN-500MG",
+          "title": "Dual-chamber vial · 500 mg",
+          "format": "Dual-chamber vial",
+          "price": 101.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGH26VR8R139AT825RH",
+          "sku": "VTD-NAD-PEN-1000MG",
+          "title": "Dual-chamber vial · 1000 mg",
+          "format": "Dual-chamber vial",
+          "price": 140,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9YY758CQ9DHY4BKAT8",
+      "handle": "selank",
+      "title": "Selank",
+      "subtitle": "Synthetic tuftsin analogue studied in anxiety and stress research.",
+      "description": "Selank is a synthetic seven-amino-acid peptide based on tuftsin, a fragment of an immune protein. It was developed in Russia and is studied in anxiety and stress research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Calm & balance"
+      ],
+      "metadata": {
+        "form": "Nasal spray, dual-chamber vial or vial",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6JWFPGJDT7YM6HAVPHKR1A2",
+          "sku": "VTD-SEL-VIAL-5MG",
+          "title": "Vial · 5 mg",
+          "format": "Vial",
+          "price": 17.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJAZDZSZ3J446MQZ9D",
+          "sku": "VTD-SEL-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 36.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJKTZQW9JQRDG3G3AW",
+          "sku": "VTD-SEL-PEN-5MG",
+          "title": "Dual-chamber vial · 5 mg",
+          "format": "Dual-chamber vial",
+          "price": 41.6,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJTDEYE65Q345VSE71",
+          "sku": "VTD-SEL-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 68.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQRSDM3J7REMKXQ7ZH",
+          "sku": "VTD-SEL-BOX-5MG",
+          "title": "Nasal spray · 5 mg",
+          "format": "Nasal spray",
+          "price": 20.8,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQHBRQD4FRKQARKW99",
+          "sku": "VTD-SEL-BOX-10MG",
+          "title": "Nasal spray · 10 mg",
+          "format": "Nasal spray",
+          "price": 96,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6JWFP9YZXRQPG2VZK1S0J99",
+      "handle": "semaglutide",
+      "title": "Semaglutide (SM-1)",
+      "subtitle": "GLP-1 receptor agonist studied in metabolic research.",
+      "description": "Semaglutide, labelled SM-1, is a long-acting GLP-1 receptor agonist. It is one of the most studied peptides in obesity and type 2 diabetes research.\n\nChoose a dual-chamber pen, with the powder and bacteriostatic water kept in separate chambers of one cartridge, or a vial of freeze-dried powder. Supplied for laboratory research use only. Not for human or veterinary use.",
+      "categories": [
+        "Weight management"
+      ],
+      "metadata": {
+        "form": "Dual-chamber vial, vial or pen kit box",
+        "brand": "VETUD",
+        "research_use_only": true
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCGQQYRZ47YVN5TMHHSFD",
+          "sku": "VTD-SM1-BOX-10MG",
+          "title": "Pen kit box · 10 mg",
+          "format": "Pen kit box",
+          "price": 138.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQBBAD8R6P4WDCHEYR",
+          "sku": "VTD-SM1-BOX-20MG",
+          "title": "Pen kit box · 20 mg",
+          "format": "Pen kit box",
+          "price": 194.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6KBCGQQZ8MKXDH0P2KKHEBZ",
+          "sku": "VTD-SM1-BOX-40MG",
+          "title": "Pen kit box · 40 mg",
+          "format": "Pen kit box",
+          "price": 340,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJ60KMRT8404Z3PN8H",
+          "sku": "VTD-SM1-VIAL-10MG",
+          "title": "Vial · 10 mg",
+          "format": "Vial",
+          "price": 50.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJ2040BD3SZF6YJKRB",
+          "sku": "VTD-SM1-VIAL-20MG",
+          "title": "Vial · 20 mg",
+          "format": "Vial",
+          "price": 74.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJJMWDE1QAA7D5XHRT",
+          "sku": "VTD-SM1-VIAL-40MG",
+          "title": "Vial · 40 mg",
+          "format": "Vial",
+          "price": 180,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJG5FRM3AJMZP175SK",
+          "sku": "VTD-SM1-PEN-10MG",
+          "title": "Dual-chamber vial · 10 mg",
+          "format": "Dual-chamber vial",
+          "price": 106.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJVDXQNWDGR37XGE2M",
+          "sku": "VTD-SM1-PEN-20MG",
+          "title": "Dual-chamber vial · 20 mg",
+          "format": "Dual-chamber vial",
+          "price": 162.4,
+          "currency": "usd"
+        },
+        {
+          "id": "variant_01M6JWFPGJ4AFG2XVCBZT9YA4J",
+          "sku": "VTD-SM1-PEN-40MG",
+          "title": "Dual-chamber vial · 40 mg",
+          "format": "Dual-chamber vial",
+          "price": 308,
+          "currency": "usd"
+        }
+      ]
+    },
+    {
+      "id": "prod_01M6KBCHHJEV53ZEQ4V07X4J40",
+      "handle": "u-100-syringes",
+      "title": "U-100 Insulin Syringes",
+      "subtitle": "Sterile, single-use U-100 insulin syringes, 10 to a box.",
+      "description": "Sterile, single-use U-100 insulin syringes with a fixed needle and an orange needle cap. The barrel is marked in units for U-100 solutions (100 units per ml). Packed 10 to a VETUD box.\n\nFor laboratory use. Each syringe is for one use only; dispose of it in a sharps container.",
+      "categories": [
+        "Laboratory supplies"
+      ],
+      "metadata": {
+        "form": "Laboratory supply",
+        "brand": "VETUD",
+        "contents": "10 sterile, single-use U-100 insulin syringes in a VETUD box"
+      },
+      "variants": [
+        {
+          "id": "variant_01M6KBCHKTM4283A0H4AJ7WE47",
+          "sku": "VTD-SYR-U100-10",
+          "title": "Box of 10",
+          "price": 4,
+          "currency": "usd"
+        }
+      ]
+    }
+  ],
+  "countries": [
+    {
+      "code": "us",
+      "locale": "en-US",
+      "currency": "usd"
+    },
+    {
+      "code": "gb",
+      "locale": "en-GB",
+      "currency": "gbp"
+    },
+    {
+      "code": "de",
+      "locale": "de",
+      "currency": "eur"
+    },
+    {
+      "code": "fr",
+      "locale": "fr",
+      "currency": "eur"
+    },
+    {
+      "code": "nl",
+      "locale": "nl",
+      "currency": "eur"
+    },
+    {
+      "code": "ca",
+      "locale": "en-CA",
+      "currency": "cad"
+    },
+    {
+      "code": "au",
+      "locale": "en-AU",
+      "currency": "aud"
+    },
+    {
+      "code": "ie",
+      "locale": "en-IE",
+      "currency": "eur"
+    },
+    {
+      "code": "mt",
+      "locale": "en-MT",
+      "currency": "eur"
+    },
+    {
+      "code": "at",
+      "locale": "de-AT",
+      "currency": "eur"
+    },
+    {
+      "code": "ch",
+      "locale": "de-CH",
+      "currency": "eur"
+    },
+    {
+      "code": "li",
+      "locale": "de-LI",
+      "currency": "eur"
+    },
+    {
+      "code": "be",
+      "locale": "nl-BE",
+      "currency": "eur"
+    },
+    {
+      "code": "lu",
+      "locale": "fr-LU",
+      "currency": "eur"
+    },
+    {
+      "code": "it",
+      "locale": "it",
+      "currency": "eur"
+    },
+    {
+      "code": "es",
+      "locale": "es",
+      "currency": "eur"
+    },
+    {
+      "code": "pt",
+      "locale": "pt",
+      "currency": "eur"
+    },
+    {
+      "code": "pl",
+      "locale": "pl",
+      "currency": "eur"
+    },
+    {
+      "code": "cz",
+      "locale": "cs",
+      "currency": "eur"
+    },
+    {
+      "code": "sk",
+      "locale": "sk",
+      "currency": "eur"
+    },
+    {
+      "code": "hu",
+      "locale": "hu",
+      "currency": "eur"
+    },
+    {
+      "code": "ro",
+      "locale": "ro",
+      "currency": "eur"
+    },
+    {
+      "code": "bg",
+      "locale": "bg",
+      "currency": "eur"
+    },
+    {
+      "code": "hr",
+      "locale": "hr",
+      "currency": "eur"
+    },
+    {
+      "code": "si",
+      "locale": "sl",
+      "currency": "eur"
+    },
+    {
+      "code": "gr",
+      "locale": "el",
+      "currency": "eur"
+    },
+    {
+      "code": "cy",
+      "locale": "el-CY",
+      "currency": "eur"
+    },
+    {
+      "code": "se",
+      "locale": "sv",
+      "currency": "eur"
+    },
+    {
+      "code": "dk",
+      "locale": "da",
+      "currency": "eur"
+    },
+    {
+      "code": "no",
+      "locale": "nb",
+      "currency": "eur"
+    },
+    {
+      "code": "fi",
+      "locale": "fi",
+      "currency": "eur"
+    },
+    {
+      "code": "is",
+      "locale": "is",
+      "currency": "eur"
+    },
+    {
+      "code": "ee",
+      "locale": "et",
+      "currency": "eur"
+    },
+    {
+      "code": "lv",
+      "locale": "lv",
+      "currency": "eur"
+    },
+    {
+      "code": "lt",
+      "locale": "lt",
+      "currency": "eur"
+    }
+  ],
+  "account_connections": {
+    "google_ads": false,
+    "ga4": false
+  }
+}

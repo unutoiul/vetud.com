@@ -6,7 +6,7 @@ import { DM_Mono, Manrope } from "next/font/google"
 import { countryCode } from "next/root-params"
 import { Suspense } from "react"
 import CartDrawer from "@/components/cart/CartDrawer"
-import OfferPopup from "@/components/newsletter/OfferPopup"
+import WelcomeExperience from "@/components/welcome/WelcomeExperience"
 import AccountProvider from "@/components/account/AccountProvider"
 import Footer from "@/components/layout/Footer"
 import Header from "@/components/layout/Header"
@@ -111,7 +111,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
               <Footer />
               <CartDrawer />
               <Suspense fallback={null}>
-                <OfferPopup />
+                <WelcomeExperience />
               </Suspense>
             </AccountProvider>
           </StoreProvider>

@@ -18,8 +18,15 @@ async function getReviewedContent(locale: string): Promise<{ translations: Conte
   }
 }
 
+/**
+ * Page-text translations stay off until each dictionary is complete and small enough to send with
+ * every page. Once the backend route is live, turning this on adds about 420 KB to each French page.
+ */
+const CONTENT_TRANSLATIONS_ENABLED = process.env.CONTENT_TRANSLATIONS_ENABLED === "true"
+const NO_CONTENT = { translations: {}, templates: {} }
+
 export async function getCountryI18n(country: string) {
   const base = await getBaseCountryI18n(country)
-  const content = await getReviewedContent(messageLocale(base.locale))
+  const content = CONTENT_TRANSLATIONS_ENABLED ? await getReviewedContent(messageLocale(base.locale)) : NO_CONTENT
   return { ...base, messages: { ...base.messages, Content: content.translations, ContentTemplates: content.templates } }
 }

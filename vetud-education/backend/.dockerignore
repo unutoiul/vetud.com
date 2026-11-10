@@ -1,0 +1,13 @@
+.git
+node_modules
+**/node_modules
+.medusa
+.env
+.env.*
+.cache
+coverage
+static
+uploads
+*.log
+*.tsbuildinfo
+.DS_Store

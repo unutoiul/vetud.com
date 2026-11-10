@@ -23,6 +23,7 @@ import Icon from "../brand/Icon"
 import { useLocalizedHref } from "../common/links"
 import { useAccount } from "../account/AccountProvider"
 import { useStore } from "../store/StoreProvider"
+import { NEWSLETTER_SUBSCRIBED_KEY, subscribeToNewsletter } from "./subscription"
 
 type Offer = { id: string; headline: string; description: string | null; discount: string; ends_at: string | null }
 
@@ -32,7 +33,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const QUIET_PATHS = /\/(cart|checkout|account|order|newsletter)(\/|$)/
 
 /** Set in this browser once someone subscribes; they never see the pop-up again. */
-const SUBSCRIBED_KEY = "vetud_newsletter"
+const SUBSCRIBED_KEY = NEWSLETTER_SUBSCRIBED_KEY
 const offerKey = (id: string) => `vetud_offer_${id}`
 
 function subscribed(id: string) {
@@ -94,7 +95,7 @@ function Countdown({ endsAt }: { endsAt: string }) {
  * until the next visit. Never on cart, checkout or account pages, and never for subscribers
  * (in this browser, or signed in with marketing consent). The code itself is only sent by email.
  */
-export default function OfferPopup() {
+export default function OfferPopup({ enabled = true }: { enabled?: boolean }) {
   const ct = useContentTranslator()
   const t = useTranslations("Offer")
   const pathname = usePathname()
@@ -111,7 +112,7 @@ export default function OfferPopup() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
 
   useEffect(() => {
-    if (QUIET_PATHS.test(pathname) || consented) return
+    if (!enabled || QUIET_PATHS.test(pathname) || consented) return
     let cancelled = false
     const timer = window.setTimeout(async () => {
       try {
@@ -127,7 +128,7 @@ export default function OfferPopup() {
       cancelled = true
       window.clearTimeout(timer)
     }
-  }, [pathname, consented])
+  }, [pathname, consented, enabled])
 
   if (!offer) return null
 
@@ -142,8 +143,7 @@ export default function OfferPopup() {
     if (emailError || !consent) return
     setStatus("sending")
     try {
-      await sdk.client.fetch("/store/newsletter", { method: "POST", body: { email: email.trim(), consent: true, country_code: countryCode, ...(website ? { website } : {}) } })
-      remember("local", SUBSCRIBED_KEY, "subscribed")
+      await subscribeToNewsletter({ email, consent: true, countryCode, website })
       setStatus("sent")
     } catch {
       setStatus("error")
@@ -151,7 +151,7 @@ export default function OfferPopup() {
   }
 
   return (
-    <Dialog open={open} onClose={close} maxWidth="xs" fullWidth aria-labelledby="offer-title" slotProps={{ paper: { sx: { borderRadius: "20px", overflow: "hidden", m: 2, maxHeight: "calc(100% - 32px)" } } }}>
+    <Dialog open={open && enabled} onClose={close} maxWidth="xs" fullWidth aria-labelledby="offer-title" slotProps={{ paper: { sx: { borderRadius: "20px", overflow: "hidden", m: 2, maxHeight: "calc(100% - 32px)" } } }}>
       <Box sx={{ position: "relative", height: 132, bgcolor: "brand.navy" }}>
         <Image src="/images/vetud-alpine-landscape.webp" alt="" fill sizes="440px" style={{ objectFit: "cover", objectPosition: "center 80%", opacity: .55 }} />
         <Box sx={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(21,38,94,.85), rgba(21,38,94,.15))" }} />
