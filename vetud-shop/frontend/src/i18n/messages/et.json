@@ -188,7 +188,6 @@
     "contactDescription": "Küsimused toote, partii või tellimuse kohta jõuavad meie meeskonnani. Lisa tellimuse või partii number.",
     "standardsTitle": "Täpsus on harjumus.",
     "documentationTitle": "Iga partii dokumenteeritud.",
-    "educationTitle": "Peptiiditeadus arusaadavalt.",
     "accountTitle": "Lihtsam viis tellida.",
     "trackingTitle": "Jälgi oma uurimistellimust.",
     "cartTitle": "Sinu kollektsioon.",
@@ -200,7 +199,6 @@
     "contactEmail": "Kontakt-e-post",
     "accountDescription": "Salvesta oma andmed üks kord ja halda aadresse, tellimusi ja jälgimist ühes kohas.",
     "documentationDescription": "Leia avaldatud partii andmed pakendil oleva partiinumbri järgi või küsi saadaolevat analüütilist dokumentatsiooni.",
-    "educationDescription": "Juhend kollektsiooni mõistete juurde, tootevormidest analüütilise teabeni.",
     "standardsDescription": "Selged tootespetsifikatsioonid, jälgitav dokumentatsioon ja tugi sinu laborile.",
     "trackingDescription": "Kasuta saatmiskinnitusel olevat paki jälgimisnumbrit.",
     "cartDescription": "Sinu uurimismaterjalid, kogused ja kohalikud hinnad ühes kohas."
@@ -635,7 +633,6 @@
     "removeFromCart": "Eemaldage {product} ostukorvist",
     "payAmount": "Maksa {amount}",
     "moreItems": "Kuva rohkem ({count})",
-    "productInShop": "{product} uurimispoes",
     "currencySelector": "Valuuta {currency}, riik {country}. Muuda",
     "categoryFilter": "Kategooria: {name}",
     "addItems": "Lisa kaubad ostukorvi ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "{product} kogus",
     "productGallery": "{product} tootegalerii",
     "specifications": "{product} spetsifikatsioonid",
-    "documentedLots": "Dokumenteeritud partiid {product} jaoks",
     "photoView": "Vaadake {photo}"
   }
 }

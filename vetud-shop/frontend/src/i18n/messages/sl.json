@@ -188,7 +188,6 @@
     "contactDescription": "Vprašanja o izdelku, seriji ali naročilu prejme naša ekipa. Navedite številko naročila ali serije.",
     "standardsTitle": "Natančnost je praksa.",
     "documentationTitle": "Vsaka serija, dokumentirana.",
-    "educationTitle": "Znanost o peptidih, jasno razložena.",
     "accountTitle": "Preprostejši način naročanja.",
     "trackingTitle": "Sledite svojemu raziskovalnemu naročilu.",
     "cartTitle": "Vaša zbirka.",
@@ -200,7 +199,6 @@
     "contactEmail": "Kontaktna e-pošta",
     "accountDescription": "Shranite podatke enkrat, nato pa upravljajte naslove, naročila in sledenje na enem mestu.",
     "documentationDescription": "Poiščite objavljen zapis serije po številki serije na embalaži ali zahtevajte razpoložljivo analitično dokumentacijo.",
-    "educationDescription": "Vodnik po izrazih zbirke, od oblik izdelkov do analitičnih podatkov.",
     "standardsDescription": "Jasne specifikacije izdelkov, sledljiva dokumentacija in podpora za vaš laboratorij.",
     "trackingDescription": "Uporabite številko za sledenje paketu iz potrditve pošiljanja.",
     "cartDescription": "Vaši raziskovalni materiali, količine in lokalne cene na enem mestu."
@@ -635,7 +633,6 @@
     "removeFromCart": "Odstranite {product} iz košarice",
     "payAmount": "Plačajte {amount}",
     "moreItems": "Prikaži več ({count})",
-    "productInShop": "{product} v raziskovalni trgovini",
     "currencySelector": "Valuta {currency}, država {country}. spremeniti",
     "categoryFilter": "Kategorija: {name}",
     "addItems": "Dodajte izdelke v košarico ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Količina {product}",
     "productGallery": "{product} galerija izdelkov",
     "specifications": "Specifikacije {product}",
-    "documentedLots": "Dokumentirani sklopi za {product}",
     "photoView": "Poglej {photo}"
   }
 }

@@ -188,7 +188,6 @@
     "contactDescription": "Klausimai apie produktą, partiją ar užsakymą pasiekia mūsų komandą. Nurodykite užsakymo ar partijos numerį.",
     "standardsTitle": "Tikslumas yra praktika.",
     "documentationTitle": "Kiekviena partija dokumentuota.",
-    "educationTitle": "Peptidų mokslas aiškiai.",
     "accountTitle": "Paprastesnis būdas užsisakyti.",
     "trackingTitle": "Sekite savo tyrimų užsakymą.",
     "cartTitle": "Jūsų kolekcija.",
@@ -200,7 +199,6 @@
     "contactEmail": "Kontaktinis el. paštas",
     "accountDescription": "Išsaugokite duomenis vieną kartą ir tvarkykite adresus, užsakymus bei sekimą vienoje vietoje.",
     "documentationDescription": "Raskite paskelbtą partijos įrašą pagal partijos numerį ant pakuotės arba paprašykite turimos analitinės dokumentacijos.",
-    "educationDescription": "Kolekcijos sąvokų gidas, nuo produktų formų iki analitinės informacijos.",
     "standardsDescription": "Aiškios produktų specifikacijos, atsekama dokumentacija ir pagalba Jūsų laboratorijai.",
     "trackingDescription": "Naudokite siuntos sekimo numerį iš išsiuntimo patvirtinimo.",
     "cartDescription": "Jūsų tyrimų medžiagos, kiekiai ir vietinės kainos vienoje vietoje."
@@ -635,7 +633,6 @@
     "removeFromCart": "Išimkite {product} iš krepšelio",
     "payAmount": "Mokėkite {amount}",
     "moreItems": "Rodyti daugiau ({count})",
-    "productInShop": "{product} tyrimų parduotuvėje",
     "currencySelector": "Valiuta {currency}, šalis {country}. Keisti",
     "categoryFilter": "Kategorija: {name}",
     "addItems": "Įdėkite prekes į krepšelį ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "{product} kiekis",
     "productGallery": "{product} gaminių galerija",
     "specifications": "{product} specifikacijos",
-    "documentedLots": "Dokumentuotos {product} aikštelės",
     "photoView": "Žiūrėti {photo}"
   }
 }

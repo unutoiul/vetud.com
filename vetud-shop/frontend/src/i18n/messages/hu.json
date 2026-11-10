@@ -188,7 +188,6 @@
     "contactDescription": "A termékkel, gyártási tétellel vagy rendeléssel kapcsolatos kérdések a csapatunkhoz kerülnek. Add meg a rendelés- vagy tételszámot.",
     "standardsTitle": "A pontosság gyakorlat kérdése.",
     "documentationTitle": "Minden tétel dokumentálva.",
-    "educationTitle": "A peptidek tudománya érthetően.",
     "accountTitle": "Egyszerűbb rendelés.",
     "trackingTitle": "Kövesd a kutatási rendelésedet.",
     "cartTitle": "A kollekciód.",
@@ -200,7 +199,6 @@
     "contactEmail": "Kapcsolattartási e-mail",
     "accountDescription": "Mentsd el az adataidat egyszer, és kezeld a címeket, rendeléseket és a csomagkövetést egy helyen.",
     "documentationDescription": "Keresd meg egy közzétett tétel adatlapját a csomagoláson lévő tételszám alapján, vagy kérd az elérhető analitikai dokumentációt.",
-    "educationDescription": "Útmutató a kollekció fogalmaihoz, a termékformáktól az analitikai információkig.",
     "standardsDescription": "Világos termékspecifikációk, nyomon követhető dokumentáció és támogatás a laborod számára.",
     "trackingDescription": "Használd a szállítási visszaigazolásban szereplő csomagkövetési számot.",
     "cartDescription": "Kutatási anyagaid, mennyiségeid és helyi áraid egy helyen."
@@ -635,7 +633,6 @@
     "removeFromCart": "Vegye ki a {product}-et a kosárból",
     "payAmount": "Fizessen {amount}",
     "moreItems": "Mutass többet ({count})",
-    "productInShop": "{product} a kutatóüzletben",
     "currencySelector": "Pénznem {currency}, ország {country}. Változás",
     "categoryFilter": "Kategória: {name}",
     "addItems": "Tételek kosárba tétele ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "{product} mennyisége",
     "productGallery": "{product} termékgaléria",
     "specifications": "{product} specifikációk",
-    "documentedLots": "Dokumentált telkek a {product} számára",
     "photoView": "Nézd meg a {photo}-et"
   }
 }

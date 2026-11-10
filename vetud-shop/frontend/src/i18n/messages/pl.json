@@ -188,7 +188,6 @@
     "contactDescription": "Pytania o produkt, partię lub zamówienie trafiają do naszego zespołu. Podaj numer zamówienia lub partii.",
     "standardsTitle": "Precyzja to praktyka.",
     "documentationTitle": "Każda partia udokumentowana.",
-    "educationTitle": "Nauka o peptydach w przystępnej formie.",
     "accountTitle": "Prostszy sposób zamawiania.",
     "trackingTitle": "Śledź swoje zamówienie badawcze.",
     "cartTitle": "Twoja kolekcja.",
@@ -200,7 +199,6 @@
     "contactEmail": "E-mail kontaktowy",
     "accountDescription": "Zapisz dane raz, a potem zarządzaj adresami, zamówieniami i śledzeniem w jednym miejscu.",
     "documentationDescription": "Znajdź opublikowaną kartę partii po numerze partii z opakowania lub poproś o dostępną dokumentację analityczną.",
-    "educationDescription": "Przewodnik po pojęciach związanych z kolekcją, od form produktów po informacje analityczne.",
     "standardsDescription": "Jasne specyfikacje produktów, identyfikowalna dokumentacja i wsparcie dla Twojego laboratorium.",
     "trackingDescription": "Użyj numeru przesyłki z potwierdzenia wysyłki.",
     "cartDescription": "Twoje materiały badawcze, ilości i ceny lokalne w jednym miejscu."
@@ -635,7 +633,6 @@
     "removeFromCart": "Usuń {product} z koszyka",
     "payAmount": "Zapłać {amount}",
     "moreItems": "Pokaż więcej ({count})",
-    "productInShop": "{product} w sklepie badawczym",
     "currencySelector": "Waluta {currency}, kraj {country}. Zmiana",
     "categoryFilter": "Kategoria: {name}",
     "addItems": "Dodaj produkty do koszyka ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Ilość {product}",
     "productGallery": "Galeria produktów {product}",
     "specifications": "Specyfikacje {product}",
-    "documentedLots": "Udokumentowane partie dla {product}",
     "photoView": "Zobacz {photo}"
   }
 }

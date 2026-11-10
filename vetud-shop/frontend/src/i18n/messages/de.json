@@ -188,7 +188,6 @@
     "contactDescription": "Fragen zu Produkten, Chargen oder Bestellungen? Unser Team hilft weiter.",
     "standardsTitle": "Präzision in der Praxis.",
     "documentationTitle": "Jede Charge dokumentiert.",
-    "educationTitle": "Peptidwissenschaft verständlich.",
     "accountTitle": "Einfacher bestellen.",
     "trackingTitle": "Ihre Bestellung verfolgen.",
     "cartTitle": "Ihre Auswahl.",
@@ -200,7 +199,6 @@
     "contactEmail": "Kontakt-E-Mail",
     "accountDescription": "Speichern Sie Ihre Angaben und verwalten Sie Adressen, Bestellungen und Sendungen an einem Ort.",
     "documentationDescription": "Suchen Sie mit der Chargennummer auf Ihrer Verpackung nach veröffentlichten Unterlagen oder fordern Sie verfügbare Analysen an.",
-    "educationDescription": "Ein Leitfaden zu Produktformaten und analytischen Informationen der Kollektion.",
     "standardsDescription": "Klare Produktspezifikationen, nachvollziehbare Unterlagen und Unterstützung für Ihr Labor.",
     "trackingDescription": "Verwenden Sie die Paketnummer aus Ihrer Versandbestätigung.",
     "cartDescription": "Ihre Forschungsmaterialien, Mengen und regionalen Preise an einem Ort."
@@ -635,7 +633,6 @@
     "removeFromCart": "Entfernen Sie {product} aus dem Warenkorb",
     "payAmount": "Zahlen Sie {amount}",
     "moreItems": "Mehr anzeigen ({count})",
-    "productInShop": "{product} im Forschungsshop",
     "currencySelector": "Währung {currency}, Land {country}. Ändern",
     "categoryFilter": "Kategorie: {name}",
     "addItems": "Artikel zum Warenkorb hinzufügen ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Menge von {product}",
     "productGallery": "{product}-Produktgalerie",
     "specifications": "{product}-Spezifikationen",
-    "documentedLots": "Dokumentierte Chargen für {product}",
     "photoView": "{photo} anzeigen"
   }
 }

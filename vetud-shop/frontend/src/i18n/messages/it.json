@@ -188,7 +188,6 @@
     "contactDescription": "Le domande su un prodotto, un lotto o un ordine arrivano al nostro team. Indica il numero d’ordine o di lotto.",
     "standardsTitle": "La precisione è una pratica.",
     "documentationTitle": "Ogni lotto, documentato.",
-    "educationTitle": "La scienza dei peptidi, spiegata con chiarezza.",
     "accountTitle": "Un modo più semplice di ordinare.",
     "trackingTitle": "Segui il tuo ordine di ricerca.",
     "cartTitle": "La tua collezione.",
@@ -200,7 +199,6 @@
     "contactEmail": "Email di contatto",
     "accountDescription": "Salva i tuoi dati una volta, poi gestisci indirizzi, ordini e tracciamento in un unico posto.",
     "documentationDescription": "Trova la scheda di un lotto pubblicato con il numero di lotto sulla confezione, o richiedi la documentazione analitica disponibile.",
-    "educationDescription": "Una guida ai termini della collezione, dai formati dei prodotti alle informazioni analitiche.",
     "standardsDescription": "Specifiche di prodotto chiare, documentazione tracciabile e supporto per il tuo laboratorio.",
     "trackingDescription": "Usa il numero di tracciamento del pacco indicato nella conferma di spedizione.",
     "cartDescription": "I tuoi materiali di ricerca, le quantità e i prezzi locali in un unico posto."
@@ -635,7 +633,6 @@
     "removeFromCart": "Rimuovere {product} dal carrello",
     "payAmount": "Paga {amount}",
     "moreItems": "Mostra di più ({count})",
-    "productInShop": "{product} nel negozio di ricerca",
     "currencySelector": "Valuta {currency}, paese {country}. Modifica",
     "categoryFilter": "Categoria: {name}",
     "addItems": "Aggiungi articoli al carrello ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Quantità di {product}",
     "productGallery": "Galleria prodotti {product}",
     "specifications": "Specifiche {product}",
-    "documentedLots": "Lotti documentati per {product}",
     "photoView": "Visualizza {photo}"
   }
 }

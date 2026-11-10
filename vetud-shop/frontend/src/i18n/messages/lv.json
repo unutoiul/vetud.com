@@ -188,7 +188,6 @@
     "contactDescription": "Jautājumi par produktu, partiju vai pasūtījumu nonāk pie mūsu komandas. Norādiet pasūtījuma vai partijas numuru.",
     "standardsTitle": "Precizitāte ir prakse.",
     "documentationTitle": "Katra partija dokumentēta.",
-    "educationTitle": "Peptīdu zinātne skaidri un saprotami.",
     "accountTitle": "Vienkāršāks veids, kā pasūtīt.",
     "trackingTitle": "Izsekojiet savu pētniecības pasūtījumu.",
     "cartTitle": "Jūsu kolekcija.",
@@ -200,7 +199,6 @@
     "contactEmail": "Kontaktu e-pasts",
     "accountDescription": "Saglabājiet savus datus vienreiz un pārvaldiet adreses, pasūtījumus un izsekošanu vienuviet.",
     "documentationDescription": "Atrodiet publicētu partijas ierakstu pēc partijas numura uz iepakojuma vai pieprasiet pieejamo analītisko dokumentāciju.",
-    "educationDescription": "Ceļvedis kolekcijas jēdzienos, no produktu formām līdz analītiskajai informācijai.",
     "standardsDescription": "Skaidras produktu specifikācijas, izsekojama dokumentācija un atbalsts Jūsu laboratorijai.",
     "trackingDescription": "Izmantojiet sūtījuma izsekošanas numuru no nosūtīšanas apstiprinājuma.",
     "cartDescription": "Jūsu pētniecības materiāli, daudzumi un vietējās cenas vienuviet."
@@ -635,7 +633,6 @@
     "removeFromCart": "Izņemiet {product} no groza",
     "payAmount": "Maksājiet {amount}",
     "moreItems": "Rādīt vairāk ({count})",
-    "productInShop": "{product} izpētes veikalā",
     "currencySelector": "Valūta {currency}, valsts {country}. Mainīt",
     "categoryFilter": "Kategorija: {name}",
     "addItems": "Pievienot preces grozam ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "{product} daudzums",
     "productGallery": "{product} preču galerija",
     "specifications": "{product} specifikācijas",
-    "documentedLots": "Dokumentētas {product} partijas",
     "photoView": "Skatīt {photo}"
   }
 }

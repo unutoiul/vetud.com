@@ -188,7 +188,6 @@
     "contactDescription": "Întrebările despre un produs, un lot sau o comandă ajung la echipa noastră. Include numărul comenzii sau al lotului.",
     "standardsTitle": "Precizia este o practică.",
     "documentationTitle": "Fiecare lot, documentat.",
-    "educationTitle": "Știința peptidelor, pe înțeles.",
     "accountTitle": "Un mod mai simplu de a comanda.",
     "trackingTitle": "Urmărește comanda ta de cercetare.",
     "cartTitle": "Colecția ta.",
@@ -200,7 +199,6 @@
     "contactEmail": "E-mail de contact",
     "accountDescription": "Salvează-ți datele o singură dată, apoi gestionează adresele, comenzile și urmărirea într-un singur loc.",
     "documentationDescription": "Găsește fișa unui lot publicat după numărul de lot de pe ambalaj sau cere documentația analitică disponibilă.",
-    "educationDescription": "Un ghid al termenilor din colecție, de la formele produselor la informațiile analitice.",
     "standardsDescription": "Specificații clare ale produselor, documentație trasabilă și sprijin pentru laboratorul tău.",
     "trackingDescription": "Folosește numărul de urmărire al coletului din confirmarea expedierii.",
     "cartDescription": "Materialele tale de cercetare, cantitățile și prețurile locale într-un singur loc."
@@ -635,7 +633,6 @@
     "removeFromCart": "Scoateți {product} din coș",
     "payAmount": "Plătiți {amount}",
     "moreItems": "Afișați mai multe ({count})",
-    "productInShop": "{product} în magazinul de cercetare",
     "currencySelector": "Moneda {currency}, țara {country}. Schimba",
     "categoryFilter": "Categorie: {name}",
     "addItems": "Adăugați articole în coș ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Cantitatea de {product}",
     "productGallery": "{product} galerie de produse",
     "specifications": "Specificații {product}",
-    "documentedLots": "Loturi documentate pentru {product}",
     "photoView": "Vizualizați {photo}"
   }
 }

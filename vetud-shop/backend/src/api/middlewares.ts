@@ -8,8 +8,6 @@ import {
 import { StoreContactSchema } from "./store/contact/validators"
 import { StoreNewsletterSchema, StoreNewsletterUnsubscribeSchema } from "./store/newsletter/validators"
 import { CustomerOrderQuery, CustomerOrdersQuery } from "./store/account/orders/validators"
-import { StoreArticleCommentsQuery, StoreCreateArticleCommentSchema } from "./store/article-comments/validators"
-import { AdminArticleCommentsQuery } from "./admin/article-comments/validators"
 import { AdminCreateStorewideSale, AdminUpdateStorewideSale } from "./admin/storewide-sales/validators"
 import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
@@ -17,7 +15,6 @@ import { cartOwnerGuardRoutes, requireCartOwner } from "./cart-owner-guards"
 import * as cartQueryConfig from "@medusajs/medusa/api/store/carts/query-config"
 import { StoreGetCartsCart } from "@medusajs/medusa/api/store/carts/validators"
 import { StoreSetCartDeliveryAddressSchema } from "./store/carts/[id]/delivery-address/validators"
-import { forumRoutes } from "./forum-middlewares"
 import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
 import { paypalGuardRoutes, preparePayPalSession } from "./paypal-guards"
 import { cartBillingRoutes } from "./cart-billing"
@@ -26,7 +23,6 @@ export default defineMiddlewares({
   routes: [
     ...nmiGuardRoutes,
     ...cartOwnerGuardRoutes,
-    ...forumRoutes,
     ...paygateGuardRoutes,
     ...paypalGuardRoutes,
     ...cartBillingRoutes,
@@ -93,33 +89,6 @@ export default defineMiddlewares({
       method: ["POST"],
       matcher: "/store/newsletter/unsubscribe",
       middlewares: [validateAndTransformBody(StoreNewsletterUnsubscribeSchema)],
-    },
-    {
-      // Anyone can read comments; a signed-in reader's own comments are flagged in the response.
-      method: ["GET"],
-      matcher: "/store/article-comments",
-      middlewares: [
-        authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
-        validateAndTransformQuery(StoreArticleCommentsQuery, { isList: true, defaults: [] }),
-      ],
-    },
-    {
-      method: ["POST"],
-      matcher: "/store/article-comments",
-      middlewares: [
-        authenticate("customer", ["session", "bearer"]),
-        validateAndTransformBody(StoreCreateArticleCommentSchema),
-      ],
-    },
-    {
-      method: ["DELETE"],
-      matcher: "/store/article-comments/:id",
-      middlewares: [authenticate("customer", ["session", "bearer"])],
-    },
-    {
-      method: ["GET"],
-      matcher: "/admin/article-comments",
-      middlewares: [validateAndTransformQuery(AdminArticleCommentsQuery, { isList: true, defaults: [] })],
     },
     {
       method: ["POST"],

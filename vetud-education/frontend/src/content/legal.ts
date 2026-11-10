@@ -19,10 +19,11 @@ export type LegalDocument = {
 }
 
 const EMAIL = SITE.email
-const OPERATOR = "[Company legal name]"
+const OPERATOR = "Vetud LTD"
+const ADDRESS = "120 Kings Road, London SW6 3BX, United Kingdom"
 // Filled in after translation (see SHOP_NAME), so the text doesn't depend on the shop's address.
 const SHOP = "{shop}"
-const UPDATED = "10 November 2026"
+const UPDATED = "11 November 2026"
 
 export const LEGAL_DOCUMENTS: LegalDocument[] = [
   {
@@ -31,7 +32,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     summary: "What we collect on the education site, why, and the choices you have.",
     updated: UPDATED,
     sections: [
-      { heading: "Who is responsible", paragraphs: [`${OPERATOR}, [registered address], runs this site and is responsible for your personal data. Contact us at ${EMAIL}.`] },
+      { heading: "Who is responsible", paragraphs: [`${OPERATOR}, ${ADDRESS}, runs this site and is responsible for your personal data. Contact us at ${EMAIL}.`] },
       { heading: "What we collect", paragraphs: [
         "Account details: your name, email address and a protected version of your password.",
         "What you publish: community posts, photos, votes, your display name and any biography. These are public.",
@@ -85,7 +86,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     summary: "Who publishes this site.",
     updated: UPDATED,
     sections: [
-      { heading: "Publisher", paragraphs: [`${OPERATOR}, [legal form], [registered address], [company registration number], [VAT number]. Director of publication: [name]. Email: ${EMAIL}.`] },
+      { heading: "Publisher", paragraphs: [`${OPERATOR}, private limited company, ${ADDRESS}. Email: ${EMAIL}.`] },
       { heading: "Hosting", paragraphs: ["Website: Vercel Inc., [address to be confirmed]. Servers: Railway Corporation, [address to be confirmed]."] },
       { heading: "Related business", paragraphs: [`The publisher also operates a shop at ${SHOP}.`] },
     ],

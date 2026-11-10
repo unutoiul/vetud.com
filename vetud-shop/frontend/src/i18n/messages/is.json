@@ -188,7 +188,6 @@
     "contactDescription": "Spurningar um vöru, framleiðslulotu eða pöntun berast teyminu okkar. Tilgreindu pöntunar- eða lotunúmer.",
     "standardsTitle": "Nákvæmni er venja.",
     "documentationTitle": "Hver lota, skráð.",
-    "educationTitle": "Peptíðvísindi á mannamáli.",
     "accountTitle": "Einfaldari leið til að panta.",
     "trackingTitle": "Fylgstu með rannsóknarpöntuninni þinni.",
     "cartTitle": "Safnið þitt.",
@@ -200,7 +199,6 @@
     "contactEmail": "Netfang",
     "accountDescription": "Vistaðu upplýsingarnar einu sinni og hafðu umsjón með heimilisföngum, pöntunum og rakningu á einum stað.",
     "documentationDescription": "Finndu birta lotuskrá með lotunúmerinu á umbúðunum eða óskaðu eftir tiltækum greiningargögnum.",
-    "educationDescription": "Leiðarvísir um hugtökin að baki vörulínunni, frá vöruformum til greiningarupplýsinga.",
     "standardsDescription": "Skýrar vörulýsingar, rekjanleg gögn og stuðningur fyrir rannsóknarstofuna þína.",
     "trackingDescription": "Notaðu rakningarnúmer sendingarinnar úr sendingarstaðfestingunni.",
     "cartDescription": "Rannsóknarefnin þín, magn og staðbundin verð á einum stað."
@@ -635,7 +633,6 @@
     "removeFromCart": "Fjarlægðu {product} úr körfunni",
     "payAmount": "Borgaðu {amount}",
     "moreItems": "Sýna meira ({count})",
-    "productInShop": "{product} í rannsóknarbúðinni",
     "currencySelector": "Gjaldmiðill {currency}, land {country}. Breyta",
     "categoryFilter": "Flokkur: {name}",
     "addItems": "Bæta hlutum í körfu ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Magn af {product}",
     "productGallery": "{product} vörugallerí",
     "specifications": "{product} upplýsingar",
-    "documentedLots": "Skjalfest lóð fyrir {product}",
     "photoView": "Skoða {photo}"
   }
 }

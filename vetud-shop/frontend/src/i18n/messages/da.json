@@ -188,7 +188,6 @@
     "contactDescription": "Spørgsmål om et produkt, et parti eller en ordre går til vores team. Angiv dit ordre- eller partinummer.",
     "standardsTitle": "Præcision er en praksis.",
     "documentationTitle": "Hvert parti, dokumenteret.",
-    "educationTitle": "Peptidvidenskab, forklaret klart.",
     "accountTitle": "En enklere måde at bestille på.",
     "trackingTitle": "Følg din forskningsordre.",
     "cartTitle": "Din kollektion.",
@@ -200,7 +199,6 @@
     "contactEmail": "Kontakt-e-mail",
     "accountDescription": "Gem dine oplysninger én gang, og administrer adresser, ordrer og sporing ét sted.",
     "documentationDescription": "Find en offentliggjort partirapport med partinummeret på emballagen, eller anmod om tilgængelig analysedokumentation.",
-    "educationDescription": "En guide til begreberne bag kollektionen, fra produktformer til analyseoplysninger.",
     "standardsDescription": "Klare produktspecifikationer, sporbar dokumentation og støtte til dit laboratorium.",
     "trackingDescription": "Brug pakkens sporingsnummer fra forsendelsesbekræftelsen.",
     "cartDescription": "Dine forskningsmaterialer, mængder og lokale priser ét sted."
@@ -635,7 +633,6 @@
     "removeFromCart": "Fjern {product} fra kurven",
     "payAmount": "Betal {amount}",
     "moreItems": "Vis mere ({count})",
-    "productInShop": "{product} i researchshoppen",
     "currencySelector": "Valuta {currency}, land {country}. Forandring",
     "categoryFilter": "Kategori: {name}",
     "addItems": "Tilføj varer til indkøbskurv ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Mængde af {product}",
     "productGallery": "{product} produktgalleri",
     "specifications": "{product} specifikationer",
-    "documentedLots": "Dokumenterede partier til {product}",
     "photoView": "Se {photo}"
   }
 }

@@ -188,7 +188,6 @@
     "contactDescription": "Tuotetta, erää tai tilausta koskevat kysymykset tulevat tiimillemme. Kerro tilaus- tai eränumero.",
     "standardsTitle": "Tarkkuus on käytäntö.",
     "documentationTitle": "Jokainen erä dokumentoituna.",
-    "educationTitle": "Peptiditiede selkeästi.",
     "accountTitle": "Helpompi tapa tilata.",
     "trackingTitle": "Seuraa tutkimustilaustasi.",
     "cartTitle": "Mallistosi.",
@@ -200,7 +199,6 @@
     "contactEmail": "Yhteyssähköposti",
     "accountDescription": "Tallenna tietosi kerran ja hallitse osoitteita, tilauksia ja seurantaa yhdessä paikassa.",
     "documentationDescription": "Löydä julkaistu eräraportti pakkauksen eränumerolla tai pyydä saatavilla olevaa analyyttistä dokumentaatiota.",
-    "educationDescription": "Opas malliston käsitteisiin tuotemuodoista analyyttisiin tietoihin.",
     "standardsDescription": "Selkeät tuotetiedot, jäljitettävä dokumentaatio ja tukea laboratoriollesi.",
     "trackingDescription": "Käytä lähetysvahvistuksessa olevaa paketin seurantanumeroa.",
     "cartDescription": "Tutkimusmateriaalisi, määrät ja paikalliset hinnat yhdessä paikassa."
@@ -635,7 +633,6 @@
     "removeFromCart": "Poista {product} ostoskorista",
     "payAmount": "Maksa {amount}",
     "moreItems": "Näytä lisää ({count})",
-    "productInShop": "{product} tutkimusliikkeessä",
     "currencySelector": "Valuutta {currency}, maa {country}. Muuttaa",
     "categoryFilter": "Luokka: {name}",
     "addItems": "Lisää tuotteet ostoskoriin ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "{product}:n määrä",
     "productGallery": "{product} tuotegalleria",
     "specifications": "{product} tekniset tiedot",
-    "documentedLots": "Dokumentoidut erät {product}:lle",
     "photoView": "Katso {photo}"
   }
 }

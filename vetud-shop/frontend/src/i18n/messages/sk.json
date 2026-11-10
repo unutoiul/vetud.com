@@ -188,7 +188,6 @@
     "contactDescription": "Otázky k produktu, šarži alebo objednávke smerujú k nášmu tímu. Uveďte číslo objednávky alebo šarže.",
     "standardsTitle": "Presnosť je prax.",
     "documentationTitle": "Každá šarža zdokumentovaná.",
-    "educationTitle": "Veda o peptidoch zrozumiteľne.",
     "accountTitle": "Jednoduchší spôsob objednávania.",
     "trackingTitle": "Sledujte svoju výskumnú objednávku.",
     "cartTitle": "Vaša kolekcia.",
@@ -200,7 +199,6 @@
     "contactEmail": "Kontaktný e-mail",
     "accountDescription": "Uložte svoje údaje raz a potom spravujte adresy, objednávky a sledovanie na jednom mieste.",
     "documentationDescription": "Nájdite zverejnený záznam šarže podľa čísla šarže na obale alebo si vyžiadajte dostupnú analytickú dokumentáciu.",
-    "educationDescription": "Sprievodca pojmami kolekcie, od foriem produktov po analytické informácie.",
     "standardsDescription": "Jasné špecifikácie produktov, dohľadateľná dokumentácia a podpora pre vaše laboratórium.",
     "trackingDescription": "Použite sledovacie číslo zásielky z potvrdenia o odoslaní.",
     "cartDescription": "Vaše výskumné materiály, množstvá a miestne ceny na jednom mieste."
@@ -635,7 +633,6 @@
     "removeFromCart": "Odstráňte {product} z košíka",
     "payAmount": "Zaplaťte {amount}",
     "moreItems": "Zobraziť viac ({count})",
-    "productInShop": "{product} vo výskumnom obchode",
     "currencySelector": "Mena {currency}, krajina {country}. Zmeniť",
     "categoryFilter": "Kategória: {name}",
     "addItems": "Pridať položky do košíka ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Množstvo {product}",
     "productGallery": "Galéria produktov {product}",
     "specifications": "Špecifikácie {product}",
-    "documentedLots": "Zdokumentované šarže pre {product}",
     "photoView": "Pozrite si {photo}"
   }
 }

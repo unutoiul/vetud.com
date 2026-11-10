@@ -188,7 +188,6 @@
     "contactDescription": "Questions about a product, a lot or an order reach our team. Include your order or lot number.",
     "standardsTitle": "Precision is a practice.",
     "documentationTitle": "Every lot, on the record.",
-    "educationTitle": "Peptide science, made clear.",
     "accountTitle": "A simpler way to order.",
     "trackingTitle": "Follow your research order.",
     "cartTitle": "Your collection.",
@@ -200,7 +199,6 @@
     "contactEmail": "Contact email",
     "accountDescription": "Save your details once, then manage addresses, orders and tracking in one place.",
     "documentationDescription": "Find a published batch record using the lot number on your packaging, or request available analytical documentation.",
-    "educationDescription": "A guide to the terms behind the collection, from product formats to analytical information.",
     "standardsDescription": "Clear product specifications, traceable documentation and support for your laboratory.",
     "trackingDescription": "Use the parcel tracking number from your shipping confirmation.",
     "cartDescription": "Your research materials, quantities and regional pricing in one place."
@@ -635,7 +633,6 @@
     "removeFromCart": "Remove {product} from cart",
     "payAmount": "Pay {amount}",
     "moreItems": "Show more ({count})",
-    "productInShop": "{product} in the research shop",
     "currencySelector": "Currency {currency}, country {country}. Change",
     "categoryFilter": "Category: {name}",
     "addItems": "Add items to cart ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Quantity of {product}",
     "productGallery": "{product} product gallery",
     "specifications": "{product} specifications",
-    "documentedLots": "Documented lots for {product}",
     "photoView": "View {photo}"
   }
 }

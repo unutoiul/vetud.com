@@ -188,7 +188,6 @@
     "contactDescription": "Een vraag over een product, batch of bestelling? Neem contact op met ons team.",
     "standardsTitle": "Precisie in de praktijk.",
     "documentationTitle": "Elke batch gedocumenteerd.",
-    "educationTitle": "Peptidenwetenschap helder uitgelegd.",
     "accountTitle": "Eenvoudiger bestellen.",
     "trackingTitle": "Volg uw bestelling.",
     "cartTitle": "Uw selectie.",
@@ -200,7 +199,6 @@
     "contactEmail": "Contact-e-mail",
     "accountDescription": "Bewaar uw gegevens en beheer adressen, bestellingen en tracking op één plek.",
     "documentationDescription": "Zoek gepubliceerde batchgegevens met het nummer op de verpakking of vraag de beschikbare documentatie aan.",
-    "educationDescription": "Een gids voor productformaten en analytische informatie van de collectie.",
     "standardsDescription": "Heldere specificaties, traceerbare documentatie en ondersteuning voor uw laboratorium.",
     "trackingDescription": "Gebruik het pakketnummer uit uw verzendbevestiging.",
     "cartDescription": "Uw onderzoeksmaterialen, hoeveelheden en regionale prijzen op één plek."
@@ -635,7 +633,6 @@
     "removeFromCart": "Verwijder de {product} uit de winkelwagen",
     "payAmount": "Betaal {amount}",
     "moreItems": "Meer weergeven ({count})",
-    "productInShop": "{product} in de onderzoekswinkel",
     "currencySelector": "Valuta {currency}, land {country}. Wijziging",
     "categoryFilter": "Categorie: {name}",
     "addItems": "Artikelen toevoegen aan winkelwagen ({count})",
@@ -646,7 +643,6 @@
     "quantityAddOn": "Aantal {product}",
     "productGallery": "{product}-productgalerij",
     "specifications": "{product}-specificaties",
-    "documentedLots": "Gedocumenteerde partijen voor {product}",
     "photoView": "Bekijk {photo}"
   }
 }
