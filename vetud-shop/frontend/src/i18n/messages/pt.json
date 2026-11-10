@@ -178,7 +178,6 @@
     "shippingPending": "Calculado no checkout",
     "shippingAfterAddress": "Calculado após indicar a morada",
     "qty": "Qtd. {count}",
-    "payCard": "Cartão de crédito / débito",
     "payBank": "Transferência bancária / fatura",
     "payCrypto": "Pagar com criptomoeda"
   },
@@ -570,7 +569,6 @@
     "reports": "Relatórios ({count})",
     "fullGuide": "Leia o guia {product} completo",
     "photoNumber": "Foto {number}",
-    "cardDescription": "Pague com segurança com cartão com Stripe. Seu cartão será verificado agora e cobrado quando seu pedido estiver pronto para envio.",
     "bankDescription": "Faça já a sua encomenda e pague por transferência bancária. As instruções de pagamento e sua referência são enviadas por e-mail logo após o pedido. O stock fica reservado enquanto aguardamos o seu pagamento.",
     "cryptoDescription": "Faça seu pedido e pague na página hospedada segura do MakePay. Seu pedido será confirmado assim que a rede confirmar seu pagamento.",
     "payPalDescription": "Aprove com segurança com PayPal. Seu pedido é feito após a confirmação do pagamento.",

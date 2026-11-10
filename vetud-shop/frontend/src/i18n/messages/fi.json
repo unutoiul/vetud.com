@@ -178,7 +178,6 @@
     "shippingPending": "Lasketaan kassalla",
     "shippingAfterAddress": "Lasketaan osoitteen perusteella",
     "qty": "Määrä {count}",
-    "payCard": "Luotto- / pankkikortti",
     "payBank": "Pankkisiirto / lasku",
     "payCrypto": "Maksa kryptovaluutalla"
   },
@@ -570,7 +569,6 @@
     "reports": "Raportit ({count})",
     "fullGuide": "Lue koko {product}-opas",
     "photoNumber": "Valokuva {number}",
-    "cardDescription": "Maksa turvallisesti Stripen kortilla. Korttisi tarkistetaan nyt ja veloitetaan, kun tilauksesi on valmis lähetettäväksi.",
     "bankDescription": "Tee tilauksesi nyt ja maksa pankkisiirrolla. Maksuohjeet ja viitteesi lähetetään sähköpostitse heti tilauksen jälkeen. Varastoa on varattu odotellessamme maksuasi.",
     "cryptoDescription": "Tee tilauksesi ja maksa sitten MakePayn suojatulla isännöidyllä sivulla. Tilauksesi vahvistetaan heti, kun verkko vahvistaa maksusi.",
     "payPalDescription": "Hyväksy turvallisesti PayPalilla. Tilauksesi on tehty maksun vahvistamisen jälkeen.",

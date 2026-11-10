@@ -178,7 +178,6 @@
     "shippingPending": "Reiknað við greiðslu",
     "shippingAfterAddress": "Reiknast eftir að heimilisfang er skráð",
     "qty": "Magn {count}",
-    "payCard": "Kredit- / debetkort",
     "payBank": "Millifærsla / reikningur",
     "payCrypto": "Greiða með rafmynt"
   },
@@ -570,7 +569,6 @@
     "reports": "Skýrslur ({count})",
     "fullGuide": "Lestu {product} handbókina í heild sinni",
     "photoNumber": "Mynd {number}",
-    "cardDescription": "Borgaðu örugglega með korti með Stripe. Kortið þitt er athugað núna og skuldfært þegar pöntunin þín er tilbúin til sendingar.",
     "bankDescription": "Pantaðu núna og borgaðu með millifærslu. Greiðsluleiðbeiningar og tilvísun þín eru send í tölvupósti strax eftir pöntun. Birgðir eru fráteknar á meðan við bíðum eftir greiðslu þinni.",
     "cryptoDescription": "Settu pöntunina þína og borgaðu síðan á öruggri hýstsíðu MakePay. Pöntun þín er staðfest um leið og netið staðfestir greiðsluna þína.",
     "payPalDescription": "Samþykkja á öruggan hátt með PayPal. Pöntun þín er sett eftir að greiðsla hefur verið staðfest.",

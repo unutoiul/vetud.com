@@ -178,7 +178,6 @@
     "shippingPending": "Vypočítá se v pokladně",
     "shippingAfterAddress": "Vypočítá se po zadání adresy",
     "qty": "Množství {count}",
-    "payCard": "Kreditní / debetní karta",
     "payBank": "Bankovní převod / faktura",
     "payCrypto": "Zaplatit kryptoměnou"
   },
@@ -570,7 +569,6 @@
     "reports": "Přehledy ({count})",
     "fullGuide": "Přečtěte si celou příručku {product}",
     "photoNumber": "Fotografie {number}",
-    "cardDescription": "Plaťte bezpečně kartou s Stripe. Vaše karta je nyní zkontrolována a naúčtována, když bude vaše objednávka připravena k odeslání.",
     "bankDescription": "Objednejte nyní a zaplaťte bankovním převodem. Pokyny k platbě a vaše reference jsou zaslány e-mailem ihned po objednávce. Zásoby jsou rezervovány, dokud čekáme na vaši platbu.",
     "cryptoDescription": "Zadejte objednávku a poté zaplaťte na zabezpečené hostované stránce MakePay. Vaše objednávka je potvrzena, jakmile síť potvrdí vaši platbu.",
     "payPalDescription": "Schválit bezpečně pomocí PayPal. Vaše objednávka je zadána po potvrzení platby.",

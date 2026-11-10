@@ -7,8 +7,6 @@
     "postinstall": "patch-package --error-on-fail",
     "test:paypal": "node --test scripts/test-paypal-module.cjs",
     "test:content": "node scripts/test-localized-content.cjs",
-    "test:stripe": "node --test scripts/test-stripe-checkout.mjs",
-    "test:stripe:sandbox": "node scripts/test-stripe-sandbox.cjs && medusa exec ./scripts/finalize-stripe-sandbox.cjs",
     "test:makepay": "node --test scripts/test-makepay-checkout.mjs",
     "test:paygate:integration": "node scripts/test-paygate-integration.cjs",
     "build": "medusa build",

@@ -178,7 +178,6 @@
     "shippingPending": "Izračunano pri plačilu",
     "shippingAfterAddress": "Izračun po vnosu naslova",
     "qty": "Kol. {count}",
-    "payCard": "Kreditna / debetna kartica",
     "payBank": "Bančno nakazilo / račun",
     "payCrypto": "Plačilo s kriptovaluto"
   },
@@ -570,7 +569,6 @@
     "reports": "Poročila ({count})",
     "fullGuide": "Preberite celoten vodnik {product}",
     "photoNumber": "Fotografija {number}",
-    "cardDescription": "Varno plačujte s kartico s Stripe. Vaša kartica je zdaj preverjena in bremenjena, ko je vaše naročilo pripravljeno za pošiljanje.",
     "bankDescription": "Oddajte naročilo zdaj in plačajte z bančnim nakazilom. Navodila za plačilo in vašo referenco prejmete po e-pošti takoj po naročilu. Zaloga je rezervirana, medtem ko čakamo na vaše plačilo.",
     "cryptoDescription": "Oddajte naročilo in nato plačajte na varni gostujoči strani MakePay. Vaše naročilo je potrjeno takoj, ko omrežje potrdi vaše plačilo.",
     "payPalDescription": "Varno odobrite s PayPal. Vaše naročilo je oddano po potrditvi plačila.",

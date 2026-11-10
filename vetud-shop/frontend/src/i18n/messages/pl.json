@@ -178,7 +178,6 @@
     "shippingPending": "Obliczane przy kasie",
     "shippingAfterAddress": "Obliczana po podaniu adresu",
     "qty": "Ilość: {count}",
-    "payCard": "Karta kredytowa / debetowa",
     "payBank": "Przelew bankowy / faktura",
     "payCrypto": "Zapłać kryptowalutą"
   },
@@ -570,7 +569,6 @@
     "reports": "Raporty ({count})",
     "fullGuide": "Przeczytaj cały przewodnik {product}",
     "photoNumber": "Zdjęcie {number}",
-    "cardDescription": "Płać bezpiecznie kartą ze Stripe. Twoja karta zostanie sprawdzona i obciążona, gdy zamówienie będzie gotowe do wysyłki.",
     "bankDescription": "Złóż zamówienie już teraz i zapłać przelewem. Instrukcje dotyczące płatności i numer referencyjny zostaną przesłane e-mailem zaraz po złożeniu zamówienia. Zapasy są zarezerwowane do czasu oczekiwania na Twoją płatność.",
     "cryptoDescription": "Złóż zamówienie, a następnie zapłać na bezpiecznej stronie hostowanej przez MakePay. Twoje zamówienie zostanie potwierdzone, gdy tylko sieć potwierdzi Twoją płatność.",
     "payPalDescription": "Zatwierdź bezpiecznie w systemie PayPal. Twoje zamówienie zostaje złożone po potwierdzeniu płatności.",

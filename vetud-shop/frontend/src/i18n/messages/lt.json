@@ -178,7 +178,6 @@
     "shippingPending": "Apskaičiuojama atsiskaitant",
     "shippingAfterAddress": "Apskaičiuojama įvedus adresą",
     "qty": "Kiekis {count}",
-    "payCard": "Kredito / debeto kortelė",
     "payBank": "Banko pavedimas / sąskaita",
     "payCrypto": "Mokėti kriptovaliuta"
   },
@@ -570,7 +569,6 @@
     "reports": "Ataskaitos ({count})",
     "fullGuide": "Perskaitykite visą {product} vadovą",
     "photoNumber": "Nuotrauka {number}",
-    "cardDescription": "Saugiai mokėkite kortele su Stripe. Jūsų kortelė dabar patikrinama ir apmokestinama, kai užsakymas bus paruoštas išsiųsti.",
     "bankDescription": "Pateikite užsakymą dabar ir apmokėkite banko pavedimu. Mokėjimo instrukcijos ir nuoroda bus išsiųsta el. paštu iškart po užsakymo. Atsargos rezervuotos, kol laukiame jūsų mokėjimo.",
     "cryptoDescription": "Pateikite užsakymą, tada sumokėkite saugiame „MakePay“ puslapyje. Jūsų užsakymas patvirtinamas, kai tik tinklas patvirtina jūsų mokėjimą.",
     "payPalDescription": "Saugiai patvirtinkite naudodami PayPal. Jūsų užsakymas pateikiamas patvirtinus apmokėjimą.",

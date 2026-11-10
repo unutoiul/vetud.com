@@ -178,7 +178,6 @@
     "shippingPending": "Calculated at checkout",
     "shippingAfterAddress": "Calculated after address",
     "qty": "Qty {count}",
-    "payCard": "Credit / debit card",
     "payBank": "Bank transfer / invoice",
     "payCrypto": "Pay with cryptocurrency"
   },
@@ -570,7 +569,6 @@
     "reports": "Reports ({count})",
     "fullGuide": "Read the full {product} guide",
     "photoNumber": "Photo {number}",
-    "cardDescription": "Pay securely by card with Stripe. Your card is checked now and charged when your order is ready to ship.",
     "bankDescription": "Place your order now and pay by bank transfer. Payment instructions and your reference are emailed right after you order. Stock is reserved while we wait for your payment.",
     "cryptoDescription": "Place your order, then pay on MakePay's secure hosted page. Your order is confirmed as soon as the network confirms your payment.",
     "payPalDescription": "Approve securely with PayPal. Your order is placed after payment is confirmed.",

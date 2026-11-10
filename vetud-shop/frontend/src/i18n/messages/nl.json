@@ -178,7 +178,6 @@
     "shippingPending": "Wordt berekend bij het afrekenen",
     "shippingAfterAddress": "Berekend na invoeren adres",
     "qty": "Aantal {count}",
-    "payCard": "Credit- / debetkaart",
     "payBank": "Bankoverschrijving / factuur",
     "payCrypto": "Betalen met cryptovaluta"
   },
@@ -570,7 +569,6 @@
     "reports": "Rapporten ({count})",
     "fullGuide": "Lees de volledige {product}-gids",
     "photoNumber": "Foto {number}",
-    "cardDescription": "Betaal veilig met een kaart met Stripe. Uw kaart wordt nu gecontroleerd en belast zodra uw bestelling klaar is voor verzending.",
     "bankDescription": "Plaats nu uw bestelling en betaal via bankoverschrijving. Betaalinstructies en uw referentie worden direct na uw bestelling per e-mail verzonden. De voorraad wordt gereserveerd terwijl wij wachten op uw betaling.",
     "cryptoDescription": "Plaats uw bestelling en betaal vervolgens op de beveiligde gehoste pagina van MakePay. Uw bestelling wordt bevestigd zodra het netwerk uw betaling bevestigt.",
     "payPalDescription": "Veilig goedkeuren met PayPal. Uw bestelling wordt geplaatst nadat de betaling is bevestigd.",

@@ -178,7 +178,6 @@
     "shippingPending": "Se calculează la finalizare",
     "shippingAfterAddress": "Calculat după introducerea adresei",
     "qty": "Cant. {count}",
-    "payCard": "Card de credit / debit",
     "payBank": "Transfer bancar / factură",
     "payCrypto": "Plătește cu criptomonede"
   },
@@ -570,7 +569,6 @@
     "reports": "Rapoarte ({count})",
     "fullGuide": "Citiți ghidul complet {product}",
     "photoNumber": "Fotografie {number}",
-    "cardDescription": "Plătiți în siguranță cu cardul cu Stripe. Cardul dvs. este verificat acum și debitat atunci când comanda dvs. este gata de expediere.",
     "bankDescription": "Plasați acum comanda și plătiți prin transfer bancar. Instrucțiunile de plată și referința dvs. sunt trimise prin e-mail imediat după ce comandați. Stocul este rezervat în timp ce așteptăm plata dvs.",
     "cryptoDescription": "Plasați comanda, apoi plătiți pe pagina securizată găzduită a MakePay. Comanda dvs. este confirmată imediat ce rețeaua vă confirmă plata.",
     "payPalDescription": "Aprobați în siguranță cu PayPal. Comanda dvs. este plasată după confirmarea plății.",

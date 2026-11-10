@@ -19,7 +19,6 @@ import { StoreGetCartsCart } from "@medusajs/medusa/api/store/carts/validators"
 import { StoreSetCartDeliveryAddressSchema } from "./store/carts/[id]/delivery-address/validators"
 import { forumRoutes } from "./forum-middlewares"
 import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
-import { prepareStripeSession } from "./stripe-session"
 import { paypalGuardRoutes, preparePayPalSession } from "./paypal-guards"
 import { cartBillingRoutes } from "./cart-billing"
 
@@ -38,7 +37,6 @@ export default defineMiddlewares({
         authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
         prepareNmiSession,
         preparePaygateSession,
-        prepareStripeSession,
         preparePayPalSession,
       ],
     },

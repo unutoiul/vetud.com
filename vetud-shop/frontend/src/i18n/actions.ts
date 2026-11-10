@@ -319,7 +319,6 @@ const ACTION_LABELS: Record<string, keyof typeof messages.Actions> = {
   "Credit / debit card or eligible bank account": "cardOrBank",
   "Ask the community and experts. You can mark the best answer.": "questionHint",
   "Talk about a study, storage or anything else.": "discussionHint",
-  "Pay securely by card with Stripe. Your card is checked now and charged when your order is ready to ship.": "cardDescription",
   "Place your order now and pay by bank transfer. Payment instructions and your reference are emailed right after you order. Stock is reserved while we wait for your payment.": "bankDescription",
   "Place your order, then pay on MakePay's secure hosted page. Your order is confirmed as soon as the network confirms your payment.": "cryptoDescription",
   "Approve securely with PayPal. Your order is placed after payment is confirmed.": "payPalDescription",

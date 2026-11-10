@@ -1,11 +1,11 @@
 import { PAYPAL_PROVIDER_ID, planPayPalRegions } from "../paypal-setup"
 
-const region = (id: string, currency: string, providers = ["pp_system_default", "pp_stripe_stripe"]) => ({ id, currency_code: currency, countries: [{ iso_2: "us" }], payment_providers: providers.map(id => ({ id })) })
+const region = (id: string, currency: string, providers = ["pp_system_default", "pp_makepay_makepay"]) => ({ id, currency_code: currency, countries: [{ iso_2: "us" }], payment_providers: providers.map(id => ({ id })) })
 
 describe("PayPal region activation", () => {
   it("retains existing methods and adds PayPal once, including on a retry", () => {
     const plan = planPayPalRegions([region("reg_us", "usd"), region("reg_gb", "gbp", ["pp_system_default", PAYPAL_PROVIDER_ID])], ["USD", "gbp", "usd"])
-    expect(plan[0].next).toEqual(["pp_system_default", "pp_stripe_stripe", PAYPAL_PROVIDER_ID])
+    expect(plan[0].next).toEqual(["pp_system_default", "pp_makepay_makepay", PAYPAL_PROVIDER_ID])
     expect(plan[0].changed).toBe(true)
     expect(plan[1].next).toEqual(["pp_system_default", PAYPAL_PROVIDER_ID])
     expect(plan[1].changed).toBe(false)

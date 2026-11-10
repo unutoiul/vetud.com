@@ -178,7 +178,6 @@
     "shippingPending": "Beregnes i kassen",
     "shippingAfterAddress": "Beregnes etter at adressen er oppgitt",
     "qty": "Antall {count}",
-    "payCard": "Kreditt- / debetkort",
     "payBank": "Bankoverføring / faktura",
     "payCrypto": "Betal med kryptovaluta"
   },
@@ -570,7 +569,6 @@
     "reports": "Rapporter ({count})",
     "fullGuide": "Les hele {product}-guiden",
     "photoNumber": "Foto {number}",
-    "cardDescription": "Betal sikkert med kort med Stripe. Kortet ditt blir sjekket nå og belastet når bestillingen er klar til å sendes.",
     "bankDescription": "Legg inn bestillingen nå og betal med bankoverføring. Betalingsinstruksjoner og din referanse sendes på e-post rett etter at du har bestilt. Lager er reservert mens vi venter på din betaling.",
     "cryptoDescription": "Legg inn bestillingen din, og betal deretter på MakePays sikre vertsside. Bestillingen din er bekreftet så snart nettverket bekrefter betalingen din.",
     "payPalDescription": "Godkjenn sikkert med PayPal. Bestillingen din legges inn etter at betalingen er bekreftet.",

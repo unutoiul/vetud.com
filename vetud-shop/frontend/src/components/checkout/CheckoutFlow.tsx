@@ -37,7 +37,6 @@ import { hasShippingPrice } from "@/lib/shipping"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
 import { NMI_PROVIDER_ID, nmiAvailable, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
 import { isCheckoutPaymentProvider } from "@/lib/payment-providers"
-import { STRIPE_PROVIDER_ID, readStripeClientSecret, stripeBillingDetails, stripeEnabled } from "@/lib/stripe"
 import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
 import { ButtonLink } from "../common/links"
@@ -47,21 +46,14 @@ import PayPalReturn from "./PayPalReturn"
 import CheckoutOrderSummary from "./CheckoutOrderSummary"
 
 const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
-const StripePaymentForm = dynamic(() => import("./StripePaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
 const PayPalPaymentForm = dynamic(() => import("./PayPalPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={48} /> })
 
 /** Display labels are translated without changing payment provider identifiers. */
-const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payCard" | "payBank" | "payCrypto"; description: string; icon?: IconName }> = {
+const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payBank" | "payCrypto"; description: string; icon?: IconName }> = {
   [NMI_PROVIDER_ID]: {
     icon: "card",
     title: "Credit / debit card or eligible bank account",
     description: "Enter payment details securely below. Cards are authorized now and captured when ready to ship. Bank debit is available only when enabled and must settle before shipment.",
-  },
-  [STRIPE_PROVIDER_ID]: {
-    icon: "card",
-    title: "Credit / debit card",
-    titleKey: "payCard",
-    description: "Pay securely by card with Stripe. Your card is checked now and charged when your order is ready to ship.",
   },
   pp_system_default: {
     icon: "bank",
@@ -87,7 +79,7 @@ const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payCard" | "pa
 
 /** Providers whose session is bound to one amount, so choosing them always starts a fresh session. */
 function needsFreshSession(providerId: string) {
-  return providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID || providerId === STRIPE_PROVIDER_ID
+  return providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID
 }
 
 function errorMessage(error: unknown) {
@@ -283,7 +275,6 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         setLoadedProviders({ key: providersKey, list: payment_providers.filter((provider) => {
           if (!isCheckoutPaymentProvider(provider.id)) return false
           if (provider.id === PAYPAL_PROVIDER_ID) return payPalAvailable(paypal, cart.currency_code)
-          if (provider.id === STRIPE_PROVIDER_ID) return stripeEnabled
           return provider.id !== NMI_PROVIDER_ID || nmiAvailable(config, cart.currency_code)
         }) })
       })
@@ -414,21 +405,12 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     return orderId
   }
 
-  const placeOrder = (nmiToken?: NmiToken, confirmStripe?: () => Promise<void>, confirmPayPal?: () => Promise<void>) =>
+  const placeOrder = (nmiToken?: NmiToken, confirmPayPal?: () => Promise<void>) =>
     guard(async (assertCurrent) => {
       let checkoutCart = await linkCustomerCart()
       assertCurrent()
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         throw new Error("Your account pricing has been applied. Please review the updated total before paying.")
-      }
-      // Stripe: confirm the card only once the total is known to be current, then create the order.
-      if (checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === STRIPE_PROVIDER_ID)) {
-        if (!confirmStripe || readStripeClientSecret(checkoutCart) !== readStripeClientSecret(cart)) {
-          setCart(checkoutCart)
-          throw new Error("Your checkout changed. Review your order and enter your card details again.")
-        }
-        await confirmStripe()
-        assertCurrent()
       }
       const isNmi = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === NMI_PROVIDER_ID)
       if (isNmi || nmiToken) {
@@ -567,8 +549,8 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
                 </RadioGroup>
                 {chosenProvider ? (
                   activeSession ? (
-                    <PayPanel cart={cart} provider={chosenProvider} busy={busy} onRefresh={() => void startPayment(chosenProvider)} onPlaceOrder={() => void placeOrder()} onNmiToken={async (token) => { await placeOrder(token) }} onStripePay={async (confirm) => { await placeOrder(undefined, confirm) }} payPalConfig={payPalConfig} createPayPalOrder={createPayPalOrder} onPayPalApprove={async (orderId) => {
-                      await placeOrder(undefined, undefined, async () => {
+                    <PayPanel cart={cart} provider={chosenProvider} busy={busy} onRefresh={() => void startPayment(chosenProvider)} onPlaceOrder={() => void placeOrder()} onNmiToken={async (token) => { await placeOrder(token) }} payPalConfig={payPalConfig} createPayPalOrder={createPayPalOrder} onPayPalApprove={async (orderId) => {
+                      await placeOrder(undefined, async () => {
                         const attempt = payPalAttempt.current
                         if (!attempt || attempt.id !== orderId) throw new Error("This PayPal payment does not match your checkout.")
                         attempt.assertCurrent()
@@ -934,7 +916,6 @@ function PayPanel({
   onRefresh,
   onPlaceOrder,
   onNmiToken,
-  onStripePay,
   payPalConfig,
   createPayPalOrder,
   onPayPalApprove,
@@ -945,7 +926,6 @@ function PayPanel({
   onRefresh: () => void
   onPlaceOrder: () => void
   onNmiToken: (token: NmiToken) => Promise<void>
-  onStripePay: (confirm: () => Promise<void>) => Promise<void>
   payPalConfig: PayPalConfig | null
   createPayPalOrder: () => Promise<string>
   onPayPalApprove: (orderId: string) => Promise<void>
@@ -955,16 +935,12 @@ function PayPanel({
   const money = useMoney()
   const total = money(Number(cart.total ?? 0), cart.currency_code)
   const nmiSession = provider === NMI_PROVIDER_ID ? readNmiSession(cart) : null
-  const stripeSecret = provider === STRIPE_PROVIDER_ID ? readStripeClientSecret(cart) : null
 
   return (
     <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
       {provider === NMI_PROVIDER_ID ? (
         nmiSession ? <NmiPaymentForm key={`${nmiSession.id}:${nmiCartFingerprint(cart)}`} session={nmiSession} busy={busy} onToken={onNmiToken} />
           : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>{ct("Your secure payment session needs refreshing.")}</Alert>
-      ) : provider === STRIPE_PROVIDER_ID ? (
-        stripeSecret ? <StripePaymentForm key={stripeSecret} clientSecret={stripeSecret} amountLabel={total} billingDetails={stripeBillingDetails(cart)} busy={busy} onPay={onStripePay} />
-          : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>{ct("Your card payment session needs refreshing.")}</Alert>
       ) : provider === PAYPAL_PROVIDER_ID ? (
         payPalConfig ? <PayPalPaymentForm key={`${cart.id}:${payPalConfig.client_id}:${payPalConfig.currency}:${payPalConfig.intent}`} config={payPalConfig} busy={busy} createOrder={createPayPalOrder} onApprove={onPayPalApprove} />
           : <Alert severity="warning">{ct("PayPal is unavailable. Please choose another payment method.")}</Alert>
@@ -987,8 +963,6 @@ function PayPanel({
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 2, fontSize: 13 }}>
         {ct(provider === NMI_PROVIDER_ID
           ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
-          : provider === STRIPE_PROVIDER_ID
-          ? "By paying and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Your card is authorized now and charged when your order is ready to ship."
           : provider === PAYPAL_PROVIDER_ID
           ? "By paying with PayPal you agree to our terms of sale and confirm the products are for laboratory research use only. We ship after payment is confirmed."
           : provider === MAKEPAY_PROVIDER_ID

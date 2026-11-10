@@ -178,7 +178,6 @@
     "shippingPending": "Arvutatakse kassas",
     "shippingAfterAddress": "Arvutatakse pärast aadressi sisestamist",
     "qty": "Kogus {count}",
-    "payCard": "Krediit- / deebetkaart",
     "payBank": "Pangaülekanne / arve",
     "payCrypto": "Maksa krüptorahas"
   },
@@ -570,7 +569,6 @@
     "reports": "Aruanded ({count})",
     "fullGuide": "Lugege täielikku {product} juhendit",
     "photoNumber": "Foto {number}",
-    "cardDescription": "Maksa turvaliselt kaardiga Stripe'iga. Teie kaarti kontrollitakse nüüd ja selle eest võetakse tasu, kui tellimus on saatmiseks valmis.",
     "bankDescription": "Esitage tellimus kohe ja tasuge pangaülekandega. Maksejuhised ja teie viide saadetakse meilile kohe pärast tellimuse esitamist. Laoseis on broneeritud, kuni ootame teie makset.",
     "cryptoDescription": "Esitage tellimus ja makske MakePay turvalisel hostitud lehel. Teie tellimus kinnitatakse kohe, kui võrk on teie makse kinnitanud.",
     "payPalDescription": "Kinnitage turvaliselt PayPaliga. Teie tellimus esitatakse pärast makse kinnitamist.",

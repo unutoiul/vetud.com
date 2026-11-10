@@ -178,7 +178,6 @@
     "shippingPending": "Tiek aprēķināta norēķinoties",
     "shippingAfterAddress": "Aprēķina pēc adreses ievadīšanas",
     "qty": "Daudz. {count}",
-    "payCard": "Kredītkarte / debetkarte",
     "payBank": "Bankas pārskaitījums / rēķins",
     "payCrypto": "Maksāt ar kriptovalūtu"
   },
@@ -570,7 +569,6 @@
     "reports": "Pārskati ({count})",
     "fullGuide": "Izlasiet pilnu {product} rokasgrāmatu",
     "photoNumber": "Foto {number}",
-    "cardDescription": "Maksājiet droši ar karti ar Stripe. Jūsu karte tagad tiek pārbaudīta un iekasēta, kad pasūtījums ir gatavs nosūtīšanai.",
     "bankDescription": "Veiciet pasūtījumu tūlīt un maksājiet ar bankas pārskaitījumu. Maksājuma instrukcijas un jūsu atsauce tiek nosūtīta uz e-pastu tūlīt pēc pasūtījuma veikšanas. Krājumi ir rezervēti, kamēr mēs gaidām jūsu maksājumu.",
     "cryptoDescription": "Veiciet pasūtījumu un pēc tam maksājiet MakePay drošā mitinātajā lapā. Jūsu pasūtījums tiek apstiprināts, tiklīdz tīkls apstiprina jūsu maksājumu.",
     "payPalDescription": "Droši apstipriniet, izmantojot PayPal. Jūsu pasūtījums tiek veikts pēc maksājuma apstiprināšanas.",

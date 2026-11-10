@@ -178,7 +178,6 @@
     "shippingPending": "Wird an der Kasse berechnet",
     "shippingAfterAddress": "Nach Adresseingabe berechnet",
     "qty": "Menge {count}",
-    "payCard": "Kredit- / Debitkarte",
     "payBank": "Banküberweisung / Rechnung",
     "payCrypto": "Mit Kryptowährung bezahlen"
   },
@@ -570,7 +569,6 @@
     "reports": "Berichte ({count})",
     "fullGuide": "Lesen Sie die vollständige {product}-Anleitung",
     "photoNumber": "Foto {number}",
-    "cardDescription": "Bezahlen Sie sicher per Karte mit Stripe. Ihre Karte wird jetzt überprüft und belastet, sobald Ihre Bestellung versandbereit ist.",
     "bankDescription": "Geben Sie jetzt Ihre Bestellung auf und zahlen Sie per Banküberweisung. Zahlungsanweisungen und Ihre Referenz werden Ihnen direkt nach der Bestellung per E-Mail zugesandt. Der Lagerbestand bleibt reserviert, während wir auf Ihre Zahlung warten.",
     "cryptoDescription": "Geben Sie Ihre Bestellung auf und bezahlen Sie dann auf der sicheren gehosteten Seite von MakePay. Ihre Bestellung wird bestätigt, sobald das Netzwerk Ihre Zahlung bestätigt.",
     "payPalDescription": "Sicher mit PayPal genehmigen. Ihre Bestellung wird aufgegeben, nachdem die Zahlung bestätigt wurde.",

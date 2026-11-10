@@ -178,7 +178,6 @@
     "shippingPending": "Izračunava se pri plaćanju",
     "shippingAfterAddress": "Izračun nakon unosa adrese",
     "qty": "Kol. {count}",
-    "payCard": "Kreditna / debitna kartica",
     "payBank": "Bankovni prijenos / račun",
     "payCrypto": "Plati kriptovalutom"
   },
@@ -570,7 +569,6 @@
     "reports": "Izvješća ({count})",
     "fullGuide": "Pročitajte cijeli {product} vodič",
     "photoNumber": "Fotografija {number}",
-    "cardDescription": "Plaćajte sigurno karticom uz Stripe. Vaša se kartica sada provjerava i tereti kada je vaša narudžba spremna za slanje.",
     "bankDescription": "Naručite odmah i platite bankovnim transferom. Upute za plaćanje i vašu referencu šaljemo e-poštom odmah nakon naručivanja. Zaliha je rezervirana dok čekamo vašu uplatu.",
     "cryptoDescription": "Postavite svoju narudžbu, a zatim platite na sigurnoj hostiranoj stranici MakePaya. Vaša narudžba je potvrđena čim mreža potvrdi vašu uplatu.",
     "payPalDescription": "Odobrite sigurno uz PayPal. Vaša se narudžba predaje nakon potvrde plaćanja.",

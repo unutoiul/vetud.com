@@ -178,7 +178,6 @@
     "shippingPending": "Calcolata al checkout",
     "shippingAfterAddress": "Calcolata dopo l’indirizzo",
     "qty": "Qtà {count}",
-    "payCard": "Carta di credito / debito",
     "payBank": "Bonifico bancario / fattura",
     "payCrypto": "Paga con criptovaluta"
   },
@@ -570,7 +569,6 @@
     "reports": "Rapporti ({count})",
     "fullGuide": "Leggi la guida completa {product}",
     "photoNumber": "Foto {number}",
-    "cardDescription": "Paga in sicurezza con carta con Stripe. La tua carta viene controllata ora e addebitata quando il tuo ordine è pronto per la spedizione.",
     "bankDescription": "Effettua ora il tuo ordine e paga tramite bonifico bancario. Le istruzioni per il pagamento e il tuo riferimento vengono inviati via email subito dopo l'ordine. Lo stock è riservato mentre aspettiamo il pagamento.",
     "cryptoDescription": "Effettua il tuo ordine, quindi paga sulla pagina ospitata sicura di MakePay. Il tuo ordine sarà confermato non appena la rete confermerà il tuo pagamento.",
     "payPalDescription": "Approva in tutta sicurezza con PayPal. Il tuo ordine viene effettuato dopo la conferma del pagamento.",

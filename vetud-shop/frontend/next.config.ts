@@ -6,9 +6,9 @@ import createNextIntlPlugin from "next-intl/plugin"
 const backendOrigin = new URL(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000").origin
 const checkoutCsp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""} https://*.stripe.com https://*.link.com https://maps.googleapis.com https://maps.gstatic.com https://*.nmi.com https://*.paypal.com https://*.paypalobjects.com`,
-  `connect-src 'self' ${backendOrigin} https://*.stripe.com https://*.link.com https://*.googleapis.com https://*.gstatic.com https://*.nmi.com https://*.paypal.com https://*.paypalobjects.com${process.env.NODE_ENV === "development" ? " ws://localhost:* ws://127.0.0.1:*" : ""}`,
-  "frame-src 'self' https://*.stripe.com https://*.link.com https://*.nmi.com https://*.paypal.com https://*.paypalobjects.com",
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""} https://maps.googleapis.com https://maps.gstatic.com https://*.nmi.com https://*.paypal.com https://*.paypalobjects.com`,
+  `connect-src 'self' ${backendOrigin} https://*.googleapis.com https://*.gstatic.com https://*.nmi.com https://*.paypal.com https://*.paypalobjects.com${process.env.NODE_ENV === "development" ? " ws://localhost:* ws://127.0.0.1:*" : ""}`,
+  "frame-src 'self' https://*.nmi.com https://*.paypal.com https://*.paypalobjects.com",
   `img-src 'self' data: blob: https: ${backendOrigin}`,
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' data: https://fonts.gstatic.com",

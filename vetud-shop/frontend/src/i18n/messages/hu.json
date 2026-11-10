@@ -178,7 +178,6 @@
     "shippingPending": "A pénztárnál számoljuk ki",
     "shippingAfterAddress": "Cím megadása után számítva",
     "qty": "Menny.: {count}",
-    "payCard": "Hitel- / bankkártya",
     "payBank": "Banki átutalás / számla",
     "payCrypto": "Fizetés kriptovalutával"
   },
@@ -570,7 +569,6 @@
     "reports": "Jelentések ({count})",
     "fullGuide": "Olvassa el a teljes {product} útmutatót",
     "photoNumber": "Fotó: {number}",
-    "cardDescription": "Fizessen biztonságosan kártyával a Stripe segítségével. Kártyáját most ellenőrzik, és megterheljük, amikor a rendelés készen áll a szállításra.",
     "bankDescription": "Adja le rendelését most és fizessen banki átutalással. A fizetési utasításokat és referenciáját közvetlenül a megrendelés után e-mailben küldjük el. A készlet le van foglalva, amíg várunk a fizetésére.",
     "cryptoDescription": "Adja le rendelését, majd fizessen a MakePay biztonságos oldalán. Rendelése visszaigazolásra kerül, amint a hálózat visszaigazolja fizetését.",
     "payPalDescription": "Biztonságosan hagyja jóvá a PayPal segítségével. Megrendelése a fizetés visszaigazolása után kerül feladásra.",

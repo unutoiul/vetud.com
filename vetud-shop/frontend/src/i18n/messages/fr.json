@@ -178,7 +178,6 @@
     "shippingPending": "Calculée au paiement",
     "shippingAfterAddress": "Calculée après saisie de l’adresse",
     "qty": "Qté {count}",
-    "payCard": "Carte de crédit / débit",
     "payBank": "Virement bancaire / facture",
     "payCrypto": "Payer en cryptomonnaie"
   },
@@ -570,7 +569,6 @@
     "reports": "Retours ({count})",
     "fullGuide": "Guide complet : {product}",
     "photoNumber": "Photo {number}",
-    "cardDescription": "Payez en toute sécurité par carte avec Stripe. Votre carte est vérifiée maintenant et débitée lorsque votre commande est prête à être expédiée.",
     "bankDescription": "Passez votre commande maintenant et payez par virement bancaire. Les instructions de paiement et votre référence sont envoyées par e-mail juste après votre commande. Le stock est réservé en attendant votre paiement.",
     "cryptoDescription": "Passez votre commande, puis payez sur la page hébergée sécurisée de MakePay. Votre commande est confirmée dès que le réseau confirme votre paiement.",
     "payPalDescription": "Autorisez le paiement en toute sécurité avec PayPal. Votre commande est enregistrée après confirmation du paiement.",

@@ -20,8 +20,7 @@ export function loadPaymentMethods(regionId: string, currency: string): Promise<
   ]).then(([{ payment_providers }, nmi, paypal]) => {
     const providers = new Set(payment_providers.map(provider => provider.id))
     const methods: PaymentMethod[] = []
-    if ((providers.has("pp_stripe_stripe") && Boolean(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)) ||
-      (providers.has(NMI_PROVIDER_ID) && nmiAvailable(nmi, currency))) methods.push("visa", "mastercard")
+    if (providers.has(NMI_PROVIDER_ID) && nmiAvailable(nmi, currency)) methods.push("visa", "mastercard")
     // Without a cart the endpoint returns the merchant's default currency. Region membership
     // determines where the wallet is offered; the config still verifies its live connection.
     if (providers.has(PAYPAL_PROVIDER_ID) && payPalAvailable(paypal, paypal?.currency || currency)) methods.push("paypal")
