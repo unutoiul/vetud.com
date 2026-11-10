@@ -22,7 +22,7 @@ type Props = { categories: CategoryFacet[]; selected?: string; total: number; qu
 const NOTE = "Themes make browsing easier; the products remain intended for laboratory research."
 
 /** One-pick category list: "View all" plus each theme that has products, with counts. */
-function CategoryList({ categories, selected, total, onPick, disabled }: Omit<Props, "query" | "sort"> & { onPick: (handle?: string) => void; disabled: boolean }) {
+export function CategoryList({ categories, selected, total, onPick, disabled }: Omit<Props, "query" | "sort"> & { onPick: (handle?: string) => void; disabled: boolean }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const options = [

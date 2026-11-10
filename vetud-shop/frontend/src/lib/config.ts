@@ -5,16 +5,23 @@ export const MEDUSA_BACKEND_URL =
 
 export const MEDUSA_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || ""
 
-export const BASE_URL = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000").replace(
-  /\/$/,
-  ""
-)
-
 /**
  * The education site (guides, news, videos and the community). Since 2026-11-11 it is a separate
  * site and the shop only links to it.
  */
 export const EDUCATION_URL = (process.env.NEXT_PUBLIC_EDUCATION_URL || "https://www.vetud.com").replace(/\/$/, "")
+
+/** The shop's public address since it moved off vetud.com on 2026-11-11. */
+const SHOP_URL = "https://www.pep.company"
+const hostOf = (url: string) => { try { return new URL(url).host.replace(/^www\./, "") } catch { return "" } }
+const configuredBaseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000").replace(/\/$/, "")
+
+/**
+ * The shop's own address, used for canonical URLs, the sitemap and robots.txt. An old
+ * NEXT_PUBLIC_BASE_URL that still names the education site's domain is replaced by the shop's,
+ * so the shop never tells search engines that its pages live on vetud.com.
+ */
+export const BASE_URL = hostOf(configuredBaseUrl) === hostOf(EDUCATION_URL) ? SHOP_URL : configuredBaseUrl
 
 /** A page on the education site, which is in English for now: educationHref("/learn/bpc-157"). */
 export const educationHref = (path = "") => `${EDUCATION_URL}/en${path}`

@@ -87,7 +87,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     updated: UPDATED,
     sections: [
       { heading: "Publisher", paragraphs: [`${OPERATOR}, private limited company, ${ADDRESS}. Email: ${EMAIL}.`] },
-      { heading: "Hosting", paragraphs: ["Website: Vercel Inc., [address to be confirmed]. Servers: Railway Corporation, [address to be confirmed]."] },
+      { heading: "Hosting", paragraphs: ["Website: Vercel Inc. Servers: Railway Corporation."] },
       { heading: "Related business", paragraphs: [`The publisher also operates a shop at ${SHOP}.`] },
     ],
   },

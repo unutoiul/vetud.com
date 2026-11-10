@@ -18,7 +18,7 @@ import Icon from "../brand/Icon"
 import { LocalizedNextLink } from "../common/links"
 import ProductPhoto from "../product/ProductPhoto"
 
-/** Product cards share the hero's alpine stage; the active card sits above its neighbours. */
+/** A wide fan of product cards with a prominent, fully readable centre card. */
 export default function CollectionCarousel({ products }: { products: HttpTypes.StoreProduct[] }) {
   const ct = useContentTranslator()
   const t = useTranslations("Common")
@@ -81,21 +81,22 @@ export default function CollectionCarousel({ products }: { products: HttpTypes.S
       }}
       onTouchCancel={() => { touchStart.current = null }}
       onClickCapture={event => { if (lastSwipe.current && event.timeStamp - lastSwipe.current < 700) event.preventDefault() }}
-      sx={{ position: "relative", height: { xs: 360, sm: 420, md: 440, lg: 460 }, perspective: 1400, touchAction: "pan-y" }}
+      sx={{ position: "relative", height: { xs: 385, sm: 440, md: 490, lg: 520 }, perspective: 1800, touchAction: "pan-y" }}
     >
       {photos.map((product, productIndex) => {
         let position = (productIndex - current + count) % count
         if (position > count / 2) position -= count
         const active = position === 0
-        const hidden = Math.abs(position) > 1
+        const distance = Math.abs(position)
+        const hidden = distance > 2
         const meta = readProductMeta(product)
         const price = cheapestPrice(product)
         const images = getProductImages(product)
-        return <Box key={product.id} role="group" aria-roledescription="slide" aria-label={t("slide", { current: productIndex + 1, total: count })} aria-hidden={hidden || undefined} inert={hidden} data-active={active} sx={{ position: "absolute", left: "50%", top: "50%", width: { xs: "70%", sm: "54%", md: "62%" }, maxWidth: 340, zIndex: active ? 3 : hidden ? 0 : 1, opacity: hidden ? 0 : 1, visibility: hidden ? "hidden" : "visible", transform: `translate(${-50 + position * 46}%, ${-50 + Math.abs(position) * 5}%) rotate(${position * 8}deg) scale(${active ? 1 : .83})`, transition: "transform .7s cubic-bezier(.22,.68,0,1), opacity .45s, visibility .45s", "@media (prefers-reduced-motion: reduce)": { transition: "none" } }}>
-          <Box component={LocalizedNextLink} href={`/products/${product.handle}`} sx={{ display: "flex", flexDirection: "column", minHeight: { xs: 340, sm: 380, md: 395, lg: 405 }, p: { xs: 1.75, md: 2 }, gap: { xs: 1.75, md: 2 }, boxSizing: "border-box", overflow: "hidden", border: "1px solid", borderColor: active ? brand.lineStrong : brand.line, borderRadius: "14px", bgcolor: "#fff", color: "inherit", textDecoration: "none", boxShadow: active ? "0 24px 64px -20px rgba(21,38,94,.28), 0 4px 12px rgba(21,38,94,.04)" : "0 14px 40px -18px rgba(21,38,94,.2)", "&:focus-visible": { outline: `3px solid ${brand.blue}`, outlineOffset: 4 }, "&:hover .hero-product-arrow": { bgcolor: brand.navy, color: "#fff" } }}>
-            <Box sx={{ height: { xs: 150, sm: 185, md: 190, lg: 205 }, flexShrink: 0, p: .5, borderRadius: "8px", bgcolor: "#fff" }}>
+        return <Box key={product.id} role="group" aria-roledescription="slide" aria-label={t("slide", { current: productIndex + 1, total: count })} aria-hidden={hidden || undefined} inert={hidden} data-active={active} sx={{ position: "absolute", left: "50%", top: "50%", width: { xs: "82%", sm: "48%", md: "30%", lg: "27%" }, maxWidth: 420, display: distance === 2 ? { xs: "none", md: "block" } : "block", zIndex: active ? 3 : hidden ? 0 : 3 - distance, opacity: hidden ? 0 : 1, visibility: hidden ? "hidden" : "visible", transform: { xs: `translate(${-50 + position * 64}%, ${-50 + distance * 3}%) rotate(${position * 4}deg) scale(${active ? 1 : .9})`, md: `translate(${-50 + position * 76}%, ${-50 + distance * 3}%) rotate(${position * 4}deg) scale(${active ? 1 : distance === 1 ? .92 : .82})` }, transition: "transform .7s cubic-bezier(.22,.68,0,1), opacity .45s, visibility .45s", "@media (prefers-reduced-motion: reduce)": { transition: "none" } }}>
+          <Box component={LocalizedNextLink} href={`/products/${product.handle}`} sx={{ display: "flex", flexDirection: "column", minHeight: { xs: 350, sm: 390, md: 430, lg: 450 }, p: { xs: 1.75, md: 2.5 }, gap: { xs: 1.75, md: 2 }, boxSizing: "border-box", overflow: "hidden", border: "1px solid", borderColor: active ? brand.lineStrong : brand.line, borderRadius: "14px", bgcolor: "#fff", color: "inherit", textDecoration: "none", boxShadow: active ? "0 24px 64px -20px rgba(21,38,94,.28), 0 4px 12px rgba(21,38,94,.04)" : "0 14px 40px -18px rgba(21,38,94,.2)", "&:focus-visible": { outline: `3px solid ${brand.blue}`, outlineOffset: 4 }, "&:hover .hero-product-arrow": { bgcolor: brand.navy, color: "#fff" } }}>
+            <Box sx={{ height: { xs: 165, sm: 195, md: 225, lg: 245 }, flexShrink: 0, p: .5, borderRadius: "8px", bgcolor: "#fff" }}>
               <Box sx={{ position: "relative", height: "100%" }}>
-                <ProductPhoto images={images} title={ct(product.title)} sizes="(max-width: 600px) 65vw, 340px" preload={productIndex === 0} />
+                <ProductPhoto images={images} title={ct(product.title)} sizes="(max-width: 600px) 75vw, (max-width: 900px) 44vw, (max-width: 1600px) 27vw, 420px" preload={productIndex === 0} />
               </Box>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", flex: 1, px: .5, pb: .5 }}>
