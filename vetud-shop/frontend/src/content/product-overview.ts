@@ -4,9 +4,9 @@ import type { Evidence, StatusId } from "./research/categories"
 import { getPeptide, type PeptideProfile, type Source, type StudyResult } from "./research/peptides"
 
 /**
- * The plain-language "Research overview" of a product page, built from the learning library's
- * profile of the same compound (or each compound of a blend), so the shop and the library say the
- * same thing: what it is, how strong the evidence is, published results, what isn't known yet.
+ * The plain-language "Research overview" of a product page, built from the research profile of the
+ * same compound (or each compound of a blend, content/research/peptides.ts): what it is, how strong
+ * the evidence is, published results, what isn't known yet. The full guides are on the education site.
  */
 export type ProductOverview = {
   name: string

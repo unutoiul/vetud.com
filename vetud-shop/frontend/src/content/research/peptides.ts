@@ -2,7 +2,8 @@ import type { CategoryId, Evidence, StatusId } from "./categories"
 import { CBL_514_SOURCES, PTT_A_SOURCES } from "./emerging-weight-research"
 
 /**
- * The peptide library: plain-language profiles for readers without a science background.
+ * Research profiles behind each product page's "Research overview", copied from the education site's
+ * peptide library: plain-language profiles for readers without a science background.
  * Every number comes from the linked source (PubMed abstracts checked 2026-11-01).
  * Profiles describe published research and approval status only. They never give doses,
  * never suggest personal use. Related catalog links show live research-product availability.
@@ -51,9 +52,9 @@ export type PeptideProfile = {
   unknowns?: string[]
   risks: string[]
   sources: Source[]
-  /** YouTube ids from content/learn/videos.ts */
+  /** YouTube ids of videos on the education site */
   videos?: string[]
-  /** PubChem compound id; the drawing lives at /images/learn/structures/<slug>.webp */
+  /** PubChem compound id */
   pubchem?: number
   notAPeptide?: boolean
 }

@@ -18,15 +18,19 @@ const checkoutCsp = [
   "frame-ancestors 'self'",
 ].join("; ")
 
-// Once the sites are split, learning pages move to the education site. Temporary until it has settled.
-const educationUrl = (process.env.NEXT_PUBLIC_EDUCATION_URL || "").replace(/\/$/, "")
-const educationRedirects = process.env.NEXT_PUBLIC_EDUCATION_CUTOVER === "true" && educationUrl ? [
+// Learning pages, news, videos and the community live on the education site since 2026-11-11.
+// Temporary redirects until the move has settled.
+const educationUrl = (process.env.NEXT_PUBLIC_EDUCATION_URL || "https://www.vetud.com").replace(/\/$/, "")
+const educationRedirects = [
   { source: "/:country(fr|lu)/:section(learn|news|videos|community)/:path*", destination: `${educationUrl}/fr/:section/:path*`, permanent: false },
   { source: "/:country([a-z]{2})/:section(learn|news|videos|community)/:path*", destination: `${educationUrl}/en/:section/:path*`, permanent: false },
   { source: "/:section(learn|news|community)/:path*", destination: `${educationUrl}/en/:section/:path*`, permanent: false },
   // /videos/<file> is this site's own product video, so only the page itself moves.
   { source: "/videos", destination: `${educationUrl}/en/videos`, permanent: false },
-] : []
+  // The old single Learn page, before it grew into the learning hub.
+  { source: "/:country([a-z]{2})/education", destination: `${educationUrl}/en/learn`, permanent: false },
+  { source: "/education", destination: `${educationUrl}/en/learn`, permanent: false },
+]
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -45,9 +49,6 @@ const nextConfig: NextConfig = {
       { source: "/:countryCode/legal/shipping-returns", destination: "/:countryCode/legal/shipping", permanent: true },
       { source: "/legal/shipping-returns", destination: "/legal/shipping", permanent: true },
       { source: "/:countryCode/discover", destination: "/:countryCode/shop", permanent: true },
-      // The old single Learn page grew into the learning hub.
-      { source: "/:countryCode/education", destination: "/:countryCode/learn", permanent: true },
-      { source: "/education", destination: "/learn", permanent: true },
       { source: "/discover", destination: "/shop", permanent: true },
       // The unspecified Melanotan kit was replaced by Melanotan I and II (2026-11-04).
       { source: "/:countryCode/products/melanotan", destination: "/:countryCode/shop?category=beauty", permanent: false },

@@ -24,7 +24,7 @@ const sectionStyle = { pt: { xs: 4, md: 5 }, pb: { xs: 4, md: 5 }, borderTop: "1
 const bodyStyle = { fontSize: 14, lineHeight: 1.95, color: "text.secondary", maxWidth: 800 }
 
 /**
- * The plain-language overview from the learning library: what it is, how strong the evidence is,
+ * The plain-language research overview: what it is, how strong the evidence is,
  * published results (framed as studies of the compound, not of this material), what isn't known
  * yet, risks, and sources.
  */
