@@ -19,6 +19,12 @@ export const brand = {
   onNavyMuted: "#b4c9d5",
 } as const
 
+/** Solid merchandising accents keep the two product labels distinct on white cards. */
+export const productBadgeColors = {
+  popular: { background: "#245bcb", foreground: "#ffffff", border: "#1b4db3" },
+  bestSeller: { background: "#f4be4f", foreground: brand.navyDeep, border: "#d9a02e" },
+} as const
+
 export const fonts = {
   sans: "var(--font-manrope), sans-serif",
   mono: "var(--font-dm-mono), monospace",
