@@ -12,14 +12,16 @@ import { getContentTranslator } from "@/i18n/server-content"
 import { SITE } from "@/lib/config"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { listCatalogProducts } from "@/lib/medusa/products"
+import { localizedWebsiteStructuredData } from "@/lib/storefront-seo"
 
-/** The home page once the shop is its own site: the collection first, then how it is made and checked. */
+/** The home page: the collection first, then how it is made and checked. */
 export default async function ShopHome() {
   const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const { region } = await getCurrentRegion()
   const products = await listCatalogProducts(region.id)
   return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localizedWebsiteStructuredData(ct.locale)).replace(/</g, "\\u003c") }} />
     <VideoHero video={SHOP_HERO_VIDEO} eyebrow={ct("The collection")} title={ct("Research peptides & laboratory materials.")} description={ct("Research materials with lot documentation, for laboratory research use only.")}>
       <ButtonLink href="/shop" variant="contained" endIcon={<Icon name="arrowUpRight" />}>{act("shopCatalog")}</ButtonLink>
     </VideoHero>

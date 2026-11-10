@@ -14,9 +14,7 @@ import Typography from "@mui/material/Typography"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { useRef, useState, type FormEvent } from "react"
-import { CATEGORIES } from "@/content/learn/categories"
 import { translateAction } from "@/i18n/actions"
-import { EDUCATION_CUTOVER } from "@/lib/config"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
@@ -85,7 +83,6 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const ct = useContentTranslator()
   const offerText = useTranslations("Offer")
   const actions = useTranslations("Actions")
-  const heroText = useTranslations("LearnHero")
   const footerText = useTranslations("Footer")
   const { countryCode } = useStore()
   const [email, setEmail] = useState("")
@@ -194,13 +191,12 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
 
           {status === "success" ? <div role="status" aria-live="polite" aria-atomic="true">
             <Box sx={{ display: "grid", placeItems: "center", width: 52, height: 52, my: 2.75, borderRadius: "50%", bgcolor: "brand.navy", color: "brand.cyan" }}><Icon name="check" sx={{ fontSize: 28 }} /></Box>
-            <Typography id="welcome-description" sx={descriptionSx}>{ct(EDUCATION_CUTOVER ? "Thanks for signing up to VETUD. We'll email you our latest offers and news." : "Thanks for signing up to VETUD. Explore our peptide guides and meet the community while you wait for the next update.")}</Typography>
+            <Typography id="welcome-description" sx={descriptionSx}>{ct("Thanks for signing up to VETUD. We'll email you our latest offers and news.")}</Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 3.25 }}>
-              <ButtonLink href={EDUCATION_CUTOVER ? "/shop" : "/learn"} onClick={onDismiss} variant="contained" endIcon={<Icon name="arrowRight" />} sx={primaryButtonSx}>{EDUCATION_CUTOVER ? actions("shopCatalog") : ct("Explore peptide education")}</ButtonLink>
-              {EDUCATION_CUTOVER ? null : <ButtonLink href="/community" onClick={onDismiss} variant="outlined" sx={{ color: "brand.onNavy", borderColor: "brand.cyan", "&:hover": { borderColor: "brand.cyan", bgcolor: "brand.navy" } }}>{ct("Visit the community")}</ButtonLink>}
+              <ButtonLink href="/shop" onClick={onDismiss} variant="contained" endIcon={<Icon name="arrowRight" />} sx={primaryButtonSx}>{actions("shopCatalog")}</ButtonLink>
             </Box>
           </div> : <>
-            <Typography id="welcome-description" sx={descriptionSx}>{ct(EDUCATION_CUTOVER ? "Get VETUD offers and news in your inbox." : "Get clear peptide explainers, research news and community updates in your inbox.")}</Typography>
+            <Typography id="welcome-description" sx={descriptionSx}>{ct("Get VETUD offers and news in your inbox.")}</Typography>
             <Box component="form" onSubmit={submit} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 3, md: 3.75 } }}>
               <TextField
                 label={offerText("email")}
@@ -254,48 +250,6 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
           </>}
         </Box>
       </Box>
-
-      {EDUCATION_CUTOVER ? null : <Box component="nav" aria-labelledby="welcome-topics-title" sx={{ minWidth: 0, mb: { xs: 2.5, md: 3 } }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 2, mb: 1.25 }}>
-          <Typography id="welcome-topics-title" component="h3" sx={{ fontSize: 13, fontWeight: 600, color: "brand.cyan" }}>{heroText("topics")}</Typography>
-          <Typography sx={{ display: { sm: "none" }, fontSize: 11, color: "brand.onNavyMuted" }}>{ct("Swipe to explore")}</Typography>
-        </Box>
-        <Box component="ul" role="list" sx={{
-          display: "flex",
-          flexWrap: { sm: "wrap" },
-          gap: 1,
-          m: "0 -6px",
-          p: { xs: "6px 6px 12px", sm: "6px" },
-          listStyle: "none",
-          overflowX: { xs: "auto", sm: "visible" },
-          scrollbarWidth: "thin",
-          scrollbarColor: `${brand.navySoft} ${brand.navyDeep}`,
-        }}>
-          {CATEGORIES.map(topic => <Box component="li" key={topic.id} sx={{ flexShrink: 0 }}>
-            <Box component={LocalizedNextLink} href={`/learn#${topic.id}`} onClick={onDismiss} sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 1,
-              minHeight: 44,
-              p: "8px 14px",
-              border: "1px solid",
-              borderColor: "brand.navySoft",
-              borderRadius: 999,
-              color: "brand.onNavy",
-              bgcolor: alpha(brand.onNavy, .04),
-              textDecoration: "none",
-              whiteSpace: "nowrap",
-              fontSize: { xs: 12, md: 13 },
-              fontWeight: 500,
-              transition: "border-color 150ms ease, background-color 150ms ease",
-              "&:hover": { borderColor: "brand.cyan", bgcolor: alpha(brand.cyan, .12) },
-            }}>
-              <Icon name={topic.icon} sx={{ width: 17, height: 17, color: "brand.cyan" }} />
-              {translateAction(actions, topic.name)}
-            </Box>
-          </Box>)}
-        </Box>
-      </Box>}
 
       <Box component="footer" sx={{
         display: "grid",

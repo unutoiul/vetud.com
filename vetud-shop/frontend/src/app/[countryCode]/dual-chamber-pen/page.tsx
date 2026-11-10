@@ -9,14 +9,16 @@ import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import { FormatComparison } from "@/components/product/DualChamberExplainer"
 import FaqAccordion, { type FaqItem } from "@/components/standards/FaqAccordion"
-import { collectionMetadata } from "@/lib/article-seo"
+import { getPageLocalization } from "@/i18n/metadata"
+import { storefrontMetadata } from "@/lib/storefront-seo"
 import { PEN_EXPLAINER_IMAGE, REUSABLE_PEN_IMAGE } from "@/lib/product-images"
 
 const TITLE = "The dual-chamber pen, explained"
 const DESCRIPTION = "How the reusable VETUD dual-chamber pen works: freeze-dried peptide and bacteriostatic water kept apart in one cartridge, the pen kit box, refill dual-chamber vials, and how they compare with a vial."
 
 export async function generateMetadata() {
-  return collectionMetadata({ path: "/dual-chamber-pen", title: `${TITLE}: pen kit box, dual-chamber vial or vial`, description: DESCRIPTION })
+  const { country } = await getPageLocalization()
+  return storefrontMetadata({ country, path: "/dual-chamber-pen", title: `${TITLE}: pen kit box, dual-chamber vial or vial | VETUD`, description: DESCRIPTION })
 }
 
 const PARTS = [

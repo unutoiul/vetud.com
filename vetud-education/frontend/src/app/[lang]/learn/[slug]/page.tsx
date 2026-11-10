@@ -13,7 +13,6 @@ import Section from "@/components/common/Section"
 import PeptideCommunity from "@/components/community/PeptideCommunity"
 import ArticleCard from "@/components/learn/ArticleCard"
 import PeptideCard from "@/components/learn/PeptideCard"
-import GuideShopLink from "@/components/learn/GuideShopLink"
 import { ArticleJsonLd, ReadingHeader, ReadingLayout, ReadingSection, readingProse } from "@/components/learn/ReadingLayout"
 import SourceList, { LEARN_DISCLAIMER } from "@/components/learn/SourceList"
 import EvidenceLadder from "@/components/learn/EvidenceLadder"
@@ -29,7 +28,6 @@ import { getPeptide, PEPTIDES } from "@/content/learn/peptides"
 import { getProfileVideoResources } from "@/content/learn/video-resources"
 import { WEIGHT_LOSS_TRIALS } from "@/content/learn/weight-loss-trials"
 import { articleMetadata, articleStructuredData, readingMinutes } from "@/lib/article-seo"
-import { guideProductUrl } from "@/lib/guide-products"
 
 export function generateStaticParams() {
   return PEPTIDES.map(peptide => ({ slug: peptide.slug }))
@@ -78,7 +76,6 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[lang]/learn/[slu
     { id: "community", label: "From the community" },
     { id: "videos", label: "Watch and learn" },
     { id: "sources", label: "Sources and references" },
-    ...(guideProductUrl(peptide.slug) ? [{ id: "research-shop", label: "Laboratory research material" }] : []),
   ]
   const data = await articleStructuredData({
     title, description: peptide.oneLiner, path: `/learn/${peptide.slug}`, image, sources: peptide.sources, text,
@@ -141,7 +138,6 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[lang]/learn/[slu
           <SourceList sources={peptide.sources} />
           <Typography sx={{ mt: 3, fontSize: 14, lineHeight: 1.8, color: "brand.navySoft" }}>{ct(LEARN_DISCLAIMER)}</Typography>
         </ReadingSection>
-        <GuideShopLink slug={peptide.slug} name={peptide.name} />
       </ReadingLayout>
     </Box>
 

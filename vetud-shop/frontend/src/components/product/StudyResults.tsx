@@ -1,7 +1,7 @@
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import type { Source, StudyResult } from "@/content/learn/peptides"
+import type { Source, StudyResult } from "@/content/research/peptides"
 
 const WHO = { people: "In people", animals: "In animals", cells: "In cells", review: "Review of studies" } as const
 // The compound in the brand blue, comparisons in a grey that passes 3:1 on white (as in WeightLossChart).

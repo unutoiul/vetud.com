@@ -12,7 +12,6 @@ import { usePathname } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { Suspense, useRef, useState } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
-import { SHOP_URL } from "@/lib/config"
 import { motion } from "@/theme/tokens"
 import { useAccount } from "../account/AccountProvider"
 import Icon from "../brand/Icon"
@@ -30,7 +29,6 @@ function MainNav({ activeHref }: { activeHref?: string }) {
   const t = useTranslations("Common")
   return <Stack component="nav" aria-label={act("mainNav")} direction="row" spacing={3.5} sx={{ display: { xs: "none", lg: "flex" }, mx: "auto" }}>
     {NAV_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} aria-current={link.href === activeHref ? "page" : undefined} sx={navLinkSx(link.href === activeHref)}>{t(NAV_LABEL_KEYS[link.href])}</Box>)}
-    {SHOP_URL ? <Box component="a" href={SHOP_URL} sx={navLinkSx(false)}>{t("shop")}</Box> : null}
   </Stack>
 }
 
@@ -69,7 +67,6 @@ export default function Header() {
       <Box id="mobile-navigation" component="nav" aria-label={act("mobileNav")} sx={{ p: 3.5, pt: 4, pb: "max(28px, env(safe-area-inset-bottom))" }}>
         <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 6 }}><Logo /><IconButton aria-label={act("closeMenu")} onClick={() => setMenuOpen(false)}><Icon name="close" /></IconButton></Stack>
         {NAV_LINKS.map((link, index) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ ...mobileLinkSx, animation: `vetud-enter .5s ${motion} ${index * .06}s both` }}>{t(NAV_LABEL_KEYS[link.href])}<Icon name="arrowUpRight" sx={{ fontSize: 20 }} /></Box>)}
-        {SHOP_URL ? <Box component="a" href={SHOP_URL} sx={mobileLinkSx}>{t("shop")}<Icon name="arrowUpRight" sx={{ fontSize: 20 }} /></Box> : null}
         <Box component={LocalizedNextLink} href="/account" onClick={() => setMenuOpen(false)} sx={{ display: "flex", alignItems: "center", gap: 1.5, mt: 4, color: "brand.navy", textDecoration: "none", fontWeight: 700 }}>
           <Icon name="account" sx={{ fontSize: 20 }} />
           {ct(customer ? act("yourAccount") : act("signInCreate"))}

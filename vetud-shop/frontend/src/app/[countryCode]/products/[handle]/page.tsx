@@ -19,11 +19,9 @@ import { ArtStage } from "@/components/product/ProductCard"
 import ProductGrid from "@/components/product/ProductGrid"
 import ProductGallery from "@/components/product/ProductGallery"
 import ProductDossier from "@/components/product/ProductDossier"
-import ProductLearnMore from "@/components/product/ProductLearnMore"
-import { EDUCATION_CUTOVER } from "@/lib/config"
 import DualChamberExplainer from "@/components/product/DualChamberExplainer"
 import { ProductSelectionProvider } from "@/components/product/ProductSelection"
-import { getProductGuides, getProductOverview } from "@/content/product-overview"
+import { getProductOverview } from "@/content/product-overview"
 import PurchasePanel, { type PurchaseAddOn } from "@/components/product/PurchasePanel"
 import { productMetadata, productStructuredData } from "@/lib/storefront-seo"
 import { preparationAddOnsAllowed } from "@/lib/product-format-policy"
@@ -161,7 +159,6 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
 
   const images = getProductImages(product)
   const jsonLd = await productStructuredData(product, countryCode)
-  const guides = getProductGuides(product)
 
   return (
     <>
@@ -236,9 +233,6 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
           <ProductGrid products={related} />
         </Section>
       ) : null}
-
-      {/* Supplies without a library guide (water, syringes) don't need a reading list. */}
-      {!EDUCATION_CUTOVER && (guides.length || meta.artKind !== "supply") ? <ProductLearnMore title={ct(product.title)} guides={guides} /> : null}
     </>
   )
 }

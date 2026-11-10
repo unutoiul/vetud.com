@@ -1,11 +1,7 @@
-import { EDUCATION_CUTOVER, EDUCATION_URL } from "@/lib/config"
+import { educationHref } from "@/lib/config"
 
-/** Message keys (Common namespace) for every navigation link, shared by the header and footer. */
+/** Message keys (Common namespace) for the shop's own pages, shared by the header and footer. */
 export const NAV_LABEL_KEYS = {
-  "/learn": "learn",
-  "/news": "news",
-  "/videos": "videos",
-  "/community": "community",
   "/shop": "shop",
   "/standards": "standards",
   "/documentation": "documentation",
@@ -17,27 +13,20 @@ export type NavHref = keyof typeof NAV_LABEL_KEYS
 
 type NavLink = { label: string; href: NavHref }
 
-/** The shop as its own site. Education is one link out to the other site, added by the header and footer. */
-const SHOP_LINKS: NavLink[] = [
-  { label: "Shop", href: "/shop" },
-  { label: "Our standards", href: "/standards" },
-  { label: "Lab documentation", href: "/documentation" },
-  { label: "Tracking", href: "/tracking" },
-  { label: "Contact", href: "/contact" },
-]
+/** Links out to the education site (www.vetud.com). `key` is the label's message key (Common namespace). */
+export const EDUCATION_LINKS = [
+  { key: "learn", label: "Education", href: educationHref("/learn") },
+  { key: "news", label: "News", href: educationHref("/news") },
+  { key: "videos", label: "Videos", href: educationHref("/videos") },
+  { key: "community", label: "Community", href: educationHref("/community") },
+] as const
 
-/** Learning comes first; the shop is one section of the site. */
-const COMBINED_LINKS: NavLink[] = [
-  { label: "Education", href: "/learn" },
-  { label: "News", href: "/news" },
-  { label: "Videos", href: "/videos" },
-  { label: "Community", href: "/community" },
+/** The shop comes first in the menu, followed by the EDUCATION_LINKS. */
+export const NAV_LINKS: NavLink[] = [
   { label: "Shop", href: "/shop" },
 ]
 
-export const NAV_LINKS = EDUCATION_CUTOVER ? SHOP_LINKS : COMBINED_LINKS
-
-export const SECONDARY_LINKS: NavLink[] = EDUCATION_CUTOVER ? [] : [
+export const SECONDARY_LINKS: NavLink[] = [
   { label: "Our standards", href: "/standards" },
   { label: "Lab documentation", href: "/documentation" },
   { label: "Tracking", href: "/tracking" },
@@ -45,14 +34,12 @@ export const SECONDARY_LINKS: NavLink[] = EDUCATION_CUTOVER ? [] : [
 ]
 
 export const FOOTER_LINKS = {
-  explore: EDUCATION_CUTOVER ? [
-    ...SHOP_LINKS.slice(0, 4),
-    { label: "Education", href: EDUCATION_URL },
-  ] : [
-    ...NAV_LINKS,
+  explore: [
+    { label: "Shop", href: "/shop" },
     { label: "Our standards", href: "/standards" },
     { label: "Lab documentation", href: "/documentation" },
     { label: "Order tracking", href: "/tracking" },
+    ...EDUCATION_LINKS.map(({ label, href }) => ({ label, href })),
   ],
   information: [
     { label: "My orders & tracking", href: "/account/orders" },

@@ -1,6 +1,6 @@
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import Box from "@mui/material/Box"
-import { STATUSES, type StatusId } from "@/content/learn/categories"
+import { STATUSES, type StatusId } from "@/content/research/categories"
 
 const TONES = {
   good: { color: "#235640", bg: "#e5f1ea", dot: "#2f7a55" },

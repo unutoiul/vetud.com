@@ -43,8 +43,6 @@ const ACTION_LABELS: Record<string, keyof typeof messages.Actions> = {
   "Home": "home",
   "Education": "learn",
   "Weight management guides": "weightGuides",
-  "Shop": "shop",
-  "In the shop": "shop",
   "Try again": "retry",
   "Retry": "retry",
   "Checking": "checking",

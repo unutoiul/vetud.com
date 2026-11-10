@@ -91,7 +91,7 @@ export async function productStructuredData(product: HttpTypes.StoreProduct, cou
 export const websiteStructuredData = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "WebSite", "@id": `${BASE_URL}/#website`, url: BASE_URL, name: "VETUD", alternateName: "VETUD Peptides Education", inLanguage: "en", publisher: { "@id": `${BASE_URL}/#organization` } },
+    { "@type": "WebSite", "@id": `${BASE_URL}/#website`, url: BASE_URL, name: "VETUD", inLanguage: "en", publisher: { "@id": `${BASE_URL}/#organization` } },
     { "@type": "Organization", "@id": `${BASE_URL}/#organization`, name: "VETUD", url: BASE_URL, email: SITE.email, logo: `${BASE_URL}/brand/vetud-logo.svg` },
   ],
 }

@@ -17,9 +17,7 @@ import { AppLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
-import { EDUCATION_CUTOVER } from "@/lib/config"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
-import { getLotReportCounts } from "@/lib/medusa/forum"
 import { listProducts } from "@/lib/medusa/products"
 import { readProductMeta } from "@/lib/product"
 
@@ -41,8 +39,6 @@ export default async function DocumentationPage() {
       return meta.lots.map((lot) => ({ product, meta, lot }))
     })
     .sort((a, b) => (b.lot.date ?? "").localeCompare(a.lot.date ?? "") || a.lot.lot.localeCompare(b.lot.lot))
-  // Community posts that name each lot. The register still renders if the community is unreachable.
-  const reports: Record<string, number> = EDUCATION_CUTOVER ? {} : await getLotReportCounts(rows.map(({ lot }) => lot.lot)).catch(() => ({}))
 
   return (
     <>
@@ -70,7 +66,6 @@ export default async function DocumentationPage() {
                 <TableCell scope="col">{ct("Product")}</TableCell>
                 <TableCell scope="col">{ct("Batch date")}</TableCell>
                 <TableCell scope="col">{ct("Purity")}</TableCell>
-                {EDUCATION_CUTOVER ? null : <TableCell scope="col">{ct("Member reports")}</TableCell>}
                 <TableCell scope="col" align="right">{ct("Certificate")}</TableCell>
               </TableRow>
             </TableHead>
@@ -88,9 +83,6 @@ export default async function DocumentationPage() {
                   </TableCell>
                   <TableCell>{ct(lot.date ?? "—")}</TableCell>
                   <TableCell sx={{ fontVariantNumeric: "tabular-nums" }}>{ct(lot.purity ?? "—")}</TableCell>
-                  {EDUCATION_CUTOVER ? null : <TableCell sx={{ whiteSpace: "nowrap" }}>
-                    {reports[lot.lot] ? <AppLink href={`/community?lot=${encodeURIComponent(lot.lot)}`}>{act("reports", { count: reports[lot.lot] })}</AppLink> : "—"}
-                  </TableCell>}
                   <TableCell align="right">
                     {lot.coaUrl ? (
                       <Box component="a" href={lot.coaUrl} target="_blank" rel="noopener" sx={{ display: "inline-flex", gap: 0.75, alignItems: "center", color: "secondary.main", fontWeight: 600 }}>

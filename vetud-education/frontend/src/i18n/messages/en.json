@@ -1,6 +1,5 @@
 {
   "Common": {
-    "shop": "Shop",
     "learn": "Guides",
     "news": "News",
     "videos": "Videos",
@@ -136,7 +135,6 @@
     "researchSafety": "Research and safety guide",
     "home": "Home",
     "weightGuides": "Weight management guides",
-    "shop": "Shop",
     "retry": "Try again",
     "checking": "Checking",
     "posting": "Posting…",

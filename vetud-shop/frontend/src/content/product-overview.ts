@@ -1,8 +1,7 @@
-import { learningHref } from "@/lib/config"
+import { educationHref } from "@/lib/config"
 import type { HttpTypes } from "@medusajs/types"
-import { findDose } from "@/lib/community/format"
-import type { Evidence, StatusId } from "./learn/categories"
-import { getPeptide, type PeptideProfile, type Source, type StudyResult } from "./learn/peptides"
+import type { Evidence, StatusId } from "./research/categories"
+import { getPeptide, type PeptideProfile, type Source, type StudyResult } from "./research/peptides"
 
 /**
  * The plain-language "Research overview" of a product page, built from the learning library's
@@ -85,7 +84,10 @@ const OWN_OVERVIEWS: Record<string, Pick<ProductOverview, "summary" | "sections"
   },
 }
 
-const noDose = (text: string) => !findDose(text) && !DOSE_WORDS.test(text)
+/** A dose-like phrase ("250 mcg"). */
+const DOSE_PATTERN = /(?<![\p{L}\p{N}])\d+(?:[.,]\d+)?\s*(?:mg|mgs|mcg|µg|μg|ug|iu|i\.u\.|units?|ml|cc|clicks?)(?![\p{L}\p{N}])/iu
+
+const noDose = (text: string) => !DOSE_PATTERN.test(text) && !DOSE_WORDS.test(text)
 
 function learnSlugs(product: CatalogProduct) {
   const topics = product.metadata?.learn_peptides
@@ -141,7 +143,7 @@ export function getProductOverview(product: CatalogProduct): ProductOverview | u
       results: [],
       unknowns: ["No published study has tested this combination. What is known comes from studies of each compound on its own."],
       risks: [],
-      components: guides.map((peptide) => ({ name: peptide.name, text: peptide.oneLiner, href: learningHref(`/learn/${peptide.slug}`), evidence: peptide.evidence })),
+      components: guides.map((peptide) => ({ name: peptide.name, text: peptide.oneLiner, href: educationHref(`/learn/${peptide.slug}`), evidence: peptide.evidence })),
       sources: guides.flatMap((peptide) => peptide.sources.slice(0, 1)).slice(0, 3),
       guides,
     }

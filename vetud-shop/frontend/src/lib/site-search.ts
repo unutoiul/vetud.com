@@ -1,13 +1,9 @@
 /**
- * The header search's index of the learning library and the news, served once from
- * /api/search-index and searched in the browser. Products are searched with Meilisearch.
+ * The header search's product index, served once from /api/search-index and searched in the
+ * browser in the reader's language. Meilisearch searches the original product text.
  */
-/** `about` is searched but not shown, so "GLP-1" finds Semaglutide. */
-export type GuideEntry = { slug: string; name: string; aka?: string; line: string; category: string; about: string }
-/** `date` is ISO so the reader's locale formats it; entries come newest first. */
-export type ArticleEntry = { slug: string; title: string; dek: string; kind: string; date: string; peptides: string[] }
 export type ProductEntry = { id: string; title: string; handle: string; description: string }
-export type SearchIndex = { guides: GuideEntry[]; articles: ArticleEntry[]; products?: ProductEntry[] }
+export type SearchIndex = { products?: ProductEntry[] }
 
 /** The text to search: the name or title, then the closer fields, then the background text. */
 export type SearchFields = [main: string, near: string[], far?: string[]]

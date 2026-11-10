@@ -1,12 +1,11 @@
 import { getContentTranslator } from "@/i18n/server-content"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
-import Link from "@mui/material/Link"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { cacheLife } from "next/cache"
 import { getTranslations } from "next-intl/server"
-import { SHOP_URL, SITE } from "@/lib/config"
+import { SITE } from "@/lib/config"
 import { gutter } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
@@ -54,7 +53,6 @@ export default async function Footer() {
             <LinkColumn title={t("explore")}>
               {NAV_LINKS.map((link) => <AppLink key={link.href} href={link.href} underline="hover" sx={linkSx}>{common(NAV_LABEL_KEYS[link.href])}</AppLink>)}
               <AppLink href="/contact" underline="hover" sx={linkSx}>{t("contact")}</AppLink>
-              {SHOP_URL ? <Link href={SHOP_URL} underline="hover" sx={linkSx}>{common("shop")}</Link> : null}
             </LinkColumn>
           </Grid>
           <Grid size={{ xs: 6, md: 3 }}>

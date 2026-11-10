@@ -1,18 +1,14 @@
 import type { MetadataRoute } from "next"
 import { cacheLife } from "next/cache"
 import { LEGAL_DOCUMENTS } from "@/content/legal"
-import { ARTICLES } from "@/content/learn/articles"
-import { PEPTIDES } from "@/content/learn/peptides"
-import { getLearnIllustration } from "@/content/learn/illustrations"
-import { BASE_URL, EDUCATION_CUTOVER } from "@/lib/config"
-import { articleLanguages, articleUrl } from "@/lib/article-seo"
-import { listForumThreadIds } from "@/lib/medusa/forum"
+import { BASE_URL } from "@/lib/config"
 import { listProductHandles } from "@/lib/medusa/products"
 import { listCountryCodes } from "@/lib/medusa/regions"
 import { storefrontLanguages } from "@/lib/storefront-seo"
 
 const STATIC_PATHS = ["", "/shop", "/dual-chamber-pen", "/tracking", "/standards", "/documentation", "/contact"]
 
+/** The shop's pages. Learning pages, news, videos and the community are listed by the education site. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   "use cache"
   cacheLife("hours")
@@ -31,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...handles.map((handle) => `/products/${handle}`),
   ]
 
-  const storefront = countries.flatMap((country) =>
+  return countries.flatMap((country) =>
     paths.map((path) => ({
       url: country === "us" && path === "" ? BASE_URL : `${BASE_URL}/${country}${path}`,
       changeFrequency: path.startsWith("/products") ? ("daily" as const) : ("weekly" as const),
@@ -40,32 +36,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         : path.startsWith("/products") || path === "/shop" ? { alternates: { languages: storefrontLanguages(path) } } : {}),
     }))
   )
-
-  // Once the sites are split, learning pages are listed by the education site instead.
-  if (EDUCATION_CUTOVER) return storefront
-
-  const editorial = [
-    ...PEPTIDES.map(peptide => ({ path: `/learn/${peptide.slug}`, slug: peptide.slug })),
-    ...ARTICLES.map(article => ({ path: `/news/${article.slug}`, slug: article.slug })),
-  ].flatMap(({ path, slug }) => countries.map(country => {
-    const image = getLearnIllustration(slug)
-    return { url: articleUrl(path, country), changeFrequency: "monthly" as const, priority: 0.7,
-      alternates: { languages: articleLanguages(path) }, ...(image ? { images: [`${BASE_URL}${image.src}`] } : {}),
-    }
-  }))
-  const collections = ["/learn", "/news", "/videos", "/community", "/community/guidelines", "/community/apply"].flatMap(path => countries.map(country => ({
-    url: articleUrl(path, country), changeFrequency: "weekly" as const, priority: 0.8,
-    alternates: { languages: articleLanguages(path) },
-  })))
-  let threads: string[] = []
-  try {
-    threads = await listForumThreadIds(500)
-  } catch {
-    threads = []
-  }
-  const community = threads.flatMap(id => countries.map(country => ({
-    url: articleUrl(`/community/${id}`, country), changeFrequency: "weekly" as const, priority: 0.5,
-    alternates: { languages: articleLanguages(`/community/${id}`) },
-  })))
-  return [...storefront, ...collections, ...editorial, ...community]
 }

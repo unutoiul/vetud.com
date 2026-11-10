@@ -6,7 +6,7 @@ import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
 import type { HttpTypes } from "@medusajs/types"
-import Icon, { SearchIcon } from "@/components/brand/Icon"
+import { SearchIcon } from "@/components/brand/Icon"
 import Autocomplete from "@mui/material/Autocomplete"
 import Box from "@mui/material/Box"
 import CircularProgress from "@mui/material/CircularProgress"
@@ -16,24 +16,19 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState, type ReactNode, type Ref } from "react"
-import { EDUCATION_CUTOVER } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { cheapestPrice, readProductMeta } from "@/lib/product"
 import { useMoney } from "@/lib/money"
 import { shortAvailability } from "@/lib/product-formats"
 import { getProductThumbnail } from "@/lib/product-images"
-import { loadSearchIndex, rank, type ArticleEntry, type GuideEntry } from "@/lib/site-search"
-import { formatArticleDate } from "@/content/learn/articles"
+import { loadSearchIndex, rank } from "@/lib/site-search"
 import { useStore } from "../store/StoreProvider"
 import ProductThumb from "../product/ProductThumb"
 
 const SEARCH_FIELDS = "id,title,handle,thumbnail,+metadata,*categories,*options,*variants.options,*variants.calculated_price"
 
-/** One result; the groups always appear in this order. */
-type Result =
-  | { group: "Products"; key: string; label: string; href: string; product: HttpTypes.StoreProduct }
-  | { group: "Peptide guides"; key: string; label: string; href: string; guide: GuideEntry }
-  | { group: "News & articles"; key: string; label: string; href: string; article: ArticleEntry }
+/** One result. */
+type Result = { group: "Products"; key: string; label: string; href: string; product: HttpTypes.StoreProduct }
 
 type SearchBoxProps = {
   autoFocus?: boolean
@@ -49,7 +44,7 @@ function InlineResults({ open, children, className, role }: PopperProps) {
   return open ? <Box className={className} role={role} sx={{ width: "100%", mt: 1.5 }}>{children as ReactNode}</Box> : null
 }
 
-/** Searches products (Meilisearch), the peptide guides and the news, grouped by kind. */
+/** Searches products with Meilisearch, plus their titles and descriptions in the reader's language. */
 export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inline }: SearchBoxProps) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
@@ -80,7 +75,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
       const [searchProducts, index] = await Promise.all([
         sdk.client.fetch<{ products: HttpTypes.StoreProduct[] }>("/store/meilisearch/products", { query: { query, limit: 5, region_id: region.id, fields: SEARCH_FIELDS } })
           .then((result) => result.products).catch(() => []),
-        loadSearchIndex().catch(() => ({ guides: [], articles: [], products: [] })),
+        loadSearchIndex().catch(() => ({ products: [] })),
       ])
       if (requestId !== latest.current) return
       const translatedMatches = rank(index.products ?? [], query, product => [ct(product.title), [ct(product.description)], [product.title, product.description]], 5)
@@ -88,13 +83,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
       const additionalProducts = missingIds.length ? await sdk.store.product.list({ id: missingIds, region_id: region.id, fields: SEARCH_FIELDS, limit: 5 }).then(result => result.products).catch(() => []) : []
       if (requestId !== latest.current) return
       const products = [...searchProducts, ...additionalProducts].slice(0, 5)
-      const guides = EDUCATION_CUTOVER ? [] : rank(index.guides, query, (guide) => [ct(guide.name), [guide.aka ?? "", guide.slug], [ct(guide.category), ct(guide.line), ct(guide.about), guide.name, guide.line]], 4)
-      const articles = EDUCATION_CUTOVER ? [] : rank(index.articles, query, (article) => [ct(article.title), [ct(article.kind), ...article.peptides], [ct(article.dek), article.title, article.dek]], 4)
-      setOptions([
-        ...products.map((product): Result => ({ group: "Products", key: `p-${product.id}`, label: product.title, href: `/products/${product.handle}`, product })),
-        ...guides.map((guide): Result => ({ group: "Peptide guides", key: `g-${guide.slug}`, label: guide.name, href: `/learn/${guide.slug}`, guide })),
-        ...articles.map((article): Result => ({ group: "News & articles", key: `a-${article.slug}`, label: article.title, href: `/news/${article.slug}`, article })),
-      ])
+      setOptions(products.map((product): Result => ({ group: "Products", key: `p-${product.id}`, label: product.title, href: `/products/${product.handle}`, product })))
       setLoading(false)
     }, 220)
   }
@@ -141,9 +130,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
         const { key, ...rest } = props as typeof props & { key: string }
         return (
           <Box component="li" key={key} {...rest} sx={{ gap: 1.5, alignItems: "center !important", py: "8px !important", minHeight: 60 }}>
-            {option.group === "Products" ? <ProductRow product={option.product} />
-              : option.group === "Peptide guides" ? <ContentRow icon="molecule" title={ct(option.guide.name)} detail={option.guide.aka ? `${option.guide.aka} · ${ct(option.guide.line)}` : ct(option.guide.line)} />
-              : <ContentRow icon="news" title={ct(option.article.title)} detail={`${ct(option.article.kind)} · ${formatArticleDate(option.article.date, ct.locale)}`} />}
+            <ProductRow product={option.product} />
           </Box>
         )
       }}
@@ -160,7 +147,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
             ...params.slotProps,
             htmlInput: {
               ...params.slotProps.htmlInput,
-              "aria-label": ct("Search products, peptide guides and news"),
+              "aria-label": ct("Search products"),
               name: "search",
               type: "search",
               autoComplete: "off",
@@ -187,7 +174,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
   )
 }
 
-/** The leading picture of a result: the product's vial photo, or the icon of a guide or article. */
+/** The leading picture of a result: the product's vial photo. */
 const MEDIA = { width: 48, height: 48, flexShrink: 0, borderRadius: "8px", overflow: "hidden" } as const
 
 function ProductRow({ product }: { product: HttpTypes.StoreProduct }) {
@@ -210,18 +197,5 @@ function ProductRow({ product }: { product: HttpTypes.StoreProduct }) {
         <Typography component="div" sx={{ fontSize: 13.5, lineHeight: 1.4, fontWeight: 600, color: "text.primary", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>{ct(money(price.amount, price.currencyCode))}</Typography>
       </Box>
     ) : null}
-  </>
-}
-
-function ContentRow({ icon, title, detail }: { icon: "molecule" | "news"; title: string; detail: string }) {
-  const ct = useContentTranslator()
-  return <>
-    <Box aria-hidden sx={{ ...MEDIA, display: "grid", placeItems: "center", bgcolor: "brand.mintWash", color: "brand.blue" }}>
-      <Icon name={icon} sx={{ fontSize: 22 }} />
-    </Box>
-    <Box sx={{ flex: 1, minWidth: 0 }}>
-      <Typography sx={{ fontWeight: 600, fontSize: 14, lineHeight: 1.4 }}>{ct(title)}</Typography>
-      <Typography sx={{ color: "text.secondary", fontSize: 12, lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{ct(detail)}</Typography>
-    </Box>
   </>
 }

@@ -1,33 +1,15 @@
-import { getContentTranslator } from "@/i18n/server-content"
-import { getTranslations } from "next-intl/server"
-import Box from "@mui/material/Box"
 import type { Metadata } from "next"
-import Typography from "@mui/material/Typography"
-import Icon from "@/components/brand/Icon"
-import { ButtonLink } from "@/components/common/links"
-import Section from "@/components/common/Section"
-import SectionHeading from "@/components/common/SectionHeading"
-import CollectionCarousel from "@/components/home/CollectionCarousel"
-import LearnHero from "@/components/home/LearnHero"
 import ShopHome from "@/components/home/ShopHome"
-import ResearchStandard from "@/components/home/ResearchStandard"
-import ArticleCard from "@/components/learn/ArticleCard"
-import VideoGallery from "@/components/learn/VideoGallery"
-import WeightLossChart from "@/components/learn/WeightLossChart"
-import { ARTICLES } from "@/content/learn/articles"
-import { getVideos } from "@/content/learn/videos"
-import { BASE_URL, EDUCATION_CUTOVER, SITE } from "@/lib/config"
-import { storefrontLanguages, storefrontMetadata, localizedWebsiteStructuredData } from "@/lib/storefront-seo"
-import { getCurrentRegion } from "@/lib/medusa/current-region"
+import { BASE_URL } from "@/lib/config"
+import { storefrontLanguages, storefrontMetadata } from "@/lib/storefront-seo"
 import { parseStoreSegment } from "@/lib/store-segment"
-import { listCatalogProducts } from "@/lib/medusa/products"
 
 export async function generateMetadata({ params }: PageProps<"/[countryCode]">): Promise<Metadata> {
   // The canonical URL is the country's, whatever currency the page was rendered in.
   const countryCode = parseStoreSegment((await params).countryCode).country
   const metadata = await storefrontMetadata({
-    title: EDUCATION_CUTOVER ? "Research Peptides & Laboratory Materials | VETUD" : "Peptides Explained: Research Guides & Laboratory Materials | VETUD",
-    description: EDUCATION_CUTOVER ? "Browse VETUD research peptides and laboratory materials, with lot documentation, for laboratory research use only." : "Explore peptide research, Retatrutide, Tirzepatide and Semaglutide guides, evidence and educational videos. Browse VETUD laboratory research materials.",
+    title: "Research Peptides & Laboratory Materials | VETUD",
+    description: "Browse VETUD research peptides and laboratory materials, with lot documentation, for laboratory research use only.",
     country: countryCode, path: "",
   })
   const url = countryCode === "us" ? BASE_URL : `${BASE_URL}/${countryCode}`
@@ -37,48 +19,6 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]">):
   }
 }
 
-export default async function HomePage() {
-  if (EDUCATION_CUTOVER) return <ShopHome />
-  const ct = await getContentTranslator()
-  const act = await getTranslations("Actions")
-  const { region } = await getCurrentRegion()
-  const products = await listCatalogProducts(region.id)
-  return <>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localizedWebsiteStructuredData(ct.locale)).replace(/</g, "\\u003c") }} />
-    <LearnHero />
-
-    <Section tone="white" sx={{ py: { xs: 6, md: 9 } }}>
-      <SectionHeading eyebrow={ct("Results")} title={ct("What the weight-loss trials found.")} description={ct("Average weight lost in the main published trials of today’s leading medicines, each compared with a placebo.")} action={<ButtonLink href="/learn#weight" variant="outlined" endIcon={<Icon name="arrowRight" />}>{act("weightGuides")}</ButtonLink>} />
-      <WeightLossChart />
-    </Section>
-
-    <Section tone="paper" sx={{ py: { xs: 6, md: 9 } }}>
-      <SectionHeading eyebrow={ct("News & articles")} title={ct("New research, explained.")} description={ct("Recent studies and decisions, written so anyone can follow them, with every source linked.")} action={<ButtonLink href="/news" variant="outlined" endIcon={<Icon name="arrowRight" />}>{act("allArticles")}</ButtonLink>} />
-      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" }, gap: { xs: 4, md: 3.5 } }}>
-        {ARTICLES.slice(1, 4).map((article) => <ArticleCard key={article.slug} article={article} />)}
-      </Box>
-    </Section>
-
-    <Section tone="white" sx={{ py: { xs: 6, md: 9 } }}>
-      <SectionHeading eyebrow={ct("Videos")} title={ct("Doctors explain.")} description={ct("Hand-picked videos, mostly from doctors, including some skeptical ones.")} action={<ButtonLink href="/videos" variant="outlined" endIcon={<Icon name="arrowRight" />}>{act("allVideos")}</ButtonLink>} />
-      <VideoGallery videos={getVideos(["o8YMLTfNYtc", "QGIFdakceHM", "xpdLs-_nl4g"])} />
-    </Section>
-
-    {/* The shop is its own section, kept apart from the learning content above. */}
-    <Section tone="wash" id="shop" aria-labelledby="home-shop-title" sx={{ py: { xs: 6, md: 9 }, borderTop: "1px solid", borderColor: "divider" }}>
-      <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", alignItems: { md: "flex-end" }, gap: 3, mb: { xs: 3, md: 4 } }}>
-        <Box>
-          <Typography variant="eyebrow" component="p" sx={{ color: "brand.blue" }}>{act("shop")}</Typography>
-          <Typography id="home-shop-title" variant="h2" component="h2" sx={{ mt: 1.5, fontSize: { xs: 34, md: 44 } }}>{ct("The VETUD Peptide Series.")}</Typography>
-          <Typography sx={{ mt: 1.5, color: "text.secondary", maxWidth: 620 }}>{ct("Research materials with lot documentation, for laboratory research use only.")}</Typography>
-        </Box>
-        <ButtonLink href="/shop" variant="contained" endIcon={<Icon name="arrowUpRight" />} sx={{ flexShrink: 0 }}>{act("shopCatalog")}</ButtonLink>
-      </Box>
-      {/* The carousel peeks past its edges by design; clip it to the section (clip, unlike hidden, adds no scroll container). */}
-      {products.length ? <Box sx={{ overflowX: "clip" }}><CollectionCarousel products={products} /></Box> : <Typography sx={{ color: "text.secondary" }}>{ct("Our catalog is being updated. Contact us for availability.")}</Typography>}
-      <Typography sx={{ mt: 3, fontSize: 12.5, color: "text.secondary" }}>{ct(SITE.catalogNotice)}</Typography>
-    </Section>
-
-    <ResearchStandard />
-  </>
+export default function HomePage() {
+  return <ShopHome />
 }

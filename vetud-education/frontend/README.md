@@ -23,9 +23,9 @@ Check changes with `npm run lint`, `npm run typecheck` and `npm run build` (the 
 - The site doesn't depend on the visitor's country. Old country addresses (`/gb/learn`, `/de/shop`) are redirected by the rules in `src/i18n/old-addresses.ts`.
 - Internal links get the language from `components/common/links.tsx`.
 
-## The link to the shop
+## The shop
 
-The shop is a separate site, set by `NEXT_PUBLIC_SHOP_URL`. There is one Shop link in the menu and footer, and each guide can link once to its product. `src/content/learn/guide-product-map.json` holds which product that is; refresh it with `scripts/generate-guide-product-map.mjs` when the catalog changes.
+The shop is a separate site, and this site doesn't link to it: no Shop menu item and no product links in guides. `NEXT_PUBLIC_SHOP_URL` is still used for two things: the shop's name in the legal pages, and redirecting old vetud.com shop addresses (orders, product images) to the shop.
 
 ## Before launch
 

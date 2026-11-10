@@ -10,7 +10,7 @@ import { gutter } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { AppLink, ButtonLink } from "../common/links"
-import { FOOTER_LINKS, NAV_LABEL_KEYS } from "./nav"
+import { EDUCATION_LINKS, FOOTER_LINKS, NAV_LABEL_KEYS } from "./nav"
 import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
 
 async function CopyrightYear() {
@@ -23,7 +23,7 @@ async function LinkColumn({ title, links }: { title: string; links: { label: str
   const ct = await getContentTranslator()
   const common = await getTranslations("Common")
   const t = await getTranslations("Footer")
-  const labels: Record<string, string> = { ...Object.fromEntries(Object.entries(NAV_LABEL_KEYS).map(([href, key]) => [href, common(key)])), "/account/orders": t("orders"), "/contact": t("contact"), "/legal/shipping": t("shipping"), "/legal/terms": t("terms"), "/legal/privacy": t("privacy"), "/legal/research-use": t("research"), "/legal/returns": t("returns"), "/legal/refunds": t("refunds"), "/legal/chargebacks": t("chargebacks") }
+  const labels: Record<string, string> = { ...Object.fromEntries(Object.entries(NAV_LABEL_KEYS).map(([href, key]) => [href, common(key)])), ...Object.fromEntries(EDUCATION_LINKS.map((link) => [link.href, common(link.key)])), "/account/orders": t("orders"), "/contact": t("contact"), "/legal/shipping": t("shipping"), "/legal/terms": t("terms"), "/legal/privacy": t("privacy"), "/legal/research-use": t("research"), "/legal/returns": t("returns"), "/legal/refunds": t("refunds"), "/legal/chargebacks": t("chargebacks") }
   return (
     <Box>
       <Typography variant="eyebrow" component="h2" sx={{ color: "brand.onNavy", mb: 2.5, fontWeight: 650, letterSpacing: ".03em" }}>

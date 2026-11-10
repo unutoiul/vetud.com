@@ -1,7 +1,7 @@
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import { EVIDENCE_STEPS, type Evidence } from "@/content/learn/categories"
+import { EVIDENCE_STEPS, type Evidence } from "@/content/research/categories"
 
 /**
  * "How strong is the evidence?": the five steps from cells to an approved medicine, with the

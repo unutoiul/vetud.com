@@ -1,6 +1,5 @@
 {
   "Common": {
-    "shop": "Collection",
     "learn": "Guides",
     "news": "Actualités",
     "videos": "Vidéos",
@@ -136,7 +135,6 @@
     "researchSafety": "Guide de recherche et de sécurité",
     "home": "Accueil",
     "weightGuides": "Guides sur la gestion du poids",
-    "shop": "Collection",
     "retry": "Réessayer",
     "checking": "Compte courant",
     "posting": "Publication…",
