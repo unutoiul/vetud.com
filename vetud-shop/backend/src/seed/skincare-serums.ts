@@ -1,10 +1,11 @@
+import { PRODUCT_IMAGE_ORIGIN } from "../lib/product-image-origin"
 /**
  * Retail skincare serums (owner request 2026-11-09): finished cosmetics for the skin, sold in one
  * size and kept out of the storewide sale (`sale_excluded`). Photos live in the storefront at
  * /images/products/<handle>.webp. Prices are retail USD; other currencies are converted from it.
  */
 export const SKINCARE_SERUMS_REVISION = "skincare-serums-2026-11-09-v1"
-export const SKINCARE_IMAGE_ORIGIN = process.env.DUAL_CHAMBER_IMAGE_ORIGIN || "https://www.vetud.com"
+export const SKINCARE_IMAGE_ORIGIN = PRODUCT_IMAGE_ORIGIN
 
 export type SkincareSerum = {
   handle: string

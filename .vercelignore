@@ -3,7 +3,8 @@
 .agents
 assets
 output
-apps/backend
+vetud-shop/backend
+vetud-education
 **/node_modules
 **/.next
 **/.vercel

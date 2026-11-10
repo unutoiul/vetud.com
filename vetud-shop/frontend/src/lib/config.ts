@@ -10,6 +10,16 @@ export const BASE_URL = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8
   ""
 )
 
+/**
+ * The education site, once the two sites are split. Until NEXT_PUBLIC_EDUCATION_CUTOVER is "true",
+ * this site keeps serving the learning pages itself and nothing changes for visitors.
+ */
+export const EDUCATION_URL = (process.env.NEXT_PUBLIC_EDUCATION_URL || "").replace(/\/$/, "")
+export const EDUCATION_CUTOVER = process.env.NEXT_PUBLIC_EDUCATION_CUTOVER === "true" && Boolean(EDUCATION_URL)
+
+/** Where a learning page lives: on this site before the split, on the education site after it. */
+export const learningHref = (path: string) => (EDUCATION_CUTOVER ? `${EDUCATION_URL}${path}` : path)
+
 export const DEFAULT_COUNTRY = (process.env.NEXT_PUBLIC_DEFAULT_COUNTRY || "us").toLowerCase()
 
 /**

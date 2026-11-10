@@ -9,13 +9,14 @@ import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import CollectionCarousel from "@/components/home/CollectionCarousel"
 import LearnHero from "@/components/home/LearnHero"
+import ShopHome from "@/components/home/ShopHome"
 import ResearchStandard from "@/components/home/ResearchStandard"
 import ArticleCard from "@/components/learn/ArticleCard"
 import VideoGallery from "@/components/learn/VideoGallery"
 import WeightLossChart from "@/components/learn/WeightLossChart"
 import { ARTICLES } from "@/content/learn/articles"
 import { getVideos } from "@/content/learn/videos"
-import { BASE_URL, SITE } from "@/lib/config"
+import { BASE_URL, EDUCATION_CUTOVER, SITE } from "@/lib/config"
 import { storefrontLanguages, storefrontMetadata, localizedWebsiteStructuredData } from "@/lib/storefront-seo"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { parseStoreSegment } from "@/lib/store-segment"
@@ -25,8 +26,8 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]">):
   // The canonical URL is the country's, whatever currency the page was rendered in.
   const countryCode = parseStoreSegment((await params).countryCode).country
   const metadata = await storefrontMetadata({
-    title: "Peptides Explained: Research Guides & Laboratory Materials | VETUD",
-    description: "Explore peptide research, Retatrutide, Tirzepatide and Semaglutide guides, evidence and educational videos. Browse VETUD laboratory research materials.",
+    title: EDUCATION_CUTOVER ? "Research Peptides & Laboratory Materials | VETUD" : "Peptides Explained: Research Guides & Laboratory Materials | VETUD",
+    description: EDUCATION_CUTOVER ? "Browse VETUD research peptides and laboratory materials, with lot documentation, for laboratory research use only." : "Explore peptide research, Retatrutide, Tirzepatide and Semaglutide guides, evidence and educational videos. Browse VETUD laboratory research materials.",
     country: countryCode, path: "",
   })
   const url = countryCode === "us" ? BASE_URL : `${BASE_URL}/${countryCode}`
@@ -37,6 +38,7 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]">):
 }
 
 export default async function HomePage() {
+  if (EDUCATION_CUTOVER) return <ShopHome />
   const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const { region } = await getCurrentRegion()

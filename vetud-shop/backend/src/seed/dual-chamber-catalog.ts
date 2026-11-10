@@ -1,3 +1,4 @@
+import { PRODUCT_IMAGE_ORIGIN } from "../lib/product-image-origin"
 /**
  * The dual-chamber catalog approved by the owner on 2026-11-04 (28 products; Decapeptide-12 added
  * 2026-11-09), each sold as a
@@ -7,7 +8,7 @@
 import { RESEARCH_WATER_SUBTITLE, reviewedResearchDescription } from "../lib/product-format-review"
 
 export const DUAL_CHAMBER_REVISION = "dual-chamber-2026-11-04-v1"
-export const DUAL_CHAMBER_IMAGE_ORIGIN = process.env.DUAL_CHAMBER_IMAGE_ORIGIN || "https://www.vetud.com"
+export const DUAL_CHAMBER_IMAGE_ORIGIN = PRODUCT_IMAGE_ORIGIN
 
 export const FORMATS = {
   // Called "Dual-chamber pen" until 2026-11-04; the reusable pen now comes in the Pen kit box.

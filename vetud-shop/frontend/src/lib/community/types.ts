@@ -1,4 +1,4 @@
-/** Shapes returned by the backend's /store/forum routes (see apps/backend/src/lib/forum/public.ts). */
+/** Shapes returned by the backend's /store/forum routes (see vetud-shop/backend/src/lib/forum/public.ts). */
 
 export type ThreadKind = "discussion" | "question"
 export type ModerationStatus = "published" | "pending" | "hidden" | "removed"

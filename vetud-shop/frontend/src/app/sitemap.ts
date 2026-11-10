@@ -4,7 +4,7 @@ import { LEGAL_DOCUMENTS } from "@/content/legal"
 import { ARTICLES } from "@/content/learn/articles"
 import { PEPTIDES } from "@/content/learn/peptides"
 import { getLearnIllustration } from "@/content/learn/illustrations"
-import { BASE_URL } from "@/lib/config"
+import { BASE_URL, EDUCATION_CUTOVER } from "@/lib/config"
 import { articleLanguages, articleUrl } from "@/lib/article-seo"
 import { listForumThreadIds } from "@/lib/medusa/forum"
 import { listProductHandles } from "@/lib/medusa/products"
@@ -40,6 +40,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         : path.startsWith("/products") || path === "/shop" ? { alternates: { languages: storefrontLanguages(path) } } : {}),
     }))
   )
+
+  // Once the sites are split, learning pages are listed by the education site instead.
+  if (EDUCATION_CUTOVER) return storefront
 
   const editorial = [
     ...PEPTIDES.map(peptide => ({ path: `/learn/${peptide.slug}`, slug: peptide.slug })),

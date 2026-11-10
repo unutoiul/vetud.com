@@ -2,6 +2,7 @@ import type { UpsertProductDTO } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { deleteProductVariantsWorkflow, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
+import { PRODUCT_IMAGE_ORIGIN } from "../lib/product-image-origin"
 import { isUnverifiedInjectionFormat, OPTIONAL_VIAL_ACCESSORIES_SCOPE, PRODUCT_FORMAT_REVIEW, RESEARCH_VIAL_CONTENTS, reviewedResearchDescription } from "../lib/product-format-review"
 
 type Variant = { id: string; title: string; options?: { value: string; option?: { title: string } }[] }
@@ -52,7 +53,7 @@ const planProductFormatReview = createStep("plan-product-format-review", async (
       format_review_basis: "Decapeptide-12 is presented as a topical-formulation research ingredient; pen and cartridge formats are excluded for this product only.",
       allowed_formats: [...new Set(retained.map(format).filter(Boolean))],
     }
-    const origin = "https://www.vetud.com"
+    const origin = PRODUCT_IMAGE_ORIGIN
     const urls = [`${origin}/images/products/${row.handle}-vial.webp`]
     products.push({ id: row.id, subtitle, description, metadata, thumbnail: urls[0], images: urls.map(url => ({ url })) })
     variants.push(...unsupported.map(variant => variant.id))

@@ -20,6 +20,7 @@ import ProductGrid from "@/components/product/ProductGrid"
 import ProductGallery from "@/components/product/ProductGallery"
 import ProductDossier from "@/components/product/ProductDossier"
 import ProductLearnMore from "@/components/product/ProductLearnMore"
+import { EDUCATION_CUTOVER } from "@/lib/config"
 import DualChamberExplainer from "@/components/product/DualChamberExplainer"
 import { ProductSelectionProvider } from "@/components/product/ProductSelection"
 import { getProductGuides, getProductOverview } from "@/content/product-overview"
@@ -237,7 +238,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
       ) : null}
 
       {/* Supplies without a library guide (water, syringes) don't need a reading list. */}
-      {guides.length || meta.artKind !== "supply" ? <ProductLearnMore title={ct(product.title)} guides={guides} /> : null}
+      {!EDUCATION_CUTOVER && (guides.length || meta.artKind !== "supply") ? <ProductLearnMore title={ct(product.title)} guides={guides} /> : null}
     </>
   )
 }

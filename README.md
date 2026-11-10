@@ -1,4 +1,9 @@
-# Vetud Peptides
+# VETUD
+
+This repository holds two separate projects, each with its own frontend, backend and database:
+
+- **`vetud-shop/`**: the store. This README describes it.
+- **`vetud-education/`**: the learning site, news, videos and community (`/en`, `/fr`). Its setup is in `vetud-education/backend/AGENTS.md` and `.env.template`/`.env.example` in each app.
 
 E-commerce store for Vetud Peptides: a Next.js storefront on top of a Medusa commerce backend.
 
@@ -11,9 +16,9 @@ E-commerce store for Vetud Peptides: a Next.js storefront on top of a Medusa com
 | Email | Resend (Medusa notification provider, react-email templates) | Resend |
 
 ```
-apps/backend      Medusa app (API at :9000, Admin at :9000/app)
-apps/storefront   Next.js storefront (:8000)
-docker-compose.yml  local Postgres, Redis, Meilisearch
+vetud-shop/backend             Medusa app (API at :9000, Admin at :9000/app)
+vetud-shop/frontend            Next.js storefront (:8000)
+vetud-shop/docker-compose.yml  local Postgres, Redis, Meilisearch
 ```
 
 The two apps are independent npm projects. There are no workspaces, because Medusa Admin uses React 18 and Next.js uses React 19.
@@ -26,10 +31,12 @@ Prerequisites: **Node 22.22+** (Medusa's engine requirement), npm 10, Docker Des
 
 ```bash
 # 1. Infrastructure
+cd vetud-shop
 docker compose up -d
+cd ..
 
 # 2. Backend
-cd apps/backend
+cd vetud-shop/backend
 cp .env.template .env          # defaults match docker-compose
 npm install
 npx medusa db:migrate          # also seeds regions, shipping and the catalog (first run only)
@@ -37,7 +44,7 @@ npx medusa user -e you@example.com -p <password>
 npm run dev                    # http://localhost:9000/app
 
 # 3. Storefront (new terminal)
-cd apps/storefront
+cd vetud-shop/frontend
 cp .env.example .env.local     # paste the publishable key printed by the migrate/seed step
 npm install
 npm run dev                    # http://localhost:8000
@@ -45,9 +52,9 @@ npm run dev                    # http://localhost:8000
 
 The publishable key can also be found in **Admin → Settings → Publishable API Keys**.
 
-`vercel dev` runs the storefront and needs the local Medusa backend running separately on port 9000. Run `vercel dev --listen 8000` from `apps/storefront` to match the local site URLs above. The backend also allows the default Vercel development origin, `http://localhost:3000`; if you use it, set the storefront's `NEXT_PUBLIC_BASE_URL` and the backend's `STOREFRONT_URL` to that origin for correct links and payment return URLs.
+`vercel dev` runs the storefront and needs the local Medusa backend running separately on port 9000. Run `vercel dev --listen 8000` from `vetud-shop/frontend` to match the local site URLs above. The backend also allows the default Vercel development origin, `http://localhost:3000`; if you use it, set the storefront's `NEXT_PUBLIC_BASE_URL` and the backend's `STOREFRONT_URL` to that origin for correct links and payment return URLs.
 
-If the storefront reports `ECONNREFUSED 127.0.0.1:9000`, start Docker Desktop, run `docker compose up -d` from the repository root, and start `npm run dev` in `apps/backend`. Check `http://localhost:9000/health` before restarting the storefront. The frontend's “Ready” message confirms that Next.js started; the commerce API must be running too.
+If the storefront reports `ECONNREFUSED 127.0.0.1:9000`, start Docker Desktop, run `docker compose up -d` from `vetud-shop/`, and start `npm run dev` in `vetud-shop/backend`. Check `http://localhost:9000/health` before restarting the storefront. The frontend's “Ready” message confirms that Next.js started; the commerce API must be running too.
 
 Without `RESEND_API_KEY`, emails are not sent; they are logged in the backend console instead.
 
@@ -55,13 +62,13 @@ Without `RESEND_API_KEY`, emails are not sent; they are logged in the backend co
 
 ## What's in the store
 
-- **Prices are set in US dollars only.** Each product variant and shipping option has one USD price, edited in Admin. Every other currency (EUR, GBP and the rest) is converted from it at the current exchange rate by `apps/backend/src/workflows/sync-currency-prices.ts`, which runs every hour (`src/jobs/sync-currency-prices.ts`) and on deploy. It uses the free [currency-api](https://github.com/fawazahmed0/exchange-api) and rounds to each currency's smallest unit (cents, or whole yen). A changed USD price reaches the other currencies within the hour, and if the rates can't be fetched the prices stay as they were. The storefront reads the converted prices from Medusa, so pages don't wait for an exchange-rate lookup, and checkout charges the same amount the page shows. Amounts are formatted with next-intl in the page's language (`apps/storefront/src/lib/money.ts`): "$58.00", "£43.11", "51,64 €".
+- **Prices are set in US dollars only.** Each product variant and shipping option has one USD price, edited in Admin. Every other currency (EUR, GBP and the rest) is converted from it at the current exchange rate by `vetud-shop/backend/src/workflows/sync-currency-prices.ts`, which runs every hour (`src/jobs/sync-currency-prices.ts`) and on deploy. It uses the free [currency-api](https://github.com/fawazahmed0/exchange-api) and rounds to each currency's smallest unit (cents, or whole yen). A changed USD price reaches the other currencies within the hour, and if the rates can't be fetched the prices stay as they were. The storefront reads the converted prices from Medusa, so pages don't wait for an exchange-rate lookup, and checkout charges the same amount the page shows. Amounts are formatted with next-intl in the page's language (`vetud-shop/frontend/src/lib/money.ts`): "$58.00", "£43.11", "51,64 €".
 - **Currencies and countries** (since 2026-11-05): three currencies. USD for the United States, Canada and Australia; GBP for the United Kingdom; EUR for every other European country we ship to (the EU, Norway, Iceland, Liechtenstein and Switzerland). Japan, China, Singapore, Hong Kong and the UAE are no longer sold to. Migration `vetud-markets-02-three-currencies` moved Canada and Australia into the USD region and its delivery zone (same Standard and Express rates) and trimmed the store currencies; rerun it safely with `npx medusa exec ./src/scripts/configure-three-currencies.ts`. The emptied regions stay for old carts and orders. Country URLs (`/us/shop`, `/de/shop`, `/pl/shop`) select the region.
-- **Currency is the shopper's choice** (since 2026-11-05): any country can pay in USD, EUR or GBP. The header selector has two independent lists; changing the country suggests its own currency until the shopper picks one. The choice is the `vetud_currency` cookie. URLs stay `/se/shop`; the proxy rewrites to a hidden `/se-usd/shop` when the cookie differs from the country's own currency, so every country and currency pair is a cached static page (`apps/storefront/src/lib/store-segment.ts`). Medusa allows one currency per country, so carts live in the region of the chosen currency and checkout sets the address through `POST /store/carts/:id/delivery-address` (signed-in owner only; any country we sell to), which skips Medusa's country-in-region check. Shipping options are priced in every store currency. Re-check that route after Medusa upgrades.
+- **Currency is the shopper's choice** (since 2026-11-05): any country can pay in USD, EUR or GBP. The header selector has two independent lists; changing the country suggests its own currency until the shopper picks one. The choice is the `vetud_currency` cookie. URLs stay `/se/shop`; the proxy rewrites to a hidden `/se-usd/shop` when the cookie differs from the country's own currency, so every country and currency pair is a cached static page (`vetud-shop/frontend/src/lib/store-segment.ts`). Medusa allows one currency per country, so carts live in the region of the chosen currency and checkout sets the address through `POST /store/carts/:id/delivery-address` (signed-in owner only; any country we sell to), which skips Medusa's country-in-region check. Shipping options are priced in every store currency. Re-check that route after Medusa upgrades.
 - **Delivery to every country** (since 2026-11-06): checkout and saved addresses accept all 246 inhabited countries and territories in Medusa's list. The header selector still lists only the 35 countries the site is set up for. Countries outside Europe, the US, Canada and Australia are in the "Rest of the world" delivery zone with its own Standard (7–14 business days) and Express (3–6 business days) options, at the same prices as everywhere. Change them in Admin > Settings > Locations & Shipping. Migration `vetud-shipping-03-rest-of-world` creates the zone, and `npx medusa exec ./src/scripts/add-rest-of-world-delivery.ts` adds countries Medusa gains later. The storefront reads the list from `GET /store/delivery-countries`. Countries without a set-up address format get a lenient form, with the postcode and state optional.
-- **Languages and address forms**: every country we sell to has its language and address rules in `apps/storefront/src/i18n/countries.json` (postal code format, field order, calling code, and states or provinces for the US, Canada and Australia in `provinces.json`). The storefront sells to exactly the countries listed there. The buttons, menus, cart, checkout and account pages are translated into 24 languages (`src/i18n/messages/`); regional locales use their language's file (de-AT uses German, en-CA and en-AU use British English). Product pages, guides and articles are still in English. Only the US, UK, Germany, France, the Netherlands, Canada and Australia are built ahead of time (`PRERENDERED_COUNTRIES`); the other countries' pages render on their first visit and are then cached.
+- **Languages and address forms**: every country we sell to has its language and address rules in `vetud-shop/frontend/src/i18n/countries.json` (postal code format, field order, calling code, and states or provinces for the US, Canada and Australia in `provinces.json`). The storefront sells to exactly the countries listed there. The buttons, menus, cart, checkout and account pages are translated into 24 languages (`src/i18n/messages/`); regional locales use their language's file (de-AT uses German, en-CA and en-AU use British English). Product pages, guides and articles are still in English. Only the US, UK, Germany, France, the Netherlands, Canada and Australia are built ahead of time (`PRERENDERED_COUNTRIES`); the other countries' pages render on their first visit and are then cached.
 - **Catalog**: 9 placeholder products (Peptide Series 01–06, Research Blends A/B, Bacteriostatic Water) in 3 categories. A "Featured" collection drives the home page.
-- **Shipping**: the same price in every country: Standard $24.95 and Express $50, converted like product prices. To change it, edit the USD price of any Standard or Express option in Admin > Settings > Locations & Shipping; the hourly sync gives every other option of that type the same USD price. There is no free shipping; to turn it off on a database seeded with the old "free over 200" rule, run `npx medusa exec ./src/scripts/disable-free-shipping.ts` from `apps/backend`.
+- **Shipping**: the same price in every country: Standard $24.95 and Express $50, converted like product prices. To change it, edit the USD price of any Standard or Express option in Admin > Settings > Locations & Shipping; the hourly sync gives every other option of that type the same USD price. There is no free shipping; to turn it off on a database seeded with the old "free over 200" rule, run `npx medusa exec ./src/scripts/disable-free-shipping.ts` from `vetud-shop/backend`.
 - **Payment**: manual bank transfer. The order is placed and stock is reserved, then the customer is emailed payment instructions. You mark the order paid in Admin.
 - **Crypto (optional)**: hosted checkout through [MakePay](https://makepay.io). Off until `MAKEPAY_ENCRYPTION_KEY` is set on the backend. See [Crypto payments (MakePay)](#crypto-payments-makepay).
 - **Search**: the header search, the shop page and the lot lookup all use Meilisearch. Lot numbers are indexed, so typing `VTD01-2609A` finds the product.
@@ -71,9 +78,9 @@ Without `RESEND_API_KEY`, emails are not sent; they are logged in the backend co
 
 The storefront uses the supplied **VETUD Peptide Series** molecular logo and alpine artwork. The shared navy-and-glacier design applies to catalog, account, checkout, documentation and information pages. The homepage features the named pen kits when they are published in the connected catalog, with a fallback to the available products.
 
-Product pages include a linked dossier covering research background, specifications, lot records, storage and delivery. Original research profiles for Retatrutide, Tirzepatide, Semaglutide, Selank and Semax live in `apps/storefront/src/content/product-research.ts`, with primary-publication links. Product amounts, prices, stock, formulation and batch documentation continue to come from Medusa. A missing certificate displays a request link. The five photographed VETUD products were published in production through the existing `publish-research-products` workflow, preserving their commercial data. The homepage carousel uses all catalog products with photographs, pauses during interaction and respects reduced motion.
+Product pages include a linked dossier covering research background, specifications, lot records, storage and delivery. Original research profiles for Retatrutide, Tirzepatide, Semaglutide, Selank and Semax live in `vetud-shop/frontend/src/content/product-research.ts`, with primary-publication links. Product amounts, prices, stock, formulation and batch documentation continue to come from Medusa. A missing certificate displays a request link. The five photographed VETUD products were published in production through the existing `publish-research-products` workflow, preserving their commercial data. The homepage carousel uses all catalog products with photographs, pauses during interaction and respects reduced motion.
 
-Country URLs determine the `next-intl` locale through `apps/storefront/src/i18n/request.ts`. Customer-interface messages are stored in `src/i18n/messages/{en-US,en-GB,de,fr,nl}.json`; address rules and US subdivisions are in `src/i18n/countries.json` and `src/i18n/us-states.json`. Research literature and legal policy bodies remain in their source language. Checkout, account addresses and profile/registration phone fields share country-aware handling. Saved details remain editable, browser autofill uses separate address sections, Google suggestions use the selected country and locale, and manual entry works when suggestions are unavailable. `libphonenumber-js` validates and normalizes supplied phone numbers to E.164; it never invents a personal number. Postal rules and address display order follow the destination country. Verify the pure address, phone and autocomplete behavior with `node scripts/check-addresses.mjs` from `apps/storefront`.
+Country URLs determine the `next-intl` locale through `vetud-shop/frontend/src/i18n/request.ts`. Customer-interface messages are stored in `src/i18n/messages/{en-US,en-GB,de,fr,nl}.json`; address rules and US subdivisions are in `src/i18n/countries.json` and `src/i18n/us-states.json`. Research literature and legal policy bodies remain in their source language. Checkout, account addresses and profile/registration phone fields share country-aware handling. Saved details remain editable, browser autofill uses separate address sections, Google suggestions use the selected country and locale, and manual entry works when suggestions are unavailable. `libphonenumber-js` validates and normalizes supplied phone numbers to E.164; it never invents a personal number. Postal rules and address display order follow the destination country. Verify the pure address, phone and autocomplete behavior with `node scripts/check-addresses.mjs` from `vetud-shop/frontend`.
 
 Everything is editable in **Admin → Products**. The storefront also reads these **metadata** keys on each product:
 
@@ -100,21 +107,21 @@ Since 2026-11-04 the catalog has 28 products, each sold as a **Dual-chamber vial
 - **Vial.** A sealed vial of freeze-dried powder; bacteriostatic water is sold separately.
 
 How it's set up:
-- **Data.** The products, amounts, USD prices (other currencies are converted from USD) and short descriptions are in `apps/backend/src/seed/dual-chamber-catalog.ts`.
+- **Data.** The products, amounts, USD prices (other currencies are converted from USD) and short descriptions are in `vetud-shop/backend/src/seed/dual-chamber-catalog.ts`.
 - **Options.** Each product has the Medusa options **Format** and **Amount**. The variants don't track stock (`manage_inventory: false`), so they're always orderable.
 - **Import.** Migration `vetud-product-19-dual-chamber-catalog` imports the catalog once on deploy. Rerun it safely with `npx medusa exec ./src/scripts/import-dual-chamber-catalog.ts`.
 - **Replaced products.** Earlier products on the same handles (the Retatrutide, Tirzepatide, Semaglutide, NAD+, Ipamorelin and Tesamorelin pen kits, the Selank and Semax sprays, and Bacteriostatic Water) are kept as drafts named `<handle>-pen-kit-2026`. Their orders, stock and reservations stay intact, and the new product takes over the URL, collection, lots and quality notes. The unspecified Melanotan kit is a draft too; Melanotan I and II replace it, and `/products/melanotan` redirects to the Pigmentation shelf.
-- **Photos.** Each product shows its dual-chamber vial (cartridge), its vial, the pen kit box when photographed and the reusable pen, from `assets/VETUD_Dual_Chamber_28_Products`, `assets/VETUD_Research_Vials_No_Dosage`, `assets/vetud_product_white_background` and `assets/Reusable dual-chamber peptide pen.png`. `node scripts/prepare-dual-chamber-images.mjs` (from `apps/storefront`) writes them to `public/images/products/` and copies the 51-second reusable-pen video (`assets/VETUD_Reusable_Dual_Chamber_Pen_1080p.mp4`) and its poster to `public/videos/`. The import checks that these images are live before it runs, so deploy the storefront first. To test locally, set `DUAL_CHAMBER_IMAGE_ORIGIN=http://localhost:8000`.
+- **Photos.** Each product shows its dual-chamber vial (cartridge), its vial, the pen kit box when photographed and the reusable pen, from `assets/VETUD_Dual_Chamber_28_Products`, `assets/VETUD_Research_Vials_No_Dosage`, `assets/vetud_product_white_background` and `assets/Reusable dual-chamber peptide pen.png`. `node scripts/prepare-dual-chamber-images.mjs` (from `vetud-shop/frontend`) writes them to `public/images/products/` and copies the 51-second reusable-pen video (`assets/VETUD_Reusable_Dual_Chamber_Pen_1080p.mp4`) and its poster to `public/videos/`. The import checks that these images are live before it runs, so deploy the storefront first. To test locally, set `DUAL_CHAMBER_IMAGE_ORIGIN=http://localhost:8000`.
 - **Product page.**
   - Format cards with "from" prices, and amount buttons with their price.
   - "In the box" for the chosen format.
   - The gallery switches to the chosen format's photo.
   - A formats section in the product dossier with a card per format, the reusable-pen video and a link to the guide at `/dual-chamber-pen`.
 - **Admin.** The "what's included" text per format is editable in Admin as the product metadata keys `contents_pen`, `contents_box` and `contents_vial`.
-- **Lab supplies.** U-100 insulin syringes (box of 10, $15 / €14) are on the Laboratory supplies shelf, from `apps/backend/src/seed/lab-supplies.ts` (migration `vetud-product-21-u100-syringes`, or `npx medusa exec ./src/scripts/import-lab-supplies.ts`). Their photos come from `assets/VETUD Ten-Syringe Box Concept.png` and `assets/VETUD Single U-100 Syringe.png` through the same image script.
+- **Lab supplies.** U-100 insulin syringes (box of 10, $15 / €14) are on the Laboratory supplies shelf, from `vetud-shop/backend/src/seed/lab-supplies.ts` (migration `vetud-product-21-u100-syringes`, or `npx medusa exec ./src/scripts/import-lab-supplies.ts`). Their photos come from `assets/VETUD Ten-Syringe Box Concept.png` and `assets/VETUD Single U-100 Syringe.png` through the same image script.
 - **Research overview and Learn section.** Products without a handwritten profile in `content/product-research.ts` get their overview from the learning library's profile of the same compound (`content/product-overview.ts`; blends list each compound). The end of each product page links its guides, news and videos.
 
-Earlier pen kits and sprays used the approved images from `assets/vetud_product_white_background`, mapped by handle in `apps/storefront/src/lib/product-images.ts`. Each product has two views, shared across the homepage, catalog, galleries, cart/checkout and lot lookup. Full-resolution WebP versions live in `apps/storefront/public/images/products`; regenerate them with `node scripts/prepare-product-images.mjs` from `apps/storefront`. Pen galleries use landscape proportions; spray galleries use portrait proportions, with white backgrounds and contained images throughout. Other products continue to use their Medusa images, or the kit-box art drawn from `code`, `accent` and category when no photos exist.
+Earlier pen kits and sprays used the approved images from `assets/vetud_product_white_background`, mapped by handle in `vetud-shop/frontend/src/lib/product-images.ts`. Each product has two views, shared across the homepage, catalog, galleries, cart/checkout and lot lookup. Full-resolution WebP versions live in `vetud-shop/frontend/public/images/products`; regenerate them with `node scripts/prepare-product-images.mjs` from `vetud-shop/frontend`. Pen galleries use landscape proportions; spray galleries use portrait proportions, with white backgrounds and contained images throughout. Other products continue to use their Medusa images, or the kit-box art drawn from `code`, `accent` and category when no photos exist.
 
 Catalog changes appear on the storefront within about a minute (cached with `cacheLife("minutes")`).
 
@@ -122,7 +129,7 @@ The shop includes the eight requested research categories plus the owner's Beaut
 
 The supplied NAD+ 1000 mg, Melanotan 10 mg and Ipamorelin 5 mg kits are imported through `src/scripts/import-supplied-research-products.ts` in the backend. Each starts as a draft with one labelled-strength variant, two owner-supplied photos, provisional USD prices and managed inventory with no available stock assigned. The import creates only missing products and preserves subsequent Admin edits. NAD+ belongs to Longevity and Anti-aging Research; Melanotan to Beauty and Peptide Series; Ipamorelin to Muscle Growth Research and Peptide Series. Melanotan subtype, formulation, purity, concentration and batch documentation remain unspecified. Review pricing, stock and product specifications before publication. The script verifies the import and checks that existing products and stock levels are preserved. A bundled copy can run through the deployed Medusa CLI as a data-only import without a service restart.
 
-Migration `vetud-product-16-research-categories` creates the eight active/public categories once, marking them with `metadata.storefront_group = "research"`, and adds research assignments to the five identified VETUD products while retaining their original categories. Generic placeholder products are left in their existing product-type categories. Manage categories and assignments in Medusa Admin, or rerun the setup safely with `npx medusa exec ./src/scripts/setup-research-categories.ts` from `apps/backend`. The catalog filtering checks run with `node --experimental-strip-types --test tests/catalog-filters.test.mjs` from `apps/storefront`.
+Migration `vetud-product-16-research-categories` creates the eight active/public categories once, marking them with `metadata.storefront_group = "research"`, and adds research assignments to the five identified VETUD products while retaining their original categories. Generic placeholder products are left in their existing product-type categories. Manage categories and assignments in Medusa Admin, or rerun the setup safely with `npx medusa exec ./src/scripts/setup-research-categories.ts` from `vetud-shop/backend`. The catalog filtering checks run with `node --experimental-strip-types --test tests/catalog-filters.test.mjs` from `vetud-shop/frontend`.
 
 ### Fulfilling an order
 
@@ -132,7 +139,7 @@ Migration `vetud-product-16-research-categories` creates the eight active/public
 
 ### Community (`/community`)
 
-A public forum. Anyone can read it, and customers with an account can post once they choose a community name and accept the guidelines (`/community/guidelines`). Its data lives in the `forum` backend module, and the UI is in `apps/storefront/src/components/community`.
+A public forum. Anyone can read it, and customers with an account can post once they choose a community name and accept the guidelines (`/community/guidelines`). Its data lives in the `forum` backend module, and the UI is in `vetud-shop/frontend/src/components/community`.
 
 - **Thread types**: questions and discussions, listed in that order.
 - **Photos**: up to 4 per thread or reply (JPEG, PNG or WebP, 10 MB each). The backend turns them upright, resizes them to 2000 px, saves them as WebP and strips their metadata, including GPS location. They're stored with the File Module, like product images.
@@ -150,13 +157,13 @@ A public forum. Anyone can read it, and customers with an account can post once 
 
 The forum pages are cached for a few minutes. Posting refreshes them through the `revalidateCommunity` Server Action.
 
-Check the helpers with `TEST_TYPE=unit npx jest src/lib/__tests__/forum.unit.spec.ts` from `apps/backend` (use Git Bash on Windows).
+Check the helpers with `TEST_TYPE=unit npx jest src/lib/__tests__/forum.unit.spec.ts` from `vetud-shop/backend` (use Git Bash on Windows).
 
 ---
 
 ## Emails (Resend)
 
-The emails are published templates in Resend (**Dashboard → Templates**, named `VETUD · …`). The backend sends each one by its template ID with variables. The IDs are in `apps/backend/src/modules/resend/template-ids.ts`, and `templates.ts` next to it builds the variables. Edit wording and layout in Resend and publish; keep the `{{{VARIABLE}}}` names, because the backend fills them in.
+The emails are published templates in Resend (**Dashboard → Templates**, named `VETUD · …`). The backend sends each one by its template ID with variables. The IDs are in `vetud-shop/backend/src/modules/resend/template-ids.ts`, and `templates.ts` next to it builds the variables. Edit wording and layout in Resend and publish; keep the `{{{VARIABLE}}}` names, because the backend fills them in.
 
 | Template | Sent when | To |
 |---|---|---|
@@ -217,7 +224,7 @@ Before accepting real orders, make a small payment above the applicable minimum 
 
 References: [official Node SDK](https://withoutkyc.to/docs/sdk/node/index.html), [card API](https://withoutkyc.to/docs/payment-gateway-api/index.html), [crypto API](https://withoutkyc.to/docs/crypto-payment-api/index.html), [custom domains](https://withoutkyc.to/white-label-api-custom-domain-guide/index.html), and [prohibited businesses](https://withoutkyc.to/instant-payment-gateway/index.html#prohibited). Provider eligibility must be checked for the actual products; implementing the API does not establish approval.
 
-Payment security tests: from `apps/backend`, set `TEST_TYPE=unit` and run `npx jest --runInBand`. Run `npm run test:paygate:integration` for the native Medusa capture/idempotency test; it uses a temporary localhost database and mocked gateway wallet calls. The runner refuses remote database credentials. From `apps/storefront`, run `node --test tests/paygate.test.mjs`.
+Payment security tests: from `vetud-shop/backend`, set `TEST_TYPE=unit` and run `npx jest --runInBand`. Run `npm run test:paygate:integration` for the native Medusa capture/idempotency test; it uses a temporary localhost database and mocked gateway wallet calls. The runner refuses remote database credentials. From `vetud-shop/frontend`, run `node --test tests/paygate.test.mjs`.
 
 ### Crypto payments (MakePay)
 
@@ -228,7 +235,7 @@ Uses the `@makecrypto/medusa-plugin-makepay` plugin (pinned) and needs a MakePay
 3. Admin → **Settings → Regions**: edit **every** region, enable the `pp_makepay_makepay` payment provider and save.
 4. Use the same exact checkout origin on both sides: backend `MAKEPAY_CHECKOUT_ORIGIN` and storefront `NEXT_PUBLIC_MAKEPAY_CHECKOUT_ORIGIN` default to `https://pay.makecrypto.io`, the hosted endpoint in [MakePay's current documentation](https://www.makecrypto.io/documentation/makepay/getting-started/overview). The plugin and storefront validate this origin independently. The older SDK default, `https://www.makepay.io`, rejects current payment-link responses with `MakePay payment-link correlation failed`. Override both values together for a different environment, then deploy backend and rebuild the storefront.
 
-To enable MakePay for the existing storefront destinations while preserving other methods, run `MAKEPAY_REGION_COUNTRIES=us,gb,de,fr,nl npx medusa exec ./src/scripts/enable-makepay.ts` from the backend source root (`/app` on Railway). Use the actual storefront country list. Run `npm run test:makepay` from `apps/backend` to verify backend correlation and storefront redirect validation together.
+To enable MakePay for the existing storefront destinations while preserving other methods, run `MAKEPAY_REGION_COUNTRIES=us,gb,de,fr,nl npx medusa exec ./src/scripts/enable-makepay.ts` from the backend source root (`/app` on Railway). Use the actual storefront country list. Run `npm run test:makepay` from `vetud-shop/backend` to verify backend correlation and storefront redirect validation together.
 
 Checkout then offers "Pay with cryptocurrency": the order is created, the shopper pays on MakePay's hosted page, and returns to `/order/makepay-return`, which waits for the backend's confirmed-paid status before showing the confirmation. The plugin does not support automated refunds; refund crypto payments manually in MakePay.
 
@@ -241,7 +248,7 @@ The storefront uses the plugin's Classic API-compatible **Collect.js hosted fiel
 #### Before enabling it
 
 1. Obtain written underwriting approval for the actual catalog, delivery formats, buyer types and countries. Ask the processor to provision **NMI**, with card authorization/capture and any separately approved ACH/wallet services. An RUO disclaimer alone is not approval.
-2. Obtain sandbox credentials from the processor/NMI. On both backend services configure the variables in [the environment template](apps/backend/.env.template): `NMI_SECURITY_KEY`, `NMI_TOKENIZATION_KEY`, `NMI_WEBHOOK_SECRET`, `NMI_ACCOUNT_CURRENCY`, `NMI_MERCHANT_COUNTRY`; set `NMI_ENABLED=true` and keep `NMI_ENVIRONMENT=sandbox`. Never put private keys in storefront variables or chat. `NODE_ENV=production` does not enable live transactions.
+2. Obtain sandbox credentials from the processor/NMI. On both backend services configure the variables in [the environment template](vetud-shop/backend/.env.template): `NMI_SECURITY_KEY`, `NMI_TOKENIZATION_KEY`, `NMI_WEBHOOK_SECRET`, `NMI_ACCOUNT_CURRENCY`, `NMI_MERCHANT_COUNTRY`; set `NMI_ENABLED=true` and keep `NMI_ENVIRONMENT=sandbox`. Never put private keys in storefront variables or chat. `NODE_ENV=production` does not enable live transactions.
 3. Enable `pp_nmi_primary` in Medusa Admin → Settings → Regions **only for regions whose currency matches the NMI account**. The server rejects mismatches; it never silently charges EUR totals as USD. This integration does not convert a charge or select between multiple currency-specific MIDs.
 4. Register `https://<backend>/hooks/payment/nmi_primary` in NMI. Use the portal-generated signing secret. Enable `transaction.check.status.settle`, `transaction.check.status.return`, and `transaction.check.status.latereturn` for ACH. Localhost requires a public HTTPS tunnel; do not expose Admin unnecessarily. Generic sale/capture/batch events do not release an ACH hold.
 5. Leave `NMI_ACH_ENABLED=false` until ACH is provisioned and tested; it requires a USD account. Keep `NMI_WALLETS_ENABLED=false`: that reserved backend flag does not add a wallet UI. Wallet implementation also needs account/domain configuration and device tests. Neither flag grants processor approval.
@@ -301,14 +308,14 @@ Uses Medusa's built-in Stripe provider (`pp_stripe_stripe`) and Stripe Payment E
 1. In the Vetud Stripe Dashboard, open a sandbox, then **Developers → API keys**. Prefer a restricted `rk_test_…` key with write access to PaymentIntents, Customers and Refunds, and read access to PaymentMethods. Set `STRIPE_API_KEY` on the backend and the matching `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_…` on the storefront. Keep keys in ignored local environment files or the hosting platform's protected variables.
 2. In Stripe's payment method settings, use a configuration with cards enabled and other methods disabled for this card checkout. Set its `pmc_…` ID as `STRIPE_PAYMENT_METHOD_CONFIGURATION`, or use the account's default configuration if already suitable. The backend excludes methods that require leaving the site and discards shopper-supplied intent settings.
 3. Create a Stripe webhook at `https://medusa-server-production-833e.up.railway.app/hooks/payment/stripe_stripe` in the same account and mode. Subscribe to `payment_intent.amount_capturable_updated`, `payment_intent.succeeded`, `payment_intent.payment_failed` and `payment_intent.partially_funded`. Store its signing secret as `STRIPE_WEBHOOK_SECRET` on **both Railway server and worker**, with the same Stripe API key and capture settings. For local testing, run `stripe listen --forward-to localhost:9000/hooks/payment/stripe_stripe` and use its signing secret locally.
-4. Restart the backend, then enable regions: `STRIPE_REGION_COUNTRIES=us,gb,de,fr,nl npx medusa exec ./src/scripts/enable-stripe.ts` from `apps/backend`, or Admin → **Settings → Regions** → `pp_stripe_stripe`. Rebuild the storefront after setting its public key.
+4. Restart the backend, then enable regions: `STRIPE_REGION_COUNTRIES=us,gb,de,fr,nl npx medusa exec ./src/scripts/enable-stripe.ts` from `vetud-shop/backend`, or Admin → **Settings → Regions** → `pp_stripe_stripe`. Rebuild the storefront after setting its public key.
 5. Check out in the sandbox with test card `4242 4242 4242 4242` (any future expiry, any CVC). Use `4000 0025 0000 3155` for 3-D Secure and `4000 0000 0000 9995` for a decline. Confirm authorization, capture and refund in both Medusa and Stripe, and verify webhook delivery before switching to live keys. For a repeatable API check, temporarily clear the local `RESEND_API_KEY`, restart local Medusa, and run `npm run test:stripe:sandbox`. It refuses remote backends/databases and live keys, creates a local test order, captures and fully refunds its sandbox payment, and verifies signed and duplicate webhook requests. Restore the local email setting after stopping the test backend.
 
-Flow: the shopper picks **Credit / debit card**, enters the card on the review step (Stripe Payment Element), and the card is authorized before the order is created. The order is then **authorized**: capture it in Admin before the authorization expires (usually about seven days for online cards). `STRIPE_CAPTURE=true` charges at checkout instead; update the checkout's authorization wording before changing that setting. Refunds from Admin refund in Stripe. Signed webhooks keep payment state synchronized when the browser closes or authentication takes longer; they are required for deployed checkout. Run `npm run test:stripe` in `apps/backend` for provider contract and webhook signature tests.
+Flow: the shopper picks **Credit / debit card**, enters the card on the review step (Stripe Payment Element), and the card is authorized before the order is created. The order is then **authorized**: capture it in Admin before the authorization expires (usually about seven days for online cards). `STRIPE_CAPTURE=true` charges at checkout instead; update the checkout's authorization wording before changing that setting. Refunds from Admin refund in Stripe. Signed webhooks keep payment state synchronized when the browser closes or authentication takes longer; they are required for deployed checkout. Run `npm run test:stripe` in `vetud-shop/backend` for provider contract and webhook signature tests.
 
 ### Countries and currencies
 
-The storefront sells to a short list of countries for now: the United States (USD), the United Kingdom (GBP) and Germany, France and the Netherlands (EUR). The list is `SUPPORTED_COUNTRIES` in `apps/storefront/src/lib/config.ts` (override with `NEXT_PUBLIC_SUPPORTED_COUNTRIES`, comma-separated ISO codes). Every other country and region in Medusa is hidden from the country menu, checkout, URLs and the geo redirect. To add a country, add it there, and make sure it belongs to a Medusa region with prices, shipping options and legal pages ready.
+The storefront sells to a short list of countries for now: the United States (USD), the United Kingdom (GBP) and Germany, France and the Netherlands (EUR). The list is `SUPPORTED_COUNTRIES` in `vetud-shop/frontend/src/lib/config.ts` (override with `NEXT_PUBLIC_SUPPORTED_COUNTRIES`, comma-separated ISO codes). Every other country and region in Medusa is hidden from the country menu, checkout, URLs and the geo redirect. To add a country, add it there, and make sure it belongs to a Medusa region with prices, shipping options and legal pages ready.
 
 - **Where a visitor lands:** `/` redirects to their saved country, else the country from Vercel's geo header, else the browser language, else `NEXT_PUBLIC_DEFAULT_COUNTRY`. The header has a panel with two dropdowns, Currency and Country; the Country list only shows the countries that use the chosen currency (a country belongs to one Medusa region, which has one currency), and Apply opens the site for that country.
 - **Shipping to another country:** checkout offers every supported country. Choosing a country in another region switches the cart to that region's currency.
@@ -323,18 +330,18 @@ Checkout and the account address book can suggest addresses as the shopper types
 2. In Vercel, set `NEXT_PUBLIC_GOOGLE_PLACES_API_KEY` for Production (and Preview if you want it there), then redeploy.
 3. Add Google Maps Platform to the processors listed in your Privacy policy, since the address a shopper types is sent to Google.
 
-Without the key, the address field is a normal text input. Suggestions are limited to the countries the shopper's region ships to. Parsing of Google's response is covered by `node --test tests/places.test.mjs` in `apps/storefront`.
+Without the key, the address field is a normal text input. Suggestions are limited to the countries the shopper's region ships to. Parsing of Google's response is covered by `node --test tests/places.test.mjs` in `vetud-shop/frontend`.
 
 ### Backend on Railway
 
-The backend now builds with `apps/backend/Dockerfile`, using the same pinned Node 22.23.3 release as the last working image. `apps/backend/.dockerignore` excludes local dependencies, generated builds, environment files and uploaded files from the image context. The build includes the MakePay Admin extension using a build-only placeholder; production encryption keys stay in Railway's runtime variables. `MEDUSA_BACKEND_URL` and `DISABLE_MEDUSA_ADMIN` are declared as public Docker build arguments. Both services retain the existing startup script and the server's `/health` check.
+The backend now builds with `vetud-shop/backend/Dockerfile`, using the same pinned Node 22.23.3 release as the last working image. `vetud-shop/backend/.dockerignore` excludes local dependencies, generated builds, environment files and uploaded files from the image context. The build includes the MakePay Admin extension using a build-only placeholder; production encryption keys stay in Railway's runtime variables. `MEDUSA_BACKEND_URL` and `DISABLE_MEDUSA_ADMIN` are declared as public Docker build arguments. Both services retain the existing startup script and the server's `/health` check.
 
 Create one Railway project with these services:
 
 1. **Postgres** (Railway template)
 2. **Redis** (Railway template)
 3. **Meilisearch** (Railway template). Set a strong `MEILI_MASTER_KEY`.
-4. **medusa-server** and 5. **medusa-worker**: two services with the same code, either from the GitHub repo (root directory `apps/backend`) or uploaded with `railway up --service <name>` from `apps/backend`. Both use `apps/backend/railway.json`. Its start command (`npm run start:railway`) runs migrations first on the server, and only starts the worker. Give medusa-server a public domain; the worker needs none.
+4. **medusa-server** and 5. **medusa-worker**: two services with the same code, either from the GitHub repo (root directory `vetud-shop/backend`) or uploaded with `railway up --service <name>` from `vetud-shop/backend`. Both use `vetud-shop/backend/railway.json`. Its start command (`npm run start:railway`) runs migrations first on the server, and only starts the worker. Give medusa-server a public domain; the worker needs none.
 
 Environment variables, shared by both Medusa services unless noted (use Railway variable references like `${{Postgres.DATABASE_URL}}`):
 
@@ -366,7 +373,7 @@ Medusa recommends at least 2 GB of RAM for the server.
 
 ### Storefront on Vercel (Pro plan)
 
-1. Import the repo into Vercel and set **Root Directory** to `apps/storefront` (framework: Next.js).
+1. Import the repo into Vercel and set **Root Directory** to `vetud-shop/frontend` (framework: Next.js).
 2. Set the environment variables:
    - `NEXT_PUBLIC_MEDUSA_BACKEND_URL` (medusa-server URL)
    - `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`
@@ -379,22 +386,22 @@ The build fetches regions and products from the backend, so deploy the backend f
 
 **Hosting note.** Vercel's Acceptable Use Policy doesn't mention peptides. It does prohibit "illegal goods" and, on non-Enterprise plans, use "for an objectionable purpose", which Vercel decides at its discretion. Its Hobby plan is non-commercial, so a store needs **Pro**. The storefront uses no Vercel-only features, so it can move:
 
-- **VPS / any Docker host**: `apps/storefront/Dockerfile` (standalone Next.js server on port 8000).
+- **VPS / any Docker host**: `vetud-shop/frontend/Dockerfile` (standalone Next.js server on port 8000).
 - **Cloudflare**: deploy with the OpenNext Cloudflare adapter (`@opennextjs/cloudflare`).
 
 ---
 
 ## Before going live
 
-- [ ] Replace placeholder products, prices, lots and descriptions (Admin, or `apps/backend/src/seed/catalog.ts` before the first production deploy).
-- [ ] Have the legal pages (`apps/storefront/src/content/legal.ts`) reviewed by a lawyer for each market, and fill in every `[placeholder]`.
+- [ ] Replace placeholder products, prices, lots and descriptions (Admin, or `vetud-shop/backend/src/seed/catalog.ts` before the first production deploy).
+- [ ] Have the legal pages (`vetud-shop/frontend/src/content/legal.ts`) reviewed by a lawyer for each market, and fill in every `[placeholder]`.
 - [ ] Check the rules for selling research materials in every country you ship to. Remove countries from the regions in Admin as needed.
 - [ ] Set tax rates in Admin → Settings → Tax Regions (they start at 0%).
 - [ ] Set real bank details and payment instructions (backend env, and optionally `NEXT_PUBLIC_PAYMENT_BANK_DETAILS`).
 - [ ] Verify the sending domain in Resend and send yourself a test order.
 - [ ] Set the warehouse address in Admin → Settings → Locations.
 - [ ] Use strong secrets and a strong Meilisearch master key. Never reuse the dev values.
-- [ ] Update `SITE.email` in `apps/storefront/src/lib/config.ts`.
+- [ ] Update `SITE.email` in `vetud-shop/frontend/src/lib/config.ts`.
 
 ## Next steps (not in v1)
 

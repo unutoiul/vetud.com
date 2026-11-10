@@ -1,3 +1,4 @@
+import { PRODUCT_IMAGE_ORIGIN } from "../lib/product-image-origin"
 /** Label facts from the owner's supplied photographs; retail amounts were approved with each publication. */
 export const SUPPLIED_RESEARCH_PRODUCTS = [
   {
@@ -52,4 +53,4 @@ export const SUPPLIED_RESEARCH_PRODUCTS = [
 ] as const
 
 export const SUPPLIED_PRODUCTS_REVISION = "supplied-three-pen-kits-2026-10-30-v1"
-export const PRODUCT_IMAGE_ORIGIN = "https://www.vetud.com"
+export { PRODUCT_IMAGE_ORIGIN }

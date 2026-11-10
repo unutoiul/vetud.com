@@ -22,14 +22,18 @@ import CartAnnouncer from "../cart/CartAnnouncer"
 import CountrySelect from "./CountrySelect"
 import { NAV_LABEL_KEYS, NAV_LINKS, SECONDARY_LINKS } from "./nav"
 import SearchBox from "./SearchBox"
+import { EDUCATION_CUTOVER, EDUCATION_URL } from "@/lib/config"
 import { motion } from "@/theme/tokens"
 import { useAccount } from "../account/AccountProvider"
+
+const navLinkSx = (active: boolean) => ({ fontSize: 13, fontWeight: 600, textDecoration: "none", color: active ? "brand.blue" : "brand.navySoft", py: 1.5, position: "relative", "&::after": { content: '""', position: "absolute", bottom: 6, left: 0, right: 0, height: 2, bgcolor: "brand.blue", transform: active ? "scaleX(1)" : "scaleX(0)", transformOrigin: "left", transition: `transform .3s ${motion}` }, "&:hover::after": { transform: "scaleX(1)" } })
 
 function MainNav({ activeHref }: { activeHref?: string }) {
   const act = useTranslations("Actions")
   const t = useTranslations("Common")
   return <Stack component="nav" aria-label={act("mainNav")} direction="row" spacing={3.5} sx={{ display: { xs: "none", lg: "flex" }, mx: "auto" }}>
-    {NAV_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} aria-current={link.href === activeHref ? "page" : undefined} sx={{ fontSize: 13, fontWeight: 600, textDecoration: "none", color: link.href === activeHref ? "brand.blue" : "brand.navySoft", py: 1.5, position: "relative", "&::after": { content: '""', position: "absolute", bottom: 6, left: 0, right: 0, height: 2, bgcolor: "brand.blue", transform: link.href === activeHref ? "scaleX(1)" : "scaleX(0)", transformOrigin: "left", transition: `transform .3s ${motion}` }, "&:hover::after": { transform: "scaleX(1)" } }}>{t(NAV_LABEL_KEYS[link.href])}</Box>)}
+    {NAV_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} aria-current={link.href === activeHref ? "page" : undefined} sx={navLinkSx(link.href === activeHref)}>{t(NAV_LABEL_KEYS[link.href])}</Box>)}
+    {EDUCATION_CUTOVER ? <Box component="a" href={EDUCATION_URL} sx={navLinkSx(false)}>{t("learn")}</Box> : null}
   </Stack>
 }
 function ActiveMainNav() {
@@ -75,6 +79,7 @@ export default function Header() {
       <Box id="mobile-navigation" component="nav" aria-label={act("mobileNav")} sx={{ p: 3.5, pt: 4, pb: "max(28px, env(safe-area-inset-bottom))" }}>
         <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 6 }}><Logo /><IconButton aria-label={act("closeMenu")} onClick={() => setMenuOpen(false)}><Icon name="close" /></IconButton></Stack>
         {NAV_LINKS.map((link, index) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", py: 2.5, borderBottom: "1px solid rgba(23,53,75,.08)", fontSize: 23, letterSpacing: "-.03em", animation: `vetud-enter .5s ${motion} ${index * .06}s both`, "&:hover": { color: "brand.blue" } }}>{t(NAV_LABEL_KEYS[link.href])}<Icon name="arrowUpRight" sx={{ fontSize: 20 }} /></Box>)}
+        {EDUCATION_CUTOVER ? <Box component="a" href={EDUCATION_URL} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", textDecoration: "none", py: 2.5, borderBottom: "1px solid rgba(23,53,75,.08)", fontSize: 23, letterSpacing: "-.03em", "&:hover": { color: "brand.blue" } }}>{t("learn")}<Icon name="arrowUpRight" sx={{ fontSize: 20 }} /></Box> : null}
         <Stack direction="row" spacing={3} sx={{ mt: 3 }}>
           {SECONDARY_LINKS.map((link) => <Box key={link.href} component={LocalizedNextLink} href={link.href} onClick={() => setMenuOpen(false)} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 13, color: "text.secondary", textDecoration: "none", "&:hover": { color: "brand.blue" } }}>{t(NAV_LABEL_KEYS[link.href])}</Box>)}
         </Stack>
@@ -97,7 +102,7 @@ export default function Header() {
     <Dialog open={searchOpen} onClose={() => setSearchOpen(false)} fullWidth maxWidth="sm" aria-labelledby="search-title" slotProps={{ paper: { sx: { alignSelf: "flex-start", mt: 10, p: { xs: 2.5, sm: 4 } } }, transition: { onEntered: () => searchInput.current?.focus() } }}>
       <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", mb: 2 }}><Typography component="h2" variant="h4" id="search-title">{ct("Find your research materials")}</Typography><IconButton aria-label={act("closeSearch")} onClick={() => setSearchOpen(false)}><Icon name="close" /></IconButton></Stack>
       <SearchBox autoFocus inline inputRef={searchInput} onNavigate={() => setSearchOpen(false)} />
-      <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>{ct("Search products (name, code or lot number), peptide guides and news.")}</Typography>
+      <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>{ct(EDUCATION_CUTOVER ? "Search products by name, code or lot number." : "Search products (name, code or lot number), peptide guides and news.")}</Typography>
     </Dialog>
   </>
 }

@@ -1,0 +1,40 @@
+{
+  "name": "vetud-education-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 8100",
+    "build": "next build",
+    "start": "next start -p 8100",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "check:i18n": "node --no-warnings scripts/check-translations.mjs",
+    "prebuild": "npm run check:i18n"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@medusajs/js-sdk": "^2.21.2",
+    "@medusajs/types": "^2.21.2",
+    "@mui/icons-material": "^9.5.0",
+    "@mui/material": "^9.5.0",
+    "@mui/material-nextjs": "^9.5.0",
+    "next": "16.4.2",
+    "next-intl": "^4.14.9",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": "24.x"
+  }
+}

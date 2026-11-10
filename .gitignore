@@ -17,8 +17,8 @@ next-env.d.ts
 !.env.example
 
 # uploads stored by Medusa's local file provider
-apps/backend/static/
-apps/backend/uploads/
+vetud-shop/backend/static/
+vetud-shop/backend/uploads/
 
 # logs & OS
 npm-debug.log*

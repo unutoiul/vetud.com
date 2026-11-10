@@ -16,6 +16,7 @@ import Image from "next/image"
 import { useRef, useState, type FormEvent } from "react"
 import { CATEGORIES } from "@/content/learn/categories"
 import { translateAction } from "@/i18n/actions"
+import { EDUCATION_CUTOVER } from "@/lib/config"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
@@ -193,13 +194,13 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
 
           {status === "success" ? <div role="status" aria-live="polite" aria-atomic="true">
             <Box sx={{ display: "grid", placeItems: "center", width: 52, height: 52, my: 2.75, borderRadius: "50%", bgcolor: "brand.navy", color: "brand.cyan" }}><Icon name="check" sx={{ fontSize: 28 }} /></Box>
-            <Typography id="welcome-description" sx={descriptionSx}>{ct("Thanks for signing up to VETUD. Explore our peptide guides and meet the community while you wait for the next update.")}</Typography>
+            <Typography id="welcome-description" sx={descriptionSx}>{ct(EDUCATION_CUTOVER ? "Thanks for signing up to VETUD. We'll email you our latest offers and news." : "Thanks for signing up to VETUD. Explore our peptide guides and meet the community while you wait for the next update.")}</Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 3.25 }}>
-              <ButtonLink href="/learn" onClick={onDismiss} variant="contained" endIcon={<Icon name="arrowRight" />} sx={primaryButtonSx}>{ct("Explore peptide education")}</ButtonLink>
-              <ButtonLink href="/community" onClick={onDismiss} variant="outlined" sx={{ color: "brand.onNavy", borderColor: "brand.cyan", "&:hover": { borderColor: "brand.cyan", bgcolor: "brand.navy" } }}>{ct("Visit the community")}</ButtonLink>
+              <ButtonLink href={EDUCATION_CUTOVER ? "/shop" : "/learn"} onClick={onDismiss} variant="contained" endIcon={<Icon name="arrowRight" />} sx={primaryButtonSx}>{EDUCATION_CUTOVER ? actions("shopCatalog") : ct("Explore peptide education")}</ButtonLink>
+              {EDUCATION_CUTOVER ? null : <ButtonLink href="/community" onClick={onDismiss} variant="outlined" sx={{ color: "brand.onNavy", borderColor: "brand.cyan", "&:hover": { borderColor: "brand.cyan", bgcolor: "brand.navy" } }}>{ct("Visit the community")}</ButtonLink>}
             </Box>
           </div> : <>
-            <Typography id="welcome-description" sx={descriptionSx}>{ct("Get clear peptide explainers, research news and community updates in your inbox.")}</Typography>
+            <Typography id="welcome-description" sx={descriptionSx}>{ct(EDUCATION_CUTOVER ? "Get VETUD offers and news in your inbox." : "Get clear peptide explainers, research news and community updates in your inbox.")}</Typography>
             <Box component="form" onSubmit={submit} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 3, md: 3.75 } }}>
               <TextField
                 label={offerText("email")}
@@ -254,7 +255,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         </Box>
       </Box>
 
-      <Box component="nav" aria-labelledby="welcome-topics-title" sx={{ minWidth: 0, mb: { xs: 2.5, md: 3 } }}>
+      {EDUCATION_CUTOVER ? null : <Box component="nav" aria-labelledby="welcome-topics-title" sx={{ minWidth: 0, mb: { xs: 2.5, md: 3 } }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 2, mb: 1.25 }}>
           <Typography id="welcome-topics-title" component="h3" sx={{ fontSize: 13, fontWeight: 600, color: "brand.cyan" }}>{heroText("topics")}</Typography>
           <Typography sx={{ display: { sm: "none" }, fontSize: 11, color: "brand.onNavyMuted" }}>{ct("Swipe to explore")}</Typography>
@@ -294,7 +295,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
             </Box>
           </Box>)}
         </Box>
-      </Box>
+      </Box>}
 
       <Box component="footer" sx={{
         display: "grid",

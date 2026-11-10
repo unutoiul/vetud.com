@@ -1,6 +1,6 @@
 import type { ForumThread, ThreadKind } from "./types"
 
-// Same pattern the backend holds posts for (apps/backend/src/lib/forum/moderation.ts), so the
+// Same pattern the backend holds posts for (vetud-shop/backend/src/lib/forum/moderation.ts), so the
 // composer can warn before a post is sent for review.
 const DOSE_PATTERN = /(?<![\p{L}\p{N}])\d+(?:[.,]\d+)?\s*(?:mg|mgs|mcg|µg|μg|ug|iu|i\.u\.|units?|ml|cc|clicks?)(?![\p{L}\p{N}])/iu
 

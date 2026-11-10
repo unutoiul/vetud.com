@@ -17,6 +17,7 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
+import { EDUCATION_CUTOVER } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { parseLots, readProductMeta, type ProductLot } from "@/lib/product"
 import { AppLink } from "../common/links"
@@ -147,7 +148,7 @@ export default function LotLookup() {
                       ) : (
                         <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>{act("requestCoa")}</AppLink>
                       ) }, {  })}</Typography>
-                    <LotReportsLink lot={lot.lot} />
+                    {EDUCATION_CUTOVER ? null : <LotReportsLink lot={lot.lot} />}
                   </Box>
                 </Paper>
               </Grid>

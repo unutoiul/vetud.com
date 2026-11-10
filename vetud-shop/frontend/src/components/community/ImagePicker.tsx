@@ -17,7 +17,7 @@ import { sdk } from "@/lib/medusa/sdk"
 import Icon from "../brand/Icon"
 import { forumError } from "./useCommunityProfile"
 
-// Same limits as the backend (apps/backend/src/api/forum-middlewares.ts).
+// Same limits as the backend (vetud-shop/backend/src/api/forum-middlewares.ts).
 export const MAX_POST_IMAGES = 4
 const MAX_MB = 10
 const ACCEPT = "image/jpeg,image/png,image/webp"

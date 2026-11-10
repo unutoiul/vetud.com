@@ -18,6 +18,16 @@ const checkoutCsp = [
   "frame-ancestors 'self'",
 ].join("; ")
 
+// Once the sites are split, learning pages move to the education site. Temporary until it has settled.
+const educationUrl = (process.env.NEXT_PUBLIC_EDUCATION_URL || "").replace(/\/$/, "")
+const educationRedirects = process.env.NEXT_PUBLIC_EDUCATION_CUTOVER === "true" && educationUrl ? [
+  { source: "/:country(fr|lu)/:section(learn|news|videos|community)/:path*", destination: `${educationUrl}/fr/:section/:path*`, permanent: false },
+  { source: "/:country([a-z]{2})/:section(learn|news|videos|community)/:path*", destination: `${educationUrl}/en/:section/:path*`, permanent: false },
+  { source: "/:section(learn|news|community)/:path*", destination: `${educationUrl}/en/:section/:path*`, permanent: false },
+  // /videos/<file> is this site's own product video, so only the page itself moves.
+  { source: "/videos", destination: `${educationUrl}/en/videos`, permanent: false },
+] : []
+
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
@@ -31,6 +41,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     const adminUrl = `${(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")}/app`
     return [
+      ...educationRedirects,
       { source: "/:countryCode/legal/shipping-returns", destination: "/:countryCode/legal/shipping", permanent: true },
       { source: "/legal/shipping-returns", destination: "/legal/shipping", permanent: true },
       { source: "/:countryCode/discover", destination: "/:countryCode/shop", permanent: true },

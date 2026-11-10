@@ -1,10 +1,11 @@
+import { PRODUCT_IMAGE_ORIGIN } from "../lib/product-image-origin"
 /**
  * Lab supplies sold next to the dual-chamber catalog (owner request 2026-11-04). Photos live in the
  * storefront at /images/products/<handle>-box.webp and -single.webp; prices are retail USD;
  * other currencies are converted from it.
  */
 export const LAB_SUPPLIES_REVISION = "lab-supplies-2026-11-04-v1"
-export const LAB_SUPPLY_IMAGE_ORIGIN = process.env.DUAL_CHAMBER_IMAGE_ORIGIN || "https://www.vetud.com"
+export const LAB_SUPPLY_IMAGE_ORIGIN = PRODUCT_IMAGE_ORIGIN
 
 export const LAB_SUPPLIES = [
   {

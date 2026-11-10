@@ -1,3 +1,4 @@
+import { learningHref } from "@/lib/config"
 import type { HttpTypes } from "@medusajs/types"
 import { findDose } from "@/lib/community/format"
 import type { Evidence, StatusId } from "./learn/categories"
@@ -140,7 +141,7 @@ export function getProductOverview(product: CatalogProduct): ProductOverview | u
       results: [],
       unknowns: ["No published study has tested this combination. What is known comes from studies of each compound on its own."],
       risks: [],
-      components: guides.map((peptide) => ({ name: peptide.name, text: peptide.oneLiner, href: `/learn/${peptide.slug}`, evidence: peptide.evidence })),
+      components: guides.map((peptide) => ({ name: peptide.name, text: peptide.oneLiner, href: learningHref(`/learn/${peptide.slug}`), evidence: peptide.evidence })),
       sources: guides.flatMap((peptide) => peptide.sources.slice(0, 1)).slice(0, 3),
       guides,
     }

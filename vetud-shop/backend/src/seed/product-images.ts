@@ -11,7 +11,7 @@ const MIME_TYPES: Record<string, string> = {
 }
 
 /**
- * Finds a file in `apps/backend/assets/products`. Migrations run from the app root locally and
+ * Finds a file in `vetud-shop/backend/assets/products`. Migrations run from the app root locally and
  * from `.medusa/server` in production, so both locations are checked.
  */
 export function findProductAsset(filename: string) {

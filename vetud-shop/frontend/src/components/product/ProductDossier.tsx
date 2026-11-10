@@ -13,7 +13,7 @@ import StudyResults from "../learn/StudyResults"
 import { EVIDENCE_STEPS } from "@/content/learn/categories"
 import type { ProductOverview } from "@/content/product-overview"
 import type { ProductMeta } from "@/lib/product"
-import { SITE } from "@/lib/config"
+import { learningHref, SITE } from "@/lib/config"
 
 const sections = [
   { id: "research-overview", label: "Research overview" },
@@ -64,7 +64,7 @@ function Overview({ overview }: { overview: ProductOverview }) {
       <Typography variant="mono" component="h3" sx={{ mt: 3.5, mb: 1.5, fontSize: 10, color: "brand.blue", letterSpacing: ".12em" }}>{ct("SOURCES")}</Typography>
       <Box sx={{ display: "grid", gap: 1.75 }}>{overview.sources.map(source => <Box key={source.url} component="a" href={source.url} target="_blank" rel="noopener noreferrer" sx={{ display: "flex", gap: 2, alignItems: "flex-start", textDecoration: "none", "&:hover": { color: "brand.blue" } }}><Icon name="document" sx={{ color: "brand.blue", fontSize: 20, mt: .3, flexShrink: 0 }} /><Box><Typography sx={{ fontSize: 13, lineHeight: 1.7, fontWeight: 600 }}>{ct(source.title)} ↗</Typography><Typography sx={{ mt: .25, fontSize: 11.5, color: "text.secondary" }}>{ct(source.detail)}</Typography></Box></Box>)}</Box>
     </> : null}
-    {overview.guides.length === 1 ? <AppLink href={`/learn/${overview.guides[0].slug}`} sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 3, minHeight: 44, fontSize: 14, fontWeight: 600 }}>{act("fullGuide", { product: ct(overview.guides[0].name) })} <Icon name="arrowRight" sx={{ fontSize: 16 }} /></AppLink> : null}
+    {overview.guides.length === 1 ? <AppLink href={learningHref(`/learn/${overview.guides[0].slug}`)} sx={{ display: "inline-flex", alignItems: "center", gap: 1, mt: 3, minHeight: 44, fontSize: 14, fontWeight: 600 }}>{act("fullGuide", { product: ct(overview.guides[0].name) })} <Icon name="arrowRight" sx={{ fontSize: 16 }} /></AppLink> : null}
   </>
 }
 

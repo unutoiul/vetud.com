@@ -16,6 +16,7 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState, type ReactNode, type Ref } from "react"
+import { EDUCATION_CUTOVER } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { cheapestPrice, readProductMeta } from "@/lib/product"
 import { useMoney } from "@/lib/money"
@@ -87,8 +88,8 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
       const additionalProducts = missingIds.length ? await sdk.store.product.list({ id: missingIds, region_id: region.id, fields: SEARCH_FIELDS, limit: 5 }).then(result => result.products).catch(() => []) : []
       if (requestId !== latest.current) return
       const products = [...searchProducts, ...additionalProducts].slice(0, 5)
-      const guides = rank(index.guides, query, (guide) => [ct(guide.name), [guide.aka ?? "", guide.slug], [ct(guide.category), ct(guide.line), ct(guide.about), guide.name, guide.line]], 4)
-      const articles = rank(index.articles, query, (article) => [ct(article.title), [ct(article.kind), ...article.peptides], [ct(article.dek), article.title, article.dek]], 4)
+      const guides = EDUCATION_CUTOVER ? [] : rank(index.guides, query, (guide) => [ct(guide.name), [guide.aka ?? "", guide.slug], [ct(guide.category), ct(guide.line), ct(guide.about), guide.name, guide.line]], 4)
+      const articles = EDUCATION_CUTOVER ? [] : rank(index.articles, query, (article) => [ct(article.title), [ct(article.kind), ...article.peptides], [ct(article.dek), article.title, article.dek]], 4)
       setOptions([
         ...products.map((product): Result => ({ group: "Products", key: `p-${product.id}`, label: product.title, href: `/products/${product.handle}`, product })),
         ...guides.map((guide): Result => ({ group: "Peptide guides", key: `g-${guide.slug}`, label: guide.name, href: `/learn/${guide.slug}`, guide })),
