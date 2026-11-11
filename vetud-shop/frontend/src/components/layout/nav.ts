@@ -21,9 +21,12 @@ export const EDUCATION_LINKS = [
   { key: "community", label: "Community", href: educationHref("/community") },
 ] as const
 
-/** The shop comes first in the menu, followed by the EDUCATION_LINKS. */
-export const NAV_LINKS: NavLink[] = [
-  { label: "Shop", href: "/shop" },
+/**
+ * The desktop header after the "Products" menu: the product menu leads, then lot documentation, then
+ * one link out to the education site. News, videos and the community are in the footer.
+ */
+export const HEADER_LINKS: NavLink[] = [
+  { label: "Lab documentation", href: "/documentation" },
 ]
 
 export const SECONDARY_LINKS: NavLink[] = [

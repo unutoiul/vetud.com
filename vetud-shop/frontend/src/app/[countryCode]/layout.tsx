@@ -13,8 +13,12 @@ import Header from "@/components/layout/Header"
 import SaleBannerSlot from "@/components/layout/SaleBannerSlot"
 import StoreProvider from "@/components/store/StoreProvider"
 import { BASE_URL, PRERENDERED_COUNTRIES, SITE } from "@/lib/config"
+import { categoryFacets } from "@/lib/catalog-filters"
 import { listDeliveryCountries } from "@/lib/medusa/delivery"
+import { listCatalogProducts, listCategories } from "@/lib/medusa/products"
 import { getStoreRegion, listCountryCodes, listCountryOptions } from "@/lib/medusa/regions"
+import { sortProducts } from "@/lib/product"
+import { buildProductMenu, EMPTY_PRODUCT_MENU } from "@/lib/product-menu"
 import { parseStoreSegment } from "@/lib/store-segment"
 import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
@@ -61,7 +65,14 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
   if (!region) {
     throw new Error("No regions found. Is the Medusa backend running and seeded?")
   }
-  const [countries, deliveryCountries] = await Promise.all([listCountryOptions(), listDeliveryCountries()])
+  const [countries, deliveryCountries, catalog] = await Promise.all([
+    listCountryOptions(),
+    listDeliveryCountries(),
+    // The header's product menu and search suggestions; the site still renders without them.
+    Promise.all([listCatalogProducts(region.id), listCategories()])
+      .then(([products, categories]) => buildProductMenu(sortProducts(products, "relevance"), categoryFacets(categories, products)))
+      .catch(() => EMPTY_PRODUCT_MENU),
+  ])
 
   return (
     <html lang={i18n.locale} className={`${manrope.variable} ${dmMono.variable}`}>
@@ -104,7 +115,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
               <Suspense fallback={null}>
                 <SaleBannerSlot />
               </Suspense>
-              <Header />
+              <Header catalog={catalog} />
               <Box component="main" id="main" sx={{ minHeight: "60vh" }}>
                 {children}
               </Box>
