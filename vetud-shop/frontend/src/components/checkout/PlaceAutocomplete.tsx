@@ -4,6 +4,7 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 
 import Autocomplete from "@mui/material/Autocomplete"
 import Box from "@mui/material/Box"
+import CircularProgress from "@mui/material/CircularProgress"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useEffect, useRef, useState } from "react"
@@ -24,7 +25,7 @@ type Props = {
   suggest: (text: string, sessionToken: string, signal: AbortSignal) => Promise<PlaceSuggestion[]>
   onTextChange: (text: string) => void
   /** The visitor picked a suggestion. The session token is the one the suggestions were fetched with. */
-  onPick: (suggestion: PlaceSuggestion, sessionToken: string) => void
+  onPick: (suggestion: PlaceSuggestion, sessionToken: string, signal: AbortSignal) => Promise<void>
   minCharacters?: number
 }
 
@@ -40,8 +41,11 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
   const t = useTranslations("Address")
   const [options, setOptions] = useState<PlaceSuggestion[]>([])
   const [open, setOpen] = useState(false)
+  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "empty" | "error" | "details" | "filled">("idle")
   const session = useRef(newSessionToken())
   const typed = useRef(false)
+  const detailsRequest = useRef<AbortController | null>(null)
+  const focused = useRef(false)
   // Always call the latest `suggest` without restarting the debounce on every render.
   const latestSuggest = useRef(suggest)
   useEffect(() => {
@@ -50,13 +54,19 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
 
   useEffect(() => {
     // Only ask while the visitor is typing, not when a pick or a saved address fills the field.
-    if (!typed.current || value.trim().length < minCharacters) return
+    if (!typed.current || !focused.current || value.trim().length < minCharacters) return
     const controller = new AbortController()
     const timer = window.setTimeout(() => {
       latestSuggest.current(value.trim(), session.current, controller.signal)
-        .then(setOptions)
-        .catch((caught) => {
-          if (!(caught instanceof DOMException && caught.name === "AbortError")) setOptions([])
+        .then(results => {
+          if (controller.signal.aborted) return
+          setOptions(results)
+          setStatus(results.length ? "ready" : "empty")
+        })
+        .catch(() => {
+          if (controller.signal.aborted) return
+          setOptions([])
+          setStatus("error")
         })
     }, DEBOUNCE_MS)
     return () => {
@@ -65,13 +75,21 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
     }
   }, [value, minCharacters])
 
+  useEffect(() => () => { detailsRequest.current?.abort() }, [])
+
+  const feedback = status === "error" ? ct("Address search is unavailable. Type your address below to continue.")
+    : status === "empty" ? ct("No matching addresses. You can enter your address manually.")
+    : status === "loading" ? ct("Searching addresses...")
+    : status === "details" ? ct("Filling in your address...")
+    : status === "filled" ? ct("Check the address details below and add anything missing.") : ""
+
   return (
     <Box>
       <Autocomplete<PlaceSuggestion, false, false, true>
         freeSolo
         fullWidth
         open={open && options.length > 0}
-        onOpen={() => setOpen(true)}
+        onOpen={() => { if (focused.current) setOpen(true) }}
         onClose={() => setOpen(false)}
         options={options}
         // Google already ranks the suggestions, so show them as returned.
@@ -84,13 +102,17 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
         inputValue={value}
         onInputChange={(_event, text, reason) => {
           if (reason === "input") {
+            detailsRequest.current?.abort()
             typed.current = true
-            // Suggestions for longer text would be stale once the text is too short to ask again.
-            if (text.trim().length < minCharacters) setOptions([])
+            setOptions([])
+            setStatus(text.trim().length < minCharacters ? "idle" : "loading")
+            setOpen(true)
             onTextChange(text)
           } else if (reason === "clear") {
             // The clear (×) button: empty the form value, not just MUI's copy of the text.
             typed.current = false
+            detailsRequest.current?.abort()
+            setStatus("idle")
             setOptions([])
             setOpen(false)
             onTextChange("")
@@ -100,10 +122,19 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
           if (!picked || typeof picked === "string") return
           typed.current = false
           setOptions([])
+          setOpen(false)
+          setStatus("details")
+          detailsRequest.current?.abort()
+          const controller = new AbortController()
+          detailsRequest.current = controller
           const token = session.current
           session.current = newSessionToken()
           onTextChange(picked.main)
-          onPick(picked, token)
+          void onPick(picked, token, controller.signal).then(() => {
+            if (!controller.signal.aborted) setStatus("filled")
+          }).catch(() => {
+            if (!controller.signal.aborted) setStatus("error")
+          })
         }}
         renderOption={(props, option) => {
           const { key, ...rest } = props as typeof props & { key: string }
@@ -127,9 +158,11 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
             helperText={ct(helperText)}
             // MUI only reports a close while the list is showing. Suggestions that arrive after the
             // visitor has moved to another field must not open this list there.
-            onBlur={() => setOpen(false)}
+            onFocus={() => { focused.current = true; setOpen(true) }}
+            onBlur={() => { focused.current = false; setOpen(false); setStatus(previous => previous === "loading" ? "idle" : previous) }}
             slotProps={{
               ...params.slotProps,
+              input: { ...params.slotProps.input, endAdornment: <>{status === "loading" || status === "details" ? <CircularProgress size={18} color="inherit" aria-label={ct("Looking up address")} /> : null}{params.slotProps.input.endAdornment}</> },
               // MUI gives the input its own generated id; ours is what the label, the focus-on-error
               // logic and the tests use.
               htmlInput: { ...params.slotProps.htmlInput, id, autoComplete: autoComplete },
@@ -137,9 +170,8 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
           />
         )}
       />
-      <Typography variant="caption" sx={{ display: "block", color: "text.secondary", mt: 0.5, ml: 1.75 }}>
-        {t("google")}
-      </Typography>
+      <Typography variant="caption" role="status" aria-live="polite" sx={{ display: "block", color: "text.secondary", mt: 0.5, ml: 1.75 }}>{feedback}</Typography>
+      {options.length > 0 && open ? <Typography variant="caption" sx={{ display: "block", color: "text.secondary", mt: 0.5, ml: 1.75 }}>{t("google")}</Typography> : null}
     </Box>
   )
 }

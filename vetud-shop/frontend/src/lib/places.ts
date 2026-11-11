@@ -59,15 +59,31 @@ type AutocompleteBody = {
   suggestions?: { placePrediction?: { placeId: string; text?: { text?: string }; structuredFormat?: { mainText?: { text?: string }; secondaryText?: { text?: string } } } }[]
 }
 
+/** Stop a slow lookup without blocking manual address entry. */
+async function fetchPlaces(url: string, init: RequestInit = {}) {
+  const controller = new AbortController()
+  const abort = () => controller.abort()
+  if (init.signal?.aborted) abort()
+  init.signal?.addEventListener("abort", abort, { once: true })
+  const timer = setTimeout(abort, 6000)
+  try {
+    const response = await fetch(url, { ...init, signal: controller.signal })
+    // Include reading the body in the timeout, not just waiting for headers.
+    if (!response.ok) throw new Error(`Address lookup failed (${response.status})`)
+    return await response.json()
+  } finally {
+    clearTimeout(timer)
+    init.signal?.removeEventListener("abort", abort)
+  }
+}
+
 async function autocomplete(body: Record<string, unknown>, signal?: AbortSignal, locale = "en"): Promise<PlaceSuggestion[]> {
-  const response = await fetch("https://places.googleapis.com/v1/places:autocomplete", {
+  const json = await fetchPlaces("https://places.googleapis.com/v1/places:autocomplete", {
     method: "POST",
     headers: { "Content-Type": "application/json", "X-Goog-Api-Key": PLACES_API_KEY },
     body: JSON.stringify({ languageCode: locale, ...body }),
     signal,
-  })
-  if (!response.ok) throw new Error(`Address suggestions failed (${response.status})`)
-  const json = (await response.json()) as AutocompleteBody
+  }) as AutocompleteBody
   return (json.suggestions ?? []).flatMap((item) => {
     const prediction = item.placePrediction
     if (!prediction?.placeId) return []
@@ -115,13 +131,24 @@ export function suggestPostalCodes(input: string, sessionToken: string, countryC
 type DetailsBody = { addressComponents?: PlaceComponent[]; location?: PlaceLocation }
 
 /** The address fields and map position of a chosen suggestion. Reusing the session token ends its billing session. */
-export async function placeDetails(placeId: string, sessionToken: string, locale = "en"): Promise<PlaceDetails> {
-  const response = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?sessionToken=${encodeURIComponent(sessionToken)}&languageCode=${encodeURIComponent(locale)}`, {
+export async function placeDetails(placeId: string, sessionToken: string, locale = "en", signal?: AbortSignal): Promise<PlaceDetails> {
+  const body = await fetchPlaces(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?sessionToken=${encodeURIComponent(sessionToken)}&languageCode=${encodeURIComponent(locale)}`, {
     headers: { "X-Goog-Api-Key": PLACES_API_KEY, "X-Goog-FieldMask": "addressComponents,location" },
-  })
-  if (!response.ok) throw new Error(`Address details failed (${response.status})`)
-  const body = (await response.json()) as DetailsBody
+    signal,
+  }) as DetailsBody
   return { address: parsePlace(body.addressComponents ?? []), location: body.location }
+}
+
+/** A lookup must never replace fields the shopper edited while it was loading. */
+export function mergePlaceAddress(current: AddressValues, initial: AddressValues, address: Partial<AddressValues>, street: string): AddressValues {
+  return {
+    ...current,
+    address_1: address.address_1 || street,
+    address_2: current.address_2 !== initial.address_2 ? current.address_2 : address.address_2 || current.address_2,
+    city: current.city !== initial.city ? current.city : address.city || "",
+    postal_code: current.postal_code !== initial.postal_code ? current.postal_code : address.postal_code || "",
+    province: current.province !== initial.province ? current.province : address.province || "",
+  }
 }
 
 /**

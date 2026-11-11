@@ -6,6 +6,8 @@ import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Chip from "@mui/material/Chip"
+import Checkbox from "@mui/material/Checkbox"
+import FormControlLabel from "@mui/material/FormControlLabel"
 import CircularProgress from "@mui/material/CircularProgress"
 import Divider from "@mui/material/Divider"
 import Grid from "@mui/material/Grid"
@@ -353,11 +355,17 @@ function AddressBook() {
   const [addressName, setAddressName] = useState("Home")
   const [showForm, setShowForm] = useState(false)
   const [showErrors, setShowErrors] = useState(false)
+  const [makeDefault, setMakeDefault] = useState(false)
+  const [addressNotice, setAddressNotice] = useState("")
+  const defaultAddressId = customer?.default_shipping_address_id || customer?.addresses?.find(address => address.is_default_shipping)?.id
   const errors = validateAddress(values, (key, args) => ta(key, args), ta(getCountryRules(values.country_code).postalLabel as "postal" | "zip" | "postcode"))
   // Saved addresses can be anywhere checkout delivers to: the whole world.
   const addressOptions = deliveryCountries.map((code) => ({ code, name: code.toUpperCase() }))
 
   const openNew = () => {
+    account.clearError()
+    setAddressNotice("")
+    setMakeDefault(!defaultAddressId)
     setEditingId(null)
     setAddressName("")
     setValues({
@@ -372,6 +380,9 @@ function AddressBook() {
   }
 
   const openEdit = (address: AccountAddress) => {
+    account.clearError()
+    setAddressNotice("")
+    setMakeDefault(address.id === defaultAddressId)
     setEditingId(address.id)
     setAddressName(address.address_name ?? t("savedAddress"))
     setValues(toAddressValues(address))
@@ -392,12 +403,13 @@ function AddressBook() {
     const payload = {
       ...normalizeAddress(values),
       address_name: editingId ? addressName.trim() || generatedName : generatedName,
-      is_default_shipping: !customer?.default_shipping_address_id,
+      ...(makeDefault || !defaultAddressId ? { is_default_shipping: true } : {}),
     }
     try {
       if (editingId) await account.updateAddress(editingId, payload)
       else await account.createAddress(payload)
       setShowForm(false)
+      setAddressNotice(ct("Address saved."))
     } catch {
       // The account provider displays the API error.
     }
@@ -405,26 +417,30 @@ function AddressBook() {
 
   return (
     <Paper variant="outlined" sx={{ p: { xs: 2.5, md: 3.5 }, borderRadius: 3 }}>
-      <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "flex-start", gap: 2 }}>
-        <Box><Typography variant="h5" component="h2">{t("savedAddresses")}</Typography><Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>{t("addressesHelp")}</Typography></Box>
-        {!showForm ? <Button variant="outlined" startIcon={<Icon name="plus" sx={{ fontSize: 17 }} />} onClick={openNew}>{t("addAddress")}</Button> : null}
+      <Stack direction={{ xs: "column", sm: "row" }} sx={{ justifyContent: "space-between", alignItems: "flex-start", gap: 2 }}>
+        <Box><Typography variant="h5" component="h2">{t("savedAddresses")}</Typography><Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>{ct("Your default address is used automatically at checkout. You can choose another address for any order.")}</Typography></Box>
+        {!showForm ? <Button variant="outlined" disabled={account.pending} startIcon={<Icon name="plus" sx={{ fontSize: 17 }} />} onClick={openNew} sx={{ flexShrink: 0, minHeight: 44 }}>{t("addAddress")}</Button> : null}
       </Stack>
       {account.error ? <Alert severity="error" sx={{ mt: 2 }}>{ct(account.error)}</Alert> : null}
+      {addressNotice ? <Alert severity="success" role="status" sx={{ mt: 2 }}>{addressNotice}</Alert> : null}
       {showForm ? (
         <Box component="form" onSubmit={save} noValidate sx={{ mt: 3 }}>
-          <Stack spacing={2}>
+          <Box component="fieldset" disabled={account.pending} inert={account.pending} sx={{ border: 0, p: 0, m: 0, minWidth: 0 }}>
+            <Typography component="legend" sx={{ mb: 2, fontWeight: 650 }}>{editingId ? ct("Edit address") : t("addAddress")}</Typography>
             <AddressFields
               prefix="account-address"
               values={values}
               errors={showErrors ? errors : {}}
               countries={addressOptions}
               onChange={setValues}
+              disabled={account.pending}
               defaults={{ first_name: customer?.first_name, last_name: customer?.last_name, phone: customer?.phone }}
             />
-          </Stack>
-          <Stack direction="row" spacing={1.5} sx={{ mt: 2.5 }}>
+            {!defaultAddressId || editingId === defaultAddressId ? <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>{ct("This will be your default address for future orders.")}</Typography> : <FormControlLabel sx={{ mt: 1.5 }} control={<Checkbox checked={makeDefault} onChange={event => setMakeDefault(event.target.checked)} />} label={ct("Use as my default address for future orders")} />}
+          </Box>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 2.5 }}>
             <Button type="submit" variant="contained" disabled={account.pending}>{ct(account.pending ? t("saving") : t("saveAddress"))}</Button>
-            <Button type="button" onClick={() => setShowForm(false)}>{t("cancel")}</Button>
+            <Button type="button" disabled={account.pending} onClick={() => setShowForm(false)}>{t("cancel")}</Button>
           </Stack>
         </Box>
       ) : customer?.addresses?.length ? (
@@ -432,16 +448,25 @@ function AddressBook() {
           {customer.addresses.map((address) => (
             <Paper key={address.id} variant="outlined" sx={{ p: 2, borderRadius: 2.5 }}>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "space-between" }}>
-                <Box>
-                  <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 0.5 }}>
+                <Box sx={{ minWidth: 0, overflowWrap: "anywhere" }}>
+                  <Stack direction="row" useFlexGap spacing={1} sx={{ alignItems: "center", flexWrap: "wrap", mb: 0.5 }}>
                     <Typography sx={{ fontWeight: 700 }}>{ct(address.address_name || t("savedAddress"))}</Typography>
-                    {customer.default_shipping_address_id === address.id ? <Chip label={t("default")} size="small" color="secondary" /> : null}
+                    {defaultAddressId === address.id ? <Chip label={t("default")} size="small" color="secondary" /> : null}
                   </Stack>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>{ct(addressSummary(address))}</Typography>
+                  {formatAddressLines(address).map((line, index) => <Typography key={index} variant="body2" color="text.secondary">{line}</Typography>)}
                 </Box>
-                <Stack direction="row" spacing={0.5} sx={{ alignSelf: { xs: "flex-start", sm: "center" } }}>
-                  <Button size="small" onClick={() => openEdit(address)}>{t("edit")}</Button>
-                  <Button size="small" color="error" onClick={() => { if (window.confirm(t("confirmRemove"))) void account.deleteAddress(address.id) }}>{t("remove")}</Button>
+                <Stack direction="row" useFlexGap spacing={0.5} sx={{ flexWrap: "wrap", alignSelf: { xs: "flex-start", sm: "center" }, flexShrink: 0 }}>
+                  {defaultAddressId !== address.id ? <Button size="small" disabled={account.pending} sx={{ minHeight: 44 }} onClick={() => {
+                    setAddressNotice("")
+                    void account.updateAddress(address.id, { is_default_shipping: true }).then(() => setAddressNotice(ct("Default address updated."))).catch(() => undefined)
+                  }}>{ct("Make default")}</Button> : null}
+                  <Button size="small" disabled={account.pending} sx={{ minHeight: 44 }} onClick={() => openEdit(address)}>{t("edit")}</Button>
+                  <Button size="small" color="error" disabled={account.pending} sx={{ minHeight: 44 }} onClick={() => {
+                    if (window.confirm(t("confirmRemove"))) {
+                      setAddressNotice("")
+                      void account.deleteAddress(address.id).catch(() => undefined)
+                    }
+                  }}>{t("remove")}</Button>
                 </Stack>
               </Stack>
             </Paper>
@@ -452,8 +477,4 @@ function AddressBook() {
       )}
     </Paper>
   )
-}
-
-function addressSummary(address: Partial<AccountAddress>) {
-  return formatAddressLines(address).join(" / ")
 }

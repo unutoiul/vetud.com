@@ -7,11 +7,11 @@ import Grid from "@mui/material/Grid"
 import MenuItem from "@mui/material/MenuItem"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { getCountryRules } from "@/i18n/config"
 import { changeAddressCountry, normalizePostal, provincesOf, type AddressValues } from "@/lib/address"
-import { findPostalCode, PLACES_ENABLED, placeDetails, suggestAddresses, suggestPostalCodes, type PlaceLocation } from "@/lib/places"
+import { mergePlaceAddress, PLACES_ENABLED, placeDetails, suggestAddresses } from "@/lib/places"
 import PhoneField from "../common/PhoneField"
 import PlaceAutocomplete from "./PlaceAutocomplete"
 
@@ -23,18 +23,21 @@ type Props = {
   defaults?: { first_name?: string | null; last_name?: string | null; phone?: string | null }
   fields?: (keyof AddressValues)[]
   showAutofillHint?: boolean
+  disabled?: boolean
 }
 
-export default function AddressFields({ prefix, values, errors, countries, onChange, fields, showAutofillHint = true }: Props) {
+export default function AddressFields({ prefix, values, errors, countries, onChange, fields, showAutofillHint = true, disabled = false }: Props) {
   const ct = useContentTranslator()
   const t = useTranslations("Address")
   const locale = useLocale()
   const rules = getCountryRules(values.country_code)
   const visible = (field: keyof AddressValues) => !fields || fields.includes(field)
-  const [near, setNear] = useState<PlaceLocation>()
-  const latest = useRef({ values, onChange })
+  const latest = useRef({ values, onChange, disabled })
   const requestVersion = useRef(0)
-  useEffect(() => { latest.current = { values, onChange } }, [values, onChange])
+  useEffect(() => {
+    latest.current = { values, onChange, disabled }
+    if (disabled) requestVersion.current += 1
+  }, [values, onChange, disabled])
   const set = (changes: Partial<AddressValues>) => {
     onChange({ ...values, ...changes })
   }
@@ -49,47 +52,32 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
   const regionNames = new Intl.DisplayNames([locale], { type: "region" })
   const sortedCountries = countries.map(option => ({ code: option.code, label: regionNames.of(option.code.toUpperCase()) ?? option.name })).sort((a, b) => a.label.localeCompare(b.label, locale))
   const suggestionsOn = PLACES_ENABLED && Boolean(country)
-  const pick = async (picked: { placeId: string; main: string }, token: string, postalOnly = false) => {
+  const pick = async (picked: { placeId: string; main: string }, token: string, signal: AbortSignal) => {
     const initial = latest.current.values
     const version = ++requestVersion.current
-    const key = postalOnly ? "postal_code" : "address_1"
-    // Still the latest pick, and the visitor hasn't edited or cleared the field while the details loaded.
-    const active = () => {
-      const now = latest.current.values
-      return version === requestVersion.current && now.country_code === country && (now[key] === initial[key] || now[key] === picked.main)
-    }
-    try {
-      const { address, location } = await placeDetails(picked.placeId, token, locale)
-      if (!active() || (address.country_code && address.country_code !== country)) return
-      const postal = address.postal_code || (postalOnly ? picked.main : await findPostalCode({ ...address, country_code: country }, undefined, locale).catch(() => ""))
-      if (!active()) return
-      if (location) setNear(location)
-      const previous = latest.current.values
-      latest.current.onChange({
-        ...previous,
-        ...(!postalOnly ? { address_1: address.address_1 || picked.main, address_2: address.address_2 || previous.address_2 } : {}),
-        city: previous.city !== initial.city ? previous.city : address.city || previous.city,
-        postal_code: normalizePostal(postal || previous.postal_code, country),
-        province: rules.provinceRequired || rules.provinceOptional ? address.province || previous.province : "",
-      })
-    } catch {
-      if (active()) latest.current.onChange({ ...latest.current.values, [key]: picked.main })
-    }
+    const { address } = await placeDetails(picked.placeId, token, locale, signal)
+    const previous = latest.current.values
+    if (signal.aborted || latest.current.disabled || version !== requestVersion.current || previous.country_code !== country || previous.address_1 !== picked.main) return
+    if (address.country_code && address.country_code !== country) throw new Error("Address country mismatch")
+    const next = mergePlaceAddress(previous, initial, address, picked.main)
+    next.postal_code = normalizePostal(next.postal_code, country)
+    if (!rules.provinceRequired && !rules.provinceOptional) next.province = ""
+    latest.current = { ...latest.current, values: next }
+    latest.current.onChange(next)
   }
   const postalHelp = rules.postalExample ? t("postalHelp", { example: rules.postalExample }) : undefined
-  const postalField = suggestionsOn ? <PlaceAutocomplete key={`${prefix}-postal-${country}`} id={`${prefix}-postal_code`} name={`${prefix}-postal_code`} label={t(rules.postalLabel as "postal" | "zip" | "postcode")} value={values.postal_code} required={!rules.postalOptional} error={Boolean(errors.postal_code)} helperText={ct(errors.postal_code || postalHelp)} autoComplete={autocomplete("postal-code")} minCharacters={2} suggest={(text, token, signal) => suggestPostalCodes(text, token, country, signal, locale)} onTextChange={text => set({ postal_code: text })} onPick={(picked, token) => void pick(picked, token, true)} /> : <TextField {...field("postal_code", t(rules.postalLabel as "postal" | "zip" | "postcode"), "postal-code", !rules.postalOptional)} helperText={ct(errors.postal_code || postalHelp)} onBlur={() => set({ postal_code: normalizePostal(values.postal_code, country) })} />
+  const postalField = <TextField {...field("postal_code", t(rules.postalLabel as "postal" | "zip" | "postcode"), "postal-code", !rules.postalOptional)} helperText={ct(errors.postal_code || postalHelp)} onBlur={() => set({ postal_code: normalizePostal(latest.current.values.postal_code, country) })} />
   const cityField = <TextField {...field("city", t(rules.cityLabel as "city" | "town"), "address-level2", true)} />
   return <Box>
     {showAutofillHint ? <Typography sx={{ fontSize: 12, color: "text.secondary", mb: 2 }}>{t("autofill")}</Typography> : null}
     <Grid container spacing={2}>
       {visible("country_code") ? <Grid size={12}><TextField select {...field("country_code", t("country"), "country", true)} value={sortedCountries.some(option => option.code === country) ? country : ""} onChange={event => {
         requestVersion.current += 1
-        setNear(undefined)
         onChange(changeAddressCountry(values, event.target.value))
       }}>{sortedCountries.map(option => <MenuItem key={option.code} value={option.code}>{ct(option.label)}</MenuItem>)}</TextField></Grid> : null}
       {visible("first_name") ? <Grid size={{ xs: 12, sm: visible("last_name") ? 6 : 12 }}><TextField {...field("first_name", t("firstName"), "given-name", true)} /></Grid> : null}
       {visible("last_name") ? <Grid size={{ xs: 12, sm: visible("first_name") ? 6 : 12 }}><TextField {...field("last_name", t("lastName"), "family-name", true)} /></Grid> : null}
-      {visible("address_1") ? <Grid size={12}>{suggestionsOn ? <PlaceAutocomplete key={`${prefix}-address-${country}`} id={`${prefix}-address_1`} name={`${prefix}-address_1`} label={t("address")} value={values.address_1} required error={Boolean(errors.address_1)} helperText={ct(errors.address_1 || t("addressHelp"))} autoComplete={autocomplete("address-line1")} suggest={(text, token, signal) => suggestAddresses(text, token, country, signal, near, locale)} onTextChange={text => set({ address_1: text })} onPick={(picked, token) => void pick(picked, token)} /> : <TextField {...field("address_1", t("address"), "address-line1", true)} helperText={ct(errors.address_1 || t("addressHelp"))} />}</Grid> : null}
+      {visible("address_1") ? <Grid size={12}>{suggestionsOn ? <PlaceAutocomplete key={`${prefix}-address-${country}`} id={`${prefix}-address_1`} name={`${prefix}-address_1`} label={t("address")} value={values.address_1} required error={Boolean(errors.address_1)} helperText={ct(errors.address_1 || t("addressHelp"))} autoComplete={autocomplete("address-line1")} suggest={(text, token, signal) => suggestAddresses(text, token, country, signal, undefined, locale)} onTextChange={text => set({ address_1: text })} onPick={pick} /> : <TextField {...field("address_1", t("address"), "address-line1", true)} helperText={ct(errors.address_1 || t("addressHelp"))} />}</Grid> : null}
       {visible("address_2") ? <Grid size={12}><TextField {...field("address_2", t("address2"), "address-line2")} /></Grid> : null}
       {(rules.postalBeforeCity ? ["postal_code", "city"] as const : ["city", "postal_code"] as const).filter(visible).map(name => <Grid key={name} size={{ xs: 12, sm: visible("city") && visible("postal_code") ? name === "city" ? 7 : 5 : 12 }}>{name === "city" ? cityField : postalField}</Grid>)}
       {visible("province") && rules.provinceRequired ? <Grid size={12}><TextField select {...field("province", t(country === "us" ? "state" : "region"), "address-level1", true)}>{Object.entries(provincesOf(country)).map(([code, name]) => <MenuItem key={code} value={code}>{ct(name)}</MenuItem>)}</TextField></Grid>
