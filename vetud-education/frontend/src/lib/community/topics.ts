@@ -22,8 +22,8 @@ export type CommunityTopic = {
 export const COMMUNITY_TOPICS: CommunityTopic[] = [
   {
     id: "general", name: "General", icon: "molecule", categories: ["medicines"],
-    description: "Getting started, reading studies, regulation and news, lots and quality.",
-    prompts: ["How do I tell a good study from a weak one?", "What does an FDA advisory meeting actually decide?", "How do I read a certificate of analysis?"],
+    description: "Getting started, reading studies, side effects, regulation and news.",
+    prompts: ["How do I tell a good study from a weak one?", "What does an FDA advisory meeting actually decide?", "How do I describe a side effect clearly?"],
   },
   {
     id: "weight", name: "Weight & metabolism", icon: "scale", categories: ["weight"],

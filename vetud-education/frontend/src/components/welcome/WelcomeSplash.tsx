@@ -258,7 +258,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
                 {showErrors && !consent ? <FormHelperText error id="welcome-consent-error" sx={{ m: "0 0 8px 48px", lineHeight: 1.6, "&.Mui-error": { color: "error.light" } }}>{ct("Please tick the box to receive our emails.")}</FormHelperText> : null}
               </Box>
               {status === "error" ? <Alert severity="error" sx={{ mt: 2 }}>{ct("We couldn't save your signup. Please try again.")}</Alert> : null}
-              <HoldButton ref={joinButton} variant="contained" fullWidth size="large" disabled={status === "sending"} onConfirm={() => void submit()} fill={alpha(brand.navy, .2)}
+              <HoldButton ref={joinButton} showHoldTooltip variant="contained" fullWidth size="large" disabled={status === "sending"} onConfirm={() => void submit()} fill={alpha(brand.navy, .2)}
                 startIcon={status === "sending" ? <CircularProgress size={18} color="inherit" /> : <Icon name="mail" />}
                 counterSx={{ ml: "auto" }}
                 sx={{ ...primaryButtonSx, minHeight: 54, mt: 2.5, justifyContent: "center", "& .MuiButton-startIcon": { mr: "auto" } }}>

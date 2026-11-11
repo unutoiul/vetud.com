@@ -22,7 +22,7 @@ const RULES: { title: string; points: string[] }[] = [
     points: [
       "Don't post amounts, schedules, cycles or \"stacks\" with quantities, and don't ask others for theirs.",
       "Posts that mention a dose amount (for example \"250 mcg\" or \"10 units\") wait for a moderator before they appear.",
-      "Don't name or link to other sellers, and don't offer to sell, swap or give away products.",
+      "Don't name or link to sellers, and don't offer to sell, swap or give away products.",
     ],
   },
   {
@@ -30,7 +30,7 @@ const RULES: { title: string; points: string[] }[] = [
     points: [
       "Describe what you noticed and cite your sources. Don't tell others what to take or diagnose anyone.",
       "If someone describes symptoms that worry you, suggest they speak to a doctor.",
-      "Vetud supplies laboratory research materials. Nothing in the community is a recommendation to use them in people.",
+      "Many peptides discussed here are sold for research only and aren’t approved for people. Nothing in the community is a recommendation to take them.",
     ],
   },
   {
@@ -46,7 +46,6 @@ const RULES: { title: string; points: string[] }[] = [
 const HOW = [
   { title: "Moderation", text: "Posts with dose amounts, and links from members below the Contributor level, wait for a moderator. When three members report a post, it's hidden until a moderator reviews it. Moderators can remove posts, close threads, and mute or ban accounts." },
   { title: "Experts", text: "Doctors and researchers are verified by the Vetud team before they get the Expert badge. Their credentials appear next to every answer, and the most helpful expert answer is pinned in each thread." },
-  { title: "Verified buyers and lots", text: "Members with a paid Vetud order for a product get a Verified buyer badge on posts about it. Lot numbers are checked against our published lot records; we can't confirm which lot a member received, so the lot is shown as the member reported it." },
   { title: "Reputation", text: "Members earn 2 points for each helpful vote and 15 for a best answer, and lose 10 when a moderator removes a post. Levels: Member, Contributor (25), Trusted member (100) and Community lead (300)." },
   { title: "Your data", text: "Your community name, posts and photos are public. Your email address and real name are never shown. You can edit or delete your posts at any time; see the privacy policy for everything else." },
 ]

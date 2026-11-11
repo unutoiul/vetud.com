@@ -10,7 +10,7 @@ import { Suspense } from "react"
 import { AppLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
-import { getLegalDocument, LEGAL_DOCUMENTS, SHOP_NAME } from "@/content/legal"
+import { getLegalDocument, LEGAL_DOCUMENTS } from "@/content/legal"
 
 export function generateStaticParams() {
   return LEGAL_DOCUMENTS.map((document) => ({ slug: document.slug }))
@@ -73,7 +73,7 @@ async function LegalContent({ params }: Pick<PageProps<"/[lang]/legal/[slug]">, 
                   </Typography>
                   {section.paragraphs.map((paragraph) => (
                     <Typography key={paragraph.slice(0, 40)} sx={{ mb: 1.5, color: "text.primary" }}>
-                      {ct(paragraph).replaceAll("{shop}", SHOP_NAME)}
+                      {ct(paragraph)}
                     </Typography>
                   ))}
                 </Box>

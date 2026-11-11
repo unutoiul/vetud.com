@@ -7,8 +7,7 @@ const LINK = /\[([^\]]+)\]\(([^)\s]+)\)/g
 
 /**
  * Article prose with inline links written as [label](target). Targets are site paths
- * ("/learn/bpc-157") or external URLs. A "shop:<slug>" target shows as plain text: this site links
- * to the shop only from the menu and once per guide.
+ * ("/learn/bpc-157") or external URLs.
  */
 export default function RichText({ text: source }: { text: string }) {
   const ct = useContentTranslator()
@@ -18,9 +17,7 @@ export default function RichText({ text: source }: { text: string }) {
   for (const match of text.matchAll(LINK)) {
     const [whole, label, target] = match
     parts.push(text.slice(last, match.index))
-    if (target.startsWith("shop:")) {
-      parts.push(label)
-    } else if (target.startsWith("http")) {
+    if (target.startsWith("http")) {
       parts.push(<Link key={match.index} href={target} target="_blank" rel="noopener noreferrer">{label}</Link>)
     } else {
       parts.push(<AppLink key={match.index} href={target}>{label}</AppLink>)

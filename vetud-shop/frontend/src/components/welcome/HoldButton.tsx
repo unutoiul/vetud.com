@@ -2,6 +2,7 @@
 
 import Box from "@mui/material/Box"
 import Button, { type ButtonProps } from "@mui/material/Button"
+import Tooltip from "@mui/material/Tooltip"
 import { keyframes, type SxProps, type Theme } from "@mui/material/styles"
 import { useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
@@ -33,6 +34,8 @@ type HoldButtonProps = Omit<ButtonProps, "onClick" | "href" | "type" | "endIcon"
   fill: string
   /** "full" shows "Hold 3s" before the hold starts; "short" shows only "3s", for small buttons. */
   hint?: "full" | "short"
+  /** Explains the hold gesture on hover and keyboard focus. */
+  showHoldTooltip?: boolean
   /** Extra styles for the counter, e.g. to push it to the button's edge. */
   counterSx?: SxProps<Theme>
 }
@@ -43,7 +46,7 @@ type HoldButtonProps = Omit<ButtonProps, "onClick" | "href" | "type" | "endIcon"
  * keyboard (hold Space or Enter). Screen readers activate buttons with a plain click, which no
  * press starts, so that click still acts at once.
  */
-export default function HoldButton({ onConfirm, fill, hint = "full", counterSx, children, disabled, sx, ...props }: HoldButtonProps) {
+export default function HoldButton({ onConfirm, fill, hint = "full", showHoldTooltip = false, counterSx, children, disabled, sx, ...props }: HoldButtonProps) {
   const ct = useContentTranslator()
   const hintId = useId()
   const [holding, setHolding] = useState(false)
@@ -92,7 +95,7 @@ export default function HoldButton({ onConfirm, fill, hint = "full", counterSx, 
     setShake((count) => count + 1)
   }
 
-  return (
+  const button = (
     <Button
       {...props}
       type="button"
@@ -173,4 +176,21 @@ export default function HoldButton({ onConfirm, fill, hint = "full", counterSx, 
       </Box>
     </Button>
   )
+
+  return showHoldTooltip ? (
+    <Tooltip
+      title={disabled ? "" : ct.template("Press and hold for {v0} seconds", { v0: SECONDS })}
+      describeChild
+      arrow
+      placement="top"
+      enterDelay={150}
+      disableTouchListener
+      slotProps={{
+        tooltip: { sx: { bgcolor: "brand.onNavy", color: "brand.navy", fontSize: 13, lineHeight: 1.5, px: 1.5, py: 1 } },
+        arrow: { sx: { color: "brand.onNavy" } },
+      }}
+    >
+      {button}
+    </Tooltip>
+  ) : button
 }

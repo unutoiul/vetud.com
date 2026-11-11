@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography"
 import type { SxProps, Theme } from "@mui/material/styles"
 import { AppLink } from "../common/links"
 
-export const COMMUNITY_DISCLAIMER = "Member posts are personal, unverified observations, not medical advice. Members never share doses. Vetud supplies laboratory research materials and doesn't advise on personal use."
+export const COMMUNITY_DISCLAIMER = "Member posts are personal, unverified observations, not medical advice. Members never share doses. Many peptides discussed here are sold for research only and aren’t approved for people. We don’t recommend taking them; the community is here so people who do can share what they noticed, including side effects."
 
 export default function CommunityDisclaimer({ sx }: { sx?: SxProps<Theme> }) {
   const ct = useContentTranslator()

@@ -22,8 +22,7 @@ function isoDate(value: string | undefined) {
 
 /**
  * Every education page on www.vetud.com in each launched language, with hreflang alternates.
- * News articles and legal pages carry their dates as lastmod. The shop's pages are in the shop's
- * own sitemap (https://www.pep.company/sitemap.xml).
+ * News articles and legal pages carry their dates as lastmod.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   "use cache"

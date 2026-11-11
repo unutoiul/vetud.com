@@ -1,7 +1,5 @@
-import { SHOP_URL, SITE } from "@/lib/config"
+import { SITE } from "@/lib/config"
 
-/** How legal pages name the separate shop. */
-export const SHOP_NAME = SHOP_URL ? SHOP_URL.replace(/^https?:\/\//, "") : "[shop domain]"
 
 /**
  * Legal page drafts for the education site. Replace every [bracketed placeholder] and have the text
@@ -21,8 +19,6 @@ export type LegalDocument = {
 const EMAIL = SITE.email
 const OPERATOR = "Vetud LTD"
 const ADDRESS = "120 Kings Road, London SW6 3BX, United Kingdom"
-// Filled in after translation (see SHOP_NAME), so the text doesn't depend on the shop's address.
-const SHOP = "{shop}"
 const UPDATED = "11 November 2026"
 
 export const LEGAL_DOCUMENTS: LegalDocument[] = [
@@ -45,7 +41,6 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       ] },
       { heading: "Who handles it for us", paragraphs: ["We use Vercel to host the website, Railway to host our servers and database, and Resend to send email. They process data for us under their own security and data protection terms. Some may process it outside your country."] },
       { heading: "Browser storage", paragraphs: ["We keep your sign-in in your browser's local storage and your language choice in a cookie. We use no advertising or analytics cookies on this site."] },
-      { heading: "The separate shop", paragraphs: [`The shop at ${SHOP} is a separate website with its own accounts, email list and privacy policy. Signing up here does not sign you up there.`] },
       { heading: "How long we keep it", paragraphs: ["[Retention periods to be confirmed.] You can unsubscribe from the email list at any time using the link in our emails."] },
       { heading: "Your rights", paragraphs: [`Depending on where you live, you can ask to see, correct, delete or move your data, object to how we use it, or withdraw consent. Write to ${EMAIL}. You can also complain to your data protection authority.`] },
     ],
@@ -64,7 +59,6 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         "Follow the community guidelines. Do not post doses, personal protocols, medical claims, or anything unlawful, abusive or misleading. We may hold, edit, hide or remove posts and suspend accounts.",
       ] },
       { heading: "Accuracy", paragraphs: ["We work to keep our guides accurate and sourced, but research changes and we cannot promise that everything is complete or current."] },
-      { heading: "Our operator also sells products", paragraphs: [`${OPERATOR} also operates a separate shop at ${SHOP}. This site may link to it. Purchases are governed by that shop's own terms.`] },
       { heading: "Liability and law", paragraphs: ["[Liability wording and governing law to be confirmed by a lawyer.]"] },
     ],
   },
@@ -88,7 +82,6 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     sections: [
       { heading: "Publisher", paragraphs: [`${OPERATOR}, private limited company, ${ADDRESS}. Email: ${EMAIL}.`] },
       { heading: "Hosting", paragraphs: ["Website: Vercel Inc. Servers: Railway Corporation."] },
-      { heading: "Related business", paragraphs: [`The publisher also operates a shop at ${SHOP}.`] },
     ],
   },
 ]

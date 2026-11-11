@@ -20,11 +20,11 @@ export default async function LearnHero() {
   return <Box component="section" aria-labelledby="hero-title" sx={{ bgcolor: brand.mintWash, borderBottom: "1px solid", borderColor: "divider", px: gutter, pt: { xs: 5, md: 7 }, pb: { xs: 4, md: 5 } }}>
     <Box sx={{ maxWidth: 1360, mx: "auto", display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, 1fr) minmax(0, 1fr)" }, gap: { xs: 4, md: 6, lg: 9 }, alignItems: "center" }}>
       <Box>
-        <Typography component="h1" id="hero-title" sx={{ maxWidth: 650, fontSize: { xs: 48, sm: 64, md: 64, lg: 82 }, fontWeight: 400, letterSpacing: "-.065em", lineHeight: 1.02, textWrap: "balance" }}>{ct("Tiny molecules. Extraordinary science.")}</Typography>
-        <Typography sx={{ maxWidth: 510, color: brand.navySoft, mt: 3, fontSize: { xs: 17, md: 18 }, lineHeight: 1.8 }}>{ct("Your body uses peptides to send messages. Discover how they work, the surprising stories behind them, and what the research can really tell us.")}</Typography>
+        <Typography component="h1" id="hero-title" sx={{ maxWidth: 650, fontSize: { xs: 48, sm: 64, md: 64, lg: 82 }, fontWeight: 400, letterSpacing: "-.065em", lineHeight: 1.02, textWrap: "balance" }}>{ct("Peptides, explained. Real people, real experiences.")}</Typography>
+        <Typography sx={{ maxWidth: 510, color: brand.navySoft, mt: 3, fontSize: { xs: 17, md: 18 }, lineHeight: 1.8 }}>{ct("Many peptides are sold for research only and aren’t approved for people. We know some people take them anyway. Learn what the research really shows, then join our community, where people share what they noticed, including side effects, so nobody has to figure it out alone.")}</Typography>
         <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3.5, alignItems: { xs: "stretch", sm: "center" } }}>
           <ButtonLink href="/learn" variant="contained" endIcon={<Icon name="arrowRight" />}>{t("library")}</ButtonLink>
-          <Box component="a" href="#peptide-stories" sx={{ display: "inline-flex", justifyContent: "center", alignItems: "center", minHeight: 48, px: 2, fontSize: 14, fontWeight: 600, color: brand.navy, textUnderlineOffset: 5 }}>{ct("Surprise me with the science")}</Box>
+          <ButtonLink href="/community" variant="outlined" endIcon={<Icon name="arrowRight" />}>{ct("Join the community")}</ButtonLink>
         </Stack>
         <Box sx={{ mt: { xs: 3, md: 5 }, display: "flex", gap: 1.25, alignItems: "flex-start", color: brand.navySoft }}>
           <Icon name="document" sx={{ fontSize: 20, mt: .3, color: brand.blue }} />
