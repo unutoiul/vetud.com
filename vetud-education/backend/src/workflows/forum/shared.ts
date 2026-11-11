@@ -101,13 +101,13 @@ export const recountForumThreadsStep = createStep(
   }
 )
 
-/** Recounts reputation from the members' votes, best answers and removed posts. */
+/** Recounts reputation from the members' votes, best answers, removed posts and published posts. */
 export const recountForumReputationStep = createStep(
   "recount-forum-reputation",
   async (input: { profile_ids: (string | null | undefined)[] }, { container }) => {
     const service = forumService(container)
     for (const id of unique(input.profile_ids)) {
-      const published = await service.listForumPosts({ author_id: id, status: "published" }, { select: ["id", "helpful_count"] })
+      const published = await service.listForumPosts({ author_id: id, status: "published" }, { select: ["id", "helpful_count", "is_opening"] })
       const postIds = published.map(post => post.id)
       const [, bestAnswers] = postIds.length
         ? await service.listAndCountForumThreads({ accepted_post_id: postIds, status: "published" }, { take: 1 })
@@ -119,6 +119,8 @@ export const recountForumReputationStep = createStep(
           helpfulVotes: published.reduce((total, post) => total + (post.helpful_count ?? 0), 0),
           bestAnswers,
           removedPosts,
+          replies: published.filter(post => !post.is_opening).length,
+          threads: published.filter(post => post.is_opening).length,
         }),
       })
     }

@@ -171,7 +171,7 @@ export default function HoldButton({ onConfirm, fill, hint = "full", showHoldToo
       }, ...(Array.isArray(counterSx) ? counterSx : [counterSx])]}>
         {holding ? `${left}s` : hint === "full" ? ct.template("Hold {v0}s", { v0: SECONDS }) : `${SECONDS}s`}
       </Box>
-      <Box component="span" id={hintId} sx={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
+      <Box component="span" id={hintId} sx={{ position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
         {ct.template("Press and hold for {v0} seconds", { v0: SECONDS })}
       </Box>
     </Button>

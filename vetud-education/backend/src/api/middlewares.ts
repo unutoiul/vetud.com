@@ -12,11 +12,13 @@ import {
   StoreEmailListSchema,
   StoreUnsubscribeEmailListSchema,
 } from "./store/email-list/validators"
+import { accountRoutes } from "./account-middlewares"
 import { forumRoutes } from "./forum-middlewares"
 
 export default defineMiddlewares({
   routes: [
     ...forumRoutes,
+    ...accountRoutes,
     {
       method: ["POST"],
       matcher: "/store/contact",

@@ -62,7 +62,7 @@ export const PROFILE_FIELDS = ["id", "customer_id", "display_name", "handle", "r
 /** What a post shows about its author. Never the customer ID, email or full name. */
 export function publicAuthor(profile?: ProfileRecord | null) {
   if (!profile) {
-    return { handle: null, display_name: "Former member", role: "member" as const, credentials: null, level: "Member", level_id: "member", reputation: 0 }
+    return { handle: null, display_name: "Former member", role: "member" as const, credentials: null, level: "Newcomer", level_id: "newcomer", reputation: 0 }
   }
   const level = levelFor(profile.reputation)
   return {

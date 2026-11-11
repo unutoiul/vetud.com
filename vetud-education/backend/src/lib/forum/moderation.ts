@@ -1,4 +1,4 @@
-import { REPUTATION_LEVELS } from "./reputation"
+import { LINK_LEVEL_MIN } from "./reputation"
 
 export type HoldReason = "dose" | "link" | "image" | "reports"
 
@@ -22,7 +22,7 @@ type Author = { role: string; reputation: number }
 
 /** Experts, moderators and members from the Contributor level up. */
 export function isTrusted(author: Author) {
-  return author.role !== "member" || author.reputation >= REPUTATION_LEVELS[1].min
+  return author.role !== "member" || author.reputation >= LINK_LEVEL_MIN
 }
 
 /**

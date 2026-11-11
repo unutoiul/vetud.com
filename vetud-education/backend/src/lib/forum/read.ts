@@ -14,6 +14,7 @@ import {
   type ProfileRecord,
   type ThreadRecord,
 } from "./public"
+import { nextLevelFor, participationPoints } from "./reputation"
 
 /**
  * Read models for the community API. Everything public goes through the projections in
@@ -201,4 +202,33 @@ export async function memberPage(container: MedusaContainer, handle: string, vie
     listThreads(container, { author: handle, sort: "latest", offset: 0, limit: 10 }, viewer),
   ])
   return { member: publicMember(profile), totals: { threads, replies }, threads: recent.threads }
+}
+
+/**
+ * The signed-in member's own numbers for their account page: what they posted, what others found
+ * useful, what is waiting for review, and where they stand on the reputation ladder.
+ */
+export async function memberStats(container: MedusaContainer, profile: ProfileRecord) {
+  const { data: published } = await queryOf(container).graph({
+    entity: "forum_post",
+    fields: ["id", "helpful_count", "is_opening"],
+    filters: { author_id: profile.id, status: "published" },
+  })
+  const postIds = published.map(post => post.id as string)
+  const [bestAnswers, pending] = await Promise.all([
+    postIds.length ? count(container, "forum_thread", { accepted_post_id: postIds, status: "published" }) : 0,
+    count(container, "forum_post", { author_id: profile.id, status: "pending" }),
+  ])
+  const threads = published.filter(post => post.is_opening).length
+  const replies = published.length - threads
+  const next = nextLevelFor(profile.reputation)
+  return {
+    threads,
+    replies,
+    helpful_received: published.reduce((total, post) => total + Number(post.helpful_count ?? 0), 0),
+    best_answers: bestAnswers,
+    pending,
+    participation_points: participationPoints({ threads, replies }),
+    next_level: next ? { id: next.id, name: next.name, min: next.min } : null,
+  }
 }

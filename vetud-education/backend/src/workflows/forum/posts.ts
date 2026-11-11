@@ -92,6 +92,8 @@ export const createForumPostWorkflow = createWorkflow(
     const prepared = prepareForumPostStep(input)
     const post = createForumPostStep(prepared)
     recountForumThreadsStep({ thread_ids: transform({ input }, ({ input }) => [input.thread_id]) })
+    // Published replies count toward the author's reputation (see lib/forum/reputation.ts).
+    recountForumReputationStep({ profile_ids: transform({ post }, ({ post }) => [post.author_id]) })
     return new WorkflowResponse(post)
   }
 )
@@ -143,6 +145,8 @@ export const editForumPostWorkflow = createWorkflow(
   function (input: EditForumPostInput) {
     const post = editForumPostStep(input)
     recountForumThreadsStep({ thread_ids: transform({ post }, ({ post }) => [post.thread_id]) })
+    // An edit can hold or release a post, which changes what counts toward reputation.
+    recountForumReputationStep({ profile_ids: transform({ post }, ({ post }) => [post.author_id]) })
     return new WorkflowResponse(post)
   }
 )

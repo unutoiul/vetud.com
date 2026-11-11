@@ -46,7 +46,7 @@ const RULES: { title: string; points: string[] }[] = [
 const HOW = [
   { title: "Moderation", text: "Posts with dose amounts, and links from members below the Contributor level, wait for a moderator. When three members report a post, it's hidden until a moderator reviews it. Moderators can remove posts, close threads, and mute or ban accounts." },
   { title: "Experts", text: "Doctors and researchers are verified by the Vetud team before they get the Expert badge. Their credentials appear next to every answer, and the most helpful expert answer is pinned in each thread." },
-  { title: "Reputation", text: "Members earn 2 points for each helpful vote and 15 for a best answer, and lose 10 when a moderator removes a post. Levels: Member, Contributor (25), Trusted member (100) and Community lead (300)." },
+  { title: "Reputation and levels", text: "Taking part counts: 1 point for each published reply and 2 for each discussion or question, up to 40 points. Beyond that, reputation comes from what other members value: 2 points for each helpful vote and 15 for a best answer. A post removed by a moderator costs 10. Levels: Newcomer, Member (10), Contributor (25), Trusted member (100), Senior member (200) and Community lead (300). Contributors can share links without review." },
   { title: "Your data", text: "Your community name, posts and photos are public. Your email address and real name are never shown. You can edit or delete your posts at any time; see the privacy policy for everything else." },
 ]
 

@@ -1,9 +1,9 @@
 import type { ForumTopic } from "../../lib/forum/topics"
 import { MedusaError } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { screenPost } from "../../lib/forum/moderation"
 import { excerptOf, normalizeBody, normalizeTitle, slugify } from "../../lib/forum/text"
-import { activeProfile, assertNotTooSoon, attachImages, claimableImages, forumService, releaseImages } from "./shared"
+import { activeProfile, assertNotTooSoon, attachImages, claimableImages, forumService, recountForumReputationStep, releaseImages } from "./shared"
 
 export type ThreadKind = "discussion" | "question"
 
@@ -106,6 +106,8 @@ export const createForumThreadWorkflow = createWorkflow(
   function (input: CreateForumThreadInput) {
     const prepared = prepareForumThreadStep(input)
     const created = createForumThreadStep(prepared)
+    // Published threads count toward the author's reputation (see lib/forum/reputation.ts).
+    recountForumReputationStep({ profile_ids: transform({ created }, ({ created }) => [created.post.author_id]) })
     return new WorkflowResponse(created)
   }
 )

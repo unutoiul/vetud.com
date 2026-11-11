@@ -17,7 +17,7 @@ import { useState } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import Icon from "../brand/Icon"
 import { useLanguage } from "../common/language"
-import { ButtonLink } from "../common/links"
+import AccountDashboard from "../profile/AccountDashboard"
 import { useAccount } from "./AccountProvider"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -30,7 +30,7 @@ function errorText(error: unknown) {
 export default function AccountPage() {
   const { customer, loading } = useAccount()
   if (loading) return <Skeleton variant="rounded" height={480} />
-  return customer ? <AccountSummary /> : <AuthPanel />
+  return customer ? <AccountDashboard /> : <AuthPanel />
 }
 
 export function PasswordField({ label, value, onChange, autoComplete, helperText, error }: {
@@ -197,24 +197,5 @@ export function AuthPanel() {
         </Paper>
       </Grid>
     </Grid>
-  )
-}
-
-function AccountSummary() {
-  const ct = useContentTranslator()
-  const t = useTranslations("Account")
-  const { customer, signOut, pending, error } = useAccount()
-  if (!customer) return null
-  return (
-    <Paper variant="outlined" sx={{ p: { xs: 2.5, md: 4 }, borderRadius: 3, maxWidth: 640 }}>
-      <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>{t("account")}</Typography>
-      <Typography variant="h4" component="h2" sx={{ mt: 1 }}>{[customer.first_name, customer.last_name].filter(Boolean).join(" ")}</Typography>
-      <Typography sx={{ mt: .5, color: "text.secondary", overflowWrap: "anywhere" }}>{customer.email}</Typography>
-      {error ? <Alert severity="error" sx={{ mt: 2 }}>{ct(error)}</Alert> : null}
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3 }}>
-        <ButtonLink href="/community" variant="contained">{ct("Go to the community")}</ButtonLink>
-        <Button variant="outlined" disabled={pending} onClick={() => void signOut().catch(() => undefined)}>{t("signout")}</Button>
-      </Stack>
-    </Paper>
   )
 }

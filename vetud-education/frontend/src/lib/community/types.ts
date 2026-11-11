@@ -9,12 +9,34 @@ export type ForumAuthor = {
   role: "member" | "expert" | "moderator"
   credentials: string | null
   level: string
-  level_id: "member" | "contributor" | "trusted" | "lead"
+  level_id: LevelId
   reputation: number
 }
 
 export type ForumMember = ForumAuthor & { bio: string | null; joined_at: string }
 export type OwnForumProfile = ForumMember & { status: "active" | "muted" | "banned" }
+
+/** Reputation levels, lowest first (backend lib/forum/reputation.ts). */
+export type LevelId = "newcomer" | "member" | "contributor" | "trusted" | "senior" | "lead"
+export type ReputationLevel = { id: LevelId; name: string; min: number }
+
+/** How reputation is earned, returned with the member's own profile. */
+export type ReputationRules = {
+  levels: ReputationLevel[]
+  points: { helpfulVote: number; bestAnswer: number; removedPost: number; reply: number; thread: number }
+  participation_cap: number
+}
+
+/** The signed-in member's own numbers (GET /store/forum/me). */
+export type OwnForumStats = {
+  threads: number
+  replies: number
+  helpful_received: number
+  best_answers: number
+  pending: number
+  participation_points: number
+  next_level: ReputationLevel | null
+}
 
 export type ForumThread = {
   id: string

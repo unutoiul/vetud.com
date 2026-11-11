@@ -1,6 +1,6 @@
 import { containsDose, containsLink, screenPost } from "../forum/moderation"
 import { publicAuthor, publicPost, type PostRecord, type ProfileRecord } from "../forum/public"
-import { computeReputation, levelFor } from "../forum/reputation"
+import { computeReputation, levelFor, nextLevelFor, PARTICIPATION_CAP } from "../forum/reputation"
 import { DISPLAY_NAME_PATTERN, excerptOf, handleFor, isReservedHandle, normalizeBody, slugify, suggestedDisplayName } from "../forum/text"
 
 describe("forum moderation", () => {
@@ -45,12 +45,23 @@ describe("forum reputation", () => {
     expect(computeReputation({ helpfulVotes: 0, bestAnswers: 0, removedPosts: 2 })).toBe(0)
   })
 
+  it("counts taking part, up to a cap, so higher levels need helpful votes and best answers", () => {
+    expect(computeReputation({ helpfulVotes: 0, bestAnswers: 0, removedPosts: 0, replies: 4, threads: 3 })).toBe(10)
+    expect(computeReputation({ helpfulVotes: 0, bestAnswers: 0, removedPosts: 0, replies: 500, threads: 50 })).toBe(PARTICIPATION_CAP)
+    expect(levelFor(PARTICIPATION_CAP).id).toBe("contributor")
+    expect(computeReputation({ helpfulVotes: 30, bestAnswers: 0, removedPosts: 0, replies: 500 })).toBe(60 + PARTICIPATION_CAP)
+  })
+
   it("maps reputation to levels", () => {
-    expect(levelFor(0).id).toBe("member")
+    expect(levelFor(0).id).toBe("newcomer")
+    expect(levelFor(10).id).toBe("member")
     expect(levelFor(24).id).toBe("member")
     expect(levelFor(25).id).toBe("contributor")
     expect(levelFor(100).id).toBe("trusted")
+    expect(levelFor(200).id).toBe("senior")
     expect(levelFor(1000).id).toBe("lead")
+    expect(nextLevelFor(30)?.id).toBe("trusted")
+    expect(nextLevelFor(1000)).toBeNull()
   })
 })
 

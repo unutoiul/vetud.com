@@ -33,6 +33,6 @@ export function AuthorLine({ author, size = "medium" }: { author: ForumAuthor; s
     {author.handle ? <AppLink href={`/community/members/${author.handle}`} underline="hover" sx={{ color: "inherit" }}>{ct(name)}</AppLink> : name}
     {author.role === "expert" ? <Pill tone="expert" icon="shield" title={ct("Verified by the Vetud team")}>{ct("Expert")}{author.credentials ? <span translate="no"> · {author.credentials}</span> : null}</Pill> : null}
     {author.role === "moderator" ? <Pill tone="moderator">{ct("Moderator")}</Pill> : null}
-    {author.role === "member" && author.level_id !== "member" ? <Pill>{ct(author.level)}</Pill> : null}
+    {author.role === "member" && author.level_id !== "member" && author.level_id !== "newcomer" ? <Pill>{ct(author.level)}</Pill> : null}
   </Box>
 }
