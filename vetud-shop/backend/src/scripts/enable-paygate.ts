@@ -1,6 +1,7 @@
-import { MedusaError } from "@medusajs/framework/utils"
+import type { ExecArgs } from "@medusajs/framework/types"
+import { enablePaygateWorkflow } from "../workflows/enable-paygate"
 
-/** Kept as an explicit failure for old deployment/runbook commands. */
-export default async function enablePaygate() {
-  throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "PayGate checkout has been retired and cannot be enabled.")
+export default async function enablePaygate({ container }: ExecArgs) {
+  const { result } = await enablePaygateWorkflow(container).run({ input: {} })
+  console.log(JSON.stringify({ action: "enable-paygate", changedRegions: result }))
 }

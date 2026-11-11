@@ -160,7 +160,7 @@ if (REDIS_URL) {
 // (Settings > Regions) as `pp_<resolve id>_<id>`, e.g. pp_paypal_paypal.
 const paymentProviders: ModuleConfig[] = []
 const paygate = getPaygateConfig()
-// Legacy settlement handlers only: checkout availability is retired in all regions and API guards.
+// Checkout and settlement use the same configured wallets and callback secret.
 if (paygate.enabled) {
   if (paygate.cardWallet) paymentProviders.push({ resolve: "./src/modules/paygate", id: "card", options: { ...paygate, mode: "card" } })
   if (Object.keys(paygate.wallets).length) paymentProviders.push({ resolve: "./src/modules/paygate", id: "crypto", options: { ...paygate, mode: "crypto" } })

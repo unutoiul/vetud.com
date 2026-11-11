@@ -21,6 +21,7 @@ import { useEffect, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import { activeShipments, deliveryLabel, orderNumber, orderPaymentLabel, orderPaymentNotice, shipmentLabel, trackingLink, type CustomerOrder, type CustomerOrdersResponse } from "@/lib/orders"
 import { useMoney } from "@/lib/money"
+import { paygateOrderLink } from "@/lib/paygate"
 import { formatAddressLines } from "@/lib/address"
 import Icon from "../brand/Icon"
 import { ButtonLink } from "../common/links"
@@ -142,6 +143,7 @@ function OrderCard({ order }: { order: CustomerOrder }) {
 
       <Stack spacing={2} sx={{ px: { xs: 2.5, md: 3.5 }, py: 2.5 }}>
         {paymentNotice ? <Alert severity={order.payment_summary?.review === "pending_settlement" ? "info" : "warning"}>{ct(paymentNotice)}</Alert> : null}
+        {paygateOrderLink(order.payment_summary?.checkout_url) ? <Button component="a" href={paygateOrderLink(order.payment_summary?.checkout_url)!} variant="contained" sx={{ alignSelf: "flex-start" }}>{ct("Continue payment with PayGate")}</Button> : null}
         {shipments.length ? shipments.map((shipment, index) => (
           <Box key={shipment.id}>
             <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>

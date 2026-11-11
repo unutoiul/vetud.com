@@ -1,6 +1,7 @@
 .git
 .claude
 .agents
+.tmp
 assets
 output
 vetud-shop/backend

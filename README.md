@@ -175,6 +175,8 @@ The emails are published templates in Resend (**Dashboard → Templates**, named
 
 ### PayGate.to cards and cryptocurrency
 
+The shop now uses `https://www.pep.company`. See the [PayGate domain-move runbook](vetud-shop/backend/docs/paygate-domain-move.md) for the current CORS, return URL, callback and restore settings.
+
 The optional PayGate integration uses the pinned official `paygate-to` Node SDK. It is **disabled by default**. The dedicated API hostname is `api-vetudcom-6a438e9ca8f87c5e13025476.paygate.to`; no gateway account or API key is required. `PAYGATE_CALLBACK_SECRET` is our own signing secret, not an API credential.
 
 Configure these on both Medusa services before enabling:
@@ -196,7 +198,7 @@ Generate the local signing secret with `node -e "console.log(require('crypto').r
 
 Deploy backend and storefront, then enable `pp_paygate_card` and/or `pp_paygate_crypto` on the intended Medusa regions under **Settings → Regions**. The storefront displays each option only when backend configuration and the region both enable it. No database migration is needed for this integration.
 
-Alternatively, run `PAYGATE_REGION_COUNTRIES=us,gb,de,fr,nl npx medusa exec ./src/scripts/enable-paygate.ts` in the backend after enabling the provider. On Railway run it from the source root `/app`, using that directory's CLI and dependencies; running inside `.medusa/server` can load a second copy of Medusa's workflow definitions. Use the actual storefront country list. This script adds the configured PayGate methods through Medusa's region workflow, preserves existing payment methods, and is safe to rerun.
+Alternatively, run `npx medusa exec ./src/scripts/enable-paygate.ts` in the backend after enabling the provider. On Railway run it from the source root `/app`, using that directory's CLI and dependencies; running inside `.medusa/server` can load a second copy of Medusa's workflow definitions. This script adds configured PayGate methods to existing regions through Medusa's region workflow, preserves existing payment methods, and is safe to rerun. The restore migration runs the same workflow during deployment.
 
 Each attempt has its own invoice reference, receiving wallet and signed callback token. Checkout reserves an order with deferred authorization, then redirects through a server-validated link to the hosted payment page. Customers can resume an unpaid checkout from their account's order history. The API never embeds checkout in an iframe and never trusts a browser `paid` flag. PayGate's published SDK has no merchant return-URL option; customers can return to their orders and refresh after payment. Callback reconciliation runs independently of their browser.
 
@@ -319,7 +321,16 @@ Create one Railway project with these services:
 1. **Postgres** (Railway template)
 2. **Redis** (Railway template)
 3. **Meilisearch** (Railway template). Set a strong `MEILI_MASTER_KEY`.
-4. **medusa-server** and 5. **medusa-worker**: two services with the same code, either from the GitHub repo (root directory `vetud-shop/backend`) or uploaded with `railway up --service <name>` from `vetud-shop/backend`. Both use `vetud-shop/backend/railway.json`. Its start command (`npm run start:railway`) runs migrations first on the server, and only starts the worker. Give medusa-server a public domain; the worker needs none.
+4. **medusa-server** and 5. **medusa-worker**: two services with the same backend code. For a GitHub source, set the service root directory to `vetud-shop/backend`. For CLI uploads, explicitly select the backend folder with `--path-as-root` as shown below. The start command (`npm run start:railway`) runs migrations first on the server, and only starts the worker. Give medusa-server a public domain; the worker needs none. The server uses `railway.json` with `/health`; worker release artifacts must set `deploy.healthcheckPath` to `null` rather than inherit the server's HTTP health check.
+
+Run these commands from the repository root for the existing production API services:
+
+```powershell
+railway up vetud-shop/backend --path-as-root --project e04f2eac-45d2-4854-9f2b-c523f5cff113 --service medusa-server --environment production
+railway up vetud-education/backend --path-as-root --project cb071b12-e61e-4c96-8210-89091184d586 --service medusa-server --environment production
+```
+
+The upload root must contain `Dockerfile`, `railway.json`, `package.json` and `package-lock.json`. Both Dockerfiles provide Node.js and npm explicitly. Do not rely on a bare `railway up` from a nested folder to select that folder: use the CLI's documented [`--path-as-root`](https://docs.railway.com/cli/up) option. The failed shop API and worker builds on 2026-11-10 used Railpack without a Node installation and failed with `npm: not found`; later Docker deployments replaced them successfully. Old failed entries remain deployment history, so check the latest active deployment and `/health` when assessing current service status.
 
 Environment variables, shared by both Medusa services unless noted (use Railway variable references like `${{Postgres.DATABASE_URL}}`):
 

@@ -29,6 +29,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import dynamic from "next/dynamic"
 import { Suspense, useEffect, useMemo, useRef, useState } from "react"
 import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib/makepay"
+import { PAYGATE_CARD, PAYGATE_CRYPTO, isPaygate, paygateAvailable, readPaygateRedirect, type PaygateConfig } from "@/lib/paygate"
 import { SITE } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { PAYPAL_PROVIDER_ID, payPalAvailable, payPalCartFingerprint, type PayPalConfig } from "@/lib/paypal"
@@ -50,6 +51,16 @@ const PayPalPaymentForm = dynamic(() => import("./PayPalPaymentForm"), { ssr: fa
 
 /** Display labels are translated without changing payment provider identifiers. */
 const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payBank" | "payCrypto"; description: string; icon?: IconName }> = {
+  [PAYGATE_CARD]: {
+    icon: "card",
+    title: "Credit / debit card · PayGate",
+    description: "Place your order, then complete payment on PayGate's secure checkout. Any provider fees are shown before you pay.",
+  },
+  [PAYGATE_CRYPTO]: {
+    icon: "coin",
+    title: "Cryptocurrency · PayGate",
+    description: "Place your order, then choose a supported cryptocurrency on PayGate. Network fees are shown before you pay.",
+  },
   [NMI_PROVIDER_ID]: {
     icon: "card",
     title: "Credit / debit card or eligible bank account",
@@ -79,7 +90,7 @@ const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payBank" | "pa
 
 /** Providers whose session is bound to one amount, so choosing them always starts a fresh session. */
 function needsFreshSession(providerId: string) {
-  return providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID
+  return isPaygate(providerId) || providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID
 }
 
 function errorMessage(error: unknown) {
@@ -268,12 +279,14 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       sdk.store.payment.listPaymentProviders({ region_id: cart.region_id ?? "" }),
       sdk.client.fetch<NmiConfig>("/store/nmi/config", { method: "GET", cache: "no-store" }).catch(() => null),
       sdk.client.fetch<PayPalConfig>("/store/paypal/config", { method: "GET", query: { cart_id: cart.id }, cache: "no-store" }).catch(() => null),
+      sdk.client.fetch<PaygateConfig>("/store/paygate/config", { method: "GET", cache: "no-store" }).catch(() => null),
     ])
-      .then(([{ payment_providers }, config, paypal]) => {
+      .then(([{ payment_providers }, config, paypal, paygate]) => {
         if (cancelled) return
         setLoadedPayPal({ key: providersKey, config: paypal })
         setLoadedProviders({ key: providersKey, list: payment_providers.filter((provider) => {
           if (!isCheckoutPaymentProvider(provider.id)) return false
+          if (isPaygate(provider.id)) return paygateAvailable(paygate, provider.id)
           if (provider.id === PAYPAL_PROVIDER_ID) return payPalAvailable(paypal, cart.currency_code)
           return provider.id !== NMI_PROVIDER_ID || nmiAvailable(config, cart.currency_code)
         }) })
@@ -439,9 +452,10 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         await confirmPayPal()
         assertCurrent()
       }
-      // Crypto: validate the hosted-checkout redirect first, create the order, then leave for MakePay.
+      // Validate hosted redirects before reserving the order, then open the payment page.
       const isMakePay = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
       const redirect = isMakePay ? readMakePayRedirect(checkoutCart) : null
+      const paygateRedirect = isPaygate(chosenProvider) ? readPaygateRedirect(checkoutCart) : null
       const result = await sdk.store.cart.complete(checkoutCart.id)
       assertCurrent()
       if (result.type !== "order") {
@@ -452,6 +466,12 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         if (receipt) window.sessionStorage.setItem(`vetud_order_${result.order.id}`, receipt)
       } catch {
         // The confirmation page fetches the order when storage is unavailable.
+      }
+      if (paygateRedirect) {
+        onCompleted(result.order.id)
+        clearCart()
+        window.location.assign(paygateRedirect.url)
+        return
       }
       if (redirect) {
         try {
@@ -965,6 +985,8 @@ function PayPanel({
           ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
           : provider === PAYPAL_PROVIDER_ID
           ? "By paying with PayPal you agree to our terms of sale and confirm the products are for laboratory research use only. We ship after payment is confirmed."
+          : isPaygate(provider)
+          ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Continue to PayGate to pay. You can resume an unpaid payment from your order history. We ship after payment is verified."
           : provider === MAKEPAY_PROVIDER_ID
           ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to MakePay to complete your payment; we ship as soon as it is confirmed."
           : "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will receive payment instructions by email; we ship as soon as payment is received.")}
