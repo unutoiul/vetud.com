@@ -50,11 +50,12 @@ export function isValidPhone(value: string, country: string) {
 }
 
 export function normalizeAddress(values: AddressValues): AddressValues {
-  const country = values.country_code.toLowerCase()
+  const cleaned = toAddressValues(values)
+  const country = cleaned.country_code
   const rules = getCountryRules(country)
   // A state from the list (US, Canada, Australia) is a code; elsewhere it's free text, when given.
-  const province = rules.provinceRequired ? values.province.trim().toUpperCase() : rules.provinceOptional ? values.province.trim() : ""
-  return { ...values, country_code: country, postal_code: normalizePostal(values.postal_code, country), phone: normalizePhone(values.phone, country), province }
+  const province = rules.provinceRequired ? cleaned.province.toUpperCase() : rules.provinceOptional ? cleaned.province : ""
+  return { ...cleaned, country_code: country, postal_code: normalizePostal(cleaned.postal_code, country), phone: normalizePhone(cleaned.phone, country), province }
 }
 
 type Translate = (key: "required" | "unsupportedCountry" | "invalidState" | "invalidPhone" | "invalidPostal", values?: { label: string; example: string }) => string
@@ -78,11 +79,41 @@ export function validateAddress(values: AddressValues, translate?: Translate, po
 }
 
 export function toAddressValues(address?: Partial<Record<keyof AddressValues, string | null>> | null): AddressValues {
-  return Object.fromEntries(Object.keys(EMPTY_ADDRESS).map(key => [key, address?.[key as keyof AddressValues] ?? ""])) as AddressValues
+  const values = Object.fromEntries(Object.keys(EMPTY_ADDRESS).map(key => [key, (address?.[key as keyof AddressValues] ?? "").trim()])) as AddressValues
+  values.country_code = values.country_code.toLowerCase()
+  // Older browser autofill entries sometimes saved the select's placeholder as a state.
+  if (/^\[?select (?:a )?(?:state|province|region)\]?$/i.test(values.province)) values.province = ""
+  const comparable = (value: string) => value.toLowerCase().replace(/\s+/g, " ")
+  if (comparable(values.address_2) === comparable(values.address_1)) values.address_2 = ""
+  return values
 }
 
-export function formatAddressLines(address: Partial<Record<keyof AddressValues, string | null>>) {
-  const country = address.country_code?.toLowerCase() ?? "us"
+/** Changing country keeps the entered address available for correction and revalidation. */
+export function changeAddressCountry(values: AddressValues, country: string): AddressValues {
+  if (values.country_code === country) return values
+  return { ...values, country_code: country, province: "" }
+}
+
+/** Only the fields needing attention, plus country because it controls address rules. */
+export function addressRepairFields(errors: Partial<Record<keyof AddressValues, string>>): (keyof AddressValues)[] {
+  const fields = new Set<keyof AddressValues>(["country_code", ...Object.keys(errors) as (keyof AddressValues)[]])
+  if (errors.country_code || errors.postal_code || errors.province) {
+    fields.add("postal_code")
+    fields.add("province")
+  }
+  return [...fields]
+}
+
+export function sameAddress(a?: Partial<Record<keyof AddressValues, string | null>> | null, b?: Partial<Record<keyof AddressValues, string | null>> | null) {
+  if (!a || !b) return false
+  const first = normalizeAddress(toAddressValues(a))
+  const second = normalizeAddress(toAddressValues(b))
+  return (Object.keys(EMPTY_ADDRESS) as (keyof AddressValues)[]).every(key => first[key].toLowerCase() === second[key].toLowerCase())
+}
+
+export function formatAddressLines(input: Partial<Record<keyof AddressValues, string | null>>) {
+  const address = toAddressValues(input)
+  const country = address.country_code || "us"
   const location = getCountryRules(country).postalBeforeCity
     ? [address.postal_code, address.city].filter(Boolean).join(" ")
     : getCountryRules(country).provinceRequired

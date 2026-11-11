@@ -6,7 +6,7 @@ import type { HttpTypes } from "@medusajs/types"
 import { useLocale, useTranslations } from "next-intl"
 import { translateAction } from "@/i18n/actions"
 import { getCountryRules } from "@/i18n/config"
-import { normalizeAddress, formatAddressLines } from "@/lib/address"
+import { normalizeAddress, formatAddressLines, addressRepairFields, sameAddress } from "@/lib/address"
 import Icon, { type IconName, LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Accordion from "@mui/material/Accordion"
 import AccordionDetails from "@mui/material/AccordionDetails"
@@ -42,7 +42,7 @@ import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
 import { ButtonLink } from "../common/links"
 import { CART_FIELDS, useStore } from "../store/StoreProvider"
-import AddressFields, { EMPTY_ADDRESS, toAddressValues, validateAddress, type AddressValues } from "./AddressFields"
+import AddressFields, { toAddressValues, validateAddress, type AddressValues } from "./AddressFields"
 import PayPalReturn from "./PayPalReturn"
 import CheckoutOrderSummary from "./CheckoutOrderSummary"
 
@@ -99,12 +99,7 @@ function errorMessage(error: unknown) {
 }
 
 function countryName(code: string | null | undefined, locale: string) {
-  return code ? new Intl.DisplayNames([locale], { type: "region" }).of(code.toUpperCase()) ?? code.toUpperCase() : ""
-}
-
-function sameAddress(a?: Partial<Record<keyof AddressValues, string | null>> | null, b?: Partial<Record<keyof AddressValues, string | null>> | null) {
-  const keys = ["first_name", "last_name", "address_1", "postal_code", "country_code"] as const
-  return Boolean(a && b) && keys.every((key) => (a?.[key] ?? "").trim().toLowerCase() === (b?.[key] ?? "").trim().toLowerCase())
+  return code && /^[a-z]{2}$/i.test(code) ? new Intl.DisplayNames([locale], { type: "region" }).of(code.toUpperCase()) ?? code.toUpperCase() : ""
 }
 
 type OptionType = { code?: string | null; description?: string | null }
@@ -220,7 +215,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const { setCart, clearCart, linkCustomerCart, isCurrentCart, deliveryCountries, countryCode } = useStore()
   // Delivery goes anywhere in the world, not only to the countries the site is set up for.
   const countries = useMemo(() => deliveryCountries.map((code) => ({ code, name: code.toUpperCase() })), [deliveryCountries])
-  const { createAddress, captureSession } = useAccount()
+  const { createAddress, updateAddress, captureSession } = useAccount()
   const [busy, setBusy] = useState(false)
   const busyRef = useRef(false)
   const [error, setError] = useState<string | null>(null)
@@ -236,7 +231,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
 
   const currency = cart.currency_code
   const address = cart.shipping_address
-  const hasAddress = Boolean(cart.email && address?.address_1)
+  const hasAddress = Boolean(cart.email && address?.address_1 && countries.some(country => country.code === address.country_code?.toLowerCase()) && !Object.keys(validateAddress(toAddressValues(address))).length)
   const method = cart.shipping_methods?.[0]
   const hasDelivery = hasAddress && Boolean(method)
   const addressKey = [address?.country_code, address?.postal_code, address?.address_1].join("|")
@@ -328,7 +323,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     guard(async (assertCurrent) => {
       await linkCustomerCart()
       assertCurrent()
-      const { saveToAccount, email: nextEmail, ...addresses } = body
+      const { saveToAccount, savedAddressId, email: nextEmail, ...addresses } = body
       if (nextEmail && nextEmail !== cart.email) {
         await sdk.store.cart.update(cart.id, { email: nextEmail })
         assertCurrent()
@@ -342,8 +337,12 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       assertCurrent()
       setCart(updated)
       if (saveToAccount) {
-        const first = !customer.addresses?.length
-        await createAddress({ ...body.shipping_address, ...(first ? { address_name: "Primary shipping", is_default_shipping: true } : {}) })
+        if (savedAddressId) {
+          await updateAddress(savedAddressId, body.shipping_address)
+        } else {
+          const first = !customer.addresses?.length
+          await createAddress({ ...body.shipping_address, ...(first ? { address_name: "Primary shipping", is_default_shipping: true } : {}) })
+        }
         assertCurrent()
       }
     })
@@ -668,16 +667,10 @@ type AddressBody = {
   email: string
   shipping_address: AddressValues
   saveToAccount: boolean
+  savedAddressId?: string
 }
 
-function AddressSection({
-  cart,
-  customer,
-  countries,
-  defaultCountry,
-  busy,
-  onSubmit,
-}: {
+function AddressSection({ cart, customer, countries, defaultCountry, busy, onSubmit }: {
   cart: HttpTypes.StoreCart
   customer: HttpTypes.StoreCustomer
   countries: { code: string; name: string }[]
@@ -689,171 +682,155 @@ function AddressSection({
   const t = useTranslations("Checkout")
   const ta = useTranslations("Address")
   const locale = useLocale()
-  const savedAddresses = useMemo(() => {
-    const allowed = new Set(countries.map((country) => country.code))
-    return (customer.addresses ?? []).filter((address) => address.country_code && allowed.has(address.country_code))
-  }, [countries, customer.addresses])
-  const defaultAddress = savedAddresses.find((address) => address.id === customer.default_shipping_address_id)
-    ?? savedAddresses.find((address) => address.is_default_shipping)
-  const preferredAddress = defaultAddress ?? savedAddresses[0]
+  const savedAddresses = customer.addresses ?? []
+  const defaultAddress = savedAddresses.find(address => address.id === customer.default_shipping_address_id)
+    ?? savedAddresses.find(address => address.is_default_shipping)
+  const preferred = defaultAddress ?? savedAddresses[0]
   const current = cart.shipping_address?.address_1 ? cart.shipping_address : null
   const email = cart.email || customer.email
-  const withProfile = (values: AddressValues): AddressValues => ({
-    ...values,
-    first_name: values.first_name || customer.first_name || "",
-    last_name: values.last_name || customer.last_name || "",
-    phone: values.phone || customer.phone || "",
-    country_code: values.country_code || defaultCountry,
-  })
-  const blankAddress = () => withProfile({ ...EMPTY_ADDRESS })
-  const errorsFor = (values: AddressValues) => validateAddress(values, (key, args) => ta(key, args), ta(getCountryRules(values.country_code).postalLabel as "postal" | "zip" | "postcode"))
-
-  const initialId = current
-    ? savedAddresses.find((address) => sameAddress(address, current))?.id ?? "new"
-    : preferredAddress?.id ?? "new"
-  // null follows the cart: the form shows until the cart has an address.
-  const [editingState, setEditing] = useState<boolean | null>(null)
-  const editing = editingState ?? !(current && cart.email)
+  const withProfile = (address?: Parameters<typeof toAddressValues>[0]): AddressValues => {
+    const values = toAddressValues(address)
+    return { ...values, first_name: values.first_name || customer.first_name || "", last_name: values.last_name || customer.last_name || "", phone: values.phone || customer.phone || "", country_code: values.country_code || defaultCountry }
+  }
+  const errorsFor = (values: AddressValues) => {
+    const errors = validateAddress(values, (key, args) => ta(key, args), ta(getCountryRules(values.country_code).postalLabel as "postal" | "zip" | "postcode"))
+    if (!countries.some(country => country.code === values.country_code)) errors.country_code = ta("unsupportedCountry")
+    return errors
+  }
+  const initialSource = current ?? preferred
+  const initialId = current ? savedAddresses.find(address => sameAddress(withProfile(address), current))?.id ?? "current" : preferred?.id ?? "new"
   const [selectedId, setSelectedId] = useState(initialId)
-  const [shipping, setShipping] = useState<AddressValues>(() =>
-    withProfile(toAddressValues(current ?? savedAddresses.find((address) => address.id === initialId)))
-  )
+  const [shipping, setShipping] = useState(() => withProfile(initialSource))
+  const [mode, setMode] = useState<"summary" | "choose" | "repair" | "edit" | "new">(() => !initialSource ? "new" : Object.keys(errorsFor(shipping)).length ? "repair" : "summary")
+  const [repairFields, setRepairFields] = useState(() => addressRepairFields(errorsFor(shipping)))
+  const [showErrors, setShowErrors] = useState(Boolean(initialSource))
   const [saveToAccount, setSaveToAccount] = useState(true)
-  const [showErrors, setShowErrors] = useState(false)
   const autoApplied = useRef(false)
-
   const shippingErrors = errorsFor(shipping)
-  const valid = !Object.keys(shippingErrors).length
-  // A saved address only needs its form when it is missing something.
-  const showForm = selectedId === "new" || Object.keys(shippingErrors).length > 0
+  const valid = Object.keys(shippingErrors).length === 0
+  const selectedSaved = savedAddresses.find(address => address.id === selectedId)
+  const isApplied = Boolean(current && cart.email && valid && sameAddress(shipping, current))
+  const isEditor = mode === "repair" || mode === "edit" || mode === "new"
 
-  const bodyFor = (values: AddressValues): AddressBody => {
-    const shippingAddress = normalizeAddress(values)
-    return {
-      email,
-      shipping_address: shippingAddress,
-      saveToAccount: selectedId === "new" && saveToAccount,
-    }
-  }
-
-  // Ship to the default address straight away; the shopper can change it in one click.
-  useEffect(() => {
-    if (autoApplied.current || current || !preferredAddress) return
-    autoApplied.current = true
-    const values = withProfile(toAddressValues(preferredAddress))
-    if (!Object.keys(errorsFor(values)).length) void onSubmit(bodyFor(values))
+  const bodyFor = (values: AddressValues, persist = false, addressId = selectedId): AddressBody => ({
+    email, shipping_address: normalizeAddress(values), saveToAccount: persist,
+    ...(savedAddresses.some(address => address.id === addressId) ? { savedAddressId: addressId } : {}),
   })
 
+  // A complete default address can be used immediately. Repairs always need confirmation.
+  useEffect(() => {
+    if (autoApplied.current || current || !preferred || mode !== "summary") return
+    autoApplied.current = true
+    if (valid) void onSubmit(bodyFor(shipping))
+  })
+
+  const openChoose = () => {
+    autoApplied.current = true
+    const match = savedAddresses.find(address => sameAddress(withProfile(address), shipping))
+    if (match) setSelectedId(match.id)
+    else if (current && sameAddress(current, shipping)) setSelectedId("current")
+    setMode("choose")
+  }
   const pick = (id: string) => {
+    if (busy) return
+    autoApplied.current = true
+    const source = id === "current" ? current : savedAddresses.find(address => address.id === id)
+    const values = withProfile(source)
+    const errors = errorsFor(values)
     setSelectedId(id)
+    setShipping(values)
+    setRepairFields(addressRepairFields(errors))
+    setShowErrors(id !== "new")
+    setSaveToAccount(true)
+    setMode(id === "new" ? "new" : Object.keys(errors).length ? "repair" : "summary")
+    if (id !== "new" && !Object.keys(errors).length && !(cart.email && sameAddress(values, current))) void onSubmit(bodyFor(values, false, id))
+  }
+  const openEditor = (full = false) => {
+    const match = savedAddresses.find(address => sameAddress(withProfile(address), shipping))
+    if (match) setSelectedId(match.id)
+    else if (!selectedSaved && current) setSelectedId("current")
+    setRepairFields(addressRepairFields(shippingErrors))
+    setShowErrors(!valid)
+    setSaveToAccount(true)
+    setMode(full ? "edit" : "repair")
+  }
+  const cancelEditor = () => {
+    const source = selectedSaved ?? current ?? preferred
+    const values = withProfile(source)
+    setShipping(values)
+    setSelectedId(source?.id === current?.id ? "current" : source?.id ?? "new")
     setShowErrors(false)
-    const saved = savedAddresses.find((address) => address.id === id)
-    setShipping(saved ? withProfile(toAddressValues(saved)) : blankAddress())
+    setMode(source ? "summary" : "new")
   }
-
-  if (!editing && current) {
-    return (
-      <Step
-        index={1}
-        title={t("shipping")}
-        done
-        locked={false}
-        action={
-          <Button size="small" color="secondary" onClick={() => setEditing(true)} disabled={busy}>
-            {t("change")}
-          </Button>
-        }
-      >
-        <Box sx={{ overflowWrap: "anywhere" }}>
-          {[...formatAddressLines(current).slice(0, -1), countryName(current.country_code, locale), current.phone].filter(Boolean).map((line, index) => (
-            <Typography key={`${index}:${line}`} sx={{ fontWeight: index === 0 ? 600 : 400, color: index === 0 ? "text.primary" : "text.secondary" }}>
-              {ct(line)}
-            </Typography>
-          ))}
-          <Typography variant="body2" sx={{ color: "text.secondary", mt: 1.5 }}>
-            {t("confirmationTo", { email: cart.email ?? email })}
-          </Typography>
-        </Box>
-      </Step>
-    )
+  const change = (values: AddressValues) => {
+    setShipping(values)
+    // Once revealed, a field remains mounted while the shopper corrects it.
+    if (mode === "repair") setRepairFields(previous => [...new Set([...previous, ...addressRepairFields(errorsFor(values))])])
   }
+  const lines = (values: Parameters<typeof formatAddressLines>[0]) => [...formatAddressLines(values).slice(0, -1), countryName(values.country_code, locale)].filter(Boolean)
 
-  return (
-    <Step index={1} title={t("shipping")} done={false} locked={false}>
-      <Box
-        component="form"
-        noValidate
-        onSubmit={(event) => {
-          event.preventDefault()
-          setShowErrors(true)
-          if (!valid) {
-            const field = `shipping-${Object.keys(shippingErrors)[0]}`
-            const control = event.currentTarget.querySelector<HTMLElement>(`[id="${field}"]`)
-              ?? event.currentTarget.querySelector<HTMLInputElement>(`[name="${field}"]`)
-            control?.focus()
-            return
-          }
-          void onSubmit(bodyFor(shipping)).then((ok) => {
-            if (ok) setEditing(null)
-          })
-        }}
-      >
-        <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
-          {t("confirmationTo", { email })}
-        </Typography>
-        {savedAddresses.length ? (
-          <RadioGroup name="saved_address" value={selectedId} onChange={(event) => pick(event.target.value)} aria-label={t("savedAddress")} sx={{ mb: showForm ? 2.5 : 0 }}>
-            <Stack spacing={1.25}>
-              {savedAddresses.map((address) => (
-                <Box key={address.id} component="label" sx={{ ...selectableSx(selectedId === address.id), alignItems: "flex-start" }}>
-                  <Radio value={address.id} sx={{ mt: -0.25 }} />
-                  <Box sx={{ flex: 1, minWidth: 0, py: 0.75 }}>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-                      <Typography sx={{ fontWeight: 600 }}>{[address.first_name, address.last_name].filter(Boolean).join(" ") || address.address_name}</Typography>
-                      {address.id === defaultAddress?.id ? <Chip label={t("defaultAddress")} size="small" sx={{ height: 20, fontSize: 11, fontWeight: 600 }} /> : null}
-                    </Stack>
-                    <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.25, overflowWrap: "anywhere" }}>
-                      {ct([...formatAddressLines(address).slice(1, -1), countryName(address.country_code, locale)].join(", "))}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-              <Box component="label" sx={selectableSx(selectedId === "new")}>
-                <Radio value="new" />
-                <Icon name="plus" fontSize="small" sx={{ color: "secondary.main" }} />
-                <Typography sx={{ fontWeight: 600 }}>{t("addAddress")}</Typography>
+  return <Step index={1} title={t("shipping")} done={mode === "summary" && isApplied} locked={false} action={
+    (mode === "summary" || mode === "repair") ? <Button type="button" size="small" disabled={busy} onClick={openChoose} sx={{ minHeight: 44 }}>{t("change")}</Button> : undefined
+  }>
+    {(mode === "summary" || mode === "repair") ? <Box sx={{ mb: 2.5, overflowWrap: "anywhere" }}>
+      {lines(shipping).map((line, index) => <Typography key={index} variant="body2" sx={{ fontWeight: index === 0 ? 650 : 400, color: index === 0 ? "text.primary" : "text.secondary" }}>{line}</Typography>)}
+      <Typography variant="caption" sx={{ display: "block", color: "text.secondary", mt: 1.5 }}>{t("confirmationTo", { email })}</Typography>
+      {mode === "summary" ? <Button type="button" size="small" disabled={busy} onClick={() => openEditor(true)} sx={{ px: 0, mt: 0.5, minHeight: 44 }}>{ct("Edit address")}</Button> : null}
+    </Box> : null}
+
+    {mode === "choose" ? <Stack spacing={1.5}>
+      <Typography variant="body2" color="text.secondary">{ct("Where should we deliver your order?")}</Typography>
+      <RadioGroup name="saved_address" value={selectedId} onChange={event => pick(event.target.value)} aria-label={t("savedAddress")}>
+        <Stack spacing={1.25}>
+          {savedAddresses.map(address => {
+            const name = [address.first_name, address.last_name].filter(Boolean).join(" ") || t("savedAddress")
+            return <Box key={address.id} component="label" sx={{ ...selectableSx(selectedId === address.id), alignItems: "start", cursor: busy ? "default" : "pointer" }}>
+              <Radio value={address.id} disabled={busy} onClick={() => { if (address.id === selectedId) pick(address.id) }} sx={{ minHeight: 44, minWidth: 44 }} />
+              <Box sx={{ py: 0.75, minWidth: 0 }}>
+                <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: "wrap", alignItems: "center", mb: 0.5 }}>
+                  <Typography sx={{ fontWeight: 650 }}>{name}</Typography>
+                  {address.id === defaultAddress?.id ? <Chip size="small" label={t("defaultAddress")} sx={{ height: 22, fontSize: 11 }} /> : null}
+                </Stack>
+                {lines({ ...address, first_name: "", last_name: "" }).map((line, index) => <Typography key={index} variant="body2" color="text.secondary">{line}</Typography>)}
               </Box>
-            </Stack>
-          </RadioGroup>
-        ) : null}
-
-        {showForm ? (
-          <>
-            {selectedId !== "new" ? (
-              <Alert severity="info" sx={{ mb: 2 }}>
-                {t("completeAddress")}
-              </Alert>
-            ) : null}
-            <AddressFields prefix="shipping" values={shipping} errors={showErrors ? shippingErrors : {}} countries={countries} onChange={setShipping} />
-            {selectedId === "new" ? (
-              <FormControlLabel sx={{ mt: 1 }} control={<Checkbox checked={saveToAccount} onChange={(event) => setSaveToAccount(event.target.checked)} />} label={t("save")} />
-            ) : null}
-          </>
-        ) : null}
-
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3 }}>
-          <Button type="submit" variant="contained" size="large" disabled={busy} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined} sx={{ minWidth: 220 }}>
-            {t("useAddress")}
-          </Button>
-          {current && cart.email ? (
-            <Button type="button" size="large" color="secondary" onClick={() => setEditing(null)} disabled={busy}>
-              {t("cancel")}
-            </Button>
-          ) : null}
+            </Box>
+          })}
+          {current && !savedAddresses.some(address => sameAddress(withProfile(address), current)) ? <Box component="label" sx={selectableSx(selectedId === "current")}>
+            <Radio value="current" disabled={busy} onClick={() => { if (selectedId === "current") pick("current") }} />
+            <Box><Typography sx={{ fontWeight: 650 }}>{ct("Current order address")}</Typography>{lines(current).map((line, index) => <Typography key={index} variant="body2" color="text.secondary">{line}</Typography>)}</Box>
+          </Box> : null}
         </Stack>
+      </RadioGroup>
+      <Button type="button" variant="outlined" disabled={busy} onClick={() => pick("new")} startIcon={<Icon name="plus" />} sx={{ minHeight: 48, justifyContent: "flex-start", "&:hover": { transform: "none" } }}>{t("addAddress")}</Button>
+      {initialSource ? <Button type="button" disabled={busy} onClick={() => setMode("summary")} sx={{ alignSelf: "flex-start", minHeight: 44 }}>{t("cancel")}</Button> : null}
+    </Stack> : null}
+
+    {isEditor ? <Box component="form" noValidate onSubmit={event => {
+      event.preventDefault()
+      if (busy) return
+      setShowErrors(true)
+      if (!valid) {
+        const field = `shipping-${Object.keys(shippingErrors)[0]}`
+        const control = event.currentTarget.querySelector<HTMLElement>(`[id="${field}"]`) ?? event.currentTarget.querySelector<HTMLElement>(`[name="${field}"]`)
+        control?.focus()
+        return
+      }
+      void onSubmit(bodyFor(shipping, saveToAccount && (mode === "new" || Boolean(selectedSaved)))).then(ok => { if (ok) setMode("summary") })
+    }}>
+      <Box id="shipping-address-editor" component="fieldset" disabled={busy} inert={busy} sx={{ border: 0, p: 0, m: 0, minWidth: 0 }}>
+        <Typography component="legend" sx={{ p: 0, mb: 1, fontWeight: 650 }}>{ct(mode === "new" ? "New shipping address" : mode === "repair" ? "Confirm delivery details" : "Edit selected address")}</Typography>
+        {mode === "repair" ? <Typography variant="body2" sx={{ mb: 2.5, color: "text.secondary" }}>{ct("Your saved details are filled in. Check the highlighted fields to continue.")}</Typography> : null}
+        <AddressFields prefix="shipping" values={shipping} errors={showErrors ? shippingErrors : {}} countries={countries} onChange={change} fields={mode === "repair" ? repairFields : undefined} showAutofillHint={false} />
+        {mode === "new" || selectedSaved ? <FormControlLabel sx={{ mt: 1.5, alignItems: "flex-start", "& .MuiFormControlLabel-label": { pt: 1, fontSize: "0.8125rem" } }} control={<Checkbox checked={saveToAccount} disabled={busy} onChange={event => setSaveToAccount(event.target.checked)} />} label={mode === "new" ? t("save") : ct("Save these changes to my saved address")} /> : null}
       </Box>
-    </Step>
-  )
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: 2 }}>
+        <Button type="submit" variant="contained" size="large" disabled={busy} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined}>{ct("Save and continue")}</Button>
+        {mode === "repair" ? <Button type="button" disabled={busy} onClick={() => openEditor(true)}>{ct("Edit all details")}</Button> : (initialSource || savedAddresses.length) ? <Button type="button" disabled={busy} onClick={cancelEditor}>{t("cancel")}</Button> : null}
+      </Stack>
+    </Box> : null}
+
+    {mode === "summary" && !isApplied ? <Button type="button" variant="contained" size="large" disabled={busy} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined} onClick={() => { if (valid) void onSubmit(bodyFor(shipping)); else openEditor() }}>{valid ? t("useAddress") : ct("Review address")}</Button> : null}
+  </Step>
 }
 
 function DeliverySection({
