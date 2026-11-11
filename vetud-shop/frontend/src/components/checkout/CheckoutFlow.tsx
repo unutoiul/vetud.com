@@ -872,12 +872,12 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
           </Box> : null}
         </Stack>
       </RadioGroup>
-      <Stack direction={{ xs: "column", sm: "row" }} useFlexGap spacing={1} sx={{ flexWrap: "wrap" }}>
-        <Button type="button" variant="contained" disabled={disabled} onClick={() => void applyAddress()}>{t("useAddress")}</Button>
-        <Button type="button" variant="outlined" disabled={disabled} onClick={edit}>{ct("Edit selected address")}</Button>
-        <Button type="button" disabled={disabled} onClick={add} startIcon={<Icon name="plus" />}>{t("addAddress")}</Button>
-        <Button type="button" disabled={disabled} onClick={restore}>{t("cancel")}</Button>
-      </Stack>
+      <Button type="button" variant="outlined" size="large" fullWidth disabled={disabled} onClick={add} startIcon={<Icon name="plus" />} sx={{ minHeight: 56 }}>{t("addAddress")}</Button>
+      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "minmax(0, 1.2fr) minmax(0, 1.4fr) minmax(0, 0.7fr)" }, gap: 1 }}>
+        <Button type="button" variant="contained" disabled={disabled} onClick={() => void applyAddress()} sx={{ minHeight: 48, minWidth: 0, px: 1.5 }}>{t("useAddress")}</Button>
+        <Button type="button" variant="outlined" disabled={disabled} onClick={edit} sx={{ minHeight: 48, minWidth: 0, px: 1.5 }}>{ct("Edit selected address")}</Button>
+        <Button type="button" disabled={disabled} onClick={restore} sx={{ minHeight: 48, minWidth: 0, px: 1.5 }}>{t("cancel")}</Button>
+      </Box>
     </Stack> : null}
 
     {isEditor ? <Box component="form" noValidate onSubmit={event => {
