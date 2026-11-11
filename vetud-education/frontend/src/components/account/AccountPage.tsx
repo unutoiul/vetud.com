@@ -19,6 +19,7 @@ import Icon from "../brand/Icon"
 import { useLanguage } from "../common/language"
 import AccountDashboard from "../profile/AccountDashboard"
 import { useAccount } from "./AccountProvider"
+import SignInCodeForm from "./SignInCodeForm"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -116,7 +117,7 @@ export function AuthPanel() {
   const act = useTranslations("Actions")
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
-  const { signIn, signUp, pending, error, clearError } = useAccount()
+  const { signIn, signUp, pending, error, clearError, codeStep } = useAccount()
   const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -158,18 +159,18 @@ export function AuthPanel() {
     <Grid container spacing={{ xs: 3, md: 6 }}>
       <Grid size={{ xs: 12, md: 5 }}>
         <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
-          {mode === "signin" ? t("welcome") : t("account")}
+          {codeStep || mode === "signin" ? t("welcome") : t("account")}
         </Typography>
         <Typography variant="h3" component="h2" sx={{ mt: 1.5, mb: 2 }}>
-          {mode === "reset" ? t("resetTitle") : ct(mode === "signin" ? "Sign in to join the conversation." : "Join the VETUD community.")}
+          {codeStep ? ct("Check your email.") : mode === "reset" ? t("resetTitle") : ct(mode === "signin" ? "Sign in to join the conversation." : "Join the VETUD community.")}
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          {mode === "reset" ? t("resetIntro") : ct("An account lets you ask questions in the community, answer other members and comment on articles.")}
+          {codeStep ? ct("For your security, every sign-in is confirmed with a code we send to your email.") : mode === "reset" ? t("resetIntro") : ct("An account lets you ask questions in the community, answer other members and comment on articles.")}
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 7 }}>
         <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3 }}>
-          {mode === "reset" ? <ResetRequestForm initialEmail={email} onBack={() => switchMode("signin")} /> : <>
+          {codeStep ? <SignInCodeForm /> : mode === "reset" ? <ResetRequestForm initialEmail={email} onBack={() => switchMode("signin")} /> : <>
             <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
               <Button variant={mode === "signin" ? "contained" : "text"} aria-pressed={mode === "signin"} onClick={() => switchMode("signin")}>{t("signin")}</Button>
               <Button variant={mode === "signup" ? "contained" : "text"} aria-pressed={mode === "signup"} onClick={() => switchMode("signup")}>{t("signup")}</Button>

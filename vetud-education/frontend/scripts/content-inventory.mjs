@@ -41,7 +41,7 @@ const SKIPPED_FIELDS = new Set(["slug", "id", "url", "src", "href", "date", "art
 const MODULES = [
   "content/learn/peptides.ts", "content/learn/articles.ts", "content/learn/peptide-articles.ts", "content/learn/categories.ts",
   "content/learn/videos.ts", "content/learn/video-resources.ts", "content/learn/illustrations.ts", "content/learn/editorial-covers.ts",
-  "content/learn/emerging-weight-research.ts", "content/learn/weight-loss-trials.ts", "content/learn/search-titles.ts", "content/legal.ts",
+  "content/learn/emerging-weight-research.ts", "content/learn/weight-loss-trials.ts", "content/learn/search-titles.ts", "content/learn/planned-peptides.ts", "content/legal.ts",
   "lib/community/topics.ts", "lib/community/format.ts", "lib/config.ts",
 ]
 

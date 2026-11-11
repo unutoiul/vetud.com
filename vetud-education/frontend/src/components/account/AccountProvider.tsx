@@ -15,12 +15,56 @@ import { CUSTOMER_TOKEN_KEY, sdk } from "@/lib/medusa/sdk"
 
 const CUSTOMER_FIELDS = "id,email,first_name,last_name"
 
+/**
+ * Every sign-in is confirmed with a 6-digit code sent by email. Between the password and the code
+ * the SDK holds a token with no member attached; this step remembers which challenge it belongs to.
+ * It's kept for this tab, so switching to the mail app and back (or a reload) doesn't lose it.
+ */
+export type SignInCodeStep = { challengeId: string; sentTo: string }
+const CODE_STEP_KEY = "vetud_sign_in_code"
+
+function readCodeStep(): SignInCodeStep | null {
+  try {
+    const value = JSON.parse(window.sessionStorage.getItem(CODE_STEP_KEY) ?? "null") as Partial<SignInCodeStep> | null
+    return typeof value?.challengeId === "string" && typeof value.sentTo === "string" ? { challengeId: value.challengeId, sentTo: value.sentTo } : null
+  } catch {
+    return null
+  }
+}
+
+function writeCodeStep(step: SignInCodeStep | null) {
+  try {
+    if (step) window.sessionStorage.setItem(CODE_STEP_KEY, JSON.stringify(step))
+    else window.sessionStorage.removeItem(CODE_STEP_KEY)
+  } catch {
+    // Without storage the step still works until the page is reloaded.
+  }
+}
+
+/** Medusa's MFA messages, in plain words. */
+function codeErrorMessage(error: unknown) {
+  const message = errorMessage(error)
+  if (/invalid mfa challenge code/i.test(message)) return "That code isn't right. Check the email and try again."
+  if (/expired/i.test(message)) return "This code has expired. Please sign in again to get a new one."
+  if (/too many/i.test(message)) return "Too many wrong codes. Please sign in again to get a new one."
+  if (/already been completed/i.test(message)) return "This code has already been used. Please sign in again."
+  if (/mfa verification is required|unauthori[sz]ed|not found/i.test(message)) return "Your sign-in has timed out. Please sign in again."
+  return message
+}
+
+type MfaLoginResult = { mfa_required?: boolean; mfa_challenge?: { id?: string; methods?: string[] } }
+
 type AccountContextValue = {
   customer: HttpTypes.StoreCustomer | null
   loading: boolean
   pending: boolean
   error: string | null
   signIn: (email: string, password: string) => Promise<void>
+  /** Set after the password step until the emailed code is entered. */
+  codeStep: SignInCodeStep | null
+  verifyCode: (code: string) => Promise<void>
+  resendCode: () => Promise<void>
+  cancelCode: () => Promise<void>
   signUp: (details: { email: string; password: string; first_name: string; last_name: string }) => Promise<void>
   signOut: () => Promise<void>
   requestPasswordReset: (email: string, language: string) => Promise<void>
@@ -48,7 +92,13 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [codeStep, setCodeStepState] = useState<SignInCodeStep | null>(null)
   const authVersion = useRef(0)
+
+  const setCodeStep = useCallback((step: SignInCodeStep | null) => {
+    writeCodeStep(step)
+    setCodeStepState(step)
+  }, [])
 
   const refreshCustomer = useCallback(async () => {
     const version = authVersion.current
@@ -67,8 +117,11 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
     let cancelled = false
     async function load() {
       const version = authVersion.current
-      await refreshCustomer()
-      if (!cancelled && version === authVersion.current) setLoading(false)
+      const signedIn = await refreshCustomer()
+      if (cancelled || version !== authVersion.current) return
+      if (!signedIn) setCodeStepState(readCodeStep())
+      else writeCodeStep(null)
+      setLoading(false)
     }
     void load()
     return () => {
@@ -85,6 +138,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       setCustomer(null)
       setError(null)
       setPending(false)
+      setCodeStep(null)
       setLoading(true)
       void refreshCustomer().then(() => {
         if (version === authVersion.current) setLoading(false)
@@ -92,7 +146,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
     }
     window.addEventListener("storage", syncSession)
     return () => window.removeEventListener("storage", syncSession)
-  }, [refreshCustomer])
+  }, [refreshCustomer, setCodeStep])
 
   const captureSession = useCallback(() => {
     const version = authVersion.current
@@ -116,17 +170,29 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
     }
   }, [captureSession])
 
+  /** After the password step: email a code and wait for it. */
+  const beginCodeStep = useCallback(async (result: unknown, assertCurrent: () => void) => {
+    const { mfa_required, mfa_challenge } = (result ?? {}) as MfaLoginResult
+    if (!mfa_required || !mfa_challenge?.id || !mfa_challenge.methods?.includes("email")) {
+      throw new Error("This sign-in needs a step we can't show here. Please contact us.")
+    }
+    const { sent_to } = await sdk.client.fetch<{ sent_to: string }>("/store/sign-in-code", { method: "POST" })
+    assertCurrent()
+    setCodeStep({ challengeId: mfa_challenge.id, sentTo: sent_to })
+  }, [setCodeStep])
+
   const signIn = useCallback(
     async (email: string, password: string) => {
       authVersion.current += 1
       await run(async (assertCurrent) => {
+        setCodeStep(null)
         const result = await sdk.auth.login("customer", "emailpass", { email, password })
         assertCurrent()
-        if (!isToken(result)) throw new Error("This sign-in needs an additional verification step. Please contact support.")
-        await refreshCustomer()
+        if (isToken(result)) await refreshCustomer()
+        else await beginCodeStep(result, assertCurrent)
       })
     },
-    [refreshCustomer, run]
+    [beginCodeStep, refreshCustomer, run, setCodeStep]
   )
 
   const signUp = useCallback(
@@ -139,20 +205,66 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
         assertCurrent()
         const result = await sdk.auth.login("customer", "emailpass", { email, password })
         assertCurrent()
-        if (!isToken(result)) throw new Error("Your account was created, but sign-in needs an additional step. Please contact support.")
+        if (isToken(result)) await refreshCustomer()
+        else await beginCodeStep(result, assertCurrent)
+      })
+    },
+    [beginCodeStep, refreshCustomer, run]
+  )
+
+  const verifyCode = useCallback(
+    async (code: string) => {
+      const step = codeStep
+      if (!step) return
+      authVersion.current += 1
+      await run(async (assertCurrent) => {
+        try {
+          await sdk.auth.mfa.verifyChallenge(step.challengeId, { method: "email", code: code.replace(/\s/g, "") })
+        } catch (error) {
+          throw new Error(codeErrorMessage(error))
+        }
+        assertCurrent()
+        setCodeStep(null)
         await refreshCustomer()
       })
     },
-    [refreshCustomer, run]
+    [codeStep, refreshCustomer, run, setCodeStep]
   )
+
+  const resendCode = useCallback(async () => {
+    const step = codeStep
+    if (!step) return
+    await run(async (assertCurrent) => {
+      try {
+        const { sent_to } = await sdk.client.fetch<{ sent_to: string }>("/store/sign-in-code", { method: "POST" })
+        assertCurrent()
+        setCodeStep({ ...step, sentTo: sent_to })
+      } catch (error) {
+        throw new Error(codeErrorMessage(error))
+      }
+    })
+  }, [codeStep, run, setCodeStep])
+
+  /** Back to the sign-in form; the half-finished sign-in is dropped. */
+  const cancelCode = useCallback(async () => {
+    authVersion.current += 1
+    setCodeStep(null)
+    setError(null)
+    try {
+      await sdk.auth.logout()
+    } catch {
+      // The token is cleared either way.
+    }
+  }, [setCodeStep])
 
   const signOut = useCallback(async () => {
     authVersion.current += 1
     await run(async () => {
       await sdk.auth.logout()
       setCustomer(null)
+      setCodeStep(null)
     })
-  }, [run])
+  }, [run, setCodeStep])
 
   const requestPasswordReset = useCallback(
     async (email: string, language: string) => {
@@ -181,6 +293,10 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       pending,
       error,
       signIn,
+      codeStep,
+      verifyCode,
+      resendCode,
+      cancelCode,
       signUp,
       signOut,
       requestPasswordReset,
@@ -189,7 +305,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       captureSession,
       clearError: () => setError(null),
     }),
-    [customer, loading, pending, error, signIn, signUp, signOut, requestPasswordReset, resetPassword, refreshCustomer, captureSession]
+    [customer, loading, pending, error, signIn, codeStep, verifyCode, resendCode, cancelCode, signUp, signOut, requestPasswordReset, resetPassword, refreshCustomer, captureSession]
   )
 
   return <AccountContext.Provider value={value}>{children}</AccountContext.Provider>

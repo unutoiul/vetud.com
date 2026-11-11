@@ -23,6 +23,7 @@ import Logo from "../brand/Logo"
 import { AppLink, useLocalizedHref } from "../common/links"
 import { EMAIL_LIST_CONSENT, subscribeToEmailList } from "../newsletter/subscription"
 import { useLanguage } from "../common/language"
+import Button from "@mui/material/Button"
 import HoldButton from "./HoldButton"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -211,8 +212,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
             <Box sx={{ display: "grid", placeItems: "center", width: 52, height: 52, my: 2.75, borderRadius: "50%", bgcolor: "brand.navy", color: "brand.cyan" }}><Icon name="check" sx={{ fontSize: 28 }} /></Box>
             <Typography id="welcome-description" sx={descriptionSx}>{ct("We've sent you a link to confirm your email. Explore our peptide guides and meet the community in the meantime.")}</Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 3.25 }}>
-              <HoldButton variant="contained" fill={alpha(brand.navy, .2)} onConfirm={() => go("/learn")} sx={primaryButtonSx}>{ct("Explore peptide education")}</HoldButton>
-              <HoldButton variant="outlined" fill={alpha(brand.cyan, .24)} onConfirm={() => go("/community")} sx={{ color: "brand.onNavy", borderColor: "brand.cyan", "&:hover": { borderColor: "brand.cyan", bgcolor: "brand.navy" } }}>{ct("Visit the community")}</HoldButton>
+              <Button variant="contained" onClick={onDismiss} sx={primaryButtonSx}>{actions("close")}</Button>
             </Box>
           </div> : <>
             <Typography id="welcome-description" sx={descriptionSx}>{ct("Get clear peptide explainers, research news and community updates in your inbox.")}</Typography>

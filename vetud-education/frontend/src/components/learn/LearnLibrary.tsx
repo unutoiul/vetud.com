@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography"
 import { useSyncExternalStore } from "react"
 import { CATEGORIES, type CategoryId } from "@/content/learn/categories"
 import { PEPTIDES } from "@/content/learn/peptides"
+import { PLANNED_PEPTIDES } from "@/content/learn/planned-peptides"
 import PeptideCard from "./PeptideCard"
 
 const isCategory = (value: string): value is CategoryId => CATEGORIES.some((category) => category.id === value)
@@ -40,11 +41,13 @@ export default function LearnLibrary() {
   }
 
   // "View all" follows the topic order, so related peptides sit together.
-  const ordered = [...PEPTIDES].sort((a, b) => CATEGORIES.findIndex((category) => category.id === a.category) - CATEGORIES.findIndex((category) => category.id === b.category))
+  // Written guides first within each topic, then the ones still being written (the sort is stable).
+  const entries = [...PEPTIDES, ...PLANNED_PEPTIDES]
+  const ordered = [...entries].sort((a, b) => CATEGORIES.findIndex((category) => category.id === a.category) - CATEGORIES.findIndex((category) => category.id === b.category))
   const shown = active ? ordered.filter((peptide) => peptide.category === active) : ordered
   const options: { id: CategoryId | null; name: string; count: number }[] = [
-    { id: null, name: "View all", count: PEPTIDES.length },
-    ...CATEGORIES.map((category) => ({ id: category.id, name: category.name, count: PEPTIDES.filter((peptide) => peptide.category === category.id).length })).filter((option) => option.count),
+    { id: null, name: "View all", count: entries.length },
+    ...CATEGORIES.map((category) => ({ id: category.id, name: category.name, count: entries.filter((peptide) => peptide.category === category.id).length })).filter((option) => option.count),
   ]
 
   return (
@@ -52,7 +55,7 @@ export default function LearnLibrary() {
       <Box component="nav" aria-label={act("topics")} sx={{ minWidth: 0, position: { lg: "sticky" }, top: { lg: 112 }, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "16px", p: { xs: 2, md: 2.5 } }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", px: 1, mb: 1.5 }}>
           <Typography component="h2" sx={{ fontSize: 19, fontWeight: 700, letterSpacing: "-.02em" }}>{ct("Topic")}</Typography>
-          <Typography sx={{ fontSize: 13.5, color: "text.secondary" }}>{ct.rich("{v0} guides", { v0: ct(PEPTIDES.length) }, {  })}</Typography>
+          <Typography sx={{ fontSize: 13.5, color: "text.secondary" }}>{ct.rich("{v0} peptides", { v0: ct(entries.length) }, {  })}</Typography>
         </Box>
         <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: { xs: "flex", lg: "grid" }, gap: { xs: 1, lg: .5 }, overflowX: { xs: "auto", lg: "visible" }, pb: { xs: .5, lg: 0 }, scrollbarWidth: "thin" }}>
           {options.map((option) => {

@@ -14,6 +14,19 @@ type ModuleConfig = {
 
 // Medusa's commerce modules stay on with empty tables: it needs them to start and the Admin expects them.
 const modules: ModuleConfig[] = [
+  // Sign-in: email and password, then a 6-digit code sent by email (src/modules/email-mfa).
+  // Medusa still adds AUTH_MFA_ENCRYPTION_KEY to these MFA options by itself.
+  {
+    resolve: "@medusajs/medusa/auth",
+    options: {
+      providers: [{ resolve: "@medusajs/medusa/auth-emailpass", id: "emailpass" }],
+      mfa: {
+        challenge_ttl_seconds: 600,
+        challenge_max_attempts: 5,
+        providers: [{ resolve: "./src/modules/email-mfa", id: "email", options: { secret: process.env.JWT_SECRET } }],
+      },
+    },
+  },
   // Comments signed-in members leave on articles.
   { resolve: "./src/modules/article-comment" },
   // Community forum: profiles, threads, votes and reports.

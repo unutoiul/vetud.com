@@ -1,7 +1,7 @@
 import provinces from "@/i18n/provinces.json"
 import usStates from "@/i18n/us-states.json"
 import { parsePhoneNumberFromString, type CountryCode } from "libphonenumber-js"
-import { getCountryRules } from "@/i18n/config"
+import { COUNTRY_RULES, getCountryRules } from "@/i18n/config"
 
 export type AddressValues = {
   first_name: string
@@ -86,6 +86,29 @@ export function toAddressValues(address?: Partial<Record<keyof AddressValues, st
   const comparable = (value: string) => value.toLowerCase().replace(/\s+/g, " ")
   if (comparable(values.address_2) === comparable(values.address_1)) values.address_2 = ""
   return values
+}
+
+function postalFits(postal: string, country: string) {
+  return new RegExp(getCountryRules(country).postalPattern, "i").test(normalizePostal(postal, country))
+}
+
+/**
+ * The country an address really belongs to when its own can't be right: missing, not one we
+ * deliver to, or with a postcode that can't come from there (a London "SW6 5HQ" saved as United
+ * States). Only countries with a strict postcode format are candidates. When several share a
+ * format (five digits), only the phone number's country may decide: a guess could ship the order
+ * to the wrong country, so an uncertain address goes back to the shopper instead. Returns "" when
+ * the address is fine as it is or the answer isn't certain.
+ */
+export function inferAddressCountry(values: AddressValues, deliverable: readonly string[]): string {
+  const postal = values.postal_code.trim()
+  const current = values.country_code.toLowerCase()
+  if (!postal || (deliverable.includes(current) && postalFits(postal, current))) return ""
+  const candidates = deliverable.filter(code => Object.hasOwn(COUNTRY_RULES, code) && postalFits(postal, code))
+  if (candidates.length <= 1) return candidates[0] ?? ""
+  // Saved phone numbers are international (+44 …), so they carry their country.
+  const phoneCountry = parsePhoneNumberFromString(values.phone)?.country?.toLowerCase() ?? ""
+  return candidates.includes(phoneCountry) ? phoneCountry : ""
 }
 
 /** Changing country keeps the entered address available for correction and revalidation. */

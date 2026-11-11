@@ -6,7 +6,7 @@ import type { HttpTypes } from "@medusajs/types"
 import { useLocale, useTranslations } from "next-intl"
 import { translateAction } from "@/i18n/actions"
 import { getCountryRules } from "@/i18n/config"
-import { normalizeAddress, formatAddressLines, addressRepairFields, sameAddress } from "@/lib/address"
+import { normalizeAddress, formatAddressLines, addressRepairFields, sameAddress, inferAddressCountry, changeAddressCountry } from "@/lib/address"
 import Icon, { type IconName, LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
 import Accordion from "@mui/material/Accordion"
 import AccordionDetails from "@mui/material/AccordionDetails"
@@ -91,6 +91,32 @@ const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payBank" | "pa
 /** Providers whose session is bound to one amount, so choosing them always starts a fresh session. */
 function needsFreshSession(providerId: string) {
   return isPaygate(providerId) || providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID
+}
+
+/**
+ * Hosted payment pages (PayGate, MakePay) are prepared when the shopper presses pay, not when the
+ * method is chosen: no waiting after a click, and no payment page opened at the provider for
+ * every checkout visit.
+ */
+function preparedOnPay(providerId: string) {
+  return isPaygate(providerId) || providerId === MAKEPAY_PROVIDER_ID
+}
+
+/** The payment method this browser used last, offered first next time (a convenience only). */
+const PAYMENT_MEMORY = "vetud_payment_method"
+function rememberedPayment() {
+  try {
+    return window.localStorage.getItem(PAYMENT_MEMORY) ?? ""
+  } catch {
+    return ""
+  }
+}
+function rememberPayment(providerId: string) {
+  try {
+    window.localStorage.setItem(PAYMENT_MEMORY, providerId)
+  } catch {
+    // Private windows and blocked storage simply don't remember.
+  }
 }
 
 function errorMessage(error: unknown) {
@@ -226,7 +252,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const [loadedPayPal, setLoadedPayPal] = useState<{ key: string; config: PayPalConfig | null } | null>(null)
   const payPalAttempt = useRef<{ id: string; fingerprint: string; assertCurrent: () => void } | null>(null)
   const sessions = cart.payment_collection?.payment_sessions ?? []
-  const [wantedProvider, setWantedProvider] = useState(sessions[0]?.provider_id ?? "")
+  const [wantedProvider, setWantedProvider] = useState(() => sessions[0]?.provider_id || rememberedPayment())
   const attempted = useRef({ delivery: "", payment: "" })
 
   const currency = cart.currency_code
@@ -323,7 +349,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     guard(async (assertCurrent) => {
       await linkCustomerCart()
       assertCurrent()
-      const { saveToAccount, savedAddressId, email: nextEmail, ...addresses } = body
+      const { saveToAccount, savedAddressId, quiet, email: nextEmail, ...addresses } = body
       if (nextEmail && nextEmail !== cart.email) {
         await sdk.store.cart.update(cart.id, { email: nextEmail })
         assertCurrent()
@@ -337,13 +363,16 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       assertCurrent()
       setCart(updated)
       if (saveToAccount) {
-        if (savedAddressId) {
-          await updateAddress(savedAddressId, body.shipping_address)
-        } else {
-          const first = !customer.addresses?.length
-          await createAddress({ ...body.shipping_address, ...(first ? { address_name: "Primary shipping", is_default_shipping: true } : {}) })
+        const first = !customer.addresses?.length
+        const saving = savedAddressId
+          ? updateAddress(savedAddressId, body.shipping_address)
+          : createAddress({ ...body.shipping_address, ...(first ? { address_name: "Primary shipping", is_default_shipping: true } : {}) })
+        // A correction we made ourselves never holds up the order: the order already has the address.
+        if (quiet) void saving.catch(() => undefined)
+        else {
+          await saving
+          assertCurrent()
         }
-        assertCurrent()
       }
     })
 
@@ -354,28 +383,34 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       setCart(updated)
     })
 
+  const preparePayment = async (providerId: string, assertCurrent: () => void) => {
+    const checkoutCart = await linkCustomerCart()
+    assertCurrent()
+    const existing = checkoutCart.payment_collection?.payment_sessions?.find((session) => session.provider_id === providerId)
+    if (needsFreshSession(providerId) || !existing) {
+      await sdk.store.payment.initiatePaymentSession(checkoutCart, {
+        provider_id: providerId,
+        data: providerId === MAKEPAY_PROVIDER_ID && checkoutCart.email ? { customer_email: checkoutCart.email } : undefined,
+      })
+      assertCurrent()
+    }
+    const { cart: updated } = await sdk.store.cart.retrieve(cart.id, { fields: CART_FIELDS })
+    assertCurrent()
+    setCart(updated)
+    return updated
+  }
+
   const startPayment = (providerId: string) => {
     attempted.current.payment = `${providerId}:${cart.total}`
     return guard(async (assertCurrent) => {
-      const checkoutCart = await linkCustomerCart()
-      assertCurrent()
-      const existing = checkoutCart.payment_collection?.payment_sessions?.find((session) => session.provider_id === providerId)
-      if (needsFreshSession(providerId) || !existing) {
-        await sdk.store.payment.initiatePaymentSession(checkoutCart, {
-          provider_id: providerId,
-          data: providerId === MAKEPAY_PROVIDER_ID && checkoutCart.email ? { customer_email: checkoutCart.email } : undefined,
-        })
-        assertCurrent()
-      }
-      const { cart: updated } = await sdk.store.cart.retrieve(cart.id, { fields: CART_FIELDS })
-      assertCurrent()
-      setCart(updated)
+      await preparePayment(providerId, assertCurrent)
     })
   }
 
   const choosePayment = (providerId: string) => {
     setWantedProvider(providerId)
-    void startPayment(providerId)
+    rememberPayment(providerId)
+    if (!preparedOnPay(providerId)) void startPayment(providerId)
   }
 
   // Preselect the cheapest delivery once the destination is known; the shopper can still switch.
@@ -391,7 +426,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   // With a single payment method, choose it. A changed total voids the payment session, so
   // the chosen method is prepared again for the new amount.
   useEffect(() => {
-    if (!hasDelivery || busyRef.current || !chosenProvider || activeSession) return
+    if (!hasDelivery || busyRef.current || !chosenProvider || activeSession || preparedOnPay(chosenProvider)) return
     if (attempted.current.payment === `${chosenProvider}:${cart.total}`) return
     void startPayment(chosenProvider)
   })
@@ -419,7 +454,8 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
 
   const placeOrder = (nmiToken?: NmiToken, confirmPayPal?: () => Promise<void>) =>
     guard(async (assertCurrent) => {
-      let checkoutCart = await linkCustomerCart()
+      // A hosted payment page is opened now, for exactly this total.
+      let checkoutCart = preparedOnPay(chosenProvider) ? await preparePayment(chosenProvider, assertCurrent) : await linkCustomerCart()
       assertCurrent()
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         throw new Error("Your account pricing has been applied. Please review the updated total before paying.")
@@ -460,6 +496,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       if (result.type !== "order") {
         throw new Error(result.error?.message ?? "We couldn't place your order. Please review your details.")
       }
+      rememberPayment(chosenProvider)
       try {
         const receipt = serializeOrderReceipt(result.order, customer.id)
         if (receipt) window.sessionStorage.setItem(`vetud_order_${result.order.id}`, receipt)
@@ -567,7 +604,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
                   </Stack>
                 </RadioGroup>
                 {chosenProvider ? (
-                  activeSession ? (
+                  activeSession || preparedOnPay(chosenProvider) ? (
                     <PayPanel cart={cart} provider={chosenProvider} busy={busy} onRefresh={() => void startPayment(chosenProvider)} onPlaceOrder={() => void placeOrder()} onNmiToken={async (token) => { await placeOrder(token) }} payPalConfig={payPalConfig} createPayPalOrder={createPayPalOrder} onPayPalApprove={async (orderId) => {
                       await placeOrder(undefined, async () => {
                         const attempt = payPalAttempt.current
@@ -668,6 +705,8 @@ type AddressBody = {
   shipping_address: AddressValues
   saveToAccount: boolean
   savedAddressId?: string
+  /** Saving to the account is a background fix: its failure doesn't stop checkout. */
+  quiet?: boolean
 }
 
 function AddressSection({ cart, customer, countries, defaultCountry, busy, onSubmit }: {
@@ -688,9 +727,24 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
   const preferred = defaultAddress ?? savedAddresses[0]
   const current = cart.shipping_address?.address_1 ? cart.shipping_address : null
   const email = cart.email || customer.email
-  const withProfile = (address?: Parameters<typeof toAddressValues>[0]): AddressValues => {
+  const fromAccount = (address?: Parameters<typeof toAddressValues>[0]): AddressValues => {
     const values = toAddressValues(address)
-    return { ...values, first_name: values.first_name || customer.first_name || "", last_name: values.last_name || customer.last_name || "", phone: values.phone || customer.phone || "", country_code: values.country_code || defaultCountry }
+    return { ...values, first_name: values.first_name || customer.first_name || "", last_name: values.last_name || customer.last_name || "", phone: values.phone || customer.phone || "" }
+  }
+  const profile = (address?: Parameters<typeof toAddressValues>[0]): AddressValues => {
+    const values = fromAccount(address)
+    return { ...values, country_code: values.country_code || defaultCountry }
+  }
+  // An address saved under the wrong country, or none (a London postcode marked United States),
+  // is moved to the country its postcode belongs to instead of asking the shopper to fix it.
+  const withProfile = (address?: Parameters<typeof toAddressValues>[0]): AddressValues => {
+    const values = fromAccount(address)
+    const country = inferAddressCountry(values, countries.map(option => option.code))
+    return country ? changeAddressCountry(values, country) : profile(address)
+  }
+  const correctedCountry = (address?: Parameters<typeof toAddressValues>[0]) => {
+    const country = withProfile(address).country_code
+    return address && country !== profile(address).country_code ? country : ""
   }
   const errorsFor = (values: AddressValues) => {
     const errors = validateAddress(values, (key, args) => ta(key, args), ta(getCountryRules(values.country_code).postalLabel as "postal" | "zip" | "postcode"))
@@ -698,13 +752,15 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
     return errors
   }
   const initialSource = current ?? preferred
-  const initialId = current ? savedAddresses.find(address => sameAddress(withProfile(address), current))?.id ?? "current" : preferred?.id ?? "new"
+  const initialId = current ? savedAddresses.find(address => sameAddress(withProfile(address), current) || sameAddress(profile(address), current))?.id ?? "current" : preferred?.id ?? "new"
   const [selectedId, setSelectedId] = useState(initialId)
   const [shipping, setShipping] = useState(() => withProfile(initialSource))
   const [mode, setMode] = useState<"summary" | "choose" | "repair" | "edit" | "new">(() => !initialSource ? "new" : Object.keys(errorsFor(shipping)).length ? "repair" : "summary")
   const [repairFields, setRepairFields] = useState(() => addressRepairFields(errorsFor(shipping)))
   const [showErrors, setShowErrors] = useState(Boolean(initialSource))
   const [saveToAccount, setSaveToAccount] = useState(true)
+  // Shown under the address after we corrected its country, so the change is never silent.
+  const [countryNote, setCountryNote] = useState(() => correctedCountry(initialSource ?? undefined))
   const autoApplied = useRef(false)
   const shippingErrors = errorsFor(shipping)
   const valid = Object.keys(shippingErrors).length === 0
@@ -717,11 +773,15 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
     ...(savedAddresses.some(address => address.id === addressId) ? { savedAddressId: addressId } : {}),
   })
 
-  // A complete default address can be used immediately. Repairs always need confirmation.
+  // A complete address is used straight away: the default saved one, or the order's own once its
+  // country is corrected. Repairs always need confirmation. A saved address we corrected (or
+  // completed from the profile) is fixed in the account too, so the next order is instant.
   useEffect(() => {
-    if (autoApplied.current || current || !preferred || mode !== "summary") return
+    if (autoApplied.current || mode !== "summary" || (!current && !preferred)) return
     autoApplied.current = true
-    if (valid) void onSubmit(bodyFor(shipping))
+    if (!valid || isApplied) return
+    const fixSaved = Boolean(selectedSaved && !sameAddress(selectedSaved, shipping))
+    void onSubmit({ ...bodyFor(shipping, fixSaved), quiet: true })
   })
 
   const openChoose = () => {
@@ -739,11 +799,15 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
     const errors = errorsFor(values)
     setSelectedId(id)
     setShipping(values)
+    setCountryNote(id === "new" ? "" : correctedCountry(source ?? undefined))
     setRepairFields(addressRepairFields(errors))
     setShowErrors(id !== "new")
     setSaveToAccount(true)
     setMode(id === "new" ? "new" : Object.keys(errors).length ? "repair" : "summary")
-    if (id !== "new" && !Object.keys(errors).length && !(cart.email && sameAddress(values, current))) void onSubmit(bodyFor(values, false, id))
+    const saved = savedAddresses.find(address => address.id === id)
+    if (id !== "new" && !Object.keys(errors).length && !(cart.email && sameAddress(values, current))) {
+      void onSubmit({ ...bodyFor(values, Boolean(saved && !sameAddress(saved, values)), id), quiet: true })
+    }
   }
   const openEditor = (full = false) => {
     const match = savedAddresses.find(address => sameAddress(withProfile(address), shipping))
@@ -752,6 +816,7 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
     setRepairFields(addressRepairFields(shippingErrors))
     setShowErrors(!valid)
     setSaveToAccount(true)
+    setCountryNote("")
     setMode(full ? "edit" : "repair")
   }
   const cancelEditor = () => {
@@ -774,6 +839,10 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
   }>
     {(mode === "summary" || mode === "repair") ? <Box sx={{ mb: 2.5, overflowWrap: "anywhere" }}>
       {lines(shipping).map((line, index) => <Typography key={index} variant="body2" sx={{ fontWeight: index === 0 ? 650 : 400, color: index === 0 ? "text.primary" : "text.secondary" }}>{line}</Typography>)}
+      {mode === "summary" && countryNote && countryNote === shipping.country_code ? <Stack direction="row" spacing={0.75} role="status" sx={{ mt: 1.25, alignItems: "flex-start", color: "secondary.main" }}>
+        <Icon name="check" sx={{ fontSize: 16, mt: "2px" }} />
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>{ct.rich("Country set to {v0} to match postcode {v1}.", { v0: countryName(countryNote, locale), v1: shipping.postal_code }, {})}</Typography>
+      </Stack> : null}
       <Typography variant="caption" sx={{ display: "block", color: "text.secondary", mt: 1.5 }}>{t("confirmationTo", { email })}</Typography>
       {mode === "summary" ? <Button type="button" size="small" disabled={busy} onClick={() => openEditor(true)} sx={{ px: 0, mt: 0.5, minHeight: 44 }}>{ct("Edit address")}</Button> : null}
     </Box> : null}
@@ -819,7 +888,9 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
     }}>
       <Box id="shipping-address-editor" component="fieldset" disabled={busy} inert={busy} sx={{ border: 0, p: 0, m: 0, minWidth: 0 }}>
         <Typography component="legend" sx={{ p: 0, mb: 1, fontWeight: 650 }}>{ct(mode === "new" ? "New shipping address" : mode === "repair" ? "Confirm delivery details" : "Edit selected address")}</Typography>
-        {mode === "repair" ? <Typography variant="body2" sx={{ mb: 2.5, color: "text.secondary" }}>{ct("Your saved details are filled in. Check the highlighted fields to continue.")}</Typography> : null}
+        {mode === "repair" ? <Typography variant="body2" sx={{ mb: 2.5, color: "text.secondary" }}>{ct(shippingErrors.postal_code
+          ? "The postcode doesn't match the country. Check the country first, then the postcode."
+          : "Your saved details are filled in. Check the highlighted fields to continue.")}</Typography> : null}
         <AddressFields prefix="shipping" values={shipping} errors={showErrors ? shippingErrors : {}} countries={countries} onChange={change} fields={mode === "repair" ? repairFields : undefined} showAutofillHint={false} />
         {mode === "new" || selectedSaved ? <FormControlLabel sx={{ mt: 1.5, alignItems: "flex-start", "& .MuiFormControlLabel-label": { pt: 1, fontSize: "0.8125rem" } }} control={<Checkbox checked={saveToAccount} disabled={busy} onChange={event => setSaveToAccount(event.target.checked)} />} label={mode === "new" ? t("save") : ct("Save these changes to my saved address")} /> : null}
       </Box>

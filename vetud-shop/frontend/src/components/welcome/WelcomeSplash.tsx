@@ -12,15 +12,15 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { useRef, useState, type FormEvent } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
-import { AppLink, useLocalizedHref } from "../common/links"
+import { AppLink } from "../common/links"
 import { subscribeToNewsletter } from "../newsletter/subscription"
 import { useStore } from "../store/StoreProvider"
+import Button from "@mui/material/Button"
 import HoldButton from "./HoldButton"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -93,8 +93,6 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const submitting = useRef(false)
   const form = useRef<HTMLFormElement>(null)
   const joinButton = useRef<HTMLButtonElement>(null)
-  const router = useRouter()
-  const localize = useLocalizedHref()
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
 
   // Every action on this screen is a three-second hold, so pressing Enter in the form only moves
@@ -203,10 +201,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
             <Box sx={{ display: "grid", placeItems: "center", width: 52, height: 52, my: 2.75, borderRadius: "50%", bgcolor: "brand.navy", color: "brand.cyan" }}><Icon name="check" sx={{ fontSize: 28 }} /></Box>
             <Typography id="welcome-description" sx={descriptionSx}>{ct("Thanks for signing up to VETUD. We'll email you our latest offers and news.")}</Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 3.25 }}>
-              <HoldButton variant="contained" fill={alpha(brand.navy, .2)} onConfirm={() => {
-                onDismiss()
-                router.push(localize("/shop"))
-              }} sx={primaryButtonSx}>{actions("shopCatalog")}</HoldButton>
+              <Button variant="contained" onClick={onDismiss} sx={primaryButtonSx}>{actions("close")}</Button>
             </Box>
           </div> : <>
             <Typography id="welcome-description" sx={descriptionSx}>{ct("Get VETUD offers and news in your inbox.")}</Typography>

@@ -62,8 +62,8 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
       )
     }
 
-    const templateId = RESEND_TEMPLATE_IDS[email.template]
-    if (!templateId) {
+    const templateId = "html" in email ? undefined : RESEND_TEMPLATE_IDS[email.template]
+    if (!("html" in email) && !templateId) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
         `No Resend template ID for "${email.template}" in template-ids.ts.`
@@ -73,8 +73,9 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
     const { data, error } = await this.client.emails.send({
       from: notification.from || this.options.from,
       to: [notification.to],
-      template: { id: templateId, variables: email.variables },
-      subject: email.subject,
+      ...("html" in email
+        ? { html: email.html, text: email.text, subject: email.subject }
+        : { template: { id: templateId!, variables: email.variables }, subject: email.subject }),
       replyTo: email.replyTo ?? this.options.reply_to,
       attachments: notification.attachments?.map((attachment) => ({
         content: attachment.content,

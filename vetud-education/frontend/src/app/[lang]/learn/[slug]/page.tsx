@@ -25,17 +25,21 @@ import { EMERGING_WEIGHT_RESEARCH } from "@/content/learn/emerging-weight-resear
 import { getCategory, STATUSES } from "@/content/learn/categories"
 import { getLearnIllustration } from "@/content/learn/illustrations"
 import { getPeptide, PEPTIDES } from "@/content/learn/peptides"
+import { getPlannedPeptide, PLANNED_PEPTIDES } from "@/content/learn/planned-peptides"
+import PlannedGuide from "@/components/learn/PlannedGuide"
 import { getProfileVideoResources } from "@/content/learn/video-resources"
 import { WEIGHT_LOSS_TRIALS } from "@/content/learn/weight-loss-trials"
 import { articleMetadata, articleStructuredData, readingMinutes } from "@/lib/article-seo"
 
 export function generateStaticParams() {
-  return PEPTIDES.map(peptide => ({ slug: peptide.slug }))
+  return [...PEPTIDES, ...PLANNED_PEPTIDES].map(peptide => ({ slug: peptide.slug }))
 }
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/learn/[slug]">): Promise<Metadata> {
   const { slug } = await params
   const peptide = getPeptide(slug)
+  const planned = peptide ? undefined : getPlannedPeptide(slug)
+  if (planned) return { ...(await articleMetadata({ title: `${planned.name}: guide coming soon`, description: `Our guide to ${planned.name} is being written.`, path: `/learn/${planned.slug}` })), robots: { index: false, follow: true } }
   return peptide ? articleMetadata({
     title: `${peptide.name}: research, risks and approval status`, description: peptide.oneLiner,
     path: `/learn/${peptide.slug}`, image: getLearnIllustration(peptide.slug),
@@ -51,7 +55,11 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[lang]/learn/[slu
   const act = await getTranslations("Actions")
   const { slug } = await params
   const peptide = getPeptide(slug)
-  if (!peptide) notFound()
+  if (!peptide) {
+    const planned = getPlannedPeptide(slug)
+    if (!planned) notFound()
+    return <PlannedGuide peptide={planned} />
+  }
   const category = getCategory(peptide.category)
   const status = STATUSES[peptide.status]
   const image = getLearnIllustration(peptide.slug)

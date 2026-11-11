@@ -14,11 +14,13 @@ import {
 } from "./store/email-list/validators"
 import { accountRoutes } from "./account-middlewares"
 import { forumRoutes } from "./forum-middlewares"
+import { signInCodeRoutes } from "./sign-in-code-middlewares"
 
 export default defineMiddlewares({
   routes: [
     ...forumRoutes,
     ...accountRoutes,
+    ...signInCodeRoutes,
     {
       method: ["POST"],
       matcher: "/store/contact",
