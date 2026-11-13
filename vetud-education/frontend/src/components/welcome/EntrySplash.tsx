@@ -8,7 +8,7 @@ import DialogContent from "@mui/material/DialogContent"
 import Typography from "@mui/material/Typography"
 import { alpha } from "@mui/material/styles"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
@@ -18,6 +18,12 @@ import HoldButton from "./HoldButton"
 export default function EntrySplash({ open, onEnter }: { open: boolean; onEnter: () => void }) {
   const ct = useContentTranslator()
   const [age, setAge] = useState<"adult" | "underage" | null>(null)
+  const confirmed = age === "adult"
+  const heading = useRef<HTMLHeadingElement>(null)
+
+  useEffect(() => {
+    if (open) heading.current?.focus()
+  }, [open, confirmed])
 
   return <Dialog
     open={open}
@@ -59,24 +65,29 @@ export default function EntrySplash({ open, onEnter }: { open: boolean; onEnter:
         </Box>
 
         <Box sx={{ minWidth: 0, p: { xs: 3, sm: 4, md: 4.5 }, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          <Box sx={{ mb: 2.5 }}>
+          <Box sx={{ mb: 2.5, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}>
             <Box sx={{ display: "inline-flex", alignItems: "center", gap: .75, color: "brand.teal", fontSize: 12, fontWeight: 700 }}>
               <Icon name="shield" sx={{ fontSize: 17 }} />{ct("An 18+ learning space")}
             </Box>
+            <Typography sx={{ color: "text.secondary", fontSize: 12, whiteSpace: "nowrap" }}>{ct(confirmed ? "Step 2 of 2" : "Step 1 of 2")}</Typography>
           </Box>
-          <Typography id="entry-title" component="h2" sx={{ fontSize: { xs: 28, sm: 34 }, fontWeight: 600, lineHeight: 1.18, letterSpacing: "-.045em", textWrap: "balance" }}>
-            {ct("Are you 18 or older?")}
+          <Typography ref={heading} id="entry-title" component="h2" tabIndex={-1} sx={{ fontSize: { xs: 28, sm: 34 }, fontWeight: 600, lineHeight: 1.18, letterSpacing: "-.045em", textWrap: "balance" }}>
+            {ct(confirmed ? "You're ready to explore." : "Are you 18 or older?")}
           </Typography>
-          <Typography id="entry-description" sx={{ mt: 1.5, mb: 3, color: "text.secondary", fontSize: 15, lineHeight: 1.75 }}>{ct("Please confirm your age to enter this educational website.")}</Typography>
-          <Box role="group" aria-labelledby="entry-title">
-            <Button type="button" fullWidth variant={age === "adult" ? "contained" : "outlined"} aria-pressed={age === "adult"} onClick={() => setAge("adult")} startIcon={age === "adult" ? <Icon name="check" /> : undefined} sx={{ minHeight: 52, borderRadius: "12px" }}>{ct("Yes, I am 18 or older")}</Button>
-            <Button type="button" fullWidth variant={age === "underage" ? "contained" : "outlined"} aria-pressed={age === "underage"} onClick={() => setAge("underage")} sx={{ mt: 1.5, minHeight: 52, borderRadius: "12px" }}>{ct("No, I am under 18")}</Button>
-          </Box>
-          {age === "underage" ? <Alert severity="info" sx={{ mt: 2, borderRadius: "12px" }}>{ct("This learning space is for adults aged 18 and over. You cannot enter yet.")}</Alert> : null}
-          <HoldButton fullWidth variant="contained" disabled={age !== "adult"} onConfirm={() => { if (age === "adult") onEnter() }} fill={alpha(brand.onNavy, .2)} startIcon={<Icon name="arrowRight" />} sx={{ mt: 3, minHeight: 54, borderRadius: "12px" }}>
-            {ct("Enter website")}
-          </HoldButton>
-          <Typography sx={{ mt: 1.5, color: "text.secondary", fontSize: 12, lineHeight: 1.7, textAlign: "center" }}>{ct("Press and hold for 3 seconds to enter.")}</Typography>
+          <Typography id="entry-description" sx={{ mt: 1.5, mb: 3, color: "text.secondary", fontSize: 15, lineHeight: 1.75 }}>{ct(confirmed ? "This site shares peptide research for education only." : "Please confirm your age to enter this educational website.")}</Typography>
+          {confirmed ? <>
+            <HoldButton fullWidth variant="contained" onConfirm={() => { if (confirmed) onEnter() }} fill={alpha(brand.onNavy, .2)} startIcon={<Icon name="arrowRight" />} sx={{ minHeight: 54, borderRadius: "12px" }}>
+              {ct("Enter website")}
+            </HoldButton>
+            <Typography sx={{ mt: 1.5, color: "text.secondary", fontSize: 12, lineHeight: 1.7, textAlign: "center" }}>{ct("Press and hold for 3 seconds to enter.")}</Typography>
+            <Button type="button" fullWidth onClick={() => setAge(null)} sx={{ mt: 1, minHeight: 44 }}>{ct("Back")}</Button>
+          </> : <>
+            <Box role="group" aria-labelledby="entry-title">
+              <Button type="button" fullWidth variant="contained" onClick={() => setAge("adult")} sx={{ minHeight: 52, borderRadius: "12px" }}>{ct("Yes, I am 18 or older")}</Button>
+              <Button type="button" fullWidth variant="outlined" aria-pressed={age === "underage"} onClick={() => setAge("underage")} sx={{ mt: 1.5, minHeight: 52, borderRadius: "12px" }}>{ct("No, I am under 18")}</Button>
+            </Box>
+            {age === "underage" ? <Alert severity="info" sx={{ mt: 2, borderRadius: "12px" }}>{ct("This learning space is for adults aged 18 and over. You cannot enter yet.")}</Alert> : null}
+          </>}
           <Typography sx={{ mt: 2.5, color: "text.secondary", fontSize: 12, lineHeight: 1.7, textAlign: "center" }}>{ct("For research and education only. Not medical advice.")}</Typography>
         </Box>
       </Box>
