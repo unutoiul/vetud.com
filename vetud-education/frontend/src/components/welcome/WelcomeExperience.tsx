@@ -6,13 +6,13 @@ import { subscribedInBrowser } from "../newsletter/subscription"
 import WelcomeSplash from "./WelcomeSplash"
 import EntrySplash from "./EntrySplash"
 import { entryVisitor, rememberEntryVisitor, type EntryVisitor } from "./entry-session"
-import { dismissWelcomeForSession, welcomeCooldownUntil } from "./session"
+import { dismissWelcomeForSession, startWelcomeForSession } from "./session"
 
 // Pages opened from an email link, where a full-screen sign-up would get in the way.
 const QUIET_PATHS = /^\/[^/]+\/(newsletter|account\/reset-password)(\/|$)/
 
 /**
- * Offer the email list again five minutes after dismissal, until subscribed in this browser.
+ * Offer the email list thirty seconds after entry and after each dismissal, until subscribed.
  * Check browser preferences before opening so navigation and reloads cannot flash the splash.
  */
 export default function WelcomeExperience() {
@@ -25,7 +25,7 @@ export default function WelcomeExperience() {
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      setCooldownUntil(value => Math.max(value, welcomeCooldownUntil()))
+      setCooldownUntil(value => Math.max(value, startWelcomeForSession()))
       setSubscribed(subscribedInBrowser())
       setVisitor(entryVisitor())
     })

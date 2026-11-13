@@ -13,10 +13,11 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
+import HoldButton from "./HoldButton"
 
 export default function EntrySplash({ open, onEnter }: { open: boolean; onEnter: () => void }) {
   const ct = useContentTranslator()
-  const [underage, setUnderage] = useState(false)
+  const [age, setAge] = useState<"adult" | "underage" | null>(null)
 
   return <Dialog
     open={open}
@@ -67,9 +68,15 @@ export default function EntrySplash({ open, onEnter }: { open: boolean; onEnter:
             {ct("Are you 18 or older?")}
           </Typography>
           <Typography id="entry-description" sx={{ mt: 1.5, mb: 3, color: "text.secondary", fontSize: 15, lineHeight: 1.75 }}>{ct("Please confirm your age to enter this educational website.")}</Typography>
-          <Button type="button" fullWidth variant="contained" onClick={onEnter} endIcon={<Icon name="arrowRight" />} sx={{ minHeight: 52, borderRadius: "12px" }}>{ct("Yes, I am 18 or older")}</Button>
-          <Button type="button" fullWidth variant="outlined" onClick={() => setUnderage(true)} sx={{ mt: 1.5, minHeight: 52, borderRadius: "12px" }}>{ct("No, I am under 18")}</Button>
-          {underage ? <Alert severity="info" sx={{ mt: 2, borderRadius: "12px" }}>{ct("This learning space is for adults aged 18 and over. You cannot enter yet.")}</Alert> : null}
+          <Box role="group" aria-labelledby="entry-title">
+            <Button type="button" fullWidth variant={age === "adult" ? "contained" : "outlined"} aria-pressed={age === "adult"} onClick={() => setAge("adult")} startIcon={age === "adult" ? <Icon name="check" /> : undefined} sx={{ minHeight: 52, borderRadius: "12px" }}>{ct("Yes, I am 18 or older")}</Button>
+            <Button type="button" fullWidth variant={age === "underage" ? "contained" : "outlined"} aria-pressed={age === "underage"} onClick={() => setAge("underage")} sx={{ mt: 1.5, minHeight: 52, borderRadius: "12px" }}>{ct("No, I am under 18")}</Button>
+          </Box>
+          {age === "underage" ? <Alert severity="info" sx={{ mt: 2, borderRadius: "12px" }}>{ct("This learning space is for adults aged 18 and over. You cannot enter yet.")}</Alert> : null}
+          <HoldButton fullWidth variant="contained" disabled={age !== "adult"} onConfirm={() => { if (age === "adult") onEnter() }} fill={alpha(brand.onNavy, .2)} startIcon={<Icon name="arrowRight" />} sx={{ mt: 3, minHeight: 54, borderRadius: "12px" }}>
+            {ct("Enter website")}
+          </HoldButton>
+          <Typography sx={{ mt: 1.5, color: "text.secondary", fontSize: 12, lineHeight: 1.7, textAlign: "center" }}>{ct("Press and hold for 3 seconds to enter.")}</Typography>
           <Typography sx={{ mt: 2.5, color: "text.secondary", fontSize: 12, lineHeight: 1.7, textAlign: "center" }}>{ct("For research and education only. Not medical advice.")}</Typography>
         </Box>
       </Box>
