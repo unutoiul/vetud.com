@@ -70,6 +70,7 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
       )
     }
 
+    const idempotencyKey = notification.provider_data?.idempotency_key
     const { data, error } = await this.client.emails.send({
       from: notification.from || this.options.from,
       to: [notification.to],
@@ -82,7 +83,7 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
         filename: attachment.filename,
         contentType: attachment.content_type,
       })),
-    })
+    }, typeof idempotencyKey === "string" ? { idempotencyKey } : undefined)
 
     if (error || !data) {
       this.logger.error(

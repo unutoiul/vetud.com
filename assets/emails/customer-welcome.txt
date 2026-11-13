@@ -1,0 +1,29 @@
+Welcome{{{NAME_SUFFIX}}}.
+Your VETUD account is ready.
+
+Thanks for joining us. Start exploring VETUD, and discover a few familiar names from our peptide collection below.
+
+MEET THE COLLECTION
+Explore these featured peptides on pep.company. Each product page has the current formats, prices and product details.
+
+Retatrutide
+Buy now: https://www.pep.company/products/retatrutide
+
+Tirzepatide
+Buy now: https://www.pep.company/products/tirzepatide
+
+Semaglutide
+Buy now: https://www.pep.company/products/semaglutide
+
+GHK-Cu
+Buy now: https://www.pep.company/products/ghk-cu
+
+Find your next starting point.
+See the full VETUD collection, compare available formats and explore the details at your own pace.
+Explore all peptides: https://www.pep.company/shop
+
+Return to VETUD: {{{STOREFRONT_URL}}}
+
+You received this welcome email because a VETUD account was created with your email address. If this wasn't you, reply to this email and we'll help.
+
+VETUD products are sold for laboratory research use only. Not for human or veterinary use. This email does not provide medical advice.

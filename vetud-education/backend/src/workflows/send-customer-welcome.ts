@@ -13,34 +13,35 @@ type WorkflowInput = { id: string }
 
 type CustomerRow = { id: string; email?: string | null; first_name?: string | null; has_account?: boolean | null }
 
+export function customerWelcomeNotifications(customer: CustomerRow | undefined): CreateNotificationDTO[] {
+  if (!customer?.email || !customer.has_account) return []
+
+  return [{
+    to: customer.email,
+    channel: "email",
+    template: EmailTemplates.CUSTOMER_WELCOME,
+    data: { first_name: customer.first_name, storefront_url: emailSettings().storefrontUrl },
+    trigger_type: "customer.created",
+    resource_id: customer.id,
+    resource_type: "customer",
+    idempotency_key: `customer-welcome:${customer.id}`,
+    provider_data: { idempotency_key: `customer-welcome:${customer.id}` },
+  }]
+}
+
 /** Welcomes a customer who registered an account (not customers created by an admin). */
 export const sendCustomerWelcomeWorkflow = createWorkflow(
   "send-customer-welcome",
-  ({ id }: WorkflowInput) => {
+  function ({ id }: WorkflowInput) {
     const { data: customers } = useQueryGraphStep({
       entity: "customer",
       fields: ["id", "email", "first_name", "has_account"],
       filters: { id },
     })
 
-    const notifications = transform({ customers }, ({ customers }) => {
-      const customer = customers[0] as CustomerRow | undefined
-      if (!customer?.email || !customer.has_account) {
-        return [] as CreateNotificationDTO[]
-      }
-
-      const notification: CreateNotificationDTO = {
-        to: customer.email,
-        channel: "email",
-        template: EmailTemplates.CUSTOMER_WELCOME,
-        data: { first_name: customer.first_name, storefront_url: emailSettings().storefrontUrl },
-        trigger_type: "customer.created",
-        resource_id: customer.id,
-        resource_type: "customer",
-      }
-
-      return [notification]
-    })
+    const notifications = transform({ customers }, ({ customers }) =>
+      customerWelcomeNotifications(customers[0] as CustomerRow | undefined)
+    )
 
     const sent = sendNotificationStep(notifications)
 

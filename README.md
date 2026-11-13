@@ -151,6 +151,8 @@ The forum and article comments moved to the education site (`vetud-education/`) 
 
 The emails are published templates in Resend (**Dashboard → Templates**, named `VETUD · …`). The backend sends each one by its template ID with variables. The IDs are in `vetud-shop/backend/src/modules/resend/template-ids.ts`, and `templates.ts` next to it builds the variables. Edit wording and layout in Resend and publish; keep the `{{{VARIABLE}}}` names, because the backend fills them in.
 
+The account welcome email is shared by the shop and education backends. Its reviewed HTML and plain-text source are in [`assets/emails/`](assets/emails/README.md). It welcomes the new member, shows four featured VETUD peptides with **Buy now** buttons leading to their product pages on pep.company, and links back to the originating site. Publish changes to the existing Resend template and keep the source files in sync; no backend deployment is needed for template edits.
+
 | Template | Sent when | To |
 |---|---|---|
 | `order-placed` | Order placed | Customer (includes payment instructions) |

@@ -4,7 +4,7 @@ import Box from "@mui/material/Box"
 import Button, { type ButtonProps } from "@mui/material/Button"
 import Tooltip from "@mui/material/Tooltip"
 import { keyframes, type SxProps, type Theme } from "@mui/material/styles"
-import { useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react"
+import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
 /** How long a splash button has to be held before it acts. */
@@ -43,8 +43,8 @@ type HoldButtonProps = Omit<ButtonProps, "onClick" | "href" | "type" | "endIcon"
 /**
  * A button that acts only after a three-second hold: a bar fills the button and a counter in it
  * counts the seconds down. Letting go early empties the bar. Works with a mouse, touch, and the
- * keyboard (hold Space or Enter). Screen readers activate buttons with a plain click, which no
- * press starts, so that click still acts at once.
+ * keyboard (hold Space or Enter). An assistive-technology click starts the same three-second
+ * countdown, since it may not produce pointer or keyboard press events.
  */
 export default function HoldButton({ onConfirm, fill, hint = "full", showHoldTooltip = false, counterSx, children, disabled, sx, ...props }: HoldButtonProps) {
   const ct = useContentTranslator()
@@ -58,17 +58,20 @@ export default function HoldButton({ onConfirm, fill, hint = "full", showHoldToo
   // Set from press to click, so the click that ends a press never acts on its own.
   const pressed = useRef(false)
   const confirm = useRef(onConfirm)
+  const enabled = useRef(!disabled)
 
-  useEffect(() => {
-    confirm.current = onConfirm
-  }, [onConfirm])
-
-  const stopTimers = () => {
+  const stopTimers = useCallback(() => {
     window.clearTimeout(done.current)
     window.clearInterval(ticker.current)
     done.current = undefined
-  }
-  useEffect(() => stopTimers, [])
+  }, [])
+  useEffect(() => stopTimers, [stopTimers])
+
+  useEffect(() => {
+    confirm.current = onConfirm
+    enabled.current = !disabled
+    if (disabled) stopTimers()
+  }, [onConfirm, disabled, stopTimers])
 
   const start = () => {
     if (disabled || done.current !== undefined) return
@@ -83,17 +86,27 @@ export default function HoldButton({ onConfirm, fill, hint = "full", showHoldToo
       stopTimers()
       setHolding(false)
       setLeft(SECONDS)
-      confirm.current()
+      if (enabled.current) confirm.current()
     }, HOLD_MS)
   }
 
-  const release = () => {
+  const release = useCallback(() => {
     if (done.current === undefined) return
     stopTimers()
     setHolding(false)
     setLeft(SECONDS)
     setShake((count) => count + 1)
-  }
+  }, [stopTimers])
+
+  useEffect(() => {
+    const cancelWhenHidden = () => { if (document.hidden) release() }
+    window.addEventListener("blur", release)
+    document.addEventListener("visibilitychange", cancelWhenHidden)
+    return () => {
+      window.removeEventListener("blur", release)
+      document.removeEventListener("visibilitychange", cancelWhenHidden)
+    }
+  }, [release])
 
   const button = (
     <Button
@@ -109,6 +122,7 @@ export default function HoldButton({ onConfirm, fill, hint = "full", showHoldToo
       }}
       onPointerUp={release}
       onPointerCancel={release}
+      onLostPointerCapture={release}
       onBlur={release}
       onKeyDown={(event: KeyboardEvent<HTMLButtonElement>) => {
         if (!isHoldKey(event.key)) return
@@ -123,7 +137,7 @@ export default function HoldButton({ onConfirm, fill, hint = "full", showHoldToo
       }}
       onClick={(event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
-        if (!pressed.current && event.detail === 0) confirm.current()
+        if (!pressed.current && event.detail === 0) start()
         pressed.current = false
       }}
       onContextMenu={(event) => event.preventDefault()}
@@ -148,8 +162,8 @@ export default function HoldButton({ onConfirm, fill, hint = "full", showHoldToo
         zIndex: -1,
         bgcolor: fill,
         transformOrigin: "left center",
-        transform: holding ? "scaleX(1)" : "scaleX(0)",
-        transition: holding ? `transform ${HOLD_MS}ms linear` : "transform .25s ease-out",
+        transform: holding && !disabled ? "scaleX(1)" : "scaleX(0)",
+        transition: holding && !disabled ? `transform ${HOLD_MS}ms linear` : "transform .25s ease-out",
         pointerEvents: "none",
       }} />
       {children}
