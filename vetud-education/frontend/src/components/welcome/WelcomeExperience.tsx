@@ -55,8 +55,8 @@ export default function WelcomeExperience() {
   const open = !!visitor && cooldownUntil === 0 && (asking || thanking)
 
   return <>
-    <EntrySplash open={visitor === null} onEnter={name => {
-      const accepted = rememberEntryVisitor(name, true)
+    <EntrySplash open={visitor === null} onEnter={() => {
+      const accepted = rememberEntryVisitor(true)
       if (!accepted) return
       // Let the visitor enter the actual site before offering the existing newsletter splash.
       setCooldownUntil(dismissWelcomeForSession())

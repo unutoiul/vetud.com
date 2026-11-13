@@ -1,29 +1,26 @@
-const ENTRY_KEY = "vetud_education_entry_v1"
-const NAME_LIMIT = 80
+const ENTRY_KEY = "vetud_education_entry_v2"
+const LEGACY_ENTRY_KEY = "vetud_education_entry_v1"
 
-export type EntryVisitor = { name: string; adult: true }
+export type EntryVisitor = { adult: true }
 
-export function entryName(value: string) {
-  return value.trim().replace(/\s+/g, " ").slice(0, NAME_LIMIT)
-}
-
-/** Keep this visit's introduction in the current tab, without creating an account. */
+/** Remember only the age confirmation for this tab's visit. Discard previously collected names. */
 export function entryVisitor(): EntryVisitor | null {
   try {
-    const stored: unknown = JSON.parse(window.sessionStorage.getItem(ENTRY_KEY) ?? "null")
-    if (!stored || typeof stored !== "object" || !("name" in stored) || !("adult" in stored)) return null
-    if (typeof stored.name !== "string" || stored.adult !== true || !entryName(stored.name)) return null
-    return { name: entryName(stored.name), adult: true }
+    const saved = window.sessionStorage.getItem(ENTRY_KEY) ?? window.sessionStorage.getItem(LEGACY_ENTRY_KEY)
+    window.sessionStorage.removeItem(LEGACY_ENTRY_KEY)
+    const stored: unknown = JSON.parse(saved ?? "null")
+    if (!stored || typeof stored !== "object" || !("adult" in stored) || stored.adult !== true) return null
+    return rememberEntryVisitor(true)
   } catch {
     return null
   }
 }
 
-export function rememberEntryVisitor(name: string, adult: boolean): EntryVisitor | null {
-  const normalized = entryName(name)
-  if (!normalized || !adult) return null
-  const visitor: EntryVisitor = { name: normalized, adult: true }
+export function rememberEntryVisitor(adult: boolean): EntryVisitor | null {
+  if (!adult) return null
+  const visitor: EntryVisitor = { adult: true }
   try {
+    window.sessionStorage.removeItem(LEGACY_ENTRY_KEY)
     window.sessionStorage.setItem(ENTRY_KEY, JSON.stringify(visitor))
   } catch {
     // React retains the completed introduction when browser storage is blocked.
