@@ -53,7 +53,7 @@ export default function PayPalReturn() {
           return
         }
         try {
-          const receipt = serializeOrderReceipt(result.order, customer?.id)
+          const receipt = serializeOrderReceipt(result.order, customer?.id, cartId)
           if (receipt) window.sessionStorage.setItem(`vetud_order_${result.order.id}`, receipt)
         } catch {
           // The confirmation page fetches the order when storage is unavailable.

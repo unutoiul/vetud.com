@@ -1,9 +1,15 @@
 import type { HttpTypes } from "@medusajs/types"
 import type { CustomerOrder } from "./orders"
 
-/** This is an offline receipt, never evidence that a payment succeeded. */
-export function serializeOrderReceipt(order: HttpTypes.StoreOrder, customerId?: string) {
-  if (!customerId) return null
+/** A receipt belongs to the signed-in member who ordered, or to "guest" for an order without an account. */
+export const GUEST_RECEIPT_OWNER = "guest"
+
+/**
+ * This is an offline receipt, never evidence that a payment succeeded. A guest's copy also keeps the
+ * cart the order came from: that is how this browser proves it placed the order when the guest
+ * creates an account from the confirmation page.
+ */
+export function serializeOrderReceipt(order: HttpTypes.StoreOrder, customerId?: string, cartId?: string) {
   const address = order.shipping_address
   const snapshot = {
     id: order.id, display_id: order.display_id, custom_display_id: order.custom_display_id,
@@ -22,17 +28,27 @@ export function serializeOrderReceipt(order: HttpTypes.StoreOrder, customerId?: 
     } : null,
     shipping_methods: order.shipping_methods?.map(({ name }) => ({ name })),
   }
-  return JSON.stringify({ version: 1, customer_id: customerId, order: snapshot })
+  return JSON.stringify({ version: 1, customer_id: customerId || GUEST_RECEIPT_OWNER, cart_id: customerId ? null : cartId ?? null, order: snapshot })
 }
 
 export function parseOrderReceipt(raw: string | null, orderId: string, customerId?: string): CustomerOrder | null {
-  if (!raw || !customerId) return null
+  if (!raw) return null
   try {
     const receipt = JSON.parse(raw)
-    if (receipt?.version !== 1 || receipt.customer_id !== customerId || receipt.order?.id !== orderId) return null
-    // Older/unscoped receipts are intentionally not displayed after an account
-    // change. Even a matching receipt remains non-authoritative at confirmation.
+    if (receipt?.version !== 1 || receipt.customer_id !== (customerId || GUEST_RECEIPT_OWNER) || receipt.order?.id !== orderId) return null
+    // A receipt is only shown to whoever it belongs to: a member's never appears after an account
+    // change, and a guest's is read as a guest's. Even a matching receipt is non-authoritative.
     return receipt.order
+  } catch {
+    return null
+  }
+}
+
+/** The cart a guest order came from, or null. */
+export function receiptCartId(raw: string | null, orderId: string): string | null {
+  try {
+    const receipt = JSON.parse(raw ?? "null")
+    return receipt?.order?.id === orderId && receipt.customer_id === GUEST_RECEIPT_OWNER && typeof receipt.cart_id === "string" ? receipt.cart_id : null
   } catch {
     return null
   }

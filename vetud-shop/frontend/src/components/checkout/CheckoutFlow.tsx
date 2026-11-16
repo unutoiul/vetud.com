@@ -24,6 +24,7 @@ import Radio from "@mui/material/Radio"
 import RadioGroup from "@mui/material/RadioGroup"
 import Skeleton from "@mui/material/Skeleton"
 import Stack from "@mui/material/Stack"
+import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useRouter, useSearchParams } from "next/navigation"
 import dynamic from "next/dynamic"
@@ -223,15 +224,12 @@ function CheckoutContent() {
     )
   }
 
-  // An account is required to order: there is no guest checkout.
-  if (!customer) {
-    return <AuthPanel context="checkout" />
-  }
-
-  return <Checkout cart={cart} customer={customer} onCompleted={setCompletedOrderId} />
+  // Guests order with just an email (owner request 2026-11-17); members are signed in.
+  // Signing in part-way through starts the form afresh for the member.
+  return <Checkout key={customer?.id ?? "guest"} cart={cart} customer={customer ?? null} onCompleted={setCompletedOrderId} />
 }
 
-function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; customer: HttpTypes.StoreCustomer; onCompleted: (orderId: string) => void }) {
+function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; customer: HttpTypes.StoreCustomer | null; onCompleted: (orderId: string) => void }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Checkout")
@@ -255,6 +253,14 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const sessions = cart.payment_collection?.payment_sessions ?? []
   const [wantedProvider, setWantedProvider] = useState(() => sessions[0]?.provider_id || rememberedPayment())
   const attempted = useRef({ delivery: "", payment: "" })
+
+  // A member's cart is linked to their account first; a guest's cart is just refreshed.
+  const syncCart = async () => {
+    if (customer) return linkCustomerCart()
+    const { cart: fresh } = await sdk.store.cart.retrieve(cart.id, { fields: CART_FIELDS })
+    setCart(fresh)
+    return fresh
+  }
 
   const currency = cart.currency_code
   const address = cart.shipping_address
@@ -346,9 +352,17 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     }
   }
 
+  // A guest's first step: the email the confirmation goes to. Saving it also marks the checkout as started.
+  const saveContact = (email: string) =>
+    guard(async (assertCurrent) => {
+      const { cart: updated } = await sdk.store.cart.update(cart.id, { email }, { fields: CART_FIELDS })
+      assertCurrent()
+      setCart(updated)
+    })
+
   const saveAddress = (body: AddressBody) =>
     guard(async (assertCurrent) => {
-      await linkCustomerCart()
+      await syncCart()
       assertCurrent()
       const { saveToAccount, savedAddressId, makeDefault, quiet, email: nextEmail, ...addresses } = body
       if (nextEmail && nextEmail !== cart.email) {
@@ -363,7 +377,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       })
       assertCurrent()
       setCart(updated)
-      if (saveToAccount) {
+      if (saveToAccount && customer) {
         const first = !customer.addresses?.length
         const saving = savedAddressId
           ? updateAddress(savedAddressId, { ...body.shipping_address, ...(makeDefault ? { is_default_shipping: true } : {}) })
@@ -385,7 +399,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     })
 
   const preparePayment = async (providerId: string, assertCurrent: () => void) => {
-    const checkoutCart = await linkCustomerCart()
+    const checkoutCart = await syncCart()
     assertCurrent()
     const existing = checkoutCart.payment_collection?.payment_sessions?.find((session) => session.provider_id === providerId)
     if (needsFreshSession(providerId) || !existing) {
@@ -435,7 +449,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const createPayPalOrder = async () => {
     let orderId = ""
     await guard(async (assertCurrent) => {
-      const checkoutCart = await linkCustomerCart()
+      const checkoutCart = await syncCart()
       assertCurrent()
       if (payPalCartFingerprint(checkoutCart) !== payPalCartFingerprint(cart)) {
         setCart(checkoutCart)
@@ -456,7 +470,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const placeOrder = (nmiToken?: NmiToken, confirmPayPal?: () => Promise<void>) =>
     guard(async (assertCurrent) => {
       // A hosted payment page is opened now, for exactly this total.
-      let checkoutCart = preparedOnPay(chosenProvider) ? await preparePayment(chosenProvider, assertCurrent) : await linkCustomerCart()
+      let checkoutCart = preparedOnPay(chosenProvider) ? await preparePayment(chosenProvider, assertCurrent) : await syncCart()
       assertCurrent()
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         throw new Error("Your account pricing has been applied. Please review the updated total before paying.")
@@ -499,7 +513,8 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       }
       rememberPayment(chosenProvider)
       try {
-        const receipt = serializeOrderReceipt(result.order, customer.id)
+        // A guest's copy keeps the cart, so the guest can add this order to a new account afterwards.
+        const receipt = serializeOrderReceipt(result.order, customer?.id, checkoutCart.id)
         if (receipt) window.sessionStorage.setItem(`vetud_order_${result.order.id}`, receipt)
       } catch {
         // The confirmation page fetches the order when storage is unavailable.
@@ -548,7 +563,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
 
         <Box sx={{ mb: 3 }}>
           <Typography variant="h5" component="p" sx={{ fontWeight: 600 }}>
-            {customer.first_name ? t("greeting", { name: customer.first_name }) : t("greetingPlain")}
+            {customer?.first_name ? t("greeting", { name: customer.first_name }) : t("greetingPlain")}
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
             {t("greetingHelp")}
@@ -562,18 +577,21 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         ) : null}
 
         <Stack spacing={2}>
+          {customer ? null : <ContactSection cart={cart} busy={busy} onSubmit={saveContact} />}
           <AddressSection
-            key={`${cart.id}:${customer.id}`}
+            key={`${cart.id}:${customer?.id ?? "guest"}`}
             cart={cart}
             customer={customer}
             countries={countries}
             defaultCountry={countries.some((country) => country.code === countryCode) ? countryCode : countries[0]?.code ?? ""}
             busy={busy}
+            step={customer ? 1 : 2}
+            locked={!customer && !cart.email}
             onSubmit={saveAddress}
             onEditingChange={setAddressEditing}
           />
-          <DeliverySection cart={cart} options={hasAddress ? options : null} locked={!hasAddress || addressEditing} place={place} busy={busy} onSelect={chooseDelivery} />
-          <Step index={3} title={t("payment")} done={false} locked={!hasDelivery || addressEditing} lockedHint={addressEditing ? ct("Save or cancel your address changes to continue.") : t("paymentLocked")}>
+          <DeliverySection cart={cart} options={hasAddress ? options : null} locked={!hasAddress || addressEditing} place={place} busy={busy} step={customer ? 2 : 3} onSelect={chooseDelivery} />
+          <Step index={customer ? 3 : 4} title={t("payment")} done={false} locked={!hasDelivery || addressEditing} lockedHint={addressEditing ? ct("Save or cancel your address changes to continue.") : t("paymentLocked")}>
             {providers === null ? (
               <Stack spacing={1.25}>
                 <Skeleton variant="rounded" height={64} />
@@ -702,6 +720,74 @@ function Step({
   )
 }
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/**
+ * A guest's first step: the email for the order confirmation. No account is needed; the shopper
+ * can sign in instead, or create an account after ordering, from the confirmation page.
+ */
+function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; busy: boolean; onSubmit: (email: string) => Promise<boolean> }) {
+  const ct = useContentTranslator()
+  const act = useTranslations("Actions")
+  const [email, setEmail] = useState(cart.email ?? "")
+  const [editing, setEditing] = useState(!cart.email)
+  const [invalid, setInvalid] = useState(false)
+  const [signingIn, setSigningIn] = useState(false)
+
+  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const value = email.trim()
+    if (!EMAIL_PATTERN.test(value)) {
+      setInvalid(true)
+      return
+    }
+    setInvalid(false)
+    if (value === cart.email || await onSubmit(value)) setEditing(false)
+  }
+
+  const signInToggle = (
+    <Button type="button" onClick={() => setSigningIn((open) => !open)} aria-expanded={signingIn} sx={{ minHeight: 44 }}>
+      {ct(signingIn ? "Continue as a guest instead" : "Have an account? Sign in")}
+    </Button>
+  )
+
+  return <Step index={1} title={ct("Contact")} done={Boolean(cart.email) && !editing && !signingIn} locked={false}>
+    {editing ? (
+      <Box component="form" onSubmit={submit} noValidate>
+        <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
+          {ct("No account needed. We'll send your order confirmation and updates to this email, and you can create an account after ordering.")}
+        </Typography>
+        <TextField
+          label={act("email")}
+          type="email"
+          required
+          fullWidth
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          error={invalid}
+          helperText={invalid ? ct("Enter a valid email address.") : undefined}
+          slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false, inputMode: "email" } }}
+        />
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: 2, alignItems: { sm: "center" } }}>
+          <Button type="submit" variant="contained" size="large" disabled={busy} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined}>{ct("Continue as a guest")}</Button>
+          {signInToggle}
+        </Stack>
+      </Box>
+    ) : (
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ alignItems: { sm: "center" }, justifyContent: "space-between" }}>
+        <Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>
+          {ct("Ordering as a guest:")} <Box component="strong" sx={{ fontWeight: 650 }}>{cart.email}</Box>
+        </Typography>
+        <Stack direction="row" spacing={1}>
+          <Button type="button" size="small" variant="outlined" disabled={busy} onClick={() => setEditing(true)} sx={{ minHeight: 44 }}>{ct("Change")}</Button>
+          {signInToggle}
+        </Stack>
+      </Stack>
+    )}
+    {signingIn ? <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}><AuthPanel context="checkout" /></Box> : null}
+  </Step>
+}
+
 type AddressBody = {
   email: string
   shipping_address: AddressValues
@@ -712,12 +798,15 @@ type AddressBody = {
   quiet?: boolean
 }
 
-function AddressSection({ cart, customer, countries, defaultCountry, busy, onSubmit, onEditingChange }: {
+function AddressSection({ cart, customer, countries, defaultCountry, busy, step, locked, onSubmit, onEditingChange }: {
   cart: HttpTypes.StoreCart
-  customer: HttpTypes.StoreCustomer
+  /** Null for a guest: no saved addresses, nothing saved to an account. */
+  customer: HttpTypes.StoreCustomer | null
   countries: { code: string; name: string }[]
   defaultCountry: string
   busy: boolean
+  step: number
+  locked: boolean
   onSubmit: (body: AddressBody) => Promise<boolean>
   onEditingChange: (editing: boolean) => void
 }) {
@@ -726,20 +815,20 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
   const ta = useTranslations("Address")
   const locale = useLocale()
   const account = useAccount()
-  const savedAddresses = customer.addresses ?? []
-  const defaultAddress = savedAddresses.find(address => address.id === customer.default_shipping_address_id)
+  const savedAddresses = customer?.addresses ?? []
+  const defaultAddress = savedAddresses.find(address => address.id === customer?.default_shipping_address_id)
     ?? savedAddresses.find(address => address.is_default_shipping)
   const preferred = defaultAddress ?? savedAddresses[0]
   const current = cart.shipping_address?.address_1 ? cart.shipping_address : null
-  const email = cart.email || customer.email
+  const email = cart.email || customer?.email || ""
   const withProfile = (address?: Parameters<typeof toAddressValues>[0]): AddressValues => {
     const values = toAddressValues(address)
     const country = inferAddressCountry(values, countries.map(option => option.code))
     return {
       ...changeAddressCountry(values, country || values.country_code || defaultCountry),
-      first_name: values.first_name || customer.first_name || "",
-      last_name: values.last_name || customer.last_name || "",
-      phone: values.phone || customer.phone || "",
+      first_name: values.first_name || customer?.first_name || "",
+      last_name: values.last_name || customer?.last_name || "",
+      phone: values.phone || customer?.phone || "",
     }
   }
   const errorsFor = (values: AddressValues) => {
@@ -752,7 +841,7 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
   const [selectedId, setSelectedId] = useState(() => savedAddresses.find(address => sameAddress(withProfile(address), shipping))?.id ?? (current ? "current" : "new"))
   const [mode, setMode] = useState<"summary" | "choose" | "edit" | "new">(() => !initialSource ? "new" : Object.keys(errorsFor(shipping)).length ? "edit" : "summary")
   const [showErrors, setShowErrors] = useState(Boolean(initialSource))
-  const [saveToAccount, setSaveToAccount] = useState(true)
+  const [saveToAccount, setSaveToAccount] = useState(Boolean(customer))
   const [makeDefault, setMakeDefault] = useState(false)
   const [defaultError, setDefaultError] = useState(false)
   const autoApplied = useRef(false)
@@ -804,7 +893,7 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
   const edit = () => {
     autoApplied.current = true
     setSelectedId(matchingSaved?.id ?? selectedId)
-    setSaveToAccount(true)
+    setSaveToAccount(Boolean(customer))
     setMakeDefault(false)
     setShowErrors(false)
     setMode("edit")
@@ -813,7 +902,7 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
     autoApplied.current = true
     setShipping(withProfile({ country_code: shipping.country_code }))
     setSelectedId("new")
-    setSaveToAccount(true)
+    setSaveToAccount(Boolean(customer))
     setMakeDefault(false)
     setShowErrors(false)
     setMode("new")
@@ -837,7 +926,7 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
     {lines(shipping).map((line, index) => <Typography key={index} variant="body2" sx={{ fontWeight: index === 0 ? 650 : 400, color: index === 0 ? "text.primary" : "text.secondary" }}>{line}</Typography>)}
   </Box>
 
-  return <Step index={1} title={t("shipping")} done={mode === "summary" && isApplied} locked={false}>
+  return <Step index={step} title={t("shipping")} done={mode === "summary" && isApplied} locked={locked} lockedHint={ct("Add your email above first.")}>
     {defaultError ? <Alert severity="error" sx={{ mb: 2 }}>{ct("Couldn't change the default address. Please try again.")}</Alert> : null}
     {mode === "summary" ? <Stack spacing={1.5}>
       {addressPreview}
@@ -894,10 +983,10 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, onSub
         <Typography component="legend" sx={{ p: 0, mb: 1, fontWeight: 650 }}>{ct(mode === "new" ? "Add a shipping address" : "Edit shipping address")}</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>{ct("Enter your delivery details below. You can type the full address yourself or choose a street suggestion.")}</Typography>
         <AddressFields prefix="shipping" values={shipping} errors={showErrors ? shippingErrors : {}} countries={countries} onChange={setShipping} showAutofillHint={false} disabled={disabled} />
-        <Stack sx={{ mt: 1.5 }}>
+        {customer ? <Stack sx={{ mt: 1.5 }}>
           <FormControlLabel control={<Checkbox checked={saveToAccount} onChange={event => { setSaveToAccount(event.target.checked); if (!event.target.checked) setMakeDefault(false) }} />} label={selectedSaved ? ct("Update this saved address") : t("save")} />
           {saveToAccount ? !defaultAddress || editingDefault ? <Typography variant="caption" color="text.secondary" sx={{ pl: 4 }}>{ct("This will be your default address for future orders.")}</Typography> : <FormControlLabel control={<Checkbox checked={makeDefault} onChange={event => setMakeDefault(event.target.checked)} />} label={ct("Use as my default address for future orders")} /> : null}
-        </Stack>
+        </Stack> : null}
       </Box>
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: 2 }}>
         <Button type="submit" variant="contained" size="large" disabled={disabled} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined}>{t("continue")}</Button>
@@ -913,6 +1002,7 @@ function DeliverySection({
   locked,
   place,
   busy,
+  step,
   onSelect,
 }: {
   cart: HttpTypes.StoreCart
@@ -920,6 +1010,7 @@ function DeliverySection({
   locked: boolean
   place: string
   busy: boolean
+  step: number
   onSelect: (optionId: string) => void
 }) {
   const ct = useContentTranslator()
@@ -933,7 +1024,7 @@ function DeliverySection({
   }
 
   return (
-    <Step index={2} title={t("delivery")} done={Boolean(selected)} locked={locked} lockedHint={t("deliveryLocked")}>
+    <Step index={step} title={t("delivery")} done={Boolean(selected)} locked={locked} lockedHint={t("deliveryLocked")}>
       {place ? (
         <Stack direction="row" spacing={1} sx={{ alignItems: "center", color: "text.secondary", mb: 2 }}>
           <Icon name="truck" fontSize="small" sx={{ color: "secondary.main" }} />

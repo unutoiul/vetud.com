@@ -20,15 +20,25 @@ import { useMoney } from "@/lib/money"
 import { formatAddressLines } from "@/lib/address"
 import { confirmationPayment } from "@/lib/nmi"
 import { orderNumber, type CustomerOrder } from "@/lib/orders"
-import { parseOrderReceipt } from "@/lib/order-receipt"
+import { parseOrderReceipt, receiptCartId } from "@/lib/order-receipt"
 import OrderTotals from "../cart/OrderTotals"
 import { ButtonLink } from "../common/links"
 import { useAccount } from "../account/AccountProvider"
+import GuestAccountOffer from "./GuestAccountOffer"
 
+/** The copy saved at checkout in this tab: the signed-in member's, or a guest's when customerId is omitted. */
 function readStoredOrder(id: string, customerId?: string): CustomerOrder | null {
   try {
     const stored = window.sessionStorage.getItem(`vetud_order_${id}`)
     return parseOrderReceipt(stored, id, customerId)
+  } catch {
+    return null
+  }
+}
+
+function readGuestCartId(id: string) {
+  try {
+    return receiptCartId(window.sessionStorage.getItem(`vetud_order_${id}`), id)
   } catch {
     return null
   }
@@ -41,25 +51,31 @@ export default function OrderConfirmation() {
   const params = useSearchParams()
   const money = useMoney()
   const id = params.get("id") ?? ""
-  const [result, setResult] = useState<{ id: string; customerId?: string; order: CustomerOrder | null; authoritative: boolean }>({ id: "", order: null, authoritative: false })
+  const [result, setResult] = useState<{ id: string; customerId?: string; order: CustomerOrder | null; authoritative: boolean; guestCartId?: string | null }>({ id: "", order: null, authoritative: false })
+  // Reloads the order after a guest puts it into an account.
+  const [refreshes, setRefreshes] = useState(0)
+  // Stays after the reload, when the order is shown from the new account.
+  const [addedToAccount, setAddedToAccount] = useState(false)
+  const customerId = customer?.id
 
   useEffect(() => {
     let cancelled = false
     if (!id) return
     sdk.client.fetch<{ order: CustomerOrder }>(`/store/account/orders/${encodeURIComponent(id)}`, { cache: "no-store" })
       .then(({ order: fetched }) => {
-        if (!cancelled) setResult({ id, customerId: customer?.id, order: fetched, authoritative: true })
+        if (!cancelled) setResult({ id, customerId, order: fetched, authoritative: true })
       })
       .catch(() => {
         if (cancelled) return
-        // Fall back to the copy saved at checkout (same browser tab).
-        const stored = readStoredOrder(id, customer?.id)
-        setResult({ id, customerId: customer?.id, order: stored, authoritative: false })
+        // Fall back to the copy saved at checkout (same browser tab): the member's, or a guest's.
+        const memberCopy = customerId ? readStoredOrder(id, customerId) : null
+        const guestCopy = memberCopy ? null : readStoredOrder(id)
+        setResult({ id, customerId, order: memberCopy ?? guestCopy, authoritative: false, guestCartId: guestCopy ? readGuestCartId(id) : null })
       })
     return () => {
       cancelled = true
     }
-  }, [id, customer?.id])
+  }, [id, customerId, refreshes])
 
   // A changed URL/account must never temporarily display the previous order.
   const current = result.id === id && result.customerId === customer?.id
@@ -128,6 +144,12 @@ export default function OrderConfirmation() {
             {ct("Please include the payment reference so we can match your transfer.")}
           </Typography>
         </Paper>
+        ) : null}
+
+        {addedToAccount ? (
+          <Alert severity="success" sx={{ mb: 4 }}>{ct("Done. This order is now in your account, where you can follow it.")}</Alert>
+        ) : result.guestCartId && order.email ? (
+          <GuestAccountOffer orderId={order.id} email={order.email} cartId={result.guestCartId} onAdded={() => { setAddedToAccount(true); setRefreshes((count) => count + 1) }} />
         ) : null}
 
         <Typography variant="h5" component="h3" sx={{ mb: 2 }}>

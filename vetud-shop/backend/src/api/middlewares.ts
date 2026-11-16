@@ -8,6 +8,7 @@ import {
 import { StoreContactSchema } from "./store/contact/validators"
 import { StoreNewsletterSchema, StoreNewsletterUnsubscribeSchema } from "./store/newsletter/validators"
 import { CustomerOrderQuery, CustomerOrdersQuery } from "./store/account/orders/validators"
+import { StoreGuestOrderAccountSchema } from "./store/guest-orders/[id]/account/validators"
 import { AdminCreateStorewideSale, AdminUpdateStorewideSale } from "./admin/storewide-sales/validators"
 import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
@@ -41,10 +42,19 @@ export default defineMiddlewares({
       method: ["POST"],
       matcher: "/store/carts/:id/delivery-address",
       middlewares: [
-        authenticate("customer", ["session", "bearer"]),
+        authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
         requireCartOwner,
         validateAndTransformBody(StoreSetCartDeliveryAddressSchema),
         validateAndTransformQuery(StoreGetCartsCart, cartQueryConfig.retrieveTransformQueryConfig),
+      ],
+    },
+    {
+      // After a guest order: create an account (or add the order to the signed-in member's).
+      method: ["POST"],
+      matcher: "/store/guest-orders/:id/account",
+      middlewares: [
+        authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
+        validateAndTransformBody(StoreGuestOrderAccountSchema),
       ],
     },
     {

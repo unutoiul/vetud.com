@@ -9,7 +9,7 @@ export async function preparePayPalSession(req: AuthenticatedMedusaRequest<{ pro
   if (req.body?.provider_id !== PAYPAL_PROVIDER_ID) return next()
   try {
     const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-    const { data } = await query.graph({ entity: "cart_payment_collection", fields: ["cart.id", "cart.customer_id"], filters: { payment_collection_id: req.params.id } })
+    const { data } = await query.graph({ entity: "cart_payment_collection", fields: ["cart.id", "cart.customer_id", "cart.customer.has_account"], filters: { payment_collection_id: req.params.id } })
     const cart = data[0]?.cart
     if (!cart) throw new MedusaError(MedusaError.Types.NOT_FOUND, "Checkout cart not found.")
     validateCartOwner(cart, req.auth_context?.actor_id)
@@ -34,14 +34,14 @@ export async function requirePayPalAvailable(req: MedusaRequest, _res: MedusaRes
   }
 }
 
-/** Apply the store's signed-in owner policy to the plugin's additional checkout routes. */
+/** Apply the store's cart owner policy (guest carts, or the signed-in member's) to the plugin's additional checkout routes. */
 export async function requirePayPalCart(req: AuthenticatedMedusaRequest<{ cart_id?: string; order_id?: string; is_card_payment?: boolean }>, _res: MedusaResponse, next: MedusaNextFunction) {
   try {
     if (typeof req.body?.cart_id !== "string" || !/^cart_[a-zA-Z0-9_]+$/.test(req.body.cart_id) || req.body.is_card_payment || (req.body.order_id !== undefined && (typeof req.body.order_id !== "string" || !/^[A-Z0-9]{10,25}$/.test(req.body.order_id)))) throw new MedusaError(MedusaError.Types.INVALID_DATA, "A PayPal wallet checkout cart is required.")
     const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
     const { data } = await query.graph({
       entity: "cart",
-      fields: ["id", "customer_id", "total", "currency_code", "payment_collection.payment_sessions.provider_id", "payment_collection.payment_sessions.data"],
+      fields: ["id", "customer_id", "customer.has_account", "total", "currency_code", "payment_collection.payment_sessions.provider_id", "payment_collection.payment_sessions.data"],
       filters: { id: req.body.cart_id },
     })
     const cart = data[0]
@@ -70,6 +70,6 @@ export const paypalGuardRoutes: MiddlewareRoute[] = [
   ...["/store/paypal/create-order", "/store/paypal/capture-order", "/store/paypal-complete"].map(matcher => ({
     matcher,
     method: ["POST"] as ["POST"],
-    middlewares: [authenticate("customer", ["session", "bearer"]), requirePayPalAvailable, requirePayPalCart],
+    middlewares: [authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }), requirePayPalAvailable, requirePayPalCart],
   })),
 ]

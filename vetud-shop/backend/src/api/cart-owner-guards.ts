@@ -3,13 +3,13 @@ import { authenticate } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { validateCartOwner, type CartForOwnerCheck } from "../lib/cart-owner"
 
-/** Runs before a cart becomes an order: only the signed-in owner may complete it. */
+/** Runs before a cart becomes an order: a guest's own cart, or a member's cart by that signed-in member. */
 export async function requireCartOwner(req: AuthenticatedMedusaRequest, _res: MedusaResponse, next: MedusaNextFunction) {
   try {
     const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
     const { data } = await query.graph({
       entity: "cart",
-      fields: ["id", "customer_id"],
+      fields: ["id", "customer_id", "customer.has_account"],
       filters: { id: req.params.id },
     })
     const cart = data[0] as CartForOwnerCheck | undefined
@@ -21,11 +21,11 @@ export async function requireCartOwner(req: AuthenticatedMedusaRequest, _res: Me
   }
 }
 
-// Spread into defineMiddlewares({ routes: [...] }). Guests are rejected by `authenticate` (401).
+// Spread into defineMiddlewares({ routes: [...] }). Guests pass `authenticate`; requireCartOwner decides.
 export const cartOwnerGuardRoutes: MiddlewareRoute[] = [
   {
     matcher: "/store/carts/:id/complete",
     method: ["POST"],
-    middlewares: [authenticate("customer", ["session", "bearer"]), requireCartOwner],
+    middlewares: [authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }), requireCartOwner],
   },
 ]
