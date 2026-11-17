@@ -60,7 +60,7 @@ export async function articleStructuredData({ title, description, path, image, b
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         ...(image ? { image: [`${BASE_URL}${image.src}`] } : {}),
         author: { "@type": "Organization", name: "VETUD Learn", url: articleUrl("/learn", language) },
-        publisher: { "@type": "Organization", name: "VETUD", url: BASE_URL, logo: { "@type": "ImageObject", url: `${BASE_URL}/brand/vetud-logo.svg` } },
+        publisher: { "@type": "Organization", name: "VETUD", url: BASE_URL, logo: { "@type": "ImageObject", url: `${BASE_URL}/brand/vetud-science-lab-horizontal.svg` } },
         citation: sources.map(source => source.url),
         wordCount: plainText(text.map(part => ct(part)).join(" ")).split(/\s+/).filter(Boolean).length,
       },
