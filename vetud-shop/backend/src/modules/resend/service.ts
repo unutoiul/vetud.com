@@ -9,7 +9,7 @@ import type {
 } from "@medusajs/framework/types"
 import { Resend } from "resend"
 import { RESEND_TEMPLATE_IDS } from "./template-ids"
-import { buildEmail } from "./templates"
+import { buildEmail, buildInlineEmail } from "./templates"
 
 type ResendOptions = {
   api_key: string
@@ -53,6 +53,11 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
   async send(
     notification: ProviderSendNotificationDTO
   ): Promise<ProviderSendNotificationResultsDTO> {
+    const inline = buildInlineEmail(notification.template, notification.data ?? {})
+    if (inline) {
+      return this.deliver(notification, { html: inline.html, text: inline.text, subject: inline.subject, replyTo: this.options.reply_to })
+    }
+
     const email = buildEmail(notification.template, notification.data ?? {})
 
     if (!email) {
@@ -70,12 +75,23 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
       )
     }
 
-    const { data, error } = await this.client.emails.send({
-      from: notification.from || this.options.from,
-      to: [notification.to],
+    return this.deliver(notification, {
       template: { id: templateId, variables: email.variables },
       subject: email.subject,
       replyTo: email.replyTo ?? this.options.reply_to,
+    })
+  }
+
+  private async deliver(
+    notification: ProviderSendNotificationDTO,
+    content:
+      | { html: string; text: string; subject: string; replyTo?: string }
+      | { template: { id: string; variables: Record<string, string> }; subject?: string; replyTo?: string }
+  ): Promise<ProviderSendNotificationResultsDTO> {
+    const { data, error } = await this.client.emails.send({
+      from: notification.from || this.options.from,
+      to: [notification.to],
+      ...content,
       attachments: notification.attachments?.map((attachment) => ({
         content: attachment.content,
         filename: attachment.filename,

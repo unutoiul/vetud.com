@@ -2,6 +2,8 @@
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
 
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete"
+import type { FilterOptionsState } from "@mui/material/useAutocomplete"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import MenuItem from "@mui/material/MenuItem"
@@ -16,6 +18,38 @@ import PhoneField from "../common/PhoneField"
 import PlaceAutocomplete from "./PlaceAutocomplete"
 
 export { EMPTY_ADDRESS, toAddressValues, validateAddress, normalizeAddress, type AddressValues } from "@/lib/address"
+
+type CountryOption = { code: string; label: string }
+
+/** Other names people type for a country. */
+const COUNTRY_ALIASES: Record<string, string> = {
+  gb: "UK GB Britain England Scotland Wales",
+  us: "USA US America",
+  ae: "UAE Emirates Dubai",
+  nl: "Holland",
+  cz: "Czech Republic",
+  ch: "Swiss Suisse Schweiz",
+  de: "Deutschland",
+  es: "España Espana",
+  kr: "South Korea",
+}
+
+const matchCountries = createFilterOptions<CountryOption>({
+  stringify: option => `${option.label} ${option.code} ${COUNTRY_ALIASES[option.code] ?? ""}`,
+})
+
+/** Matches anywhere in the name, code or other names; an exact code or short name ("uk", "us") comes first. */
+function filterCountries(options: CountryOption[], state: FilterOptionsState<CountryOption>) {
+  const matches = matchCountries(options, state)
+  const query = state.inputValue.trim().toLowerCase()
+  if (!query) return matches
+  const rank = (option: CountryOption) => {
+    const aliases = (COUNTRY_ALIASES[option.code] ?? "").toLowerCase().split(/\s+/)
+    if (option.code === query || aliases.includes(query)) return 0
+    return option.label.toLowerCase().startsWith(query) ? 1 : 2
+  }
+  return [...matches].sort((a, b) => rank(a) - rank(b))
+}
 
 type Props = {
   prefix: string; values: AddressValues; errors: Partial<Record<keyof AddressValues, string>>;
@@ -71,10 +105,37 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
   return <Box>
     {showAutofillHint ? <Typography sx={{ fontSize: 12, color: "text.secondary", mb: 2 }}>{t("autofill")}</Typography> : null}
     <Grid container spacing={2}>
-      {visible("country_code") ? <Grid size={12}><TextField select {...field("country_code", t("country"), "country", true)} value={sortedCountries.some(option => option.code === country) ? country : ""} onChange={event => {
-        requestVersion.current += 1
-        onChange(changeAddressCountry(values, event.target.value))
-      }}>{sortedCountries.map(option => <MenuItem key={option.code} value={option.code}>{ct(option.label)}</MenuItem>)}</TextField></Grid> : null}
+      {visible("country_code") ? <Grid size={12}>
+        {/* Type to find a country, by name in the visitor's language or by code (US, GB, DE). */}
+        <Autocomplete<CountryOption, false, false, false>
+          id={`${prefix}-country_code`}
+          options={sortedCountries}
+          value={sortedCountries.find(option => option.code === country) ?? null}
+          onChange={(_, option) => {
+            if (!option || option.code === country) return
+            requestVersion.current += 1
+            onChange(changeAddressCountry(values, option.code))
+          }}
+          getOptionLabel={option => option.label}
+          isOptionEqualToValue={(option, selected) => option.code === selected.code}
+          filterOptions={filterCountries}
+          autoHighlight
+          openOnFocus
+          disabled={disabled}
+          noOptionsText={ct("No country matches")}
+          renderInput={params => (
+            <TextField
+              {...params}
+              name={`${prefix}-country_code`}
+              label={t("country")}
+              required
+              error={Boolean(errors.country_code)}
+              helperText={errors.country_code}
+              slotProps={{ ...params.slotProps, htmlInput: { ...params.slotProps.htmlInput, autoComplete: autocomplete("country-name") } }}
+            />
+          )}
+        />
+      </Grid> : null}
       {visible("first_name") ? <Grid size={{ xs: 12, sm: visible("last_name") ? 6 : 12 }}><TextField {...field("first_name", t("firstName"), "given-name", true)} /></Grid> : null}
       {visible("last_name") ? <Grid size={{ xs: 12, sm: visible("first_name") ? 6 : 12 }}><TextField {...field("last_name", t("lastName"), "family-name", true)} /></Grid> : null}
       {visible("address_1") ? <Grid size={12}>{suggestionsOn ? <PlaceAutocomplete key={`${prefix}-address-${country}`} id={`${prefix}-address_1`} name={`${prefix}-address_1`} label={t("address")} value={values.address_1} required error={Boolean(errors.address_1)} helperText={ct(errors.address_1 || t("addressHelp"))} autoComplete={autocomplete("address-line1")} suggest={(text, token, signal) => suggestAddresses(text, token, country, signal, undefined, locale)} onTextChange={text => set({ address_1: text })} onPick={pick} /> : <TextField {...field("address_1", t("address"), "address-line1", true)} helperText={ct(errors.address_1 || t("addressHelp"))} />}</Grid> : null}

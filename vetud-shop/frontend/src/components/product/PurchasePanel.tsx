@@ -22,6 +22,7 @@ import { isVariantInStock, percentOff, readProductNotice, sortedVariants, varian
 import { useMoney } from "@/lib/money"
 import { defaultVariant, findVariant, FORMAT_OPTION, formatContents, formatLine, readOptions, selectionOf, variantsWith } from "@/lib/product-formats"
 import { useStore } from "../store/StoreProvider"
+import FreeShippingProgress from "../cart/FreeShippingProgress"
 import { useProductSelection } from "./ProductSelection"
 import QuantityStepper from "./QuantityStepper"
 import StockBadge from "./StockBadge"
@@ -33,7 +34,7 @@ export type PurchaseAddOn = { variantId: string; title: string; detail: string; 
 export default function PurchasePanel({ product, addOns = [] }: { product: HttpTypes.StoreProduct; addOns?: PurchaseAddOn[] }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
-  const { addItem, cartReady, pending, error, clearError, region } = useStore()
+  const { addItem, cart, cartReady, pending, error, clearError, region } = useStore()
   const { setFormat } = useProductSelection()
   const variants = sortedVariants(product)
   // Research-use notice by default; per product from its metadata (notice_title / notice_text).
@@ -115,7 +116,8 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
           <Typography sx={{ color: "text.secondary", fontSize: 14, mt: 0.25 }}>{ct(variant.title)}</Typography>
         ) : null}
         {threshold ? (
-          <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>{ct.rich("Free standard shipping on orders over {v0}", { v0: ct(money(threshold, region.currencyCode, { whole: true })) }, {  })}</Typography>
+          // Counts what's already in the cart, so shoppers see how close they are while choosing.
+          <Box sx={{ mt: 1.5 }}><FreeShippingProgress itemTotal={Number(cart?.item_total ?? 0)} currencyCode={cart?.currency_code ?? region.currencyCode} /></Box>
         ) : null}
       </Box>
 

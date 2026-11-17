@@ -10,6 +10,11 @@ import Typography from "@mui/material/Typography"
 import { useMoney } from "@/lib/money"
 import { useStore } from "../store/StoreProvider"
 
+/**
+ * How far the cart is from free standard shipping. The threshold is set in Admin (Free shipping) and
+ * read from the visitor's region, so it changes without a release. Shown in the cart, on product
+ * pages and in the checkout summary.
+ */
 export default function FreeShippingProgress({
   itemTotal,
   currencyCode,
@@ -32,10 +37,12 @@ export default function FreeShippingProgress({
     <Box sx={{ bgcolor: "brand.mintWash", border: "1px solid", borderColor: "brand.line", borderRadius: 2.5, p: 1.75 }}>
       <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1 }}>
         <LocalShippingOutlinedIcon fontSize="small" sx={{ color: "secondary.main" }} />
-        <Typography variant="body2" sx={{ fontWeight: 600 }}>
-          {ct(remaining > 0
+        <Typography variant="body2" sx={{ fontWeight: 600 }} aria-live="polite">
+          {ct(remaining <= 0
+            ? "Your order ships free (standard)"
+            : itemTotal > 0
             ? `${money(remaining, currencyCode)} away from free standard shipping`
-            : "Your order ships free (standard)")}
+            : `Free standard shipping on orders over ${money(threshold, currencyCode, { whole: true })}`)}
         </Typography>
       </Stack>
       <LinearProgress

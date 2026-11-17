@@ -13,6 +13,7 @@ import { SITE } from "@/lib/config"
 import { useMoney } from "@/lib/money"
 import { readProductMeta } from "@/lib/product"
 import { getProductThumbnail } from "@/lib/product-images"
+import FreeShippingProgress from "../cart/FreeShippingProgress"
 import OrderTotals from "../cart/OrderTotals"
 import { ButtonLink } from "../common/links"
 import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
@@ -56,6 +57,7 @@ export default function CheckoutOrderSummary({ cart, place, arrival, compact = f
         })}
       </Stack>
 
+      <Box sx={{ mb: 2 }}><FreeShippingProgress itemTotal={Number(cart.item_total ?? 0)} currencyCode={cart.currency_code} /></Box>
       <OrderTotals totals={cart} shippingKnown={Boolean(cart.shipping_methods?.length)} variant="checkout" pendingShippingLabel={t("shippingAfterAddress")} />
 
       {place ? (

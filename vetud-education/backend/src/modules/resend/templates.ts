@@ -1,9 +1,12 @@
+import { emailListSignupAlert, type EmailListSignupAlertData } from "./owner-alerts"
+
 /**
  * The emails live as published templates in Resend (Dashboard > Templates), in the VETUD style.
  * This file only turns each notification's data into that template's variables; the template
- * IDs are in template-ids.ts. Change wording or layout in Resend, not here. The email-list
- * confirmation is the exception: its text is sent as variables so one template serves every language.
- * The sign-in code is written here in full (signInCodeEmail), because it has no template in Resend.
+ * IDs are in template-ids.ts. Change wording or layout in Resend, not here.
+ * The exceptions are written here in full, because they have no template in Resend: the sign-in
+ * code (signInCodeEmail), the email-list confirmation (emailListConfirmEmail, in each language) and
+ * the owner alerts (owner-alerts.ts).
  */
 export const EmailTemplates = {
   CONTACT_MESSAGE: "contact-message",
@@ -12,6 +15,7 @@ export const EmailTemplates = {
   USER_INVITE: "user-invite",
   EMAIL_LIST_CONFIRM: "email-list-confirm",
   SIGN_IN_CODE: "sign-in-code",
+  EMAIL_LIST_SIGNUP_ADMIN: "email-list-signup-admin",
 } as const
 
 export type EmailTemplate = (typeof EmailTemplates)[keyof typeof EmailTemplates]
@@ -47,6 +51,7 @@ const EMAIL_LIST_COPY = {
     HEADING: "Confirm your email",
     MESSAGE: "Press the button below to start receiving new VETUD guides and answered community questions.",
     BUTTON_LABEL: "Confirm my sign-up",
+    LINK_HINT: "If the button doesn't work, copy this link into your browser. It works for 7 days.",
     FOOTNOTE: "If you didn't ask for this, you can ignore this email and you won't hear from us again.",
   },
   fr: {
@@ -54,11 +59,13 @@ const EMAIL_LIST_COPY = {
     HEADING: "Confirmez votre adresse e-mail",
     MESSAGE: "Cliquez sur le bouton ci-dessous pour recevoir les nouveaux guides VETUD et les questions de la communauté ayant reçu une réponse.",
     BUTTON_LABEL: "Confirmer mon inscription",
+    LINK_HINT: "Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur. Il reste valable 7 jours.",
     FOOTNOTE: "Si vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail et vous ne recevrez plus rien de notre part.",
   },
 }
 
 type Builder = (data: Data) => { variables: Record<string, string>; subject?: string }
+type InlineEmail = { subject: string; html: string; text: string }
 
 const builders: Record<string, Builder> = {
   [EmailTemplates.CONTACT_MESSAGE]: (data) => ({
@@ -80,10 +87,6 @@ const builders: Record<string, Builder> = {
       EXPIRY_NOTE: data.expires_at ? `The link expires on ${dateTime(data.expires_at)}.` : "",
     },
   }),
-  [EmailTemplates.EMAIL_LIST_CONFIRM]: (data) => {
-    const { subject, ...copy } = data.locale === "fr" ? EMAIL_LIST_COPY.fr : EMAIL_LIST_COPY.en
-    return { subject, variables: { ...copy, CONFIRM_URL: data.confirm_url } }
-  },
 }
 
 const NAVY = "#15265E"
@@ -132,9 +135,49 @@ function signInCodeEmail(data: Data) {
   return { subject, html, text }
 }
 
+/**
+ * The email-list confirmation, in the visitor's language. Written here rather than in Resend so it
+ * can't fail for want of a template: a sign-up whose email can't be sent is rolled back.
+ */
+function emailListConfirmEmail(data: Data): InlineEmail {
+  const lang = data.locale === "fr" ? "fr" : "en"
+  const copy = EMAIL_LIST_COPY[lang]
+  const url = escape(String(data.confirm_url))
+  const text = [copy.HEADING, "", copy.MESSAGE, "", `${copy.BUTTON_LABEL}: ${data.confirm_url}`, "", copy.FOOTNOTE, "", "VETUD · www.vetud.com"].join("\n")
+  const html = `<!doctype html>
+<html lang="${lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(copy.subject)}</title></head>
+<body style="margin:0;padding:0;background:#F3F6FA;">
+<div style="display:none;max-height:0;overflow:hidden;">${escape(copy.MESSAGE)}</div>
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#F3F6FA;padding:32px 16px;">
+<tr><td align="center">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:520px;background:#FFFFFF;border:1px solid #E1E7EF;border-radius:12px;">
+<tr><td style="padding:28px 32px 0;font-family:Helvetica,Arial,sans-serif;">
+<div style="font-size:22px;letter-spacing:6px;color:${NAVY};">VETUD</div>
+<div style="font-size:10px;letter-spacing:3px;color:${MUTED};text-transform:uppercase;margin-top:2px;">Peptides education</div>
+</td></tr>
+<tr><td style="padding:28px 32px 8px;font-family:Helvetica,Arial,sans-serif;color:${NAVY};">
+<h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;font-weight:600;">${escape(copy.HEADING)}</h1>
+<p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:${MUTED};">${escape(copy.MESSAGE)}</p>
+<table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 0 24px;"><tr><td style="background:${NAVY};border-radius:8px;">
+<a href="${url}" style="display:inline-block;padding:13px 22px;font-size:15px;font-weight:600;color:#FFFFFF;text-decoration:none;">${escape(copy.BUTTON_LABEL)}</a>
+</td></tr></table>
+<p style="margin:0 0 8px;font-size:13px;line-height:1.6;color:${MUTED};">${escape(copy.LINK_HINT)}</p>
+<p style="margin:0 0 24px;font-size:12px;line-height:1.5;word-break:break-all;"><a href="${url}" style="color:${NAVY};">${url}</a></p>
+<p style="margin:0 0 28px;font-size:13px;line-height:1.6;color:${MUTED};">${escape(copy.FOOTNOTE)}</p>
+</td></tr>
+<tr><td style="padding:16px 32px 24px;border-top:1px solid #E1E7EF;font-family:Helvetica,Arial,sans-serif;font-size:12px;color:${MUTED};">VETUD · <a href="https://www.vetud.com" style="color:${MUTED};">www.vetud.com</a></td></tr>
+</table>
+</td></tr>
+</table>
+</body></html>`
+  return { subject: copy.subject, html, text }
+}
+
 /** Emails written in full here rather than as Resend templates. */
-const inlineEmails: Record<string, (data: Data) => { subject: string; html: string; text: string }> = {
+const inlineEmails: Record<string, (data: Data) => InlineEmail> = {
   [EmailTemplates.SIGN_IN_CODE]: signInCodeEmail,
+  [EmailTemplates.EMAIL_LIST_CONFIRM]: emailListConfirmEmail,
+  [EmailTemplates.EMAIL_LIST_SIGNUP_ADMIN]: (data) => emailListSignupAlert(data as unknown as EmailListSignupAlertData),
 }
 
 /** The Resend template to use and its escaped variables, or null for an unknown template. */

@@ -7,6 +7,7 @@ import CollectionCarousel from "@/components/home/CollectionCarousel"
 import HomeCatalog from "@/components/home/HomeCatalog"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
+import { getCollectionResearch } from "@/content/collection-research"
 import { getContentTranslator } from "@/i18n/server-content"
 import { SITE } from "@/lib/config"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
@@ -42,11 +43,11 @@ export default async function ShopHome() {
         <Box component="header" sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: { xs: "flex-start", md: "flex-end" }, justifyContent: "space-between", gap: 3, mb: { xs: 3, md: 4 } }}>
           <Box sx={{ maxWidth: 760 }}>
             <Typography id="collection-heading" component="h1" sx={{ fontSize: { xs: 34, sm: 44, md: 52 }, fontWeight: 400, lineHeight: 1.12, letterSpacing: "-.05em", textWrap: "balance" }}>{ct("Research peptides & laboratory materials.")}</Typography>
-            <Typography sx={{ mt: 2, maxWidth: 620, fontSize: { xs: 14, md: 16 }, lineHeight: 1.7, color: "text.secondary" }}>{ct("Research materials with lot documentation, for laboratory research use only.")}</Typography>
+            <Typography sx={{ mt: 2, maxWidth: 620, fontSize: { xs: 14, md: 16 }, lineHeight: 1.7, color: "text.secondary" }}>{ct("Explore what each material is studied for. Browse the carousel to see a key finding, a short study summary and the evidence behind it.")}</Typography>
           </Box>
           <ButtonLink href="/shop" variant="contained" endIcon={<Icon name="arrowUpRight" />} sx={{ flexShrink: 0 }}>{act("shopCatalog")}</ButtonLink>
         </Box>
-        {products.length ? <CollectionCarousel products={sortProducts(products, "relevance")} /> : <Typography sx={{ py: 6, color: "text.secondary" }}>{ct("Our catalog is being updated. Contact us for availability.")}</Typography>}
+        {products.length ? <CollectionCarousel products={sortProducts(products, "relevance")} researchById={Object.fromEntries(products.map(product => [product.id, getCollectionResearch(product)]))} /> : <Typography sx={{ py: 6, color: "text.secondary" }}>{ct("Our catalog is being updated. Contact us for availability.")}</Typography>}
         <Typography sx={{ mt: 3, fontSize: 12.5, color: "text.secondary", textAlign: "center" }}>{ct(SITE.catalogNotice)}</Typography>
       </Box>
     </Box>

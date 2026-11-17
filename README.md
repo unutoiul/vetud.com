@@ -169,6 +169,16 @@ The account welcome email is shared by the shop and education backends. Its revi
 | `return-received` | Return received in Admin | Customer |
 | `user-invite` | Admin user invited or invite resent | Invited user (link to `/app/invite`) |
 
+Owner alerts have no Resend template; their HTML is written in code (`owner-alerts.ts` in each backend's `src/modules/resend/`). They go to `STORE_OWNER_EMAIL`, so nothing is sent while it's unset.
+
+| Alert | Sent when | Backend |
+|---|---|---|
+| `newsletter-signup-admin` | A new address signs up in the shop's newsletter pop-up (not repeat sign-ups) | Shop |
+| `guest-checkout-admin` | A shopper who isn't signed in enters their email at checkout; once per cart and address | Shop |
+| `email-list-signup-admin` | Someone confirms their vetud.com email-list sign-up (unconfirmed sign-ups aren't announced) | Education |
+
+The education site's email-list confirmation (`email-list-confirm`, English and French) and sign-in code are also written in code, in `vetud-education/backend/src/modules/resend/templates.ts`.
+
 **Setup:** create a Resend account, verify your sending domain, then set `RESEND_API_KEY`, `RESEND_FROM_EMAIL` (an address on the verified domain), `STORE_OWNER_EMAIL`, `PAYMENT_INSTRUCTIONS` and `PAYMENT_BANK_DETAILS` on the backend.
 
 ---

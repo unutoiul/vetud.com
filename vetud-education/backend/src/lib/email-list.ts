@@ -11,6 +11,17 @@ export const CONSENT_TEXT: Record<ListLocale, string> = {
   fr: "Oui, envoyez-moi par e-mail les nouveaux guides VETUD et les questions de la communauté ayant reçu une réponse. Je peux me désinscrire à tout moment.",
 }
 
+/** Custom event emitted when a pending sign-up is confirmed; it emails the owner. */
+export const EMAIL_LIST_CONFIRMED_EVENT = "email_list.confirmed"
+
+export type EmailListConfirmedEvent = {
+  id: string
+  email: string
+  locale: string
+  consented_at: string
+  confirmed_at: string
+}
+
 /** How long a confirmation link keeps working. */
 export const CONFIRM_LINK_TTL_MS = 7 * 24 * 60 * 60 * 1000
 

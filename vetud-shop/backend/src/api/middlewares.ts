@@ -10,6 +10,7 @@ import { StoreNewsletterSchema, StoreNewsletterUnsubscribeSchema } from "./store
 import { CustomerOrderQuery, CustomerOrdersQuery } from "./store/account/orders/validators"
 import { StoreGuestOrderAccountSchema } from "./store/guest-orders/[id]/account/validators"
 import { AdminCreateStorewideSale, AdminUpdateStorewideSale } from "./admin/storewide-sales/validators"
+import { AdminSetFreeShipping } from "./admin/free-shipping/validators"
 import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
 import { cartOwnerGuardRoutes, requireCartOwner } from "./cart-owner-guards"
@@ -99,6 +100,11 @@ export default defineMiddlewares({
       method: ["POST"],
       matcher: "/store/newsletter/unsubscribe",
       middlewares: [validateAndTransformBody(StoreNewsletterUnsubscribeSchema)],
+    },
+    {
+      method: ["POST"],
+      matcher: "/admin/free-shipping",
+      middlewares: [validateAndTransformBody(AdminSetFreeShipping)],
     },
     {
       method: ["POST"],

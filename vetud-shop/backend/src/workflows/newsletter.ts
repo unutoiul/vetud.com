@@ -1,7 +1,9 @@
 import type { CreateNotificationDTO, MedusaContainer } from "@medusajs/framework/types"
 import { MedusaError, Modules } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import { emitEventStep } from "@medusajs/medusa/core-flows"
 import { emailSettings } from "../lib/notifications"
+import { isNewNewsletterSignup, NEWSLETTER_SUBSCRIBED_EVENT, type NewsletterSubscribedEvent } from "../lib/owner-alerts"
 import { CONSENT_TEXT, CONSENT_VERSION, getActiveOffer, isValidUnsubscribeToken, NEWSLETTER_GROUP, unsubscribeToken } from "../lib/newsletter"
 import { EmailTemplates } from "../modules/resend/templates"
 import { sendNotificationStep } from "./steps/send-notification"
@@ -54,7 +56,14 @@ const upsertNewsletterSubscriberStep = createStep(
     if (!alreadyInGroup) await customers.addCustomerToGroup({ customer_id: customer.id, customer_group_id: groupId })
 
     return new StepResponse(
-      { email, sendEmail },
+      {
+        email,
+        sendEmail,
+        customerId: customer.id,
+        hasAccount: existing?.has_account === true,
+        isNew: isNewNewsletterSignup(existing?.metadata, alreadyInGroup),
+        subscribedAt: now.toISOString(),
+      },
       { customerId: customer.id, created: !existing, previousMetadata: existing?.metadata ?? null, groupId, addedToGroup: !alreadyInGroup }
     )
   },
@@ -70,7 +79,10 @@ const upsertNewsletterSubscriberStep = createStep(
   }
 )
 
-/** Signs up an email for offers and sends the current pop-up code, if there is one. */
+/**
+ * Signs up an email for offers and sends the current pop-up code, if there is one. A new sign-up
+ * also emits newsletter.subscribed, which emails the owner (subscribers/newsletter-subscribed.ts).
+ */
 export const subscribeNewsletterWorkflow = createWorkflow(
   "subscribe-newsletter",
   (input: SubscribeInput) => {
@@ -95,6 +107,22 @@ export const subscribeNewsletterWorkflow = createWorkflow(
       return [notification]
     })
     sendNotificationStep(notifications)
+
+    const signup = transform({ offer, subscriber, input }, ({ offer: current, subscriber: person, input: data }): NewsletterSubscribedEvent | null =>
+      person.isNew
+        ? {
+            customer_id: person.customerId,
+            email: person.email,
+            country_code: data.country_code ?? null,
+            has_account: person.hasAccount,
+            offer_code: person.sendEmail ? current?.code ?? null : null,
+            subscribed_at: person.subscribedAt,
+          }
+        : null
+    )
+    when("newsletter-signup-is-new", { signup }, ({ signup: event }) => event !== null).then(() => {
+      emitEventStep({ eventName: NEWSLETTER_SUBSCRIBED_EVENT, data: signup as unknown as NewsletterSubscribedEvent })
+    })
     return new WorkflowResponse({ success: true })
   }
 )

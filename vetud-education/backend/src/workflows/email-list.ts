@@ -1,6 +1,7 @@
 import type { CreateNotificationDTO } from "@medusajs/framework/types"
 import { MedusaError } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import { emitEventStep } from "@medusajs/medusa/core-flows"
 import {
   CONFIRM_LINK_TTL_MS,
   confirmToken,
@@ -8,6 +9,8 @@ import {
   CONSENT_VERSION,
   isValidConfirmToken,
   isValidUnsubscribeToken,
+  EMAIL_LIST_CONFIRMED_EVENT,
+  type EmailListConfirmedEvent,
   type ListLocale,
   normalizeEmail,
 } from "../lib/email-list"
@@ -111,9 +114,11 @@ export const subscribeEmailListWorkflow = createWorkflow(
   }
 )
 
+type ConfirmResult = { success: true; confirmed: EmailListConfirmedEvent | null }
+
 const confirmEmailSubscriberStep = createStep(
   "confirm-email-subscriber",
-  async (input: ConfirmInput, { container }) => {
+  async (input: ConfirmInput, { container }): Promise<StepResponse<ConfirmResult>> => {
     const email = normalizeEmail(input.email)
     const invalid = new MedusaError(MedusaError.Types.NOT_ALLOWED, "This confirmation link isn't valid any more. Please sign up again.")
     if (!isValidConfirmToken(email, input.expires, input.token)) throw invalid
@@ -121,18 +126,34 @@ const confirmEmailSubscriberStep = createStep(
     const [subscriber] = await service.listEmailSubscribers({ email })
     // An old link must not bring back someone who has since unsubscribed.
     if (!subscriber || subscriber.status === "unsubscribed") throw invalid
-    if (subscriber.status === "pending") {
-      await service.updateEmailSubscribers({ id: subscriber.id, status: "confirmed", confirmed_at: new Date() })
+    if (subscriber.status !== "pending") return new StepResponse({ success: true, confirmed: null })
+    const confirmedAt = new Date()
+    await service.updateEmailSubscribers({ id: subscriber.id, status: "confirmed", confirmed_at: confirmedAt })
+    const confirmed: EmailListConfirmedEvent = {
+      id: subscriber.id,
+      email,
+      locale: subscriber.locale,
+      consented_at: new Date(subscriber.consented_at).toISOString(),
+      confirmed_at: confirmedAt.toISOString(),
     }
-    return new StepResponse({ success: true })
+    return new StepResponse({ success: true, confirmed })
   }
 )
 
-/** Called when someone presses Confirm on the page their email links to. */
+/**
+ * Called when someone presses Confirm on the page their email links to. A first confirmation emits
+ * email_list.confirmed, which emails the owner (subscribers/email-list-confirmed.ts).
+ */
 export const confirmEmailListWorkflow = createWorkflow(
   "confirm-email-list",
   function (input: ConfirmInput) {
-    return new WorkflowResponse(confirmEmailSubscriberStep(input))
+    const result = confirmEmailSubscriberStep(input)
+    when("email-list-newly-confirmed", { result }, ({ result: step }) => step.confirmed !== null).then(() => {
+      const event = transform({ result }, ({ result: step }) => step.confirmed as EmailListConfirmedEvent)
+      emitEventStep({ eventName: EMAIL_LIST_CONFIRMED_EVENT, data: event })
+    })
+    const response = transform({ result }, () => ({ success: true }))
+    return new WorkflowResponse(response)
   }
 )
 

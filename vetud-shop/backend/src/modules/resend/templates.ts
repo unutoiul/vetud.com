@@ -1,9 +1,11 @@
 import { formatCurrency } from "../../lib/currencies"
+import { guestCheckoutAlert, newsletterSignupAlert, type GuestCheckoutAlertData, type NewsletterSignupAlertData } from "./owner-alerts"
 
 /**
  * The emails live as published templates in Resend (Dashboard > Templates), in the VETUD style.
  * This file only turns each notification's data into that template's variables; the template
- * IDs are in template-ids.ts. Change wording or layout in Resend, not here.
+ * IDs are in template-ids.ts. Change wording or layout in Resend, not here. The owner alerts are
+ * the exception: they're written in full in owner-alerts.ts and have no template in Resend.
  */
 export const EmailTemplates = {
   ORDER_PLACED: "order-placed",
@@ -20,6 +22,8 @@ export const EmailTemplates = {
   REFUND_ISSUED: "refund-issued",
   ORDER_DELIVERED: "order-delivered",
   RETURN_RECEIVED: "return-received",
+  NEWSLETTER_SIGNUP_ADMIN: "newsletter-signup-admin",
+  GUEST_CHECKOUT_ADMIN: "guest-checkout-admin",
 } as const
 
 export type EmailTemplate = (typeof EmailTemplates)[keyof typeof EmailTemplates]
@@ -263,6 +267,17 @@ const builders: Record<string, Builder> = {
       },
     }
   },
+}
+
+/** Emails written in full in code rather than as Resend templates. */
+const inlineEmails: Record<string, (data: Record<string, unknown>) => { subject: string; html: string; text: string }> = {
+  [EmailTemplates.NEWSLETTER_SIGNUP_ADMIN]: (data) => newsletterSignupAlert(data as NewsletterSignupAlertData),
+  [EmailTemplates.GUEST_CHECKOUT_ADMIN]: (data) => guestCheckoutAlert(data as GuestCheckoutAlertData),
+}
+
+/** The finished email for an inline template, or null when the template lives in Resend. */
+export function buildInlineEmail(template: string, data: Record<string, unknown>) {
+  return inlineEmails[template]?.(data) ?? null
 }
 
 /** The Resend template to use and its escaped variables, or null for an unknown template. */
