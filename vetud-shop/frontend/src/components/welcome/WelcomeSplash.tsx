@@ -92,14 +92,11 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
   const submitting = useRef(false)
   const form = useRef<HTMLFormElement>(null)
-  const joinButton = useRef<HTMLButtonElement>(null)
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
 
-  // Every action on this screen is a three-second hold, so pressing Enter in the form only moves
-  // to the Join button, where holding Enter (or the button) sends it.
-  const holdToJoin = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    joinButton.current?.focus()
+    void submit()
   }
 
   const submit = async () => {
@@ -205,7 +202,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
             </Box>
           </div> : <>
             <Typography id="welcome-description" sx={descriptionSx}>{ct("Get VETUD offers and news in your inbox.")}</Typography>
-            <Box component="form" ref={form} onSubmit={holdToJoin} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 3, md: 3.75 } }}>
+            <Box component="form" ref={form} onSubmit={handleSubmit} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 3, md: 3.75 } }}>
               <TextField
                 label={offerText("email")}
                 type="email"
@@ -247,12 +244,11 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
                 {showErrors && !consent ? <FormHelperText error id="welcome-consent-error" sx={{ m: "0 0 8px 48px", lineHeight: 1.6, "&.Mui-error": { color: "error.light" } }}>{ct("Please tick the box to receive our emails.")}</FormHelperText> : null}
               </Box>
               {status === "error" ? <Alert severity="error" sx={{ mt: 2 }}>{ct("We couldn't save your signup. Please try again.")}</Alert> : null}
-              <HoldButton ref={joinButton} showHoldTooltip variant="contained" fullWidth size="large" disabled={status === "sending"} onConfirm={() => void submit()} fill={alpha(brand.navy, .2)}
+              <Button type="submit" variant="contained" fullWidth size="large" disabled={status === "sending"}
                 startIcon={status === "sending" ? <CircularProgress size={18} color="inherit" /> : <Icon name="mail" />}
-                counterSx={{ ml: "auto" }}
                 sx={{ ...primaryButtonSx, minHeight: 54, mt: 2.5, justifyContent: "center", "& .MuiButton-startIcon": { mr: "auto" } }}>
                 {ct(status === "sending" ? "Joining the newsletter..." : "Join the newsletter")}
-              </HoldButton>
+              </Button>
               <Typography sx={{ mt: 1.5, textAlign: "center", fontSize: 12, lineHeight: 1.6, color: "brand.onNavyMuted" }}>{ct("Free to join. Unsubscribe whenever you like.")}</Typography>
             </Box>
           </>}
