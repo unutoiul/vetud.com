@@ -159,6 +159,7 @@ export default function PhoneField({ country, value, onChange, error, label, req
         onChange={(_, choice) => { if (choice) { pick(choice); closePicker() } }}
         onClose={(_, reason) => { if (reason === "escape") closePicker() }}
         disableClearable
+        forcePopupIcon={false}
         autoHighlight
         getOptionLabel={(choice) => choice.label}
         isOptionEqualToValue={(choice, current) => choice.code === current.code}

@@ -15,6 +15,20 @@ declare module "@mui/material/Chip" { interface ChipPropsColorOverrides { mint: 
 
 const focusRing = { outline: `2px solid ${brand.blue}`, outlineOffset: 4 }
 
+/**
+ * Browser autofill paints filled fields pale blue, but only behind the text, so forms looked
+ * patchy (owner, 2026-11-18). Filled fields keep the field's own white and ink instead; autofill
+ * itself still works. The long transition stops Chrome from flashing its colour back.
+ */
+const autofill = {
+  WebkitBoxShadow: "0 0 0 1000px #fff inset",
+  boxShadow: "0 0 0 1000px #fff inset",
+  WebkitTextFillColor: brand.ink,
+  caretColor: brand.ink,
+  borderRadius: "inherit",
+  transition: "background-color 600000s 0s, color 600000s 0s",
+}
+
 /** Shared Alpine design system, including transactional screens. */
 export const pepLabTheme = createTheme({
   cssVariables: true,
@@ -74,7 +88,29 @@ export const pepLabTheme = createTheme({
     MuiAccordion: { defaultProps: { disableGutters: true, elevation: 0, square: true }, styleOverrides: { root: { backgroundColor: "transparent", borderBottom: `1px solid ${brand.line}`, "&::before": { display: "none" } } } },
     MuiAccordionSummary: { styleOverrides: { root: { paddingInline: 0, minHeight: 80 }, content: { margin: "22px 0", gap: 20, alignItems: "center" } } },
     MuiAccordionDetails: { styleOverrides: { root: { padding: "0 0 26px" } } },
-    MuiOutlinedInput: { styleOverrides: { root: { borderRadius: 5, backgroundColor: "#fff", "& .MuiOutlinedInput-notchedOutline": { borderColor: brand.lineStrong }, "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: brand.blue } } } },
+    // Every text field, select and autocomplete shares this look (the same as the shop's).
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: 6, backgroundColor: "#fff",
+          transition: `box-shadow .2s ${motion}`,
+          "& .MuiOutlinedInput-notchedOutline": { borderColor: brand.lineStrong, transition: `border-color .2s ${motion}` },
+          "&:hover:not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: brand.navySoft },
+          "&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: brand.blue, borderWidth: 2 },
+          "&.Mui-focused": { boxShadow: `0 0 0 4px ${brand.mintLight}` },
+          "&.Mui-disabled": { backgroundColor: brand.mintWash },
+          "& input:-webkit-autofill": autofill,
+          "& input:-webkit-autofill:hover": autofill,
+          "& input:-webkit-autofill:focus": autofill,
+          "& input:autofill": autofill,
+        },
+        input: { "&::placeholder": { color: brand.muted, opacity: 1 } },
+        adornedStart: { "& .MuiInputAdornment-root": { color: brand.ink } },
+      },
+    },
+    MuiInputLabel: { styleOverrides: { root: { color: brand.muted, "&.Mui-focused:not(.Mui-error)": { color: brand.blue } }, asterisk: { color: brand.muted } } },
+    MuiFormHelperText: { styleOverrides: { root: { marginTop: 6, fontSize: ".78rem", lineHeight: 1.45, color: brand.muted, "&.Mui-error": { color: "#b3261e" } } } },
+    MuiAutocomplete: { styleOverrides: { paper: { borderRadius: 8, marginTop: 4, boxShadow: "0 12px 40px rgba(18,51,76,.12)", border: `1px solid ${brand.line}` }, option: { minHeight: 44 }, noOptions: { color: brand.muted } } },
     MuiTextField: { defaultProps: { fullWidth: true } },
     MuiAppBar: { defaultProps: { elevation: 0, color: "inherit" } },
     MuiTab: { styleOverrides: { root: { textTransform: "none", fontWeight: 600, fontSize: ".95rem", minHeight: 58, paddingInline: 4, marginRight: 24, minWidth: 0 } } },
