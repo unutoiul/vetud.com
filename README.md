@@ -318,11 +318,13 @@ The storefront sells to a short list of countries for now: the United States (US
 
 Checkout and the account address book can suggest addresses as the shopper types and fill in the street, city, state, postal code and country, using Google's Places API (New). It stays off until a key is set.
 
-1. In Google Cloud, create a project with billing, enable **Places API (New)**, and create an API key. Restrict it to **HTTP referrers** (`https://www.vetud.com/*`, plus `http://localhost:8000/*` for development) and to the Places API only.
+1. In Google Cloud, create a project with billing, enable **Places API (New)**, and create an API key. Restrict it to **Websites** (HTTP referrers) for every address the shop is served from: `https://www.pep.company/*` and `https://pep.company/*`, plus `http://localhost:8000/*` for development. Restrict it to the Places API (New) only.
 2. In Vercel, set `NEXT_PUBLIC_GOOGLE_PLACES_API_KEY` for Production (and Preview if you want it there), then redeploy.
 3. Add Google Maps Platform to the processors listed in your Privacy policy, since the address a shopper types is sent to Google.
 
-Without the key, the address field is a normal text input. Suggestions are limited to the countries the shopper's region ships to. Parsing of Google's response is covered by `node --test tests/places.test.mjs` in `vetud-shop/frontend`.
+Without the key, the address field is a normal text input. If Google refuses the key (a site missing from its website list answers 403), the field says suggestions aren't available, stops asking for the rest of the visit, and the browser console names the site to add. Moving the shop to a new domain means adding that domain to the key.
+
+How it behaves: suggestions are limited to the selected country and to deliverable places (street addresses, buildings, flats, streets and postal codes, not shops or landmarks). Picking a postal code fills the postcode and town and leaves the street for the shopper, whose next suggestions favour that area. When Google knows only the street, the house number the shopper typed is kept. Parsing and these rules are covered by `node --test tests/places.test.mjs` in `vetud-shop/frontend`.
 
 ### Backend on Railway
 

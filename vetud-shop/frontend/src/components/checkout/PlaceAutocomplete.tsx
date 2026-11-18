@@ -9,7 +9,11 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
-import { newSessionToken, type PlaceSuggestion } from "@/lib/places"
+import { newSessionToken, placesAvailable, type PlaceSuggestion } from "@/lib/places"
+import Icon from "../brand/Icon"
+
+/** What a picked suggestion filled: a full street address, or only a postal code and town. */
+export type PickResult = "street" | "area"
 
 type Props = {
   id: string
@@ -18,14 +22,20 @@ type Props = {
   value: string
   required?: boolean
   error?: boolean
+  /** The error, or help for typing the field by hand. */
   helperText?: string
+  /** Help shown instead of `helperText` while suggestions work and there's no error. */
+  searchHint?: string
   /** Browser autofill hint, for example "address-line1" or "postal-code". */
   autoComplete?: string
   /** Fetches suggestions for the text typed so far. Called after a short pause. */
   suggest: (text: string, sessionToken: string, signal: AbortSignal) => Promise<PlaceSuggestion[]>
   onTextChange: (text: string) => void
-  /** The visitor picked a suggestion. The session token is the one the suggestions were fetched with. */
-  onPick: (suggestion: PlaceSuggestion, sessionToken: string, signal: AbortSignal) => Promise<void>
+  /**
+   * The visitor picked a suggestion. The session token is the one the suggestions were fetched
+   * with; `typed` is the text they had typed before picking.
+   */
+  onPick: (suggestion: PlaceSuggestion, sessionToken: string, signal: AbortSignal, typed: string) => Promise<PickResult | void>
   minCharacters?: number
 }
 
@@ -34,14 +44,14 @@ const DEBOUNCE_MS = 250
 /**
  * A text field with Google suggestions underneath. Re-mount it (change its `key`) when the inputs
  * that shape the suggestions change, for example the selected country. If suggestions fail, the
- * field keeps working as a normal text input.
+ * field keeps working as a normal text input; if Google refuses the key, it stops asking.
  */
-export default function PlaceAutocomplete({ id, name, label, value, required, error, helperText, autoComplete, suggest, onTextChange, onPick, minCharacters = 3 }: Props) {
+export default function PlaceAutocomplete({ id, name, label, value, required, error, helperText, searchHint, autoComplete, suggest, onTextChange, onPick, minCharacters = 3 }: Props) {
   const ct = useContentTranslator()
   const t = useTranslations("Address")
   const [options, setOptions] = useState<PlaceSuggestion[]>([])
   const [open, setOpen] = useState(false)
-  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "empty" | "error" | "details" | "filled">("idle")
+  const [status, setStatus] = useState<"idle" | "loading" | "ready" | "empty" | "error" | "details" | "filled" | "area">("idle")
   const session = useRef(newSessionToken())
   const typed = useRef(false)
   const detailsRequest = useRef<AbortController | null>(null)
@@ -54,7 +64,7 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
 
   useEffect(() => {
     // Only ask while the visitor is typing, not when a pick or a saved address fills the field.
-    if (!typed.current || !focused.current || value.trim().length < minCharacters) return
+    if (!typed.current || !focused.current || value.trim().length < minCharacters || !placesAvailable()) return
     const controller = new AbortController()
     const timer = window.setTimeout(() => {
       latestSuggest.current(value.trim(), session.current, controller.signal)
@@ -77,11 +87,13 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
 
   useEffect(() => () => { detailsRequest.current?.abort() }, [])
 
-  const feedback = status === "error" ? ct("Address search is unavailable. Type your address below to continue.")
-    : status === "empty" ? ct("No matching addresses. You can enter your address manually.")
+  const feedback = status === "error" ? ct("Address suggestions aren't available right now. Please type your full address.")
+    : status === "empty" ? ct("No matching addresses. Keep typing, or enter your address yourself.")
     : status === "loading" ? ct("Searching addresses...")
     : status === "details" ? ct("Filling in your address...")
+    : status === "area" ? ct("Town and postal code added. Now type your house number and street.")
     : status === "filled" ? ct("Check the address details below and add anything missing.") : ""
+  const help = error || status === "error" || !placesAvailable() ? helperText : searchHint ?? helperText
 
   return (
     <Box>
@@ -105,7 +117,8 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
             detailsRequest.current?.abort()
             typed.current = true
             setOptions([])
-            setStatus(text.trim().length < minCharacters ? "idle" : "loading")
+            // Once Google has refused the key, keep the explanation and stop searching.
+            setStatus(previous => !placesAvailable() ? (previous === "error" ? "error" : "idle") : text.trim().length < minCharacters ? "idle" : "loading")
             setOpen(true)
             onTextChange(text)
           } else if (reason === "clear") {
@@ -120,6 +133,7 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
         }}
         onChange={(_event, picked) => {
           if (!picked || typeof picked === "string") return
+          const typedText = value
           typed.current = false
           setOptions([])
           setOpen(false)
@@ -130,8 +144,8 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
           const token = session.current
           session.current = newSessionToken()
           onTextChange(picked.main)
-          void onPick(picked, token, controller.signal).then(() => {
-            if (!controller.signal.aborted) setStatus("filled")
+          void onPick(picked, token, controller.signal, typedText).then(result => {
+            if (!controller.signal.aborted) setStatus(result === "area" ? "area" : "filled")
           }).catch(() => {
             if (!controller.signal.aborted) setStatus("error")
           })
@@ -140,6 +154,7 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
           const { key, ...rest } = props as typeof props & { key: string }
           return (
             <li key={key} {...rest}>
+              <Icon name="pin" sx={{ fontSize: 18, color: "text.secondary", mr: 1.25, flexShrink: 0 }} />
               <Box sx={{ minWidth: 0 }}>
                 <Typography sx={{ fontWeight: 600, fontSize: 14 }}>{ct(option.main)}</Typography>
                 {option.secondary ? <Typography variant="body2" sx={{ color: "text.secondary" }}>{ct(option.secondary)}</Typography> : null}
@@ -155,7 +170,7 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
             label={ct(label)}
             required={required}
             error={error}
-            helperText={ct(helperText)}
+            helperText={ct(help)}
             // MUI only reports a close while the list is showing. Suggestions that arrive after the
             // visitor has moved to another field must not open this list there.
             onFocus={() => { focused.current = true; setOpen(true) }}

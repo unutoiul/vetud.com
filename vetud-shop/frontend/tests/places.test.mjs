@@ -1,6 +1,6 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
-import { mergePlaceAddress, parsePlace, placeDetails, suggestAddresses } from "../src/lib/places.ts"
+import { ADDRESS_TYPES, isAreaPlace, mergePlaceAddress, parsePlace, placeDetails, placesAvailable, PlacesError, suggestAddresses, typedHouseNumber } from "../src/lib/places.ts"
 
 const part = (longText, types, shortText = longText) => ({ longText, shortText, types })
 
@@ -85,19 +85,71 @@ test("a delayed lookup preserves every delivery field edited in the meantime", (
   assert.equal(filled.address_1, "20 New Street")
 })
 
-test("Google suggestions use the selected country, language, and billing session", async t => {
+test("Google suggestions use the selected country, language, and billing session, and only deliverable places", async t => {
   t.mock.method(globalThis, "fetch", async (url, init) => {
     assert.equal(url, "https://places.googleapis.com/v1/places:autocomplete")
-    assert.deepEqual(JSON.parse(init.body), { languageCode: "en-GB", input: "20 Example", sessionToken: "session-1", includedRegionCodes: ["gb"] })
+    assert.deepEqual(JSON.parse(init.body), { languageCode: "en-GB", input: "20 Example", sessionToken: "session-1", includedPrimaryTypes: ADDRESS_TYPES, includedRegionCodes: ["gb"] })
     return Response.json({ suggestions: [{ placePrediction: { placeId: "place-1", structuredFormat: { mainText: { text: "20 Example Road" }, secondaryText: { text: "London, UK" } } } }] })
   })
   assert.deepEqual(await suggestAddresses("20 Example", "session-1", "gb", undefined, undefined, "en-GB"), [{ placeId: "place-1", main: "20 Example Road", secondary: "London, UK" }])
+  assert.ok(ADDRESS_TYPES.length <= 5, "Google accepts at most five primary types")
 })
 
-test("Google failures are reported so the form can show its manual-entry fallback", async t => {
+test("after a postal code is picked, street suggestions favour that area", async t => {
+  t.mock.method(globalThis, "fetch", async (_url, init) => {
+    assert.deepEqual(JSON.parse(init.body).locationBias, { circle: { center: { latitude: 51.5, longitude: -0.19 }, radius: 5000 } })
+    return Response.json({ suggestions: [] })
+  })
+  assert.deepEqual(await suggestAddresses("Fulham Road", "s", "gb", undefined, { latitude: 51.5, longitude: -0.19 }), [])
+})
+
+test("Google failures are reported so the form can show its manual-entry fallback, with one console hint for a refused key", async t => {
+  const warn = t.mock.method(console, "warn", () => {})
   t.mock.method(globalThis, "fetch", async () => new Response("", { status: 403 }))
-  await assert.rejects(suggestAddresses("Example", "session", "gb"), /403/)
+  await assert.rejects(suggestAddresses("Example", "session", "gb"), error => error instanceof PlacesError && error.status === 403 && /403/.test(error.message))
   await assert.rejects(placeDetails("place", "session"), /403/)
+  assert.equal(warn.mock.callCount(), 1)
+  assert.match(warn.mock.calls[0].arguments[0], /website restrictions/)
+  assert.equal(placesAvailable(), false)
+})
+
+test("a street Google knows only as a whole keeps the house number the shopper typed", () => {
+  const fulham = [part("Fulham Road", ["route"]), part("London", ["postal_town"]), part("United Kingdom", ["country"], "GB")]
+  assert.equal(parsePlace(fulham, "500 fulham road").address_1, "500 Fulham Road")
+  assert.equal(parsePlace(fulham, "Flat 3, 12a Fulham Rd, London").address_1, "12a Fulham Road")
+  assert.equal(parsePlace(fulham, "Fulham Road").address_1, "Fulham Road")
+  const damrak = [part("Damrak", ["route"]), part("Amsterdam", ["locality"]), part("Netherlands", ["country"], "NL")]
+  assert.equal(parsePlace(damrak, "Damrak 70-2").address_1, "Damrak 70-2")
+  // Google's own number wins over what was typed.
+  assert.equal(parsePlace([part("10", ["street_number"]), ...fulham], "500 Fulham Road").address_1, "10 Fulham Road")
+})
+
+test("typedHouseNumber reads the number where each country writes it", () => {
+  assert.equal(typedHouseNumber("221b baker street", "Baker Street", "gb"), "221b")
+  assert.equal(typedHouseNumber("1600 Pennsylvania Ave", "Pennsylvania Avenue Northwest", "us"), "1600")
+  assert.equal(typedHouseNumber("Unter den Linden 77", "Unter den Linden", "de"), "77")
+  assert.equal(typedHouseNumber("Baker Street", "Baker Street", "gb"), "")
+  assert.equal(typedHouseNumber("SW6 5HQ", "Fulham Road", "gb"), "")
+})
+
+test("a picked postal code fills the postcode and town and leaves the street for the shopper", () => {
+  const area = parsePlace([part("SW1A 2AA", ["postal_code"]), part("London", ["postal_town"]), part("United Kingdom", ["country"], "GB")])
+  assert.equal(area.address_1, "")
+  assert.equal(isAreaPlace(area), true)
+  const filled = mergePlaceAddress({ ...initialAddress, address_1: "SW1A 2AA" }, { ...initialAddress, address_1: "SW1A 2AA" }, area, "SW1A 2AA")
+  assert.equal(filled.address_1, "")
+  assert.equal(filled.postal_code, "SW1A 2AA")
+  assert.equal(filled.city, "London")
+  assert.equal(isAreaPlace(parsePlace([part("20", ["street_number"]), part("New Street", ["route"]), part("London", ["postal_town"])])), false)
+  // A lookup that returned nothing keeps the picked text rather than clearing the field.
+  assert.equal(mergePlaceAddress(initialAddress, initialAddress, {}, "Picked Street").address_1, "Picked Street")
+})
+
+test("a named building without a street becomes the first line, and flats start with a capital", () => {
+  const cottage = parsePlace([part("Rose Cottage", ["premise"]), part("Little Village", ["postal_town"]), part("AB1 2CD", ["postal_code"]), part("United Kingdom", ["country"], "GB")])
+  assert.equal(cottage.address_1, "Rose Cottage")
+  assert.equal(isAreaPlace(cottage), false)
+  assert.equal(parsePlace([part("flat 2", ["subpremise"]), part("10", ["street_number"]), part("Abbey Road", ["route"]), part("United Kingdom", ["country"], "GB")]).address_2, "Flat 2")
 })
 
 test("a cancelled lookup aborts its network request", async t => {

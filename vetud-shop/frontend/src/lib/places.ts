@@ -24,16 +24,47 @@ export const STATE_COUNTRIES = new Set(["us", "ca", "au"])
 
 const CITY_TYPES = ["postal_town", "locality", "sublocality_level_1", "sublocality", "administrative_area_level_3", "administrative_area_level_2"]
 
+/**
+ * Only places someone can be delivered to: street addresses, buildings, flats, streets and postal
+ * codes. Without this, shops, offices and landmarks crowd out the address being typed.
+ * Google allows at most five types here.
+ */
+export const ADDRESS_TYPES = ["street_address", "premise", "subpremise", "route", "postal_code"]
+
 function find(components: PlaceComponent[], type: string) {
   return components.find((component) => component.types?.includes(type))
 }
 
-/** Turns Google address components into the fields of our address form. */
-export function parsePlace(components: PlaceComponent[]): Partial<AddressValues> {
+const HOUSE_NUMBER = String.raw`\d+[a-zA-Z]?(?:\s*[-–/]\s*\d+[a-zA-Z]?)?`
+
+/**
+ * The house number in what the shopper typed, for a street Google knows only as a whole ("Fulham
+ * Road" for "839 Fulham Road"). Looks in the part that names the street, before or after the
+ * street name depending on the country.
+ */
+export function typedHouseNumber(typed: string, route: string, country: string) {
+  const parts = typed.split(",").map((part) => part.trim()).filter(Boolean)
+  const streetWord = route.trim().split(/\s+/)[0]?.toLowerCase() ?? ""
+  const part = parts.find((candidate) => streetWord && candidate.toLowerCase().includes(streetWord)) ?? parts[0] ?? ""
+  const match = NUMBER_AFTER_STREET.has(country)
+    ? part.match(new RegExp(`(?:^|\\s)(${HOUSE_NUMBER})$`))
+    : part.match(new RegExp(`^(${HOUSE_NUMBER})(?:\\s|$)`))
+  return match?.[1]?.replace(/\s+/g, "") ?? ""
+}
+
+/**
+ * Turns Google address components into the fields of our address form. `typed` is what the
+ * shopper had typed; it supplies the house number when Google matched only the street.
+ * A postal code or town gives an empty `address_1`: the shopper still has to type the street.
+ */
+export function parsePlace(components: PlaceComponent[], typed = ""): Partial<AddressValues> {
   const country = find(components, "country")?.shortText?.toLowerCase() ?? ""
-  const number = find(components, "street_number")?.longText ?? ""
   const route = find(components, "route")?.longText ?? ""
+  const number = find(components, "street_number")?.longText || (route ? typedHouseNumber(typed, route, country) : "")
   const street = NUMBER_AFTER_STREET.has(country) ? [route, number] : [number, route]
+  // A named building without a street, common for rural UK addresses ("Rose Cottage").
+  const premise = route ? "" : (find(components, "premise")?.longText ?? "")
+  const flat = find(components, "subpremise")?.longText ?? ""
 
   let city = ""
   for (const type of CITY_TYPES) {
@@ -42,8 +73,9 @@ export function parsePlace(components: PlaceComponent[]): Partial<AddressValues>
   }
 
   return {
-    address_1: street.filter(Boolean).join(" "),
-    address_2: find(components, "subpremise")?.longText ?? "",
+    address_1: route ? street.filter(Boolean).join(" ") : premise,
+    // Google writes some flats in lower case ("flat 2").
+    address_2: flat.charAt(0).toUpperCase() + flat.slice(1),
     city,
     province: STATE_COUNTRIES.has(country) ? (find(components, "administrative_area_level_1")?.shortText ?? "") : "",
     postal_code: find(components, "postal_code")?.longText ?? "",
@@ -59,6 +91,27 @@ type AutocompleteBody = {
   suggestions?: { placePrediction?: { placeId: string; text?: { text?: string }; structuredFormat?: { mainText?: { text?: string }; secondaryText?: { text?: string } } } }[]
 }
 
+/** A lookup Google refused or couldn't answer. `status` is the HTTP status. */
+export class PlacesError extends Error {
+  readonly status: number
+  constructor(status: number) {
+    super(`Address lookup failed (${status})`)
+    this.name = "PlacesError"
+    this.status = status
+  }
+}
+
+let refused = false
+
+/**
+ * False once Google has refused the key on this page, for example because the site's address isn't
+ * in the key's website restrictions (Google Cloud > Credentials). Further lookups would only fail
+ * again, so the address fields stop asking and work as plain text.
+ */
+export function placesAvailable() {
+  return PLACES_ENABLED && !refused
+}
+
 /** Stop a slow lookup without blocking manual address entry. */
 async function fetchPlaces(url: string, init: RequestInit = {}) {
   const controller = new AbortController()
@@ -68,8 +121,12 @@ async function fetchPlaces(url: string, init: RequestInit = {}) {
   const timer = setTimeout(abort, 6000)
   try {
     const response = await fetch(url, { ...init, signal: controller.signal })
+    if (response.status === 400 || response.status === 401 || response.status === 403) {
+      if (!refused) console.warn(`Address suggestions are off: Google refused the request (${response.status}). Check that ${typeof location === "undefined" ? "this site" : location.origin} is allowed in the API key's website restrictions and that Places API (New) is enabled.`)
+      refused = true
+    }
     // Include reading the body in the timeout, not just waiting for headers.
-    if (!response.ok) throw new Error(`Address lookup failed (${response.status})`)
+    if (!response.ok) throw new PlacesError(response.status)
     return await response.json()
   } finally {
     clearTimeout(timer)
@@ -93,8 +150,8 @@ async function autocomplete(body: Record<string, unknown>, signal?: AbortSignal,
 }
 
 /**
- * Street-address suggestions for what the visitor has typed, limited to the one country they
- * selected. A location (from a chosen postal code) narrows the results to that area.
+ * Address suggestions for what the visitor has typed (a street address or a postal code), limited
+ * to the one country they selected. A location (from a chosen postal code) favours that area.
  */
 export function suggestAddresses(
   input: string,
@@ -108,6 +165,7 @@ export function suggestAddresses(
     {
       input,
       sessionToken,
+      includedPrimaryTypes: ADDRESS_TYPES,
       ...(countryCode ? { includedRegionCodes: [countryCode] } : {}),
       ...(near ? { locationBias: { circle: { center: near, radius: 5000 } } } : {}),
     },
@@ -130,20 +188,31 @@ export function suggestPostalCodes(input: string, sessionToken: string, countryC
 
 type DetailsBody = { addressComponents?: PlaceComponent[]; location?: PlaceLocation }
 
-/** The address fields and map position of a chosen suggestion. Reusing the session token ends its billing session. */
-export async function placeDetails(placeId: string, sessionToken: string, locale = "en", signal?: AbortSignal): Promise<PlaceDetails> {
+/**
+ * The address fields and map position of a chosen suggestion. Reusing the session token ends its
+ * billing session. `typed` is what the shopper had typed (see parsePlace).
+ */
+export async function placeDetails(placeId: string, sessionToken: string, locale = "en", signal?: AbortSignal, typed = ""): Promise<PlaceDetails> {
   const body = await fetchPlaces(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?sessionToken=${encodeURIComponent(sessionToken)}&languageCode=${encodeURIComponent(locale)}`, {
     headers: { "X-Goog-Api-Key": PLACES_API_KEY, "X-Goog-FieldMask": "addressComponents,location" },
     signal,
   }) as DetailsBody
-  return { address: parsePlace(body.addressComponents ?? []), location: body.location }
+  return { address: parsePlace(body.addressComponents ?? [], typed), location: body.location }
+}
+
+/**
+ * A postal code or town rather than a street: it fills the postcode and town, and the shopper then
+ * types the street.
+ */
+export function isAreaPlace(address: Partial<AddressValues>) {
+  return !address.address_1 && Boolean(address.postal_code || address.city)
 }
 
 /** A lookup must never replace fields the shopper edited while it was loading. */
 export function mergePlaceAddress(current: AddressValues, initial: AddressValues, address: Partial<AddressValues>, street: string): AddressValues {
   return {
     ...current,
-    address_1: address.address_1 || street,
+    address_1: isAreaPlace(address) ? "" : address.address_1 || street,
     address_2: current.address_2 !== initial.address_2 ? current.address_2 : address.address_2 || current.address_2,
     city: current.city !== initial.city ? current.city : address.city || "",
     postal_code: current.postal_code !== initial.postal_code ? current.postal_code : address.postal_code || "",
