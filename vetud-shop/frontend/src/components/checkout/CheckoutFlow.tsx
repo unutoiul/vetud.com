@@ -814,7 +814,7 @@ function ContactSection({ cart, busy, memberCart, onSubmit, onStartOver }: {
   }
 
   const signInToggle = (
-    <Button type="button" onClick={() => setSigningIn((open) => !open)} aria-expanded={signingIn} sx={{ minHeight: 44 }}>
+    <Button type="button" onClick={() => setSigningIn((open) => !open)} aria-expanded={signingIn} sx={{ minHeight: 44, whiteSpace: "nowrap" }}>
       {ct(signingIn ? "Continue as a guest instead" : "Have an account? Sign in")}
     </Button>
   )
@@ -856,12 +856,13 @@ function ContactSection({ cart, busy, memberCart, onSubmit, onStartOver }: {
         </Stack>
       </Box>
     ) : (
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ alignItems: { sm: "center" }, justifyContent: "space-between" }}>
+      // The email gets its own line: a long address used to squeeze the buttons beside it.
+      <Stack spacing={1.5}>
         <Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>
           {ct("Ordering as a guest:")} <Box component="strong" sx={{ fontWeight: 650 }}>{cart.email}</Box>
         </Typography>
-        <Stack direction="row" spacing={1}>
-          <Button type="button" size="small" variant="outlined" disabled={busy} onClick={() => setEditing(true)} sx={{ minHeight: 44 }}>{ct("Change")}</Button>
+        <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: "wrap", alignItems: "center" }}>
+          <Button type="button" size="small" variant="outlined" disabled={busy} onClick={() => setEditing(true)} sx={{ minHeight: 44, whiteSpace: "nowrap" }}>{ct("Change")}</Button>
           {signInToggle}
         </Stack>
       </Stack>
