@@ -201,7 +201,7 @@ export function AuthPanel({ context = "account", initialEmail = "" }: { context?
       ) : null}
       <Stack spacing={2}>
         <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
-        {mode === "signup" ? <PhoneField country={countryCode} value={phone} onChange={setPhone} /> : null}
+        {mode === "signup" ? <PhoneField country={countryCode} value={phone} onChange={setPhone} label={ta("phoneOptional")} /> : null}
         <PasswordField label={t("password")} value={password} onChange={setPassword} helperText={ct(mode === "signup" ? t("passwordHelp") : undefined)} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
       </Stack>
       <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
@@ -329,7 +329,7 @@ function ProfileSection() {
           <TextField label={act("email")} value={customer?.email ?? ""} disabled />
           <TextField label={ta("firstName")} value={values.first_name} onChange={(event) => setValues({ ...values, first_name: event.target.value })} autoComplete="given-name" />
           <TextField label={ta("lastName")} value={values.last_name} onChange={(event) => setValues({ ...values, last_name: event.target.value })} autoComplete="family-name" />
-          <PhoneField country={countryCode} value={values.phone} onChange={phone => setValues({ ...values, phone })} error={!isValidPhone(values.phone, countryCode) ? ta("invalidPhone") : undefined} />
+          <PhoneField country={countryCode} value={values.phone} onChange={phone => setValues({ ...values, phone })} label={ta("phoneOptional")} error={!isValidPhone(values.phone, countryCode) ? ta("invalidPhone") : undefined} />
           <TextField label={t("institution")} value={values.company_name} onChange={(event) => setValues({ ...values, company_name: event.target.value })} autoComplete="organization" />
         </Stack>
         <Button type="submit" variant="contained" disabled={pending} sx={{ mt: 2.5 }}>{ct(pending ? t("saving") : t("saveProfile"))}</Button>

@@ -25,7 +25,13 @@ describe("delivery-only checkout", () => {
   })
 
   it("accepts a delivery address without storing a legacy billing payload", () => {
-    const shipping = { address_1: "Delivery street", country_code: "gb" }
+    const shipping = { address_1: "Delivery street", country_code: "gb", phone: "+447700900123" }
     expect(StoreSetCartDeliveryAddressSchema.parse({ shipping_address: shipping, billing_address: shipping })).toEqual({ shipping_address: shipping })
+  })
+
+  it("requires a phone number for delivery", () => {
+    const shipping = { address_1: "Delivery street", country_code: "gb" }
+    expect(StoreSetCartDeliveryAddressSchema.safeParse({ shipping_address: shipping }).success).toBe(false)
+    expect(StoreSetCartDeliveryAddressSchema.safeParse({ shipping_address: { ...shipping, phone: "  " } }).success).toBe(false)
   })
 })

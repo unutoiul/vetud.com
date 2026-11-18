@@ -1,0 +1,13 @@
+Accept your invitation to manage the VETUD store.
+
+Team
+
+
+YOU'VE BEEN INVITED TO THE STORE ADMIN.
+
+Accept the invitation to set your password and manage orders, products and
+customers in Medusa Admin.
+
+Accept invitation {{{INVITE_URL}}}
+
+{{{EXPIRY_NOTE}}} If you weren't expecting this, you can ignore this email.

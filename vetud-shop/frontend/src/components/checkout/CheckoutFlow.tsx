@@ -120,6 +120,14 @@ function rememberPayment(providerId: string) {
   }
 }
 
+/**
+ * The backend's answer when a signed-out shopper uses a cart that belongs to a member account
+ * (validateCartOwner). For a guest, these checkout routes answer 401 for nothing else.
+ */
+function isMemberCartError(error: unknown) {
+  return Boolean(error && typeof error === "object" && (error as { status?: unknown }).status === 401)
+}
+
 function errorMessage(error: unknown) {
   if (error && typeof error === "object" && "message" in error) return String((error as { message: unknown }).message)
   return "Something went wrong. Please try again."
@@ -236,7 +244,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const locale = useLocale()
   const money = useMoney()
   const router = useRouter()
-  const { setCart, clearCart, linkCustomerCart, isCurrentCart, deliveryCountries, countryCode } = useStore()
+  const { setCart, clearCart, linkCustomerCart, restartCart, isCurrentCart, deliveryCountries, countryCode } = useStore()
   // Delivery goes anywhere in the world, not only to the countries the site is set up for.
   const countries = useMemo(() => deliveryCountries.map((code) => ({ code, name: code.toUpperCase() })), [deliveryCountries])
   const { createAddress, updateAddress, captureSession } = useAccount()
@@ -244,6 +252,9 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const [addressEditing, setAddressEditing] = useState(false)
   const busyRef = useRef(false)
   const [error, setError] = useState<string | null>(null)
+  /** A cart a guest can't use because it belongs to a member account: the Contact step asks to sign in. */
+  const [memberCartId, setMemberCartId] = useState<string | null>(null)
+  const memberCart = !customer && memberCartId === cart.id
   const errorRef = useRef<HTMLDivElement>(null)
   // Each list remembers what it was loaded for, so a stale list is never shown or acted on.
   const [loadedOptions, setLoadedOptions] = useState<{ key: string; list: HttpTypes.StoreCartShippingOption[] } | null>(null)
@@ -344,7 +355,8 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       await task(assertCurrent)
       return true
     } catch (err) {
-      setError(errorMessage(err))
+      if (!customer && isMemberCartError(err)) setMemberCartId(cart.id)
+      else setError(errorMessage(err))
       return false
     } finally {
       busyRef.current = false
@@ -372,6 +384,11 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     })
     return accountExists ? "account" : saved
   }
+
+  // "Use a different email" on a member's cart: the basket moves to a new guest cart.
+  const startOver = () => guard(async () => {
+    await restartCart()
+  })
 
   const saveAddress = (body: AddressBody) =>
     guard(async (assertCurrent) => {
@@ -579,7 +596,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
             {customer?.first_name ? t("greeting", { name: customer.first_name }) : t("greetingPlain")}
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-            {t("greetingHelp")}
+            {customer ? t("greetingHelp") : ct("Add your email and delivery details, then choose how to pay. No account needed.")}
           </Typography>
         </Box>
 
@@ -590,7 +607,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         ) : null}
 
         <Stack spacing={2}>
-          {customer ? null : <ContactSection cart={cart} busy={busy} onSubmit={saveContact} />}
+          {customer ? null : <ContactSection key={cart.id} cart={cart} busy={busy} memberCart={memberCart} onSubmit={saveContact} onStartOver={startOver} />}
           <AddressSection
             key={`${cart.id}:${customer?.id ?? "guest"}`}
             cart={cart}
@@ -744,7 +761,14 @@ type ContactResult = boolean | "account"
  * that already has an account must sign in (owner request 2026-11-18); signing in moves checkout
  * on to the address.
  */
-function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; busy: boolean; onSubmit: (email: string) => Promise<ContactResult> }) {
+function ContactSection({ cart, busy, memberCart, onSubmit, onStartOver }: {
+  cart: HttpTypes.StoreCart
+  busy: boolean
+  /** This cart belongs to a member account (saved before the sign-in rule existed, or by a member who signed out). */
+  memberCart: boolean
+  onSubmit: (email: string) => Promise<ContactResult>
+  onStartOver: () => Promise<boolean>
+}) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [email, setEmail] = useState(cart.email ?? "")
@@ -754,6 +778,12 @@ function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; b
   /** The email a member account uses, once the shopper tried to continue as a guest with it. */
   const [memberEmail, setMemberEmail] = useState<string | null>(null)
   const emailField = useRef<HTMLInputElement>(null)
+  const panel = useRef<HTMLDivElement>(null)
+  const accountEmail = memberEmail ?? (memberCart ? cart.email ?? "" : null)
+
+  useEffect(() => {
+    if (memberCart) panel.current?.scrollIntoView({ block: "center", behavior: "smooth" })
+  }, [memberCart])
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -770,7 +800,13 @@ function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; b
     } else if (result) setEditing(false)
   }
 
-  const chooseAnotherEmail = () => {
+  const chooseAnotherEmail = async () => {
+    // A member's cart can't take a guest's email: the basket moves to a new cart, and this step
+    // starts again there (it is keyed by the cart).
+    if (memberCart) {
+      await onStartOver()
+      return
+    }
     setMemberEmail(null)
     setEditing(true)
     setEmail("")
@@ -783,14 +819,17 @@ function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; b
     </Button>
   )
 
-  if (memberEmail) {
-    return <Step index={1} title={ct("Contact")} done={false} locked={false}>
+  if (accountEmail !== null) {
+    return <Box ref={panel}><Step index={1} title={ct("Contact")} done={false} locked={false}>
       <Alert severity="info" sx={{ mb: 3 }}>
-        {ct("There's already an account for")} <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>{memberEmail}</Box>. {ct("Sign in to continue to delivery. Your basket stays as it is.")}
+        {accountEmail
+          ? <>{ct("There's already an account for")} <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>{accountEmail}</Box>. </>
+          : <>{ct("This basket belongs to an account.")} </>}
+        {ct("Sign in to continue to delivery. Your basket stays as it is.")}
       </Alert>
-      <AuthPanel key={memberEmail} context="checkout" initialEmail={memberEmail} />
-      <Button type="button" onClick={chooseAnotherEmail} sx={{ mt: 2, minHeight: 44 }}>{ct("Use a different email instead")}</Button>
-    </Step>
+      <AuthPanel key={accountEmail} context="checkout" initialEmail={accountEmail || undefined} />
+      <Button type="button" disabled={busy} onClick={() => void chooseAnotherEmail()} sx={{ mt: 2, minHeight: 44 }}>{ct("Use a different email instead")}</Button>
+    </Step></Box>
   }
 
   return <Step index={1} title={ct("Contact")} done={Boolean(cart.email) && !editing && !signingIn} locked={false}>

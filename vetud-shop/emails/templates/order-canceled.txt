@@ -1,0 +1,33 @@
+Order {{{ORDER_NUMBER}}} has been canceled and won't ship.
+
+Order {{{ORDER_NUMBER}}}
+
+
+YOUR ORDER HAS BEEN CANCELED.
+
+Order {{{ORDER_NUMBER}}} has been canceled and will not ship. The reserved stock
+has been released.
+
+Payment
+
+{{{PAYMENT_NOTE}}}
+
+Order summary
+
+{{{ITEMS}}}
+
+{{{TOTALS_LABELS}}}
+
+{{{TOTALS_VALUES}}}
+
+Total
+
+{{{ORDER_TOTAL}}}
+
+Shipping to
+
+{{{SHIP_TO}}}
+
+{{{SHIPPING_METHOD}}}
+
+Questions? Contact us {{{STOREFRONT_URL}}}/contact

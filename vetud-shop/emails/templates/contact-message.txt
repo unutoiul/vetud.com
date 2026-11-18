@@ -1,0 +1,14 @@
+{{{NAME}}} sent a message through the contact form.
+
+Contact form
+
+
+{{{SUBJECT}}}
+
+From {{{NAME}}} ({{{SENDER_EMAIL}}}){{{ORDER_REF}}}
+
+Message
+
+{{{MESSAGE}}}
+
+Reply to this email to answer the customer directly.

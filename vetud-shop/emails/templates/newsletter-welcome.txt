@@ -1,0 +1,13 @@
+Thanks for signing up.
+
+VETUD offers
+
+
+YOU'RE SUBSCRIBED.
+
+We'll email you when there's a new offer or important news.
+
+Visit the shop {{{SHOP_URL}}}
+
+You're receiving this because you asked for VETUD offers and news. Unsubscribe
+{{{UNSUBSCRIBE_LINK}}}

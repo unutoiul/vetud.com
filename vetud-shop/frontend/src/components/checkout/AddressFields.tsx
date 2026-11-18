@@ -149,7 +149,7 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
       {(rules.postalBeforeCity ? ["postal_code", "city"] as const : ["city", "postal_code"] as const).filter(visible).map(name => <Grid key={name} size={{ xs: 12, sm: visible("city") && visible("postal_code") ? name === "city" ? 7 : 5 : 12 }}>{name === "city" ? cityField : postalField}</Grid>)}
       {visible("province") && rules.provinceRequired ? <Grid size={12}><TextField select {...field("province", t(country === "us" ? "state" : "region"), "address-level1", true)}>{Object.entries(provincesOf(country)).map(([code, name]) => <MenuItem key={code} value={code}>{ct(name)}</MenuItem>)}</TextField></Grid>
         : visible("province") && rules.provinceOptional ? <Grid size={12}><TextField {...field("province", t("region"), "address-level1")} /></Grid> : null}
-      {visible("phone") ? <Grid size={12}><PhoneField id={`${prefix}-phone`} name={`${prefix}-phone`} country={country || "us"} value={values.phone} onChange={phone => set({ phone })} error={errors.phone} autoComplete={autocomplete("tel")} /></Grid> : null}
+      {visible("phone") ? <Grid size={12}><PhoneField id={`${prefix}-phone`} name={`${prefix}-phone`} required country={country || "us"} value={values.phone} onChange={phone => set({ phone })} error={errors.phone} autoComplete={autocomplete("tel")} /></Grid> : null}
     </Grid>
   </Box>
 }

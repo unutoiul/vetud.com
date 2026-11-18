@@ -25,5 +25,3 @@ Explore all peptides: https://www.pep.company/shop
 Return to VETUD: {{{STOREFRONT_URL}}}
 
 You received this welcome email because a VETUD account was created with your email address. If this wasn't you, reply to this email and we'll help.
-
-VETUD products are sold for laboratory research use only. Not for human or veterinary use. This email does not provide medical advice.

@@ -12,7 +12,8 @@ const Address = z.object({
   province: text(80),
   postal_code: text(24),
   country_code: z.string().trim().length(2),
-  phone: text(40),
+  // The courier's contact number is required for every delivery (owner request 2026-11-18).
+  phone: z.string().trim().min(1, "Enter a phone number for delivery questions.").max(40),
   metadata: z.record(z.string(), z.unknown()).optional(),
 })
 

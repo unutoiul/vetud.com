@@ -1,0 +1,199 @@
+{
+  "contact-message": {
+    "id": "b3793a79-5979-4695-ba0f-accf3a411617",
+    "name": "VETUD · Contact form message (store owner)",
+    "subject": "Contact form: {{{SUBJECT}}} ({{{NAME}}})",
+    "preheader": "{{{NAME}}} sent a message through the contact form.",
+    "variables": [
+      "SUBJECT",
+      "NAME",
+      "SENDER_EMAIL",
+      "ORDER_REF",
+      "MESSAGE"
+    ]
+  },
+  "customer-welcome": {
+    "id": "dd50a68b-070b-4cab-9398-f4d383ee63c3",
+    "name": "VETUD · Welcome (new account)",
+    "subject": "Welcome to VETUD",
+    "preheader": "Your account is ready. Discover featured VETUD peptides at pep.company.",
+    "variables": [
+      "NAME_SUFFIX",
+      "STOREFRONT_URL"
+    ]
+  },
+  "newsletter-offer": {
+    "id": "8a5bac5e-47eb-4109-ac30-140ff13ca836",
+    "name": "VETUD · Newsletter offer code",
+    "subject": "Your {{{DISCOUNT}}} VETUD code",
+    "preheader": "Your code {{{CODE}}} is inside.",
+    "variables": [
+      "HEADLINE",
+      "DISCOUNT",
+      "CODE",
+      "VALIDITY",
+      "DESCRIPTION",
+      "SHOP_URL",
+      "UNSUBSCRIBE_LINK"
+    ]
+  },
+  "newsletter-welcome": {
+    "id": "1b6ff6c2-51b1-454c-8407-022265637c59",
+    "name": "VETUD · Newsletter sign-up",
+    "subject": "You're subscribed to VETUD offers and news",
+    "preheader": "Thanks for signing up.",
+    "variables": [
+      "SHOP_URL",
+      "UNSUBSCRIBE_LINK"
+    ]
+  },
+  "order-canceled": {
+    "id": "56b5e403-acee-4b0c-b7e5-3d69b56f3769",
+    "name": "VETUD · Order canceled",
+    "subject": "Order {{{ORDER_NUMBER}}} has been canceled",
+    "preheader": "Order {{{ORDER_NUMBER}}} has been canceled and won't ship.",
+    "variables": [
+      "ORDER_NUMBER",
+      "ITEMS",
+      "TOTALS_LABELS",
+      "TOTALS_VALUES",
+      "ORDER_TOTAL",
+      "SHIP_TO",
+      "SHIPPING_METHOD",
+      "PAYMENT_NOTE",
+      "STOREFRONT_URL"
+    ]
+  },
+  "order-delivered": {
+    "id": "35f8ba56-903f-4b9e-b9d8-272accf2b11c",
+    "name": "VETUD · Order delivered",
+    "subject": "Order {{{ORDER_NUMBER}}} has been delivered",
+    "preheader": "Your Vetud order {{{ORDER_NUMBER}}} has arrived.",
+    "variables": [
+      "ORDER_NUMBER",
+      "ITEMS",
+      "TOTALS_LABELS",
+      "TOTALS_VALUES",
+      "ORDER_TOTAL",
+      "SHIP_TO",
+      "SHIPPING_METHOD",
+      "STOREFRONT_URL"
+    ]
+  },
+  "order-placed-admin": {
+    "id": "4320c538-6356-4c63-8cb8-40d41cf3d1ff",
+    "name": "VETUD · New order (store owner)",
+    "subject": "New order {{{ORDER_NUMBER}}}: {{{ORDER_TOTAL}}}",
+    "preheader": "New order {{{ORDER_NUMBER}}} from {{{CUSTOMER_EMAIL}}}",
+    "variables": [
+      "ORDER_NUMBER",
+      "ITEMS",
+      "TOTALS_LABELS",
+      "TOTALS_VALUES",
+      "ORDER_TOTAL",
+      "SHIP_TO",
+      "SHIPPING_METHOD",
+      "CUSTOMER_EMAIL",
+      "ADMIN_ACTION",
+      "ADMIN_ORDER_URL"
+    ]
+  },
+  "order-placed": {
+    "id": "24982617-509f-438b-bd91-6a55b930efa2",
+    "name": "VETUD · Order received",
+    "subject": "Order {{{ORDER_NUMBER}}} received",
+    "preheader": "We've received order {{{ORDER_NUMBER}}}. View your order and payment details.",
+    "variables": [
+      "ORDER_NUMBER",
+      "ITEMS",
+      "TOTALS_LABELS",
+      "TOTALS_VALUES",
+      "ORDER_TOTAL",
+      "SHIP_TO",
+      "SHIPPING_METHOD",
+      "NAME_SUFFIX",
+      "PAYMENT_SUMMARY",
+      "PAYMENT_DETAILS",
+      "STOREFRONT_URL"
+    ]
+  },
+  "password-reset": {
+    "id": "bdf14047-6454-45f8-89d6-70ca0a3c8286",
+    "name": "VETUD · Password reset",
+    "subject": "Reset your VETUD password",
+    "preheader": "Use this link to choose a new password. It expires in 15 minutes.",
+    "variables": [
+      "RESET_URL"
+    ]
+  },
+  "payment-received": {
+    "id": "ec704fb1-ee51-40c9-8d80-2aa261df1648",
+    "name": "VETUD · Payment received",
+    "subject": "Payment received for order {{{ORDER_NUMBER}}}",
+    "preheader": "We've received your payment for order {{{ORDER_NUMBER}}}. It's being prepared for dispatch.",
+    "variables": [
+      "ORDER_NUMBER",
+      "ITEMS",
+      "TOTALS_LABELS",
+      "TOTALS_VALUES",
+      "ORDER_TOTAL",
+      "SHIP_TO",
+      "SHIPPING_METHOD",
+      "PAYMENT_LINE",
+      "AMOUNT",
+      "STOREFRONT_URL"
+    ]
+  },
+  "refund-issued": {
+    "id": "1188633b-4c2a-4a03-94e0-241c4387280a",
+    "name": "VETUD · Refund issued",
+    "subject": "Refund of {{{REFUND_AMOUNT}}} for order {{{ORDER_NUMBER}}}",
+    "preheader": "We've refunded {{{REFUND_AMOUNT}}} for order {{{ORDER_NUMBER}}}.",
+    "variables": [
+      "ORDER_NUMBER",
+      "REFUND_AMOUNT",
+      "ORDER_TOTAL",
+      "STOREFRONT_URL"
+    ]
+  },
+  "return-received": {
+    "id": "32c50679-52eb-40d2-a4ad-622631b454ff",
+    "name": "VETUD · Return received",
+    "subject": "We've received your return for order {{{ORDER_NUMBER}}}",
+    "preheader": "Your return for order {{{ORDER_NUMBER}}} has arrived at our facility.",
+    "variables": [
+      "ORDER_NUMBER",
+      "RETURN_ITEMS",
+      "REFUND_LINE",
+      "STOREFRONT_URL"
+    ]
+  },
+  "shipment-created": {
+    "id": "2767d25d-7489-42be-80e3-d29b55d67c27",
+    "name": "VETUD · Order shipped",
+    "subject": "Order {{{ORDER_NUMBER}}} has shipped",
+    "preheader": "Your Vetud order {{{ORDER_NUMBER}}} is on its way.",
+    "variables": [
+      "ORDER_NUMBER",
+      "ITEMS",
+      "TOTALS_LABELS",
+      "TOTALS_VALUES",
+      "ORDER_TOTAL",
+      "SHIP_TO",
+      "SHIPPING_METHOD",
+      "TRACKING",
+      "TRACK_URL",
+      "STOREFRONT_URL"
+    ]
+  },
+  "user-invite": {
+    "id": "2f5adb06-9fe0-420e-b95c-f04837e2dba3",
+    "name": "VETUD · Admin invitation",
+    "subject": "You're invited to the VETUD admin",
+    "preheader": "Accept your invitation to manage the VETUD store.",
+    "variables": [
+      "INVITE_URL",
+      "EXPIRY_NOTE"
+    ]
+  }
+}

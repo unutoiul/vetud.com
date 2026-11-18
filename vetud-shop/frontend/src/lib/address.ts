@@ -74,7 +74,9 @@ export function validateAddress(values: AddressValues, translate?: Translate, po
   }
   if (values.postal_code.trim() && !new RegExp(rules.postalPattern, "i").test(normalizePostal(values.postal_code, country))) errors.postal_code = t("invalidPostal", { label: postalLabel ?? "postal code", example: rules.postalExample })
   if (rules.provinceRequired && !provincesOf(country)[values.province.trim().toUpperCase()]) errors.province = values.province.trim() ? t("invalidState") : t("required")
-  if (!isValidPhone(values.phone, country)) errors.phone = t("invalidPhone")
+  // A delivery address needs a phone number for the courier (owner request 2026-11-18).
+  if (!values.phone.trim()) errors.phone = t("required")
+  else if (!isValidPhone(values.phone, country)) errors.phone = t("invalidPhone")
   return errors
 }
 

@@ -79,6 +79,8 @@ type StoreContextValue = {
   removeItem: (lineId: string) => Promise<void>
   refreshCart: () => Promise<HttpTypes.StoreCart | null>
   linkCustomerCart: () => Promise<HttpTypes.StoreCart>
+  /** A new guest cart with the same items and codes, for a checkout that a signed-out shopper can't use. */
+  restartCart: () => Promise<HttpTypes.StoreCart>
   isCurrentCart: (id: string) => boolean
   setCart: (cart: HttpTypes.StoreCart | null) => void
   clearCart: () => void
@@ -261,6 +263,24 @@ export default function StoreProvider({ countryCode, region, countries, delivery
     return linked
   }, [setCart])
 
+  // A cart that belongs to a member account can't be checked out signed out (validateCartOwner on
+  // the backend). The shopper keeps their basket in a new guest cart and the member's cart is left as it is.
+  const restartCart = useCallback(async () => {
+    const current = cartRef.current
+    if (!current) throw new Error("Your cart is no longer available. Please refresh checkout.")
+    const items = (current.items ?? []).flatMap((item) => item.variant_id ? [{ variant_id: item.variant_id, quantity: Number(item.quantity) }] : [])
+    const codes = (current.promotions ?? []).flatMap((promotion) => promotion.code && !(promotion as { is_automatic?: boolean }).is_automatic ? [promotion.code] : [])
+    const create = (promo_codes: string[]) => sdk.store.cart.create(
+      { region_id: current.region_id ?? region.id, items, ...(promo_codes.length ? { promo_codes } : {}) },
+      { fields: CART_FIELDS }
+    )
+    // A code that no longer applies doesn't stop the new cart.
+    const { cart: created } = await create(codes).catch((error) => (codes.length ? create([]) : Promise.reject(error)))
+    if (cartRef.current?.id !== current.id) throw new Error("Your session changed. Please return to checkout.")
+    setCart(created)
+    return created
+  }, [region.id, setCart])
+
   const isCurrentCart = useCallback((id: string) => cartRef.current?.id === id, [])
 
   const value = useMemo<StoreContextValue>(
@@ -282,12 +302,13 @@ export default function StoreProvider({ countryCode, region, countries, delivery
       removeItem,
       refreshCart,
       linkCustomerCart,
+      restartCart,
       isCurrentCart,
       setCart,
       clearCart,
       clearError: () => setError(null),
     }),
-    [countryCode, region, countries, deliveryCountries, cart, cartReady, pending, error, drawerOpen, addItem, updateItem, removeItem, refreshCart, linkCustomerCart, isCurrentCart, setCart, clearCart]
+    [countryCode, region, countries, deliveryCountries, cart, cartReady, pending, error, drawerOpen, addItem, updateItem, removeItem, refreshCart, linkCustomerCart, restartCart, isCurrentCart, setCart, clearCart]
   )
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
