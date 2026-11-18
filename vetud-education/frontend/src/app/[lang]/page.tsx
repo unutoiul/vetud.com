@@ -7,6 +7,7 @@ import { ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import LearnHero from "@/components/home/LearnHero"
+import GuideCategories from "@/components/home/GuideCategories"
 import PeptideStories from "@/components/home/PeptideStories"
 import EvidenceChallenge from "@/components/home/EvidenceChallenge"
 import ArticleCard from "@/components/learn/ArticleCard"
@@ -32,6 +33,7 @@ export default async function HomePage() {
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(website).replace(/</g, "\\u003c") }} />
     <LearnHero />
+    <GuideCategories />
     <PeptideStories />
     <EvidenceChallenge />
 

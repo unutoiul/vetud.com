@@ -86,6 +86,16 @@
     "research": "Usage en recherche"
   },
   "LearnHero": {
+    "previousGuide": "Guide précédent",
+    "nextGuide": "Guide suivant",
+    "previousTopics": "Catégories précédentes",
+    "nextTopics": "Catégories suivantes",
+    "categoryTitle": "Explorer par catégorie",
+    "guideCount": "{count, plural, one {# guide} other {# guides}}",
+    "carousel": "carrousel",
+    "guidePosition": "Guide {current} sur {total}",
+    "featuredGuides": "Guides à découvrir",
+    "readNamedGuide": "Lire le guide sur {name}",
     "series": "Perte de poids et graisse viscérale",
     "phaseStudy": "Essai de phase 2",
     "visceralStudy": "Falutz et coll.",
@@ -93,6 +103,26 @@
     "openGuide": "Lire le guide",
     "placeboChange": "Placebo {change}",
     "features": {
+      "liraglutide": {
+        "topic": "Saxenda",
+        "deck": "Avant les injections hebdomadaires, il y avait le liraglutide. Découvrez l’essai qui a suivi pendant plus d’un an l’effet de ce signal quotidien sur le poids.",
+        "result": "Variation moyenne du poids à {weeks} semaines chez des adultes en situation d’obésité ou de surpoids sans diabète de type 2."
+      },
+      "cagrilintide": {
+        "topic": "Amyline et appétit",
+        "deck": "L’amyline aide le cerveau à reconnaître la fin d’un repas. Les chercheurs ont testé le cagrilintide seul pour mesurer l’effet de ce signal sur le poids.",
+        "result": "Variation moyenne du poids à {weeks} semaines chez des adultes sans diabète affectés au groupe cagrilintide seul."
+      },
+      "survodutide": {
+        "topic": "Foie et métabolisme",
+        "deck": "Un signal hormonal agit sur l’appétit. Un autre aide le foie à gérer l’énergie. Le survodutide réunit les deux et invite les chercheurs à regarder au-delà du poids.",
+        "result": "Variation moyenne du poids à {weeks} semaines dans le groupe destiné à la dose la plus élevée d’un essai de phase 2 chez des adultes sans diabète."
+      },
+      "mazdutide": {
+        "topic": "Essai GLORY-1",
+        "deck": "Une hormone libérée après un repas a inspiré le mazdutide. En Chine, des chercheurs ont suivi 610 adultes pour étudier les effets conjoints de ses deux signaux.",
+        "result": "Variation moyenne du poids à {weeks} semaines dans le groupe recevant la dose la plus élevée chez des adultes chinois en surpoids ou en situation d’obésité."
+      },
       "tirzepatide": {
         "topic": "Zepbound",
         "deck": "Comment le cerveau sait-il que vous avez assez mangé ? Le tirzépatide agit sur deux signaux hormonaux intestinaux qui participent à la satiété.",

@@ -86,6 +86,16 @@
     "research": "Research use policy"
   },
   "LearnHero": {
+    "previousGuide": "Previous guide",
+    "nextGuide": "Next guide",
+    "previousTopics": "Previous categories",
+    "nextTopics": "Next categories",
+    "categoryTitle": "Explore by category",
+    "guideCount": "{count, plural, one {# guide} other {# guides}}",
+    "carousel": "carousel",
+    "guidePosition": "Guide {current} of {total}",
+    "featuredGuides": "Featured guides",
+    "readNamedGuide": "Read the guide to {name}",
     "series": "Weight loss & visceral fat",
     "phaseStudy": "Phase 2 trial",
     "visceralStudy": "Falutz et al.",
@@ -93,6 +103,26 @@
     "openGuide": "Read the guide",
     "placeboChange": "Placebo {change}",
     "features": {
+      "liraglutide": {
+        "topic": "Saxenda",
+        "deck": "Before the weekly injections, there was liraglutide. Follow the early GLP-1 study that tracked a daily appetite signal for more than a year.",
+        "result": "Average weight change at {weeks} weeks in adults with obesity or overweight without type 2 diabetes."
+      },
+      "cagrilintide": {
+        "topic": "Amylin & appetite",
+        "deck": "Amylin helps tell the brain when a meal is enough. Researchers tested cagrilintide on its own to see how much that signal could change body weight.",
+        "result": "Average weight change at {weeks} weeks in adults without diabetes assigned to cagrilintide alone."
+      },
+      "survodutide": {
+        "topic": "Liver & metabolism",
+        "deck": "One hormone signal shapes appetite. Another helps the liver manage fuel. Survodutide brings them together, giving researchers a reason to look beyond the scale.",
+        "result": "Average weight change at {weeks} weeks in the highest planned dose group of a phase 2 trial in adults without diabetes."
+      },
+      "mazdutide": {
+        "topic": "GLORY-1 trial",
+        "deck": "A hormone released after a meal inspired mazdutide’s design. In China, researchers followed 610 adults to see what its two signals could do together.",
+        "result": "Average weight change at {weeks} weeks in the higher-dose group of Chinese adults with overweight or obesity."
+      },
       "tirzepatide": {
         "topic": "Zepbound",
         "deck": "How does your brain know when you’ve had enough to eat? Tirzepatide acts on two gut-hormone signals that help shape that answer.",

@@ -51,7 +51,8 @@ export default function LearnLibrary() {
   ]
 
   return (
-    <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "300px minmax(0, 1fr)" }, gap: { xs: 3, lg: 5 }, alignItems: "start" }}>
+    <Box sx={{ position: "relative", display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "300px minmax(0, 1fr)" }, gap: { xs: 3, lg: 5 }, alignItems: "start" }}>
+      {CATEGORIES.map(({ id }) => <Box component="span" key={id} id={id} aria-hidden="true" sx={{ position: "absolute", top: 0, width: 1, height: 1, scrollMarginTop: 106 }} />)}
       <Box component="nav" aria-label={act("topics")} sx={{ minWidth: 0, position: { lg: "sticky" }, top: { lg: 112 }, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "16px", p: { xs: 2, md: 2.5 } }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", px: 1, mb: 1.5 }}>
           <Typography component="h2" sx={{ fontSize: 19, fontWeight: 700, letterSpacing: "-.02em" }}>{ct("Topic")}</Typography>
