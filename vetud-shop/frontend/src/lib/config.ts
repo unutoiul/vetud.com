@@ -65,5 +65,4 @@ export const SITE = {
   // Site-wide statements (footer, homepage): since 2026-11-09 the shop also sells cosmetics.
   siteNotice:
     "Research peptides on this site are intended for laboratory research and identification only. They are not intended for human dosing, injection, or ingestion. Cosmetic products are labelled as such and are for external use on the skin only.",
-  catalogNotice: "Research peptides are for laboratory research purposes only. Cosmetic products are for external use on the skin.",
 }

@@ -123,7 +123,8 @@ export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?:
   )
 }
 
-export function AuthPanel({ context = "account" }: { context?: "account" | "checkout" }) {
+/** `initialEmail` fills the email field, for example with what the shopper typed at checkout. */
+export function AuthPanel({ context = "account", initialEmail = "" }: { context?: "account" | "checkout"; initialEmail?: string }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Account")
@@ -132,7 +133,7 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
   const atCheckout = context === "checkout"
   const { signIn, signUp, pending, error, clearError } = useAccount()
   const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin")
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState(initialEmail)
   const [password, setPassword] = useState("")
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
@@ -173,27 +174,66 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
     }
   }
 
+  const form = mode === "reset" ? <ResetRequestForm initialEmail={email} onBack={() => switchMode("signin")} /> : <>
+    <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
+      <Button
+        variant={mode === "signin" ? "contained" : "text"}
+        aria-pressed={mode === "signin"}
+        onClick={() => switchMode("signin")}
+      >
+        {t("signin")}
+      </Button>
+      <Button
+        variant={mode === "signup" ? "contained" : "text"}
+        aria-pressed={mode === "signup"}
+        onClick={() => switchMode("signup")}
+      >
+        {t("signup")}
+      </Button>
+    </Stack>
+    {formError || error ? <Alert severity="error" sx={{ mb: 2 }}>{ct(formError || error)}</Alert> : null}
+    <Box component="form" onSubmit={submit} noValidate>
+      {mode === "signup" ? (
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("firstName")} required value={firstName} onChange={(event) => setFirstName(event.target.value)} slotProps={{ htmlInput: { autoComplete: "given-name" } }} /></Grid>
+          <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("lastName")} required value={lastName} onChange={(event) => setLastName(event.target.value)} slotProps={{ htmlInput: { autoComplete: "family-name" } }} /></Grid>
+        </Grid>
+      ) : null}
+      <Stack spacing={2}>
+        <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
+        {mode === "signup" ? <PhoneField country={countryCode} value={phone} onChange={setPhone} /> : null}
+        <PasswordField label={t("password")} value={password} onChange={setPassword} helperText={ct(mode === "signup" ? t("passwordHelp") : undefined)} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
+      </Stack>
+      <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
+        <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ width: { xs: "100%", sm: "auto" } }}>
+          {ct(mode === "signin" ? t("signin") : t("signup"))}
+        </Button>
+        {mode === "signin" ? <Button type="button" onClick={() => switchMode("reset")} sx={{ alignSelf: { xs: "center", sm: "auto" } }}>{t("forgot")}</Button> : null}
+      </Stack>
+    </Box>
+    <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
+      {t("privacy")}
+    </Typography>
+  </>
+
+  // At checkout and on the order confirmation the panel sits inside a narrow card that already
+  // explains why to sign in, so only the form is shown.
+  if (atCheckout) return <Box>{form}</Box>
+
   return (
     <Grid container spacing={{ xs: 3, md: 6 }}>
       <Grid size={{ xs: 12, md: 5 }}>
         <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
-          {ct(atCheckout ? t("required") : mode === "signin" ? t("welcome") : t("account"))}
+          {ct(mode === "signin" ? t("welcome") : t("account"))}
         </Typography>
         <Typography variant="h3" component="h2" sx={{ mt: 1.5, mb: 2 }}>
-          {ct(mode === "reset" ? t("resetTitle") : atCheckout ? t("checkoutTitle") : mode === "signin" ? t("signinTitle") : t("signupTitle"))}
+          {ct(mode === "reset" ? t("resetTitle") : mode === "signin" ? t("signinTitle") : t("signupTitle"))}
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          {ct(mode === "reset"
-            ? t("resetIntro")
-            : atCheckout
-            ? t("checkoutIntro")
-            : t("intro"))}
+          {ct(mode === "reset" ? t("resetIntro") : t("intro"))}
         </Typography>
         <Stack spacing={1.5} sx={{ mt: 4 }}>
-          {(atCheckout
-            ? [t("required"), t("privacy"), t("orders")]
-            : [t("savedAddresses"), t("profile"), t("orders")]
-          ).map((item) => (
+          {[t("savedAddresses"), t("profile"), t("orders")].map((item) => (
             <Stack key={item} direction="row" spacing={1.25} sx={{ alignItems: "center" }}>
               <Icon name="checkCircle" sx={{ color: "secondary.main", fontSize: 19 }} />
               <Typography variant="body2">{ct(item)}</Typography>
@@ -203,47 +243,7 @@ export function AuthPanel({ context = "account" }: { context?: "account" | "chec
       </Grid>
       <Grid size={{ xs: 12, md: 7 }}>
         <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3 }}>
-          {mode === "reset" ? <ResetRequestForm initialEmail={email} onBack={() => switchMode("signin")} /> : <>
-          <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
-            <Button
-              variant={mode === "signin" ? "contained" : "text"}
-              aria-pressed={mode === "signin"}
-              onClick={() => switchMode("signin")}
-            >
-              {t("signin")}
-            </Button>
-            <Button
-              variant={mode === "signup" ? "contained" : "text"}
-              aria-pressed={mode === "signup"}
-              onClick={() => switchMode("signup")}
-            >
-              {t("signup")}
-            </Button>
-          </Stack>
-          {formError || error ? <Alert severity="error" sx={{ mb: 2 }}>{ct(formError || error)}</Alert> : null}
-          <Box component="form" onSubmit={submit} noValidate>
-            {mode === "signup" ? (
-              <Grid container spacing={2} sx={{ mb: 2 }}>
-                <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("firstName")} required value={firstName} onChange={(event) => setFirstName(event.target.value)} slotProps={{ htmlInput: { autoComplete: "given-name" } }} /></Grid>
-                <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("lastName")} required value={lastName} onChange={(event) => setLastName(event.target.value)} slotProps={{ htmlInput: { autoComplete: "family-name" } }} /></Grid>
-              </Grid>
-            ) : null}
-            <Stack spacing={2}>
-              <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
-              {mode === "signup" ? <PhoneField country={countryCode} value={phone} onChange={setPhone} /> : null}
-              <PasswordField label={t("password")} value={password} onChange={setPassword} helperText={ct(mode === "signup" ? t("passwordHelp") : undefined)} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
-            </Stack>
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
-              <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ width: { xs: "100%", sm: "auto" } }}>
-                {ct(mode === "signin" ? t("signin") : t("signup"))}
-              </Button>
-              {mode === "signin" ? <Button type="button" onClick={() => switchMode("reset")} sx={{ alignSelf: { xs: "center", sm: "auto" } }}>{t("forgot")}</Button> : null}
-            </Stack>
-          </Box>
-          <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
-            {t("privacy")}
-          </Typography>
-          </>}
+          {form}
         </Paper>
       </Grid>
     </Grid>

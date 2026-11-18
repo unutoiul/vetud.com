@@ -11,7 +11,7 @@ import { brand, fonts, gutter } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import { LocalizedNextLink } from "../common/links"
 
-const TICK_MS = 30_000
+const TICK_MS = 1_000
 
 // The clock only runs in the browser: the server render (and hydration) shows the end date alone.
 const subscribe = (onTick: () => void) => {
@@ -67,12 +67,13 @@ export default function SaleBanner({ sale, endLabel }: { sale: LiveSale; endLabe
 
   // Keep the initial label identical when browser and server ICU language data differ.
   const ends = endLabel
-  // "27d 5h 59m" in the page's language (de: "27 T. 5 Std. 59 Min."); minutes only in the last days.
-  const unit = (value: number, name: "day" | "hour" | "minute") => new Intl.NumberFormat(locale, { style: "unit", unit: name, unitDisplay: "narrow" }).format(value)
+  // "27d 5h 59m 42s" in the page's language (de: "27 T. 5 Std. 59 Min. 42 Sek.").
+  const unit = (value: number, name: "day" | "hour" | "minute" | "second") => new Intl.NumberFormat(locale, { style: "unit", unit: name, unitDisplay: "narrow" }).format(value)
   const days = left !== null ? Math.floor(left / 86_400_000) : 0
   const hours = left !== null ? Math.floor(left / 3_600_000) % 24 : 0
   const minutes = left !== null ? Math.floor(left / 60_000) % 60 : 0
-  const countdown = left === null ? null : [days ? unit(days, "day") : null, unit(hours, "hour"), days < 3 ? unit(minutes, "minute") : null].filter(Boolean).join(" ")
+  const seconds = left !== null ? Math.floor(left / 1_000) % 60 : 0
+  const countdown = left === null ? null : [days ? unit(days, "day") : null, unit(hours, "hour"), unit(minutes, "minute"), unit(seconds, "second")].filter(Boolean).join(" ")
 
   return (
     <Box

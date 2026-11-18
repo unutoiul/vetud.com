@@ -90,7 +90,7 @@ export default function GuestAccountOffer({ orderId, email, cartId, onAdded }: {
           {ct("Add to my account")}
         </Button>
       ) : existingAccount ? (
-        <AuthPanel context="checkout" />
+        <AuthPanel context="checkout" initialEmail={email} />
       ) : (
         <Box component="form" onSubmit={createAccount} noValidate>
           {/* Lets password managers save the new password under the right email. */}

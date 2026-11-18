@@ -98,6 +98,9 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
   return (
     <Box>
       <Autocomplete<PlaceSuggestion, false, false, true>
+        // The input's id. MUI cancels any mouse press inside the field whose target doesn't carry
+        // this id, so an id set only on the input blocked placing the cursor and selecting text.
+        id={id}
         freeSolo
         fullWidth
         open={open && options.length > 0}
@@ -178,9 +181,7 @@ export default function PlaceAutocomplete({ id, name, label, value, required, er
             slotProps={{
               ...params.slotProps,
               input: { ...params.slotProps.input, endAdornment: <>{status === "loading" || status === "details" ? <CircularProgress size={18} color="inherit" aria-label={ct("Looking up address")} /> : null}{params.slotProps.input.endAdornment}</> },
-              // MUI gives the input its own generated id; ours is what the label, the focus-on-error
-              // logic and the tests use.
-              htmlInput: { ...params.slotProps.htmlInput, id, autoComplete: autoComplete },
+              htmlInput: { ...params.slotProps.htmlInput, autoComplete: autoComplete },
             }}
           />
         )}

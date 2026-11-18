@@ -174,7 +174,7 @@ Owner alerts have no Resend template; their HTML is written in code (`owner-aler
 | Alert | Sent when | Backend |
 |---|---|---|
 | `newsletter-signup-admin` | A new address signs up in the shop's newsletter pop-up (not repeat sign-ups) | Shop |
-| `guest-checkout-admin` | A shopper who isn't signed in enters their email at checkout; once per cart and address | Shop |
+| `guest-checkout-admin` | A shopper who isn't signed in enters a new email at checkout; once per cart and address (an email that already has an account is asked to sign in instead, so it sends nothing) | Shop |
 | `email-list-signup-admin` | Someone confirms their vetud.com email-list sign-up (unconfirmed sign-ups aren't announced) | Education |
 
 The education site's email-list confirmation (`email-list-confirm`, English and French) and sign-in code are also written in code, in `vetud-education/backend/src/modules/resend/templates.ts`.

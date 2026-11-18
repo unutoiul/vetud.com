@@ -352,13 +352,26 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     }
   }
 
-  // A guest's first step: the email the confirmation goes to. Saving it also marks the checkout as started.
-  const saveContact = (email: string) =>
-    guard(async (assertCurrent) => {
-      const { cart: updated } = await sdk.store.cart.update(cart.id, { email }, { fields: CART_FIELDS })
+  // A guest's first step: the email the confirmation goes to. Saving it also marks the checkout as
+  // started. An email that belongs to an account isn't saved: the shopper is asked to sign in.
+  const saveContact = async (email: string): Promise<ContactResult> => {
+    let accountExists = false
+    const saved = await guard(async (assertCurrent) => {
+      const result = await sdk.client.fetch<{ account_exists: boolean; cart?: HttpTypes.StoreCart }>(`/store/carts/${cart.id}/contact`, {
+        method: "POST",
+        body: { email },
+        query: { fields: CART_FIELDS },
+      })
       assertCurrent()
-      setCart(updated)
+      if (result.account_exists) {
+        accountExists = true
+        return
+      }
+      if (!result.cart) throw new Error("We couldn't save your email. Please try again.")
+      setCart(result.cart)
     })
+    return accountExists ? "account" : saved
+  }
 
   const saveAddress = (body: AddressBody) =>
     guard(async (assertCurrent) => {
@@ -722,17 +735,25 @@ function Step({
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+/** Saved, not saved (an error is shown), or "account": a member account uses the email. */
+type ContactResult = boolean | "account"
+
 /**
  * A guest's first step: the email for the order confirmation. No account is needed; the shopper
- * can sign in instead, or create an account after ordering, from the confirmation page.
+ * can sign in instead, or create an account after ordering, from the confirmation page. An email
+ * that already has an account must sign in (owner request 2026-11-18); signing in moves checkout
+ * on to the address.
  */
-function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; busy: boolean; onSubmit: (email: string) => Promise<boolean> }) {
+function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; busy: boolean; onSubmit: (email: string) => Promise<ContactResult> }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const [email, setEmail] = useState(cart.email ?? "")
   const [editing, setEditing] = useState(!cart.email)
   const [invalid, setInvalid] = useState(false)
   const [signingIn, setSigningIn] = useState(false)
+  /** The email a member account uses, once the shopper tried to continue as a guest with it. */
+  const [memberEmail, setMemberEmail] = useState<string | null>(null)
+  const emailField = useRef<HTMLInputElement>(null)
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -742,7 +763,18 @@ function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; b
       return
     }
     setInvalid(false)
-    if (value === cart.email || await onSubmit(value)) setEditing(false)
+    const result = value === cart.email ? true : await onSubmit(value)
+    if (result === "account") {
+      setMemberEmail(value)
+      setSigningIn(false)
+    } else if (result) setEditing(false)
+  }
+
+  const chooseAnotherEmail = () => {
+    setMemberEmail(null)
+    setEditing(true)
+    setEmail("")
+    window.setTimeout(() => emailField.current?.focus(), 0)
   }
 
   const signInToggle = (
@@ -750,6 +782,16 @@ function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; b
       {ct(signingIn ? "Continue as a guest instead" : "Have an account? Sign in")}
     </Button>
   )
+
+  if (memberEmail) {
+    return <Step index={1} title={ct("Contact")} done={false} locked={false}>
+      <Alert severity="info" sx={{ mb: 3 }}>
+        {ct("There's already an account for")} <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>{memberEmail}</Box>. {ct("Sign in to continue to delivery. Your basket stays as it is.")}
+      </Alert>
+      <AuthPanel key={memberEmail} context="checkout" initialEmail={memberEmail} />
+      <Button type="button" onClick={chooseAnotherEmail} sx={{ mt: 2, minHeight: 44 }}>{ct("Use a different email instead")}</Button>
+    </Step>
+  }
 
   return <Step index={1} title={ct("Contact")} done={Boolean(cart.email) && !editing && !signingIn} locked={false}>
     {editing ? (
@@ -766,6 +808,7 @@ function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; b
           onChange={(event) => setEmail(event.target.value)}
           error={invalid}
           helperText={invalid ? ct("Enter a valid email address.") : undefined}
+          inputRef={emailField}
           slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false, inputMode: "email" } }}
         />
         <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: 2, alignItems: { sm: "center" } }}>
@@ -784,7 +827,7 @@ function ContactSection({ cart, busy, onSubmit }: { cart: HttpTypes.StoreCart; b
         </Stack>
       </Stack>
     )}
-    {signingIn ? <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}><AuthPanel context="checkout" /></Box> : null}
+    {signingIn ? <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}><AuthPanel context="checkout" initialEmail={EMAIL_PATTERN.test(email.trim()) ? email.trim() : undefined} /></Box> : null}
   </Step>
 }
 

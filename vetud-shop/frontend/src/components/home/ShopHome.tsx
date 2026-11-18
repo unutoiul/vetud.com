@@ -9,7 +9,6 @@ import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import { getCollectionResearch } from "@/content/collection-research"
 import { getContentTranslator } from "@/i18n/server-content"
-import { SITE } from "@/lib/config"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { categoryFacets } from "@/lib/catalog-filters"
 import { listCatalogProducts, listCategories } from "@/lib/medusa/products"
@@ -25,7 +24,7 @@ export default async function ShopHome() {
   const [products, categories] = await Promise.all([listCatalogProducts(region.id), listCategories()])
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localizedWebsiteStructuredData(ct.locale)).replace(/</g, "\\u003c") }} />
-    <Box component="section" aria-labelledby="collection-heading" sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: brand.mintWash, px: gutter, pt: { xs: 4, md: 6 }, pb: { xs: 4, md: 5 }, borderBottom: "1px solid", borderColor: "divider" }}>
+    <Box component="section" aria-label={ct("Research collection")} sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: brand.mintWash, px: gutter, pt: { xs: 4, md: 6 }, pb: { xs: 4, md: 5 }, borderBottom: "1px solid", borderColor: "divider" }}>
       {/* Static molecular linework echoes the packaging without adding video or motion. */}
       <Box component="svg" viewBox="0 0 1600 850" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" sx={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: -1, pointerEvents: "none", color: brand.cyan }}>
         <ellipse cx="800" cy="560" rx="750" ry="240" fill={brand.mintLight} />
@@ -40,15 +39,10 @@ export default async function ShopHome() {
         </g>
       </Box>
       <Box sx={{ maxWidth: 1600, mx: "auto" }}>
-        <Box component="header" sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, alignItems: { xs: "flex-start", md: "flex-end" }, justifyContent: "space-between", gap: 3, mb: { xs: 3, md: 4 } }}>
-          <Box sx={{ maxWidth: 760 }}>
-            <Typography id="collection-heading" component="h1" sx={{ fontSize: { xs: 34, sm: 44, md: 52 }, fontWeight: 400, lineHeight: 1.12, letterSpacing: "-.05em", textWrap: "balance" }}>{ct("Research peptides & laboratory materials.")}</Typography>
-            <Typography sx={{ mt: 2, maxWidth: 620, fontSize: { xs: 14, md: 16 }, lineHeight: 1.7, color: "text.secondary" }}>{ct("Explore what each material is studied for. Browse the carousel to see a key finding, a short study summary and the evidence behind it.")}</Typography>
-          </Box>
-          <ButtonLink href="/shop" variant="contained" endIcon={<Icon name="arrowUpRight" />} sx={{ flexShrink: 0 }}>{act("shopCatalog")}</ButtonLink>
-        </Box>
         {products.length ? <CollectionCarousel products={sortProducts(products, "relevance")} researchById={Object.fromEntries(products.map(product => [product.id, getCollectionResearch(product)]))} /> : <Typography sx={{ py: 6, color: "text.secondary" }}>{ct("Our catalog is being updated. Contact us for availability.")}</Typography>}
-        <Typography sx={{ mt: 3, fontSize: 12.5, color: "text.secondary", textAlign: "center" }}>{ct(SITE.catalogNotice)}</Typography>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+          <ButtonLink href="/shop" variant="contained" endIcon={<Icon name="arrowUpRight" />}>{act("shopCatalog")}</ButtonLink>
+        </Box>
       </Box>
     </Box>
 

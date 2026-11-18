@@ -20,11 +20,14 @@ import { StoreSetCartDeliveryAddressSchema } from "./store/carts/[id]/delivery-a
 import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
 import { paypalGuardRoutes, preparePayPalSession } from "./paypal-guards"
 import { cartBillingRoutes } from "./cart-billing"
+import { checkoutEmailGuardRoutes } from "./checkout-email-guard"
+import { StoreSetCheckoutEmailSchema } from "./store/carts/[id]/contact/validators"
 
 export default defineMiddlewares({
   routes: [
     ...nmiGuardRoutes,
     ...cartOwnerGuardRoutes,
+    ...checkoutEmailGuardRoutes,
     ...paygateGuardRoutes,
     ...paypalGuardRoutes,
     ...cartBillingRoutes,
@@ -46,6 +49,17 @@ export default defineMiddlewares({
         authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
         requireCartOwner,
         validateAndTransformBody(StoreSetCartDeliveryAddressSchema),
+        validateAndTransformQuery(StoreGetCartsCart, cartQueryConfig.retrieveTransformQueryConfig),
+      ],
+    },
+    {
+      // The guest checkout's Contact step: an email that belongs to a member account asks for sign-in.
+      method: ["POST"],
+      matcher: "/store/carts/:id/contact",
+      middlewares: [
+        authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
+        requireCartOwner,
+        validateAndTransformBody(StoreSetCheckoutEmailSchema),
         validateAndTransformQuery(StoreGetCartsCart, cartQueryConfig.retrieveTransformQueryConfig),
       ],
     },

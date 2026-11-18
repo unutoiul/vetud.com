@@ -73,7 +73,7 @@ export default function CollectionCarousel({ products, researchById }: { product
   return <Box ref={root} role="region" aria-label={t("carousel")} aria-roledescription="carousel" data-hero-carousel onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocusCapture={() => setPlaying(false)} sx={{ minWidth: 0, position: "relative", mt: { xs: 2, md: 0 }, display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, .85fr) minmax(0, 1.5fr)" }, alignItems: "center", columnGap: { md: 4, lg: 6 } }}>
     <Box component="section" aria-label={ct("Research for the selected material")} aria-live={playing ? "off" : "polite"} aria-atomic="true" data-carousel-research data-product-handle={product.handle} sx={{ order: { xs: 2, md: 0 }, position: "relative", zIndex: 4, minWidth: 0, minHeight: { xs: 340, md: 380 }, mt: { xs: 3, md: 0 }, py: { xs: 2.5, md: 3 }, borderTop: { xs: "1px solid", md: "none" }, borderColor: "divider" }}>
       <Typography sx={{ color: "brand.blue", fontSize: 13, fontWeight: 600, mb: 1.25 }}>{ct(research?.focus ?? "Research overview")}</Typography>
-      <Typography component="h2" translate="no" sx={{ fontSize: { xs: 30, md: 36, lg: 42 }, lineHeight: 1.15, letterSpacing: "-.04em", fontWeight: 500, overflowWrap: "anywhere" }}>{ct(product.title)}</Typography>
+      <Typography component="h1" translate="no" sx={{ fontSize: { xs: 30, md: 36, lg: 42 }, lineHeight: 1.15, letterSpacing: "-.04em", fontWeight: 500, overflowWrap: "anywhere" }}>{ct(product.title)}</Typography>
       {research ? <>
         <Typography sx={{ mt: 2, fontSize: { xs: 22, md: 25 }, lineHeight: 1.3, letterSpacing: "-.025em", color: "brand.navy" }}>{ct(research.headline)}</Typography>
         <Typography sx={{ mt: 2, fontSize: 14, lineHeight: 1.75, color: "text.secondary", maxWidth: 520 }}>{ct(research.study)}</Typography>
@@ -81,7 +81,6 @@ export default function CollectionCarousel({ products, researchById }: { product
           <Typography sx={{ fontSize: 12, fontWeight: 600, color: "brand.navySoft", bgcolor: "brand.mint", borderRadius: "6px", px: 1.25, py: .6 }}>{ct(research.evidence)}</Typography>
           {research.source ? <Link href={research.source.url} target="_blank" rel="noopener noreferrer" aria-label={`${ct("Study source")}: ${ct(research.source.title)}`} sx={{ display: "inline-flex", alignItems: "center", gap: .5, minHeight: 44, fontSize: 13, color: "brand.blue", textUnderlineOffset: "3px", "&:focus-visible": { outline: `2px solid ${brand.blue}`, outlineOffset: 3 } }}>{ct("Study source")}<Icon name="arrowUpRight" sx={{ fontSize: 15 }} /></Link> : null}
         </Stack>
-        <Typography sx={{ mt: 1.5, maxWidth: 520, fontSize: 12, lineHeight: 1.65, color: "text.secondary" }}>{ct("Published research, not a clinical result for the product shown. Study populations and formulations differ.")}</Typography>
       </> : null}
     </Box>
     <Box sx={{ minWidth: 0, overflow: "clip" }}>
@@ -107,12 +106,18 @@ export default function CollectionCarousel({ products, researchById }: { product
         if (position > count / 2) position -= count
         const active = position === 0
         const distance = Math.abs(position)
-        const hidden = distance > 2
+        // One card each side, tucked behind the centre card. The fan sits inside its column, so the
+        // side cards stay whole instead of being cut off by the column's edge (owner report
+        // 2026-11-18). On phones the side cards still run off the screen edge, as a swipe hint.
+        const hidden = distance > 1
+        const fan = (offset: number, turn: number, scale: number) => `translate(${-50 + position * offset}%, ${-50 + distance * 3}%) rotate(${position * turn}deg) scale(${active ? 1 : scale})`
         const meta = readProductMeta(product)
         const price = cheapestPrice(product)
         const images = getProductImages(product)
-        return <Box key={product.id} role="group" aria-roledescription="slide" aria-label={t("slide", { current: productIndex + 1, total: count })} aria-hidden={!active || undefined} inert={!active} data-active={active} sx={{ position: "absolute", left: "50%", top: "50%", width: { xs: "82%", sm: "48%", md: "62%", lg: "57%" }, maxWidth: 420, display: distance === 2 ? { xs: "none", md: "block" } : "block", zIndex: active ? 3 : hidden ? 0 : 3 - distance, opacity: hidden ? 0 : 1, visibility: hidden ? "hidden" : "visible", transform: { xs: `translate(${-50 + position * 64}%, ${-50 + distance * 3}%) rotate(${position * 4}deg) scale(${active ? 1 : .9})`, md: `translate(${-50 + position * 76}%, ${-50 + distance * 3}%) rotate(${position * 4}deg) scale(${active ? 1 : distance === 1 ? .92 : .82})` }, transition: "transform .7s cubic-bezier(.22,.68,0,1), opacity .45s, visibility .45s", "@media (prefers-reduced-motion: reduce)": { transition: "none" } }}>
-          <Box component={LocalizedNextLink} href={`/products/${product.handle}`} sx={{ display: "flex", flexDirection: "column", minHeight: { xs: 350, sm: 390, md: 430, lg: 450 }, p: { xs: 1.75, md: 2.5 }, gap: { xs: 1.75, md: 2 }, boxSizing: "border-box", overflow: "hidden", border: "1px solid", borderColor: active ? brand.lineStrong : brand.line, borderRadius: "14px", bgcolor: "#fff", color: "inherit", textDecoration: "none", boxShadow: active ? "0 24px 64px -20px rgba(21,38,94,.28), 0 4px 12px rgba(21,38,94,.04)" : "0 14px 40px -18px rgba(21,38,94,.2)", "&:focus-visible": { outline: `3px solid ${brand.blue}`, outlineOffset: 4 }, "&:hover .hero-product-arrow": { bgcolor: brand.navy, color: "#fff" } }}>
+        return <Box key={product.id} role="group" aria-roledescription="slide" aria-label={t("slide", { current: productIndex + 1, total: count })} aria-hidden={!active || undefined} inert={hidden} data-active={active} sx={{ position: "absolute", left: "50%", top: "50%", width: { xs: "82%", sm: "48%", md: "62%", lg: "57%" }, maxWidth: 420, zIndex: active ? 3 : hidden ? 0 : 3 - distance, opacity: hidden ? 0 : 1, visibility: hidden ? "hidden" : "visible", transform: { xs: fan(64, 4, .9), sm: fan(46, 3, .88), md: fan(32, 3, .86), lg: fan(38, 3, .86), xl: fan(54, 3, .88) }, transition: "transform .7s cubic-bezier(.22,.68,0,1), opacity .45s, visibility .45s", "@media (prefers-reduced-motion: reduce)": { transition: "none" } }}>
+          {/* A side card is clickable: it moves to the centre (and the research text follows). It stays
+              out of the keyboard order; the previous and next buttons do the same job there. */}
+          <Box component={LocalizedNextLink} href={`/products/${product.handle}`} tabIndex={active ? undefined : -1} onClick={active ? undefined : (event: React.MouseEvent) => { event.preventDefault(); select(productIndex) }} sx={{ display: "flex", flexDirection: "column", minHeight: { xs: 350, sm: 390, md: 430, lg: 450 }, p: { xs: 1.75, md: 2.5 }, gap: { xs: 1.75, md: 2 }, boxSizing: "border-box", overflow: "hidden", border: "1px solid", borderColor: active ? brand.lineStrong : brand.line, borderRadius: "14px", bgcolor: "#fff", color: "inherit", textDecoration: "none", boxShadow: active ? "0 24px 64px -20px rgba(21,38,94,.28), 0 4px 12px rgba(21,38,94,.04)" : "0 14px 40px -18px rgba(21,38,94,.2)", "&:focus-visible": { outline: `3px solid ${brand.blue}`, outlineOffset: 4 }, "&:hover .hero-product-arrow": { bgcolor: brand.navy, color: "#fff" } }}>
             <Box sx={{ height: { xs: 165, sm: 195, md: 225, lg: 245 }, flexShrink: 0, display: "flex", flexDirection: "column", p: .5, borderRadius: "8px", bgcolor: "#fff" }}>
               <ProductBadges metadata={product.metadata} />
               <Box sx={{ position: "relative", flex: 1, minHeight: 0 }}>
