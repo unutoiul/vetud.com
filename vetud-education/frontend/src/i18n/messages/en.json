@@ -86,6 +86,34 @@
     "research": "Research use policy"
   },
   "LearnHero": {
+    "series": "Weight loss & visceral fat",
+    "phaseStudy": "Phase 2 trial",
+    "visceralStudy": "Falutz et al.",
+    "allGuides": "All peptide guides",
+    "openGuide": "Read the guide",
+    "placeboChange": "Placebo {change}",
+    "features": {
+      "tirzepatide": {
+        "topic": "Zepbound",
+        "deck": "How does your brain know when you’ve had enough to eat? Tirzepatide acts on two gut-hormone signals that help shape that answer.",
+        "result": "Average weight change at {weeks} weeks in the highest-dose group of adults with obesity or overweight without diabetes."
+      },
+      "semaglutide": {
+        "topic": "Wegovy",
+        "deck": "A gut hormone sends your brain a simple message after a meal. Semaglutide mimics that signal. See how it changed appetite research.",
+        "result": "Average weight change at {weeks} weeks in adults with obesity or overweight without diabetes."
+      },
+      "retatrutide": {
+        "topic": "Investigational",
+        "deck": "Can one molecule influence both appetite and energy use? Retatrutide brings three hormone receptors into the same experiment.",
+        "result": "Average weight change at {weeks} weeks in the highest-dose group of a phase 2 obesity trial."
+      },
+      "tesamorelin": {
+        "topic": "Visceral fat",
+        "deck": "A scale can’t tell you where fat sits. Researchers used CT scans to see how tesamorelin affected the fat packed around abdominal organs.",
+        "result": "Average change in visceral fat area at {weeks} weeks in adults with HIV and excess abdominal fat."
+      }
+    },
     "title": "Learn how peptides work.",
     "intro": "Explore illustrated peptide guides. Start with the hormones that shape appetite and see what researchers found in weight-loss trials.",
     "browse": "Browse all peptide guides",

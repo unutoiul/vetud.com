@@ -86,6 +86,34 @@
     "research": "Usage en recherche"
   },
   "LearnHero": {
+    "series": "Perte de poids et graisse viscérale",
+    "phaseStudy": "Essai de phase 2",
+    "visceralStudy": "Falutz et coll.",
+    "allGuides": "Tous les guides",
+    "openGuide": "Lire le guide",
+    "placeboChange": "Placebo {change}",
+    "features": {
+      "tirzepatide": {
+        "topic": "Zepbound",
+        "deck": "Comment le cerveau sait-il que vous avez assez mangé ? Le tirzépatide agit sur deux signaux hormonaux intestinaux qui participent à la satiété.",
+        "result": "Variation moyenne du poids à {weeks} semaines dans le groupe recevant la dose la plus élevée, chez des adultes en situation d’obésité ou de surpoids sans diabète."
+      },
+      "semaglutide": {
+        "topic": "Wegovy",
+        "deck": "Après un repas, une hormone intestinale envoie un message au cerveau. Le sémaglutide imite ce signal. Découvrez comment il a changé l’étude de l’appétit.",
+        "result": "Variation moyenne du poids à {weeks} semaines chez des adultes en situation d’obésité ou de surpoids sans diabète."
+      },
+      "retatrutide": {
+        "topic": "En cours d’étude",
+        "deck": "Une seule molécule peut-elle agir sur l’appétit et la dépense énergétique ? Le rétatrutide cible trois récepteurs hormonaux dans une même expérience.",
+        "result": "Variation moyenne du poids à {weeks} semaines dans le groupe ayant reçu la dose la plus élevée lors d’un essai de phase 2 sur l’obésité."
+      },
+      "tesamorelin": {
+        "topic": "Graisse viscérale",
+        "deck": "Une balance ne révèle pas où se loge la graisse. Grâce au scanner, des chercheurs ont étudié l’effet de la tésamoréline sur la graisse autour des organes de l’abdomen.",
+        "result": "Variation moyenne de la surface de graisse viscérale à {weeks} semaines chez des adultes vivant avec le VIH et présentant un excès de graisse abdominale."
+      }
+    },
     "title": "Comprendre les peptides",
     "intro": "Explorez nos guides illustrés sur les peptides. Découvrez les hormones qui régulent l’appétit et les résultats des essais sur la perte de poids.",
     "browse": "Voir tous les guides",
