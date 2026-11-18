@@ -1,0 +1,7 @@
+Confirmez votre adresse e-mail
+
+Cliquez sur le bouton ci-dessous pour recevoir les nouveaux guides VETUD et les questions de la communauté ayant reçu une réponse.
+
+Confirmer mon inscription: {{{CONFIRM_URL}}}
+
+Si vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail et vous ne recevrez plus rien de notre part.

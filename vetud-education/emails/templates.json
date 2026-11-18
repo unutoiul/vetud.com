@@ -1,0 +1,95 @@
+{
+  "email-list-signup-admin": {
+    "id": "5c3d9995-6af7-4062-a759-9aa95925e834",
+    "name": "VETUD Edu · Email-list subscriber (owner)",
+    "alias": "vetud-edu-email-list-alert",
+    "subject": "New email-list subscriber: {{{SUBSCRIBER_EMAIL}}}",
+    "preheader": "{{{SUBSCRIBER_EMAIL}}} confirmed their sign-up on vetud.com.",
+    "variables": [
+      "SUBSCRIBER_EMAIL",
+      "LANGUAGE",
+      "MEMBER",
+      "SIGNED_UP",
+      "CONFIRMED",
+      "COUNT"
+    ]
+  },
+  "contact-message": {
+    "id": "3ee86151-46d4-4dae-af51-d1fcad8c1539",
+    "name": "VETUD Edu · Contact form message (owner)",
+    "alias": "vetud-edu-contact-message",
+    "subject": "Contact form: {{{SUBJECT}}} ({{{NAME}}})",
+    "preheader": "{{{NAME}}} sent a message through the contact form.",
+    "variables": [
+      "SUBJECT",
+      "NAME",
+      "SENDER_EMAIL",
+      "MESSAGE"
+    ]
+  },
+  "password-reset": {
+    "id": "608766ea-43f2-4686-8ef4-4392d9aecdb9",
+    "name": "VETUD Edu · Password reset",
+    "alias": "vetud-edu-password-reset",
+    "subject": "Reset your VETUD password",
+    "preheader": "Use this link to choose a new password. It expires in 15 minutes.",
+    "variables": [
+      "RESET_URL"
+    ]
+  },
+  "customer-welcome": {
+    "id": "e5355481-26fd-4555-8274-d4bec4fa0bf9",
+    "name": "VETUD Edu · Welcome (new account)",
+    "alias": "vetud-edu-welcome",
+    "subject": "Welcome to VETUD",
+    "preheader": "Your account is ready. Start with the peptide guides and the community.",
+    "variables": [
+      "NAME_SUFFIX",
+      "SITE_URL"
+    ]
+  },
+  "user-invite": {
+    "id": "614b245d-ffb9-4cad-9fb4-6b1a25ed726b",
+    "name": "VETUD Edu · Admin invitation",
+    "alias": "vetud-edu-admin-invitation",
+    "subject": "You're invited to the VETUD admin",
+    "preheader": "Accept your invitation to the vetud.com admin.",
+    "variables": [
+      "INVITE_URL",
+      "EXPIRY_NOTE"
+    ]
+  },
+  "sign-in-code": {
+    "id": "5c0f2bfd-5ade-406c-9b0f-029cfd491115",
+    "name": "VETUD Edu · Sign-in code",
+    "alias": "vetud-edu-sign-in-code",
+    "subject": "Your VETUD sign-in code",
+    "preheader": "Use {{{CODE}}} to finish signing in. It expires in {{{MINUTES}}} minutes.",
+    "variables": [
+      "CODE",
+      "MINUTES",
+      "GREETING"
+    ]
+  },
+  "email-list-confirm": {
+    "id": "0c0cae3b-6391-48b0-a099-964cd04eb3f8",
+    "name": "VETUD Edu · Email-list confirmation (English)",
+    "alias": "vetud-edu-email-list-confirm",
+    "subject": "Please confirm your VETUD email sign-up",
+    "preheader": "Press the button below to start receiving new VETUD guides and answered community questions.",
+    "variables": [
+      "CONFIRM_URL"
+    ]
+  },
+  "email-list-confirm-fr": {
+    "id": "5337b094-9a4e-4256-85fa-545775f0fcee",
+    "name": "VETUD Edu · Email-list confirmation (French)",
+    "alias": "vetud-edu-email-list-confirm-fr",
+    "lang": "fr",
+    "subject": "Veuillez confirmer votre inscription aux e-mails VETUD",
+    "preheader": "Cliquez sur le bouton ci-dessous pour recevoir les nouveaux guides VETUD et les questions de la communauté ayant reçu une réponse.",
+    "variables": [
+      "CONFIRM_URL"
+    ]
+  }
+}

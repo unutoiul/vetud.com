@@ -40,21 +40,29 @@ describe("account welcome email", () => {
     expect(customerWelcomeNotifications({ ...customer, email: null })).toEqual([])
   })
 
-  it("escapes names before inserting them into the published template and handles unnamed accounts", () => {
+  it("escapes names before inserting them into the template and handles unnamed accounts", () => {
     const email = buildEmail(EmailTemplates.CUSTOMER_WELCOME, { first_name: '<img src=x onerror="alert(1)"> & Sam', storefront_url: "https://education.example" })
     expect(email?.variables).toMatchObject({ NAME_SUFFIX: ", &#60;img src=x onerror=&#34;alert(1)&#34;&#62; &#38; Sam" })
     expect(buildEmail(EmailTemplates.CUSTOMER_WELCOME, { first_name: null, storefront_url: "https://education.example" })?.variables).toMatchObject({ NAME_SUFFIX: "" })
   })
 
-  it("sends the exact published welcome template with the required variable names", async () => {
+  it("passes the education site's address, which the template's links start from", () => {
+    expect(buildEmail(EmailTemplates.CUSTOMER_WELCOME, { first_name: "Sam", storefront_url: "https://education.example/" })?.variables).toMatchObject({ SITE_URL: "https://education.example" })
+  })
+
+  it("sends the education welcome template with its variables", async () => {
     send.mockResolvedValue({ data: { id: "email_welcome" }, error: null })
     const provider = new ResendNotificationProviderService({ logger }, { api_key: "test", from: "VETUD <contact@example.com>" })
     const [notification] = customerWelcomeNotifications(customer)
     await expect(provider.send(notification as ProviderSendNotificationDTO)).resolves.toEqual({ id: "email_welcome" })
     expect(send).toHaveBeenCalledWith(expect.objectContaining({
       to: [customer.email],
-      template: { id: RESEND_TEMPLATE_IDS[EmailTemplates.CUSTOMER_WELCOME], variables: { NAME_SUFFIX: ", Sam", STOREFRONT_URL: "https://education.example" } },
+      template: { id: RESEND_TEMPLATE_IDS[EmailTemplates.CUSTOMER_WELCOME], variables: { NAME_SUFFIX: ", Sam", SITE_URL: "https://education.example" } },
     }), { idempotencyKey: "customer-welcome:cus_reader" })
+  })
+
+  it("has a template for every education email", () => {
+    for (const template of Object.values(EmailTemplates)) expect(RESEND_TEMPLATE_IDS[template]).toMatch(/^[0-9a-f-]{36}$/)
   })
 
   it("propagates a rejected send so Medusa can record the failure and retry", async () => {
@@ -68,6 +76,6 @@ describe("account welcome email", () => {
     send.mockResolvedValue({ data: { id: "email_reset" }, error: null })
     const provider = new ResendNotificationProviderService({ logger }, { api_key: "test", from: "contact@example.com" })
     await provider.send({ to: customer.email, channel: "email", template: EmailTemplates.PASSWORD_RESET, data: { reset_url: "https://education.example/en/account/reset-password?token=test" } })
-    expect(send).toHaveBeenCalledWith(expect.objectContaining({ template: expect.objectContaining({ id: RESEND_TEMPLATE_IDS[EmailTemplates.PASSWORD_RESET] }) }), undefined)
+    expect(send).toHaveBeenCalledWith(expect.objectContaining({ template: { id: RESEND_TEMPLATE_IDS[EmailTemplates.PASSWORD_RESET], variables: { RESET_URL: "https://education.example/en/account/reset-password?token=test" } } }), undefined)
   })
 })

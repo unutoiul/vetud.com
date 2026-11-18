@@ -86,14 +86,8 @@
     "research": "Research use policy"
   },
   "LearnHero": {
-    "previousGuide": "Previous guide",
-    "nextGuide": "Next guide",
-    "previousTopics": "Previous categories",
-    "nextTopics": "Next categories",
     "categoryTitle": "Explore by category",
     "guideCount": "{count, plural, one {# guide} other {# guides}}",
-    "carousel": "carousel",
-    "guidePosition": "Guide {current} of {total}",
     "featuredGuides": "Featured guides",
     "readNamedGuide": "Read the guide to {name}",
     "series": "Weight loss & visceral fat",

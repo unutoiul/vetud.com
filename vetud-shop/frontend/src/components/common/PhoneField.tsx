@@ -11,6 +11,7 @@ import metadata from "libphonenumber-js/min/metadata"
 import { useLocale, useTranslations } from "next-intl"
 import { useMemo, useState } from "react"
 import { normalizePhone } from "@/lib/address"
+import CountryFlag from "./CountryFlag"
 
 const COUNTRIES = getCountries()
 /** "1" → US, Canada and the rest of the North American plan; the first is the main country. */
@@ -98,7 +99,7 @@ export default function PhoneField({ country, value, onChange, error, label, req
         disableUnderline
         value={selected}
         onChange={(event) => pick(event.target.value as CountryCode)}
-        renderValue={() => prefix}
+        renderValue={() => <Box component="span" sx={{ display: "inline-flex", alignItems: "center", gap: 0.75 }}>{selected ? <CountryFlag code={selected} width={18} /> : null}{prefix}</Box>}
         SelectDisplayProps={{ "aria-label": ct("Country calling code") }}
         MenuProps={{ slotProps: { paper: { sx: { maxHeight: 360, minWidth: 280 } } } }}
         sx={{
@@ -108,7 +109,8 @@ export default function PhoneField({ country, value, onChange, error, label, req
         }}
       >
         {options.map((option) => (
-          <MenuItem key={option.code} value={option.code}>
+          <MenuItem key={option.code} value={option.code} sx={{ gap: 1.25 }}>
+            <CountryFlag code={option.code} />
             <Box component="span" sx={{ flex: 1, pr: 2 }}>{option.name}</Box>
             <Box component="span" sx={{ color: "text.secondary", fontVariantNumeric: "tabular-nums" }}>+{option.dial}</Box>
           </MenuItem>

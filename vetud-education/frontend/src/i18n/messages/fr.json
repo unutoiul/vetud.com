@@ -86,14 +86,8 @@
     "research": "Usage en recherche"
   },
   "LearnHero": {
-    "previousGuide": "Guide précédent",
-    "nextGuide": "Guide suivant",
-    "previousTopics": "Catégories précédentes",
-    "nextTopics": "Catégories suivantes",
     "categoryTitle": "Explorer par catégorie",
     "guideCount": "{count, plural, one {# guide} other {# guides}}",
-    "carousel": "carrousel",
-    "guidePosition": "Guide {current} sur {total}",
     "featuredGuides": "Guides à découvrir",
     "readNamedGuide": "Lire le guide sur {name}",
     "series": "Perte de poids et graisse viscérale",

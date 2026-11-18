@@ -1,19 +1,22 @@
 # Shop email templates
 
-The shop's customer and owner emails are published templates in Resend (Dashboard → Templates). This folder is their source. Every email shares one layout in `build.mjs`:
+Every shop email is a published template in Resend (Dashboard → Templates), customer emails and owner alerts alike. This folder is their source. They share one layout in `build.mjs`:
 
 - the VETUD Peptide Series logo (`frontend/public/brand/email/vetud-peptide-series-logo.png`, served at `https://www.pep.company/brand/email/…`), linking to pep.company
 - a white 600px card on pale blue `#f3f7fc`, with a navy `#15265e` rule under the logo
 - Manrope with web-safe fallbacks, sentence-case navy buttons with 4px corners
 - the research-use notice and a pep.company link at the bottom
 
-`templates/<name>.html` holds each email's body rows and `templates/<name>.txt` its plain-text version. `templates.json` has each template's Resend ID, subject, preview text and variables. The backend only fills in the variables (`backend/src/modules/resend/templates.ts`, IDs in `template-ids.ts`). The two owner alerts (new guest checkout, newsletter sign-up) aren't Resend templates: `backend/src/modules/resend/owner-alerts.ts` builds them with the same layout.
+`templates/<name>.html` holds each email's body rows and `templates/<name>.txt` its plain-text version. `templates.json` has each template's Resend ID, name, subject, preview text and variables. The backend only fills in the variables (`backend/src/modules/resend/templates.ts`) and sends the template by its ID (`template-ids.ts`).
 
 ```bash
 node build.mjs     # checks every template and writes dist/
-node publish.mjs   # uploads, publishes and reads back each template (or name some: node publish.mjs password-reset)
+node publish.mjs   # creates or updates, publishes and reads back each template, then rewrites template-ids.ts
+node publish.mjs password-reset   # only the templates named
 ```
 
-`build.mjs` refuses a variable the Resend template doesn't declare, any link to vetud.com, images from outside pep.company, and HTML over Gmail's 102 KB clipping limit. `publish.mjs` needs `RESEND_API_KEY` in `backend/.env`. It refuses to run until the logo is live on the storefront, so deploy the storefront first. A template change goes live as soon as it's published; no backend deployment is needed.
+To add an email: write `templates/<name>.html` and `.txt`, add an entry to `templates.json` with `"id": null`, a `name` of 50 characters at most and its `variables`, and run `publish.mjs`. It creates the template and records its ID. Resend reserves some variable names, such as `EMAIL`.
 
-The education backend (vetud.com) still sends four of these templates: `contact-message`, `password-reset`, `customer-welcome` and `user-invite`. Until it has its own, those emails carry the shop's branding.
+`build.mjs` refuses a variable the template doesn't declare, any link to vetud.com, images from outside pep.company, and HTML over Gmail's 102 KB clipping limit. `publish.mjs` needs `RESEND_API_KEY` (in the environment or `backend/.env`) and refuses to run until the logo is live on the storefront. An edited template goes live as soon as it's published. A new template, or a new variable, also needs a backend deploy.
+
+The education site has its own templates, built from `vetud-education/emails/`.

@@ -1,6 +1,7 @@
 import { guestCheckoutAlertKey, isGuestCheckout, isNewNewsletterSignup } from "../owner-alerts"
 import { guestCheckoutAlert, newsletterSignupAlert } from "../../modules/resend/owner-alerts"
-import { buildEmail, buildInlineEmail, EmailTemplates } from "../../modules/resend/templates"
+import { buildEmail, EmailTemplates } from "../../modules/resend/templates"
+import { RESEND_TEMPLATE_IDS } from "../../modules/resend/template-ids"
 
 describe("isGuestCheckout", () => {
   const cart = { id: "cart_1", email: "ana@example.com", completed_at: null, items: [{}] }
@@ -43,7 +44,7 @@ describe("isNewNewsletterSignup", () => {
 
 describe("owner alert emails", () => {
   it("escapes what the shopper typed and lists the cart", () => {
-    const email = guestCheckoutAlert({
+    const email = buildEmail(EmailTemplates.GUEST_CHECKOUT_ADMIN, {
       email: "<b>ana</b>@example.com",
       currency_code: "usd",
       items: [{ title: "Retatrutide · 10 mg", quantity: 2, unit_price: 89.5 }],
@@ -51,17 +52,20 @@ describe("owner alert emails", () => {
       account_exists: false,
       started_at: "2026-11-18T10:00:00.000Z",
       unfinished_url: "https://admin.example/app/unfinished-checkouts",
-    })
+    })!
     expect(email.subject).toBe("Guest checkout started: <b>ana</b>@example.com ($179.00)")
-    expect(email.html).not.toContain("<b>ana</b>")
-    expect(email.html).toContain("&#60;b&#62;ana&#60;/b&#62;@example.com")
-    expect(email.html).toContain("Retatrutide · 10 mg × 2 · $179.00")
-    expect(email.text).toContain("Cart value:")
-    expect(email.text).toContain("https://admin.example/app/unfinished-checkouts")
+    expect(email.template).toBe(EmailTemplates.GUEST_CHECKOUT_ADMIN)
+    expect(email.variables).toMatchObject({
+      CUSTOMER_EMAIL: "&#60;b&#62;ana&#60;/b&#62;@example.com",
+      CART: "Retatrutide · 10 mg × 2 · $179.00",
+      CART_VALUE: "$179.00",
+      STARTED: "18 November 2026 at 10:00 UTC",
+      UNFINISHED_URL: "https://admin.example/app/unfinished-checkouts",
+    })
   })
 
   it("names the country and the offer code sent", () => {
-    const email = newsletterSignupAlert({
+    const alert = newsletterSignupAlert({
       email: "ana@example.com",
       country_code: "de",
       has_account: false,
@@ -69,17 +73,17 @@ describe("owner alert emails", () => {
       subscribed_at: "2026-11-18T10:00:00.000Z",
       customer_url: "https://admin.example/app/customers/cus_1",
     })
-    expect(email.subject).toBe("New newsletter sign-up: ana@example.com")
-    expect(email.html).toContain("Germany (DE)")
-    expect(email.html).toContain("WINTER10")
-    expect(email.html).toContain("https://admin.example/app/customers/cus_1")
+    expect(alert.subject).toBe("New newsletter sign-up: ana@example.com")
+    expect(alert.variables).toMatchObject({ COUNTRY: "Germany (DE)", OFFER_CODE: "WINTER10", CUSTOMER_URL: "https://admin.example/app/customers/cus_1" })
   })
 
-  it("are inline emails, not Resend templates", () => {
-    expect(buildEmail(EmailTemplates.GUEST_CHECKOUT_ADMIN, {})).toBeNull()
-    expect(buildInlineEmail(EmailTemplates.ORDER_PLACED, {})).toBeNull()
-    expect(buildInlineEmail(EmailTemplates.NEWSLETTER_SIGNUP_ADMIN, {
+  it("says when no offer was running", () => {
+    expect(buildEmail(EmailTemplates.NEWSLETTER_SIGNUP_ADMIN, {
       email: "ana@example.com", has_account: true, subscribed_at: "2026-11-18T10:00:00.000Z", customer_url: "https://admin.example/app/customers/cus_1",
-    })?.html).toContain("None (no pop-up offer is running)")
+    })?.variables.OFFER_CODE).toBe("None (no pop-up offer is running)")
+  })
+
+  it("has a published Resend template for every shop email", () => {
+    for (const template of Object.values(EmailTemplates)) expect(RESEND_TEMPLATE_IDS[template]).toMatch(/^[0-9a-f-]{36}$/)
   })
 })

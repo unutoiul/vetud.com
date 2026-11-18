@@ -6,6 +6,7 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete"
 import type { FilterOptionsState } from "@mui/material/useAutocomplete"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
+import InputAdornment from "@mui/material/InputAdornment"
 import MenuItem from "@mui/material/MenuItem"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
@@ -14,6 +15,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { getCountryRules } from "@/i18n/config"
 import { changeAddressCountry, normalizePostal, provincesOf, type AddressValues } from "@/lib/address"
 import { isAreaPlace, mergePlaceAddress, PLACES_ENABLED, placeDetails, suggestAddresses, type PlaceLocation } from "@/lib/places"
+import CountryFlag from "../common/CountryFlag"
 import PhoneField from "../common/PhoneField"
 import PlaceAutocomplete, { type PickResult } from "./PlaceAutocomplete"
 
@@ -129,6 +131,11 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
           openOnFocus
           disabled={disabled}
           noOptionsText={ct("No country matches")}
+          renderOption={({ key, ...props }, option) => (
+            <Box component="li" key={key} {...props} sx={{ gap: 1.25 }}>
+              <CountryFlag code={option.code} />{option.label}
+            </Box>
+          )}
           renderInput={params => (
             <TextField
               {...params}
@@ -137,7 +144,11 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
               required
               error={Boolean(errors.country_code)}
               helperText={errors.country_code}
-              slotProps={{ ...params.slotProps, htmlInput: { ...params.slotProps.htmlInput, autoComplete: autocomplete("country-name") } }}
+              slotProps={{
+                ...params.slotProps,
+                input: { ...params.slotProps.input, startAdornment: country ? <InputAdornment position="start" sx={{ ml: 0.5, mr: 0 }}><CountryFlag code={country} /></InputAdornment> : undefined },
+                htmlInput: { ...params.slotProps.htmlInput, autoComplete: autocomplete("country-name") },
+              }}
             />
           )}
         />

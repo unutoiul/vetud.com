@@ -1,0 +1,7 @@
+Confirm your email
+
+Press the button below to start receiving new VETUD guides and answered community questions.
+
+Confirm my sign-up: {{{CONFIRM_URL}}}
+
+If you didn't ask for this, you can ignore this email and you won't hear from us again.

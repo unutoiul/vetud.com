@@ -62,11 +62,12 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
       )
     }
 
-    const templateId = "html" in email ? undefined : RESEND_TEMPLATE_IDS[email.template]
-    if (!("html" in email) && !templateId) {
+    // Every education email is a published Resend template (vetud-education/emails).
+    const templateId = RESEND_TEMPLATE_IDS[email.template]
+    if (!templateId) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
-        `No Resend template ID for "${email.template}" in template-ids.ts.`
+        `No Resend template ID for "${email.template}". Publish it with vetud-education/emails/publish.mjs.`
       )
     }
 
@@ -74,9 +75,8 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
     const { data, error } = await this.client.emails.send({
       from: notification.from || this.options.from,
       to: [notification.to],
-      ...("html" in email
-        ? { html: email.html, text: email.text, subject: email.subject }
-        : { template: { id: templateId!, variables: email.variables }, subject: email.subject }),
+      template: { id: templateId, variables: email.variables },
+      ...(email.subject ? { subject: email.subject } : {}),
       replyTo: email.replyTo ?? this.options.reply_to,
       attachments: notification.attachments?.map((attachment) => ({
         content: attachment.content,

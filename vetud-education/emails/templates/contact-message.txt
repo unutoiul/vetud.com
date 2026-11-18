@@ -1,0 +1,9 @@
+{{{SUBJECT}}}
+
+From {{{NAME}}} ({{{SENDER_EMAIL}}})
+
+{{{MESSAGE}}}
+
+Reply to this email to answer them directly.
+
+Sent to the site owner from the vetud.com contact form.

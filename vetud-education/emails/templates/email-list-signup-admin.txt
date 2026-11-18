@@ -1,0 +1,14 @@
+New email-list subscriber
+
+Someone signed up on vetud.com and confirmed from the email we sent them. They'll receive new guides and answered community questions.
+
+Email:                 {{{SUBSCRIBER_EMAIL}}}
+Language:              {{{LANGUAGE}}}
+Community account:     {{{MEMBER}}}
+Signed up:             {{{SIGNED_UP}}}
+Confirmed:             {{{CONFIRMED}}}
+Confirmed subscribers: {{{COUNT}}}
+
+Only confirmed sign-ups are announced here, so addresses typed by mistake or by bots never reach you. The list is kept in the email_subscriber table of the education database.
+
+Sent to the site owner's address (STORE_OWNER_EMAIL). Readers don't receive this email.

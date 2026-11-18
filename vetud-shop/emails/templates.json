@@ -195,5 +195,36 @@
       "INVITE_URL",
       "EXPIRY_NOTE"
     ]
+  },
+  "guest-checkout-admin": {
+    "id": "8fde5935-7a21-457f-a444-2d7bcf2d0d18",
+    "name": "VETUD · Guest checkout started (store owner)",
+    "alias": "vetud-guest-checkout-alert",
+    "subject": "Guest checkout started: {{{CUSTOMER_EMAIL}}} ({{{CART_VALUE}}})",
+    "preheader": "{{{CUSTOMER_EMAIL}}} started checkout without an account, with {{{CART_VALUE}}} in the cart.",
+    "variables": [
+      "CUSTOMER_EMAIL",
+      "CART_VALUE",
+      "CART",
+      "REGION",
+      "ACCOUNT",
+      "STARTED",
+      "UNFINISHED_URL"
+    ]
+  },
+  "newsletter-signup-admin": {
+    "id": "cff24042-a7db-4d81-8c58-02e4558486eb",
+    "name": "VETUD · Newsletter sign-up (store owner)",
+    "alias": "vetud-newsletter-signup-alert",
+    "subject": "New newsletter sign-up: {{{CUSTOMER_EMAIL}}}",
+    "preheader": "{{{CUSTOMER_EMAIL}}} signed up for VETUD offers and news.",
+    "variables": [
+      "CUSTOMER_EMAIL",
+      "COUNTRY",
+      "ACCOUNT",
+      "OFFER_CODE",
+      "SIGNED_UP",
+      "CUSTOMER_URL"
+    ]
   }
 }
