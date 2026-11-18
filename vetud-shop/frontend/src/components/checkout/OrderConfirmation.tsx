@@ -17,14 +17,13 @@ import { useEffect, useState } from "react"
 import { PAYMENT_BANK_DETAILS } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { useMoney } from "@/lib/money"
-import { formatAddressLines } from "@/lib/address"
 import { confirmationPayment } from "@/lib/nmi"
 import { orderNumber, type CustomerOrder } from "@/lib/orders"
 import { parseOrderReceipt, receiptCartId } from "@/lib/order-receipt"
-import OrderTotals from "../cart/OrderTotals"
 import { ButtonLink } from "../common/links"
 import { useAccount } from "../account/AccountProvider"
 import GuestAccountOffer from "./GuestAccountOffer"
+import OrderReceiptSummary from "./OrderReceiptSummary"
 
 /** The copy saved at checkout in this tab: the signed-in member's, or a guest's when customerId is omitted. */
 function readStoredOrder(id: string, customerId?: string): CustomerOrder | null {
@@ -94,7 +93,6 @@ export default function OrderConfirmation() {
 
   const number = orderNumber(order)
   const { paid, manual, message } = confirmationPayment(order, authoritative)
-  const address = order.shipping_address
   const bankLines = PAYMENT_BANK_DETAILS ? PAYMENT_BANK_DETAILS.split("|").map((line) => line.trim()) : []
 
   return (
@@ -194,44 +192,7 @@ export default function OrderConfirmation() {
       </Grid>
 
       <Grid size={{ xs: 12, md: 5 }}>
-        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#f7f9fa", borderRadius: 3 }}>
-          <Typography variant="h5" component="h3" sx={{ mb: 1 }}>{ct.rich("Order {v0}", { v0: ct(number) }, {  })}</Typography>
-          <Box sx={{ mb: 2 }}>
-            {(order.items ?? []).map((item) => (
-              <Stack
-                key={item.id}
-                direction="row"
-                sx={{ justifyContent: "space-between", py: 1.25, borderBottom: "1px solid", borderColor: "divider" }}
-              >
-                <Box>
-                  <Typography sx={{ fontWeight: 600 }}>{ct(item.product_title ?? item.title)}</Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {ct(item.variant_title)} {ct("· Qty")} {ct(item.quantity)}
-                  </Typography>
-                </Box>
-                <Typography sx={{ fontWeight: 600 }}>
-                  {ct(money(Number(item.unit_price) * Number(item.quantity), order.currency_code))}
-                </Typography>
-              </Stack>
-            ))}
-          </Box>
-          <OrderTotals totals={order} shippingKnown />
-          {address ? (
-            <Box sx={{ mt: 3 }}>
-              <Typography variant="eyebrow" sx={{ color: "text.secondary" }}>
-                {ct("Shipping to")}
-              </Typography>
-              <Typography sx={{ mt: 0.5, whiteSpace: "pre-line" }}>
-                {ct(formatAddressLines(address).join("\n"))}
-              </Typography>
-              {order.shipping_methods?.[0]?.name ? (
-                <Typography variant="body2" sx={{ color: "text.secondary", mt: 1 }}>
-                  {ct(order.shipping_methods[0].name)}
-                </Typography>
-              ) : null}
-            </Box>
-          ) : null}
-        </Paper>
+        <OrderReceiptSummary order={order} />
       </Grid>
     </Grid>
   )

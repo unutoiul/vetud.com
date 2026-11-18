@@ -1,7 +1,7 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 import { activeShipments, deliveryLabel, normalizeTrackingNumber, orderNumber, orderPaymentLabel, orderPaymentNotice, paymentLabel, shipmentLabel, trackingLink } from "../src/lib/orders.ts"
-import { parseOrderReceipt, serializeOrderReceipt } from "../src/lib/order-receipt.ts"
+import { parseOrderReceipt, receiptCartId, serializeOrderReceipt } from "../src/lib/order-receipt.ts"
 
 test("order numbering preserves custom references and zero display IDs", () => {
   assert.equal(orderNumber({ id: "order_1", display_id: 0 }), "#0")
@@ -53,19 +53,25 @@ test("pending, returned and unverified payments override the old captured label 
 test("offline receipts omit gateway data and cannot cross customer or order boundaries", () => {
   const raw = serializeOrderReceipt({ id: "order_one", email: "test@example.test", currency_code: "usd", payment_status: "captured",
     metadata: { secret: "private" }, payment_collections: [{ payments: [{ data: { token: "private" } }] }],
-    items: [{ id: "item_one", title: "Sample", metadata: { private: true } }],
-    shipping_address: { address_1: "Test street", metadata: { private: true } },
+    items: [{ id: "item_one", title: "Sample", product_handle: "sample", thumbnail: "/images/sample.webp", metadata: { private: true } }],
+    shipping_address: { company: "Example laboratory", address_1: "Test street", metadata: { private: true } },
     shipping_methods: [{ name: "Courier", data: { private: true } }],
   }, "cus_A")
   const order = parseOrderReceipt(raw, "order_one", "cus_A")
   assert.equal(order.id, "order_one")
   assert.equal(order.payment_status, undefined)
   assert.equal(order.payment_collections, undefined)
+  assert.equal(order.items[0].product_handle, "sample")
+  assert.equal(order.items[0].thumbnail, "/images/sample.webp")
+  assert.equal(order.shipping_address.company, "Example laboratory")
   assert.doesNotMatch(raw, /private|token|metadata|captured/)
   assert.equal(parseOrderReceipt(raw, "order_one", "cus_B"), null)
   assert.equal(parseOrderReceipt(raw, "order_two", "cus_A"), null)
   assert.equal(parseOrderReceipt(raw, "order_one"), null)
   assert.equal(parseOrderReceipt("broken json", "order_one", "cus_A"), null)
   assert.equal(parseOrderReceipt(JSON.stringify({ id: "order_one" }), "order_one", "cus_A"), null)
-  assert.equal(serializeOrderReceipt({ id: "order_one" }), null)
+  const guestReceipt = serializeOrderReceipt({ id: "order_guest" }, undefined, "cart_guest")
+  assert.equal(parseOrderReceipt(guestReceipt, "order_guest").id, "order_guest")
+  assert.equal(parseOrderReceipt(guestReceipt, "order_guest", "cus_A"), null)
+  assert.equal(receiptCartId(guestReceipt, "order_guest"), "cart_guest")
 })

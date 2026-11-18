@@ -20,9 +20,11 @@ export function serializeOrderReceipt(order: HttpTypes.StoreOrder, customerId?: 
     items: order.items?.map((item) => ({
       id: item.id, title: item.title, product_title: item.product_title,
       variant_title: item.variant_title, quantity: item.quantity, unit_price: item.unit_price,
+      thumbnail: item.thumbnail, product_handle: item.product_handle,
     })),
     shipping_address: address ? {
       first_name: address.first_name, last_name: address.last_name,
+      company: address.company,
       address_1: address.address_1, address_2: address.address_2, city: address.city,
       postal_code: address.postal_code, province: address.province, country_code: address.country_code,
     } : null,
