@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/learn/[slu
   const planned = peptide ? undefined : getPlannedPeptide(slug)
   if (planned) return { ...(await articleMetadata({ title: `${planned.name}: guide coming soon`, description: `Our guide to ${planned.name} is being written.`, path: `/learn/${planned.slug}` })), robots: { index: false, follow: true } }
   return peptide ? articleMetadata({
-    title: `${peptide.name}: research, risks and approval status`, description: peptide.oneLiner,
+    title: peptide.headline ?? `${peptide.name}: research, risks and approval status`, description: peptide.oneLiner,
     path: `/learn/${peptide.slug}`, image: getLearnIllustration(peptide.slug),
   }) : { title: "Not found", robots: { index: false } }
 }
@@ -63,7 +63,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[lang]/learn/[slu
   const category = getCategory(peptide.category)
   const status = STATUSES[peptide.status]
   const image = getLearnIllustration(peptide.slug)
-  const title = `${peptide.name}: what the research shows`
+  const title = peptide.headline ?? `${peptide.name}: what the research shows`
   const inChart = WEIGHT_LOSS_TRIALS.some(trial => trial.peptide === peptide.slug)
     || EMERGING_WEIGHT_RESEARCH.some(research => research.peptide === peptide.slug)
   const articles = ARTICLES.filter(article => article.peptides.includes(peptide.slug)).slice(0, 3)

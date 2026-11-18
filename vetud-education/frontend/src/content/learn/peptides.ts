@@ -1,4 +1,5 @@
 import type { CategoryId, Evidence, StatusId } from "./categories"
+import { RESEARCH_GUIDES } from "./research-guides"
 import { CBL_514_SOURCES, PTT_A_SOURCES } from "./emerging-weight-research"
 
 /**
@@ -34,6 +35,7 @@ export type StudyResult = {
 export type PeptideProfile = {
   slug: string
   name: string
+  headline?: string
   aka?: string
   category: CategoryId
   status: StatusId
@@ -1069,6 +1071,7 @@ export const PEPTIDES: PeptideProfile[] = [
       { title: "Biosimilars versus the originator of follitropin alfa for ovarian stimulation in ART: a systematic review and meta-analysis", detail: "Kiose et al. · Human Reproduction · 2025", url: pubmed(39719046) },
     ],
   },
+  ...RESEARCH_GUIDES,
 ]
 
 export function getPeptide(slug: string) {

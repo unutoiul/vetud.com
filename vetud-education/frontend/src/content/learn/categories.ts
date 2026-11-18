@@ -23,10 +23,12 @@ export const CATEGORIES: { id: CategoryId; name: string; blurb: string; icon: Ic
   { id: "medicines", name: "Classic medicines", blurb: "Long-established peptide medicines, and a good reference for what “approved” means.", icon: "flask" },
 ]
 
-export type StatusId = "approved" | "approved-elsewhere" | "former" | "trials" | "early"
+export type StatusId = "approved" | "approved-elsewhere" | "former" | "trials" | "early" | "cosmetic" | "supplement"
 
 /** How far each peptide has got, in plain words. Tone picks the badge color. */
 export const STATUSES: Record<StatusId, { label: string; explain: string; tone: "good" | "info" | "neutral" | "caution" }> = {
+  cosmetic: { label: "Cosmetic ingredient", explain: "Used in topical products for the appearance of skin.", tone: "neutral" },
+  supplement: { label: "Dietary supplement", explain: "Studied as an oral supplement in humans.", tone: "neutral" },
   approved: { label: "Approved medicine", explain: "A medicines regulator, such as the FDA in the US or the EMA in Europe, has approved it for specific uses.", tone: "good" },
   "approved-elsewhere": { label: "Approved in some countries", explain: "Approved as a medicine in some countries, but not in the US, UK or EU.", tone: "info" },
   former: { label: "Formerly approved", explain: "It was once an approved medicine but is no longer sold as one.", tone: "neutral" },

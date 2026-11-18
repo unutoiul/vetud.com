@@ -3,7 +3,91 @@ import { EDITORIAL_COVERS } from "./editorial-covers"
 /** VETUD editorial artwork. Illustrations, not chemical structure diagrams. */
 export type LearnIllustration = { src: string; alt: string }
 
+export const RESEARCH_GUIDE_ILLUSTRATIONS: Record<string, LearnIllustration> = {
+  "survodutide": {
+    src: "/images/learn/illustrations/vetud-learn-survodutide.webp",
+    alt: "An amber liver sculpture between blue and gold threads.",
+  },
+  "mazdutide": {
+    src: "/images/learn/illustrations/vetud-learn-mazdutide.webp",
+    alt: "Teal and vermilion glass ribbons cross above an oval base.",
+  },
+  "exenatide": {
+    src: "/images/learn/illustrations/vetud-learn-exenatide.webp",
+    alt: "A natural-history model of a Gila monster with orange and black scales.",
+  },
+  "dulaglutide": {
+    src: "/images/learn/illustrations/vetud-learn-dulaglutide.webp",
+    alt: "An ivory Y-shaped sculpture with blue and amber curls on its upper arms.",
+  },
+  "setmelanotide": {
+    src: "/images/learn/illustrations/vetud-learn-setmelanotide.webp",
+    alt: "A layered brain model with a colored point near the hypothalamus.",
+  },
+  "adipotide": {
+    src: "/images/learn/illustrations/vetud-learn-adipotide.webp",
+    alt: "Red vessels branch through rounded lobules in an amber tissue model.",
+  },
+  "matrixyl": {
+    src: "/images/learn/illustrations/vetud-learn-matrixyl.webp",
+    alt: "Pink and ivory cords interwoven beneath a single copper strand.",
+  },
+  "snap-8": {
+    src: "/images/learn/illustrations/vetud-learn-snap-8.webp",
+    alt: "Cobalt beads follow a crease in a sheet of pink silk.",
+  },
+  "peg-mgf": {
+    src: "/images/learn/illustrations/vetud-learn-peg-mgf.webp",
+    alt: "A translucent blue coil wraps around a bundle of sculpted muscle fibers.",
+  },
+  "ghrp-2": {
+    src: "/images/learn/illustrations/vetud-learn-ghrp-2.webp",
+    alt: "Blue glass droplets above an ivory model of the pituitary gland.",
+  },
+  "ghrp-6": {
+    src: "/images/learn/illustrations/vetud-learn-ghrp-6.webp",
+    alt: "An amber stomach sculpture suspended above a green pulse trace.",
+  },
+  "hexarelin": {
+    src: "/images/learn/illustrations/vetud-learn-hexarelin.webp",
+    alt: "Amber beads sit below a blue plaque bearing a pulse trace.",
+  },
+  "dihexa": {
+    src: "/images/learn/illustrations/vetud-learn-dihexa.webp",
+    alt: "Gold and blue branching neuron models facing each other.",
+  },
+  "glutathione": {
+    src: "/images/learn/illustrations/vetud-learn-glutathione.webp",
+    alt: "Three glass spheres in green, amber and blue on a reflective dish.",
+  },
+  "humanin": {
+    src: "/images/learn/illustrations/vetud-learn-humanin.webp",
+    alt: "An open purple mitochondrion reveals layers of folded orange membrane.",
+  },
+  "foxo4-dri": {
+    src: "/images/learn/illustrations/vetud-learn-foxo4-dri.webp",
+    alt: "A teal cell model with two interlocking bands inside a violet nucleus.",
+  },
+  "gonadorelin": {
+    src: "/images/learn/illustrations/vetud-learn-gonadorelin.webp",
+    alt: "A brass metronome above a row of evenly spaced blue pulses.",
+  },
+  "ll-37": {
+    src: "/images/learn/illustrations/vetud-learn-ll-37.webp",
+    alt: "A teal ribbon at the surface of a layered pink skin model.",
+  },
+  "thymalin": {
+    src: "/images/learn/illustrations/vetud-learn-thymalin.webp",
+    alt: "Two lobes of a pink glass thymus on a dark base.",
+  },
+  "pramlintide": {
+    src: "/images/learn/illustrations/vetud-learn-pramlintide.webp",
+    alt: "An islet of amber and blue glass cells releases two streams of beads.",
+  },
+}
+
 const ILLUSTRATIONS: Record<string, LearnIllustration> = {
+  ...RESEARCH_GUIDE_ILLUSTRATIONS,
   "ptt-a": {
     "src": "/images/learn/illustrations/vetud-learn-ptt-a.webp",
     "alt": "Conceptual illustration of PTT-A: four hormone signals under investigation."
