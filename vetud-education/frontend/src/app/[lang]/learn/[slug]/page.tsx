@@ -31,6 +31,8 @@ import { getProfileVideoResources } from "@/content/learn/video-resources"
 import { WEIGHT_LOSS_TRIALS } from "@/content/learn/weight-loss-trials"
 import { articleMetadata, articleStructuredData, readingMinutes } from "@/lib/article-seo"
 
+const GUIDES_WITH_FILMS = new Set(["tirzepatide", "cagrilintide", "survodutide"])
+
 export function generateStaticParams() {
   return [...PEPTIDES, ...PLANNED_PEPTIDES].map(peptide => ({ slug: peptide.slug }))
 }
@@ -53,7 +55,7 @@ export default function PeptidePage({ params }: PageProps<"/[lang]/learn/[slug]"
 async function PeptideProfilePage({ params }: Pick<PageProps<"/[lang]/learn/[slug]">, "params">) {
   const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
-  const { slug } = await params
+  const { lang, slug } = await params
   const peptide = getPeptide(slug)
   if (!peptide) {
     const planned = getPlannedPeptide(slug)
@@ -63,6 +65,11 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[lang]/learn/[slu
   const category = getCategory(peptide.category)
   const status = STATUSES[peptide.status]
   const image = getLearnIllustration(peptide.slug)
+  const film = lang === "en" && GUIDES_WITH_FILMS.has(slug) ? {
+    src: `/media/guide-films/${slug}.mp4`,
+    captions: `/media/guide-films/${slug}.vtt`,
+    label: `Watch the 15-second ${peptide.name} guide`,
+  } : undefined
   const title = peptide.headline ?? `${peptide.name}: what the research shows`
   const inChart = WEIGHT_LOSS_TRIALS.some(trial => trial.peptide === peptide.slug)
     || EMERGING_WEIGHT_RESEARCH.some(research => research.peptide === peptide.slug)
@@ -93,7 +100,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[lang]/learn/[slu
   return <>
     <Box component="article" lang={ct.locale} aria-labelledby="article-title">
       <ArticleJsonLd data={data} />
-      <ReadingHeader title={ct(title)} description={ct(peptide.oneLiner)} image={image} uid={`hero-${peptide.slug}`} minutes={readingMinutes(text)}
+      <ReadingHeader title={ct(title)} description={ct(peptide.oneLiner)} image={image} film={film} uid={`hero-${peptide.slug}`} minutes={readingMinutes(text)}
         breadcrumbs={[{ label: "Education", href: "/learn" }, { label: category.name, href: `/learn#${category.id}` }, { label: peptide.name }]}
         meta={<><StatusBadge status={peptide.status} /><span>{ct("Research guide")}</span></>}>
         {peptide.aka ? <Typography sx={{ mt: 1.5, color: "brand.navySoft", fontSize: 14 }}>{ct.rich("Also known as {v0}", { v0: ct(peptide.aka) }, {  })}</Typography> : null}

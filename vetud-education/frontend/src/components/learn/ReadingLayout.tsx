@@ -21,9 +21,10 @@ export const readingProse = {
   overflowWrap: "break-word", "& a": { textDecoration: "underline", textUnderlineOffset: "3px" },
 } as const
 
-export function ReadingHeader({ title, description, breadcrumbs, image, variant = "triple", uid, minutes, meta, children }: {
+export function ReadingHeader({ title, description, breadcrumbs, image, film, variant = "triple", uid, minutes, meta, children }: {
   title: string; description: string; breadcrumbs: { label: string; href?: string }[]
   image?: LearnIllustration; variant?: ArticleArtVariant; uid: string; minutes: number; meta?: ReactNode; children?: ReactNode
+  film?: { src: string; captions: string; label: string }
 }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
@@ -50,8 +51,12 @@ export function ReadingHeader({ title, description, breadcrumbs, image, variant 
     {/* The artwork spans the reading width and straddles the edge between header and body. */}
     <Box sx={{ px: gutter, background: `linear-gradient(to bottom, ${brand.paper} 50%, #fff 50%)` }}>
       <Box component="figure" sx={{ m: 0, maxWidth: READING_WIDTH, mx: { xs: -2.5, sm: "auto" } }}>
-        <Box sx={{ position: "relative", aspectRatio: "16 / 9", overflow: "hidden", bgcolor: "brand.mintWash", borderRadius: { xs: 0, sm: "16px" }, border: { xs: 0, sm: "1px solid" }, borderColor: { sm: "divider" }, boxShadow: { sm: "0 28px 60px -34px rgba(21,38,94,.45)" } }}>
-          {image ? <Image src={image.src} alt={ct(image.alt)} fill preload sizes={`(max-width: 600px) 100vw, (max-width: 1240px) 92vw, ${READING_WIDTH}px`} style={{ objectFit: "cover" }} />
+        <Box sx={{ position: "relative", aspectRatio: film ? { xs: "4 / 5", sm: "16 / 9" } : "16 / 9", overflow: "hidden", bgcolor: film ? "#030b18" : "brand.mintWash", borderRadius: { xs: 0, sm: "16px" }, border: { xs: 0, sm: "1px solid" }, borderColor: { sm: "divider" }, boxShadow: { sm: "0 28px 60px -34px rgba(21,38,94,.45)" } }}>
+          {film ? <video controls playsInline preload="none" poster={image?.src} aria-label={film.label} style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }}>
+            <source src={film.src} type="video/mp4" />
+            <track kind="captions" src={film.captions} srcLang="en" label="English" />
+            <a href={film.src}>{film.label}</a>
+          </video> : image ? <Image src={image.src} alt={ct(image.alt)} fill preload sizes={`(max-width: 600px) 100vw, (max-width: 1240px) 92vw, ${READING_WIDTH}px`} style={{ objectFit: "cover" }} />
             : <ArticleArt variant={variant} uid={uid} sx={{ position: "absolute", inset: 0 }} />}
         </Box>
       </Box>
