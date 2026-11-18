@@ -2,11 +2,8 @@
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
 
-import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete"
-import type { FilterOptionsState } from "@mui/material/useAutocomplete"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
-import InputAdornment from "@mui/material/InputAdornment"
 import MenuItem from "@mui/material/MenuItem"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
@@ -15,43 +12,11 @@ import { useLocale, useTranslations } from "next-intl"
 import { getCountryRules } from "@/i18n/config"
 import { changeAddressCountry, normalizePostal, provincesOf, type AddressValues } from "@/lib/address"
 import { isAreaPlace, mergePlaceAddress, PLACES_ENABLED, placeDetails, suggestAddresses, type PlaceLocation } from "@/lib/places"
-import CountryFlag from "../common/CountryFlag"
+import CountryField from "../common/CountryField"
 import PhoneField from "../common/PhoneField"
 import PlaceAutocomplete, { type PickResult } from "./PlaceAutocomplete"
 
 export { EMPTY_ADDRESS, toAddressValues, validateAddress, normalizeAddress, type AddressValues } from "@/lib/address"
-
-type CountryOption = { code: string; label: string }
-
-/** Other names people type for a country. */
-const COUNTRY_ALIASES: Record<string, string> = {
-  gb: "UK GB Britain England Scotland Wales",
-  us: "USA US America",
-  ae: "UAE Emirates Dubai",
-  nl: "Holland",
-  cz: "Czech Republic",
-  ch: "Swiss Suisse Schweiz",
-  de: "Deutschland",
-  es: "España Espana",
-  kr: "South Korea",
-}
-
-const matchCountries = createFilterOptions<CountryOption>({
-  stringify: option => `${option.label} ${option.code} ${COUNTRY_ALIASES[option.code] ?? ""}`,
-})
-
-/** Matches anywhere in the name, code or other names; an exact code or short name ("uk", "us") comes first. */
-function filterCountries(options: CountryOption[], state: FilterOptionsState<CountryOption>) {
-  const matches = matchCountries(options, state)
-  const query = state.inputValue.trim().toLowerCase()
-  if (!query) return matches
-  const rank = (option: CountryOption) => {
-    const aliases = (COUNTRY_ALIASES[option.code] ?? "").toLowerCase().split(/\s+/)
-    if (option.code === query || aliases.includes(query)) return 0
-    return option.label.toLowerCase().startsWith(query) ? 1 : 2
-  }
-  return [...matches].sort((a, b) => rank(a) - rank(b))
-}
 
 type Props = {
   prefix: string; values: AddressValues; errors: Partial<Record<keyof AddressValues, string>>;
@@ -85,8 +50,6 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
     slotProps: { htmlInput: { autoComplete: autocomplete(autoComplete) } },
   })
   const country = values.country_code
-  const regionNames = new Intl.DisplayNames([locale], { type: "region" })
-  const sortedCountries = countries.map(option => ({ code: option.code, label: regionNames.of(option.code.toUpperCase()) ?? option.name })).sort((a, b) => a.label.localeCompare(b.label, locale))
   const suggestionsOn = PLACES_ENABLED && Boolean(country)
   // After a postal code is picked, street suggestions favour that area. Kept per country.
   const [near, setNear] = useState<{ country: string; location: PlaceLocation }>()
@@ -115,42 +78,21 @@ export default function AddressFields({ prefix, values, errors, countries, onCha
     <Grid container spacing={2}>
       {visible("country_code") ? <Grid size={12}>
         {/* Type to find a country, by name in the visitor's language or by code (US, GB, DE). */}
-        <Autocomplete<CountryOption, false, false, false>
+        <CountryField
           id={`${prefix}-country_code`}
-          options={sortedCountries}
-          value={sortedCountries.find(option => option.code === country) ?? null}
-          onChange={(_, option) => {
-            if (!option || option.code === country) return
+          name={`${prefix}-country_code`}
+          label={t("country")}
+          value={country}
+          countries={countries}
+          onChange={code => {
             requestVersion.current += 1
-            onChange(changeAddressCountry(values, option.code))
+            onChange(changeAddressCountry(values, code))
           }}
-          getOptionLabel={option => option.label}
-          isOptionEqualToValue={(option, selected) => option.code === selected.code}
-          filterOptions={filterCountries}
-          autoHighlight
-          openOnFocus
+          required
+          error={Boolean(errors.country_code)}
+          helperText={errors.country_code}
           disabled={disabled}
-          noOptionsText={ct("No country matches")}
-          renderOption={({ key, ...props }, option) => (
-            <Box component="li" key={key} {...props} sx={{ gap: 1.25 }}>
-              <CountryFlag code={option.code} />{option.label}
-            </Box>
-          )}
-          renderInput={params => (
-            <TextField
-              {...params}
-              name={`${prefix}-country_code`}
-              label={t("country")}
-              required
-              error={Boolean(errors.country_code)}
-              helperText={errors.country_code}
-              slotProps={{
-                ...params.slotProps,
-                input: { ...params.slotProps.input, startAdornment: country ? <InputAdornment position="start" sx={{ ml: 0.5, mr: 0 }}><CountryFlag code={country} /></InputAdornment> : undefined },
-                htmlInput: { ...params.slotProps.htmlInput, autoComplete: autocomplete("country-name") },
-              }}
-            />
-          )}
+          autoComplete={autocomplete("country-name")}
         />
       </Grid> : null}
       {visible("first_name") ? <Grid size={{ xs: 12, sm: visible("last_name") ? 6 : 12 }}><TextField {...field("first_name", t("firstName"), "given-name", true)} /></Grid> : null}
