@@ -27,7 +27,7 @@ export default function EvidenceLadder({ evidence, name }: { evidence: Evidence;
             }}>
               <Box aria-hidden sx={{ width: { xs: 10, sm: "100%" }, height: { xs: 10, sm: 6 }, flexShrink: 0, borderRadius: 999, bgcolor: done ? "brand.blue" : "divider" }} />
               <Typography sx={{ fontSize: 12.5, lineHeight: 1.35, fontWeight: here ? 700 : 500, color: done ? "text.primary" : "text.secondary" }}>
-                <Box component="span" sx={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>{ct.template("Step {v0} of {v1}: ", { v0: index + 1, v1: EVIDENCE_STEPS.length })}</Box>
+                <Box component="span" sx={{ position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)" }}>{ct.template("Step {v0} of {v1}: ", { v0: index + 1, v1: EVIDENCE_STEPS.length })}</Box>
                 {ct(step.label)}
               </Typography>
             </Box>
