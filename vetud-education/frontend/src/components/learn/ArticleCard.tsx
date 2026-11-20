@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography"
 import { formatArticleDate, type Article } from "@/content/learn/articles"
 import { AppLink } from "../common/links"
 import ArticleArt from "./ArticleArt"
+import { brand } from "@/theme/tokens"
 
 /** The headline with its key phrase highlighted, as on a magazine cover. */
 export function ArticleHeadline({ headline, highlight = "brand.cyan" }: { headline: Article["headline"]; highlight?: string }) {
@@ -25,7 +26,7 @@ export default function ArticleCard({ article, featured = false }: { article: Ar
   const act = useTranslations("Actions")
   return (
     <Box component="article" sx={{ position: "relative", height: "100%", display: featured ? { xs: "flex", md: "grid" } : "flex", flexDirection: "column", gridTemplateColumns: { md: "minmax(0, 1.4fr) minmax(0, 1fr)" }, columnGap: { md: 5 }, alignItems: { md: featured ? "center" : undefined }, "&:hover .article-art": { transform: "scale(1.03)" }, "&:focus-within": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 5 } }}>
-      <Box sx={{ position: "relative", borderRadius: featured ? "14px" : "8px", overflow: "hidden", aspectRatio: "16 / 9", border: "1px solid", borderColor: "divider", boxShadow: featured ? "0 24px 50px -32px rgba(21,38,94,.45)" : "none" }}>
+      <Box sx={{ position: "relative", borderRadius: featured ? "14px" : "8px", overflow: "hidden", aspectRatio: "16 / 9", border: "1px solid", borderColor: "divider", boxShadow: featured ? `0 24px 50px -32px ${brand.navyA45}` : "none" }}>
         <ArticleArt className="article-art" variant={article.art} illustrationSlug={article.slug} uid={`card-${article.slug}`} sizes={featured ? "(max-width: 900px) 100vw, 760px" : undefined} sx={{ position: "absolute", inset: 0, transition: "transform .5s ease", "@media (prefers-reduced-motion: reduce)": { transition: "none" } }} />
       </Box>
       <Box sx={{ pt: featured ? { xs: 2.5, md: 0 } : 2.25, display: "flex", flexDirection: "column", flex: 1 }}>

@@ -23,6 +23,7 @@ import { getPeptide, PEPTIDES } from "@/content/learn/peptides"
 import { KIND_PLURALS, THREAD_KINDS } from "@/lib/community/format"
 import type { ThreadKind } from "@/lib/community/types"
 import { useLocalizedHref } from "../common/links"
+import { brand } from "@/theme/tokens"
 
 const KINDS: (ThreadKind | "all")[] = ["all", ...THREAD_KINDS]
 const PEPTIDE_OPTIONS = [...PEPTIDES].sort((a, b) => a.name.localeCompare(b.name))
@@ -71,7 +72,7 @@ function ThreadFilterControls() {
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 1 }}>
       <Tabs value={kind} onChange={(_, value: string) => update({ kind: value === "all" ? null : value, sort: value !== "question" && sort === "unanswered" ? null : sort === "latest" ? null : sort })}
         variant="fullWidth" aria-label={act("threadType")} sx={{ width: { xs: "100%", sm: "auto" }, minHeight: 44, p: .5, bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "12px", "& .MuiTabs-indicator": { display: "none" }, "& .MuiTabs-list": { gap: .5 } }}>
-        {KINDS.map(value => <Tab key={value} value={value} label={ct(value === "all" ? act("allThreads") : translateAction(act, KIND_PLURALS[value]))} sx={{ minHeight: 40, minWidth: 0, px: { xs: 1, sm: 2.25 }, py: 1, mr: 0, borderRadius: "8px", fontSize: 14, color: "brand.navySoft", "&.Mui-selected": { bgcolor: "background.paper", color: "brand.navy", boxShadow: "0 1px 4px rgba(21,38,94,.10)" }, "&.Mui-focusVisible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: "-2px" } }} />)}
+        {KINDS.map(value => <Tab key={value} value={value} label={ct(value === "all" ? act("allThreads") : translateAction(act, KIND_PLURALS[value]))} sx={{ minHeight: 40, minWidth: 0, px: { xs: 1, sm: 2.25 }, py: 1, mr: 0, borderRadius: "8px", fontSize: 14, color: "brand.navySoft", "&.Mui-selected": { bgcolor: "background.paper", color: "brand.navy", boxShadow: `0 1px 4px ${brand.navyA10}` }, "&.Mui-focusVisible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: "-2px" } }} />)}
       </Tabs>
       <Typography role="status" sx={{ fontSize: 13, color: "text.secondary", ...(pending ? {} : { position: "absolute", width: 1, height: 1, p: 0, overflow: "hidden", clipPath: "inset(50%)", whiteSpace: "nowrap" }) }}>{ct(pending ? act("updatingThreads") : "")}</Typography>
     </Box>

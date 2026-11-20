@@ -24,6 +24,7 @@ import PostCard from "./PostCard"
 import ReplyForm from "./ReplyForm"
 import { useCommunityProfile } from "./useCommunityProfile"
 import { getTopic } from "@/lib/community/topics"
+import { brand } from "@/theme/tokens"
 
 const PAGE_SIZE = 100
 
@@ -144,7 +145,7 @@ export default function ThreadView({ threadId, initial }: { threadId: string; in
       <AuthorLine author={thread.author} />
       <Typography component="time" dateTime={thread.created_at} sx={{ fontSize: 14, color: "brand.navySoft" }}>{ct.rich("Started {v0}", { v0: ct(formatForumDate(thread.created_at, ct.locale)) }, {  })}</Typography>
     </Box>
-    {peptide ? <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", gap: 1, "& a": { display: "inline-flex", alignItems: "center", minHeight: 36, px: 1.5, border: "1px solid", borderColor: "divider", borderRadius: 999, fontSize: 13.5, bgcolor: "#fff" } }}>
+    {peptide ? <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", gap: 1, "& a": { display: "inline-flex", alignItems: "center", minHeight: 36, px: 1.5, border: "1px solid", borderColor: "divider", borderRadius: 999, fontSize: 13.5, bgcolor: brand.white } }}>
       {peptide ? <AppLink href={`/learn/${peptide.slug}`} underline="none">{act("about")} {ct(peptide.name)}</AppLink> : null}
     </Box> : null}
 

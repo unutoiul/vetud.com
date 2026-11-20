@@ -15,6 +15,8 @@ export const EmailTemplates = {
   /** The French confirmation; sent in place of EMAIL_LIST_CONFIRM when the visitor's language is French. */
   EMAIL_LIST_CONFIRM_FR: "email-list-confirm-fr",
   SIGN_IN_CODE: "sign-in-code",
+  /** Confirms a new sign-in email: sent to the new address. */
+  EMAIL_CHANGE_CODE: "email-change-code",
   EMAIL_LIST_SIGNUP_ADMIN: "email-list-signup-admin",
 } as const
 
@@ -69,6 +71,12 @@ const builders: Record<string, (data: Data) => Built> = {
   }),
   [EmailTemplates.USER_INVITE]: (data) => ({
     variables: { INVITE_URL: data.invite_url, EXPIRY_NOTE: data.expires_at ? `The link expires on ${dateTime(data.expires_at)}.` : "" },
+  }),
+  [EmailTemplates.EMAIL_CHANGE_CODE]: (data) => ({
+    variables: {
+      CODE: String(data.code).replace(/\D/g, "").slice(0, 6),
+      MINUTES: String(Number(data.minutes) || 10),
+    },
   }),
   [EmailTemplates.SIGN_IN_CODE]: (data) => ({
     variables: {

@@ -149,37 +149,53 @@ The forum and article comments moved to the education site (`vetud-education/`) 
 
 ## Emails (Resend)
 
-The emails are published templates in Resend (**Dashboard → Templates**, named `VETUD · …`). The backend sends each one by its template ID with variables. The IDs are in `vetud-shop/backend/src/modules/resend/template-ids.ts`, and `templates.ts` next to it builds the variables. Edit wording and layout in Resend and publish; keep the `{{{VARIABLE}}}` names, because the backend fills them in.
+Every email on both sites is a published template in Resend (**Dashboard → Templates**). Each site has its own templates, built from a source folder with one shared layout (the VETUD Peptide Series logo, the same card, buttons and footer):
 
-The account welcome email is shared by the shop and education backends. Its reviewed HTML and plain-text source are in [`assets/emails/`](assets/emails/README.md). It welcomes the new member, shows four featured VETUD peptides with **Buy now** buttons leading to their product pages on pep.company, and links back to the originating site. Publish changes to the existing Resend template and keep the source files in sync; no backend deployment is needed for template edits.
+- **Shop** (`VETUD · …`): sources in [`vetud-shop/emails/`](vetud-shop/emails/README.md)
+- **Education** (`VETUD Edu · …`): sources in [`vetud-education/emails/`](vetud-education/emails/README.md)
+
+Edit an email in its source folder, then run `node publish.mjs` there: it creates or updates the template in Resend, publishes it, reads it back and rewrites the backend's `src/modules/resend/template-ids.ts`. The backend only fills in the `{{{VARIABLE}}}` values (`templates.ts` next to the IDs). A wording change is live once published; a new template or variable also needs a backend deploy.
+
+**Shop**
 
 | Template | Sent when | To |
 |---|---|---|
+| `sign-in-code` | A customer asks to sign in (there are no customer passwords) | Customer |
 | `order-placed` | Order placed | Customer (includes payment instructions) |
 | `order-placed-admin` | Order placed | `STORE_OWNER_EMAIL` |
 | `shipment-created` | Shipment created in Admin | Customer (tracking) |
 | `contact-message` | Contact form submitted | `STORE_OWNER_EMAIL` (reply-to is the customer) |
-| `password-reset` | Password reset requested (storefront or Admin) | Customer or admin user |
+| `password-reset` | An Admin user asks for a password reset | Admin user |
 | `newsletter-offer` / `newsletter-welcome` | Newsletter sign-up, with or without a current offer code | Subscriber |
-| `customer-welcome` | Customer registers an account | Customer |
+| `customer-welcome` | A customer's account is created (first code sign-in) | Customer |
 | `payment-received` | Payment captured on an existing order (e.g. bank transfer marked paid in Admin) | Customer |
 | `order-canceled` | Order canceled in Admin | Customer |
 | `refund-issued` | Refund created in Admin | Customer (amount of that refund) |
 | `order-delivered` | Fulfillment marked as delivered in Admin | Customer |
 | `return-received` | Return received in Admin | Customer |
 | `user-invite` | Admin user invited or invite resent | Invited user (link to `/app/invite`) |
+| `newsletter-signup-admin` | A new address signs up in the newsletter pop-up (not repeat sign-ups) | `STORE_OWNER_EMAIL` |
+| `guest-checkout-admin` | A shopper who isn't signed in enters a new email at checkout; once per cart and address | `STORE_OWNER_EMAIL` |
 
-Owner alerts have no Resend template; their HTML is written in code (`owner-alerts.ts` in each backend's `src/modules/resend/`). They go to `STORE_OWNER_EMAIL`, so nothing is sent while it's unset.
+**Education**
 
-| Alert | Sent when | Backend |
+| Template | Sent when | To |
 |---|---|---|
-| `newsletter-signup-admin` | A new address signs up in the shop's newsletter pop-up (not repeat sign-ups) | Shop |
-| `guest-checkout-admin` | A shopper who isn't signed in enters a new email at checkout; once per cart and address (an email that already has an account is asked to sign in instead, so it sends nothing) | Shop |
-| `email-list-signup-admin` | Someone confirms their vetud.com email-list sign-up (unconfirmed sign-ups aren't announced) | Education |
+| `sign-in-code` | A member asks to sign in (there are no member passwords) | Member |
+| `email-change-code` | A member asks to change their sign-in email; sent to the new address | Member |
+| `customer-welcome` | A member's account is created (first code sign-in) | Member |
+| `email-list-confirm` / `email-list-confirm-fr` | Someone signs up for the email list (English or French) | Subscriber |
+| `password-reset` / `user-invite` | An Admin user asks for a reset, or is invited | Admin user |
+| `contact-message` | Contact form submitted | `STORE_OWNER_EMAIL` |
+| `email-list-signup-admin` | Someone confirms their email-list sign-up | `STORE_OWNER_EMAIL` |
 
-The education site's email-list confirmation (`email-list-confirm`, English and French) and sign-in code are also written in code, in `vetud-education/backend/src/modules/resend/templates.ts`.
+Owner emails go to `STORE_OWNER_EMAIL`, so nothing is sent while it's unset.
 
-**Setup:** create a Resend account, verify your sending domain, then set `RESEND_API_KEY`, `RESEND_FROM_EMAIL` (an address on the verified domain), `STORE_OWNER_EMAIL`, `PAYMENT_INSTRUCTIONS` and `PAYMENT_BANK_DETAILS` on the backend.
+**Setup:** create a Resend account, verify your sending domain, then set `RESEND_API_KEY`, `RESEND_FROM_EMAIL` (an address on the verified domain), `STORE_OWNER_EMAIL`, `PAYMENT_INSTRUCTIONS` and `PAYMENT_BANK_DETAILS` on the backend. Without `RESEND_API_KEY` nobody can sign in, because sign-in codes can't be sent.
+
+## Signing in
+
+Customers (shop) and members (education) have no passwords. They type their email, get a 6-digit code by email (`POST /store/sign-in-code`), and the code signs them in (`POST /auth/customer/email-code`) for 30 days (`http.jwtExpiresIn`). The first sign-in creates the account. A code works once, for 10 minutes, with 5 tries; another can be sent after 30 seconds. Password sign-in is switched off for customers (`http.authMethodsPerActor`); Admin users still sign in with email and password. On education, a member changes their sign-in email with a code sent to the new address.
 
 ---
 

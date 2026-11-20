@@ -8,6 +8,7 @@ import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
 import { useEffect, useRef, useState } from "react"
 import Icon from "@/components/brand/Icon"
+import { brand } from "@/theme/tokens"
 
 export type HeroVideoSource = { src: string; poster: string }
 
@@ -42,7 +43,7 @@ export default function HeroVideo({ src, poster }: HeroVideoSource) {
       <source src={src} type="video/mp4" />
     </Box>
     <IconButton onClick={() => (playing ? video.current?.pause() : video.current?.play())} aria-label={ct(playing ? act("pauseVideo") : act("playVideo"))}
-      sx={{ position: "absolute", zIndex: 2, right: { xs: 12, md: 20 }, bottom: { xs: 12, md: 20 }, width: 36, height: 36, color: "brand.navy", bgcolor: "rgba(255,255,255,.82)", border: "1px solid", borderColor: "divider", "&:hover": { bgcolor: "#fff" } }}>
+      sx={{ position: "absolute", zIndex: 2, right: { xs: 12, md: 20 }, bottom: { xs: 12, md: 20 }, width: 36, height: 36, color: "brand.navy", bgcolor: brand.whiteA82, border: "1px solid", borderColor: "divider", "&:hover": { bgcolor: brand.white } }}>
       <Icon name={playing ? "pause" : "play"} sx={{ fontSize: 16 }} />
     </IconButton>
   </Box>

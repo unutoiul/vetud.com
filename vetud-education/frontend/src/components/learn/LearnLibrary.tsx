@@ -12,6 +12,7 @@ import { CATEGORIES, type CategoryId } from "@/content/learn/categories"
 import { PEPTIDES } from "@/content/learn/peptides"
 import { PLANNED_PEPTIDES } from "@/content/learn/planned-peptides"
 import PeptideCard from "./PeptideCard"
+import { brand } from "@/theme/tokens"
 
 const isCategory = (value: string): value is CategoryId => CATEGORIES.some((category) => category.id === value)
 
@@ -63,9 +64,9 @@ export default function LearnLibrary() {
             const selected = option.id === active
             return (
               <Box component="li" key={option.id ?? "all"} sx={{ flexShrink: 0 }}>
-                <Box component="button" type="button" onClick={() => choose(option.id)} aria-pressed={selected} sx={{ width: "100%", minHeight: 46, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, px: 1.75, border: 0, borderRadius: "10px", font: "inherit", fontSize: 15, fontWeight: 600, textAlign: "left", whiteSpace: "nowrap", cursor: "pointer", bgcolor: selected ? "brand.navy" : "transparent", color: selected ? "#fff" : "text.primary", transition: "background-color .15s ease", "&:hover": { bgcolor: selected ? "brand.navy" : "rgba(21,38,94,.06)" }, "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
+                <Box component="button" type="button" onClick={() => choose(option.id)} aria-pressed={selected} sx={{ width: "100%", minHeight: 46, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, px: 1.75, border: 0, borderRadius: "10px", font: "inherit", fontSize: 15, fontWeight: 600, textAlign: "left", whiteSpace: "nowrap", cursor: "pointer", bgcolor: selected ? "brand.navy" : "transparent", color: selected ? brand.white : "text.primary", transition: "background-color .15s ease", "&:hover": { bgcolor: selected ? "brand.navy" : brand.navyA06 }, "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
                   {translateAction(act, option.name)}
-                  <Box component="span" sx={{ minWidth: 30, px: .75, py: .25, borderRadius: "6px", textAlign: "center", fontSize: 13, fontVariantNumeric: "tabular-nums", bgcolor: selected ? "rgba(255,255,255,.16)" : "#fff", color: selected ? "#fff" : "text.secondary" }}>{ct(option.count)}</Box>
+                  <Box component="span" sx={{ minWidth: 30, px: .75, py: .25, borderRadius: "6px", textAlign: "center", fontSize: 13, fontVariantNumeric: "tabular-nums", bgcolor: selected ? brand.whiteA16 : brand.white, color: selected ? brand.white : "text.secondary" }}>{ct(option.count)}</Box>
                 </Box>
               </Box>
             )

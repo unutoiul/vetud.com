@@ -19,6 +19,7 @@ import PostBody from "./PostBody"
 import PostImages from "./PostImages"
 import ReportDialog from "./ReportDialog"
 import { forumError } from "./useCommunityProfile"
+import { brand } from "@/theme/tokens"
 
 export type PostCardProps = {
   post: ForumPost
@@ -32,8 +33,8 @@ export type PostCardProps = {
 }
 
 const HIGHLIGHTS = {
-  accepted: { label: "Best answer", tone: "accepted", border: "#2f7a55", bg: "#f3faf6" },
-  expert: { label: "Expert answer", tone: "expert", border: "#3268aa", bg: "#f3f7fc" },
+  accepted: { label: "Best answer", tone: "accepted", border: brand.green675, bg: brand.green25 },
+  expert: { label: "Expert answer", tone: "expert", border: brand.blue, bg: brand.mintWash },
 } as const
 
 /** One post with its actions: helpful vote, report, best answer, and edit or delete for the author. */

@@ -8,7 +8,7 @@ import WelcomeSplash from "./WelcomeSplash"
 import { dismissWelcomeForSession, welcomeCooldownUntil } from "./session"
 
 // Pages where a full-screen sign-up would get in the way of a purchase, a payment return or an email link.
-const QUIET_PATHS = /^\/[^/]+\/(cart|checkout|order|newsletter|account\/reset-password)(\/|$)/
+const QUIET_PATHS = /^\/[^/]+\/(cart|checkout|order|newsletter)(\/|$)/
 
 /**
  * Offer the newsletter again five minutes after dismissal, until subscribed in this browser
@@ -21,7 +21,6 @@ export default function WelcomeExperience() {
   // null until read after hydration: the server can't know what this browser stored.
   const [subscribed, setSubscribed] = useState<boolean | null>(null)
   const [cooldownUntil, setCooldownUntil] = useState(0)
-  const [thanking, setThanking] = useState(false)
   const consented = customer?.metadata?.marketing_consent === true
 
   useEffect(() => {
@@ -51,19 +50,17 @@ export default function WelcomeExperience() {
   }, [cooldownUntil])
 
   const asking = subscribed === false && !consented && !QUIET_PATHS.test(pathname)
-  // After signing up, the thank-you stays until it is closed, and the splash doesn't return.
-  const open = cooldownUntil === 0 && (asking || thanking)
+  // Signing up closes the splash straight away (no thank-you screen, owner 2026-11-19), and it doesn't return.
+  const open = cooldownUntil === 0 && asking
 
   return <WelcomeSplash
     open={open}
     onDismiss={() => {
       setCooldownUntil(dismissWelcomeForSession())
-      setThanking(false)
     }}
     onSubscribed={() => {
       dismissWelcomeForSession()
       setSubscribed(true)
-      setThanking(true)
     }}
   />
 }

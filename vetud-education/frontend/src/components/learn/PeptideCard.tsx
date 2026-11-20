@@ -10,6 +10,7 @@ import Icon from "../brand/Icon"
 import { AppLink } from "../common/links"
 import ArticleArt from "./ArticleArt"
 import StatusBadge from "./StatusBadge"
+import { brand } from "@/theme/tokens"
 
 /**
  * A library entry: the molecule drawing, what it is in one line, and how far it has got.
@@ -21,8 +22,8 @@ export default function PeptideCard({ peptide }: { peptide: PeptideProfile | Pla
   const profile = "status" in peptide ? peptide : null
   const illustration = profile ? getLearnIllustration(peptide.slug) : undefined
   return (
-    <Box component="article" sx={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: "#fff", overflow: "hidden", transition: "border-color .2s ease, box-shadow .2s ease", "&:hover": { borderColor: "brand.lineStrong", boxShadow: "0 12px 30px rgba(21,38,94,.07)" }, "&:focus-within": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 3 } }}>
-      <Box sx={{ position: "relative", height: 150, bgcolor: "#fff", borderBottom: "1px solid", borderColor: "divider" }}>
+    <Box component="article" sx={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: brand.white, overflow: "hidden", transition: "border-color .2s ease, box-shadow .2s ease", "&:hover": { borderColor: "brand.lineStrong", boxShadow: `0 12px 30px ${brand.navyA07}` }, "&:focus-within": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 3 } }}>
+      <Box sx={{ position: "relative", height: 150, bgcolor: brand.white, borderBottom: "1px solid", borderColor: "divider" }}>
         {illustration
           ? <Image src={illustration.src} alt={ct(illustration.alt)} fill sizes="(max-width: 600px) 90vw, 420px" style={{ objectFit: "cover" }} />
           : profile?.pubchem

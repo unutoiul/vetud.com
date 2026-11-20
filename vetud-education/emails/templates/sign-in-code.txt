@@ -3,4 +3,4 @@
 Your VETUD sign-in code is {{{CODE}}}.
 Enter it on the sign-in page to finish signing in. It works once and expires in {{{MINUTES}}} minutes.
 
-If you didn't try to sign in, you can ignore this email: nobody can sign in without this code. As your password was used, it's worth changing it from your account page.
+If you didn't ask for this code, you can ignore this email. Nobody can sign in without it.

@@ -20,6 +20,7 @@ import SectionHeading from "@/components/common/SectionHeading"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { listProducts } from "@/lib/medusa/products"
 import { readProductMeta } from "@/lib/product"
+import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
@@ -58,7 +59,7 @@ export default async function DocumentationPage() {
           title={ct("Current and recent batches.")}
           description={ct("Lots currently in circulation across the catalog, newest first.")}
         />
-        <Box sx={{ overflowX: "auto", bgcolor: "#fff", border: "1px solid", borderColor: "divider", borderRadius: 1 }}>
+        <Box sx={{ overflowX: "auto", bgcolor: brand.white, border: "1px solid", borderColor: "divider", borderRadius: 1 }}>
           <Table aria-label={ct("Lot register")}>
             <TableHead>
               <TableRow>

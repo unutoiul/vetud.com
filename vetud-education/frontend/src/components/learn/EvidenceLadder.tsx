@@ -2,6 +2,7 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { EVIDENCE_STEPS, type Evidence } from "@/content/learn/categories"
+import { brand } from "@/theme/tokens"
 
 /**
  * "How strong is the evidence?": the five steps from cells to an approved medicine, with the
@@ -23,7 +24,7 @@ export default function EvidenceLadder({ evidence, name }: { evidence: Evidence;
             <Box component="li" key={step.id} aria-current={here ? "step" : undefined} sx={{
               display: "flex", flexDirection: { xs: "row", sm: "column" }, alignItems: { xs: "center", sm: "flex-start" }, gap: { xs: 1.25, sm: .75 },
               p: 1.25, borderRadius: "6px", border: "1px solid", borderColor: here ? "brand.blue" : "divider",
-              bgcolor: here ? "brand.mintLight" : done ? "brand.mintWash" : "#fff",
+              bgcolor: here ? "brand.mintLight" : done ? "brand.mintWash" : brand.white,
             }}>
               <Box aria-hidden sx={{ width: { xs: 10, sm: "100%" }, height: { xs: 10, sm: 6 }, flexShrink: 0, borderRadius: 999, bgcolor: done ? "brand.blue" : "divider" }} />
               <Typography sx={{ fontSize: 12.5, lineHeight: 1.35, fontWeight: here ? 700 : 500, color: done ? "text.primary" : "text.secondary" }}>

@@ -177,7 +177,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         animation: `${arrival} 500ms ease-out both`,
       }}>
         <Box component="figure" sx={{ width: "100%", minWidth: 0, m: { xs: 0, sm: "auto", md: 0 }, maxWidth: { sm: 520, md: "none" } }}>
-          <Box sx={{ position: "relative", height: { xs: 175, sm: 235, md: "min(42vh, 430px)" }, filter: "drop-shadow(0 20px 35px rgba(0, 0, 0, .22))" }}>
+          <Box sx={{ position: "relative", height: { xs: 175, sm: 235, md: "min(42vh, 430px)" }, filter: `drop-shadow(0 20px 35px ${brand.blackA22})` }}>
             <Image
               src="/images/welcome-peptide-building-blocks-blue.webp"
               alt={ct("Illustration of blue building blocks linked into a chain across an open book, representing amino acids forming a peptide.")}

@@ -25,6 +25,7 @@ import { paygateOrderLink } from "@/lib/paygate"
 import { formatAddressLines } from "@/lib/address"
 import Icon from "../brand/Icon"
 import { ButtonLink } from "../common/links"
+import { brand } from "@/theme/tokens"
 
 const PAGE_SIZE = 10
 type HistoryState =
@@ -127,7 +128,7 @@ function OrderCard({ order }: { order: CustomerOrder }) {
 
   return (
     <Paper component="article" aria-label={ct.template("Order {v0}", { v0: number })} variant="outlined" sx={{ borderRadius: 3, overflow: "hidden" }}>
-      <Box sx={{ p: { xs: 2.5, md: 3.5 }, bgcolor: "#f7f9fa" }}>
+      <Box sx={{ p: { xs: 2.5, md: 3.5 }, bgcolor: brand.slate25 }}>
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "space-between" }}>
           <Box>
             <Typography variant="h5" component="h3">{ct.rich("Order {v0}", { v0: ct(number) }, {  })}</Typography>

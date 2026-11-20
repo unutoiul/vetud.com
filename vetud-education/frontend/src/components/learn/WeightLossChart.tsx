@@ -11,11 +11,12 @@ import Typography from "@mui/material/Typography"
 import { AppLink } from "@/components/common/links"
 import { EMERGING_WEIGHT_RESEARCH } from "@/content/learn/emerging-weight-research"
 import { WEIGHT_LOSS_TRIALS, type WeightLossTrial } from "@/content/learn/weight-loss-trials"
+import { brand } from "@/theme/tokens"
 
 // Emphasis form: the medicine in the brand blue, placebo in a gray that passes 3:1 on white
 // (validated with the dataviz palette script). Bars grow from one baseline, max 18px thick.
-const MEDICINE = "#3268aa"
-const PLACEBO = "#8794a8"
+const MEDICINE = brand.blue
+const PLACEBO = brand.slate400
 const SCALE_MAX = 30
 const TICKS = [0, 10, 20, 30]
 
@@ -39,7 +40,7 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
   const act = useTranslations("Actions")
   const hasHumanHighlight = WEIGHT_LOSS_TRIALS.some((trial) => trial.peptide === highlight)
   return (
-    <Box component="figure" sx={{ m: 0, minWidth: 0, maxWidth: "100%", bgcolor: "#fff", border: "1px solid", borderColor: "divider", borderRadius: "10px", p: { xs: 2.5, md: 4 } }}>
+    <Box component="figure" sx={{ m: 0, minWidth: 0, maxWidth: "100%", bgcolor: brand.white, border: "1px solid", borderColor: "divider", borderRadius: "10px", p: { xs: 2.5, md: 4 } }}>
       <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: 2, mb: 3 }}>
         <Box>
           <Typography component="figcaption" sx={{ fontSize: { xs: 19, md: 22 }, fontWeight: 650, letterSpacing: "-.02em" }}>{ct("Average body weight lost in human trials")}</Typography>
@@ -60,9 +61,9 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
                 <Typography sx={{ fontSize: 12.5, color: "text.secondary", lineHeight: 1.5 }}>{ct(trial.dose)}<br />{ct(trial.trial)} · {ct.count(trial.weeks, "week")} · {ct.count(trial.people, "person", "people")}</Typography>
               </Box>
               <Box sx={{ position: "relative", py: { xs: 1, md: 2 }, borderTop: { md: "1px solid" }, borderColor: { md: "divider" }, opacity: muted ? .5 : 1, display: "grid", alignContent: "center" }}>
-                <Box sx={{ borderLeft: "1px solid #cbd6e6", display: "grid", rowGap: "2px", mr: 6,
+                <Box sx={{ borderLeft: `1px solid ${brand.lineStrong}`, display: "grid", rowGap: "2px", mr: 6,
                   // Hairline gridlines at each tick, behind the bars (same box the bar widths measure against).
-                  backgroundImage: `linear-gradient(90deg, ${TICKS.slice(1).map((tick) => `transparent calc(${(tick / SCALE_MAX) * 100}% - 1px), #e2e8f0 calc(${(tick / SCALE_MAX) * 100}% - 1px), #e2e8f0 ${(tick / SCALE_MAX) * 100}%, transparent ${(tick / SCALE_MAX) * 100}%`).join(", ")})` }}>
+                  backgroundImage: `linear-gradient(90deg, ${TICKS.slice(1).map((tick) => `transparent calc(${(tick / SCALE_MAX) * 100}% - 1px), ${brand.line} calc(${(tick / SCALE_MAX) * 100}% - 1px), ${brand.line} ${(tick / SCALE_MAX) * 100}%, transparent ${(tick / SCALE_MAX) * 100}%`).join(", ")})` }}>
                   <Bar trial={trial} value={trial.medicineLoss} color={MEDICINE} series="Medicine" />
                   <Bar trial={trial} value={trial.placeboLoss} color={PLACEBO} series="Placebo" />
                 </Box>
@@ -71,8 +72,8 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
           )
         })}
         <Box sx={{ display: { xs: "none", md: "block" } }} />
-        <Box aria-hidden sx={{ position: "relative", height: 34, borderTop: "1px solid #cbd6e6", mr: 6, mt: { xs: 1, md: 0 } }}>
-          {TICKS.map((tick) => <Typography key={tick} component="span" sx={{ position: "absolute", top: 6, left: `${(tick / SCALE_MAX) * 100}%`, translate: tick === 0 ? "0" : "-50%", fontSize: 12, color: "#67758b", fontVariantNumeric: "tabular-nums" }}>{new Intl.NumberFormat(ct.locale, { style: "percent" }).format(tick / 100)}</Typography>)}
+        <Box aria-hidden sx={{ position: "relative", height: 34, borderTop: `1px solid ${brand.lineStrong}`, mr: 6, mt: { xs: 1, md: 0 } }}>
+          {TICKS.map((tick) => <Typography key={tick} component="span" sx={{ position: "absolute", top: 6, left: `${(tick / SCALE_MAX) * 100}%`, translate: tick === 0 ? "0" : "-50%", fontSize: 12, color: brand.muted, fontVariantNumeric: "tabular-nums" }}>{new Intl.NumberFormat(ct.locale, { style: "percent" }).format(tick / 100)}</Typography>)}
         </Box>
       </Box>
       <Typography sx={{ fontSize: 12.5, color: "text.secondary", textAlign: { md: "right" }, mr: { md: 6 } }}>{ct("Average body weight lost")}</Typography>

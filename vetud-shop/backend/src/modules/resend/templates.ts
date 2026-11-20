@@ -24,6 +24,8 @@ export const EmailTemplates = {
   RETURN_RECEIVED: "return-received",
   NEWSLETTER_SIGNUP_ADMIN: "newsletter-signup-admin",
   GUEST_CHECKOUT_ADMIN: "guest-checkout-admin",
+  /** The 6-digit code customers sign in with (there are no customer passwords). */
+  SIGN_IN_CODE: "sign-in-code",
 } as const
 
 export type EmailTemplate = (typeof EmailTemplates)[keyof typeof EmailTemplates]
@@ -94,6 +96,8 @@ type Data = {
   paid: boolean
   items: { title: string; quantity: number | string }[]
   refund_amount: Amount
+  code: string
+  minutes: number
 }
 
 /** Values are inserted into the template HTML as-is, so customer input must be escaped. */
@@ -224,6 +228,13 @@ const builders: Record<string, Builder> = {
   },
   [EmailTemplates.CUSTOMER_WELCOME]: (data) => ({
     variables: { NAME_SUFFIX: data.first_name ? `, ${data.first_name}` : "", STOREFRONT_URL: data.storefront_url },
+  }),
+  [EmailTemplates.SIGN_IN_CODE]: (data) => ({
+    variables: {
+      CODE: String(data.code).replace(/D/g, "").slice(0, 6),
+      MINUTES: String(Number(data.minutes) || 10),
+      GREETING: data.first_name ? `Hi ${data.first_name},` : "Hi,",
+    },
   }),
   [EmailTemplates.USER_INVITE]: (data) => ({
     variables: {

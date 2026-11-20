@@ -32,6 +32,7 @@ import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medu
 import { isVariantInStock, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
 import { availabilitySummary, boxedFormat, defaultVariant, FORMAT_OPTION, formatContents, formatOf, readOptions, SPRAY_FORMAT, variantsWith } from "@/lib/product-formats"
 import { getFormatPhotos, getProductImages, getProductPhotography } from "@/lib/product-images"
+import { brand } from "@/theme/tokens"
 
 const PLACEHOLDER = "__placeholder__"
 
@@ -195,7 +196,7 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
                   </Box>
                 </ArtStage>
               )}
-              <Stack direction="row" spacing={1} useFlexGap sx={{ p: 2, flexWrap: "wrap", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
+              <Stack direction="row" spacing={1} useFlexGap sx={{ p: 2, flexWrap: "wrap", borderTop: "1px solid", borderColor: "divider", bgcolor: brand.white }}>
                 {[meta.purity?.endsWith("%") ? `${meta.purity} purity` : meta.purity, meta.testing, ...meta.features, meta.lots.length ? `${meta.lots.length} documented lot${meta.lots.length > 1 ? "s" : ""}` : null]
                   .filter(Boolean)
                   .map((label) => (

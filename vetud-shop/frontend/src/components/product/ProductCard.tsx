@@ -16,12 +16,13 @@ import ProductArt from "./ProductArt"
 import ProductPhoto from "./ProductPhoto"
 import StockBadge from "./StockBadge"
 import ProductBadges from "./ProductBadges"
+import { brand } from "@/theme/tokens"
 
 /** Read by screen readers only. */
 const visuallyHidden = { position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" } as const
 
 export function ArtStage({ children, height = 290 }: { children: React.ReactNode; height?: number | object }) {
-  return <Box sx={{ position: "relative", height, overflow: "hidden", display: "grid", placeItems: "center", background: "linear-gradient(140deg, #f7faff, #eaf0f8)" }}>{children}</Box>
+  return <Box sx={{ position: "relative", height, overflow: "hidden", display: "grid", placeItems: "center", background: `linear-gradient(140deg, ${brand.blue25}, ${brand.blue50_3})` }}>{children}</Box>
 }
 
 export default function ProductCard({ product }: { product: HttpTypes.StoreProduct }) {
@@ -33,11 +34,11 @@ export default function ProductCard({ product }: { product: HttpTypes.StoreProdu
   const inStock = isProductInStock(product)
   const images = getProductImages(product)
   const detail = hasFormats(product) ? shortAvailability(product, ct) : `${ct(meta.form ?? "Research material")}${product.variants?.length ? ` · ${shortAvailability(product, ct)}` : ""}`
-  return <Box component="article" sx={{ height: "100%", position: "relative", display: "flex", flexDirection: "column", "@media (hover: hover) and (prefers-reduced-motion: no-preference)": { "&:hover .product-image": { transform: "scale(1.025)" } }, "&:hover .product-arrow": { bgcolor: "brand.navy", color: "#fff" }, "&:focus-within": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 5 } }}>
-    <Box sx={{ position: "relative", overflow: "hidden", borderRadius: "5px", border: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
+  return <Box component="article" sx={{ height: "100%", position: "relative", display: "flex", flexDirection: "column", "@media (hover: hover) and (prefers-reduced-motion: no-preference)": { "&:hover .product-image": { transform: "scale(1.025)" } }, "&:hover .product-arrow": { bgcolor: "brand.navy", color: brand.white }, "&:focus-within": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 5 } }}>
+    <Box sx={{ position: "relative", overflow: "hidden", borderRadius: "5px", border: "1px solid", borderColor: "divider", bgcolor: brand.white }}>
       {images.length ? <Box sx={{ aspectRatio: "4 / 3", position: "relative" }}><Box sx={{ position: "absolute", inset: "8% 5% 4%" }}><ProductPhoto className="product-image" images={images} title={ct(product.title)} sizes="(max-width: 600px) calc(100vw - 60px), (max-width: 900px) 45vw, 30vw" /></Box></Box> : <ArtStage height={{ xs: 270, sm: 290 }}><Box sx={{ width: "100%", maxWidth: 330 }}><ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} /></Box></ArtStage>}
-      <Typography variant="mono" sx={{ position: "absolute", left: 15, top: 14, fontSize: 9, color: "brand.navy", bgcolor: "rgba(255,255,255,.9)", border: "1px solid", borderColor: "divider", px: 1, py: .5 }}>{ct(meta.code)}</Typography>
-      {off ? <Typography component="span" sx={{ position: "absolute", right: 15, top: 14, fontSize: 12, fontWeight: 700, color: "#fff", bgcolor: "brand.navy", borderRadius: "4px", px: 1, py: .25 }}>−{ct(off)}%<Box component="span" sx={visuallyHidden}> {ct("off")}</Box></Typography> : null}
+      <Typography variant="mono" sx={{ position: "absolute", left: 15, top: 14, fontSize: 9, color: "brand.navy", bgcolor: brand.whiteA90, border: "1px solid", borderColor: "divider", px: 1, py: .5 }}>{ct(meta.code)}</Typography>
+      {off ? <Typography component="span" sx={{ position: "absolute", right: 15, top: 14, fontSize: 12, fontWeight: 700, color: brand.white, bgcolor: "brand.navy", borderRadius: "4px", px: 1, py: .25 }}>−{ct(off)}%<Box component="span" sx={visuallyHidden}> {ct("off")}</Box></Typography> : null}
     </Box>
     <Box sx={{ pt: 2.5, pb: 2, flex: 1, display: "flex", flexDirection: "column" }}>
       <ProductBadges metadata={product.metadata} />

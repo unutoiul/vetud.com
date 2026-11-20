@@ -24,6 +24,7 @@ import { ButtonLink } from "../common/links"
 import { useAccount } from "../account/AccountProvider"
 import GuestAccountOffer from "./GuestAccountOffer"
 import OrderReceiptSummary from "./OrderReceiptSummary"
+import { brand } from "@/theme/tokens"
 
 /** The copy saved at checkout in this tab: the signed-in member's, or a guest's when customerId is omitted. */
 function readStoredOrder(id: string, customerId?: string): CustomerOrder | null {
@@ -107,7 +108,7 @@ export default function OrderConfirmation() {
         <Typography sx={{ color: "text.secondary", mb: 4 }}>{ct.rich("A confirmation is on its way to <slot0>{v0}</slot0>. {v1}", { v0: ct(order.email), v1: ct(message) }, { slot0: chunks => <strong key="slot0">{chunks}</strong> })}</Typography>
 
         {manual ? (
-        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#eff5f6", borderRadius: 3, borderColor: "divider", mb: 4 }}>
+        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: brand.slate50, borderRadius: 3, borderColor: "divider", mb: 4 }}>
           <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
             {ct("How to pay")}
           </Typography>

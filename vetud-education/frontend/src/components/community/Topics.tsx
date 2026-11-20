@@ -8,6 +8,7 @@ import { AppLink } from "../common/links"
 import { formatForumDate } from "@/lib/community/format"
 import { COMMUNITY_TOPICS, type CommunityTopic } from "@/lib/community/topics"
 import type { ForumStats } from "@/lib/community/types"
+import { brand } from "@/theme/tokens"
 
 type Counts = ForumStats["topics"]
 
@@ -60,7 +61,7 @@ export function TopicGrid({ counts }: { counts?: Counts }) {
         {COMMUNITY_TOPICS.map((topic) => {
           const stats = counts?.[topic.id]
           return (
-            <Box component="li" key={topic.id} sx={{ position: "relative", display: "flex", gap: 1.75, p: 2.25, border: "1px solid", borderColor: "divider", borderRadius: "10px", bgcolor: "#fff", transition: "border-color .15s ease, box-shadow .15s ease", "&:hover, &:focus-within": { borderColor: "brand.blue", boxShadow: "0 10px 24px -18px rgba(21,38,94,.45)" } }}>
+            <Box component="li" key={topic.id} sx={{ position: "relative", display: "flex", gap: 1.75, p: 2.25, border: "1px solid", borderColor: "divider", borderRadius: "10px", bgcolor: brand.white, transition: "border-color .15s ease, box-shadow .15s ease", "&:hover, &:focus-within": { borderColor: "brand.blue", boxShadow: `0 10px 24px -18px ${brand.navyA45}` } }}>
               <Box aria-hidden sx={{ width: 40, height: 40, flexShrink: 0, borderRadius: "10px", bgcolor: "brand.mintWash", color: "brand.blue", display: "grid", placeItems: "center" }}><Icon name={topic.icon} sx={{ fontSize: 21 }} /></Box>
               <Box sx={{ minWidth: 0 }}>
                 <Typography component="h3" sx={{ fontSize: 16, fontWeight: 650, lineHeight: 1.35 }}>
@@ -87,7 +88,7 @@ export function StarterPrompts({ topic, prompts }: { topic?: CommunityTopic; pro
     <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gap: 1, textAlign: "left" }}>
       {prompts.map((prompt) => (
         <Box component="li" key={translateAction(act, prompt)}>
-          <AppLink href={`/community/new?kind=question${topic ? `&topic=${topic.id}` : ""}&title=${encodeURIComponent(translateAction(act, prompt))}`} underline="none" sx={{ display: "flex", alignItems: "center", gap: 1.25, minHeight: 48, px: 2, py: 1, border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: "#fff", color: "brand.navy", fontSize: 14.5, "&:hover": { borderColor: "brand.blue", bgcolor: "brand.mintWash" } }}>
+          <AppLink href={`/community/new?kind=question${topic ? `&topic=${topic.id}` : ""}&title=${encodeURIComponent(translateAction(act, prompt))}`} underline="none" sx={{ display: "flex", alignItems: "center", gap: 1.25, minHeight: 48, px: 2, py: 1, border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: brand.white, color: "brand.navy", fontSize: 14.5, "&:hover": { borderColor: "brand.blue", bgcolor: "brand.mintWash" } }}>
             <Icon name="plus" sx={{ fontSize: 16, color: "brand.blue", flexShrink: 0 }} />
             <Box component="span" sx={{ flex: 1 }}>{translateAction(act, prompt)}</Box>
             <Box component="span" sx={{ fontSize: 12.5, color: "brand.blue", fontWeight: 600, whiteSpace: "nowrap" }}>{act("askThis")}</Box>

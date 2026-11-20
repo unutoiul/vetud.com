@@ -9,7 +9,7 @@ import { entryVisitor, rememberEntryVisitor, type EntryVisitor } from "./entry-s
 import { dismissWelcomeForSession, startWelcomeForSession } from "./session"
 
 // Pages opened from an email link, where a full-screen sign-up would get in the way.
-const QUIET_PATHS = /^\/[^/]+\/(newsletter|account\/reset-password)(\/|$)/
+const QUIET_PATHS = /^\/[^/]+\/(newsletter)(\/|$)/
 
 /**
  * Offer the email list thirty seconds after entry and after each dismissal, until subscribed.

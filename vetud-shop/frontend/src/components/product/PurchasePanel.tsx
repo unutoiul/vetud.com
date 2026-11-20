@@ -27,6 +27,7 @@ import { useProductSelection } from "./ProductSelection"
 import QuantityStepper from "./QuantityStepper"
 import StockBadge from "./StockBadge"
 import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
+import { brand } from "@/theme/tokens"
 
 /** A supply offered next to the vial format: bacteriostatic water, U-100 syringes. */
 export type PurchaseAddOn = { variantId: string; title: string; detail: string; unit?: string; image?: string; price: { amount: number; currencyCode: string } }
@@ -104,7 +105,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
               <Typography sx={{ color: "text.secondary", textDecoration: "line-through" }}>{ct.rich("<slot0>Regular price </slot0>{v0}", { v0: ct(money(price.original, price.currencyCode)) }, { slot0: chunks => <Box component="span" sx={{ position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }} key="slot0">{chunks}</Box> })}</Typography>
             ) : null}
             {off ? (
-              <Typography component="span" sx={{ alignSelf: "center", fontSize: 13, fontWeight: 700, color: "#fff", bgcolor: "brand.navy", borderRadius: "4px", px: 1, py: 0.25 }}>
+              <Typography component="span" sx={{ alignSelf: "center", fontSize: 13, fontWeight: 700, color: brand.white, bgcolor: "brand.navy", borderRadius: "4px", px: 1, py: 0.25 }}>
                 {new Intl.NumberFormat(ct.locale, { style: "percent" }).format(off / 100)} {ct("off")}
               </Typography>
             ) : null}
@@ -156,7 +157,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
                           borderRadius: "8px",
                           border: "2px solid",
                           borderColor: selected ? "brand.blue" : "brand.lineStrong",
-                          bgcolor: selected ? "brand.mintLight" : "#fff",
+                          bgcolor: selected ? "brand.mintLight" : brand.white,
                           transition: "border-color .15s, background-color .15s",
                           "&:hover": { borderColor: "brand.blue" },
                           "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 },
@@ -217,7 +218,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
                             border: "1px solid !important",
                             borderColor: "brand.lineStrong !important",
                             borderRadius: "5px !important",
-                            bgcolor: "#fff",
+                            bgcolor: brand.white,
                             "&.Mui-selected": {
                               bgcolor: "brand.mintLight",
                               borderColor: "brand.blue !important",
@@ -262,7 +263,7 @@ export default function PurchasePanel({ product, addOns = [] }: { product: HttpT
               return (
                 <Box key={addOn.variantId} sx={{ display: "grid", gridTemplateColumns: "auto 44px minmax(0, 1fr) auto", alignItems: "center", columnGap: 1.25, rowGap: 1, p: 0.75, borderRadius: "6px", bgcolor: count ? "brand.mintLight" : "transparent", "&:hover": { bgcolor: count ? "brand.mintLight" : "brand.mintWash" } }}>
                   <Checkbox checked={count > 0} onChange={(event) => setExtra(addOn.variantId, event.target.checked ? 1 : 0)} size="small" sx={{ p: 0.5 }} slotProps={{ input: { id } }} />
-                  <Box component="label" htmlFor={id} sx={{ position: "relative", width: 44, height: 44, borderRadius: "4px", overflow: "hidden", bgcolor: "#fff", border: "1px solid", borderColor: "divider", cursor: "pointer" }}>
+                  <Box component="label" htmlFor={id} sx={{ position: "relative", width: 44, height: 44, borderRadius: "4px", overflow: "hidden", bgcolor: brand.white, border: "1px solid", borderColor: "divider", cursor: "pointer" }}>
                     {addOn.image ? <Image src={addOn.image} alt="" fill sizes="44px" style={{ objectFit: "contain" }} /> : null}
                   </Box>
                   <Box component="label" htmlFor={id} sx={{ minWidth: 0, cursor: "pointer" }}>

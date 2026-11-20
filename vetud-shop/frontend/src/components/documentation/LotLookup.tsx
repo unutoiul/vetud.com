@@ -21,6 +21,7 @@ import { sdk } from "@/lib/medusa/sdk"
 import { parseLots, readProductMeta, type ProductLot } from "@/lib/product"
 import { AppLink } from "../common/links"
 import ProductThumb from "../product/ProductThumb"
+import { brand } from "@/theme/tokens"
 
 type Match = { product: HttpTypes.StoreProduct; lot: ProductLot }
 
@@ -124,7 +125,7 @@ export default function LotLookup() {
             const meta = readProductMeta(product)
             return (
               <Grid key={`${product.id}-${lot.lot}`} size={{ xs: 12, md: 8 }}>
-                <Paper variant="outlined" sx={{ p: 3, display: "flex", gap: 2.5, alignItems: "center", bgcolor: "#f7f9fa", borderRadius: 3 }}>
+                <Paper variant="outlined" sx={{ p: 3, display: "flex", gap: 2.5, alignItems: "center", bgcolor: brand.slate25, borderRadius: 3 }}>
                   <Box sx={{ width: 120, flexShrink: 0, display: { xs: "none", sm: "block" } }}>
                     <ProductThumb image={product.thumbnail} handle={product.handle} meta={meta} sizes="120px" />
                   </Box>

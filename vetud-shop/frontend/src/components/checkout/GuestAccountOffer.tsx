@@ -5,11 +5,12 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import CircularProgress from "@mui/material/CircularProgress"
 import Paper from "@mui/material/Paper"
+import Stack from "@mui/material/Stack"
+import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { sdk } from "@/lib/medusa/sdk"
-import { AuthPanel, PasswordField } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
 
 function errorText(error: unknown) {
@@ -18,10 +19,10 @@ function errorText(error: unknown) {
 }
 
 /**
- * After a guest order: create an account with a password and keep this order in it, or, when there
- * already is an account for this email, sign in and add the order to it. The browser proves it placed
- * the order with the order's cart, saved at checkout; this works for 24 hours. The page shows the
- * confirmation once the order has moved.
+ * After a guest order: keep it in an account. There are no passwords (owner, 2026-11-19): we email
+ * a 6-digit code to the order's address, and entering it signs the shopper in (making the account
+ * the first time) and adds the order. A signed-in member with the same email just adds it. The
+ * browser proves it placed the order with the order's cart, saved at checkout; this works for 24 hours.
  */
 export default function GuestAccountOffer({ orderId, email, cartId, onAdded }: {
   orderId: string
@@ -30,42 +31,27 @@ export default function GuestAccountOffer({ orderId, email, cartId, onAdded }: {
   onAdded: () => void
 }) {
   const ct = useContentTranslator()
-  const { customer, signIn } = useAccount()
-  const [password, setPassword] = useState("")
+  const { customer, requestCode, verifyCode } = useAccount()
+  const [codeSent, setCodeSent] = useState(false)
+  const [code, setCode] = useState("")
+  const [wait, setWait] = useState(0)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [existingAccount, setExistingAccount] = useState(false)
 
-  const addOrder = (body: { cart_id: string; password?: string }) =>
-    sdk.client.fetch<{ email: string; account_created: boolean }>(`/store/guest-orders/${encodeURIComponent(orderId)}/account`, { method: "POST", body })
+  useEffect(() => {
+    if (wait <= 0) return
+    const timer = window.setTimeout(() => setWait((seconds) => seconds - 1), 1000)
+    return () => window.clearTimeout(timer)
+  }, [wait])
 
-  const createAccount = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setError(null)
-    if (password.length < 8) {
-      setError("Use at least 8 characters.")
-      return
-    }
-    setBusy(true)
-    try {
-      await addOrder({ cart_id: cartId, password })
-      await signIn(email, password)
-      onAdded()
-    } catch (caught) {
-      const message = errorText(caught)
-      if (/already an account/i.test(message)) setExistingAccount(true)
-      setError(message)
-    } finally {
-      setBusy(false)
-    }
-  }
+  const addOrder = () =>
+    sdk.client.fetch<{ email: string; account_created: boolean }>(`/store/guest-orders/${encodeURIComponent(orderId)}/account`, { method: "POST", body: { cart_id: cartId } })
 
-  const addToAccount = async () => {
+  const task = async (work: () => Promise<void>) => {
     setError(null)
     setBusy(true)
     try {
-      await addOrder({ cart_id: cartId })
-      onAdded()
+      await work()
     } catch (caught) {
       setError(errorText(caught))
     } finally {
@@ -73,6 +59,31 @@ export default function GuestAccountOffer({ orderId, email, cartId, onAdded }: {
     }
   }
 
+  const sendCode = () => task(async () => {
+    setWait((await requestCode(email)).resendAfter)
+    setCode("")
+    setCodeSent(true)
+  })
+
+  const createAccount = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!/^\d{6}$/.test(code.replace(/\D/g, ""))) {
+      setError("Enter the 6-digit code from the email.")
+      return
+    }
+    void task(async () => {
+      await verifyCode(email, code)
+      await addOrder()
+      onAdded()
+    })
+  }
+
+  const addToAccount = () => task(async () => {
+    await addOrder()
+    onAdded()
+  })
+
+  const spinner = busy ? <CircularProgress size={16} color="inherit" /> : undefined
   return (
     <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, borderRadius: 3, mb: 4 }}>
       <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>{ct("Optional")}</Typography>
@@ -82,23 +93,34 @@ export default function GuestAccountOffer({ orderId, email, cartId, onAdded }: {
       <Typography sx={{ color: "text.secondary", mt: 1, mb: 2.5 }}>
         {customer
           ? ct("Keep this order with your others, so you can follow it from your account.")
-          : ct.rich("Choose a password to create an account for <slot0>{v0}</slot0>. You'll be able to follow this order and check out faster next time.", { v0: email }, { slot0: (chunks) => <strong key="slot0">{chunks}</strong> })}
+          : ct.rich("We'll email a 6-digit code to <slot0>{v0}</slot0>. Enter it here and your account is ready, with this order in it. No password needed.", { v0: email }, { slot0: (chunks) => <strong key="slot0">{chunks}</strong> })}
       </Typography>
-      {error ? <Alert severity={existingAccount && !customer ? "info" : "error"} sx={{ mb: 2 }}>{ct(error)}</Alert> : null}
+      {error ? <Alert severity="error" sx={{ mb: 2 }}>{ct(error)}</Alert> : null}
       {customer ? (
-        <Button variant="contained" size="large" disabled={busy} onClick={() => void addToAccount()} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined}>
+        <Button variant="contained" size="large" disabled={busy} onClick={() => void addToAccount()} startIcon={spinner}>
           {ct("Add to my account")}
         </Button>
-      ) : existingAccount ? (
-        <AuthPanel context="checkout" initialEmail={email} />
+      ) : !codeSent ? (
+        <Button variant="contained" size="large" disabled={busy} onClick={() => void sendCode()} startIcon={spinner}>
+          {ct("Email me a code")}
+        </Button>
       ) : (
         <Box component="form" onSubmit={createAccount} noValidate>
-          {/* Lets password managers save the new password under the right email. */}
-          <Box component="input" type="email" name="email" autoComplete="username" value={email} readOnly tabIndex={-1} aria-hidden sx={{ display: "none" }} />
-          <PasswordField label={ct("Choose a password")} value={password} onChange={setPassword} autoComplete="new-password" helperText={ct("At least 8 characters.")} />
-          <Button type="submit" variant="contained" size="large" disabled={busy} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined} sx={{ mt: 2 }}>
-            {ct("Create my account")}
-          </Button>
+          <Alert severity="info" role="status" sx={{ mb: 2 }}>{ct("Check your email for the code. It works for 10 minutes.")}</Alert>
+          <TextField
+            label={ct("Sign-in code")}
+            required
+            autoFocus
+            value={code}
+            onChange={(event) => setCode(event.target.value.replace(/[^\d ]/g, "").slice(0, 7))}
+            slotProps={{ htmlInput: { autoComplete: "one-time-code", inputMode: "numeric", maxLength: 7, sx: { letterSpacing: "0.3em", fontVariantNumeric: "tabular-nums", fontSize: 20 } } }}
+          />
+          <Stack direction={{ xs: "column", sm: "row" }} useFlexGap spacing={1} sx={{ mt: 2, alignItems: { sm: "center" }, flexWrap: "wrap" }}>
+            <Button type="submit" variant="contained" size="large" disabled={busy} startIcon={spinner}>{ct("Create my account")}</Button>
+            <Button type="button" disabled={busy || wait > 0} onClick={() => void sendCode()} sx={{ minHeight: 44 }}>
+              {wait > 0 ? ct.template("Send a new code in {v0} s", { v0: wait }) : ct("Send a new code")}
+            </Button>
+          </Stack>
         </Box>
       )}
     </Paper>

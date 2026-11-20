@@ -13,4 +13,5 @@ export const RESEND_TEMPLATE_IDS: Partial<Record<EmailTemplate, string>> = {
   "sign-in-code": "5c0f2bfd-5ade-406c-9b0f-029cfd491115",
   "email-list-confirm": "0c0cae3b-6391-48b0-a099-964cd04eb3f8",
   "email-list-confirm-fr": "5337b094-9a4e-4256-85fa-545775f0fcee",
+  "email-change-code": "368d1490-dce7-49fe-a494-ad8556afa70a",
 }

@@ -24,17 +24,14 @@ type AccountContextValue = {
   loading: boolean
   pending: boolean
   error: string | null
-  signIn: (email: string, password: string) => Promise<void>
-  signUp: (details: {
-    email: string
-    password: string
-    first_name: string
-    last_name: string
-    phone?: string
-  }) => Promise<void>
+  /**
+   * Emails a 6-digit sign-in code. `sent` is false when one went out less than 30 seconds ago;
+   * `resendAfter` is the wait, in seconds, before another can be sent.
+   */
+  requestCode: (email: string) => Promise<{ sent: boolean; resendAfter: number }>
+  /** Signs in with the emailed code (for 30 days). The first sign-in creates the account. */
+  verifyCode: (email: string, code: string) => Promise<void>
   signOut: () => Promise<void>
-  requestPasswordReset: (email: string, countryCode: string) => Promise<void>
-  resetPassword: (password: string, token: string) => Promise<void>
   updateProfile: (details: HttpTypes.StoreUpdateCustomer) => Promise<void>
   createAddress: (address: HttpTypes.StoreCreateCustomerAddress) => Promise<void>
   updateAddress: (id: string, address: HttpTypes.StoreUpdateCustomerAddress) => Promise<void>
@@ -55,6 +52,16 @@ function errorMessage(error: unknown) {
 
 function isToken(value: unknown): value is string {
   return typeof value === "string" && value.length > 0
+}
+
+/** A sign-in token names the customer once the account exists; a first sign-in's token doesn't. */
+function tokenHasCustomer(token: string) {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")))
+    return typeof payload.actor_id === "string" && payload.actor_id.length > 0
+  } catch {
+    return false
+  }
 }
 
 export default function AccountProvider({ children }: { children: ReactNode }) {
@@ -142,36 +149,32 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
     }
   }, [captureSession])
 
-  const signIn = useCallback(
-    async (email: string, password: string) => {
-      authVersion.current += 1
-      await run(async (assertCurrent) => {
-        const result = await sdk.auth.login("customer", "emailpass", { email, password })
-        assertCurrent()
-        if (!isToken(result)) {
-          throw new Error("This sign-in needs an additional verification step. Please contact support.")
-        }
-        await refreshCustomer()
-      })
-    },
-    [refreshCustomer, run]
+  // Customers have no passwords (owner, 2026-11-19): an emailed code signs them in for 30 days.
+  const requestCode = useCallback(
+    (email: string) =>
+      run(async () => {
+        const { sent, resend_after } = await sdk.client.fetch<{ sent: boolean; resend_after: number }>("/store/sign-in-code", {
+          method: "POST",
+          body: { email: email.trim() },
+        })
+        return { sent, resendAfter: resend_after }
+      }),
+    [run]
   )
 
-  const signUp = useCallback(
-    async ({ email, password, first_name, last_name, phone }: Parameters<AccountContextValue["signUp"]>[0]) => {
+  const verifyCode = useCallback(
+    async (email: string, code: string) => {
       authVersion.current += 1
       await run(async (assertCurrent) => {
-        await sdk.auth.register("customer", "emailpass", { email, password })
+        const result = await sdk.auth.login("customer", "email-code", { email: email.trim(), code: code.replace(/D/g, "") })
         assertCurrent()
-        await sdk.store.customer.create(
-          { email, first_name, last_name, phone: phone || undefined },
-          { fields: CUSTOMER_FIELDS }
-        )
-        assertCurrent()
-        const result = await sdk.auth.login("customer", "emailpass", { email, password })
-        assertCurrent()
-        if (!isToken(result)) {
-          throw new Error("Your account was created, but sign-in needs an additional step. Please contact support.")
+        if (!isToken(result)) throw new Error("This sign-in needs another step. Please contact us.")
+        // The first sign-in makes the account; the refreshed token then carries it.
+        if (!tokenHasCustomer(result)) {
+          await sdk.store.customer.create({ email: email.trim() }, { fields: CUSTOMER_FIELDS })
+          assertCurrent()
+          await sdk.auth.refresh()
+          assertCurrent()
         }
         await refreshCustomer()
       })
@@ -190,29 +193,6 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       clearCart()
     })
   }, [clearCart, run])
-
-  const requestPasswordReset = useCallback(
-    async (email: string, countryCode: string) => {
-      await run(async () => {
-        // Medusa answers the same way whether or not the account exists. The country
-        // lets the emailed link open the storefront in the shopper's region.
-        await sdk.auth.resetPassword("customer", "emailpass", {
-          identifier: email,
-          metadata: { country_code: countryCode },
-        })
-      })
-    },
-    [run]
-  )
-
-  const resetPassword = useCallback(
-    async (password: string, token: string) => {
-      await run(async () => {
-        await sdk.auth.updateProvider("customer", "emailpass", { password }, token)
-      })
-    },
-    [run]
-  )
 
   const updateProfile = useCallback(
     async (details: HttpTypes.StoreUpdateCustomer) => {
@@ -265,11 +245,9 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       loading,
       pending,
       error,
-      signIn,
-      signUp,
+      requestCode,
+      verifyCode,
       signOut,
-      requestPasswordReset,
-      resetPassword,
       updateProfile,
       createAddress,
       updateAddress,
@@ -283,11 +261,9 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       loading,
       pending,
       error,
-      signIn,
-      signUp,
+      requestCode,
+      verifyCode,
       signOut,
-      requestPasswordReset,
-      resetPassword,
       updateProfile,
       createAddress,
       updateAddress,

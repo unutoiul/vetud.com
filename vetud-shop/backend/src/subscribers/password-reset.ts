@@ -12,7 +12,8 @@ export default async function passwordResetHandler({
   event: { data },
   container,
 }: SubscriberArgs<PasswordResetEvent>) {
-  if (data.actor_type !== "customer" && data.actor_type !== "user") {
+  // Only admin users have passwords: customers sign in with an emailed code (owner, 2026-11-19).
+  if (data.actor_type !== "user") {
     return
   }
 

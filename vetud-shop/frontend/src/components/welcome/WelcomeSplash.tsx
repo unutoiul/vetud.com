@@ -82,14 +82,13 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
 }) {
   const ct = useContentTranslator()
   const offerText = useTranslations("Offer")
-  const actions = useTranslations("Actions")
   const footerText = useTranslations("Footer")
   const { countryCode } = useStore()
   const [email, setEmail] = useState("")
   const [consent, setConsent] = useState(false)
   const [website, setWebsite] = useState("")
   const [showErrors, setShowErrors] = useState(false)
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
+  const [status, setStatus] = useState<"idle" | "sending" | "error">("idle")
   const submitting = useRef(false)
   const form = useRef<HTMLFormElement>(null)
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
@@ -110,7 +109,8 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
     setStatus("sending")
     try {
       await subscribeToNewsletter({ email, consent: true, countryCode, website })
-      setStatus("success")
+      // The splash closes as soon as the sign-up is saved: no thank-you screen.
+      setStatus("idle")
       onSubscribed()
     } catch {
       setStatus("error")
@@ -166,7 +166,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         animation: `${arrival} 500ms ease-out both`,
       }}>
         <Box component="figure" sx={{ width: "100%", minWidth: 0, m: { xs: 0, sm: "auto", md: 0 }, maxWidth: { sm: 520, md: "none" } }}>
-          <Box sx={{ position: "relative", height: { xs: 175, sm: 235, md: "min(42vh, 430px)" }, filter: "drop-shadow(0 20px 35px rgba(0, 0, 0, .22))" }}>
+          <Box sx={{ position: "relative", height: { xs: 175, sm: 235, md: "min(42vh, 430px)" }, filter: `drop-shadow(0 20px 35px ${brand.blackA22})` }}>
             <Image
               src="/images/welcome-peptide-building-blocks-blue.webp"
               alt={ct("Illustration of blue building blocks linked into a chain across an open book, representing amino acids forming a peptide.")}
@@ -192,15 +192,9 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
             fontSize: { xs: "clamp(36px, 4.4vw, 64px)", sm: 46, md: "clamp(44px, min(4.4vw, 6.7vh), 64px)" },
             lineHeight: 1.08,
             letterSpacing: "-.055em",
-          }}>{ct(status === "success" ? "You're on the list." : "Peptide science. Made simple.")}</Typography>
+          }}>{ct("Peptide science. Made simple.")}</Typography>
 
-          {status === "success" ? <div role="status" aria-live="polite" aria-atomic="true">
-            <Box sx={{ display: "grid", placeItems: "center", width: 52, height: 52, my: 2.75, borderRadius: "50%", bgcolor: "brand.navy", color: "brand.cyan" }}><Icon name="check" sx={{ fontSize: 28 }} /></Box>
-            <Typography id="welcome-description" sx={descriptionSx}>{ct("Thanks for signing up to VETUD. We'll email you our latest offers and news.")}</Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 3.25 }}>
-              <Button variant="contained" onClick={onDismiss} sx={primaryButtonSx}>{actions("close")}</Button>
-            </Box>
-          </div> : <>
+          <>
             <Typography id="welcome-description" sx={descriptionSx}>{ct("Get VETUD offers and news in your inbox.")}</Typography>
             <Box component="form" ref={form} onSubmit={handleSubmit} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 3, md: 3.75 } }}>
               <TextField
@@ -251,7 +245,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
               </Button>
               <Typography sx={{ mt: 1.5, textAlign: "center", fontSize: 12, lineHeight: 1.6, color: "brand.onNavyMuted" }}>{ct("Free to join. Unsubscribe whenever you like.")}</Typography>
             </Box>
-          </>}
+          </>
         </Box>
       </Box>
 

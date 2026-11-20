@@ -16,6 +16,7 @@ import { useState, useTransition } from "react"
 import Icon from "@/components/brand/Icon"
 import { shopQuery, type CategoryFacet } from "@/lib/catalog-filters"
 import type { ProductSort } from "@/lib/medusa/products"
+import { brand } from "@/theme/tokens"
 
 type Props = { categories: CategoryFacet[]; selected?: string; total: number; query?: string; sort: ProductSort }
 
@@ -35,9 +36,9 @@ export function CategoryList({ categories, selected, total, onPick, disabled }: 
         const active = option.handle === selected
         return (
           <Box component="li" key={option.handle ?? "all"}>
-            <Box component="button" type="button" onClick={() => onPick(option.handle)} disabled={disabled} aria-pressed={active} sx={{ width: "100%", minHeight: 46, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, px: 1.75, border: 0, borderRadius: "10px", font: "inherit", fontSize: 15, fontWeight: 600, textAlign: "left", cursor: disabled ? "wait" : "pointer", bgcolor: active ? "brand.navy" : "transparent", color: active ? "#fff" : "text.primary", transition: "background-color .15s ease", "&:hover": { bgcolor: active ? "brand.navy" : "rgba(21,38,94,.06)" }, "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
+            <Box component="button" type="button" onClick={() => onPick(option.handle)} disabled={disabled} aria-pressed={active} sx={{ width: "100%", minHeight: 46, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, px: 1.75, border: 0, borderRadius: "10px", font: "inherit", fontSize: 15, fontWeight: 600, textAlign: "left", cursor: disabled ? "wait" : "pointer", bgcolor: active ? "brand.navy" : "transparent", color: active ? brand.white : "text.primary", transition: "background-color .15s ease", "&:hover": { bgcolor: active ? "brand.navy" : brand.navyA06 }, "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
               {translateAction(act, option.name)}
-              <Box component="span" sx={{ minWidth: 30, px: .75, py: .25, borderRadius: "6px", textAlign: "center", fontSize: 13, fontVariantNumeric: "tabular-nums", bgcolor: active ? "rgba(255,255,255,.16)" : "#fff", color: active ? "#fff" : "text.secondary" }}>{ct(option.count)}</Box>
+              <Box component="span" sx={{ minWidth: 30, px: .75, py: .25, borderRadius: "6px", textAlign: "center", fontSize: 13, fontVariantNumeric: "tabular-nums", bgcolor: active ? brand.whiteA16 : brand.white, color: active ? brand.white : "text.secondary" }}>{ct(option.count)}</Box>
             </Box>
           </Box>
         )

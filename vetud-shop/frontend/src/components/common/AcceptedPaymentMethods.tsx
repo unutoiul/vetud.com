@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl"
 import Icon from "@/components/brand/Icon"
 import { loadPaymentMethods, type PaymentMethod } from "@/lib/payment-methods"
 import { useStore } from "../store/StoreProvider"
+import { brand } from "@/theme/tokens"
 
 type Props = {
   regionId?: string
@@ -56,7 +57,7 @@ export default function AcceptedPaymentMethods({ regionId, currency, enabled = t
                 <span aria-hidden="true">{t(method)}</span>
               </Box>
             ) : (
-              <Image src={`/payment-methods/${method}.svg`} alt={ct(labels[method])} width={38} height={24} loading="lazy" style={{ display: "block", background: "#fff", borderRadius: 3 }} />
+              <Image src={`/payment-methods/${method}.svg`} alt={ct(labels[method])} width={38} height={24} loading="lazy" style={{ display: "block", background: brand.white, borderRadius: 3 }} />
             )}
           </Box>
         ))}

@@ -46,6 +46,7 @@ import { CART_FIELDS, useStore } from "../store/StoreProvider"
 import AddressFields, { toAddressValues, validateAddress, type AddressValues } from "./AddressFields"
 import PayPalReturn from "./PayPalReturn"
 import CheckoutOrderSummary from "./CheckoutOrderSummary"
+import { brand } from "@/theme/tokens"
 
 const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
 const PayPalPaymentForm = dynamic(() => import("./PayPalPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={48} /> })
@@ -177,7 +178,7 @@ function selectableSx(selected: boolean) {
     width: "100%",
     border: "1px solid",
     borderColor: selected ? "secondary.main" : "brand.lineStrong",
-    bgcolor: selected ? "#eff5f6" : "#fff",
+    bgcolor: selected ? brand.slate50 : brand.white,
     borderRadius: 2.5,
     p: 1.5,
     pr: 2,
@@ -713,7 +714,7 @@ function Step({
 }) {
   const ct = useContentTranslator()
   return (
-    <Paper component="section" variant="outlined" aria-label={ct(title)} sx={{ p: { xs: 2.5, sm: 3.5 }, borderRadius: 3, bgcolor: locked ? "brand.paper" : "#fff" }}>
+    <Paper component="section" variant="outlined" aria-label={ct(title)} sx={{ p: { xs: 2.5, sm: 3.5 }, borderRadius: 3, bgcolor: locked ? "brand.paper" : brand.white }}>
       <Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
         <Box
           aria-hidden
@@ -727,7 +728,7 @@ function Step({
             fontSize: 13,
             fontWeight: 700,
             bgcolor: done ? "secondary.main" : locked ? "brand.line" : "primary.main",
-            color: locked && !done ? "text.secondary" : "#fff",
+            color: locked && !done ? "text.secondary" : brand.white,
           }}
         >
           {done ? <Icon name="check" sx={{ fontSize: 16 }} /> : index}

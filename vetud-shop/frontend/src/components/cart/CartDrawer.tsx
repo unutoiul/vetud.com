@@ -18,6 +18,7 @@ import CartAnnouncer from "./CartAnnouncer"
 import CartLineItem from "./CartLineItem"
 import FreeShippingProgress from "./FreeShippingProgress"
 import AcceptedPaymentMethods from "../common/AcceptedPaymentMethods"
+import { brand } from "@/theme/tokens"
 
 export default function CartDrawer() {
   const ct = useContentTranslator()
@@ -37,7 +38,7 @@ export default function CartDrawer() {
       anchor="right"
       open={drawerOpen}
       onClose={closeDrawer}
-      slotProps={{ paper: { role: "dialog", "aria-modal": true, "aria-labelledby": "cart-drawer-title", sx: { width: { xs: "100%", sm: 460 }, bgcolor: "#f7f9fa", overscrollBehavior: "contain" } } }}
+      slotProps={{ paper: { role: "dialog", "aria-modal": true, "aria-labelledby": "cart-drawer-title", sx: { width: { xs: "100%", sm: 460 }, bgcolor: brand.slate25, overscrollBehavior: "contain" } } }}
     >
       <CartAnnouncer />
       <Stack sx={{ height: "100%" }}>
@@ -82,7 +83,7 @@ export default function CartDrawer() {
         </Box>
 
         {items.length ? (
-          <Box sx={{ flexShrink: 0, px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
+          <Box sx={{ flexShrink: 0, px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: brand.white }}>
             <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
               <Typography sx={{ fontWeight: 600 }}>{ct("Subtotal")}</Typography>
               <Typography sx={{ fontWeight: 700 }}>{ct(money(subtotal, currency))}</Typography>

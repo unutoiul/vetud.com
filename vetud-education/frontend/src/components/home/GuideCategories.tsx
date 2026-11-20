@@ -8,6 +8,7 @@ import { PEPTIDES } from "@/content/learn/peptides"
 import { translateAction } from "@/i18n/actions"
 import Icon from "../brand/Icon"
 import { AppLink } from "../common/links"
+import { brand } from "@/theme/tokens"
 
 const artwork: Record<CategoryId, string> = {
   weight: "mazdutide", skin: "matrixyl", pigmentation: "melanotan", hair: "ahk-cu",
@@ -18,8 +19,8 @@ const artwork: Record<CategoryId, string> = {
 /** Illustrations whose subject sits small in the frame: zoomed in so a thumbnail still shows it. */
 const zoomed = new Set<CategoryId>(["pigmentation", "hair", "recovery", "energy", "calm", "sleep", "intimacy"])
 
-const INK = "#192b3d"
-const LINE = "#d4d1c8"
+const INK = brand.blue825
+const LINE = brand.stone200
 
 /**
  * Every topic at once in a compact grid, so nothing scrolls sideways (owner request 2026-11-18).
@@ -32,7 +33,7 @@ export default async function GuideCategories() {
     count: t("guideCount", { count: PEPTIDES.filter(guide => guide.category === id).length }),
   }))
 
-  return <Box component="section" aria-labelledby="guide-categories-heading" sx={{ color: INK, bgcolor: "#f4f1ea" }}>
+  return <Box component="section" aria-labelledby="guide-categories-heading" sx={{ color: INK, bgcolor: brand.amber75 }}>
     <Box sx={{ maxWidth: 1520, mx: "auto", px: { xs: "max(18px, 5vw)", md: "clamp(24px, 5vw, 80px)" }, py: { xs: 3, md: 5 } }}>
       <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: "4px 18px", mb: { xs: 2, md: 2.5 } }}>
         <Typography id="guide-categories-heading" component="h2" variant="inherit" sx={{ m: 0, font: "inherit", fontWeight: 500, lineHeight: 1.1, fontSize: { xs: 24, md: "clamp(28px, 2.4vw, 36px)" }, letterSpacing: "-.045em" }}>
@@ -48,19 +49,19 @@ export default async function GuideCategories() {
             <AppLink href={`/learn#${category.id}`} underline="none"
               sx={{
                 display: "flex", alignItems: "center", gap: { xs: 1, md: 1.5 }, height: "100%", minHeight: { xs: 48, md: 64 }, p: { xs: 0.75, md: 1 }, pr: { xs: 1, md: 1.5 },
-                border: `1px solid ${LINE}`, borderRadius: "10px", bgcolor: "#fffcf6", color: INK, fontWeight: 400,
+                border: `1px solid ${LINE}`, borderRadius: "10px", bgcolor: brand.amber25, color: INK, fontWeight: 400,
                 transition: "border-color .2s ease, box-shadow .2s ease",
-                "&:hover": { borderColor: "#355c60", boxShadow: "0 6px 18px rgba(25,43,61,.08)" },
+                "&:hover": { borderColor: brand.slate700, boxShadow: `0 6px 18px ${brand.blue825A08}` },
                 "&:hover .category-name": { textDecoration: "underline", textUnderlineOffset: "3px" },
-                "&:focus-visible": { outline: "3px solid #126476", outlineOffset: "2px" },
+                "&:focus-visible": { outline: `3px solid ${brand.teal725}`, outlineOffset: "2px" },
               }}>
-              <Box component="span" sx={{ position: "relative", width: { xs: 34, md: 52 }, height: { xs: 34, md: 52 }, flexShrink: 0, overflow: "hidden", borderRadius: { xs: "6px", md: "8px" }, bgcolor: "#e3dfd7" }}>
+              <Box component="span" sx={{ position: "relative", width: { xs: 34, md: 52 }, height: { xs: 34, md: 52 }, flexShrink: 0, overflow: "hidden", borderRadius: { xs: "6px", md: "8px" }, bgcolor: brand.stone125 }}>
                 <Image src={category.cover} alt="" fill sizes="56px"
                   style={{ objectFit: "cover", ...(zoomed.has(category.id) ? { transform: "scale(1.45)", transformOrigin: "72% 85%" } : {}) }} />
               </Box>
               <Box component="span" sx={{ display: "grid", minWidth: 0, flex: 1 }}>
                 <Typography component="strong" className="category-name" sx={{ fontWeight: 600, fontSize: { xs: 13, md: 16 }, lineHeight: 1.2, letterSpacing: "-.02em", overflowWrap: "anywhere" }}>{category.name}</Typography>
-                <Typography component="small" sx={{ fontSize: { xs: 11, md: 12 }, color: "#53635f" }}>{category.count}</Typography>
+                <Typography component="small" sx={{ fontSize: { xs: 11, md: 12 }, color: brand.gray650 }}>{category.count}</Typography>
               </Box>
             </AppLink>
           </Box>

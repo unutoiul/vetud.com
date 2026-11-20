@@ -15,6 +15,7 @@ import { getClientI18n } from "@/i18n/server-config"
 import { BASE_URL, SITE } from "@/lib/config"
 import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
+import { brand } from "@/theme/tokens"
 
 const manrope = Manrope({ subsets: ["latin", "latin-ext"], variable: "--font-manrope", display: "swap" })
 const dmMono = DM_Mono({
@@ -37,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#f7f9fa",
+  themeColor: brand.slate25,
 }
 
 export function generateStaticParams() {
@@ -65,7 +66,7 @@ export default async function LanguageLayout({ children }: LayoutProps<"/[lang]"
                     top: -48,
                     zIndex: 2000,
                     bgcolor: "brand.navy",
-                    color: "#fff",
+                    color: brand.white,
                     px: 2,
                     py: 1,
                     borderRadius: 1,

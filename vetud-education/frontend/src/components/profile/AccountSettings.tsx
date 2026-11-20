@@ -5,8 +5,6 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import CircularProgress from "@mui/material/CircularProgress"
 import Grid from "@mui/material/Grid"
-import IconButton from "@mui/material/IconButton"
-import InputAdornment from "@mui/material/InputAdornment"
 import Paper from "@mui/material/Paper"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
@@ -23,34 +21,6 @@ import { forumError } from "../community/useCommunityProfile"
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 type Status = { kind: "success" | "error"; text: string } | null
-
-/** A password input with a show/hide button. */
-function PasswordField({ label, value, onChange, autoComplete }: { label: string; value: string; onChange: (value: string) => void; autoComplete: "current-password" | "new-password" }) {
-  const ct = useContentTranslator()
-  const t = useTranslations("Account")
-  const [visible, setVisible] = useState(false)
-  return (
-    <TextField
-      label={ct(label)}
-      type={visible ? "text" : "password"}
-      required
-      value={value}
-      onChange={(event) => onChange(event.target.value)}
-      slotProps={{
-        htmlInput: { autoComplete, spellCheck: false, autoCapitalize: "none" },
-        input: {
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton aria-label={t("showPassword")} aria-pressed={visible} onClick={() => setVisible(!visible)} edge="end">
-                <Icon name={visible ? "eyeOff" : "eye"} sx={{ fontSize: 20 }} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        },
-      }}
-    />
-  )
-}
 
 /** A titled settings card with its own form, save button and result message. */
 function SettingsCard({ title, description, children, onSubmit, saving, status, submitLabel }: {
@@ -159,39 +129,53 @@ export function PersonalDetailsForm() {
   )
 }
 
-/** The email the member signs in with; changing it needs the password. */
+/**
+ * The email the member signs in with. Members have no passwords (owner, 2026-11-19), so a new
+ * address is confirmed with a code we email to it; then it's the address they sign in with.
+ */
 export function EmailForm() {
   const ct = useContentTranslator()
   const { customer, refreshCustomer } = useAccount()
   const [email, setEmail] = useState("")
-  const [confirm, setConfirm] = useState("")
-  const [password, setPassword] = useState("")
+  const [sentTo, setSentTo] = useState<string | null>(null)
+  const [code, setCode] = useState("")
   const [saving, setSaving] = useState(false)
   const [status, setStatus] = useState<Status>(null)
 
-  const save = async () => {
+  const sendCode = async () => {
     setStatus(null)
     const next = email.trim().toLowerCase()
     if (!EMAIL_PATTERN.test(next)) {
       setStatus({ kind: "error", text: "Please enter a valid email address." })
       return
     }
-    if (next !== confirm.trim().toLowerCase()) {
-      setStatus({ kind: "error", text: "The two email addresses don't match." })
-      return
+    setSaving(true)
+    try {
+      await sdk.client.fetch("/store/account/email/code", { method: "POST", body: { email: next } })
+      setSentTo(next)
+      setCode("")
+    } catch (error) {
+      setStatus({ kind: "error", text: forumError(error, "We couldn't send the code. Please try again.") })
+    } finally {
+      setSaving(false)
     }
-    if (!password) {
-      setStatus({ kind: "error", text: "Enter your current password to confirm it's you." })
+  }
+
+  const confirm = async () => {
+    setStatus(null)
+    if (!sentTo) return
+    if (!/^\d{6}$/.test(code.replace(/\D/g, ""))) {
+      setStatus({ kind: "error", text: "Enter the 6-digit code from the email." })
       return
     }
     setSaving(true)
     try {
-      await sdk.client.fetch<{ email: string }>("/store/account/email", { method: "POST", body: { email: next, password } })
+      await sdk.client.fetch<{ email: string }>("/store/account/email", { method: "POST", body: { email: sentTo, code: code.replace(/\D/g, "") } })
       await refreshCustomer()
       setEmail("")
-      setConfirm("")
-      setPassword("")
-      setStatus({ kind: "success", text: ct.template("Done. Sign in with {v0} from now on.", { v0: next }, { translateValues: false }) })
+      setSentTo(null)
+      setCode("")
+      setStatus({ kind: "success", text: ct.template("Done. Sign in with {v0} from now on.", { v0: sentTo }, { translateValues: false }) })
     } catch (error) {
       setStatus({ kind: "error", text: forumError(error, "We couldn't change your email. Please try again.") })
     } finally {
@@ -199,56 +183,47 @@ export function EmailForm() {
     }
   }
 
-  return (
-    <SettingsCard title="Sign-in email" description={ct.template("You sign in with {v0}. It's private and never shown to other members.", { v0: customer?.email ?? "" }, { translateValues: false })} onSubmit={save} saving={saving} status={status} submitLabel="Change email">
-      <Stack spacing={2}>
-        <TextField label={ct("New email")} type="email" value={email} onChange={(event) => setEmail(event.target.value)} required slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
-        <TextField label={ct("Repeat the new email")} type="email" value={confirm} onChange={(event) => setConfirm(event.target.value)} required slotProps={{ htmlInput: { autoComplete: "off", spellCheck: false } }} />
-        <PasswordField label="Current password" value={password} onChange={setPassword} autoComplete="current-password" />
-      </Stack>
-    </SettingsCard>
-  )
-}
-
-/** A new password, after the current one. */
-export function PasswordForm() {
-  const [current, setCurrent] = useState("")
-  const [next, setNext] = useState("")
-  const [repeat, setRepeat] = useState("")
-  const [saving, setSaving] = useState(false)
-  const [status, setStatus] = useState<Status>(null)
-
-  const save = async () => {
+  const startOver = () => {
+    setSentTo(null)
+    setCode("")
     setStatus(null)
-    if (next.length < 8) {
-      setStatus({ kind: "error", text: "Your new password needs at least 8 characters." })
-      return
-    }
-    if (next !== repeat) {
-      setStatus({ kind: "error", text: "The two new passwords don't match." })
-      return
-    }
-    setSaving(true)
-    try {
-      await sdk.client.fetch("/store/account/password", { method: "POST", body: { current_password: current, new_password: next } })
-      setCurrent("")
-      setNext("")
-      setRepeat("")
-      setStatus({ kind: "success", text: "Your password is changed." })
-    } catch (error) {
-      setStatus({ kind: "error", text: forumError(error, "We couldn't change your password. Please try again.") })
-    } finally {
-      setSaving(false)
-    }
   }
 
   return (
-    <SettingsCard title="Password" description="Use at least 8 characters. A longer phrase is easier to remember and harder to guess." onSubmit={save} saving={saving} status={status} submitLabel="Change password">
-      <Stack spacing={2}>
-        <PasswordField label="Current password" value={current} onChange={setCurrent} autoComplete="current-password" />
-        <PasswordField label="New password" value={next} onChange={setNext} autoComplete="new-password" />
-        <PasswordField label="Repeat the new password" value={repeat} onChange={setRepeat} autoComplete="new-password" />
-      </Stack>
+    <SettingsCard
+      title="Sign-in email"
+      description={ct.template("You sign in with {v0}. It's private and never shown to other members.", { v0: customer?.email ?? "" }, { translateValues: false })}
+      onSubmit={sentTo ? confirm : sendCode}
+      saving={saving}
+      status={status}
+      submitLabel={sentTo ? "Change email" : "Email me a code"}
+    >
+      {sentTo ? (
+        <Stack spacing={2}>
+          <Alert severity="info" role="status">
+            {ct("We sent a 6-digit code to")} <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>{sentTo}</Box>. {ct("Enter it to confirm the new address.")}
+          </Alert>
+          <TextField
+            label={ct("Code from the email")}
+            required
+            autoFocus
+            value={code}
+            onChange={(event) => setCode(event.target.value.replace(/[^\d ]/g, "").slice(0, 7))}
+            slotProps={{ htmlInput: { autoComplete: "one-time-code", inputMode: "numeric", maxLength: 7, sx: { letterSpacing: "0.3em", fontVariantNumeric: "tabular-nums", fontSize: 20 } } }}
+          />
+          <Box><Button type="button" onClick={startOver} sx={{ minHeight: 44 }}>{ct("Use a different email")}</Button></Box>
+        </Stack>
+      ) : (
+        <TextField
+          label={ct("New email")}
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          required
+          helperText={ct("We'll email a code to the new address to make sure it's yours.")}
+          slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false, inputMode: "email" } }}
+        />
+      )}
     </SettingsCard>
   )
 }

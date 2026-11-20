@@ -12,6 +12,7 @@ import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import StandardsAccordion from "@/components/home/StandardsAccordion"
+import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
@@ -101,9 +102,9 @@ export default function StandardsPage() {
         <Grid container spacing={2}>
           {PRINCIPLES.map(({ icon: Icon, title, text }, index) => (
             <Grid key={title} size={{ xs: 12, sm: 6, md: 3 }}>
-              <Paper variant="outlined" sx={{ p: { xs: 3, md: 3.5 }, height: "100%", bgcolor: "#f7f9fa", borderRadius: 3 }}>
+              <Paper variant="outlined" sx={{ p: { xs: 3, md: 3.5 }, height: "100%", bgcolor: brand.slate25, borderRadius: 3 }}>
                 <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                  <Box sx={{ width: 48, height: 48, bgcolor: "#fff", border: "1px solid", borderColor: "divider", borderRadius: 2.5, display: "grid", placeItems: "center", color: "secondary.main" }}>
+                  <Box sx={{ width: 48, height: 48, bgcolor: brand.white, border: "1px solid", borderColor: "divider", borderRadius: 2.5, display: "grid", placeItems: "center", color: "secondary.main" }}>
                     <Icon fontSize="small" />
                   </Box>
                   <Typography variant="mono" sx={{ color: "text.secondary" }}>

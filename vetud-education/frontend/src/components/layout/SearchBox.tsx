@@ -16,6 +16,7 @@ import { translateAction } from "@/i18n/actions"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { loadSearchIndex, rank, type ArticleEntry, type GuideEntry } from "@/lib/site-search"
 import { useLanguage } from "../common/language"
+import { brand } from "@/theme/tokens"
 
 /** One result; the groups always appear in this order. */
 type Result =
@@ -104,7 +105,7 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
       }}
       renderGroup={(params) => (
         <Box component="li" key={params.key} sx={{ listStyle: "none" }}>
-          <Typography component="div" sx={{ position: "sticky", top: inline ? 0 : -8, zIndex: 1, px: 2, py: 1, bgcolor: "#fff", fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "brand.blue", borderTop: "1px solid", borderColor: "divider" }}>{translateAction(act, params.group)}</Typography>
+          <Typography component="div" sx={{ position: "sticky", top: inline ? 0 : -8, zIndex: 1, px: 2, py: 1, bgcolor: brand.white, fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "brand.blue", borderTop: "1px solid", borderColor: "divider" }}>{translateAction(act, params.group)}</Typography>
           <Box component="ul" sx={{ p: 0 }}>{params.children}</Box>
         </Box>
       )}

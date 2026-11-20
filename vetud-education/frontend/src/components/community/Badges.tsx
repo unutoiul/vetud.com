@@ -4,13 +4,14 @@ import type { ReactNode } from "react"
 import Icon, { type IconName } from "../brand/Icon"
 import { AppLink } from "../common/links"
 import type { ForumAuthor } from "@/lib/community/types"
+import { brand } from "@/theme/tokens"
 
 const TONES = {
-  expert: { color: "#1f4f86", bg: "#e7effa" },
-  accepted: { color: "#235640", bg: "#e5f1ea" },
-  moderator: { color: "#4b3a86", bg: "#efebfa" },
-  neutral: { color: "#4b5568", bg: "#eef1f5" },
-  pending: { color: "#7a4a00", bg: "#fbf0dc" },
+  expert: { color: brand.blue675, bg: brand.blue50 },
+  accepted: { color: brand.green775, bg: brand.stone75 },
+  moderator: { color: brand.indigo625, bg: brand.indigo50 },
+  neutral: { color: brand.slate650, bg: brand.slate50_2 },
+  pending: { color: brand.orange750, bg: brand.orange75 },
 } as const
 
 export type BadgeTone = keyof typeof TONES

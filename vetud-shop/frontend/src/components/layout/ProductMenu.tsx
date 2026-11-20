@@ -14,6 +14,7 @@ import { educationHref } from "@/lib/config"
 import { useMoney } from "@/lib/money"
 import { productsIn, type MenuProduct, type ProductMenuData } from "@/lib/product-menu"
 import { NAV_LABEL_KEYS, SECONDARY_LINKS } from "./nav"
+import { brand } from "@/theme/tokens"
 
 /** Products shown in the desktop menu before "View all", and in the phone menu. */
 const PANEL_PRODUCTS = 9
@@ -24,7 +25,7 @@ const shopHref = (category?: string) => (category ? `/shop?category=${encodeURIC
 /** The product's vial photograph, or its drawn art when there is no photograph. */
 export function MenuThumb({ product, size = 48 }: { product: MenuProduct; size?: number }) {
   return (
-    <Box aria-hidden sx={{ position: "relative", width: size, height: size, flexShrink: 0, borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: "#fff" }}>
+    <Box aria-hidden sx={{ position: "relative", width: size, height: size, flexShrink: 0, borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: brand.white }}>
       {product.image
         ? <Image src={product.image} alt="" fill sizes={`${size}px`} style={{ objectFit: "contain" }} />
         : <Box sx={{ position: "absolute", inset: 2 }}><ProductArt code={product.code} accent={product.accent} kind={product.artKind} /></Box>}
@@ -78,7 +79,7 @@ function CategoryPicker({ catalog, active, onPick, direction }: { catalog: Produ
             } : {
               flexShrink: 0, minHeight: 40, px: 1.75, border: "1px solid", borderColor: selected ? "brand.navy" : "divider", borderRadius: 999,
               font: "inherit", fontSize: 13.5, fontWeight: 600, whiteSpace: "nowrap", cursor: "pointer",
-              bgcolor: selected ? "brand.navy" : "background.paper", color: selected ? "#fff" : "text.primary",
+              bgcolor: selected ? "brand.navy" : "background.paper", color: selected ? brand.white : "text.primary",
               "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 },
             }}
           >
@@ -102,7 +103,7 @@ export function ProductMegaMenu({ id, catalog, onNavigate }: { id: string; catal
   const categoryName = category ? catalog.categories.find((item) => item.handle === category)?.name : undefined
 
   return (
-    <Box id={id} role="region" aria-label={act("products")} sx={{ position: "absolute", left: 0, right: 0, top: "100%", bgcolor: "#fff", borderBottom: "1px solid", borderColor: "divider", boxShadow: "0 28px 48px rgba(16, 42, 67, .14)", color: "text.primary" }}>
+    <Box id={id} role="region" aria-label={act("products")} sx={{ position: "absolute", left: 0, right: 0, top: "100%", bgcolor: brand.white, borderBottom: "1px solid", borderColor: "divider", boxShadow: `0 28px 48px ${brand.blue825A14}`, color: "text.primary" }}>
       <Box sx={{ maxWidth: 1488, mx: "auto", px: 6, pt: 3.5, pb: 3, display: "grid", gridTemplateColumns: "250px minmax(0, 1fr)", gap: 5 }}>
         <Box>
           <Typography variant="eyebrow" component="p" sx={{ color: "brand.blue", px: 1.5, mb: 1.25 }}>{act("productCategories")}</Typography>
@@ -158,7 +159,7 @@ export function ProductMenuSection({ catalog, onNavigate, onSearch }: { catalog:
 
   return (
     <Box component="section" aria-labelledby="menu-products-title">
-      <Box component="button" type="button" onClick={onSearch} sx={{ display: "flex", alignItems: "center", gap: 1.25, width: "100%", minHeight: 48, px: 2, mb: 3, border: "1px solid", borderColor: "divider", borderRadius: 999, bgcolor: "#fff", font: "inherit", fontSize: 14.5, color: "text.secondary", textAlign: "left", cursor: "pointer", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
+      <Box component="button" type="button" onClick={onSearch} sx={{ display: "flex", alignItems: "center", gap: 1.25, width: "100%", minHeight: 48, px: 2, mb: 3, border: "1px solid", borderColor: "divider", borderRadius: 999, bgcolor: brand.white, font: "inherit", fontSize: 14.5, color: "text.secondary", textAlign: "left", cursor: "pointer", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
         <Icon name="search" sx={{ fontSize: 20 }} />{ct("Search products, codes or lot numbers")}
       </Box>
       <Typography id="menu-products-title" component="h2" sx={{ fontSize: 23, letterSpacing: "-.03em", fontWeight: 500, mb: 1.5 }}>{act("products")}</Typography>

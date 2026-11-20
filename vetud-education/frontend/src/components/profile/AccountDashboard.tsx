@@ -18,15 +18,16 @@ import { ButtonLink } from "../common/links"
 import { useAccount } from "../account/AccountProvider"
 import { Pill } from "../community/Badges"
 import JoinCommunity from "../community/JoinCommunity"
-import { CommunityProfileForm, EmailForm, PasswordForm, PersonalDetailsForm } from "./AccountSettings"
+import { CommunityProfileForm, EmailForm, PersonalDetailsForm } from "./AccountSettings"
 import { Achievements, RecentDiscussions, ReputationCard, StatsGrid } from "./ProfileOverview"
 import { currentLevel, LEVEL_COLORS } from "./reputation"
 import { useOwnProfile } from "./useOwnProfile"
+import { brand } from "@/theme/tokens"
 
 const TABS = [
   { id: "overview", label: "Overview", icon: "molecule" },
   { id: "profile", label: "Profile", icon: "account" },
-  { id: "security", label: "Sign-in and security", icon: "lock" },
+  { id: "security", label: "Sign-in email", icon: "lock" },
 ] as const
 type TabId = (typeof TABS)[number]["id"]
 
@@ -34,7 +35,7 @@ const initials = (name: string) => name.split(/\s+/).filter(Boolean).slice(0, 2)
 
 /**
  * The signed-in member's home: who they are in the community, their reputation and level, what
- * they have posted and earned, and the settings for their profile, name, email and password.
+ * they have posted and earned, and the settings for their profile, name and sign-in email.
  */
 export default function AccountDashboard() {
   const ct = useContentTranslator()
@@ -47,13 +48,13 @@ export default function AccountDashboard() {
   const fullName = [customer.first_name, customer.last_name].filter(Boolean).join(" ")
   const profile = own.profile
   const level = profile ? currentLevel(own.rules, profile.reputation) : null
-  const ring = level ? LEVEL_COLORS[level.id] : "#cbd6e6"
+  const ring = level ? LEVEL_COLORS[level.id] : brand.lineStrong
 
   return (
     <Stack spacing={3}>
-      <Paper variant="outlined" sx={{ p: { xs: 2.5, md: 4 }, borderRadius: 3, background: "linear-gradient(135deg, #f3f7fc 0%, #ffffff 60%)" }}>
+      <Paper variant="outlined" sx={{ p: { xs: 2.5, md: 4 }, borderRadius: 3, background: `linear-gradient(135deg, ${brand.mintWash} 0%, ${brand.white} 60%)` }}>
         <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: { xs: 2, sm: 3 }, alignItems: { sm: "center" } }}>
-          <Box aria-hidden sx={{ display: "grid", placeItems: "center", width: 84, height: 84, flexShrink: 0, borderRadius: "50%", border: "4px solid", borderColor: ring, bgcolor: "brand.navy", color: "#fff", fontSize: 30, fontWeight: 600, letterSpacing: "-.02em" }}>
+          <Box aria-hidden sx={{ display: "grid", placeItems: "center", width: 84, height: 84, flexShrink: 0, borderRadius: "50%", border: "4px solid", borderColor: ring, bgcolor: "brand.navy", color: brand.white, fontSize: 30, fontWeight: 600, letterSpacing: "-.02em" }}>
             {initials(profile?.display_name ?? fullName)}
           </Box>
           <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -116,7 +117,6 @@ export default function AccountDashboard() {
         {tab === "security" ? (
           <Stack spacing={3} sx={{ maxWidth: 760 }}>
             <EmailForm />
-            <PasswordForm />
           </Stack>
         ) : null}
       </Box>

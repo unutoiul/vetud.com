@@ -12,6 +12,7 @@ import FaqAccordion, { type FaqItem } from "@/components/standards/FaqAccordion"
 import { getPageLocalization } from "@/i18n/metadata"
 import { storefrontMetadata } from "@/lib/storefront-seo"
 import { PEN_EXPLAINER_IMAGE, REUSABLE_PEN_IMAGE } from "@/lib/product-images"
+import { brand } from "@/theme/tokens"
 
 const TITLE = "The dual-chamber pen, explained"
 const DESCRIPTION = "How the reusable VETUD dual-chamber pen works: freeze-dried peptide and bacteriostatic water kept apart in one cartridge, the pen kit box, refill dual-chamber vials, and how they compare with a vial."
@@ -57,7 +58,7 @@ export default function DualChamberPenPage() {
 
       <Section tone="paper" tight aria-labelledby="parts-title">
         <Box sx={{ maxWidth: 1040, mx: "auto", display: "grid", gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1fr) minmax(0, 1fr)" }, gap: { xs: 4, md: 7 }, alignItems: "center" }}>
-          <Box sx={{ position: "relative", aspectRatio: "1 / 1", borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: "#eef4fb" }}>
+          <Box sx={{ position: "relative", aspectRatio: "1 / 1", borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: brand.blue50 }}>
             <Image src={PEN_EXPLAINER_IMAGE} alt={ct("The dual-chamber cartridge on its own and inside the pen, labelled: cartridge holder, lyophilized peptide, BAC water and pen body")} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "contain" }} />
           </Box>
           <Box>
@@ -65,7 +66,7 @@ export default function DualChamberPenPage() {
             <Box component="dl" sx={{ mt: 2.5, mb: 0, display: "grid", gap: 2.25 }}>
               {PARTS.map((part, index) => (
                 <Box key={part.name} sx={{ display: "grid", gridTemplateColumns: "32px 1fr", gap: 1.5 }}>
-                  <Box aria-hidden sx={{ width: 32, height: 32, borderRadius: "50%", bgcolor: "brand.navy", color: "#fff", display: "grid", placeItems: "center", fontSize: 14, fontWeight: 700 }}>{ct(index + 1)}</Box>
+                  <Box aria-hidden sx={{ width: 32, height: 32, borderRadius: "50%", bgcolor: "brand.navy", color: brand.white, display: "grid", placeItems: "center", fontSize: 14, fontWeight: 700 }}>{ct(index + 1)}</Box>
                   <Box>
                     <Typography component="dt" sx={{ fontWeight: 650, fontSize: 17, color: "brand.ink" }}>{ct(part.name)}</Typography>
                     <Typography component="dd" sx={{ m: 0, mt: 0.25, fontSize: 15, lineHeight: 1.7, color: "text.secondary" }}>{ct(part.text)}</Typography>
@@ -79,7 +80,7 @@ export default function DualChamberPenPage() {
 
       <Section tone="white" tight aria-labelledby="reusable-title">
         <Box sx={{ maxWidth: 1040, mx: "auto", display: "grid", gridTemplateColumns: { xs: "1fr", md: "minmax(0, 1fr) minmax(0, 1fr)" }, gap: { xs: 4, md: 7 }, alignItems: "center" }}>
-          <Box sx={{ order: { md: 2 }, position: "relative", aspectRatio: "1 / 1", borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: "#eef4fb" }}>
+          <Box sx={{ order: { md: 2 }, position: "relative", aspectRatio: "1 / 1", borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: brand.blue50 }}>
             <Image src={REUSABLE_PEN_IMAGE} alt={ct("The reusable VETUD dual-chamber pen, labelled: graduated holder, freeze-dried peptide, diluent and reusable pen body")} fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: "contain" }} />
           </Box>
           <Box>

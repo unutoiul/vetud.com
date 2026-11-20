@@ -13,6 +13,7 @@ import ContactForm from "@/components/contact/ContactForm"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import { SITE } from "@/lib/config"
+import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
@@ -48,7 +49,7 @@ export default async function ContactPage() {
           <Grid size={{ xs: 12, md: 4.5 }}>
             <Stack spacing={2}>
               {details.map(({ icon: Icon, title, body }) => (
-                <Paper key={title} variant="outlined" sx={{ p: 3, display: "flex", gap: 2, bgcolor: "#f7f9fa", borderRadius: 3 }}>
+                <Paper key={title} variant="outlined" sx={{ p: 3, display: "flex", gap: 2, bgcolor: brand.slate25, borderRadius: 3 }}>
                   <Icon sx={{ color: "secondary.main", mt: "2px", flexShrink: 0 }} />
                   <div style={{ minWidth: 0, overflowWrap: "anywhere" }}>
                     <Typography sx={{ fontWeight: 700 }}>{ct(title)}</Typography>

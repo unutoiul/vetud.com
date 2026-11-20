@@ -22,6 +22,7 @@ import { paypalGuardRoutes, preparePayPalSession } from "./paypal-guards"
 import { cartBillingRoutes } from "./cart-billing"
 import { checkoutEmailGuardRoutes } from "./checkout-email-guard"
 import { StoreSetCheckoutEmailSchema } from "./store/carts/[id]/contact/validators"
+import { StoreSignInCodeSchema } from "./store/sign-in-code/validators"
 
 export default defineMiddlewares({
   routes: [
@@ -64,11 +65,17 @@ export default defineMiddlewares({
       ],
     },
     {
-      // After a guest order: create an account (or add the order to the signed-in member's).
+      // Customers sign in with an emailed code; this sends it (POST /auth/customer/email-code checks it).
+      method: ["POST"],
+      matcher: "/store/sign-in-code",
+      middlewares: [validateAndTransformBody(StoreSignInCodeSchema)],
+    },
+    {
+      // After a guest order: make the account (first code sign-in) or add the order to the member's.
       method: ["POST"],
       matcher: "/store/guest-orders/:id/account",
       middlewares: [
-        authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
+        authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true, allowUnregistered: true }),
         validateAndTransformBody(StoreGuestOrderAccountSchema),
       ],
     },

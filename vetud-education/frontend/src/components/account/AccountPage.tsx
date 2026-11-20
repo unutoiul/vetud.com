@@ -5,21 +5,17 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import CircularProgress from "@mui/material/CircularProgress"
 import Grid from "@mui/material/Grid"
-import IconButton from "@mui/material/IconButton"
-import InputAdornment from "@mui/material/InputAdornment"
 import Paper from "@mui/material/Paper"
 import Skeleton from "@mui/material/Skeleton"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useTranslations } from "next-intl"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import Icon from "../brand/Icon"
-import { useLanguage } from "../common/language"
 import AccountDashboard from "../profile/AccountDashboard"
 import { useAccount } from "./AccountProvider"
-import SignInCodeForm from "./SignInCodeForm"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -34,167 +30,158 @@ export default function AccountPage() {
   return customer ? <AccountDashboard /> : <AuthPanel />
 }
 
-export function PasswordField({ label, value, onChange, autoComplete, helperText, error }: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  autoComplete: "current-password" | "new-password"
-  helperText?: string
-  error?: boolean
-}) {
-  const ct = useContentTranslator()
-  const t = useTranslations("Account")
-  const [visible, setVisible] = useState(false)
-  return (
-    <TextField
-      label={ct(label)}
-      type={visible ? "text" : "password"}
-      required
-      value={value}
-      onChange={(event) => onChange(event.target.value)}
-      helperText={ct(helperText)}
-      error={error}
-      slotProps={{
-        htmlInput: { autoComplete, minLength: 8, spellCheck: false, autoCapitalize: "none" },
-        input: {
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton aria-label={t("showPassword")} aria-pressed={visible} onClick={() => setVisible(!visible)} edge="end">
-                <Icon name={visible ? "eyeOff" : "eye"} sx={{ fontSize: 20 }} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        },
-      }}
-    />
-  )
-}
+/** The address a code was just sent to, kept for this tab: going to the mail app and back may reload it. */
+const PENDING_KEY = "vetud_sign_in_email"
 
-/** Emails a one-time reset link. Medusa replies the same way whether or not the account exists. */
-export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?: string; onBack?: () => void }) {
-  const ct = useContentTranslator()
-  const act = useTranslations("Actions")
-  const t = useTranslations("Account")
-  const language = useLanguage()
-  const { requestPasswordReset, pending } = useAccount()
-  const [email, setEmail] = useState(initialEmail)
-  const [sentTo, setSentTo] = useState<string | null>(null)
-  const [formError, setFormError] = useState<string | null>(null)
-
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setFormError(null)
-    const trimmed = email.trim()
-    if (!EMAIL_PATTERN.test(trimmed)) {
-      setFormError(t("invalidEmail"))
-      return
-    }
-    try {
-      await requestPasswordReset(trimmed, language)
-      setSentTo(trimmed)
-    } catch (caught) {
-      setFormError(errorText(caught))
-    }
+function readPendingEmail() {
+  try {
+    return window.sessionStorage.getItem(PENDING_KEY)
+  } catch {
+    return null
   }
-
-  return (
-    <Box component="form" onSubmit={submit} noValidate>
-      {sentTo ? <Alert severity="success" role="status" sx={{ mb: 2 }}>{t("resetSent", { email: sentTo })}</Alert> : null}
-      {formError ? <Alert severity="error" sx={{ mb: 2 }}>{ct(formError)}</Alert> : null}
-      <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" } }}>
-        <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" sx={{ fontSize: 17 }} />}>
-          {sentTo ? t("resendLink") : t("sendLink")}
-        </Button>
-        {onBack ? <Button type="button" onClick={onBack}>{t("backToSignin")}</Button> : null}
-      </Stack>
-    </Box>
-  )
 }
 
+function writePendingEmail(email: string | null) {
+  try {
+    if (email) window.sessionStorage.setItem(PENDING_KEY, email)
+    else window.sessionStorage.removeItem(PENDING_KEY)
+  } catch {
+    // Without storage the code step still works until the page is reloaded.
+  }
+}
+
+/**
+ * Sign in, or join, with a 6-digit code emailed to you: there are no passwords (owner, 2026-11-19).
+ * A sign-in lasts 30 days.
+ */
 export function AuthPanel() {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Account")
-  const ta = useTranslations("Address")
-  const { signIn, signUp, pending, error, clearError, codeStep } = useAccount()
-  const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin")
+  const { requestCode, verifyCode, pending, error, clearError } = useAccount()
   const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
+  const [sentTo, setSentTo] = useState<string | null>(null)
+  const [code, setCode] = useState("")
+  const [wait, setWait] = useState(0)
+  const [fresh, setFresh] = useState(true)
   const [formError, setFormError] = useState<string | null>(null)
 
-  const switchMode = (next: typeof mode) => {
-    setMode(next)
-    setFormError(null)
-    clearError()
-  }
+  // Back from the mail app: the code step is still open.
+  useEffect(() => {
+    const saved = readPendingEmail()
+    if (!saved) return
+    const timer = window.setTimeout(() => { setSentTo(saved); setEmail(saved) }, 0)
+    return () => window.clearTimeout(timer)
+  }, [])
 
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  // Counts down to when another code can be sent.
+  useEffect(() => {
+    if (wait <= 0) return
+    const timer = window.setTimeout(() => setWait((seconds) => seconds - 1), 1000)
+    return () => window.clearTimeout(timer)
+  }, [wait])
+
+  const send = async (event?: React.FormEvent<HTMLFormElement>) => {
+    event?.preventDefault()
     setFormError(null)
     clearError()
-    if (!EMAIL_PATTERN.test(email.trim())) {
+    const address = (sentTo ?? email).trim()
+    if (!EMAIL_PATTERN.test(address)) {
       setFormError(t("invalidEmail"))
       return
     }
-    if (password.length < 8) {
-      setFormError(t("invalidPassword"))
-      return
-    }
-    if (mode === "signup" && (!firstName.trim() || !lastName.trim())) {
-      setFormError(t("invalidName"))
-      return
-    }
     try {
-      if (mode === "signin") await signIn(email.trim(), password)
-      else await signUp({ email: email.trim(), password, first_name: firstName.trim(), last_name: lastName.trim() })
+      const { sent, resendAfter } = await requestCode(address)
+      setFresh(sent)
+      setSentTo(address)
+      writePendingEmail(address)
+      setCode("")
+      setWait(resendAfter)
     } catch (caught) {
       setFormError(errorText(caught))
     }
   }
 
+  const verify = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setFormError(null)
+    clearError()
+    if (!sentTo) return
+    if (!/^\d{6}$/.test(code.replace(/\D/g, ""))) {
+      setFormError(ct("Enter the 6-digit code from the email."))
+      return
+    }
+    try {
+      await verifyCode(sentTo, code)
+      writePendingEmail(null)
+    } catch (caught) {
+      setFormError(errorText(caught))
+    }
+  }
+
+  const changeEmail = () => {
+    setSentTo(null)
+    writePendingEmail(null)
+    setCode("")
+    setFormError(null)
+    clearError()
+  }
+
+  const message = formError || error
   return (
     <Grid container spacing={{ xs: 3, md: 6 }}>
       <Grid size={{ xs: 12, md: 5 }}>
-        <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
-          {codeStep || mode === "signin" ? t("welcome") : t("account")}
-        </Typography>
+        <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>{t("welcome")}</Typography>
         <Typography variant="h3" component="h2" sx={{ mt: 1.5, mb: 2 }}>
-          {codeStep ? ct("Check your email.") : mode === "reset" ? t("resetTitle") : ct(mode === "signin" ? "Sign in to join the conversation." : "Join the VETUD community.")}
+          {sentTo ? ct("Check your email.") : ct("Sign in to join the conversation.")}
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          {codeStep ? ct("For your security, every sign-in is confirmed with a code we send to your email.") : mode === "reset" ? t("resetIntro") : ct("An account lets you ask questions in the community, answer other members and comment on articles.")}
+          {ct("An account lets you ask questions in the community, answer other members and comment on articles. No password needed: we email you a code.")}
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 7 }}>
         <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3 }}>
-          {codeStep ? <SignInCodeForm /> : mode === "reset" ? <ResetRequestForm initialEmail={email} onBack={() => switchMode("signin")} /> : <>
-            <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
-              <Button variant={mode === "signin" ? "contained" : "text"} aria-pressed={mode === "signin"} onClick={() => switchMode("signin")}>{t("signin")}</Button>
-              <Button variant={mode === "signup" ? "contained" : "text"} aria-pressed={mode === "signup"} onClick={() => switchMode("signup")}>{t("signup")}</Button>
-            </Stack>
-            {formError || error ? <Alert severity="error" sx={{ mb: 2 }}>{ct(formError || error)}</Alert> : null}
-            <Box component="form" onSubmit={submit} noValidate>
-              {mode === "signup" ? (
-                <Grid container spacing={2} sx={{ mb: 2 }}>
-                  <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("firstName")} required value={firstName} onChange={(event) => setFirstName(event.target.value)} slotProps={{ htmlInput: { autoComplete: "given-name" } }} /></Grid>
-                  <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("lastName")} required value={lastName} onChange={(event) => setLastName(event.target.value)} slotProps={{ htmlInput: { autoComplete: "family-name" } }} /></Grid>
-                </Grid>
-              ) : null}
-              <Stack spacing={2}>
-                <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
-                <PasswordField label={t("password")} value={password} onChange={setPassword} helperText={mode === "signup" ? t("passwordHelp") : undefined} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
-              </Stack>
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
-                <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ width: { xs: "100%", sm: "auto" } }}>
-                  {mode === "signin" ? t("signin") : t("signup")}
+          {sentTo === null ? (
+            <Box component="form" onSubmit={send} noValidate>
+              {message ? <Alert severity="error" sx={{ mb: 2 }}>{ct(message)}</Alert> : null}
+              <TextField
+                label={act("email")}
+                type="email"
+                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                helperText={ct("We'll email you a 6-digit code. If you're new, it creates your account.")}
+                slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false, inputMode: "email" } }}
+              />
+              <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" sx={{ fontSize: 17 }} />} sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}>
+                {ct("Email me a sign-in code")}
+              </Button>
+            </Box>
+          ) : (
+            <Box component="form" onSubmit={verify} noValidate>
+              <Alert severity="info" role="status" sx={{ mb: 2 }}>
+                {ct(fresh ? "We sent a 6-digit code to" : "We sent a code a moment ago to")} <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>{sentTo}</Box>. {ct(fresh ? "It works for 10 minutes. Check your spam folder if you can't see it." : "Use that one, or ask for a new code when the timer ends.")}
+              </Alert>
+              {message ? <Alert severity="error" sx={{ mb: 2 }}>{ct(message)}</Alert> : null}
+              <TextField
+                label={ct("Sign-in code")}
+                required
+                autoFocus
+                value={code}
+                onChange={(event) => setCode(event.target.value.replace(/[^\d ]/g, "").slice(0, 7))}
+                slotProps={{ htmlInput: { autoComplete: "one-time-code", inputMode: "numeric", maxLength: 7, sx: { letterSpacing: "0.3em", fontVariantNumeric: "tabular-nums", fontSize: 20 } } }}
+              />
+              <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}>
+                {t("signin")}
+              </Button>
+              <Stack direction="row" useFlexGap spacing={1} sx={{ mt: 1.5, flexWrap: "wrap" }}>
+                <Button type="button" disabled={pending || wait > 0} onClick={() => void send()} sx={{ minHeight: 44 }}>
+                  {wait > 0 ? ct.template("Send a new code in {v0} s", { v0: wait }) : ct("Send a new code")}
                 </Button>
-                {mode === "signin" ? <Button type="button" onClick={() => switchMode("reset")} sx={{ alignSelf: { xs: "center", sm: "auto" } }}>{t("forgot")}</Button> : null}
+                <Button type="button" onClick={changeEmail} sx={{ minHeight: 44 }}>{ct("Use a different email")}</Button>
               </Stack>
             </Box>
-          </>}
+          )}
         </Paper>
       </Grid>
     </Grid>

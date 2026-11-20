@@ -22,6 +22,7 @@ import { communityMetadata } from "@/lib/community/seo"
 import { COMMUNITY_TOPICS, getTopic, type CommunityTopic } from "@/lib/community/topics"
 import type { ForumStats, ThreadFilters as Filters } from "@/lib/community/types"
 import { getForumStats, listForumThreads } from "@/lib/medusa/forum"
+import { brand } from "@/theme/tokens"
 
 type Params = Record<string, string | string[] | undefined>
 
@@ -133,11 +134,11 @@ function SideNotes() {
       </Box>
       <AppLink href="/community/guidelines" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, fontWeight: 600 }}>{act("communityGuidelines")}</AppLink>
     </Box>
-    <Box sx={{ p: 2.5, bgcolor: "brand.navy", color: "#fff", borderRadius: "10px" }}>
-      <Icon name="shield" sx={{ fontSize: 22, color: "#abcce3" }} />
+    <Box sx={{ p: 2.5, bgcolor: "brand.navy", color: brand.white, borderRadius: "10px" }}>
+      <Icon name="shield" sx={{ fontSize: 22, color: brand.tealBright }} />
       <Typography component="h2" sx={{ mt: 1, fontSize: 15, fontWeight: 650 }}>{ct("Doctor or researcher?")}</Typography>
-      <Typography sx={{ mt: .5, fontSize: 13.5, lineHeight: 1.6, color: "rgba(255,255,255,.8)" }}>{ct("Verified experts get a badge with their credentials, and their answers are pinned.")}</Typography>
-      <AppLink href="/community/apply" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, fontWeight: 650, color: "#fff", textDecorationColor: "rgba(255,255,255,.5)" }}>{act("applyVerified")}</AppLink>
+      <Typography sx={{ mt: .5, fontSize: 13.5, lineHeight: 1.6, color: brand.whiteA80 }}>{ct("Verified experts get a badge with their credentials, and their answers are pinned.")}</Typography>
+      <AppLink href="/community/apply" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 14, fontWeight: 650, color: brand.white, textDecorationColor: brand.whiteA50 }}>{act("applyVerified")}</AppLink>
     </Box>
   </Box>
 }

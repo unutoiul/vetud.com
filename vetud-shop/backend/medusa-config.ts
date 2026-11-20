@@ -37,6 +37,17 @@ const makePayOptions = {
 }
 
 const modules: ModuleConfig[] = [
+  // Customers sign in with a 6-digit emailed code, no password (src/modules/email-code, owner
+  // 2026-11-19). Admin users keep email and password.
+  {
+    resolve: "@medusajs/medusa/auth",
+    options: {
+      providers: [
+        { resolve: "@medusajs/medusa/auth-emailpass", id: "emailpass" },
+        { resolve: "./src/modules/email-code", id: "email-code" },
+      ],
+    },
+  },
   { resolve: "./src/modules/localized-content" },
   // Product images and other uploads. Files are written to `<server dir>/static` and served at
   // /static; on Railway that folder is a persistent volume (see README).
@@ -219,6 +230,9 @@ module.exports = defineConfig({
       authCors: process.env.AUTH_CORS!,
       jwtSecret: process.env.JWT_SECRET,
       cookieSecret: process.env.COOKIE_SECRET,
+      // A code sign-in lasts 30 days; customers can't use passwords.
+      jwtExpiresIn: "30d",
+      authMethodsPerActor: { user: ["emailpass"], customer: ["email-code"] },
     },
   },
   admin: {

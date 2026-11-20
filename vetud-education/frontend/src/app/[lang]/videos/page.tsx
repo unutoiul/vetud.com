@@ -8,7 +8,7 @@ import Section from "@/components/common/Section"
 import VideoGallery from "@/components/learn/VideoGallery"
 import { VIDEO_TOPICS, VIDEOS } from "@/content/learn/videos"
 import { collectionMetadata } from "@/lib/article-seo"
-import { gutter } from "@/theme/tokens"
+import { brand, gutter } from "@/theme/tokens"
 
 export async function generateMetadata() {
   return collectionMetadata({
@@ -31,7 +31,7 @@ export default function VideosPage() {
           {/* Phones: one row that scrolls sideways and runs to the screen edges. Wider: wraps. */}
           <Box sx={{ display: "flex", flexWrap: { xs: "nowrap", md: "wrap" }, gap: 1, overflowX: { xs: "auto", md: "visible" }, mx: { xs: -2.5, sm: -4, md: 0 }, px: { xs: 2.5, sm: 4, md: 0 }, scrollbarWidth: "none", "&::-webkit-scrollbar": { display: "none" } }}>
             {VIDEO_TOPICS.map((topic) => (
-              <AppLink key={topic.id} href={`#videos-${topic.id}`} sx={{ display: "inline-flex", alignItems: "center", gap: 0.75, flexShrink: 0, whiteSpace: "nowrap", minHeight: 44, px: 2, borderRadius: 999, border: "1px solid", borderColor: "divider", bgcolor: "#fff", color: "text.primary", textDecoration: "none", fontSize: 14, fontWeight: 600, transition: "border-color .15s ease, color .15s ease", "&:hover": { borderColor: "brand.blue", color: "brand.blue" } }}>
+              <AppLink key={topic.id} href={`#videos-${topic.id}`} sx={{ display: "inline-flex", alignItems: "center", gap: 0.75, flexShrink: 0, whiteSpace: "nowrap", minHeight: 44, px: 2, borderRadius: 999, border: "1px solid", borderColor: "divider", bgcolor: brand.white, color: "text.primary", textDecoration: "none", fontSize: 14, fontWeight: 600, transition: "border-color .15s ease, color .15s ease", "&:hover": { borderColor: "brand.blue", color: "brand.blue" } }}>
                 {ct(topic.name)}
                 <Box component="span" sx={{ color: "text.secondary", fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{VIDEOS.filter((video) => video.topic === topic.id).length}</Box>
               </AppLink>

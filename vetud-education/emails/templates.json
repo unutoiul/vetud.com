@@ -91,5 +91,16 @@
     "variables": [
       "CONFIRM_URL"
     ]
+  },
+  "email-change-code": {
+    "id": "368d1490-dce7-49fe-a494-ad8556afa70a",
+    "name": "VETUD Edu · Email change code",
+    "alias": "vetud-edu-email-change-code",
+    "subject": "Confirm your new VETUD email",
+    "preheader": "Use {{{CODE}}} to confirm your new email. It expires in {{{MINUTES}}} minutes.",
+    "variables": [
+      "CODE",
+      "MINUTES"
+    ]
   }
 }

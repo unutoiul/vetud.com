@@ -24,6 +24,7 @@ import { useLocalizedHref } from "../common/links"
 import { useAccount } from "../account/AccountProvider"
 import { useStore } from "../store/StoreProvider"
 import { NEWSLETTER_SUBSCRIBED_KEY, subscribeToNewsletter } from "./subscription"
+import { brand } from "@/theme/tokens"
 
 type Offer = { id: string; headline: string; description: string | null; discount: string; ends_at: string | null }
 
@@ -154,9 +155,9 @@ export default function OfferPopup({ enabled = true }: { enabled?: boolean }) {
     <Dialog open={open && enabled} onClose={close} maxWidth="xs" fullWidth aria-labelledby="offer-title" slotProps={{ paper: { sx: { borderRadius: "20px", overflow: "hidden", m: 2, maxHeight: "calc(100% - 32px)" } } }}>
       <Box sx={{ position: "relative", height: 132, bgcolor: "brand.navy" }}>
         <Image src="/images/vetud-alpine-landscape.webp" alt="" fill sizes="440px" style={{ objectFit: "cover", objectPosition: "center 80%", opacity: .55 }} />
-        <Box sx={{ position: "absolute", inset: 0, background: "linear-gradient(0deg, rgba(21,38,94,.85), rgba(21,38,94,.15))" }} />
-        <IconButton aria-label={t("close")} onClick={close} sx={{ position: "absolute", top: 10, right: 10, color: "#fff", bgcolor: "rgba(10,20,48,.45)", "&:hover": { bgcolor: "rgba(10,20,48,.7)" } }}><Icon name="close" /></IconButton>
-        <Typography sx={{ position: "absolute", left: 24, bottom: 16, px: 1.5, py: .5, borderRadius: 999, bgcolor: "rgba(255,255,255,.16)", color: "#fff", fontSize: 12, fontWeight: 700, letterSpacing: ".06em" }}>{ct(offer.headline || t("label"))}</Typography>
+        <Box sx={{ position: "absolute", inset: 0, background: `linear-gradient(0deg, ${brand.navyA85}, ${brand.navyA15})` }} />
+        <IconButton aria-label={t("close")} onClick={close} sx={{ position: "absolute", top: 10, right: 10, color: brand.white, bgcolor: brand.blue875A45, "&:hover": { bgcolor: brand.blue875A70 } }}><Icon name="close" /></IconButton>
+        <Typography sx={{ position: "absolute", left: 24, bottom: 16, px: 1.5, py: .5, borderRadius: 999, bgcolor: brand.whiteA16, color: brand.white, fontSize: 12, fontWeight: 700, letterSpacing: ".06em" }}>{ct(offer.headline || t("label"))}</Typography>
       </Box>
 
       <Box sx={{ p: { xs: 2.5, sm: 3 }, overflowY: "auto" }}>

@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl"
 import { PlusIcon as AddIcon, MinusIcon as RemoveIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import IconButton from "@mui/material/IconButton"
+import { brand } from "@/theme/tokens"
 
 type QuantityStepperProps = {
   value: number
@@ -40,7 +41,7 @@ export default function QuantityStepper({
         border: "1px solid",
         borderColor: "brand.lineStrong",
         borderRadius: 2.5,
-        bgcolor: "#fff",
+        bgcolor: brand.white,
         height: small ? 44 : 52,
       }}
     >

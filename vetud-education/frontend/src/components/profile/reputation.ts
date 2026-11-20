@@ -1,5 +1,6 @@
 import type { IconName } from "@/components/brand/Icon"
 import type { OwnForumProfile, OwnForumStats, ReputationLevel, ReputationRules } from "@/lib/community/types"
+import { brand } from "@/theme/tokens"
 
 /** The rules as the backend sets them (lib/forum/reputation.ts), used until it sends its own. */
 export const DEFAULT_RULES: ReputationRules = {
@@ -27,12 +28,12 @@ export const LEVEL_NOTES: Record<ReputationLevel["id"], string> = {
 
 /** Colors for the level ring and pill, from calm to strong. */
 export const LEVEL_COLORS: Record<ReputationLevel["id"], string> = {
-  newcomer: "#8a9ab0",
-  member: "#3268aa",
-  contributor: "#2f7d8c",
-  trusted: "#2f7a55",
-  senior: "#7a5ac8",
-  lead: "#b07a1a",
+  newcomer: brand.slate375,
+  member: brand.blue,
+  contributor: brand.teal625,
+  trusted: brand.green675,
+  senior: brand.indigo425,
+  lead: brand.orange600_2,
 }
 
 export function currentLevel(rules: ReputationRules, reputation: number) {

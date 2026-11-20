@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography"
 import { cacheLife } from "next/cache"
 import { getTranslations } from "next-intl/server"
 import { SITE } from "@/lib/config"
-import { gutter } from "@/theme/tokens"
+import { brand, gutter } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { AppLink, ButtonLink } from "../common/links"
@@ -18,7 +18,7 @@ async function CopyrightYear() {
   return <>{new Date().getFullYear()}</>
 }
 
-const linkSx = { color: "brand.onNavyMuted", fontWeight: 400, fontSize: 13.5, width: "fit-content", transition: "color .2s", "&:hover": { color: "#fff" } }
+const linkSx = { color: "brand.onNavyMuted", fontWeight: 400, fontSize: 13.5, width: "fit-content", transition: "color .2s", "&:hover": { color: brand.white } }
 
 async function LinkColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -36,11 +36,11 @@ export default async function Footer() {
   const t = await getTranslations("Footer")
   const common = await getTranslations("Common")
   return (
-    <Box component="footer" sx={{ bgcolor: "brand.navyDeep", color: "brand.onNavy", borderTop: "1px solid", borderColor: "#ffffff22", px: gutter, pt: { xs: 6, md: 8 }, pb: 4 }}>
+    <Box component="footer" sx={{ bgcolor: "brand.navyDeep", color: "brand.onNavy", borderTop: "1px solid", borderColor: brand.whiteA13, px: gutter, pt: { xs: 6, md: 8 }, pb: 4 }}>
       <Box sx={{ maxWidth: 1360, mx: "auto" }}>
-        <Stack direction={{ xs: "column", md: "row" }} sx={{ justifyContent: "space-between", alignItems: { md: "center" }, gap: 3, pb: { xs: 5, md: 7 }, mb: { xs: 5, md: 7 }, borderBottom: "1px solid #ffffff22" }}>
+        <Stack direction={{ xs: "column", md: "row" }} sx={{ justifyContent: "space-between", alignItems: { md: "center" }, gap: 3, pb: { xs: 5, md: 7 }, mb: { xs: 5, md: 7 }, borderBottom: `1px solid ${brand.whiteA13}` }}>
           <Box><Typography variant="mono" component="p" sx={{ fontSize: 10, letterSpacing: ".16em", color: "brand.onNavyMuted", mb: 2 }}>{t("tagline")}</Typography><Typography component="h2" sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 400, letterSpacing: "-.045em", lineHeight: 1.2 }}>{t("title")}</Typography></Box>
-          <ButtonLink href="/contact" variant="outlined" endIcon={<Icon name="arrowUpRight" />} sx={{ alignSelf: { xs: "flex-start", md: "center" }, borderColor: "#ffffff55", color: "#fff", "&:hover": { bgcolor: "#ffffff11", borderColor: "#fff" } }}>{t("talk")}</ButtonLink>
+          <ButtonLink href="/contact" variant="outlined" endIcon={<Icon name="arrowUpRight" />} sx={{ alignSelf: { xs: "flex-start", md: "center" }, borderColor: brand.whiteA33, color: brand.white, "&:hover": { bgcolor: brand.whiteA07, borderColor: brand.white } }}>{t("talk")}</ButtonLink>
         </Stack>
         <Grid container spacing={{ xs: 5, md: 5 }} sx={{ pb: { xs: 6, md: 7 } }}>
           <Grid size={{ xs: 12, md: 6 }}>
@@ -64,7 +64,7 @@ export default async function Footer() {
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={2}
-          sx={{ borderTop: "1px solid", borderColor: "#ffffff22", pt: 3, justifyContent: "space-between", color: "brand.onNavyMuted", fontSize: 11.5 }}
+          sx={{ borderTop: "1px solid", borderColor: brand.whiteA13, pt: 3, justifyContent: "space-between", color: "brand.onNavyMuted", fontSize: 11.5 }}
         >
           <Typography sx={{ maxWidth: 760, fontSize: "inherit", lineHeight: 1.7 }}>{ct(SITE.siteNotice)}</Typography>
           <Typography sx={{ fontSize: "inherit", lineHeight: 1.7 }}>

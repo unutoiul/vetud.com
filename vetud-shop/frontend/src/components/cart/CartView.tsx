@@ -19,6 +19,7 @@ import CartLineItem from "./CartLineItem"
 import FreeShippingProgress from "./FreeShippingProgress"
 import OrderTotals from "./OrderTotals"
 import PromoCodeField from "./PromoCodeField"
+import { brand } from "@/theme/tokens"
 
 export default function CartView() {
   const ct = useContentTranslator()
@@ -78,7 +79,7 @@ export default function CartView() {
         </ButtonLink>
       </Grid>
       <Grid size={{ xs: 12, md: 4.5 }}>
-        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: "#f7f9fa", borderRadius: 3, position: { md: "sticky" }, top: { md: 110 } }}>
+        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: brand.slate25, borderRadius: 3, position: { md: "sticky" }, top: { md: 110 } }}>
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
             {ct("Order summary")}
           </Typography>

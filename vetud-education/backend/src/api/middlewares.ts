@@ -14,13 +14,18 @@ import {
 } from "./store/email-list/validators"
 import { accountRoutes } from "./account-middlewares"
 import { forumRoutes } from "./forum-middlewares"
-import { signInCodeRoutes } from "./sign-in-code-middlewares"
+import { StoreSignInCodeSchema } from "./store/sign-in-code/validators"
 
 export default defineMiddlewares({
   routes: [
     ...forumRoutes,
     ...accountRoutes,
-    ...signInCodeRoutes,
+    {
+      // Members sign in with an emailed code; this sends it (POST /auth/customer/email-code checks it).
+      method: ["POST"],
+      matcher: "/store/sign-in-code",
+      middlewares: [validateAndTransformBody(StoreSignInCodeSchema)],
+    },
     {
       method: ["POST"],
       matcher: "/store/contact",

@@ -1,12 +1,13 @@
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import Box from "@mui/material/Box"
 import { STATUSES, type StatusId } from "@/content/learn/categories"
+import { brand } from "@/theme/tokens"
 
 const TONES = {
-  good: { color: "#235640", bg: "#e5f1ea", dot: "#2f7a55" },
-  info: { color: "#1f4f86", bg: "#e7effa", dot: "#3268aa" },
-  neutral: { color: "#4b5568", bg: "#eef1f5", dot: "#7a8597" },
-  caution: { color: "#7a4a00", bg: "#fbf0dc", dot: "#c07d12" },
+  good: { color: brand.green775, bg: brand.stone75, dot: brand.green675 },
+  info: { color: brand.blue675, bg: brand.blue50, dot: brand.blue },
+  neutral: { color: brand.slate650, bg: brand.slate50_2, dot: brand.slate475 },
+  caution: { color: brand.orange750, bg: brand.orange75, dot: brand.orange600 },
 } as const
 
 /** Approval status as a labelled pill; the dot repeats the tone, the words carry the meaning. */

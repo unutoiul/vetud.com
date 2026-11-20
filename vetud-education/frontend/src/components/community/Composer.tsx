@@ -27,6 +27,7 @@ import { useLocalizedHref } from "../common/links"
 import ImagePicker from "./ImagePicker"
 import JoinCommunity from "./JoinCommunity"
 import { forumError, useCommunityProfile } from "./useCommunityProfile"
+import { brand } from "@/theme/tokens"
 
 const HINTS: Record<ThreadKind, string> = {
   question: "Ask the community and experts. You can mark the best answer.",
@@ -93,7 +94,7 @@ export default function Composer() {
         {THREAD_KINDS.map(option => {
           const selected = option === kind
           return <Box key={option} component="button" type="button" role="radio" aria-checked={selected} onClick={() => setKind(option)}
-            sx={{ textAlign: "left", font: "inherit", cursor: "pointer", p: 2, borderRadius: "10px", border: "2px solid", borderColor: selected ? "brand.blue" : "divider", bgcolor: selected ? "brand.mintWash" : "#fff", color: "inherit", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
+            sx={{ textAlign: "left", font: "inherit", cursor: "pointer", p: 2, borderRadius: "10px", border: "2px solid", borderColor: selected ? "brand.blue" : "divider", bgcolor: selected ? "brand.mintWash" : brand.white, color: "inherit", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
             <Typography sx={{ fontWeight: 700, color: "brand.navy" }}>{translateAction(act, KIND_LABELS[option])}</Typography>
             <Typography sx={{ mt: .5, fontSize: 13.5, color: "brand.navySoft", lineHeight: 1.55 }}>{translateAction(act, HINTS[option])}</Typography>
           </Box>
@@ -115,7 +116,7 @@ export default function Composer() {
         {COMMUNITY_TOPICS.map(option => {
           const selected = option.id === topic
           return <Box key={option.id} component="button" type="button" role="radio" aria-checked={selected} onClick={() => { setTopic(option.id); setTopicPicked(true) }}
-            sx={{ display: "inline-flex", alignItems: "center", gap: .75, minHeight: 44, px: 1.75, font: "inherit", fontSize: 14, fontWeight: selected ? 650 : 500, cursor: "pointer", borderRadius: 999, border: "1px solid", borderColor: selected ? "brand.blue" : "divider", bgcolor: selected ? "brand.mintWash" : "#fff", color: selected ? "brand.navy" : "brand.navySoft", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
+            sx={{ display: "inline-flex", alignItems: "center", gap: .75, minHeight: 44, px: 1.75, font: "inherit", fontSize: 14, fontWeight: selected ? 650 : 500, cursor: "pointer", borderRadius: 999, border: "1px solid", borderColor: selected ? "brand.blue" : "divider", bgcolor: selected ? "brand.mintWash" : brand.white, color: selected ? "brand.navy" : "brand.navySoft", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
             <Icon name={option.icon} sx={{ fontSize: 17, color: "brand.blue" }} />{translateAction(act, option.name)}
           </Box>
         })}

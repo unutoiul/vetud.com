@@ -2,11 +2,12 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import type { Source, StudyResult } from "@/content/research/peptides"
+import { brand } from "@/theme/tokens"
 
 const WHO = { people: "In people", animals: "In animals", cells: "In cells", review: "Review of studies" } as const
 // The compound in the brand blue, comparisons in a grey that passes 3:1 on white (as in WeightLossChart).
-const COMPOUND = "#3268aa"
-const COMPARISON = "#8794a8"
+const COMPOUND = brand.blue
+const COMPARISON = brand.slate400_2
 
 const shown = (bar: { value: number; display?: string }, unit = "", locale = "en-US") => bar.display ?? (unit === "%" ? new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 3 }).format(bar.value / 100) : `${bar.value.toLocaleString(locale)}${unit}`)
 
@@ -45,9 +46,9 @@ export default function StudyResults({ results, sources, framing }: { results: S
           const bars = result.bars ?? []
           const description = bars.length ? ct.template("{v0}: {v1}", { v0: ct(result.title), v1: bars.map((bar) => `${ct(bar.label)} ${ct(shown(bar, result.unit, ct.locale))}`).join(", ") }, { translateValues: false }) + (result.lowerIsBetter ? ` (${ct("Lower is better")})` : "") : ct(result.title)
           return (
-            <Box component="figure" key={result.title} aria-label={ct(description)} sx={{ m: 0, p: { xs: 2, md: 2.5 }, border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: "#fff" }}>
+            <Box component="figure" key={result.title} aria-label={ct(description)} sx={{ m: 0, p: { xs: 2, md: 2.5 }, border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: brand.white }}>
               <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1, mb: 1 }}>
-                <Box component="span" sx={{ px: 1, py: .25, borderRadius: 999, fontSize: 11.5, fontWeight: 650, bgcolor: result.who === "people" ? "#e7effa" : result.who === "review" ? "#eef1f5" : "#fbf0dc", color: result.who === "people" ? "#1f4f86" : result.who === "review" ? "#4b5568" : "#7a4a00" }}>{ct(WHO[result.who])}</Box>
+                <Box component="span" sx={{ px: 1, py: .25, borderRadius: 999, fontSize: 11.5, fontWeight: 650, bgcolor: result.who === "people" ? brand.blue50_4 : result.who === "review" ? brand.slate50_4 : brand.orange75, color: result.who === "people" ? brand.blue675 : result.who === "review" ? brand.slate650 : brand.orange750 }}>{ct(WHO[result.who])}</Box>
                 {result.lowerIsBetter ? <Typography component="span" sx={{ fontSize: 12, color: "text.secondary" }}>{ct("Lower is better")}</Typography> : null}
               </Box>
               <Typography component="figcaption" sx={{ fontSize: 15.5, fontWeight: 650, lineHeight: 1.4 }}>{ct(result.title)}</Typography>

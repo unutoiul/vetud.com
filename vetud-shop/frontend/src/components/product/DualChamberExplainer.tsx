@@ -6,6 +6,7 @@ import Image from "next/image"
 import Icon, { type IconName } from "@/components/brand/Icon"
 import { AppLink } from "@/components/common/links"
 import type { FormatPhotos } from "@/lib/product-images"
+import { brand } from "@/theme/tokens"
 
 export const EXPLAINER_VIDEO = { src: "/videos/reusable-dual-chamber-pen.mp4", poster: "/videos/reusable-dual-chamber-pen.webp", duration: "PT51S", length: "51 seconds" }
 
@@ -66,7 +67,7 @@ type Photo = { url: string; alt: string }
 function FormatCard({ id, title, price, photos, facts }: { id: string; title: string; price?: string; photos: (Photo & { slim?: boolean })[]; facts: { contents: string; water: string } }) {
   const ct = useContentTranslator()
   return (
-    <Box component="article" aria-labelledby={id} sx={{ display: "flex", flexDirection: "column", border: "1px solid", borderColor: "divider", borderRadius: "8px", overflow: "hidden", bgcolor: "#fff" }}>
+    <Box component="article" aria-labelledby={id} sx={{ display: "flex", flexDirection: "column", border: "1px solid", borderColor: "divider", borderRadius: "8px", overflow: "hidden", bgcolor: brand.white }}>
       <Box sx={{ aspectRatio: "4 / 3", display: "flex", justifyContent: "center", gap: "3%", p: "5%", borderBottom: "1px solid", borderColor: "divider" }}>
         {photos.map((photo) => (
           <Box key={photo.url} sx={{ position: "relative", flex: photo.slim ? "0 0 26%" : "1 1 0", overflow: "hidden" }}>
@@ -94,7 +95,7 @@ export function ExplainerVideo({ title = "The reusable VETUD dual-chamber pen" }
   return (
     <Box component="figure" sx={{ m: 0 }}>
       <Box component="video" controls preload="none" playsInline poster={EXPLAINER_VIDEO.poster} aria-label={ct(title)}
-        sx={{ display: "block", width: "100%", aspectRatio: "16 / 9", bgcolor: "#eef4fb", borderRadius: "8px", border: "1px solid", borderColor: "divider" }}>
+        sx={{ display: "block", width: "100%", aspectRatio: "16 / 9", bgcolor: brand.blue50, borderRadius: "8px", border: "1px solid", borderColor: "divider" }}>
         <source src={EXPLAINER_VIDEO.src} type="video/mp4" />
       </Box>
       <Typography component="figcaption" sx={{ mt: 1, fontSize: 12.5, color: "text.secondary" }}>{ct(title)} · {ct(EXPLAINER_VIDEO.length)}</Typography>

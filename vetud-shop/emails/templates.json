@@ -226,5 +226,17 @@
       "SIGNED_UP",
       "CUSTOMER_URL"
     ]
+  },
+  "sign-in-code": {
+    "id": "4dbda1bf-6021-49b4-bab6-e6f3bc2f29c7",
+    "name": "VETUD · Sign-in code",
+    "alias": "vetud-sign-in-code",
+    "subject": "Your VETUD sign-in code",
+    "preheader": "Use {{{CODE}}} to finish signing in. It expires in {{{MINUTES}}} minutes.",
+    "variables": [
+      "CODE",
+      "MINUTES",
+      "GREETING"
+    ]
   }
 }

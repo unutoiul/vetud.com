@@ -11,6 +11,7 @@ import Link from "@mui/material/Link"
 import Typography from "@mui/material/Typography"
 import Icon from "../brand/Icon"
 import { AppLink, ButtonLink } from "../common/links"
+import { brand } from "@/theme/tokens"
 
 export type FeaturedGuide = {
   peptide: string
@@ -26,10 +27,10 @@ export type FeaturedGuide = {
 }
 
 // The hero's own night palette, around the illustrations.
-const PAPER = "#f5f6ef"
-const MUTED = "#b9cad3"
-const ACCENT = "#a2e7da"
-const focusRing = { outline: "2px solid #ffffff", outlineOffset: "3px" }
+const PAPER = brand.stone50
+const MUTED = brand.slate225
+const ACCENT = brand.teal225
+const focusRing = { outline: `2px solid ${brand.white}`, outlineOffset: "3px" }
 
 /**
  * The featured guides: one large at a time, and every guide visible below it as a tab, so there's
@@ -71,7 +72,7 @@ export default function PeptideExplorer({ guides }: { guides: FeaturedGuide[] })
   return (
     <LazyMotion features={domAnimation}>
       <Box component="section" aria-label={t("featuredGuides")}
-        sx={{ color: PAPER, background: "radial-gradient(ellipse at 72% 38%, #0c2236 0, #081624 52%, #071320 82%)", overflow: "hidden" }}>
+        sx={{ color: PAPER, background: `radial-gradient(ellipse at 72% 38%, ${brand.blue875} 0, ${brand.blue925} 52%, ${brand.blue925_2} 82%)`, overflow: "hidden" }}>
         <Box sx={{
           maxWidth: 1520, mx: "auto",
           px: { xs: "max(18px, 5vw)", md: "clamp(24px, 5vw, 80px)" },
@@ -130,14 +131,14 @@ export default function PeptideExplorer({ guides }: { guides: FeaturedGuide[] })
           </Box>
 
           <Box id={resultId} aria-live="polite" aria-atomic="true" sx={{ gridArea: "copy", position: "relative", zIndex: 1, alignSelf: "start" }}>
-            <Typography sx={{ maxWidth: "35em", mt: { xs: 1.25, md: "clamp(12px, 1.4vw, 20px)" }, color: "#d6e3e7", fontSize: { xs: 16, md: "clamp(17px, 1.4vw, 21px)" }, lineHeight: 1.48, textWrap: "pretty" }}>
+            <Typography sx={{ maxWidth: "35em", mt: { xs: 1.25, md: "clamp(12px, 1.4vw, 20px)" }, color: brand.slate125, fontSize: { xs: 16, md: "clamp(17px, 1.4vw, 21px)" }, lineHeight: 1.48, textWrap: "pretty" }}>
               {guide.deck}
             </Typography>
             <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 1.75, md: "clamp(14px, 1.4vw, 22px)" }, my: { xs: 2, md: "clamp(18px, 2vw, 28px)" } }}>
               <Typography component="strong" sx={{ color: ACCENT, fontSize: { xs: "clamp(34px, 8.2vw, 46px)", md: "clamp(40px, 3.8vw, 58px)" }, letterSpacing: "-.06em", lineHeight: 1, fontWeight: 500, whiteSpace: "nowrap" }}>
                 {percent(guide.change)}
               </Typography>
-              <Box sx={{ pl: { xs: 1.5, md: "clamp(12px, 1.3vw, 18px)" }, borderLeft: "1px solid #506174" }}>
+              <Box sx={{ pl: { xs: 1.5, md: "clamp(12px, 1.3vw, 18px)" }, borderLeft: `1px solid ${brand.slate625}` }}>
                 <Typography sx={{ m: 0, mb: "3px", fontSize: { xs: 13, md: 14 }, lineHeight: 1.35, maxWidth: "27em" }}>{guide.result}</Typography>
                 <Link href={guide.source} target="_blank" rel="noopener noreferrer" underline="always"
                   sx={{ fontSize: 12, lineHeight: 1.5, color: MUTED, fontWeight: 400, textUnderlineOffset: "3px", whiteSpace: "nowrap", "&:focus-visible": focusRing }}>
@@ -150,7 +151,7 @@ export default function PeptideExplorer({ guides }: { guides: FeaturedGuide[] })
             </Box>
             <Box sx={{ display: "flex", gap: { xs: 2, md: "clamp(16px, 1.8vw, 26px)" }, alignItems: "center", flexWrap: "wrap" }}>
               <ButtonLink href={`/learn/${guide.peptide}`} aria-label={t("readNamedGuide", { name: guide.name })} endIcon={<Icon name="arrowRight" />}
-                sx={{ minHeight: 46, px: "21px", borderRadius: "28px", bgcolor: ACCENT, color: "#0c2b30", fontSize: 14, fontWeight: 600, boxShadow: "none", "&:hover": { bgcolor: "#c2f6ed", boxShadow: "none" }, "&.Mui-focusVisible": focusRing }}>
+                sx={{ minHeight: 46, px: "21px", borderRadius: "28px", bgcolor: ACCENT, color: brand.teal875, fontSize: 14, fontWeight: 600, boxShadow: "none", "&:hover": { bgcolor: brand.teal125, boxShadow: "none" }, "&.Mui-focusVisible": focusRing }}>
                 {t("openGuide")}
               </ButtonLink>
               <AppLink href="/learn" underline="always"
@@ -168,11 +169,11 @@ export default function PeptideExplorer({ guides }: { guides: FeaturedGuide[] })
                 aria-controls={`${titleId} ${resultId}`} onClick={() => select(i)}
                 sx={{
                   justifyContent: "flex-start", gap: { xs: 1, md: 1.5 }, minWidth: 0, minHeight: { xs: 48, md: 64 }, p: { xs: "5px 7px", md: "8px" },
-                  border: "1px solid #354452", borderRadius: "10px", bgcolor: "#0f1e2c", color: PAPER, textAlign: "left", font: "inherit",
+                  border: `1px solid ${brand.slate725}`, borderRadius: "10px", bgcolor: brand.blue875_2, color: PAPER, textAlign: "left", font: "inherit",
                   transition: "background-color .2s ease, border-color .2s ease",
-                  "&:hover": { bgcolor: "#182d3a" },
-                  '&[aria-pressed="true"]': { borderColor: ACCENT, bgcolor: "#173139" },
-                  "&.Mui-focusVisible": { outline: "2px solid #ffffff", outlineOffset: "-4px" },
+                  "&:hover": { bgcolor: brand.blue850 },
+                  '&[aria-pressed="true"]': { borderColor: ACCENT, bgcolor: brand.teal850 },
+                  "&.Mui-focusVisible": { outline: `2px solid ${brand.white}`, outlineOffset: "-4px" },
                 }}>
                 <Box component="span" sx={{ position: "relative", width: { xs: 30, md: 52 }, aspectRatio: "1.12", overflow: "hidden", borderRadius: "5px", flexShrink: 0 }}>
                   <Image src={item.cover} alt="" fill sizes="56px" style={{ objectFit: "cover", objectPosition: "74% center" }} />

@@ -14,6 +14,7 @@ import { CategoryList } from "@/components/shop/CategoryFilters"
 import { translateAction } from "@/i18n/actions"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { filterByCategories, type CategoryFacet } from "@/lib/catalog-filters"
+import { brand } from "@/theme/tokens"
 
 /** Cards shown before "Show more": three rows of three. */
 const FIRST_CARDS = 9
@@ -48,7 +49,7 @@ export default function HomeCatalog({ products, categories }: { products: HttpTy
         {options.map((option) => {
           const active = option.handle === selected
           return (
-            <Box key={option.handle ?? "all"} component="button" type="button" onClick={() => pick(option.handle)} aria-pressed={active} sx={{ flexShrink: 0, minHeight: 44, px: 2, border: "1px solid", borderColor: active ? "brand.navy" : "divider", borderRadius: "999px", font: "inherit", fontSize: 14, fontWeight: 600, whiteSpace: "nowrap", cursor: "pointer", bgcolor: active ? "brand.navy" : "background.paper", color: active ? "#fff" : "text.primary", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
+            <Box key={option.handle ?? "all"} component="button" type="button" onClick={() => pick(option.handle)} aria-pressed={active} sx={{ flexShrink: 0, minHeight: 44, px: 2, border: "1px solid", borderColor: active ? "brand.navy" : "divider", borderRadius: "999px", font: "inherit", fontSize: 14, fontWeight: 600, whiteSpace: "nowrap", cursor: "pointer", bgcolor: active ? "brand.navy" : "background.paper", color: active ? brand.white : "text.primary", "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
               {translateAction(act, option.name)}
             </Box>
           )

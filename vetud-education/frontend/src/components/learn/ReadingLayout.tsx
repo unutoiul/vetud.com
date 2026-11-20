@@ -49,9 +49,9 @@ export function ReadingHeader({ title, description, breadcrumbs, image, film, va
       </Box>
     </Box>
     {/* The artwork spans the reading width and straddles the edge between header and body. */}
-    <Box sx={{ px: gutter, background: `linear-gradient(to bottom, ${brand.paper} 50%, #fff 50%)` }}>
+    <Box sx={{ px: gutter, background: `linear-gradient(to bottom, ${brand.paper} 50%, ${brand.white} 50%)` }}>
       <Box component="figure" sx={{ m: 0, maxWidth: READING_WIDTH, mx: { xs: -2.5, sm: "auto" } }}>
-        <Box sx={{ position: "relative", aspectRatio: film ? { xs: "4 / 5", sm: "16 / 9" } : "16 / 9", overflow: "hidden", bgcolor: film ? "#030b18" : "brand.mintWash", borderRadius: { xs: 0, sm: "16px" }, border: { xs: 0, sm: "1px solid" }, borderColor: { sm: "divider" }, boxShadow: { sm: "0 28px 60px -34px rgba(21,38,94,.45)" } }}>
+        <Box sx={{ position: "relative", aspectRatio: film ? { xs: "4 / 5", sm: "16 / 9" } : "16 / 9", overflow: "hidden", bgcolor: film ? brand.blue950_2 : "brand.mintWash", borderRadius: { xs: 0, sm: "16px" }, border: { xs: 0, sm: "1px solid" }, borderColor: { sm: "divider" }, boxShadow: { sm: `0 28px 60px -34px ${brand.navyA45}` } }}>
           {film ? <video controls playsInline preload="none" poster={image?.src} aria-label={film.label} style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }}>
             <source src={film.src} type="video/mp4" />
             <track kind="captions" src={film.captions} srcLang="en" label="English" />

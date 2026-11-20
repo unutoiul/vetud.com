@@ -2,11 +2,11 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import type { ReactNode } from "react"
-import { gutter } from "@/theme/tokens"
+import { brand, gutter } from "@/theme/tokens"
 import HeroVideo, { type HeroVideoSource } from "./HeroVideo"
 
 /** The wide hero videos (1920×500) are this colour across their left third, so the text sits on the video itself. */
-const VIDEO_PAPER = "#f8fafb"
+const VIDEO_PAPER = brand.slate25_2
 
 export const SHOP_HERO_VIDEO: HeroVideoSource = { src: "/videos/shop-hero.mp4", poster: "/videos/shop-hero.webp" }
 
@@ -31,7 +31,7 @@ export default function VideoHero({ eyebrow, title, description, children, video
     <Box aria-hidden sx={{
       display: { xs: "none", md: "block" }, position: "absolute", inset: 0, pointerEvents: "none",
       "--text-start": { md: "48px", lg: "max(64px, (100% - 1360px) / 2)" },
-      background: `linear-gradient(90deg, ${VIDEO_PAPER} calc(var(--text-start) + 500px), rgb(248 250 251 / 0) calc(var(--text-start) + 680px))`,
+      background: `linear-gradient(90deg, ${VIDEO_PAPER} calc(var(--text-start) + 500px), ${brand.slate25A00} calc(var(--text-start) + 680px))`,
     }} />
   </Box>
 }

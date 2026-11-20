@@ -9,16 +9,13 @@ import Chip from "@mui/material/Chip"
 import Checkbox from "@mui/material/Checkbox"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import CircularProgress from "@mui/material/CircularProgress"
-import Divider from "@mui/material/Divider"
 import Grid from "@mui/material/Grid"
-import IconButton from "@mui/material/IconButton"
-import InputAdornment from "@mui/material/InputAdornment"
 import Paper from "@mui/material/Paper"
 import Skeleton from "@mui/material/Skeleton"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTranslations } from "next-intl"
 import PhoneField from "../common/PhoneField"
 import { getCountryRules } from "@/i18n/config"
@@ -29,6 +26,7 @@ import { useStore } from "../store/StoreProvider"
 import { ButtonLink } from "../common/links"
 import OrderHistory from "./OrderHistory"
 import AddressFields, { EMPTY_ADDRESS, toAddressValues, validateAddress, type AddressValues } from "../checkout/AddressFields"
+import { brand } from "@/theme/tokens"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -45,176 +43,147 @@ export default function AccountPage({ view = "profile" }: { view?: "profile" | "
   return <AccountDashboard key={customer.id} view={view} />
 }
 
-export function PasswordField({ label, value, onChange, autoComplete, helperText, error }: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  autoComplete: "current-password" | "new-password"
-  helperText?: string
-  error?: boolean
-}) {
-  const ct = useContentTranslator()
-  const t = useTranslations("Account")
-  const [visible, setVisible] = useState(false)
-  return (
-    <TextField
-      label={ct(label)}
-      type={visible ? "text" : "password"}
-      required
-      value={value}
-      onChange={(event) => onChange(event.target.value)}
-      helperText={ct(helperText)}
-      error={error}
-      slotProps={{
-        htmlInput: { autoComplete, minLength: 8, spellCheck: false, autoCapitalize: "none" },
-        input: {
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton aria-label={t("showPassword")} aria-pressed={visible} onClick={() => setVisible(!visible)} edge="end">
-                <Icon name={visible ? "eyeOff" : "eye"} sx={{ fontSize: 20 }} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        },
-      }}
-    />
-  )
-}
+/** The address a code was just sent to, kept for this tab: going to the mail app and back may reload it. */
+const PENDING_KEY = "vetud_sign_in_email"
 
-/** Emails a one-time reset link. Medusa replies the same way whether or not the account exists. */
-export function ResetRequestForm({ initialEmail = "", onBack }: { initialEmail?: string; onBack?: () => void }) {
-  const ct = useContentTranslator()
-  const act = useTranslations("Actions")
-  const t = useTranslations("Account")
-  const { countryCode } = useStore()
-  const { requestPasswordReset, pending } = useAccount()
-  const [email, setEmail] = useState(initialEmail)
-  const [sentTo, setSentTo] = useState<string | null>(null)
-  const [formError, setFormError] = useState<string | null>(null)
-
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setFormError(null)
-    const trimmed = email.trim()
-    if (!EMAIL_PATTERN.test(trimmed)) {
-      setFormError(t("invalidEmail"))
-      return
-    }
-    try {
-      await requestPasswordReset(trimmed, countryCode)
-      setSentTo(trimmed)
-    } catch (caught) {
-      setFormError(errorText(caught))
-    }
+function readPendingEmail() {
+  try {
+    return window.sessionStorage.getItem(PENDING_KEY)
+  } catch {
+    return null
   }
-
-  return (
-    <Box component="form" onSubmit={submit} noValidate>
-      {sentTo ? <Alert severity="success" role="status" sx={{ mb: 2 }}>{t("resetSent", { email: sentTo })}</Alert> : null}
-      {formError ? <Alert severity="error" sx={{ mb: 2 }}>{ct(formError)}</Alert> : null}
-      <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" } }}>
-        <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" sx={{ fontSize: 17 }} />}>
-          {ct(sentTo ? t("resendLink") : t("sendLink"))}
-        </Button>
-        {onBack ? <Button type="button" onClick={onBack}>{t("backToSignin")}</Button> : null}
-      </Stack>
-    </Box>
-  )
 }
 
-/** `initialEmail` fills the email field, for example with what the shopper typed at checkout. */
+function writePendingEmail(email: string | null) {
+  try {
+    if (email) window.sessionStorage.setItem(PENDING_KEY, email)
+    else window.sessionStorage.removeItem(PENDING_KEY)
+  } catch {
+    // Without storage the code step still works until the page is reloaded.
+  }
+}
+
+/**
+ * Sign in, or create an account, with a 6-digit code emailed to you: there are no passwords
+ * (owner, 2026-11-19). A sign-in lasts 30 days. `initialEmail` fills the email field, for example
+ * with what the shopper typed at checkout.
+ */
 export function AuthPanel({ context = "account", initialEmail = "" }: { context?: "account" | "checkout"; initialEmail?: string }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Account")
-  const ta = useTranslations("Address")
-  const { countryCode } = useStore()
   const atCheckout = context === "checkout"
-  const { signIn, signUp, pending, error, clearError } = useAccount()
-  const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin")
+  const { requestCode, verifyCode, pending, error, clearError } = useAccount()
   const [email, setEmail] = useState(initialEmail)
-  const [password, setPassword] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [phone, setPhone] = useState("")
+  const [sentTo, setSentTo] = useState<string | null>(null)
+  const [code, setCode] = useState("")
+  const [wait, setWait] = useState(0)
+  const [fresh, setFresh] = useState(true)
   const [formError, setFormError] = useState<string | null>(null)
 
-  const switchMode = (next: typeof mode) => {
-    setMode(next)
-    setFormError(null)
-    clearError()
-  }
+  // Back from the mail app: the code step is still open (at checkout, only for the same address).
+  useEffect(() => {
+    const saved = readPendingEmail()
+    if (!saved || (initialEmail && saved.toLowerCase() !== initialEmail.trim().toLowerCase())) return
+    const timer = window.setTimeout(() => { setSentTo(saved); setEmail(saved) }, 0)
+    return () => window.clearTimeout(timer)
+  }, [initialEmail])
 
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  // Counts down to when another code can be sent.
+  useEffect(() => {
+    if (wait <= 0) return
+    const timer = window.setTimeout(() => setWait((seconds) => seconds - 1), 1000)
+    return () => window.clearTimeout(timer)
+  }, [wait])
+
+  const send = async (event?: React.FormEvent<HTMLFormElement>) => {
+    event?.preventDefault()
     setFormError(null)
     clearError()
-    if (!EMAIL_PATTERN.test(email.trim())) {
+    const address = (sentTo ?? email).trim()
+    if (!EMAIL_PATTERN.test(address)) {
       setFormError(t("invalidEmail"))
       return
     }
-    if (password.length < 8) {
-      setFormError(t("invalidPassword"))
-      return
-    }
-    if (mode === "signup" && (!firstName.trim() || !lastName.trim())) {
-      setFormError(t("invalidName"))
-      return
-    }
-    if (mode === "signup" && !isValidPhone(phone, countryCode)) { setFormError(ta("invalidPhone")); return }
     try {
-      if (mode === "signin") {
-        await signIn(email.trim(), password)
-      } else {
-        await signUp({ email: email.trim(), password, first_name: firstName.trim(), last_name: lastName.trim(), phone: normalizePhone(phone, countryCode) })
-      }
+      const { sent, resendAfter } = await requestCode(address)
+      setFresh(sent)
+      setSentTo(address)
+      writePendingEmail(address)
+      setCode("")
+      setWait(resendAfter)
     } catch (caught) {
       setFormError(errorText(caught))
     }
   }
 
-  const form = mode === "reset" ? <ResetRequestForm initialEmail={email} onBack={() => switchMode("signin")} /> : <>
-    <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
-      <Button
-        variant={mode === "signin" ? "contained" : "text"}
-        aria-pressed={mode === "signin"}
-        onClick={() => switchMode("signin")}
-      >
+  const verify = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setFormError(null)
+    clearError()
+    if (!sentTo) return
+    if (!/^\d{6}$/.test(code.replace(/\D/g, ""))) {
+      setFormError(ct("Enter the 6-digit code from the email."))
+      return
+    }
+    try {
+      await verifyCode(sentTo, code)
+      writePendingEmail(null)
+    } catch (caught) {
+      setFormError(errorText(caught))
+    }
+  }
+
+  const changeEmail = () => {
+    setSentTo(null)
+    writePendingEmail(null)
+    setCode("")
+    setFormError(null)
+    clearError()
+  }
+
+  const message = formError || error
+  const form = sentTo === null ? (
+    <Box component="form" onSubmit={send} noValidate>
+      {message ? <Alert severity="error" sx={{ mb: 2 }}>{ct(message)}</Alert> : null}
+      <TextField
+        label={act("email")}
+        type="email"
+        required
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        helperText={ct("No password needed. We'll email you a 6-digit code; if you're new, it creates your account.")}
+        slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false, inputMode: "email" } }}
+      />
+      <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" sx={{ fontSize: 17 }} />} sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}>
+        {ct("Email me a sign-in code")}
+      </Button>
+    </Box>
+  ) : (
+    <Box component="form" onSubmit={verify} noValidate>
+      <Alert severity="info" role="status" sx={{ mb: 2 }}>
+        {ct(fresh ? "We sent a 6-digit code to" : "We sent a code a moment ago to")} <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>{sentTo}</Box>. {ct(fresh ? "It works for 10 minutes. Check your spam folder if you can't see it." : "Use that one, or ask for a new code when the timer ends.")}
+      </Alert>
+      {message ? <Alert severity="error" sx={{ mb: 2 }}>{ct(message)}</Alert> : null}
+      <TextField
+        label={ct("Sign-in code")}
+        required
+        autoFocus
+        value={code}
+        onChange={(event) => setCode(event.target.value.replace(/[^\d ]/g, "").slice(0, 7))}
+        slotProps={{ htmlInput: { autoComplete: "one-time-code", inputMode: "numeric", maxLength: 7, sx: { letterSpacing: "0.3em", fontVariantNumeric: "tabular-nums", fontSize: 20 } } }}
+      />
+      <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}>
         {t("signin")}
       </Button>
-      <Button
-        variant={mode === "signup" ? "contained" : "text"}
-        aria-pressed={mode === "signup"}
-        onClick={() => switchMode("signup")}
-      >
-        {t("signup")}
-      </Button>
-    </Stack>
-    {formError || error ? <Alert severity="error" sx={{ mb: 2 }}>{ct(formError || error)}</Alert> : null}
-    <Box component="form" onSubmit={submit} noValidate>
-      {mode === "signup" ? (
-        <Grid container spacing={2} sx={{ mb: 2 }}>
-          <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("firstName")} required value={firstName} onChange={(event) => setFirstName(event.target.value)} slotProps={{ htmlInput: { autoComplete: "given-name" } }} /></Grid>
-          <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("lastName")} required value={lastName} onChange={(event) => setLastName(event.target.value)} slotProps={{ htmlInput: { autoComplete: "family-name" } }} /></Grid>
-        </Grid>
-      ) : null}
-      <Stack spacing={2}>
-        <TextField label={act("email")} type="email" required value={email} onChange={(event) => setEmail(event.target.value)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
-        {mode === "signup" ? <PhoneField country={countryCode} value={phone} onChange={setPhone} label={ta("phoneOptional")} /> : null}
-        <PasswordField label={t("password")} value={password} onChange={setPassword} helperText={ct(mode === "signup" ? t("passwordHelp") : undefined)} autoComplete={mode === "signin" ? "current-password" : "new-password"} />
-      </Stack>
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5} sx={{ mt: 3, alignItems: { sm: "center" }, justifyContent: "space-between" }}>
-        <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ width: { xs: "100%", sm: "auto" } }}>
-          {ct(mode === "signin" ? t("signin") : t("signup"))}
+      <Stack direction="row" useFlexGap spacing={1} sx={{ mt: 1.5, flexWrap: "wrap" }}>
+        <Button type="button" disabled={pending || wait > 0} onClick={() => void send()} sx={{ minHeight: 44 }}>
+          {wait > 0 ? ct.template("Send a new code in {v0} s", { v0: wait }) : ct("Send a new code")}
         </Button>
-        {mode === "signin" ? <Button type="button" onClick={() => switchMode("reset")} sx={{ alignSelf: { xs: "center", sm: "auto" } }}>{t("forgot")}</Button> : null}
+        <Button type="button" onClick={changeEmail} sx={{ minHeight: 44 }}>{ct("Use a different email")}</Button>
       </Stack>
     </Box>
-    <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>
-      {t("privacy")}
-    </Typography>
-  </>
+  )
 
   // At checkout and on the order confirmation the panel sits inside a narrow card that already
   // explains why to sign in, so only the form is shown.
@@ -223,15 +192,9 @@ export function AuthPanel({ context = "account", initialEmail = "" }: { context?
   return (
     <Grid container spacing={{ xs: 3, md: 6 }}>
       <Grid size={{ xs: 12, md: 5 }}>
-        <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
-          {ct(mode === "signin" ? t("welcome") : t("account"))}
-        </Typography>
-        <Typography variant="h3" component="h2" sx={{ mt: 1.5, mb: 2 }}>
-          {ct(mode === "reset" ? t("resetTitle") : mode === "signin" ? t("signinTitle") : t("signupTitle"))}
-        </Typography>
-        <Typography sx={{ color: "text.secondary" }}>
-          {ct(mode === "reset" ? t("resetIntro") : t("intro"))}
-        </Typography>
+        <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>{t("account")}</Typography>
+        <Typography variant="h3" component="h2" sx={{ mt: 1.5, mb: 2 }}>{t("signinTitle")}</Typography>
+        <Typography sx={{ color: "text.secondary" }}>{t("intro")}</Typography>
         <Stack spacing={1.5} sx={{ mt: 4 }}>
           {[t("savedAddresses"), t("profile"), t("orders")].map((item) => (
             <Stack key={item} direction="row" spacing={1.25} sx={{ alignItems: "center" }}>
@@ -243,7 +206,9 @@ export function AuthPanel({ context = "account", initialEmail = "" }: { context?
       </Grid>
       <Grid size={{ xs: 12, md: 7 }}>
         <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3 }}>
+          <Typography variant="h5" component="h3" sx={{ mb: 2.5 }}>{sentTo === null ? ct("Sign in or create an account") : ct("Check your email")}</Typography>
           {form}
+          <Typography variant="body2" sx={{ color: "text.secondary", mt: 3 }}>{t("privacy")}</Typography>
         </Paper>
       </Grid>
     </Grid>
@@ -258,14 +223,14 @@ function AccountDashboard({ view }: { view: "profile" | "orders" }) {
   if (!customer) return null
   return (
     <Stack spacing={{ xs: 3, md: 5 }}>
-      <Paper sx={{ p: { xs: 2.5, md: 4 }, borderRadius: 3, bgcolor: "brand.navy", color: "#fff" }}>
+      <Paper sx={{ p: { xs: 2.5, md: 4 }, borderRadius: 3, bgcolor: "brand.navy", color: brand.white }}>
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "space-between", alignItems: { sm: "center" } }}>
           <Box>
             <Typography variant="eyebrow" sx={{ color: "brand.mint" }}>{t("account")}</Typography>
             <Typography variant="h3" component="h2" sx={{ mt: 1 }}>{customer.first_name ? t("greeting", { name: customer.first_name }) : t("account")}</Typography>
-            <Typography sx={{ color: "rgba(255,255,255,.72)", mt: 1 }}>{ct(customer.email)}</Typography>
+            <Typography sx={{ color: brand.whiteA72, mt: 1 }}>{ct(customer.email)}</Typography>
           </Box>
-          <Button variant="outlined" disabled={pending} onClick={() => void signOut().catch(() => undefined)} sx={{ color: "#fff", borderColor: "rgba(255,255,255,.45)", alignSelf: { xs: "flex-start", sm: "center" } }}>{t("signout")}</Button>
+          <Button variant="outlined" disabled={pending} onClick={() => void signOut().catch(() => undefined)} sx={{ color: brand.white, borderColor: brand.whiteA45, alignSelf: { xs: "flex-start", sm: "center" } }}>{t("signout")}</Button>
         </Stack>
       </Paper>
       <Stack component="nav" aria-label={act("yourAccount")} direction="row" sx={{ gap: 1.5, flexWrap: "wrap" }}>
@@ -288,22 +253,9 @@ function ProfileSection() {
   const t = useTranslations("Account")
   const ta = useTranslations("Address")
   const { countryCode } = useStore()
-  const { customer, updateProfile, requestPasswordReset, pending, error, clearError } = useAccount()
+  const { customer, updateProfile, pending, error, clearError } = useAccount()
   const [values, setValues] = useState({ first_name: customer?.first_name ?? "", last_name: customer?.last_name ?? "", phone: customer?.phone ?? "", company_name: customer?.company_name ?? "" })
   const [saved, setSaved] = useState(false)
-  const [resetSent, setResetSent] = useState(false)
-
-  const sendReset = async () => {
-    if (!customer?.email) return
-    clearError()
-    setResetSent(false)
-    try {
-      await requestPasswordReset(customer.email, countryCode)
-      setResetSent(true)
-    } catch {
-      // The provider displays the API error.
-    }
-  }
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -334,11 +286,6 @@ function ProfileSection() {
         </Stack>
         <Button type="submit" variant="contained" disabled={pending} sx={{ mt: 2.5 }}>{ct(pending ? t("saving") : t("saveProfile"))}</Button>
       </Box>
-      <Divider sx={{ my: 3 }} />
-      <Typography variant="h6" component="h3">{t("password")}</Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5, mb: 2 }}>{t("changePasswordHelp")}</Typography>
-      {resetSent ? <Alert severity="success" role="status" sx={{ mb: 2 }}>{t("resetSentAccount", { email: customer?.email ?? "" })}</Alert> : null}
-      <Button variant="outlined" disabled={pending} onClick={() => void sendReset()} startIcon={<Icon name="mail" sx={{ fontSize: 17 }} />}>{t("changePassword")}</Button>
     </Paper>
   )
 }

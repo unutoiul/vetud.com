@@ -11,6 +11,7 @@ import Icon, { type IconName } from "../brand/Icon"
 import { AppLink, ButtonLink } from "../common/links"
 import { Pill } from "../community/Badges"
 import { achievements, currentLevel, LEVEL_COLORS, LEVEL_NOTES, levelProgress, nextLevel } from "./reputation"
+import { brand } from "@/theme/tokens"
 
 const card = { p: { xs: 2.5, md: 3.5 }, borderRadius: 3 } as const
 /** Read by screen readers, not shown. Sizes in px: in sx, 1 would mean 100%. */
@@ -135,7 +136,7 @@ export function Achievements({ profile, stats }: { profile: OwnForumProfile; sta
       <Box component="ul" sx={{ listStyle: "none", m: 0, mt: 2, p: 0, display: "grid", gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))", md: "repeat(3, minmax(0, 1fr))", lg: "repeat(4, minmax(0, 1fr))" }, gap: 1.5 }}>
         {list.map((item) => (
           <Box component="li" key={item.id} sx={{ display: "flex", gap: 1.5, alignItems: "flex-start", p: 1.75, borderRadius: 2, border: "1px solid", borderColor: item.earned ? "brand.lineStrong" : "divider", bgcolor: item.earned ? "brand.mintWash" : "transparent", opacity: item.earned ? 1 : .62 }}>
-            <Box aria-hidden sx={{ display: "grid", placeItems: "center", width: 38, height: 38, flexShrink: 0, borderRadius: "50%", bgcolor: item.earned ? "brand.navy" : "brand.mintLight", color: item.earned ? "#fff" : "text.secondary" }}>
+            <Box aria-hidden sx={{ display: "grid", placeItems: "center", width: 38, height: 38, flexShrink: 0, borderRadius: "50%", bgcolor: item.earned ? "brand.navy" : "brand.mintLight", color: item.earned ? brand.white : "text.secondary" }}>
               <Icon name={item.earned ? item.icon : "lock"} sx={{ fontSize: 18 }} />
             </Box>
             <Box sx={{ minWidth: 0 }}>

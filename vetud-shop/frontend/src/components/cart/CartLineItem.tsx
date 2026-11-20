@@ -16,6 +16,7 @@ import { LocalizedNextLink } from "../common/links"
 import ProductThumb from "../product/ProductThumb"
 import QuantityStepper from "../product/QuantityStepper"
 import { useStore } from "../store/StoreProvider"
+import { brand } from "@/theme/tokens"
 
 type CartLineItemProps = {
   item: HttpTypes.StoreCartLineItem
@@ -47,7 +48,7 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
         sx={{
           width: { xs: 72, sm: 92 },
           flexShrink: 0,
-          bgcolor: image ? "#fff" : "brand.mintWash",
+          bgcolor: image ? brand.white : "brand.mintWash",
           border: image ? "1px solid" : "none",
           borderColor: "divider",
           borderRadius: 2.5,

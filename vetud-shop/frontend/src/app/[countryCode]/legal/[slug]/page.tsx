@@ -11,6 +11,7 @@ import { AppLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import { getLegalDocument, LEGAL_DOCUMENTS } from "@/content/legal"
+import { brand } from "@/theme/tokens"
 
 export function generateStaticParams() {
   return LEGAL_DOCUMENTS.map((document) => ({ slug: document.slug }))
@@ -43,7 +44,7 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
       <Section tone="white">
         <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 3 }}>
-            <Stack component="nav" aria-label={ct("Legal documents")} spacing={0.5} sx={{ bgcolor: "#f7f9fa", border: "1px solid", borderColor: "divider", borderRadius: 3, p: 2.5, position: { md: "sticky" }, top: { md: 110 } }}>
+            <Stack component="nav" aria-label={ct("Legal documents")} spacing={0.5} sx={{ bgcolor: brand.slate25, border: "1px solid", borderColor: "divider", borderRadius: 3, p: 2.5, position: { md: "sticky" }, top: { md: 110 } }}>
               {LEGAL_DOCUMENTS.map((item) => (
                 <AppLink
                   key={item.slug}
@@ -56,7 +57,7 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
                     py: 1,
                     px: 1.5,
                     borderRadius: 1.5,
-                    bgcolor: item.slug === document.slug ? "#eff5f6" : "transparent",
+                    bgcolor: item.slug === document.slug ? brand.slate50 : "transparent",
                   }}
                 >
                   {ct(item.title)}

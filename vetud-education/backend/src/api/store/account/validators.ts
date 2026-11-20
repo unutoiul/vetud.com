@@ -1,17 +1,15 @@
 import { z } from "@medusajs/framework/zod"
 
-/** Same minimum as sign-up and password reset on the storefront. */
-const Password = z.string().min(8).max(200)
+const Email = z.string().trim().toLowerCase().email().max(254)
 
-export const StoreChangePasswordSchema = z.object({
-  current_password: z.string().min(1).max(200),
-  new_password: Password,
-}).strict()
+/** Step 1 of changing the sign-in email: a code is sent to the new address. */
+export const StoreEmailChangeCodeSchema = z.object({ email: Email }).strict()
 
+/** Step 2: the code from that email confirms the change. */
 export const StoreChangeEmailSchema = z.object({
-  email: z.string().trim().toLowerCase().email().max(254),
-  password: z.string().min(1).max(200),
+  email: Email,
+  code: z.string().trim().min(6).max(12),
 }).strict()
 
-export type StoreChangePasswordBody = z.infer<typeof StoreChangePasswordSchema>
+export type StoreEmailChangeCodeBody = z.infer<typeof StoreEmailChangeCodeSchema>
 export type StoreChangeEmailBody = z.infer<typeof StoreChangeEmailSchema>

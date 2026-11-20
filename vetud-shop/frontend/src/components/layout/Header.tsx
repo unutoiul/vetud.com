@@ -24,7 +24,7 @@ import { EDUCATION_LINKS, HEADER_LINKS, NAV_LABEL_KEYS, SECONDARY_LINKS } from "
 import { ProductMegaMenu, ProductMenuSection } from "./ProductMenu"
 import SearchBox from "./SearchBox"
 import type { ProductMenuData } from "@/lib/product-menu"
-import { motion } from "@/theme/tokens"
+import { brand, motion } from "@/theme/tokens"
 import { useAccount } from "../account/AccountProvider"
 
 const PRODUCT_MENU_ID = "product-menu"
@@ -165,7 +165,7 @@ export default function Header({ catalog }: { catalog: ProductMenuData }) {
         if (productsOpen && openedByHover.current) closeTimer.current = window.setTimeout(() => setProductsOpen(false), 220)
       }}
       onPointerEnter={() => window.clearTimeout(closeTimer.current)}
-      sx={{ top: 0, mt: 0, mx: "auto", width: "100%", borderRadius: 0, bgcolor: "rgba(255,255,255,.94)", backdropFilter: "blur(18px)", borderBottom: "1px solid", borderColor: "divider", boxShadow: "none" }}
+      sx={{ top: 0, mt: 0, mx: "auto", width: "100%", borderRadius: 0, bgcolor: brand.whiteA94, backdropFilter: "blur(18px)", borderBottom: "1px solid", borderColor: "divider", boxShadow: "none" }}
     >
       <Toolbar sx={{ minHeight: { xs: 76, md: 92 }, width: "100%", maxWidth: 1488, mx: "auto", px: { xs: 1.5, sm: 2, md: 6 }, gap: { xs: 0, sm: .25, md: 1.5 }, "& > .MuiIconButton-root": { minWidth: 44, width: 44, height: 44 } }}>
         <Box component={LocalizedNextLink} href="/" aria-label={act("homeLink")} sx={{ textDecoration: "none", display: "inline-flex", mr: { xs: "auto", lg: 5 } }}><Logo /></Box>
@@ -181,7 +181,7 @@ export default function Header({ catalog }: { catalog: ProductMenuData }) {
         </IconButton>
         {customer ? <IconButton component={LocalizedNextLink} href="/account/orders" aria-label={act("ordersTracking")} sx={{ display: { xs: "none", sm: "inline-flex" } }}><Icon name="package" sx={{ fontSize: 22 }} /></IconButton> : null}
         <IconButton aria-label={t("search")} onClick={openSearch}><Icon name="search" sx={{ fontSize: 22 }} /></IconButton>
-        <IconButton aria-label={act("openCart", { count: itemCount })} onClick={openDrawer} sx={{ bgcolor: "#edf3f6" }}><Badge badgeContent={itemCount} color="primary" max={99}><Icon name="bag" sx={{ fontSize: 22 }} /></Badge></IconButton>
+        <IconButton aria-label={act("openCart", { count: itemCount })} onClick={openDrawer} sx={{ bgcolor: brand.blue50_2 }}><Badge badgeContent={itemCount} color="primary" max={99}><Icon name="bag" sx={{ fontSize: 22 }} /></Badge></IconButton>
         <CartAnnouncer />
         <IconButton aria-label={act("openMenu")} aria-expanded={menuOpen} aria-controls={menuOpen ? "mobile-navigation" : undefined} onClick={() => setMenuOpen(true)} sx={{ display: { xs: "inline-flex", lg: "none" } }}>
           <Box aria-hidden sx={{ position: "relative", width: 20, height: 18 }}><Box sx={{ position: "absolute", left: 0, right: 0, top: 5, height: 1.5, bgcolor: "currentColor", transition: `transform .4s ${motion}`, transform: menuOpen ? "translateY(3px) rotate(45deg)" : "none" }} /><Box sx={{ position: "absolute", left: 0, right: 0, top: 11, height: 1.5, bgcolor: "currentColor", transition: `transform .4s ${motion}`, transform: menuOpen ? "translateY(-3px) rotate(-45deg)" : "none" }} /></Box>
@@ -189,7 +189,7 @@ export default function Header({ catalog }: { catalog: ProductMenuData }) {
       </Toolbar>
       {productsOpen ? <Box sx={{ display: { xs: "none", lg: "block" } }}><ProductMegaMenu id={PRODUCT_MENU_ID} catalog={catalog} onNavigate={closeProducts} /></Box> : null}
     </AppBar>
-    <Drawer anchor="right" open={menuOpen} onClose={() => setMenuOpen(false)} slotProps={{ paper: { sx: { width: { xs: "min(100vw, 420px)" }, borderRadius: 0, bgcolor: "#fbfcfe" } } }}>
+    <Drawer anchor="right" open={menuOpen} onClose={() => setMenuOpen(false)} slotProps={{ paper: { sx: { width: { xs: "min(100vw, 420px)" }, borderRadius: 0, bgcolor: brand.paper } } }}>
       <Box id="mobile-navigation" component="nav" aria-label={act("mobileNav")} sx={{ p: 3.5, pt: 4, pb: "max(28px, env(safe-area-inset-bottom))" }}>
         <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 4 }}><Logo /><IconButton aria-label={act("closeMenu")} onClick={() => setMenuOpen(false)}><Icon name="close" /></IconButton></Stack>
         <ProductMenuSection catalog={catalog} onNavigate={() => setMenuOpen(false)} onSearch={openSearch} />

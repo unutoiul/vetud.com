@@ -1,0 +1,6 @@
+Confirm your new email
+
+Your VETUD code is {{{CODE}}}.
+Enter it on your account page to finish changing your email. After that, you sign in with this address. It works once and expires in {{{MINUTES}}} minutes.
+
+If you didn't ask to change your email, you can ignore this message. Nothing changes without this code.

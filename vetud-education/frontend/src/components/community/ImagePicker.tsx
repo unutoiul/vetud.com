@@ -16,6 +16,7 @@ import type { ForumImage } from "@/lib/community/types"
 import { sdk } from "@/lib/medusa/sdk"
 import Icon from "../brand/Icon"
 import { forumError } from "./useCommunityProfile"
+import { brand } from "@/theme/tokens"
 
 // Same limits as the backend (vetud-education/backend/src/api/forum-middlewares.ts).
 export const MAX_POST_IMAGES = 4
@@ -64,7 +65,7 @@ export default function ImagePicker({ images, onChange, disabled = false }: { im
       {images.map((image, index) => <Box key={image.id} sx={{ position: "relative", width: 96, height: 96, borderRadius: "8px", overflow: "hidden", border: "1px solid", borderColor: "divider", bgcolor: "brand.mintWash" }}>
         <Image src={image.url} alt={ct.template("Photo {v0}", { v0: index + 1 })} fill sizes="96px" unoptimized style={{ objectFit: "cover" }} />
         <IconButton size="small" aria-label={act("removePhoto", { number: index + 1 })} onClick={() => onChange(images.filter(entry => entry.id !== image.id))} disabled={disabled}
-          sx={{ position: "absolute", top: 4, right: 4, bgcolor: "rgba(255,255,255,.92)", "&:hover": { bgcolor: "#fff" } }}>
+          sx={{ position: "absolute", top: 4, right: 4, bgcolor: brand.whiteA92, "&:hover": { bgcolor: brand.white } }}>
           <Icon name="close" sx={{ fontSize: 16 }} />
         </IconButton>
       </Box>)}

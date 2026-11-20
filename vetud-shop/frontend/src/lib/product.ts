@@ -3,6 +3,7 @@ import type { ProductSort } from "./medusa/products"
 import { SITE } from "./config"
 import { popularity } from "./popularity"
 import { merchandisingPriority } from "./product-merchandising"
+import { brand } from "@/theme/tokens"
 
 export type ProductLot = {
   lot: string
@@ -50,7 +51,7 @@ export type ProductMeta = {
   notice: ProductNotice | null
 }
 
-const DEFAULT_ACCENT = "#3cc7c2"
+const DEFAULT_ACCENT = brand.teal500
 
 /**
  * Lots live in product metadata as `LOT|YYYY-MM|PURITY|COA_URL` entries separated by ";"

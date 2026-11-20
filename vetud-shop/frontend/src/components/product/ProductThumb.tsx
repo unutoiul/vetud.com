@@ -3,6 +3,7 @@ import Image from "next/image"
 import type { ProductMeta } from "@/lib/product"
 import { getProductThumbnail } from "@/lib/product-images"
 import ProductArt from "./ProductArt"
+import { brand } from "@/theme/tokens"
 
 type ProductThumbProps = {
   image?: string | null
@@ -18,7 +19,7 @@ export default function ProductThumb({ image: fallback, handle, meta, sizes }: P
     return <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} />
   }
   return (
-    <Box sx={{ position: "relative", width: "100%", aspectRatio: "1 / 1", bgcolor: "#fff", borderRadius: 1, overflow: "hidden" }}>
+    <Box sx={{ position: "relative", width: "100%", aspectRatio: "1 / 1", bgcolor: brand.white, borderRadius: 1, overflow: "hidden" }}>
       <Image src={image} alt="" fill loading="lazy" sizes={sizes} style={{ objectFit: "contain" }} />
     </Box>
   )

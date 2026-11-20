@@ -14,17 +14,15 @@ type ModuleConfig = {
 
 // Medusa's commerce modules stay on with empty tables: it needs them to start and the Admin expects them.
 const modules: ModuleConfig[] = [
-  // Sign-in: email and password, then a 6-digit code sent by email (src/modules/email-mfa).
-  // Medusa still adds AUTH_MFA_ENCRYPTION_KEY to these MFA options by itself.
+  // Members sign in with a 6-digit emailed code, no password (src/modules/email-code, owner
+  // 2026-11-19). Admin users keep email and password.
   {
     resolve: "@medusajs/medusa/auth",
     options: {
-      providers: [{ resolve: "@medusajs/medusa/auth-emailpass", id: "emailpass" }],
-      mfa: {
-        challenge_ttl_seconds: 600,
-        challenge_max_attempts: 5,
-        providers: [{ resolve: "./src/modules/email-mfa", id: "email", options: { secret: process.env.JWT_SECRET } }],
-      },
+      providers: [
+        { resolve: "@medusajs/medusa/auth-emailpass", id: "emailpass" },
+        { resolve: "./src/modules/email-code", id: "email-code" },
+      ],
     },
   },
   // Comments signed-in members leave on articles.
@@ -117,6 +115,9 @@ module.exports = defineConfig({
       authCors: process.env.AUTH_CORS!,
       jwtSecret: process.env.JWT_SECRET,
       cookieSecret: process.env.COOKIE_SECRET,
+      // A code sign-in lasts 30 days; members can't use passwords.
+      jwtExpiresIn: "30d",
+      authMethodsPerActor: { user: ["emailpass"], customer: ["email-code"] },
     },
   },
   admin: {

@@ -23,6 +23,7 @@ import { parseStoreSegment } from "@/lib/store-segment"
 import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
 import { getCountryI18n } from "@/i18n/server-config"
+import { brand } from "@/theme/tokens"
 
 // latin-ext covers Polish, Czech, Baltic, Romanian and Hungarian letters; Greek and Bulgarian need their own scripts.
 const manrope = Manrope({ subsets: ["latin", "latin-ext", "greek", "cyrillic"], variable: "--font-manrope", display: "swap" })
@@ -46,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: "#f7f9fa",
+  themeColor: brand.slate25,
 }
 
 // The main countries are built ahead of time; the rest render on their first visit (see PRERENDERED_COUNTRIES).
@@ -103,7 +104,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
                   top: -48,
                   zIndex: 2000,
                   bgcolor: "brand.navy",
-                  color: "#fff",
+                  color: brand.white,
                   px: 2,
                   py: 1,
                   borderRadius: 1,

@@ -17,6 +17,7 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useMoney } from "@/lib/money"
 import type { NmiSession, NmiToken } from "@/lib/nmi"
+import { brand } from "@/theme/tokens"
 
 type Collect = { configure: (options: Record<string, unknown>) => void; startPaymentRequest: () => void }
 declare global { interface Window { CollectJS?: Collect } }
@@ -101,8 +102,8 @@ function HostedFields({ session, method, busy, onToken }: { session: NmiSession;
           variant: "inline", tokenizationKey, paymentType: method === "ach" ? "ck" : "cc",
           fields: fieldConfig, price: amount.toFixed(2), currency, country,
           styleSniffer: false,
-          customCss: { "font-size": "16px", "font-family": "Arial, sans-serif", padding: "14px", "box-sizing": "border-box", "background-color": "#ffffff", color: "#172b36" },
-          invalidCss: { color: "#b42318" }, timeoutDuration: 15000,
+          customCss: { "font-size": "16px", "font-family": "Arial, sans-serif", padding: "14px", "box-sizing": "border-box", "background-color": brand.white, color: brand.blue850 },
+          invalidCss: { color: brand.red600 }, timeoutDuration: 15000,
           timeoutCallback: fail,
           fieldsAvailableCallback: () => { if (active) { clearTimeout(loadTimeout); setReady(true); setError(null) } },
           validationCallback: (field: string, valid: boolean) => { if (active) setValidity((value) => ({ ...value, [field]: valid })) },
@@ -131,7 +132,7 @@ function HostedFields({ session, method, busy, onToken }: { session: NmiSession;
     <Box aria-busy={!ready} sx={{ pointerEvents: locked ? "none" : "auto" }}>
       {Object.entries(fields).map(([name, title]) => <Box key={name} sx={{ mb: 1.5 }}>
         <Typography id={`vetud-nmi-label-${name}`} variant="body2" sx={{ mb: 0.75 }}>{ct(title)}</Typography>
-        <Box id={`vetud-nmi-${name}`} aria-labelledby={`vetud-nmi-label-${name}`} sx={{ minHeight: 52, border: "1px solid", borderColor: validity[name] === false ? "error.main" : "divider", borderRadius: 1.5, bgcolor: "#fff", overflow: "hidden", "& iframe": { display: "block", width: "100%", border: 0 } }} />
+        <Box id={`vetud-nmi-${name}`} aria-labelledby={`vetud-nmi-label-${name}`} sx={{ minHeight: 52, border: "1px solid", borderColor: validity[name] === false ? "error.main" : "divider", borderRadius: 1.5, bgcolor: brand.white, overflow: "hidden", "& iframe": { display: "block", width: "100%", border: 0 } }} />
         {validity[name] === false ? <Typography variant="caption" color="error">{ct("Check this field.")}</Typography> : null}
       </Box>)}
     </Box>
