@@ -12,6 +12,7 @@ import { useEffect, useState } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { sdk } from "@/lib/medusa/sdk"
 import { useAccount } from "../account/AccountProvider"
+import { ButtonLink } from "../common/links"
 
 function errorText(error: unknown) {
   if (error && typeof error === "object" && "message" in error) return String((error as { message: unknown }).message)
@@ -23,6 +24,9 @@ function errorText(error: unknown) {
  * a 6-digit code to the order's address, and entering it signs the shopper in (making the account
  * the first time) and adds the order. A signed-in member with the same email just adds it. The
  * browser proves it placed the order with the order's cart, saved at checkout; this works for 24 hours.
+ *
+ * An order placed with the email of an existing account is filed in that account when it's placed
+ * (owner, 2026-11-20: the email is all you need), so then this only says where to find it.
  */
 export default function GuestAccountOffer({ orderId, email, cartId, onAdded }: {
   orderId: string
@@ -37,6 +41,17 @@ export default function GuestAccountOffer({ orderId, email, cartId, onAdded }: {
   const [wait, setWait] = useState(0)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  /** Whether the order is already in an account; null while checking. */
+  const [inAccount, setInAccount] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    sdk.client.fetch<{ in_account: boolean }>(`/store/guest-orders/${encodeURIComponent(orderId)}/account`, { query: { cart_id: cartId } })
+      .then((result) => { if (!cancelled) setInAccount(result.in_account) })
+      // If the check fails, offer the account as before; adding the order then says what's wrong.
+      .catch(() => { if (!cancelled) setInAccount(false) })
+    return () => { cancelled = true }
+  }, [orderId, cartId])
 
   useEffect(() => {
     if (wait <= 0) return
@@ -84,6 +99,16 @@ export default function GuestAccountOffer({ orderId, email, cartId, onAdded }: {
   })
 
   const spinner = busy ? <CircularProgress size={16} color="inherit" /> : undefined
+  if (inAccount === null) return null
+  if (inAccount) {
+    return (
+      <Alert severity="success" sx={{ mb: 4 }} action={customer ? undefined : <ButtonLink href="/account" color="inherit" size="small" sx={{ whiteSpace: "nowrap" }}>{ct("Sign in")}</ButtonLink>}>
+        {customer
+          ? ct("This order is in your account, where you can follow it.")
+          : ct.rich("This order is saved in the account for <slot0>{v0}</slot0>. Sign in with that email any time to follow it.", { v0: email }, { slot0: (chunks) => <strong key="slot0">{chunks}</strong> })}
+      </Alert>
+    )
+  }
   return (
     <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, borderRadius: 3, mb: 4 }}>
       <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>{ct("Optional")}</Typography>

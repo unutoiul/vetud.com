@@ -33,6 +33,17 @@ type OrderRow = {
   shipping_address?: { first_name?: string | null; last_name?: string | null; phone?: string | null } | null
 }
 
+function orderDetails(order: OrderRow, email: string): Omit<GuestOrder, "target_customer_id"> {
+  return {
+    order_id: order.id,
+    email: email.trim().toLowerCase(),
+    previous_customer_id: order.customer_id ?? null,
+    first_name: order.shipping_address?.first_name ?? null,
+    last_name: order.shipping_address?.last_name ?? null,
+    phone: order.shipping_address?.phone ?? null,
+  }
+}
+
 /**
  * Checks that this browser placed the order (it knows the order's cart), that the order is a guest
  * order from the last 24 hours, and who should get it: the signed-in member with the same email, or
@@ -51,6 +62,11 @@ export const findGuestOrderStep = createStep("find-guest-order", async (input: F
     throw new MedusaError(MedusaError.Types.NOT_FOUND, "We couldn't find this order from this browser.")
   }
   if (order.customer?.has_account !== false) {
+    // Already filed in the signed-in member's account (an order placed with a member's email is
+    // filed when it's placed): nothing to move.
+    if (input.customer_id && order.customer_id === input.customer_id) {
+      return new StepResponse<GuestOrder>({ ...orderDetails(order, order.email), target_customer_id: input.customer_id })
+    }
     throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "This order is already in an account.")
   }
   if (Date.now() - new Date(order.created_at).getTime() > GUEST_ORDER_CLAIM_HOURS * 3_600_000) {
@@ -73,16 +89,7 @@ export const findGuestOrderStep = createStep("find-guest-order", async (input: F
     }
   }
 
-  const result: GuestOrder = {
-    order_id: order.id,
-    email,
-    previous_customer_id: order.customer_id ?? null,
-    target_customer_id: target,
-    first_name: order.shipping_address?.first_name ?? null,
-    last_name: order.shipping_address?.last_name ?? null,
-    phone: order.shipping_address?.phone ?? null,
-  }
-  return new StepResponse(result)
+  return new StepResponse<GuestOrder>({ ...orderDetails(order, order.email), target_customer_id: target })
 })
 
 /** Moves the order to the member's account; undone if a later step fails. */

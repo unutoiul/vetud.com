@@ -54,7 +54,7 @@ export default defineMiddlewares({
       ],
     },
     {
-      // The guest checkout's Contact step: an email that belongs to a member account asks for sign-in.
+      // The guest checkout's Contact step: any email works; a member's email files the order in that account.
       method: ["POST"],
       matcher: "/store/carts/:id/contact",
       middlewares: [

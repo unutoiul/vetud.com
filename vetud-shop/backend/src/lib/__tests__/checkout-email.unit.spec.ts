@@ -1,12 +1,12 @@
-import { emailNeedsSignIn, exactIlike, memberIdsForEmail } from "../checkout-email"
+import { isAnotherMembersEmail, exactIlike, memberIdsForEmail } from "../checkout-email"
 
 describe("checkout email", () => {
-  it("asks for sign-in only when another member account uses the email", () => {
-    expect(emailNeedsSignIn([], undefined)).toBe(false)
-    expect(emailNeedsSignIn(["cus_1"], undefined)).toBe(true)
-    expect(emailNeedsSignIn(["cus_1"], null)).toBe(true)
-    expect(emailNeedsSignIn(["cus_1"], "cus_2")).toBe(true)
-    expect(emailNeedsSignIn(["cus_1"], "cus_1")).toBe(false)
+  it("spots an email that another member account uses", () => {
+    expect(isAnotherMembersEmail([], undefined)).toBe(false)
+    expect(isAnotherMembersEmail(["cus_1"], undefined)).toBe(true)
+    expect(isAnotherMembersEmail(["cus_1"], null)).toBe(true)
+    expect(isAnotherMembersEmail(["cus_1"], "cus_2")).toBe(true)
+    expect(isAnotherMembersEmail(["cus_1"], "cus_1")).toBe(false)
   })
 
   it("matches the whole address in any letter case, with no wildcards", () => {

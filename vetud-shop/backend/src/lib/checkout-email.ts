@@ -1,9 +1,10 @@
 /**
- * A guest can't check out with the email of a member account: the member signs in instead, so the
- * order lands in their account (owner request 2026-11-18). Medusa's own sign-up already tells
- * anyone whether an email has an account, so saying so here reveals nothing new.
+ * Any email can place an order (owner, 2026-11-20). A member's email goes on a guest record at
+ * the checkout's email step (workflows/set-checkout-email.ts) and the order is filed in the account
+ * when it's placed. Medusa's own cart update would link the cart to the member instead, so it is
+ * refused for another member's email (api/checkout-email-guard.ts).
  */
-export const ACCOUNT_EXISTS_MESSAGE = "An account already uses this email. Sign in to continue, or use a different email."
+export const MEMBER_EMAIL_MESSAGE = "Use the checkout's email step for this email."
 
 /** Escapes a value for an exact, case-insensitive ILIKE match. */
 export function exactIlike(value: string) {
@@ -25,6 +26,6 @@ export async function memberIdsForEmail(query: Query, email: string) {
 }
 
 /** True when the email belongs to a member account other than the signed-in shopper's. */
-export function emailNeedsSignIn(memberIds: string[], signedInCustomerId?: string | null) {
+export function isAnotherMembersEmail(memberIds: string[], signedInCustomerId?: string | null) {
   return memberIds.length > 0 && !(signedInCustomerId && memberIds.includes(signedInCustomerId))
 }

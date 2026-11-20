@@ -1,8 +1,8 @@
 import type { AuthenticatedMedusaRequest, MedusaResponse } from "@medusajs/framework/http"
-import { MedusaError, Modules } from "@medusajs/framework/utils"
+import { ContainerRegistrationKeys, MedusaError, Modules } from "@medusajs/framework/utils"
 import { normalizeEmail, SIGN_IN_PROVIDER } from "../../../../../lib/sign-in-code"
 import { attachGuestOrderWorkflow, findGuestOrderWorkflow } from "../../../../../workflows/guest-order-account"
-import type { StoreGuestOrderAccountBody } from "./validators"
+import { StoreGuestOrderAccountSchema, type StoreGuestOrderAccountBody } from "./validators"
 
 /**
  * POST /store/guest-orders/:id/account: after ordering as a guest, keep the order in an account.
@@ -32,4 +32,25 @@ export async function POST(req: AuthenticatedMedusaRequest<StoreGuestOrderAccoun
 
   const { result } = await attachGuestOrderWorkflow(req.scope).run({ input: { ...input, auth_identity_id: authIdentityId } })
   res.json(result)
+}
+
+/**
+ * GET /store/guest-orders/:id/account?cart_id=…: whether this order is already in an account. An
+ * order placed with a member's email without signing in is filed in that account when it's placed,
+ * so the confirmation page says so instead of offering to create one. Same proof as above.
+ */
+export async function GET(req: AuthenticatedMedusaRequest, res: MedusaResponse) {
+  const parsed = StoreGuestOrderAccountSchema.safeParse({ cart_id: req.query.cart_id })
+  if (!parsed.success) throw new MedusaError(MedusaError.Types.INVALID_DATA, "cart_id is required.")
+  const { data } = await req.scope.resolve(ContainerRegistrationKeys.QUERY).graph({
+    entity: "order",
+    fields: ["id", "cart.id", "customer.has_account"],
+    filters: { id: req.params.id },
+  })
+  const order = data[0] as { cart?: { id: string } | null; customer?: { has_account?: boolean | null } | null } | undefined
+  if (!order?.cart?.id || order.cart.id !== parsed.data.cart_id) {
+    throw new MedusaError(MedusaError.Types.NOT_FOUND, "We couldn't find this order from this browser.")
+  }
+  res.setHeader("Cache-Control", "private, no-store")
+  res.json({ in_account: order.customer?.has_account === true })
 }

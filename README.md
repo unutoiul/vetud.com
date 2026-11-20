@@ -197,6 +197,8 @@ Owner emails go to `STORE_OWNER_EMAIL`, so nothing is sent while it's unset.
 
 Customers (shop) and members (education) have no passwords. They type their email, get a 6-digit code by email (`POST /store/sign-in-code`), and the code signs them in (`POST /auth/customer/email-code`) for 30 days (`http.jwtExpiresIn`). The first sign-in creates the account. A code works once, for 10 minutes, with 5 tries; another can be sent after 30 seconds. Password sign-in is switched off for customers (`http.authMethodsPerActor`); Admin users still sign in with email and password. On education, a member changes their sign-in email with a code sent to the new address.
 
+**Shop checkout needs only an email.** Signing in is optional, and a signed-in customer's default saved address is filled in by itself. A guest gives an email and a delivery address, and nothing else: no code, even when the email belongs to an account. The checkout's email step (`POST /store/carts/:id/contact`) then keeps the cart on a guest record. When the order is placed (`src/workflows/hooks/link-member-order.ts`), it is filed in that account, so it shows in the account's orders at the next sign-in. The confirmation page asks `GET /store/guest-orders/:id/account` whether the order is already in an account. If it is, the page says so. If not, it offers to create one with a code.
+
 ---
 
 ## Deploy
