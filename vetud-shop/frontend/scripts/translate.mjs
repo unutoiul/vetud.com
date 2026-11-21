@@ -7,9 +7,10 @@
 //   npm run translate -- --direct          no batch: faster for a few strings, twice the price
 //   npm run translate -- --no-review       skip the second, checking pass
 //
-// Needs Anthropic credentials: `ant auth login` once, or ANTHROPIC_API_KEY in your own shell (never
-// in a file in this repo). Batches cost half and usually finish within an hour; a run can be stopped
-// and started again, and it picks up the batches it already sent.
+// Needs an Anthropic API key (console.anthropic.com > API keys). Put ANTHROPIC_API_KEY=... in
+// .env.translate next to package.json (git ignores every .env file), or set it in your own shell.
+// Batches cost half and usually finish within an hour; a run can be stopped and started again, and
+// it picks up the batches it already sent.
 import Anthropic from "@anthropic-ai/sdk"
 import { createHash } from "node:crypto"
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
@@ -54,6 +55,18 @@ const args = process.argv.slice(2)
 const flag = (name) => args.includes(`--${name}`)
 const option = (name) => { const index = args.indexOf(`--${name}`); return index >= 0 ? args[index + 1] : undefined }
 const DRY_RUN = flag("dry-run")
+if (!DRY_RUN && !process.env.ANTHROPIC_API_KEY) {
+  console.error(`No Anthropic API key found.
+
+  1. Create a key at https://console.anthropic.com/settings/keys (add credit under Billing first).
+  2. Create the file ${join(ROOT, ".env.translate")} with one line:
+       ANTHROPIC_API_KEY=sk-ant-...
+     Git ignores it, so the key stays on this computer.
+  3. Run npm run translate again.
+
+(npm run translate -- --dry-run works without a key.)`)
+  process.exit(1)
+}
 const DIRECT = flag("direct")
 const REVIEW = !flag("no-review")
 const ONLY = option("only")

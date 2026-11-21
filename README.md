@@ -220,7 +220,7 @@ Both frontends use `next-intl` with two kinds of text:
   - `--only messages` or `--only content` translates only one kind of text.
   - `--dry-run` shows the work and an estimate of the cost.
   - `--direct` skips the batch, for a handful of texts.
-- It needs Anthropic credentials. Run `ant auth login` once, or set `ANTHROPIC_API_KEY` in your own shell; never put the key in a file in this repo.
+- It needs an Anthropic API key (console.anthropic.com > API keys, with credit under Billing). Put `ANTHROPIC_API_KEY=...` in `.env.translate` inside that frontend folder (git ignores every `.env` file), or set it in your own shell. The shop's `CATALOG_BACKEND_URL` and `CATALOG_PUBLISHABLE_KEY` can go in the same file.
 - Each site's rules (protected names, research wording) are in `scripts/translation-glossary.json`.
 
 **After adding an article, product or UI text,** run `npm run translate`.
