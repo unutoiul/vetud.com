@@ -182,7 +182,8 @@
     "documentationDescription": "Zoek gepubliceerde batchgegevens met het nummer op de verpakking of vraag de beschikbare documentatie aan.",
     "standardsDescription": "Heldere specificaties, traceerbare documentatie en ondersteuning voor uw laboratorium.",
     "trackingDescription": "Gebruik het pakketnummer uit uw verzendbevestiging.",
-    "cartDescription": "Uw onderzoeksmaterialen, hoeveelheden en regionale prijzen op één plek."
+    "cartDescription": "Uw onderzoeksmaterialen, hoeveelheden en regionale prijzen op één plek.",
+    "legalTranslationNote": "Deze vertaling is bedoeld voor uw gemak. Als deze afwijkt van de Engelse versie, geldt de Engelse versie."
   },
   "Contact": {
     "name": "Naam",

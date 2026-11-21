@@ -182,7 +182,8 @@
     "documentationDescription": "Find a published batch record using the lot number on your packaging, or request available analytical documentation.",
     "standardsDescription": "Clear product specifications, traceable documentation and support for your laboratory.",
     "trackingDescription": "Use the parcel tracking number from your shipping confirmation.",
-    "cartDescription": "Your research materials, quantities and regional pricing in one place."
+    "cartDescription": "Your research materials, quantities and regional pricing in one place.",
+    "legalTranslationNote": "This translation is provided for convenience. If it differs from the English version, the English version applies."
   },
   "Contact": {
     "name": "Name",

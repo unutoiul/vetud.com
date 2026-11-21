@@ -1,0 +1,19 @@
+{
+  "keepAsWritten": [
+    "VETUD", "pep.company",
+    "Wegovy", "Ozempic", "Rybelsus", "Zepbound", "Mounjaro", "Saxenda", "Victoza", "Trulicity", "Byetta", "Bydureon",
+    "Egrifta", "Scenesse", "Vyleesi", "Imcivree", "Forteo", "Sandostatin",
+    "Novo Nordisk", "Eli Lilly", "Boehringer Ingelheim",
+    "NEJM", "Lancet", "JAMA", "Nature Medicine", "Diabetes Care", "PubMed", "ClinicalTrials.gov", "YouTube",
+    "FDA", "WADA", "PayPal", "Visa", "Mastercard",
+    "STEP", "SURMOUNT", "SURPASS", "SELECT", "SUSTAIN", "PIONEER", "LEADER", "OASIS", "TRIUMPH"
+  ],
+  "notes": [
+    "Peptide and drug code names (BPC-157, TB-500, GHK-Cu, CJC-1295, DSIP, LY3437943) stay exactly as written.",
+    "Items from \"catalog (Medusa): product name\" are product names: keep a peptide or compound name as written; translate only ordinary words in it (Bacteriostatic Water, Pen kit).",
+    "Generic drug and peptide names in sentences (semaglutide, tirzepatide, retatrutide, kisspeptin) use the standard spelling of the target language, as in its medical literature (for example Semaglutid in German, semaglutyd in Polish).",
+    "Study names, journal names, author names and citation lines (\"Wilding et al. · NEJM 2021\") stay as written.",
+    "\"For research use only. Not for human or veterinary use.\" and similar notices must keep their full meaning: translate them as the standard regulatory wording in the target language.",
+    "Agency names keep their English abbreviation (FDA, EMA, WADA); spell out the name in the target language only where the English spells it out."
+  ]
+}

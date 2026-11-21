@@ -182,7 +182,8 @@
     "documentationDescription": "Suchen Sie mit der Chargennummer auf Ihrer Verpackung nach veröffentlichten Unterlagen oder fordern Sie verfügbare Analysen an.",
     "standardsDescription": "Klare Produktspezifikationen, nachvollziehbare Unterlagen und Unterstützung für Ihr Labor.",
     "trackingDescription": "Verwenden Sie die Paketnummer aus Ihrer Versandbestätigung.",
-    "cartDescription": "Ihre Forschungsmaterialien, Mengen und regionalen Preise an einem Ort."
+    "cartDescription": "Ihre Forschungsmaterialien, Mengen und regionalen Preise an einem Ort.",
+    "legalTranslationNote": "Diese Übersetzung dient nur zur Information. Bei Abweichungen gilt die englische Fassung."
   },
   "Contact": {
     "name": "Name",

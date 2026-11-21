@@ -8,15 +8,13 @@ type ContentFile = { translations: ContentDictionary; templates: ContentTemplate
 
 const ENGLISH: ContentFile = { translations: {}, templates: {} }
 
-/** Page text is translated in files kept in this project, so it never depends on a backend call. */
-const content: Record<Language, () => Promise<ContentFile>> = {
-  en: async () => ENGLISH,
-  fr: () => import("./content/fr.json").then((file) => file.default as ContentFile),
-}
+/** Page text is translated in files kept in this project (npm run translate), so it never depends on a backend call. */
+const content = async (language: Language): Promise<ContentFile> =>
+  language === "en" ? ENGLISH : ((await import(`./content/${language}.json`)).default as ContentFile)
 
 export async function getLanguageI18n(language: Language) {
   const base = await getLanguageMessages(language)
-  const { translations, templates } = await content[language]()
+  const { translations, templates } = await content(language)
   return { ...base, messages: { ...base.messages, Content: translations, ContentTemplates: templates } }
 }
 

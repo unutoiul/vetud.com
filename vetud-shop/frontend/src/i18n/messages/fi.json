@@ -182,7 +182,8 @@
     "documentationDescription": "Löydä julkaistu eräraportti pakkauksen eränumerolla tai pyydä saatavilla olevaa analyyttistä dokumentaatiota.",
     "standardsDescription": "Selkeät tuotetiedot, jäljitettävä dokumentaatio ja tukea laboratoriollesi.",
     "trackingDescription": "Käytä lähetysvahvistuksessa olevaa paketin seurantanumeroa.",
-    "cartDescription": "Tutkimusmateriaalisi, määrät ja paikalliset hinnat yhdessä paikassa."
+    "cartDescription": "Tutkimusmateriaalisi, määrät ja paikalliset hinnat yhdessä paikassa.",
+    "legalTranslationNote": "Tämä käännös on tarkoitettu lukemisen helpottamiseksi. Jos se poikkeaa englanninkielisestä versiosta, englanninkielinen versio on ratkaiseva."
   },
   "Contact": {
     "name": "Nimi",

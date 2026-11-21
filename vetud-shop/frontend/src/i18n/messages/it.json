@@ -182,7 +182,8 @@
     "documentationDescription": "Trova la scheda di un lotto pubblicato con il numero di lotto sulla confezione, o richiedi la documentazione analitica disponibile.",
     "standardsDescription": "Specifiche di prodotto chiare, documentazione tracciabile e supporto per il tuo laboratorio.",
     "trackingDescription": "Usa il numero di tracciamento del pacco indicato nella conferma di spedizione.",
-    "cartDescription": "I tuoi materiali di ricerca, le quantità e i prezzi locali in un unico posto."
+    "cartDescription": "I tuoi materiali di ricerca, le quantità e i prezzi locali in un unico posto.",
+    "legalTranslationNote": "Questa traduzione è fornita per comodità. In caso di differenze rispetto alla versione inglese, prevale la versione inglese."
   },
   "Contact": {
     "name": "Nome",

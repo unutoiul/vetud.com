@@ -182,7 +182,8 @@
     "documentationDescription": "Raskite paskelbtą partijos įrašą pagal partijos numerį ant pakuotės arba paprašykite turimos analitinės dokumentacijos.",
     "standardsDescription": "Aiškios produktų specifikacijos, atsekama dokumentacija ir pagalba Jūsų laboratorijai.",
     "trackingDescription": "Naudokite siuntos sekimo numerį iš išsiuntimo patvirtinimo.",
-    "cartDescription": "Jūsų tyrimų medžiagos, kiekiai ir vietinės kainos vienoje vietoje."
+    "cartDescription": "Jūsų tyrimų medžiagos, kiekiai ir vietinės kainos vienoje vietoje.",
+    "legalTranslationNote": "Šis vertimas pateikiamas patogumo sumetimais. Jei jis skiriasi nuo versijos anglų kalba, taikoma versija anglų kalba."
   },
   "Contact": {
     "name": "Vardas",

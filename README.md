@@ -199,6 +199,43 @@ Customers (shop) and members (education) have no passwords. They type their emai
 
 **Shop checkout needs only an email.** Signing in is optional, and a signed-in customer's default saved address is filled in by itself. A guest gives an email and a delivery address, and nothing else: no code, even when the email belongs to an account. The checkout's email step (`POST /store/carts/:id/contact`) then keeps the cart on a guest record. When the order is placed (`src/workflows/hooks/link-member-order.ts`), it is filed in that account, so it shows in the account's orders at the next sign-in. The confirmation page asks `GET /store/guest-orders/:id/account` whether the order is already in an account. If it is, the page says so. If not, it offers to create one with a code.
 
+## Translations
+
+Both frontends use `next-intl` with two kinds of text:
+
+- **Menu text** lives in `src/i18n/messages/<language>.json`.
+- **Page text** is articles, research, legal pages, the FAQ, and product text from Medusa. It is written in English and shown through `ct()`, which looks each text up by a hash in `src/i18n/content/<language>.json`. Anything not found shows in English.
+
+| Site | Menu text | Page text |
+|---|---|---|
+| vetud.com | 8 prepared languages: English, Spanish, Portuguese (Brazil), French, German, Italian, Dutch and Polish (`PREPARED_LANGUAGES` in `src/i18n/languages.ts`) | Same as the menus. A language goes live when it's added to `LANGUAGES` |
+| pep.company | All 25 shop languages | A language shows translated page text once it has a content file |
+
+**Translating** is done by `npm run translate`, run inside either frontend.
+
+- It uses Claude (`claude-opus-5-5`) through the batch API, at half price, and only translates what is missing or changed.
+- Every text is checked automatically: numbers, links, placeholders, markup and protected names must match the English, and no dose may be added. Then a second pass reviews the meaning.
+- Options:
+  - `--lang es,de` translates only some languages.
+  - `--only messages` or `--only content` translates only one kind of text.
+  - `--dry-run` shows the work and an estimate of the cost.
+  - `--direct` skips the batch, for a handful of texts.
+- It needs Anthropic credentials. Run `ant auth login` once, or set `ANTHROPIC_API_KEY` in your own shell; never put the key in a file in this repo.
+- Each site's rules (protected names, research wording) are in `scripts/translation-glossary.json`.
+
+**After adding an article, product or UI text,** run `npm run translate`.
+
+- The shop reads product text from the Store API set in `.env.local`. To translate the live catalog, set `CATALOG_BACKEND_URL` and `CATALOG_PUBLISHABLE_KEY` to production.
+- `npm run check:i18n` runs before every build:
+  - on vetud.com it fails if a published language is missing anything;
+  - on the shop it fails on missing menu or page text, but only warns about catalog text, which shows in English until it's translated.
+
+**Reviewing.** `node --no-warnings scripts/export-translation-review.mjs <language> ../translation-review-<language>.csv` writes a spreadsheet for a reviewer: one row per text, with the English, the translation and a notes column.
+
+**Legal pages.** Translated shop legal pages say that the English version applies (`Pages.legalTranslationNote`).
+
+**Retired backend bundle.** The shop backend's `localized-content` module and `/store/localized-content` route are no longer read, and can be removed later.
+
 ---
 
 ## Deploy

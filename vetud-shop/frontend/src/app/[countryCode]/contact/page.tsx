@@ -1,4 +1,5 @@
 import { localizeMetadata } from "@/i18n/metadata"
+import { storefrontAlternates } from "@/lib/storefront-seo"
 import { getContentTranslator } from "@/i18n/server-content"
 import { ClockIcon as AccessTimeOutlinedIcon, DocumentIcon as DescriptionOutlinedIcon, MailIcon as MailOutlineIcon } from "@/components/brand/Icon"
 import Grid from "@mui/material/Grid"
@@ -18,6 +19,7 @@ import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
+  alternates: await storefrontAlternates("/contact"),
   title: "Contact",
   description: "Questions about a product, a lot or an order? Write to the Vetud team.",
 })

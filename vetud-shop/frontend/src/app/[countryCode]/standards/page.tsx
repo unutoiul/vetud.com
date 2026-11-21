@@ -1,4 +1,5 @@
 import { localizeMetadata } from "@/i18n/metadata"
+import { storefrontAlternates } from "@/lib/storefront-seo"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { CheckIcon, DocumentIcon as DescriptionOutlinedIcon, PackageIcon as Inventory2OutlinedIcon, SupportIcon as SupportAgentOutlinedIcon, SlidersIcon as TuneOutlinedIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
@@ -16,6 +17,7 @@ import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
+  alternates: await storefrontAlternates("/standards"),
   title: "Our standards",
   description: "How Vetud documents, describes, packs and supports every research material it sells.",
 })

@@ -22,7 +22,7 @@ import { buildProductMenu, EMPTY_PRODUCT_MENU } from "@/lib/product-menu"
 import { parseStoreSegment } from "@/lib/store-segment"
 import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
-import { getCountryI18n } from "@/i18n/server-config"
+import { getClientI18n } from "@/i18n/server-config"
 import { brand } from "@/theme/tokens"
 
 // latin-ext covers Polish, Czech, Baltic, Romanian and Hungarian letters; Greek and Bulgarian need their own scripts.
@@ -61,7 +61,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
   const act = await getTranslations("Actions")
   // "se" or, when the shopper picked another currency, "se-usd" (see lib/store-segment.ts).
   const { country: code, currency } = parseStoreSegment(await countryCode())
-  const i18n = await getCountryI18n(code)
+  const i18n = await getClientI18n(code)
   const region = await getStoreRegion(code, currency)
   if (!region) {
     throw new Error("No regions found. Is the Medusa backend running and seeded?")

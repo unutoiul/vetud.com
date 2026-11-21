@@ -1,10 +1,23 @@
-// Lets node --test import app modules that use extensionless relative imports ("./categories"),
-// as the Next.js bundler allows: a missing relative specifier is retried with ".ts".
+// Lets plain Node import app modules the way the Next.js bundler allows: extensionless relative
+// imports ("./categories") are retried with ".ts", "@/..." points at src/, and JSON files can be
+// imported without an import attribute.
+import { readFile } from "node:fs/promises"
+
+const SRC = new URL("../../src/", import.meta.url)
+
 export async function resolve(specifier, context, next) {
+  const target = specifier.startsWith("@/") ? new URL(specifier.slice(2), SRC).href : specifier
   try {
-    return await next(specifier, context)
+    return await next(target, context)
   } catch (error) {
-    if (error?.code === "ERR_MODULE_NOT_FOUND" && /^\.{1,2}\//.test(specifier) && !/\.[cm]?[jt]sx?$/.test(specifier)) return next(`${specifier}.ts`, context)
+    if (error?.code === "ERR_MODULE_NOT_FOUND" && /^(\.{1,2}\/|file:)/.test(target) && !/\.[cm]?[jt]sx?$/.test(target)) return next(`${target}.ts`, context)
     throw error
   }
+}
+
+export async function load(url, context, next) {
+  if (url.startsWith("file:") && url.endsWith(".json")) {
+    return { format: "module", source: `export default ${await readFile(new URL(url), "utf8")}`, shortCircuit: true }
+  }
+  return next(url, context)
 }

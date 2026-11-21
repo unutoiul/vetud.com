@@ -1,4 +1,5 @@
 import { getContentTranslator } from "@/i18n/server-content"
+import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import Skeleton from "@mui/material/Skeleton"
@@ -6,11 +7,13 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { getTranslations } from "next-intl/server"
 import { Suspense } from "react"
 import { AppLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import { getLegalDocument, LEGAL_DOCUMENTS } from "@/content/legal"
+import { storefrontAlternates } from "@/lib/storefront-seo"
 import { brand } from "@/theme/tokens"
 
 export function generateStaticParams() {
@@ -21,7 +24,8 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]/leg
   const ct = await getContentTranslator()
   const { slug } = await params
   const document = getLegalDocument(slug)
-  return document ? { title: ct(document.title), description: ct(document.summary) } : { title: ct("Not found") }
+  if (!document) return { title: ct("Not found") }
+  return { title: ct(document.title), description: ct(document.summary), alternates: await storefrontAlternates(`/legal/${document.slug}`) }
 }
 
 export default function LegalPage({ params }: PageProps<"/[countryCode]/legal/[slug]">) {
@@ -33,10 +37,12 @@ export default function LegalPage({ params }: PageProps<"/[countryCode]/legal/[s
 }
 
 async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[slug]">, "params">) {
-  const ct = await getContentTranslator()
+  const [ct, t] = await Promise.all([getContentTranslator(), getTranslations("Pages")])
   const { slug } = await params
   const document = getLegalDocument(slug)
   if (!document) notFound()
+  // Only translated documents say that the English version applies.
+  const translated = ct.has(document.summary)
 
   return (
     <>
@@ -67,6 +73,7 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
           </Grid>
           <Grid size={{ xs: 12, md: 9 }}>
             <Box component="article" sx={{ maxWidth: 760, overflowWrap: "anywhere" }}>
+              {translated && <Alert severity="info" variant="outlined" sx={{ mb: 4 }}>{t("legalTranslationNote")}</Alert>}
               {document.sections.map((section) => (
                 <Box key={section.heading} component="section" sx={{ mb: 4 }}>
                   <Typography variant="h5" component="h2" sx={{ mb: 1.5 }}>

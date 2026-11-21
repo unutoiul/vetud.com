@@ -182,7 +182,8 @@
     "documentationDescription": "Znajdź opublikowaną kartę partii po numerze partii z opakowania lub poproś o dostępną dokumentację analityczną.",
     "standardsDescription": "Jasne specyfikacje produktów, identyfikowalna dokumentacja i wsparcie dla Twojego laboratorium.",
     "trackingDescription": "Użyj numeru przesyłki z potwierdzenia wysyłki.",
-    "cartDescription": "Twoje materiały badawcze, ilości i ceny lokalne w jednym miejscu."
+    "cartDescription": "Twoje materiały badawcze, ilości i ceny lokalne w jednym miejscu.",
+    "legalTranslationNote": "To tłumaczenie ma charakter wyłącznie pomocniczy. W razie rozbieżności z wersją angielską obowiązuje wersja angielska."
   },
   "Contact": {
     "name": "Imię i nazwisko",

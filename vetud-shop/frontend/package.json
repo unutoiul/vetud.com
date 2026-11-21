@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start -p 8000",
     "lint": "eslint",
-    "check:i18n": "node scripts/check-i18n.mjs",
+    "check:i18n": "node --no-warnings scripts/check-translations.mjs",
+    "translate": "node --no-warnings scripts/translate.mjs",
+    "prebuild": "npm run check:i18n",
     "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
@@ -28,6 +30,7 @@
     "server-only": "^0.0.1"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "1.6.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

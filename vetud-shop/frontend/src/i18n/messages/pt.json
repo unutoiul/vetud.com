@@ -182,7 +182,8 @@
     "documentationDescription": "Encontre o registo de um lote publicado com o número de lote da embalagem, ou peça a documentação analítica disponível.",
     "standardsDescription": "Especificações de produto claras, documentação rastreável e apoio para o seu laboratório.",
     "trackingDescription": "Use o número de seguimento da encomenda indicado na confirmação de envio.",
-    "cartDescription": "Os seus materiais de investigação, quantidades e preços locais num só lugar."
+    "cartDescription": "Os seus materiais de investigação, quantidades e preços locais num só lugar.",
+    "legalTranslationNote": "Esta tradução é disponibilizada por conveniência. Em caso de divergência com a versão em inglês, prevalece a versão em inglês."
   },
   "Contact": {
     "name": "Nome",

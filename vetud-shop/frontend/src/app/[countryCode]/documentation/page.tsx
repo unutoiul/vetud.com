@@ -1,4 +1,5 @@
 import { localizeMetadata } from "@/i18n/metadata"
+import { storefrontAlternates } from "@/lib/storefront-seo"
 import { getContentTranslator } from "@/i18n/server-content"
 import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
@@ -24,6 +25,7 @@ import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
+  alternates: await storefrontAlternates("/documentation"),
   title: "Lot documentation",
   description: "Look up any Vetud lot number to see its batch date, purity result and certificate of analysis.",
 })

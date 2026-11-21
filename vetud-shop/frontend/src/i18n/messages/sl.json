@@ -182,7 +182,8 @@
     "documentationDescription": "Poiščite objavljen zapis serije po številki serije na embalaži ali zahtevajte razpoložljivo analitično dokumentacijo.",
     "standardsDescription": "Jasne specifikacije izdelkov, sledljiva dokumentacija in podpora za vaš laboratorij.",
     "trackingDescription": "Uporabite številko za sledenje paketu iz potrditve pošiljanja.",
-    "cartDescription": "Vaši raziskovalni materiali, količine in lokalne cene na enem mestu."
+    "cartDescription": "Vaši raziskovalni materiali, količine in lokalne cene na enem mestu.",
+    "legalTranslationNote": "Ta prevod je na voljo za lažje razumevanje. Če se razlikuje od angleške različice, velja angleška različica."
   },
   "Contact": {
     "name": "Ime",

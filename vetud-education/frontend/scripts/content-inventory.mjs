@@ -144,10 +144,15 @@ export async function collectInventory() {
   return inventory
 }
 
-/** The languages the site is published in, read from src/i18n/languages.ts. */
-export function launchedLanguages() {
+function languageList(name) {
   const source = readFileSync(join(SRC, "i18n", "languages.ts"), "utf8")
-  const list = /export const LANGUAGES(?::[^=]*)? = \[([^\]]*)\]/.exec(source)?.[1]
-  if (list === undefined) throw new Error("Couldn't find the LANGUAGES list in src/i18n/languages.ts.")
+  const list = new RegExp(`export const ${name}(?::[^=]*)? = \\[([^\\]]*)\\]`).exec(source)?.[1]
+  if (list === undefined) throw new Error(`Couldn't find the ${name} list in src/i18n/languages.ts.`)
   return [...list.matchAll(/"([a-z]{2})"/g)].map((match) => match[1])
 }
+
+/** The languages the site is published in, read from src/i18n/languages.ts. */
+export const launchedLanguages = () => languageList("LANGUAGES")
+
+/** Every language with prepared text, published or not (what `npm run translate` fills in). */
+export const preparedLanguages = () => languageList("PREPARED_LANGUAGES")

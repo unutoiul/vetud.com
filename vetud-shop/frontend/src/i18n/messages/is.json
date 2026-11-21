@@ -182,7 +182,8 @@
     "documentationDescription": "Finndu birta lotuskrá með lotunúmerinu á umbúðunum eða óskaðu eftir tiltækum greiningargögnum.",
     "standardsDescription": "Skýrar vörulýsingar, rekjanleg gögn og stuðningur fyrir rannsóknarstofuna þína.",
     "trackingDescription": "Notaðu rakningarnúmer sendingarinnar úr sendingarstaðfestingunni.",
-    "cartDescription": "Rannsóknarefnin þín, magn og staðbundin verð á einum stað."
+    "cartDescription": "Rannsóknarefnin þín, magn og staðbundin verð á einum stað.",
+    "legalTranslationNote": "Þessi þýðing er eingöngu til hægðarauka. Ef hún víkur frá ensku útgáfunni gildir enska útgáfan."
   },
   "Contact": {
     "name": "Nafn",

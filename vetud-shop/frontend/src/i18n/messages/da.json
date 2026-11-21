@@ -182,7 +182,8 @@
     "documentationDescription": "Find en offentliggjort partirapport med partinummeret på emballagen, eller anmod om tilgængelig analysedokumentation.",
     "standardsDescription": "Klare produktspecifikationer, sporbar dokumentation og støtte til dit laboratorium.",
     "trackingDescription": "Brug pakkens sporingsnummer fra forsendelsesbekræftelsen.",
-    "cartDescription": "Dine forskningsmaterialer, mængder og lokale priser ét sted."
+    "cartDescription": "Dine forskningsmaterialer, mængder og lokale priser ét sted.",
+    "legalTranslationNote": "Denne oversættelse er kun til orientering. Hvis den afviger fra den engelske version, gælder den engelske version."
   },
   "Contact": {
     "name": "Navn",

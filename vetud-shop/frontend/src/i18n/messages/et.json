@@ -182,7 +182,8 @@
     "documentationDescription": "Leia avaldatud partii andmed pakendil oleva partiinumbri järgi või küsi saadaolevat analüütilist dokumentatsiooni.",
     "standardsDescription": "Selged tootespetsifikatsioonid, jälgitav dokumentatsioon ja tugi sinu laborile.",
     "trackingDescription": "Kasuta saatmiskinnitusel olevat paki jälgimisnumbrit.",
-    "cartDescription": "Sinu uurimismaterjalid, kogused ja kohalikud hinnad ühes kohas."
+    "cartDescription": "Sinu uurimismaterjalid, kogused ja kohalikud hinnad ühes kohas.",
+    "legalTranslationNote": "See tõlge on esitatud mugavuse huvides. Kui see erineb ingliskeelsest versioonist, kehtib ingliskeelne versioon."
   },
   "Contact": {
     "name": "Nimi",

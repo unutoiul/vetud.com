@@ -182,7 +182,8 @@
     "documentationDescription": "Najděte zveřejněný záznam šarže podle čísla šarže na obalu nebo si vyžádejte dostupnou analytickou dokumentaci.",
     "standardsDescription": "Jasné specifikace produktů, dohledatelná dokumentace a podpora pro vaši laboratoř.",
     "trackingDescription": "Použijte sledovací číslo zásilky z potvrzení o odeslání.",
-    "cartDescription": "Vaše výzkumné materiály, množství a místní ceny na jednom místě."
+    "cartDescription": "Vaše výzkumné materiály, množství a místní ceny na jednom místě.",
+    "legalTranslationNote": "Tento překlad slouží pouze pro informaci. Pokud se liší od anglické verze, platí anglická verze."
   },
   "Contact": {
     "name": "Jméno",

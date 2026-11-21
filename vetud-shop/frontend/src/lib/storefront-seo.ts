@@ -16,6 +16,12 @@ export function storefrontLanguages(path: string) {
   ])
 }
 
+/** The page's canonical address and its version in every shop country, for pages using localizeMetadata. */
+export async function storefrontAlternates(path: string): Promise<NonNullable<Metadata["alternates"]>> {
+  const { country } = await getPageLocalization()
+  return { canonical: storefrontUrl(country, path), languages: storefrontLanguages(path) }
+}
+
 export async function storefrontMetadata({ title, description, country, path, images = [], noindex = false }: {
   title: string; description: string; country: string; path: string;
   images?: { url: string; alt?: string }[]; noindex?: boolean

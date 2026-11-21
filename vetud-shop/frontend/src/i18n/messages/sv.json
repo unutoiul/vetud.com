@@ -182,7 +182,8 @@
     "documentationDescription": "Hitta ett publicerat partiprotokoll med partinumret på förpackningen, eller begär tillgänglig analysdokumentation.",
     "standardsDescription": "Tydliga produktspecifikationer, spårbar dokumentation och stöd för ditt laboratorium.",
     "trackingDescription": "Använd paketets spårningsnummer från leveransbekräftelsen.",
-    "cartDescription": "Dina forskningsmaterial, mängder och lokala priser på ett ställe."
+    "cartDescription": "Dina forskningsmaterial, mängder och lokala priser på ett ställe.",
+    "legalTranslationNote": "Denna översättning tillhandahålls för enkelhetens skull. Om den skiljer sig från den engelska versionen gäller den engelska versionen."
   },
   "Contact": {
     "name": "Namn",

@@ -1,10 +1,12 @@
 import "server-only"
 import type { Metadata } from "next"
 import { lang } from "next/root-params"
-import { asLanguage } from "./languages"
+import { asLanguage, type Language } from "./languages"
 import { getContentTranslator } from "./server-content"
 
-const OPEN_GRAPH_LOCALES = { en: "en_US", fr: "fr_FR" } as const
+const OPEN_GRAPH_LOCALES: Record<Language, string> = {
+  en: "en_US", es: "es_ES", pt: "pt_BR", fr: "fr_FR", de: "de_DE", it: "it_IT", nl: "nl_NL", pl: "pl_PL",
+}
 
 export async function getPageLocalization() {
   const [segment, ct] = await Promise.all([lang(), getContentTranslator()])

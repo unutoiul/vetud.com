@@ -182,7 +182,8 @@
     "documentationDescription": "Atrodiet publicētu partijas ierakstu pēc partijas numura uz iepakojuma vai pieprasiet pieejamo analītisko dokumentāciju.",
     "standardsDescription": "Skaidras produktu specifikācijas, izsekojama dokumentācija un atbalsts Jūsu laboratorijai.",
     "trackingDescription": "Izmantojiet sūtījuma izsekošanas numuru no nosūtīšanas apstiprinājuma.",
-    "cartDescription": "Jūsu pētniecības materiāli, daudzumi un vietējās cenas vienuviet."
+    "cartDescription": "Jūsu pētniecības materiāli, daudzumi un vietējās cenas vienuviet.",
+    "legalTranslationNote": "Šis tulkojums ir sniegts ērtības labad. Ja tas atšķiras no angļu valodas versijas, noteicošā ir angļu valodas versija."
   },
   "Contact": {
     "name": "Vārds",

@@ -182,7 +182,8 @@
     "documentationDescription": "Keresd meg egy közzétett tétel adatlapját a csomagoláson lévő tételszám alapján, vagy kérd az elérhető analitikai dokumentációt.",
     "standardsDescription": "Világos termékspecifikációk, nyomon követhető dokumentáció és támogatás a laborod számára.",
     "trackingDescription": "Használd a szállítási visszaigazolásban szereplő csomagkövetési számot.",
-    "cartDescription": "Kutatási anyagaid, mennyiségeid és helyi áraid egy helyen."
+    "cartDescription": "Kutatási anyagaid, mennyiségeid és helyi áraid egy helyen.",
+    "legalTranslationNote": "Ez a fordítás tájékoztató jellegű. Ha eltér az angol nyelvű változattól, az angol változat az irányadó."
   },
   "Contact": {
     "name": "Név",

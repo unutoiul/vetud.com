@@ -182,7 +182,8 @@
     "documentationDescription": "Encuentra el registro de un lote publicado con el número de lote del envase, o solicita la documentación analítica disponible.",
     "standardsDescription": "Especificaciones de producto claras, documentación trazable y apoyo para tu laboratorio.",
     "trackingDescription": "Usa el número de seguimiento del paquete que aparece en la confirmación de envío.",
-    "cartDescription": "Tus materiales de investigación, cantidades y precios locales en un solo lugar."
+    "cartDescription": "Tus materiales de investigación, cantidades y precios locales en un solo lugar.",
+    "legalTranslationNote": "Esta traducción se ofrece por comodidad. Si difiere de la versión en inglés, prevalece la versión en inglés."
   },
   "Contact": {
     "name": "Nombre",
