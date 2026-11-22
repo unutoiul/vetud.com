@@ -1,0 +1,32 @@
+Order {{{ORDER_NUMBER}}}
+
+Thank you, {{{NAME}}}. Your order is reserved.
+
+We have your order and set your pens aside. {{{PAYMENT_INSTRUCTIONS}}}
+
+HOW TO PAY · reference {{{ORDER_NUMBER}}}
+
+{{{PAYMENT_DETAILS}}}
+
+ORDER SUMMARY
+
+{{{ITEM}}}
+{{{QUANTITY}}} × {{{UNIT_PRICE}}} regular price
+{{{SAVINGS}}}
+Total to pay: {{{ORDER_TOTAL}}}
+
+SHIPPING TO
+
+{{{SHIP_TO}}}
+
+WHAT HAPPENS NEXT
+
+1. Pay using the details above, with {{{ORDER_NUMBER}}} as the reference.
+2. We confirm your payment and pack your order, discreetly.
+3. Your pens ship within 24 hours of payment, with tracking.
+
+QUESTIONS? MESSAGE US
+
+{{{CONTACT_LINKS}}}
+
+We'll reach you by {{{CONTACT_PREF}}}. Just reply to this email if anything needs changing.

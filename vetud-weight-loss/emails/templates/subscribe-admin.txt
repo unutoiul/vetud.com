@@ -1,0 +1,5 @@
+New subscriber · {{{SUBSCRIBED_AT}}}
+
+{{{SUBSCRIBER_EMAIL}}}
+
+Signed up for the extra-discount code on the pen page. They were sent the code and added to your Resend contacts.
