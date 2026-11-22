@@ -61,6 +61,8 @@ export type Product = {
   prices: Record<Strength, number>
   /** The closed box, shown first. */
   image: string
+  /** The molecule's artwork on vetud.com (dark, abstract), for night backgrounds. */
+  art: string
   gallery: { src: string; alt: string; label: string }[]
 }
 
@@ -72,10 +74,11 @@ export const PRODUCTS: Record<ProductId, Product> = {
     fullName: "Tirzepatide (TZ-2) Pen",
     code: "VTD-TZ2",
     tagline: "Dual GIP / GLP-1 receptor agonist",
-    description: "The dual agonist the whole field talks about, in VETUD's sealed precision pen. One pen, 12 needles and the booklet in every box.",
+    description: "The dual agonist the whole field talks about, in VETUD's precision pen. One pen, 12 needles and a booklet per box.",
     badge: { text: "Very popular", tone: "popular" },
     prices: { "20mg": 398, "40mg": 588 },
     image: "/images/tirzepatide-closed.webp",
+    art: "/images/tirzepatide-art.webp",
     gallery: [
       { src: "/images/tirzepatide-closed.webp", alt: "VETUD Tirzepatide pen box, closed", label: "Box" },
       { src: "/images/tirzepatide-open.webp", alt: "VETUD Tirzepatide box, open: pen, 12 needles and booklet", label: "Inside" },
@@ -87,10 +90,11 @@ export const PRODUCTS: Record<ProductId, Product> = {
     fullName: "Retatrutide Pen",
     code: "VTD-RT",
     tagline: "Triple GIP / GLP-1 / glucagon agonist",
-    description: "The triple agonist everyone wants next: the newest molecule in metabolic research, in VETUD's sealed precision pen. One pen, 12 needles and the booklet in every box.",
+    description: "The next-generation triple agonist, in VETUD's precision pen. One pen, 12 needles and a booklet per box.",
     badge: { text: "Best seller", tone: "hot" },
     prices: { "20mg": 488, "40mg": 688 },
     image: "/images/retatrutide-closed.webp",
+    art: "/images/retatrutide-art.webp",
     gallery: [
       { src: "/images/retatrutide-closed.webp", alt: "VETUD Retatrutide pen box, closed", label: "Box" },
       { src: "/images/retatrutide-open.webp", alt: "VETUD Retatrutide box, open: pen, 12 needles and booklet", label: "Inside" },

@@ -7,7 +7,7 @@ import { OFFER, PRODUCTS, bestCombinedPercent, formatUsd } from "@/config/site"
 import { EMAIL_PATTERN, LIMITS, orderTotal } from "@/lib/order"
 import { colors, fonts, gradients } from "@/theme/tokens"
 import { useOrder } from "./OrderProvider"
-import Ribbons from "./Ribbons"
+import Image from "next/image"
 
 /** "Extra 10% off": subscribe with an email, get the code on screen and by email. */
 export default function PromoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -67,9 +67,7 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
     >
       {/* Night header with the glass ribbons */}
       <div style={{ position: "relative", background: gradients.night, height: screens.sm ? 210 : 180, overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: "-10% -20% -30% -20%", opacity: 0.9 }}>
-          <Ribbons />
-        </div>
+        <Image src={PRODUCTS.retatrutide.art} alt="" fill sizes="520px" style={{ objectFit: "cover", objectPosition: "center 55%" }} />
         <div aria-hidden style={{ position: "absolute", inset: 0, background: gradients.nightScrim }} />
         <Flex vertical align="center" justify="center" style={{ position: "relative", height: "100%", textAlign: "center", padding: "0 24px" }}>
           <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase", color: colors.goldLight }}>

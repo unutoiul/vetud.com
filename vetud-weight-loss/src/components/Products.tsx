@@ -167,7 +167,7 @@ function ProductCard({ product }: { product: Product }) {
           )}
           <span style={{ display: "block", fontSize: 15, fontFamily: fonts.body, fontWeight: 500, color: colors.blueSoft, marginTop: 6 }}>{product.tagline}</span>
         </Typography.Title>
-        <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.6, margin: "10px 0 18px" }}>{product.description}</Typography.Paragraph>
+        <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.6, margin: "10px 0 18px", minHeight: "4.8em" }}>{product.description}</Typography.Paragraph>
 
         <Segmented<Strength>
           block

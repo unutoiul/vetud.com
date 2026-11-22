@@ -2,7 +2,8 @@
 
 import { Col, Row, Typography } from "antd"
 import { colors, fonts, gradients } from "@/theme/tokens"
-import Ribbons from "./Ribbons"
+import Image from "next/image"
+import { PRODUCTS } from "@/config/site"
 import { Container, SectionHeading } from "./ui"
 
 const STATS = [
@@ -15,8 +16,8 @@ const STATS = [
 export default function Quality() {
   return (
     <section id="quality" style={{ position: "relative", overflow: "hidden", background: gradients.night, padding: "clamp(64px, 9vw, 112px) 0" }}>
-      <div aria-hidden style={{ position: "absolute", inset: 0, opacity: 0.45 }}>
-        <Ribbons />
+      <div aria-hidden style={{ position: "absolute", inset: 0, opacity: 0.7 }}>
+        <Image src={PRODUCTS.retatrutide.art} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center" }} />
       </div>
       <div aria-hidden style={{ position: "absolute", left: 0, right: 0, top: 0, height: "62%", background: gradients.nightScrim }} />
       <Container style={{ position: "relative" }}>

@@ -21,6 +21,9 @@ const images = [
   ["assets/VETUD_Dual_Chamber_Video_and_Artwork/VETUD_Dual_Chamber_Pen_Refined.png", "pen-diagram.webp", 1400],
   ["assets/VETUD_Dual_Chamber_Video_and_Artwork/VETUD_Dual_Chamber_Explainer_poster.png", "explainer-poster.webp", 1600],
   ["vetud-shop/frontend/public/images/vetud-alpine-landscape.webp", "alpine.webp", 1920],
+  // The molecules' artwork from the vetud.com hero: glass ribbons (Retatrutide) and the copper/teal loop (Tirzepatide).
+  ["vetud-education/frontend/public/images/learn/spotlights/retatrutide.webp", "retatrutide-art.webp", 1440],
+  ["vetud-education/frontend/public/images/learn/spotlights/tirzepatide.webp", "tirzepatide-art.webp", 1440],
 ]
 
 for (const [source, name, width] of images) {

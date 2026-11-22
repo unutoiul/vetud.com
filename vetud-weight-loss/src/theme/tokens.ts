@@ -66,6 +66,8 @@ export const gradients = {
   promoBar: `linear-gradient(90deg, ${colors.navyDeep} 0%, ${colors.navy} 50%, ${colors.navyDeep} 100%)`,
   champagneText: `linear-gradient(180deg, ${colors.goldLight} 0%, ${colors.gold} 60%, ${colors.goldDeep} 100%)`,
   night: `radial-gradient(circle at 25% 15%, ${colors.nightLift} 0%, ${colors.night} 62%)`,
+  /** Darkens the bottom of artwork so a label on it stays readable. */
+  artFade: `linear-gradient(180deg, ${colors.clear} 0%, ${colors.nightGlass} 45%, ${colors.nightVeil} 100%)`,
   /** Darkens the middle of a ribbon scene so text on it stays readable. */
   nightScrim: `radial-gradient(ellipse 58% 62% at 50% 50%, ${colors.nightVeil} 0%, ${colors.nightVeil} 45%, ${colors.clear} 100%)`,
   heroSide: `linear-gradient(90deg, ${colors.paper} 0%, rgba(251, 252, 254, 0.86) 38%, rgba(251, 252, 254, 0) 70%)`,

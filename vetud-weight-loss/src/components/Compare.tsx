@@ -1,14 +1,13 @@
 "use client"
 
-import { ArrowRightOutlined, CheckCircleFilled, ShoppingOutlined } from "@ant-design/icons"
-import { Button, Flex, Grid } from "antd"
+import { CheckCircleFilled, ShoppingOutlined } from "@ant-design/icons"
+import { Button, Grid } from "antd"
 import type { ReactNode } from "react"
 import { OFFER, PRODUCTS, PRODUCT_IDS, formatUsd, priceOf, pricePerMg, type ProductId } from "@/config/site"
-import { colors, fonts, shadows } from "@/theme/tokens"
+import Image from "next/image"
+import { colors, fonts, gradients, shadows } from "@/theme/tokens"
 import { useOrder } from "./OrderProvider"
 import { Section, SectionHeading } from "./ui"
-
-const EDUCATION_URL = "https://www.vetud.com/en/learn"
 
 type Row = { label: string; cells: Record<ProductId, ReactNode>; strong?: boolean }
 
@@ -68,11 +67,27 @@ export default function Compare() {
             const product = PRODUCTS[id]
             const hot = product.badge.tone === "hot"
             return (
-              <div key={id} style={{ padding: screens.md ? "22px 24px" : "16px 12px", borderLeft: `1px solid ${colors.onNavyLine}`, borderTop: hot ? `3px solid ${colors.gold}` : `3px solid ${colors.clear}` }}>
-                <div style={{ fontFamily: fonts.mono, fontSize: 10.5, letterSpacing: "0.16em", textTransform: "uppercase", color: hot ? colors.goldLight : colors.ribbonIce }}>
+              <div
+                key={id}
+                style={{
+                  position: "relative",
+                  overflow: "hidden",
+                  minHeight: screens.md ? 132 : 104,
+                  padding: screens.md ? "22px 24px" : "16px 12px",
+                  borderLeft: `1px solid ${colors.onNavyLine}`,
+                  borderTop: hot ? `3px solid ${colors.gold}` : `3px solid ${colors.clear}`,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                }}
+              >
+                {/* Each molecule's artwork from vetud.com */}
+                <Image src={product.art} alt="" fill sizes="(max-width: 768px) 40vw, 480px" style={{ objectFit: "cover", objectPosition: "center" }} />
+                <div aria-hidden style={{ position: "absolute", inset: 0, background: gradients.artFade }} />
+                <div style={{ position: "relative", fontFamily: fonts.mono, fontSize: 10.5, letterSpacing: "0.16em", textTransform: "uppercase", color: hot ? colors.goldLight : colors.ribbonIce }}>
                   {product.badge.text}
                 </div>
-                <div style={{ fontFamily: fonts.display, fontSize: screens.md ? 28 : 20, fontWeight: 500, color: colors.white, lineHeight: 1.15, marginTop: 4 }}>
+                <div style={{ position: "relative", fontFamily: fonts.display, fontSize: screens.md ? 30 : 20, fontWeight: 500, color: colors.white, lineHeight: 1.15, marginTop: 4 }}>
                   {product.name}
                 </div>
               </div>
@@ -132,11 +147,6 @@ export default function Compare() {
           })}
         </div>
       </div>
-      <Flex justify="center" style={{ marginTop: 22 }}>
-        <a href={EDUCATION_URL} target="_blank" rel="noopener noreferrer" style={{ color: colors.blueSoft, fontSize: 14, fontWeight: 600 }}>
-          Read the published research on both molecules at vetud.com <ArrowRightOutlined />
-        </a>
-      </Flex>
     </Section>
   )
 }
