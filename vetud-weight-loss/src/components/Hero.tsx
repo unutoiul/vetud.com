@@ -61,6 +61,25 @@ export default function Hero() {
       <Container style={{ position: "relative" }}>
         <Row gutter={[{ xs: 16, md: 48 }, 32]} align="middle" style={{ minHeight: "min(84vh, 780px)", padding: "clamp(32px, 5vw, 64px) 0 clamp(48px, 6vw, 72px)" }}>
           <Col xs={24} md={12}>
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                marginBottom: 18,
+                padding: "6px 14px 6px 6px",
+                borderRadius: 999,
+                background: colors.night,
+                color: colors.onNavy,
+                fontSize: 13,
+                fontWeight: 600,
+              }}
+            >
+              <span style={{ background: gradients.hot, color: colors.navyDeep, borderRadius: 999, padding: "3px 10px", fontWeight: 800, letterSpacing: "0.08em", fontSize: 11.5 }}>
+                {OFFER.saleLabel.toUpperCase()}
+              </span>
+              −{OFFER.salePercent}% on every pen, both strengths
+            </span>
             <Eyebrow>VETUD Peptide Series · The pens everyone is asking for</Eyebrow>
             <Typography.Title
               level={1}

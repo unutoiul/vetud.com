@@ -24,7 +24,7 @@ export const SITE = {
  */
 export const OFFER = {
   salePercent: 40,
-  saleLabel: "Launch offer",
+  saleLabel: "Black Friday",
   subscriberPercent: 10,
 }
 

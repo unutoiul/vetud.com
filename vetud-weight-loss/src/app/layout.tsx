@@ -11,11 +11,11 @@ const mono = DM_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: "Tirzepatide & Retatrutide Pens · 40% off · VETUD",
+  title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · VETUD",
   description: SITE.description,
   icons: { icon: "/brand/vetud-mark.svg" },
   openGraph: {
-    title: "Tirzepatide & Retatrutide Pens · 40% off · VETUD",
+    title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · VETUD",
     description: SITE.description,
     images: [{ url: "/images/retatrutide-closed.webp", width: 1400, height: 1050, alt: "VETUD Retatrutide pen box" }],
     type: "website",

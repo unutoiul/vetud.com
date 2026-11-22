@@ -35,12 +35,12 @@ const ROWS: Row[] = [
   { label: "Purity", cells: { tz2: <Yes>≥99%, COA for the lot</Yes>, retatrutide: <Yes>≥99%, COA for the lot</Yes> } },
   { label: "Dispatch", cells: { tz2: <Yes>Within 24 h of payment</Yes>, retatrutide: <Yes>Within 24 h of payment</Yes> } },
   {
-    label: `20 mg · ${OFFER.saleLabel.toLowerCase()} −${OFFER.salePercent}%`,
+    label: `20 mg · ${OFFER.saleLabel} −${OFFER.salePercent}%`,
     cells: { tz2: <Strike {...priceOf("tz2", "20mg")} />, retatrutide: <Strike {...priceOf("retatrutide", "20mg")} /> },
     strong: true,
   },
   {
-    label: `40 mg · ${OFFER.saleLabel.toLowerCase()} −${OFFER.salePercent}%`,
+    label: `40 mg · ${OFFER.saleLabel} −${OFFER.salePercent}%`,
     cells: { tz2: <Strike {...priceOf("tz2", "40mg")} />, retatrutide: <Strike {...priceOf("retatrutide", "40mg")} /> },
     strong: true,
   },

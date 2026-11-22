@@ -77,7 +77,7 @@ export function promoCodeVariables(code: string) {
     CODE: code,
     PERCENT: `${OFFER.subscriberPercent}%`,
     OFFER_LINE: OFFER.salePercent
-      ? `It comes on top of our ${OFFER.saleLabel.toLowerCase()} of ${OFFER.salePercent}% off every pen.`
+      ? `It comes on top of our ${OFFER.saleLabel} offer of ${OFFER.salePercent}% off every pen.`
       : "Use it on any pen.",
   })
 }

@@ -2,7 +2,7 @@
 
 import { GiftFilled, TagFilled } from "@ant-design/icons"
 import { OFFER, bestCombinedPercent } from "@/config/site"
-import { colors, fonts, gradients } from "@/theme/tokens"
+import { colors, fonts } from "@/theme/tokens"
 import { useOrder } from "./OrderProvider"
 
 /** The offer strip above the header: navy, with the numbers in gold. */
@@ -14,7 +14,7 @@ export default function PromoBar() {
       style={{
         position: "relative",
         zIndex: 101,
-        background: gradients.promoBar,
+        background: colors.night,
         color: colors.onNavy,
         fontSize: 14,
         textAlign: "center",

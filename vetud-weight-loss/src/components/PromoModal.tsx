@@ -90,7 +90,7 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
             off
           </div>
           <div style={{ color: colors.onNavyMuted, fontSize: 14, marginTop: 10 }}>
-            On top of the {OFFER.salePercent}% {OFFER.saleLabel.toLowerCase()} · up to {bestCombinedPercent()}% off in total
+            On top of the {OFFER.saleLabel} {OFFER.salePercent}% · up to {bestCombinedPercent()}% off in total
           </div>
         </Flex>
       </div>
