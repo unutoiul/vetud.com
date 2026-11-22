@@ -4,6 +4,7 @@ import { CONTACTS } from "@/config/site"
 import { sendTemplate } from "@/lib/email/send"
 import { adminVariables, confirmationVariables } from "@/lib/email/templates"
 import { orderTotal, parseOrder } from "@/lib/order"
+import { currencyOf, pricingCountry } from "@/lib/pricing"
 import { isPromoCode } from "@/lib/promo"
 import { limited } from "@/lib/rate-limit"
 
@@ -54,7 +55,9 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const { total } = orderTotal(order.product, order.strength, order.quantity, withCode)
-  console.info(`[order ${number}] ${order.quantity} × ${order.product} ${order.strength}${withCode ? " +code" : ""} = ${total} USD`)
-  return NextResponse.json({ orderNumber: number, total })
+  // Priced for the country it ships to, exactly as the form showed it.
+  const { total } = orderTotal(order.product, order.strength, order.quantity, withCode, order.country)
+  const currency = currencyOf(pricingCountry(order.country))
+  console.info(`[order ${number}] ${order.quantity} × ${order.product} ${order.strength} to ${order.country}${withCode ? " +code" : ""} = ${total} ${currency}`)
+  return NextResponse.json({ orderNumber: number, total, currency })
 }

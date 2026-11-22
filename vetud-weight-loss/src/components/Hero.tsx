@@ -3,8 +3,9 @@
 import { CheckCircleFilled, GiftFilled, ShoppingOutlined } from "@ant-design/icons"
 import { Button, Col, Flex, Row, Typography } from "antd"
 import Image from "next/image"
-import { OFFER, PRODUCTS, formatUsd, lowestPrice, priceOf, type ProductId } from "@/config/site"
+import { OFFER, PRODUCTS, type ProductId } from "@/config/site"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
+import { useCountry } from "./CountryProvider"
 import OfferSeal from "./OfferSeal"
 import { useOrder } from "./OrderProvider"
 import { AccentRule, Container, Eyebrow } from "./ui"
@@ -13,6 +14,7 @@ const TRUST = ["≥99% purity, HPLC verified", "COA with every lot", "Ships with
 
 function PenTag({ id, onClick }: { id: ProductId; onClick: () => void }) {
   const product = PRODUCTS[id]
+  const { priceOf, money } = useCountry()
   const { regular, sale } = priceOf(id, "20mg")
   const hot = product.badge.tone === "hot"
   return (
@@ -39,8 +41,8 @@ function PenTag({ id, onClick }: { id: ProductId; onClick: () => void }) {
         {product.label ? <span style={{ fontSize: 13, color: colors.muted }}> · {product.label}</span> : null}
       </div>
       <div style={{ fontSize: 14 }}>
-        <span style={{ color: colors.muted, textDecoration: "line-through", marginRight: 6 }}>{formatUsd(regular)}</span>
-        <span style={{ color: colors.navy, fontWeight: 700 }}>from {formatUsd(sale)}</span>
+        <span style={{ color: colors.muted, textDecoration: "line-through", marginRight: 6 }}>{money(regular)}</span>
+        <span style={{ color: colors.navy, fontWeight: 700 }}>from {money(sale)}</span>
       </div>
     </button>
   )
@@ -48,9 +50,10 @@ function PenTag({ id, onClick }: { id: ProductId; onClick: () => void }) {
 
 export default function Hero() {
   const { openOrder, openPromo } = useOrder()
+  const { lowestPrice, money } = useCountry()
 
   return (
-    <section id="top" style={{ position: "relative", overflow: "hidden", background: gradients.hero, marginTop: -72, paddingTop: 72 }}>
+    <section id="top" style={{ position: "relative", overflow: "hidden", background: gradients.hero, marginTop: -80, paddingTop: 80 }}>
       {/* VETUD's alpine artwork, faded into the page */}
       <div aria-hidden style={{ position: "absolute", inset: 0, opacity: 0.75 }}>
         <Image src="/images/alpine.webp" alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center bottom" }} />
@@ -113,7 +116,7 @@ export default function Hero() {
                 onClick={() => openOrder()}
                 style={{ height: 58, padding: "0 30px", fontSize: 18 }}
               >
-                Buy now · from {formatUsd(lowestPrice())}
+                Buy now · from {money(lowestPrice())}
               </Button>
               <Button
                 size="large"

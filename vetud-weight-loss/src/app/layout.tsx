@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · VETUD",
   description: SITE.description,
   icons: { icon: "/brand/vetud-mark.svg" },
+  // The per-country pages (/de, /gb…) are the same page in another currency.
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · VETUD",
     description: SITE.description,

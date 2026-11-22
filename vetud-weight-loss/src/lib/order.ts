@@ -1,5 +1,6 @@
-import { MAX_QUANTITY, OFFER, PRODUCT_IDS, STRENGTHS, priceOf, type ProductId, type Strength } from "@/config/site"
+import { MAX_QUANTITY, OFFER, PRODUCT_IDS, STRENGTHS, type ProductId, type Strength } from "@/config/site"
 import { COUNTRY_CODES } from "@/lib/countries"
+import { priceOf, pricingCountry } from "@/lib/pricing"
 
 /** Shared by the order form (client) and POST /api/order (server). */
 
@@ -39,11 +40,12 @@ export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 export const PHONE_PATTERN = /^\+?[\d\s().-]{6,32}$/
 
 /**
- * Every amount on an order, in whole dollars: regular price, the offer price, and the extra
- * subscriber discount when a valid code was given.
+ * Every amount on an order, in whole units of the currency of the country it ships to (see
+ * lib/pricing.ts): regular price, the offer price, and the extra subscriber discount when a valid
+ * code was given.
  */
-export function orderTotal(product: ProductId, strength: Strength, quantity: number, withCode = false) {
-  const { regular, sale } = priceOf(product, strength)
+export function orderTotal(product: ProductId, strength: Strength, quantity: number, withCode: boolean, shipTo: string | null | undefined) {
+  const { regular, sale } = priceOf(product, strength, pricingCountry(shipTo))
   const regularTotal = regular * quantity
   const subtotal = sale * quantity
   const codeDiscount = withCode ? Math.round((subtotal * OFFER.subscriberPercent) / 100) : 0

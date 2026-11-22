@@ -22,7 +22,9 @@ npm run lint && npm run typecheck && npm run build
 
 | What | File |
 |---|---|
-| Prices, names, badges ("Best seller", "Very popular"), texts, pictures | `src/config/site.ts` (`PRODUCTS`) |
+| Names, badges ("Best seller", "Very popular"), texts, pictures | `src/config/site.ts` (`PRODUCTS`) |
+| Prices, one list per currency (USD, EUR, GBP, CHF, SEK, NOK, DKK, PLN, CZK, HUF, RON) | `src/config/site.ts` (`PRICE_LISTS`) |
+| Which countries are in the country picker, their currency and number format | `src/config/markets.ts` (`MARKETS`) |
 | The launch offer (percent, label) and the subscriber discount percent | `src/config/site.ts` (`OFFER`); `salePercent: 0` ends the sale |
 | The subscriber code itself | env var `PROMO_CODE` (default `VETUD10`) |
 | Telegram / WhatsApp / LINE / email | `src/config/site.ts` (`CONTACTS`). An empty value hides that button |
@@ -33,6 +35,17 @@ npm run lint && npm run typecheck && npm run build
 | Email wording and layout | `emails/templates/*.html` + `.txt`, then `npm run emails:publish` |
 
 The server never trusts a price sent by the browser: `POST /api/order` works out the total from `src/config/site.ts` and the code from `PROMO_CODE`.
+
+## Prices by country
+
+Every price on the page is in the visitor's currency, written the way people there write it ("$239", "203 €", "£179", "2 274 kr", "1.043 lei"):
+
+- **Which country.** `src/proxy.ts` picks it on each visit to `/`: the country chosen in the header picker (remembered for a year in the `vetud_pens_country` cookie), else where the visit comes from (Vercel's `x-vercel-ip-country` header), else US prices. The address stays `/`; behind it each country has its own prebuilt page (`src/app/[country]/page.tsx`, also reachable as `/de`, `/gb`…, with `/` as the canonical address), so the right prices show on the first paint.
+- **The header picker** lists the United States and every European country we ship to, with flags, each country's own name (Deutschland, Sverige…) and its currency, and is searchable. Choosing one changes every price at once.
+- **The order form** starts with **Ship to**, the same flagged list plus every other country we ship to. The order is priced for the country it ships to: its own prices when it's in the picker, US prices anywhere else. The server does the same, and the emails show the total with the currency code ("3 505 kr (SEK)").
+- Countries outside the euro area that we don't price in their own currency (Iceland, the Western Balkans, Moldova, Ukraine, Belarus) pay in euros. Russia isn't in the shipping list, so it isn't in the picker either.
+
+Flags in `public/flags` come from country-flag-icons (MIT, see the LICENSE there).
 
 The pop-up opens by itself after 12 seconds or when the mouse leaves the page, at most once every three days per browser, never over the order form, and never again once the visitor has the code.
 
@@ -54,7 +67,7 @@ npm run emails:publish   # creates/updates and publishes them in Resend, then wr
 
 ## Pictures
 
-`npm run images` rebuilds `public/images/` from VETUD's own artwork: the closed and open boxes from `assets/vetud_product_white_background/`, the reusable pen from `assets/VETUD_Reusable_Dual_Chamber_Pen_poster.png` (cut out of its background), and the alpine background from the shop.
+`npm run images` rebuilds `public/images/` from VETUD's own artwork: the closed and open boxes from `assets/vetud_product_white_background/`, the reusable pen from `assets/VETUD_Reusable_Dual_Chamber_Pen_poster.png` (cut out of its background), and the alpine background from the shop. It also grades the filling-line and cold-storage photos in `assets/VETUD_Facility_Photos/` for the "Made clean. Kept cold." section (`src/components/Facility.tsx`): cropped clear of clutter, colour casts evened out, levels, softer saturation, sharpening and a faint vignette. The crop and colour settings for each photo are in the `facility` list in `scripts/prepare-images.mjs`.
 
 ## Deploy (Vercel)
 

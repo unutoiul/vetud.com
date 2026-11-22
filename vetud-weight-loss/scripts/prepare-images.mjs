@@ -1,7 +1,7 @@
 // Copies VETUD's own product artwork into public/ as web-sized WebP.
 // Sources live in the repo's assets/ folder and the shop's public/ folder; run again after the art changes.
 // Usage: npm run images
-import { copyFileSync, mkdirSync, rmSync } from "node:fs"
+import { copyFileSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import sharp from "sharp"
@@ -26,8 +26,39 @@ const images = [
   ["vetud-education/frontend/public/images/learn/spotlights/tirzepatide.webp", "tirzepatide-art.webp", 1440],
 ]
 
+/**
+ * Text baked into an artwork that doesn't belong on a sales page, as boxes in source pixels. Each box
+ * is repainted by blending, column by column, the clean row just above it into the clean row just below.
+ */
+const ERASE = {
+  // "Cartridge placement concept" under the title, and "PACKAGING CONCEPT | vetud.com" in the navy band.
+  "pen-diagram.webp": [
+    { x0: 100, x1: 570, ya: 258, yb: 306 },
+    { x0: 300, x1: 955, ya: 1186, yb: 1232 },
+  ],
+}
+
+async function load(source, name) {
+  const boxes = ERASE[name]
+  if (!boxes) return sharp(source)
+  const { data, info } = await sharp(source).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+  const { width: w, channels: n } = info
+  for (const { x0, x1, ya, yb } of boxes) {
+    for (let x = x0; x <= x1; x++) {
+      const above = (ya * w + x) * n
+      const below = (yb * w + x) * n
+      for (let y = ya + 1; y < yb; y++) {
+        const t = (y - ya) / (yb - ya)
+        const at = (y * w + x) * n
+        for (let c = 0; c < n; c++) data[at + c] = Math.round(data[above + c] * (1 - t) + data[below + c] * t)
+      }
+    }
+  }
+  return sharp(data, { raw: info })
+}
+
 for (const [source, name, width] of images) {
-  const info = await sharp(path.join(REPO, source))
+  const info = await (await load(path.join(REPO, source), name))
     .resize({ width, withoutEnlargement: true })
     .webp({ quality: 82 })
     .toFile(path.join(OUT, name))
@@ -80,6 +111,44 @@ await cutOut(
   { threshold: 238 },
 )
 
+/**
+ * The owner's phone photos of the filling line and the cold store, given one calm, consistent look:
+ * cropped clear of clutter at the edges, colour casts evened out (window blue, LED yellow), auto
+ * levels, softer saturation, a little contrast and sharpening, and a faint vignette.
+ */
+const PHOTOS = "assets/VETUD_Facility_Photos"
+const facility = [
+  // The cleanroom filling line: a little warm, so a touch cooler.
+  { source: "cleanroom-filling-line.jpg", name: "facility-cleanroom.webp", crop: { left: 120, top: 0, width: 1760, height: 1080 }, gains: [0.97, 0.99, 1.04], saturation: 0.88, brightness: 1.03 },
+  // One cabinet door, from the black frame to its LED strip: blue window light at the top, yellow LED at the side.
+  { source: "cold-storage-shelves.jpg", name: "facility-cold-storage.webp", crop: { left: 385, top: 20, width: 525, height: 789 }, gains: [0.95, 1, 1.02], saturation: 0.7, brightness: 1.04 },
+  // The row of cabinets, without the half cabinet on the left and the packing bag on the right.
+  { source: "cold-storage-cabinets.jpg", name: "facility-cabinets.webp", crop: { left: 58, top: 150, width: 970, height: 640 }, gains: [0.98, 1, 1.03], saturation: 0.78, brightness: 1.06 },
+]
+const vignette = (width, height) =>
+  Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><defs><radialGradient id="v" r="75%"><stop offset="55%" stop-opacity="0"/><stop offset="100%" stop-opacity="0.28"/></radialGradient></defs><rect width="100%" height="100%" fill="url(#v)"/></svg>`,
+  )
+for (const { source, name, crop, gains: [r, g, b], saturation, brightness } of facility) {
+  const graded = await sharp(path.join(REPO, PHOTOS, source))
+    .extract(crop)
+    .recomb([
+      [r, 0, 0],
+      [0, g, 0],
+      [0, 0, b],
+    ])
+    .normalise({ lower: 1, upper: 99.5 })
+    .modulate({ saturation, brightness })
+    .linear(1.06, -6)
+    .sharpen({ sigma: 0.8, m1: 0.6, m2: 1.2 })
+    .toBuffer()
+  const info = await sharp(graded)
+    .composite([{ input: vignette(crop.width, crop.height), blend: "multiply" }])
+    .webp({ quality: 84 })
+    .toFile(path.join(OUT, name))
+  console.log(`${name.padEnd(28)} ${info.width}x${info.height} ${(info.size / 1024).toFixed(0)} KB (graded photo)`)
+}
+
 
 mkdirSync(path.join(ROOT, "public", "videos"), { recursive: true })
 copyFileSync(
@@ -89,6 +158,12 @@ copyFileSync(
 
 mkdirSync(path.join(ROOT, "public", "brand"), { recursive: true })
 for (const file of ["vetud-logo.svg", "vetud-logo-white.svg", "vetud-mark.svg"]) {
-  copyFileSync(path.join(REPO, "vetud-shop/frontend/public/brand", file), path.join(ROOT, "public", "brand", file))
+  // The kit's lettering is a hairline that breaks up at header size on 1x screens. A thin stroke in
+  // the letter colour gives it a screen weight without changing the shapes.
+  const svg = readFileSync(path.join(REPO, "vetud-shop/frontend/public/brand", file), "utf8").replace(
+    /<g id="outlined-lettering" fill="(#[0-9A-Fa-f]{6})"/,
+    '<g id="outlined-lettering" fill="$1" stroke="$1" stroke-width="0.55" stroke-linejoin="round"',
+  )
+  writeFileSync(path.join(ROOT, "public", "brand", file), svg)
 }
 console.log("video and logos copied")

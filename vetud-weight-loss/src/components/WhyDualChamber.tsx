@@ -40,6 +40,7 @@ export default function WhyDualChamber() {
               src="/images/pen-diagram.webp"
               alt="The VETUD cartridge holds freeze-dried peptide and BAC water and sits inside the pen's cartridge holder"
               width="100%"
+              styles={{ root: { display: "block" } }}
               style={{ display: "block", aspectRatio: "1 / 1", objectFit: "cover" }}
               preview={{ mask: "Enlarge" }}
             />

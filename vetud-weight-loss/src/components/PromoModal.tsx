@@ -3,9 +3,10 @@
 import { CheckOutlined, CloseOutlined, CopyOutlined, LockOutlined, ShoppingOutlined } from "@ant-design/icons"
 import { App, Button, Flex, Form, Grid, Input, Modal, Typography } from "antd"
 import { useState } from "react"
-import { OFFER, PRODUCTS, bestCombinedPercent, formatUsd } from "@/config/site"
+import { OFFER, PRODUCTS, bestCombinedPercent } from "@/config/site"
 import { EMAIL_PATTERN, LIMITS, orderTotal } from "@/lib/order"
 import { colors, fonts, gradients } from "@/theme/tokens"
+import { useCountry } from "./CountryProvider"
 import { useOrder } from "./OrderProvider"
 import Image from "next/image"
 
@@ -18,8 +19,9 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
   const [code, setCode] = useState<string | null>(promoCode)
   const [copied, setCopied] = useState(false)
 
-  // A concrete example of what the code is worth: the best seller at 40 mg.
-  const example = orderTotal("retatrutide", "40mg", 1, true)
+  // A concrete example of what the code is worth: the best seller at 40 mg, in the visitor's currency.
+  const { country, money } = useCountry()
+  const example = orderTotal("retatrutide", "40mg", 1, true, country)
 
   async function subscribe(values: { email: string; website?: string }) {
     setSending(true)
@@ -139,7 +141,7 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
           </Flex>
         ) : (
           <>
-            {/* What the code is worth, in dollars */}
+            {/* What the code is worth, in the visitor's currency */}
             <Flex
               align="center"
               justify="space-between"
@@ -151,8 +153,8 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
                 Best seller, with your code
               </div>
               <div style={{ textAlign: "right", whiteSpace: "nowrap" }}>
-                <span style={{ color: colors.muted, textDecoration: "line-through", fontSize: 14, marginRight: 8 }}>{formatUsd(example.regular)}</span>
-                <span style={{ fontFamily: fonts.display, fontSize: 26, fontWeight: 600, color: colors.navy }}>{formatUsd(example.total)}</span>
+                <span style={{ color: colors.muted, textDecoration: "line-through", fontSize: 14, marginRight: 8 }}>{money(example.regular)}</span>
+                <span style={{ fontFamily: fonts.display, fontSize: 26, fontWeight: 600, color: colors.navy }}>{money(example.total)}</span>
               </div>
             </Flex>
 

@@ -116,5 +116,7 @@ export const theme: ThemeConfig = {
     Form: { itemMarginBottom: 16, verticalLabelPadding: "0 0 4px" },
     Steps: { colorPrimary: colors.blue },
     Statistic: { contentFontSize: 40, titleFontSize: 13 },
+    // Country lists: a light ice row for the chosen country instead of antd's grey derived from navy.
+    Select: { optionSelectedBg: colors.iceLight, optionSelectedColor: colors.navy, optionActiveBg: colors.iceWash, optionSelectedFontWeight: 600 },
   },
 }

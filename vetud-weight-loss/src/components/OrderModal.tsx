@@ -4,10 +4,14 @@ import { CheckCircleFilled, GiftFilled, LockOutlined, MailOutlined, SafetyCertif
 import { App, Button, Checkbox, Col, Divider, Flex, Form, Grid, Input, InputNumber, Modal, Radio, Result, Row, Segmented, Select, Space, Typography } from "antd"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
-import { MAX_QUANTITY, OFFER, PRODUCT_IDS, PRODUCTS, SITE, STRENGTHS, contactLinks, formatUsd, priceOf, strengthLabel, type ProductId, type Strength } from "@/config/site"
-import { COUNTRY_OPTIONS } from "@/lib/countries"
+import { isMarket, type CountryCode } from "@/config/markets"
+import { MAX_QUANTITY, OFFER, PRODUCT_IDS, PRODUCTS, SITE, STRENGTHS, contactLinks, strengthLabel, type ProductId, type Strength } from "@/config/site"
+import { countryName } from "@/lib/countries"
 import { CONTACT_APP_LABELS, CONTACT_APPS, EMAIL_PATTERN, LIMITS, PHONE_PATTERN, orderTotal, type ContactApp } from "@/lib/order"
+import { currencyOf, formatPrice, priceOf, pricingCountry } from "@/lib/pricing"
 import { colors, fonts } from "@/theme/tokens"
+import { useCountry } from "./CountryProvider"
+import { CountryFlag, filterCountry, renderCountryOption, useCountryGroups } from "./CountrySelect"
 import { CONTACT_COLORS, ContactIcon } from "./icons/ContactIcon"
 import { useOrder } from "./OrderProvider"
 
@@ -49,7 +53,7 @@ export default function OrderModal({
   const { message } = App.useApp()
   const screens = Grid.useBreakpoint()
   const [submitting, setSubmitting] = useState(false)
-  const [done, setDone] = useState<{ orderNumber: string; email: string; total: number } | null>(null)
+  const [done, setDone] = useState<{ orderNumber: string; email: string; total: number; country: CountryCode } | null>(null)
   const { promoCode, openPromo } = useOrder()
   // null = untouched: the visitor's saved subscriber code (if any) is shown and applied.
   const [codeInput, setCodeInput] = useState<string | null>(null)
@@ -63,7 +67,15 @@ export default function OrderModal({
   const quantity = Form.useWatch("quantity", form) ?? 1
   const contactApp = Form.useWatch("contactApp", form) ?? "whatsapp"
   const safeQuantity = Math.min(Math.max(Number(quantity) || 1, 1), MAX_QUANTITY)
-  const amounts = orderTotal(product, strength, safeQuantity, !!appliedCode)
+  // Prices follow the country the order ships to (its own prices when it's in the header's country
+  // picker, US prices anywhere else), exactly as the server will work them out.
+  const { country: visitorCountry, setCountry } = useCountry()
+  // Same flags and names as the header picker, plus every other country we ship to (US prices).
+  const countryGroups = useCountryGroups(true)
+  const shipTo: string = Form.useWatch("country", form) ?? visitorCountry
+  const priceCountry = pricingCountry(shipTo)
+  const money = (amount: number) => formatPrice(amount, priceCountry)
+  const amounts = orderTotal(product, strength, safeQuantity, !!appliedCode, priceCountry)
   const { total } = amounts
 
   const applyCode = useCallback(
@@ -97,6 +109,13 @@ export default function OrderModal({
     form.setFieldsValue({ product: initial.product, strength: initial.strength })
   }, [open, initial.product, initial.strength, form])
 
+  // Ship to the country chosen in the header, unless the visitor already typed a country outside the picker.
+  useEffect(() => {
+    if (!open) return
+    const current = form.getFieldValue("country") as string | undefined
+    if (!current || isMarket(current)) form.setFieldsValue({ country: visitorCountry })
+  }, [open, visitorCountry, form])
+
   async function submit(values: FormValues) {
     setSubmitting(true)
     // Read everything from the submitted values: a field committed on blur (the quantity box) may not
@@ -117,7 +136,12 @@ export default function OrderModal({
         message.error(data.error || "Something went wrong. Please try again or message us.")
         return
       }
-      setDone({ orderNumber: data.orderNumber, email: all.email, total: data.total ?? orderTotal(all.product, all.strength, submittedQuantity, !!appliedCode).total })
+      setDone({
+        orderNumber: data.orderNumber,
+        email: all.email,
+        total: data.total ?? orderTotal(all.product, all.strength, submittedQuantity, !!appliedCode, all.country).total,
+        country: pricingCountry(all.country),
+      })
       form.resetFields(["note", "quantity"])
     } catch {
       message.error("No connection. Please try again or message us.")
@@ -152,7 +176,7 @@ export default function OrderModal({
             title={<span style={{ fontFamily: fonts.display, fontSize: 30, color: colors.navy }}>Order {done.orderNumber} is reserved</span>}
             subTitle={
               <span style={{ fontSize: 16, lineHeight: 1.6 }}>
-                We sent the payment details to <strong>{done.email}</strong>. Total to pay: <strong>{formatUsd(done.total)}</strong>.
+                We sent the payment details to <strong>{done.email}</strong>. Total to pay: <strong>{formatPrice(done.total, done.country)}</strong>.
                 <br />
                 Can&apos;t find it? Check your spam folder or message us below.
               </span>
@@ -183,7 +207,7 @@ export default function OrderModal({
           layout="vertical"
           requiredMark={false}
           onFinish={submit}
-          initialValues={{ product: initial.product, strength: initial.strength, quantity: 1, contactApp: "whatsapp", researchUse: false }}
+          initialValues={{ product: initial.product, strength: initial.strength, quantity: 1, contactApp: "whatsapp", country: visitorCountry, researchUse: false }}
           scrollToFirstError
         >
           <Row>
@@ -203,13 +227,46 @@ export default function OrderModal({
                   </div>
                 </Flex>
 
+                {/* The shipping country comes first: it sets the currency of every price below. */}
+                <Form.Item
+                  name="country"
+                  label={
+                    <span>
+                      Ship to <span style={{ color: colors.muted, fontWeight: 400 }}>· prices in {currencyOf(priceCountry)}</span>
+                    </span>
+                  }
+                  rules={[{ required: true, message: "Choose a country." }]}
+                  style={{ marginBottom: 16 }}
+                >
+                  <Select<string>
+                    showSearch={{ filterOption: filterCountry }}
+                    options={countryGroups}
+                    optionRender={renderCountryOption}
+                    labelRender={({ value }) =>
+                      typeof value === "string" && value ? (
+                        <span style={{ display: "flex", alignItems: "center", gap: 10, height: "100%" }}>
+                          <CountryFlag code={value} />
+                          <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>{countryName(value)}</span>
+                        </span>
+                      ) : null
+                    }
+                    placeholder="Choose a country"
+                    autoComplete="country"
+                    listHeight={320}
+                    // A country from the header picker becomes the visitor's country for the whole page too.
+                    onChange={(code) => {
+                      if (isMarket(code)) setCountry(code)
+                    }}
+                  />
+                </Form.Item>
+
                 <Form.Item name="product" label="Pen" style={{ marginBottom: 16 }}>
                   <Segmented block options={PRODUCT_IDS.map((id) => ({ value: id, label: PRODUCTS[id].name }))} />
                 </Form.Item>
                 <Form.Item name="strength" label="Strength" style={{ marginBottom: 16 }}>
                   <Segmented
                     block
-                    options={STRENGTHS.map((value) => ({ value, label: `${strengthLabel(value)} · ${formatUsd(priceOf(product, value).sale)}` }))}
+                    options={STRENGTHS.map((value) => ({ value, label: `${strengthLabel(value)} · ${money(priceOf(product, value, priceCountry).sale)}` }))}
                   />
                 </Form.Item>
                 <Form.Item name="quantity" label="Quantity" style={{ marginBottom: 20 }}>
@@ -247,16 +304,16 @@ export default function OrderModal({
                 <Flex vertical gap={6} style={{ fontSize: 14 }}>
                   <Flex justify="space-between" style={{ color: colors.muted }}>
                     <span>
-                      {safeQuantity} × {formatUsd(amounts.regular)} regular price
+                      {safeQuantity} × {money(amounts.regular)} regular price
                     </span>
-                    <span style={{ textDecoration: amounts.saved ? "line-through" : undefined }}>{formatUsd(amounts.regularTotal)}</span>
+                    <span style={{ textDecoration: amounts.saved ? "line-through" : undefined }}>{money(amounts.regularTotal)}</span>
                   </Flex>
                   {OFFER.salePercent > 0 && (
                     <Flex justify="space-between" style={{ color: colors.sale, fontWeight: 600 }}>
                       <span>
                         {OFFER.saleLabel} −{OFFER.salePercent}%
                       </span>
-                      <span>−{formatUsd(amounts.regularTotal - amounts.subtotal)}</span>
+                      <span>−{money(amounts.regularTotal - amounts.subtotal)}</span>
                     </Flex>
                   )}
                   {appliedCode && (
@@ -264,16 +321,16 @@ export default function OrderModal({
                       <span>
                         Code {appliedCode} −{OFFER.subscriberPercent}%
                       </span>
-                      <span>−{formatUsd(amounts.codeDiscount)}</span>
+                      <span>−{money(amounts.codeDiscount)}</span>
                     </Flex>
                   )}
                 </Flex>
                 <Flex justify="space-between" align="baseline" style={{ marginTop: 10 }}>
                   <span style={{ fontWeight: 600 }}>Total</span>
-                  <span style={{ fontFamily: fonts.display, fontSize: 36, color: colors.navy, fontWeight: 600 }}>{formatUsd(total)}</span>
+                  <span style={{ fontFamily: fonts.display, fontSize: 36, color: colors.navy, fontWeight: 600 }}>{money(total)}</span>
                 </Flex>
-                {amounts.saved > 0 && (
-                  <Flex justify="flex-end">
+                <Flex justify="flex-end">
+                  {amounts.saved > 0 && (
                     <span
                       style={{
                         fontWeight: 700,
@@ -285,10 +342,10 @@ export default function OrderModal({
                         border: `1px solid ${colors.goldLight}`,
                       }}
                     >
-                      You save {formatUsd(amounts.saved)}
+                      You save {money(amounts.saved)}
                     </span>
-                  </Flex>
-                )}
+                  )}
+                </Flex>
 
                 <Flex vertical gap={8} style={{ marginTop: 20, fontSize: 13, color: colors.navyInk, display: screens.md ? undefined : "none" }}>
                   <span>
@@ -346,14 +403,6 @@ export default function OrderModal({
                   </Form.Item>
                 )}
 
-                <Form.Item name="country" label="Country" rules={[{ required: true, message: "Choose a country." }]}>
-                  <Select
-                    showSearch={{ optionFilterProp: "label" }}
-                    options={COUNTRY_OPTIONS}
-                    placeholder="Choose a country"
-                    autoComplete="country"
-                  />
-                </Form.Item>
                 <Form.Item name="address" label="Street address" rules={[{ required: true, min: 4, message: "Enter the street address." }]}>
                   <Input autoComplete="street-address" maxLength={LIMITS.address} />
                 </Form.Item>
@@ -387,7 +436,7 @@ export default function OrderModal({
                 </Form.Item>
 
                 <Button type="primary" htmlType="submit" size="large" block loading={submitting} icon={<LockOutlined />} style={{ height: 56, fontSize: 17 }}>
-                  Place order · {formatUsd(total)}
+                  Place order · {money(total)}
                 </Button>
                 <Typography.Paragraph style={{ color: colors.muted, fontSize: 12, textAlign: "center", margin: "12px 0 0" }}>
                   You&apos;ll get a confirmation email with payment details right away. Questions? Write to {SITE.email}.

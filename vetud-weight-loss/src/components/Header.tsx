@@ -5,6 +5,7 @@ import { Button, Flex, Grid } from "antd"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { colors, fonts } from "@/theme/tokens"
+import CountrySelect from "./CountrySelect"
 import { useOrder } from "./OrderProvider"
 import { Container } from "./ui"
 
@@ -42,9 +43,18 @@ export default function Header() {
       }}
     >
       <Container>
-        <Flex align="center" justify="space-between" style={{ height: 72 }}>
-          <a href="#top" aria-label="VETUD Peptide Series, back to top" style={{ display: "flex", alignItems: "center" }}>
-            <Image src="/brand/vetud-logo.svg" alt="VETUD Peptide Series" width={screens.sm ? 172 : 140} height={screens.sm ? 36 : 29} priority />
+        <Flex align="center" justify="space-between" gap={12} style={{ height: 80 }}>
+          <a href="#top" aria-label="VETUD Peptide Series, back to top" style={{ display: "flex", alignItems: "center", minWidth: 0 }}>
+            <Image
+              src="/brand/vetud-logo.svg"
+              alt="VETUD Peptide Series"
+              width={362}
+              height={76}
+              priority
+              unoptimized
+              // On narrow phones the logo gives up a little width so the country picker and the button fit.
+              style={{ width: screens.md ? 228 : "clamp(136px, calc(100vw - 222px), 176px)", height: "auto", display: "block" }}
+            />
           </a>
           {screens.lg && (
             <nav aria-label="Sections">
@@ -61,9 +71,12 @@ export default function Header() {
               </Flex>
             </nav>
           )}
-          <Button type="primary" size={screens.sm ? "large" : "middle"} icon={<ShoppingOutlined />} onClick={() => openOrder()}>
-            Order now
-          </Button>
+          <Flex align="center" gap={screens.sm ? 12 : 8} style={{ flex: "none" }}>
+            <CountrySelect compact={!screens.sm} size={screens.sm ? "large" : "middle"} />
+            <Button type="primary" size={screens.sm ? "large" : "middle"} icon={screens.sm ? <ShoppingOutlined /> : undefined} onClick={() => openOrder()}>
+              Order now
+            </Button>
+          </Flex>
         </Flex>
       </Container>
     </header>

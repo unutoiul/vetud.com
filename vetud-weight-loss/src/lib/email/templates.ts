@@ -1,7 +1,8 @@
 import "server-only"
-import { OFFER, PRODUCTS, SITE, contactLinks, formatUsd, strengthLabel } from "@/config/site"
+import { OFFER, PRODUCTS, SITE, contactLinks, strengthLabel } from "@/config/site"
 import { countryName } from "@/lib/countries"
 import { CONTACT_APP_LABELS, orderTotal, type OrderInput } from "@/lib/order"
+import { formatPrice, formatPriceWithCode, pricingCountry } from "@/lib/pricing"
 
 /**
  * Turns an order or a subscription into each Resend template's variables. The wording and layout
@@ -19,14 +20,17 @@ const escapeAll = (variables: Record<string, string>) =>
 
 function shared(order: OrderInput, orderNumber: string, withCode: boolean) {
   const product = PRODUCTS[order.product]
-  const amounts = orderTotal(order.product, order.strength, order.quantity, withCode)
+  // Amounts in the currency of the country the order ships to, written the way people there write them.
+  const amounts = orderTotal(order.product, order.strength, order.quantity, withCode, order.country)
+  const country = pricingCountry(order.country)
+  const money = (amount: number) => formatPrice(amount, country)
   const contactPref =
     order.contactApp === "email"
       ? "email"
       : `${CONTACT_APP_LABELS[order.contactApp]}${order.contactHandle ? ` (${order.contactHandle})` : ` (${order.phone})`}`
   const savings = [
-    OFFER.salePercent ? `${OFFER.saleLabel} −${OFFER.salePercent}%: −${formatUsd(amounts.regularTotal - amounts.subtotal)}` : "",
-    withCode ? `Subscriber code ${order.promoCode} −${OFFER.subscriberPercent}%: −${formatUsd(amounts.codeDiscount)}` : "",
+    OFFER.salePercent ? `${OFFER.saleLabel} −${OFFER.salePercent}%: −${money(amounts.regularTotal - amounts.subtotal)}` : "",
+    withCode ? `Subscriber code ${order.promoCode} −${OFFER.subscriberPercent}%: −${money(amounts.codeDiscount)}` : "",
   ]
     .filter(Boolean)
     .join("\n")
@@ -36,9 +40,10 @@ function shared(order: OrderInput, orderNumber: string, withCode: boolean) {
     ORDER_NUMBER: orderNumber,
     ITEM: `${product.fullName} · ${strengthLabel(order.strength)}`,
     QUANTITY: String(order.quantity),
-    UNIT_PRICE: `${formatUsd(amounts.regular)}`,
-    ORDER_TOTAL: formatUsd(amounts.total),
-    SAVINGS: savings ? `${savings}\nYou save ${formatUsd(amounts.saved)}` : "Regular price",
+    UNIT_PRICE: money(amounts.regular),
+    // With the currency code, so "kr" or "$" can't be mistaken for another currency when paying.
+    ORDER_TOTAL: formatPriceWithCode(amounts.total, country),
+    SAVINGS: savings ? `${savings}\nYou save ${money(amounts.saved)}` : "Regular price",
     SHIP_TO: [order.name, order.address, `${order.postalCode} ${order.city}`, countryName(order.country)].join("\n"),
     CONTACT_PREF: contactPref,
   }

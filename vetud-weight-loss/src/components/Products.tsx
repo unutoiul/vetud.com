@@ -4,8 +4,9 @@ import { CheckOutlined, FireFilled, GiftFilled, ShoppingOutlined, StarFilled, Zo
 import { Button, Col, Flex, Image as AntImage, Row, Segmented, Tag, Typography } from "antd"
 import NextImage from "next/image"
 import { useState } from "react"
-import { OFFER, PRODUCT_IDS, PRODUCTS, STRENGTHS, formatUsd, priceOf, pricePerMg, strengthLabel, type Product, type Strength } from "@/config/site"
+import { OFFER, PRODUCT_IDS, PRODUCTS, STRENGTHS, strengthLabel, type Product, type Strength } from "@/config/site"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
+import { useCountry } from "./CountryProvider"
 import OfferSeal from "./OfferSeal"
 import { useOrder } from "./OrderProvider"
 import { Section, SectionHeading } from "./ui"
@@ -18,6 +19,7 @@ function ProductCard({ product }: { product: Product }) {
   const [shown, setShown] = useState(0)
   const [previewOpen, setPreviewOpen] = useState(false)
   const hot = product.badge.tone === "hot"
+  const { priceOf, pricePerMg, money } = useCountry()
   const { regular, sale } = priceOf(product.id, strength)
   const perMg = pricePerMg(product.id, strength)
   const bulkSaving = Math.round((1 - pricePerMg(product.id, "40mg") / pricePerMg(product.id, "20mg")) * 100)
@@ -183,7 +185,7 @@ function ProductCard({ product }: { product: Product }) {
           <div>
             {sale < regular && (
               <div style={{ fontSize: 18, color: colors.muted }}>
-                <span style={{ textDecoration: "line-through" }}>{formatUsd(regular)}</span>
+                <span style={{ textDecoration: "line-through" }}>{money(regular)}</span>
                 <span
                   style={{
                     marginLeft: 10,
@@ -196,15 +198,15 @@ function ProductCard({ product }: { product: Product }) {
                     fontWeight: 700,
                   }}
                 >
-                  −{OFFER.salePercent}% · save {formatUsd(regular - sale)}
+                  −{OFFER.salePercent}% · save {money(regular - sale)}
                 </span>
               </div>
             )}
             <span style={{ fontFamily: fonts.display, fontSize: 56, lineHeight: 1, color: colors.navy, fontWeight: 500 }}>
-              {formatUsd(sale)}
+              {money(sale)}
             </span>
           </div>
-          <span style={{ color: colors.muted, fontSize: 14 }}>${perMg.toFixed(2)} per mg</span>
+          <span style={{ color: colors.muted, fontSize: 14 }}>{money(perMg)} per mg</span>
         </Flex>
         <div style={{ minHeight: 26 }}>
           {strength === "40mg" ? (
@@ -239,7 +241,7 @@ function ProductCard({ product }: { product: Product }) {
           onClick={() => openOrder({ product: product.id, strength })}
           style={{ height: 58, fontSize: 17, marginTop: "auto" }}
         >
-          Buy now · {formatUsd(sale)}
+          Buy now · {money(sale)}
         </Button>
         <span style={{ textAlign: "center", fontSize: 12, color: colors.muted, marginTop: 10 }}>Nothing to pay now. Payment details come by email.</span>
       </Flex>

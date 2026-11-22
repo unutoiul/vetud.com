@@ -1,7 +1,7 @@
 /**
  * Everything the owner may want to change lives here: products, prices, the offer, pictures and
- * contacts. Prices are in US dollars. `regular` prices match the shop's pen prices
- * (vetud-shop/backend/src/seed/dual-chamber-catalog.ts, pen column); buyers pay the offer price below.
+ * contacts. Prices are set per currency in PRICE_LISTS below; which country pays which list is in
+ * src/config/markets.ts. Buyers pay the offer price worked out from these regular prices.
  */
 
 export const SITE = {
@@ -57,8 +57,6 @@ export type Product = {
   tagline: string
   description: string
   badge: { text: string; tone: "hot" | "popular" }
-  /** Regular prices, before the offer. */
-  prices: Record<Strength, number>
   /** The closed box, shown first. */
   image: string
   /** The molecule's artwork on vetud.com (dark, abstract), for night backgrounds. */
@@ -76,7 +74,6 @@ export const PRODUCTS: Record<ProductId, Product> = {
     tagline: "Dual GIP / GLP-1 receptor agonist",
     description: "The dual agonist the whole field talks about, in VETUD's precision pen. One pen, 12 needles and a booklet per box.",
     badge: { text: "Very popular", tone: "popular" },
-    prices: { "20mg": 398, "40mg": 588 },
     image: "/images/tirzepatide-closed.webp",
     art: "/images/tirzepatide-art.webp",
     gallery: [
@@ -92,7 +89,6 @@ export const PRODUCTS: Record<ProductId, Product> = {
     tagline: "Triple GIP / GLP-1 / glucagon agonist",
     description: "The next-generation triple agonist, in VETUD's precision pen. One pen, 12 needles and a booklet per box.",
     badge: { text: "Best seller", tone: "hot" },
-    prices: { "20mg": 488, "40mg": 688 },
     image: "/images/retatrutide-closed.webp",
     art: "/images/retatrutide-art.webp",
     gallery: [
@@ -102,28 +98,45 @@ export const PRODUCTS: Record<ProductId, Product> = {
   },
 }
 
+export type PriceList = {
+  /** ISO 4217 code: what buyers see and pay in. */
+  currency: string
+  /** Regular prices before the offer, in whole units of the currency. */
+  prices: Record<ProductId, Record<Strength, number>>
+}
+
+/**
+ * Regular prices (before the offer) in each currency, in whole units. Buyers pay these minus
+ * OFFER.salePercent, and the server works every total out from here.
+ *
+ * - USD matches the shop's pen prices (vetud-shop/backend/src/seed/dual-chamber-catalog.ts, pen column).
+ * - The others were converted from USD at mid-2026 exchange rates and rounded to a price ending in
+ *   9 or 90. They are plain numbers: change any of them freely.
+ * - To charge some countries differently, add a list here (e.g. `EUR_EAST` with currency "EUR")
+ *   and point those countries at it in src/config/markets.ts.
+ */
+export const PRICE_LISTS = {
+  USD: { currency: "USD", prices: { tz2: { "20mg": 398, "40mg": 588 }, retatrutide: { "20mg": 488, "40mg": 688 } } },
+  EUR: { currency: "EUR", prices: { tz2: { "20mg": 339, "40mg": 509 }, retatrutide: { "20mg": 419, "40mg": 589 } } },
+  GBP: { currency: "GBP", prices: { tz2: { "20mg": 299, "40mg": 439 }, retatrutide: { "20mg": 369, "40mg": 509 } } },
+  CHF: { currency: "CHF", prices: { tz2: { "20mg": 319, "40mg": 469 }, retatrutide: { "20mg": 389, "40mg": 549 } } },
+  SEK: { currency: "SEK", prices: { tz2: { "20mg": 3790, "40mg": 5590 }, retatrutide: { "20mg": 4590, "40mg": 6490 } } },
+  NOK: { currency: "NOK", prices: { tz2: { "20mg": 3990, "40mg": 5990 }, retatrutide: { "20mg": 4890, "40mg": 6990 } } },
+  DKK: { currency: "DKK", prices: { tz2: { "20mg": 2590, "40mg": 3790 }, retatrutide: { "20mg": 3090, "40mg": 4390 } } },
+  PLN: { currency: "PLN", prices: { tz2: { "20mg": 1459, "40mg": 2149 }, retatrutide: { "20mg": 1789, "40mg": 2519 } } },
+  CZK: { currency: "CZK", prices: { tz2: { "20mg": 8390, "40mg": 12390 }, retatrutide: { "20mg": 10290, "40mg": 14490 } } },
+  HUF: { currency: "HUF", prices: { tz2: { "20mg": 132990, "40mg": 196990 }, retatrutide: { "20mg": 162990, "40mg": 229990 } } },
+  RON: { currency: "RON", prices: { tz2: { "20mg": 1739, "40mg": 2579 }, retatrutide: { "20mg": 2139, "40mg": 2999 } } },
+} as const satisfies Record<string, PriceList>
+
+export type PriceListId = keyof typeof PRICE_LISTS
+
 export const MAX_QUANTITY = 10
 
 export const strengthLabel = (strength: Strength) => strength.replace("mg", " mg")
 
-export const formatUsd = (amount: number) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(amount)
-
-/** Regular price and the offer price buyers pay, in whole dollars. */
-export function priceOf(product: ProductId, strength: Strength) {
-  const regular = PRODUCTS[product].prices[strength]
-  return { regular, sale: Math.round(regular * (1 - OFFER.salePercent / 100)) }
-}
-
-/** Offer price per mg, for the "best value" tag. */
-export const pricePerMg = (product: ProductId, strength: Strength) => priceOf(product, strength).sale / parseInt(strength, 10)
-
 /** The most a buyer can save with the offer and the subscriber code together (40% then 10% = 46%). */
 export const bestCombinedPercent = () => Math.round(100 - ((100 - OFFER.salePercent) * (100 - OFFER.subscriberPercent)) / 100)
-
-/** The lowest offer price on the page ("from $…"). */
-export const lowestPrice = () =>
-  Math.min(...PRODUCT_IDS.flatMap((id) => STRENGTHS.map((strength) => priceOf(id, strength).sale)))
 
 export type ContactKey = keyof typeof CONTACTS
 

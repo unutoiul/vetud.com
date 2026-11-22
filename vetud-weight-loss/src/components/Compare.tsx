@@ -3,20 +3,31 @@
 import { CheckCircleFilled, ShoppingOutlined } from "@ant-design/icons"
 import { Button, Grid } from "antd"
 import type { ReactNode } from "react"
-import { OFFER, PRODUCTS, PRODUCT_IDS, formatUsd, priceOf, pricePerMg, type ProductId } from "@/config/site"
+import { OFFER, PRODUCTS, PRODUCT_IDS, type ProductId, type Strength } from "@/config/site"
 import Image from "next/image"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
+import { useCountry } from "./CountryProvider"
 import { useOrder } from "./OrderProvider"
 import { Section, SectionHeading } from "./ui"
 
 type Row = { label: string; cells: Record<ProductId, ReactNode>; strong?: boolean }
 
-const Strike = ({ regular, sale }: { regular: number; sale: number }) => (
-  <span>
-    <span style={{ textDecoration: "line-through", color: colors.muted, marginRight: 8, fontWeight: 400 }}>{formatUsd(regular)}</span>
-    <span style={{ color: colors.navy, fontWeight: 700 }}>{formatUsd(sale)}</span>
-  </span>
-)
+/** Regular price struck through, then the offer price, in the visitor's currency. */
+function Strike({ product, strength }: { product: ProductId; strength: Strength }) {
+  const { priceOf, money } = useCountry()
+  const { regular, sale } = priceOf(product, strength)
+  return (
+    <span>
+      <span style={{ textDecoration: "line-through", color: colors.muted, marginRight: 8, fontWeight: 400 }}>{money(regular)}</span>
+      <span style={{ color: colors.navy, fontWeight: 700 }}>{money(sale)}</span>
+    </span>
+  )
+}
+
+function PerMg({ product }: { product: ProductId }) {
+  const { pricePerMg, money } = useCountry()
+  return <>{money(pricePerMg(product, "40mg"))}</>
+}
 
 const Yes = ({ children }: { children: ReactNode }) => (
   <span style={{ display: "inline-flex", alignItems: "flex-start", gap: 8 }}>
@@ -36,15 +47,15 @@ const ROWS: Row[] = [
   { label: "Dispatch", cells: { tz2: <Yes>Within 24 h of payment</Yes>, retatrutide: <Yes>Within 24 h of payment</Yes> } },
   {
     label: `20 mg · ${OFFER.saleLabel} −${OFFER.salePercent}%`,
-    cells: { tz2: <Strike {...priceOf("tz2", "20mg")} />, retatrutide: <Strike {...priceOf("retatrutide", "20mg")} /> },
+    cells: { tz2: <Strike product="tz2" strength="20mg" />, retatrutide: <Strike product="retatrutide" strength="20mg" /> },
     strong: true,
   },
   {
     label: `40 mg · ${OFFER.saleLabel} −${OFFER.salePercent}%`,
-    cells: { tz2: <Strike {...priceOf("tz2", "40mg")} />, retatrutide: <Strike {...priceOf("retatrutide", "40mg")} /> },
+    cells: { tz2: <Strike product="tz2" strength="40mg" />, retatrutide: <Strike product="retatrutide" strength="40mg" /> },
     strong: true,
   },
-  { label: "Price per mg (40 mg)", cells: { tz2: `$${pricePerMg("tz2", "40mg").toFixed(2)}`, retatrutide: `$${pricePerMg("retatrutide", "40mg").toFixed(2)}` } },
+  { label: "Price per mg (40 mg)", cells: { tz2: <PerMg product="tz2" />, retatrutide: <PerMg product="retatrutide" /> } },
 ]
 
 export default function Compare() {
