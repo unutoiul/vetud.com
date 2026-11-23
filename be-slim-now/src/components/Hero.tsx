@@ -5,7 +5,7 @@ import { Button, Col, Flex, Grid, Row, Typography } from "antd"
 import { motion, MotionConfig, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react"
 import Image from "next/image"
 import { Fragment, useRef, type CSSProperties, type PointerEvent } from "react"
-import { OFFER, PRODUCTS, WEIGHT_LOSS, type ProductId } from "@/config/site"
+import { OFFER, PRODUCTS, TRIAL_DATA, WEIGHT_LOSS, type ProductId } from "@/config/site"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
 import { CountUp, enter, EnterKeyframes, FadeUp, RisingWord, Rotator, Shine, SPRING_CSS, srOnly } from "./animated"
 import { useCountry } from "./CountryProvider"
@@ -79,6 +79,132 @@ function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; de
         <span style={{ color: colors.navy, fontWeight: 700 }}>from {money(sale)}</span>
       </div>
     </motion.button>
+  )
+}
+
+/** Average body weight lost in human trials, shown under the hero pens. */
+function TrialChart() {
+  const max = Math.max(...TRIAL_DATA.map((t) => t.medicine))
+  return (
+    <FadeUp delay={AFTER_HEADLINE + 0.45} y={10}>
+      <div style={{ maxWidth: 560, margin: "0 auto", paddingTop: 10 }}>
+        <Typography.Title
+          level={2}
+          style={{
+            fontFamily: fonts.display,
+            fontWeight: 400,
+            fontSize: "clamp(24px, 3vw, 30px)",
+            lineHeight: 1.15,
+            letterSpacing: "-0.01em",
+            color: colors.navyDeep,
+            margin: "0 0 8px",
+          }}
+        >
+          Average body weight lost in human trials
+        </Typography.Title>
+        <Typography.Paragraph
+          style={{
+            fontSize: 13,
+            lineHeight: 1.5,
+            color: colors.muted,
+            margin: "0 0 24px",
+            maxWidth: 520,
+          }}
+        >
+          Each medicine compared with its trial&apos;s placebo group. Ordered by reported average;
+          this is not a head-to-head ranking. Trials differ in people, doses and length.
+        </Typography.Paragraph>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 14,
+          }}
+        >
+          {TRIAL_DATA.map((trial) => {
+            const medicineWidth = (trial.medicine / max) * 100
+            const placeboWidth = (trial.placebo / max) * 100
+            return (
+              <div key={trial.name} style={{ position: "relative" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 2 }}>
+                  <div style={{ minWidth: 150 }}>
+                    <span
+                      style={{
+                        fontFamily: fonts.display,
+                        fontWeight: 600,
+                        fontSize: 14,
+                        color: colors.navyDeep,
+                        display: "block",
+                      }}
+                    >
+                      {trial.name} &middot; {trial.status}
+                    </span>
+                    <span style={{ fontSize: 11.5, color: colors.muted, display: "block", marginTop: 2 }}>
+                      {trial.dose} &middot; {trial.study}
+                    </span>
+                  </div>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: colors.navyDeep, whiteSpace: "nowrap" }}>
+                    {trial.medicine}%
+                  </span>
+                </div>
+                <div style={{ width: "100%", height: 8, background: colors.aquaLight, borderRadius: 4, overflow: "hidden" }}>
+                  <div
+                    style={{
+                      width: `${medicineWidth}%`,
+                      height: "100%",
+                      background: colors.navyDeep,
+                      borderRadius: 4,
+                      transition: "width 1.2s ease-out",
+                    }}
+                  />
+                </div>
+                <div style={{ width: "100%", height: 6, background: colors.aquaLight, borderRadius: 3, overflow: "hidden", marginTop: 4 }}>
+                  <div
+                    style={{
+                      width: `${placeboWidth}%`,
+                      height: "100%",
+                      background: colors.muted,
+                      borderRadius: 3,
+                      transition: "width 1.2s ease-out",
+                    }}
+                  />
+                </div>
+                <span style={{ fontSize: 11, color: colors.muted, position: "absolute", right: 0, top: -20 }}>
+                  Placebo {trial.placebo}%
+                </span>
+              </div>
+            )
+          })}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: 10,
+              fontSize: 11,
+              color: colors.muted,
+            }}
+          >
+            <span>0%</span>
+            <span>10%</span>
+            <span>20%</span>
+            <span>30%</span>
+          </div>
+        </div>
+        <Typography.Paragraph
+          style={{
+            fontSize: 12,
+            lineHeight: 1.5,
+            color: colors.muted,
+            margin: "20px 0 0",
+            maxWidth: 520,
+          }}
+        >
+          Each human trial had different people, doses and lengths, so compare with care. The bars
+          describe medicines studied under medical supervision with diet and exercise advice, not
+          VETUD&apos;s research product.
+        </Typography.Paragraph>
+      </div>
+    </FadeUp>
   )
 }
 
@@ -446,6 +572,7 @@ export default function Hero() {
                   </div>
                 )}
               </div>
+              <TrialChart />
             </Col>
           </Row>
         </Container>

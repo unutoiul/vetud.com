@@ -38,6 +38,46 @@ export const WEIGHT_LOSS = {
 }
 
 /**
+ * Human-trial weight-loss results shown under the hero pens. Ordered by reported average;
+ * each medicine was compared with its own trial's placebo group — this is not a head-to-head
+ * ranking. Trials differ in people, doses and length, so compare with care.
+ */
+export const TRIAL_DATA = [
+  {
+    name: "Retatrutide",
+    status: "Experimental",
+    dose: "12 mg weekly",
+    study: "Phase 2 · 48 weeks · 338 people",
+    medicine: 24.2,
+    placebo: 2.1,
+  },
+  {
+    name: "Tirzepatide",
+    status: "Approved",
+    dose: "15 mg weekly (Zepbound)",
+    study: "SURMOUNT-1 · 72 weeks · 2,539 people",
+    medicine: 20.9,
+    placebo: 3.1,
+  },
+  {
+    name: "Semaglutide",
+    status: "Approved",
+    dose: "2.4 mg weekly injection (Wegovy)",
+    study: "STEP 1 · 68 weeks · 1,961 people",
+    medicine: 14.9,
+    placebo: 2.4,
+  },
+  {
+    name: "Semaglutide",
+    status: "Approved (US)",
+    dose: "25 mg daily pill (Wegovy pill)",
+    study: "OASIS 4 · 64 weeks · 307 people",
+    medicine: 13.6,
+    placebo: 2.2,
+  },
+] as const
+
+/**
  * Chat contacts. Fill in a value to show that button everywhere on the page; leave it empty to hide it.
  * - telegram: the username without "@" (https://t.me/<username>)
  * - whatsapp: the full number with country code, digits only (https://wa.me/<number>)
