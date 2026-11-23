@@ -10,7 +10,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "emails:build": "node emails/build.mjs",
     "emails:publish": "node emails/publish.mjs",
-    "images": "node scripts/prepare-images.mjs"
+    "images": "node scripts/prepare-images.mjs",
+    "brand": "node scripts/prepare-brand.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^6.3.4",

@@ -79,6 +79,21 @@ npm run emails:publish   # creates/updates and publishes them in Resend, then wr
 
 `npm run images` rebuilds `public/images/` from VETUD's own artwork: the closed and open boxes from `assets/vetud_product_white_background/`, the reusable pen from `assets/VETUD_Reusable_Dual_Chamber_Pen_poster.png` (cut out of its background), and the alpine background from the shop. It also grades the filling-line and cold-storage photos in `assets/VETUD_Facility_Photos/` for the "Made clean. Kept cold." section (`src/components/Facility.tsx`): cropped clear of clutter, colour casts evened out, levels, softer saturation, sharpening and a faint vignette. The crop and colour settings for each photo are in the `facility` list in `scripts/prepare-images.mjs`.
 
+## Logo and icons
+
+Everything comes from one file of the owner's logo kit, `public/logos/recommended-04-premium/full-logo-trimmed.png`, so the header, the footer, the emails, the browser tab and the home-screen icon all show the very same B. `npm run brand` makes:
+
+| File | Used for |
+|---|---|
+| `public/brand/beslimnow-logo.png` | Header |
+| `public/brand/beslimnow-logo-white.png` | Footer ("Be" and "Now" in white) |
+| `public/brand/email/beslimnow-logo.png` | Emails (on white, 440 px for sharp 220 px display) |
+| `src/app/favicon.ico` | Browser tab (16/32/48 px, the B alone) |
+| `src/app/apple-icon.png` | iPhone home screen (the B on white) |
+| `public/brand/icon-192.png`, `icon-512.png` | Android home screen, via `src/app/manifest.ts` |
+
+The B's S-shaped waist is see-through in the artwork, so the script fills it white and it shows on any background. Next.js adds the icon `<link>` tags on its own.
+
 ## Deploy (Vercel)
 
 A separate Vercel project whose root is this folder. Add the env vars from `.env.example` (with `NEXT_PUBLIC_SITE_URL` set to the real domain) and deploy. The spam limits on the order and subscribe routes are kept in memory per server instance.

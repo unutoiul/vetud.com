@@ -11,9 +11,8 @@ const mono = DM_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · VETUD",
+  title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · BeSlimNow",
   description: SITE.description,
-  icons: { icon: "/brand/vetud-mark.svg" },
   // The per-country pages (/de, /gb…) are the same page in another currency.
   alternates: { canonical: "/" },
   openGraph: {

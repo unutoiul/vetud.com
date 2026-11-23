@@ -44,14 +44,14 @@ export default function Header() {
     >
       <Container>
         <Flex align="center" justify="space-between" gap={12} style={{ height: 80 }}>
-          <a href="#top" aria-label="VETUD Peptide Series, back to top" style={{ display: "flex", alignItems: "center", minWidth: 0 }}>
+          <a href="#top" aria-label="BeSlimNow, back to top" style={{ display: "flex", alignItems: "center", minWidth: 0 }}>
             <Image
-              src="/brand/vetud-logo.svg"
-              alt="VETUD Peptide Series"
-              width={362}
-              height={76}
+              src="/brand/beslimnow-logo.png"
+              alt="BeSlimNow"
+              width={1200}
+              height={252}
+              sizes="228px"
               priority
-              unoptimized
               // On narrow phones the logo gives up a little width so the country picker and the button fit.
               style={{ width: screens.md ? 228 : "clamp(136px, calc(100vw - 222px), 176px)", height: "auto", display: "block" }}
             />
