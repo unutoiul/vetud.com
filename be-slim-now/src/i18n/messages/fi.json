@@ -95,7 +95,7 @@
     ],
     "everyPenSale": "tällä viikolla {percent} % edullisempi",
     "listAnd": "ja",
-    "intro": "Aineenvaihduntatutkimuksen kaksi halutuinta molekyyliä suljettuna VETUDin kaksikammioiseen tarkkuuskynään. 20 mg tai 40 mg, puhtaus ≥99 %, 12 neulaa pakkauksessa, perillä muutamassa päivässä. Yksi lyhyt lomake. Ei tiliä, ei ostoskoria, ei odottelua.",
+    "intro": "Aineenvaihduntatutkimuksen kaksi halutuinta molekyyliä suljettuna VETUDin kaksikammioiseen tarkkuuskynään. 20 mg tai 40 mg, puhtaus ≥99 %, perillä muutamassa päivässä. Ei pulloja, ei mittaamista, ei tiliä. Muuta ei tarvitse ostaa: suljettu patruuna, uudelleenkäytettävä kynä ja 12 neulaa tulevat samassa pakkauksessa.",
     "buyFrom": "Osta nyt · alkaen {price}",
     "extraCode": "Lisäkoodi −{percent} %",
     "guaranteedLabel": "Taattu:",
@@ -206,6 +206,33 @@
     "perMgRow": "Hinta / mg (40 mg)",
     "buyProduct": "Osta {product}",
     "buy": "Osta nyt"
+  },
+  "trialChart": {
+    "eyebrow": "Tutkimukset ihmisillä",
+    "title": "Keskimääräinen painonlasku ihmisillä tehdyissä tutkimuksissa",
+    "subtitle": "Jokaista lääkettä verrataan oman tutkimuksensa lumeryhmään. Järjestetty raportoidun keskiarvon mukaan; tämä ei ole suora vertailu. Tutkimukset eroavat osallistujiltaan, annoksiltaan ja kestoltaan.",
+    "medicine": "Lääke",
+    "placebo": "Lume",
+    "percent": "{value} %",
+    "placeboValue": "Lume {value} %",
+    "caption": "Jokaisessa ihmistutkimuksessa oli eri osallistujat, annokset ja kesto, joten vertailussa on syytä olla varovainen. Palkit kuvaavat lääkkeitä, joita tutkittiin lääkärin valvonnassa ruokavalio- ja liikuntaohjauksen kanssa, eivät VETUDin tutkimustuotetta.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Kokeellinen",
+        "dose": "12 mg viikoittain",
+        "study": "Vaihe 2 · 48 viikkoa · 338 henkilöä"
+      },
+      "Tirzepatide": {
+        "status": "Hyväksytty",
+        "dose": "15 mg viikoittain (Zepbound)",
+        "study": "SURMOUNT-1 · 72 viikkoa · 2 539 henkilöä"
+      },
+      "Semaglutide": {
+        "status": "Hyväksytty",
+        "dose": "2,4 mg viikoittain pistoksena (Wegovy)",
+        "study": "STEP 1 · 68 viikkoa · 1 961 henkilöä"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Näin tilaat",

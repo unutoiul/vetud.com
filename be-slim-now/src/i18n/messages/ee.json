@@ -95,7 +95,7 @@
     ],
     "everyPenSale": "sel nädalal {percent}% soodsam",
     "listAnd": "ja",
-    "intro": "Ainevahetusuuringute kaks ihaldatuimat molekuli, suletud VETUDi kahekambrilisse täppispenni. 20 mg või 40 mg, puhtus ≥99%, 12 nõela karbis, sinu ukse taga mõne päevaga. Üks lühike vorm. Ei kontot, ei ostukorvi, ei ootamist.",
+    "intro": "Ainevahetusuuringute kaks ihaldatuimat molekuli, suletud VETUDi kahekambrilisse täppispenni. 20 mg või 40 mg, puhtus ≥99%, sinu ukse taga mõne päevaga. Ei viaale, ei mõõtmist, ei kontot. Muud pole vaja osta: suletud padrun, korduvkasutatav penn ja 12 nõela tulevad ühes karbis.",
     "buyFrom": "Osta kohe · alates {price}",
     "extraCode": "Lisakood −{percent}%",
     "guaranteedLabel": "Garantii:",
@@ -206,6 +206,33 @@
     "perMgRow": "Hind / mg (40 mg)",
     "buyProduct": "Osta {product}",
     "buy": "Osta kohe"
+  },
+  "trialChart": {
+    "eyebrow": "Uuringud inimestel",
+    "title": "Keskmine kehakaalu langus uuringutes inimestel",
+    "subtitle": "Iga ravimit on võrreldud oma uuringu platseeborühmaga. Järjestatud teatatud keskmise järgi; see ei ole otsene võrdlus. Uuringud erinevad osalejate, annuste ja kestuse poolest.",
+    "medicine": "Ravim",
+    "placebo": "Platseebo",
+    "percent": "{value}%",
+    "placeboValue": "Platseebo {value}%",
+    "caption": "Igas inimuuringus olid erinevad osalejad, annused ja kestus, seega tuleb võrrelda ettevaatlikult. Tulbad kirjeldavad ravimeid, mida uuriti arsti järelevalve all koos toitumis- ja liikumisnõuannetega, mitte VETUDi uurimistoodet.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Eksperimentaalne",
+        "dose": "12 mg nädalas",
+        "study": "2. faas · 48 nädalat · 338 inimest"
+      },
+      "Tirzepatide": {
+        "status": "Heaks kiidetud",
+        "dose": "15 mg nädalas (Zepbound)",
+        "study": "SURMOUNT-1 · 72 nädalat · 2539 inimest"
+      },
+      "Semaglutide": {
+        "status": "Heaks kiidetud",
+        "dose": "2,4 mg nädalas süstena (Wegovy)",
+        "study": "STEP 1 · 68 nädalat · 1961 inimest"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Kuidas tellida",

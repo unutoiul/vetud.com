@@ -95,7 +95,7 @@
     ],
     "everyPenSale": "šią savaitę {percent} % pigesnis",
     "listAnd": "ir",
-    "intro": "Dvi geidžiamiausios medžiagų apykaitos tyrimų molekulės, uždarytos preciziškame dviejų kamerų VETUD švirkštiklyje. 20 mg arba 40 mg, grynumas ≥99 %, 12 adatų dėžutėje, pas jus per kelias dienas. Viena trumpa forma. Be paskyros, be krepšelio, be laukimo.",
+    "intro": "Dvi geidžiamiausios medžiagų apykaitos tyrimų molekulės, uždarytos preciziškame dviejų kamerų VETUD švirkštiklyje. 20 mg arba 40 mg, grynumas ≥99 %, pas jus per kelias dienas. Jokių buteliukų, jokio matavimo, jokios paskyros. Nieko daugiau pirkti nereikia: užsandarinta kasetė, daugkartinis švirkštiklis ir 12 adatų atkeliauja vienoje dėžutėje.",
     "buyFrom": "Pirkti dabar · nuo {price}",
     "extraCode": "Papildomas kodas −{percent} %",
     "guaranteedLabel": "Garantija:",
@@ -206,6 +206,33 @@
     "perMgRow": "Kaina už mg (40 mg)",
     "buyProduct": "Pirkti {product}",
     "buy": "Pirkti dabar"
+  },
+  "trialChart": {
+    "eyebrow": "Tyrimai su žmonėmis",
+    "title": "Vidutinis kūno svorio sumažėjimas tyrimuose su žmonėmis",
+    "subtitle": "Kiekvienas vaistas palygintas su savo tyrimo placebo grupe. Išdėstyta pagal paskelbtą vidurkį; tai nėra tiesioginis palyginimas. Tyrimai skiriasi dalyviais, dozėmis ir trukme.",
+    "medicine": "Vaistas",
+    "placebo": "Placebas",
+    "percent": "{value} %",
+    "placeboValue": "Placebas {value} %",
+    "caption": "Kiekviename tyrime su žmonėmis buvo skirtingi dalyviai, dozės ir trukmė, todėl lyginti reikia atsargiai. Stulpeliai rodo vaistus, tirtus prižiūrint gydytojams ir patariant dėl mitybos bei fizinio aktyvumo, o ne VETUD tyrimų produktą.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Eksperimentinis",
+        "dose": "12 mg per savaitę",
+        "study": "2 fazė · 48 savaitės · 338 žmonės"
+      },
+      "Tirzepatide": {
+        "status": "Patvirtintas",
+        "dose": "15 mg per savaitę (Zepbound)",
+        "study": "SURMOUNT-1 · 72 savaitės · 2 539 žmonės"
+      },
+      "Semaglutide": {
+        "status": "Patvirtintas",
+        "dose": "2,4 mg per savaitę, injekcija (Wegovy)",
+        "study": "STEP 1 · 68 savaitės · 1 961 žmogus"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Kaip užsisakyti",

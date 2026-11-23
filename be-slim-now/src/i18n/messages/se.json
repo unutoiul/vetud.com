@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "{percent} % billigare den här veckan",
     "listAnd": "och",
-    "intro": "De två mest eftertraktade molekylerna inom metabolismforskning, förseglade i VETUD:s precisionspenna med dubbla kammare. 20 mg eller 40 mg, ≥99 % renhet, 12 nålar i förpackningen, hemma hos dig inom några dagar. Ett kort formulär. Inget konto, ingen varukorg, ingen väntan.",
+    "intro": "De två mest eftertraktade molekylerna inom metabolismforskning, förseglade i VETUD:s precisionspenna med dubbla kammare. 20 mg eller 40 mg, ≥99 % renhet, hemma hos dig inom några dagar. Inga flaskor, ingen mätning, inget konto. Inget mer att köpa: den förseglade patronen, den återanvändbara pennan och 12 nålar kommer i en och samma förpackning.",
     "buyFrom": "Köp nu · från {price}",
     "extraCode": "Extrakod −{percent} %",
     "guaranteedLabel": "Garanterat:",
@@ -207,6 +207,33 @@
     "perMgRow": "Pris per mg (40 mg)",
     "buyProduct": "Köp {product}",
     "buy": "Köp nu"
+  },
+  "trialChart": {
+    "eyebrow": "Studier på människor",
+    "title": "Genomsnittlig viktnedgång i studier på människor",
+    "subtitle": "Varje läkemedel jämfört med placebogruppen i sin egen studie. Ordnade efter rapporterat genomsnitt; detta är ingen direkt jämförelse. Studierna skiljer sig i deltagare, doser och längd.",
+    "medicine": "Läkemedel",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Varje studie på människor hade olika deltagare, doser och längd, så jämför med försiktighet. Staplarna beskriver läkemedel som studerats under medicinsk övervakning med råd om kost och motion, inte VETUD:s forskningsprodukt.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Experimentellt",
+        "dose": "12 mg i veckan",
+        "study": "Fas 2 · 48 veckor · 338 personer"
+      },
+      "Tirzepatide": {
+        "status": "Godkänt",
+        "dose": "15 mg i veckan (Zepbound)",
+        "study": "SURMOUNT-1 · 72 veckor · 2 539 personer"
+      },
+      "Semaglutide": {
+        "status": "Godkänt",
+        "dose": "2,4 mg i veckan som injektion (Wegovy)",
+        "study": "STEP 1 · 68 veckor · 1 961 personer"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Så beställer du",

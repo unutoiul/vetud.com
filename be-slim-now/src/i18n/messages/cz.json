@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "tento týden o {percent} % levnější",
     "listAnd": "a",
-    "intro": "Dvě nejžádanější molekuly metabolického výzkumu, uzavřené v přesném dvoukomorovém peru VETUD. 20 mg nebo 40 mg, čistota ≥99 %, 12 jehel v balení, u vás během několika dní. Jeden krátký formulář. Žádný účet, žádný košík, žádné čekání.",
+    "intro": "Dvě nejžádanější molekuly metabolického výzkumu, uzavřené v přesném dvoukomorovém peru VETUD. 20 mg nebo 40 mg, čistota ≥99 %, u vás během několika dní. Žádné lahvičky, žádné odměřování, žádný účet. Nic dalšího nekupujete: zapečetěný zásobník, opakovaně použitelné pero a 12 jehel v jednom balení.",
     "buyFrom": "Koupit · od {price}",
     "extraCode": "Kód na dalších −{percent} %",
     "guaranteedLabel": "Záruka:",
@@ -207,6 +207,33 @@
     "perMgRow": "Cena za mg (40 mg)",
     "buyProduct": "Koupit {product}",
     "buy": "Koupit"
+  },
+  "trialChart": {
+    "eyebrow": "Studie u lidí",
+    "title": "Průměrný úbytek tělesné hmotnosti ve studiích u lidí",
+    "subtitle": "Každý lék srovnaný s placebovou skupinou vlastní studie. Seřazeno podle uváděného průměru; nejde o přímé srovnání. Studie se liší účastníky, dávkami i délkou.",
+    "medicine": "Lék",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Každá studie u lidí měla jiné účastníky, dávky i délku, proto je třeba srovnávat opatrně. Sloupce popisují léky zkoumané pod lékařským dohledem s radami ke stravě a pohybu, nikoli výzkumný produkt VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Experimentální",
+        "dose": "12 mg týdně",
+        "study": "Fáze 2 · 48 týdnů · 338 osob"
+      },
+      "Tirzepatide": {
+        "status": "Schválený",
+        "dose": "15 mg týdně (Zepbound)",
+        "study": "SURMOUNT-1 · 72 týdnů · 2 539 osob"
+      },
+      "Semaglutide": {
+        "status": "Schválený",
+        "dose": "2,4 mg týdně v injekci (Wegovy)",
+        "study": "STEP 1 · 68 týdnů · 1 961 osob"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Jak objednat",

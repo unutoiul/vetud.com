@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "diese Woche {percent} % günstiger",
     "listAnd": "und",
-    "intro": "Die zwei begehrtesten Moleküle der Stoffwechselforschung, versiegelt im Präzisions-Zweikammer-Pen von VETUD. 20 mg oder 40 mg, ≥99 % Reinheit, 12 Nadeln in der Box, in wenigen Tagen bei Ihnen. Ein kurzes Formular. Kein Konto, kein Warenkorb, kein Warten.",
+    "intro": "Die zwei begehrtesten Moleküle der Stoffwechselforschung, versiegelt im Präzisions-Zweikammer-Pen von VETUD. 20 mg oder 40 mg, ≥99 % Reinheit, in wenigen Tagen bei Ihnen. Keine Fläschchen, kein Abmessen, kein Konto. Sonst nichts zu kaufen: Die versiegelte Kartusche, der wiederverwendbare Pen und 12 Nadeln kommen in einer Box.",
     "buyFrom": "Jetzt kaufen · ab {price}",
     "extraCode": "Extra-Code: −{percent} %",
     "guaranteedLabel": "Garantiert:",
@@ -207,6 +207,33 @@
     "perMgRow": "Preis pro mg (40 mg)",
     "buyProduct": "{product} kaufen",
     "buy": "Jetzt kaufen"
+  },
+  "trialChart": {
+    "eyebrow": "Studien am Menschen",
+    "title": "Durchschnittlicher Gewichtsverlust in Studien am Menschen",
+    "subtitle": "Jedes Medikament im Vergleich mit der Placebogruppe seiner eigenen Studie. Sortiert nach dem berichteten Durchschnitt; dies ist kein direkter Vergleich. Die Studien unterscheiden sich in Teilnehmern, Dosierungen und Dauer.",
+    "medicine": "Medikament",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Jede Studie am Menschen hatte andere Teilnehmer, Dosierungen und Laufzeiten, daher ist beim Vergleichen Vorsicht geboten. Die Balken zeigen Medikamente, die unter ärztlicher Aufsicht mit Ernährungs- und Bewegungsberatung untersucht wurden, nicht das Forschungsprodukt von VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Experimentell",
+        "dose": "12 mg wöchentlich",
+        "study": "Phase 2 · 48 Wochen · 338 Personen"
+      },
+      "Tirzepatide": {
+        "status": "Zugelassen",
+        "dose": "15 mg wöchentlich (Zepbound)",
+        "study": "SURMOUNT-1 · 72 Wochen · 2.539 Personen"
+      },
+      "Semaglutide": {
+        "status": "Zugelassen",
+        "dose": "2,4 mg wöchentlich als Injektion (Wegovy)",
+        "study": "STEP 1 · 68 Wochen · 1.961 Personen"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "So bestellen Sie",

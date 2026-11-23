@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "{percent}% ódýrari þessa vikuna",
     "listAnd": "og",
-    "intro": "Tvær eftirsóttustu sameindirnar í efnaskiptarannsóknum, innsiglaðar í nákvæmnispenna VETUD með tveimur hólfum. 20 mg eða 40 mg, ≥99% hreinleiki, 12 nálar í kassanum, komnar til þín innan fárra daga. Eitt stutt eyðublað. Enginn aðgangur, engin karfa, engin bið.",
+    "intro": "Tvær eftirsóttustu sameindirnar í efnaskiptarannsóknum, innsiglaðar í nákvæmnispenna VETUD með tveimur hólfum. 20 mg eða 40 mg, ≥99% hreinleiki, hjá þér innan fárra daga. Engin glös, engar mælingar, enginn aðgangur. Ekkert annað að kaupa: innsiglaða hylkið, fjölnota penninn og 12 nálar koma í einum kassa.",
     "buyFrom": "Kaupa núna · frá {price}",
     "extraCode": "Aukakóði −{percent}%",
     "guaranteedLabel": "Tryggt:",
@@ -207,6 +207,33 @@
     "perMgRow": "Verð á mg (40 mg)",
     "buyProduct": "Kaupa {product}",
     "buy": "Kaupa núna"
+  },
+  "trialChart": {
+    "eyebrow": "Rannsóknir á fólki",
+    "title": "Meðalþyngdartap í rannsóknum á fólki",
+    "subtitle": "Hvert lyf borið saman við lyfleysuhóp eigin rannsóknar. Raðað eftir uppgefnu meðaltali; þetta er ekki beinn samanburður. Rannsóknirnar eru ólíkar hvað varðar þátttakendur, skammta og lengd.",
+    "medicine": "Lyf",
+    "placebo": "Lyfleysa",
+    "percent": "{value}%",
+    "placeboValue": "Lyfleysa {value}%",
+    "caption": "Í hverri rannsókn voru ólíkir þátttakendur, skammtar og lengd, svo bera þarf saman af varúð. Súlurnar lýsa lyfjum sem rannsökuð voru undir eftirliti lækna með ráðgjöf um mataræði og hreyfingu, ekki rannsóknarvöru VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Á tilraunastigi",
+        "dose": "12 mg á viku",
+        "study": "2. stig · 48 vikur · 338 manns"
+      },
+      "Tirzepatide": {
+        "status": "Samþykkt",
+        "dose": "15 mg á viku (Zepbound)",
+        "study": "SURMOUNT-1 · 72 vikur · 2.539 manns"
+      },
+      "Semaglutide": {
+        "status": "Samþykkt",
+        "dose": "2,4 mg á viku, stungulyf (Wegovy)",
+        "study": "STEP 1 · 68 vikur · 1.961 manns"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Svona pantar þú",

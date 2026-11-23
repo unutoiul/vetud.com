@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "cu {percent}% mai ieftin săptămâna aceasta",
     "listAnd": "și",
-    "intro": "Cele mai căutate două molecule din cercetarea metabolică, sigilate în pen-ul de precizie cu dublă cameră VETUD. 20 mg sau 40 mg, puritate ≥99%, 12 ace în cutie, la ușa dumneavoastră în câteva zile. Un singur formular scurt. Fără cont, fără coș, fără așteptare.",
+    "intro": "Cele mai căutate două molecule din cercetarea metabolică, sigilate în pen-ul de precizie cu dublă cameră VETUD. 20 mg sau 40 mg, puritate ≥99%, la ușa dumneavoastră în câteva zile. Fără flacoane, fără măsurători, fără cont. Nimic altceva de cumpărat: cartușul sigilat, pen-ul reutilizabil și 12 ace vin într-o singură cutie.",
     "buyFrom": "Cumpărați acum · de la {price}",
     "extraCode": "Cod extra −{percent}%",
     "guaranteedLabel": "Garantat:",
@@ -207,6 +207,33 @@
     "perMgRow": "Preț pe mg (40 mg)",
     "buyProduct": "Cumpărați {product}",
     "buy": "Cumpărați acum"
+  },
+  "trialChart": {
+    "eyebrow": "Studii pe oameni",
+    "title": "Greutatea corporală medie pierdută în studiile pe oameni",
+    "subtitle": "Fiecare medicament comparat cu grupul placebo din propriul studiu. Ordonate după media raportată; nu este o comparație directă. Studiile diferă prin participanți, doze și durată.",
+    "medicine": "Medicament",
+    "placebo": "Placebo",
+    "percent": "{value}%",
+    "placeboValue": "Placebo {value}%",
+    "caption": "Fiecare studiu pe oameni a avut alți participanți, alte doze și altă durată, așa că o comparație trebuie făcută cu grijă. Barele descriu medicamente studiate sub supraveghere medicală, cu sfaturi privind dieta și exercițiile fizice, nu produsul de cercetare VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Experimental",
+        "dose": "12 mg săptămânal",
+        "study": "Faza 2 · 48 de săptămâni · 338 de persoane"
+      },
+      "Tirzepatide": {
+        "status": "Aprobat",
+        "dose": "15 mg săptămânal (Zepbound)",
+        "study": "SURMOUNT-1 · 72 de săptămâni · 2.539 de persoane"
+      },
+      "Semaglutide": {
+        "status": "Aprobat",
+        "dose": "2,4 mg săptămânal, injectabil (Wegovy)",
+        "study": "STEP 1 · 68 de săptămâni · 1.961 de persoane"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Cum comandați",

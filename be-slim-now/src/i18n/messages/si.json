@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "ta teden {percent} % cenejši",
     "listAnd": "in",
-    "intro": "Dve najbolj iskani molekuli presnovnih raziskav, zaprti v natančen dvoprekatni peresnik VETUD. 20 mg ali 40 mg, čistost ≥99 %, 12 igel v škatli, pri vas v nekaj dneh. En kratek obrazec. Brez računa, brez košarice, brez čakanja.",
+    "intro": "Dve najbolj iskani molekuli presnovnih raziskav, zaprti v natančen dvoprekatni peresnik VETUD. 20 mg ali 40 mg, čistost ≥99 %, pri vas v nekaj dneh. Brez stekleničk, brez odmerjanja, brez računa. Ničesar drugega vam ni treba kupiti: zaprt vložek, peresnik za večkratno uporabo in 12 igel prispejo v eni škatli.",
     "buyFrom": "Kupite zdaj · od {price}",
     "extraCode": "Dodatna koda −{percent} %",
     "guaranteedLabel": "Jamstvo:",
@@ -207,6 +207,33 @@
     "perMgRow": "Cena na mg (40 mg)",
     "buyProduct": "Kupite {product}",
     "buy": "Kupite zdaj"
+  },
+  "trialChart": {
+    "eyebrow": "Študije pri ljudeh",
+    "title": "Povprečna izguba telesne mase v študijah pri ljudeh",
+    "subtitle": "Vsako zdravilo je primerjano s skupino s placebom iz lastne študije. Razvrščeno po poročanem povprečju; to ni neposredna primerjava. Študije se razlikujejo po udeležencih, odmerkih in trajanju.",
+    "medicine": "Zdravilo",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Vsaka študija pri ljudeh je imela druge udeležence, odmerke in trajanje, zato je treba primerjati previdno. Stolpci opisujejo zdravila, preučevana pod zdravniškim nadzorom s svetovanjem o prehrani in gibanju, ne raziskovalnega izdelka VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Eksperimentalno",
+        "dose": "12 mg tedensko",
+        "study": "Faza 2 · 48 tednov · 338 oseb"
+      },
+      "Tirzepatide": {
+        "status": "Odobreno",
+        "dose": "15 mg tedensko (Zepbound)",
+        "study": "SURMOUNT-1 · 72 tednov · 2539 oseb"
+      },
+      "Semaglutide": {
+        "status": "Odobreno",
+        "dose": "2,4 mg tedensko v injekciji (Wegovy)",
+        "study": "STEP 1 · 68 tednov · 1961 oseb"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Kako naročiti",

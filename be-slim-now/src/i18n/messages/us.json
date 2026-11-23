@@ -95,7 +95,7 @@
     ],
     "everyPenSale": "{percent}% off this week",
     "listAnd": "and",
-    "intro": "The two most-wanted molecules in metabolic research, sealed in VETUD's precision dual-chamber pen. 20 mg or 40 mg, ≥99% purity, 12 needles in the box, at your door within days. One short form. No account, no cart, no waiting.",
+    "intro": "The two most-wanted molecules in metabolic research, sealed in VETUD's precision dual-chamber pen. 20 mg or 40 mg, ≥99% purity, at your door within days. No vials, no measuring, no account. Nothing else to buy: the sealed cartridge, the reusable pen and 12 needles come in one box.",
     "buyFrom": "Buy now · from {price}",
     "extraCode": "Extra −{percent}% code",
     "guaranteedLabel": "Guaranteed:",
@@ -206,6 +206,33 @@
     "perMgRow": "Price per mg (40 mg)",
     "buyProduct": "Buy {product}",
     "buy": "Buy now"
+  },
+  "trialChart": {
+    "eyebrow": "Human trials",
+    "title": "Average body weight lost in human trials",
+    "subtitle": "Each medicine compared with its trial's placebo group. Ordered by reported average; this is not a head-to-head ranking. Trials differ in people, doses and length.",
+    "medicine": "Medicine",
+    "placebo": "Placebo",
+    "percent": "{value}%",
+    "placeboValue": "Placebo {value}%",
+    "caption": "Each human trial had different people, doses and lengths, so compare with care. The bars describe medicines studied under medical supervision with diet and exercise advice, not VETUD's research product.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Experimental",
+        "dose": "12 mg weekly",
+        "study": "Phase 2 · 48 weeks · 338 people"
+      },
+      "Tirzepatide": {
+        "status": "Approved",
+        "dose": "15 mg weekly (Zepbound)",
+        "study": "SURMOUNT-1 · 72 weeks · 2,539 people"
+      },
+      "Semaglutide": {
+        "status": "Approved",
+        "dose": "2.4 mg weekly injection (Wegovy)",
+        "study": "STEP 1 · 68 weeks · 1,961 people"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "How to order",

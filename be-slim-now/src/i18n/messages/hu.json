@@ -95,7 +95,7 @@
     ],
     "everyPenSale": "ezen a héten {percent}%-kal olcsóbb",
     "listAnd": "és",
-    "intro": "A metabolikus kutatás két legkeresettebb molekulája, a VETUD precíziós, kétkamrás tollába zárva. 20 mg vagy 40 mg, ≥99% tisztaság, 12 tű a dobozban, néhány napon belül Önnél. Egyetlen rövid űrlap. Nincs fiók, nincs kosár, nincs várakozás.",
+    "intro": "A metabolikus kutatás két legkeresettebb molekulája, a VETUD precíziós, kétkamrás tollába zárva. 20 mg vagy 40 mg, ≥99% tisztaság, néhány napon belül Önnél. Nincs fiola, nincs kimérés, nincs fiók. Semmi mást nem kell venni: a lezárt patron, az újrahasználható toll és 12 tű egy dobozban érkezik.",
     "buyFrom": "Megveszem · már {price}",
     "extraCode": "Extra −{percent}% kód",
     "guaranteedLabel": "Garancia:",
@@ -206,6 +206,33 @@
     "perMgRow": "Ár mg-onként (40 mg)",
     "buyProduct": "{product} megvásárlása",
     "buy": "Megveszem"
+  },
+  "trialChart": {
+    "eyebrow": "Humán vizsgálatok",
+    "title": "Átlagos testtömegcsökkenés humán vizsgálatokban",
+    "subtitle": "Minden gyógyszer a saját vizsgálatának placebócsoportjával összevetve. A közölt átlag szerint rendezve; ez nem közvetlen összehasonlítás. A vizsgálatok résztvevőkben, adagokban és időtartamban eltérnek.",
+    "medicine": "Gyógyszer",
+    "placebo": "Placebo",
+    "percent": "{value}%",
+    "placeboValue": "Placebo {value}%",
+    "caption": "Minden humán vizsgálatban mások voltak a résztvevők, az adagok és az időtartam, ezért óvatosan kell összevetni őket. Az oszlopok orvosi felügyelet mellett, étrendi és mozgási tanácsadással vizsgált gyógyszereket mutatnak, nem a VETUD kutatási termékét.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Kísérleti",
+        "dose": "Heti 12 mg",
+        "study": "2. fázis · 48 hét · 338 fő"
+      },
+      "Tirzepatide": {
+        "status": "Engedélyezett",
+        "dose": "Heti 15 mg (Zepbound)",
+        "study": "SURMOUNT-1 · 72 hét · 2539 fő"
+      },
+      "Semaglutide": {
+        "status": "Engedélyezett",
+        "dose": "Heti 2,4 mg injekció (Wegovy)",
+        "study": "STEP 1 · 68 hét · 1961 fő"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Rendelés menete",

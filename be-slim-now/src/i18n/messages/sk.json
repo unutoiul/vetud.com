@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "tento týždeň o {percent} % lacnejšie",
     "listAnd": "a",
-    "intro": "Dve najžiadanejšie molekuly metabolického výskumu, uzavreté v presnom dvojkomorovom pere VETUD. 20 mg alebo 40 mg, čistota ≥99 %, 12 ihiel v balení, u vás v priebehu niekoľkých dní. Jeden krátky formulár. Žiadny účet, žiadny košík, žiadne čakanie.",
+    "intro": "Dve najžiadanejšie molekuly metabolického výskumu, uzavreté v presnom dvojkomorovom pere VETUD. 20 mg alebo 40 mg, čistota ≥99 %, u vás v priebehu niekoľkých dní. Žiadne fľaštičky, žiadne odmeriavanie, žiadny účet. Nič ďalšie nekupujete: zapečatený zásobník, opakovane použiteľné pero a 12 ihiel v jednom balení.",
     "buyFrom": "Kúpiť · od {price}",
     "extraCode": "Kód na ďalších −{percent} %",
     "guaranteedLabel": "Záruka:",
@@ -207,6 +207,33 @@
     "perMgRow": "Cena za mg (40 mg)",
     "buyProduct": "Kúpiť {product}",
     "buy": "Kúpiť"
+  },
+  "trialChart": {
+    "eyebrow": "Štúdie u ľudí",
+    "title": "Priemerný úbytok telesnej hmotnosti v štúdiách u ľudí",
+    "subtitle": "Každý liek porovnaný s placebovou skupinou vlastnej štúdie. Zoradené podľa uvádzaného priemeru; nejde o priame porovnanie. Štúdie sa líšia účastníkmi, dávkami aj dĺžkou.",
+    "medicine": "Liek",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Každá štúdia u ľudí mala iných účastníkov, dávky aj dĺžku, preto treba porovnávať opatrne. Stĺpce opisujú lieky skúmané pod lekárskym dohľadom s radami k strave a pohybu, nie výskumný produkt VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Experimentálny",
+        "dose": "12 mg týždenne",
+        "study": "Fáza 2 · 48 týždňov · 338 osôb"
+      },
+      "Tirzepatide": {
+        "status": "Schválený",
+        "dose": "15 mg týždenne (Zepbound)",
+        "study": "SURMOUNT-1 · 72 týždňov · 2 539 osôb"
+      },
+      "Semaglutide": {
+        "status": "Schválený",
+        "dose": "2,4 mg týždenne v injekcii (Wegovy)",
+        "study": "STEP 1 · 68 týždňov · 1 961 osôb"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Ako objednať",

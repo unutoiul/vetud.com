@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "{percent} % billigere denne uken",
     "listAnd": "og",
-    "intro": "De to mest ettertraktede molekylene i stoffskifteforskningen, forseglet i VETUDs presisjonspenn med to kamre. 20 mg eller 40 mg, ≥99 % renhet, 12 nåler i esken, hos deg i løpet av noen dager. Ett kort skjema. Ingen konto, ingen handlekurv, ingen venting.",
+    "intro": "De to mest ettertraktede molekylene i stoffskifteforskningen, forseglet i VETUDs presisjonspenn med to kamre. 20 mg eller 40 mg, ≥99 % renhet, hos deg i løpet av noen dager. Ingen hetteglass, ingen avmåling, ingen konto. Ingenting annet å kjøpe: den forseglede patronen, den gjenbrukbare pennen og 12 nåler kommer i én eske.",
     "buyFrom": "Kjøp nå · fra {price}",
     "extraCode": "Ekstra kode −{percent} %",
     "guaranteedLabel": "Garantert:",
@@ -207,6 +207,33 @@
     "perMgRow": "Pris per mg (40 mg)",
     "buyProduct": "Kjøp {product}",
     "buy": "Kjøp nå"
+  },
+  "trialChart": {
+    "eyebrow": "Studier på mennesker",
+    "title": "Gjennomsnittlig vekttap i studier på mennesker",
+    "subtitle": "Hvert legemiddel sammenlignet med placebogruppen i sin egen studie. Sortert etter rapportert gjennomsnitt; dette er ikke en direkte sammenligning. Studiene skiller seg i deltakere, doser og varighet.",
+    "medicine": "Legemiddel",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Hver studie på mennesker hadde ulike deltakere, doser og varighet, så sammenlign med omtanke. Stolpene beskriver legemidler studert under medisinsk oppfølging med råd om kosthold og trening, ikke VETUDs forskningsprodukt.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Eksperimentelt",
+        "dose": "12 mg i uken",
+        "study": "Fase 2 · 48 uker · 338 personer"
+      },
+      "Tirzepatide": {
+        "status": "Godkjent",
+        "dose": "15 mg i uken (Zepbound)",
+        "study": "SURMOUNT-1 · 72 uker · 2 539 personer"
+      },
+      "Semaglutide": {
+        "status": "Godkjent",
+        "dose": "2,4 mg i uken som injeksjon (Wegovy)",
+        "study": "STEP 1 · 68 uker · 1 961 personer"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Slik bestiller du",

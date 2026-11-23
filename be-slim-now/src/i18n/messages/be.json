@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "deze week {percent}% goedkoper",
     "listAnd": "en",
-    "intro": "De twee meest gewilde moleculen in stofwisselingsonderzoek, verzegeld in de precisie-tweekamerpen van VETUD. 20 mg of 40 mg, ≥99% zuiverheid, 12 naalden in de doos, binnen enkele dagen bij je thuis. Eén kort formulier. Geen account, geen winkelwagen, geen wachten.",
+    "intro": "De twee meest gewilde moleculen in stofwisselingsonderzoek, verzegeld in de precisie-tweekamerpen van VETUD. 20 mg of 40 mg, ≥99% zuiverheid, binnen enkele dagen bij je thuis. Geen flesjes, geen afmeten, geen account. Verder niets te kopen: de verzegelde cartridge, de herbruikbare pen en 12 naalden zitten in één doos.",
     "buyFrom": "Nu kopen · vanaf {price}",
     "extraCode": "Extra code −{percent}%",
     "guaranteedLabel": "Gegarandeerd:",
@@ -207,6 +207,33 @@
     "perMgRow": "Prijs per mg (40 mg)",
     "buyProduct": "{product} kopen",
     "buy": "Nu kopen"
+  },
+  "trialChart": {
+    "eyebrow": "Studies bij mensen",
+    "title": "Gemiddeld verlies van lichaamsgewicht in studies bij mensen",
+    "subtitle": "Elk medicijn vergeleken met de placebogroep uit de eigen studie. Gerangschikt op gerapporteerd gemiddelde; dit is geen onderlinge vergelijking. Studies verschillen in deelnemers, doseringen en duur.",
+    "medicine": "Medicijn",
+    "placebo": "Placebo",
+    "percent": "{value}%",
+    "placeboValue": "Placebo {value}%",
+    "caption": "Elke studie bij mensen had andere deelnemers, doseringen en looptijden, dus vergelijken vraagt voorzichtigheid. De balken beschrijven medicijnen die onder medisch toezicht zijn onderzocht, met advies over voeding en beweging, niet het onderzoeksproduct van VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Experimenteel",
+        "dose": "12 mg per week",
+        "study": "Fase 2 · 48 weken · 338 mensen"
+      },
+      "Tirzepatide": {
+        "status": "Goedgekeurd",
+        "dose": "15 mg per week (Zepbound)",
+        "study": "SURMOUNT-1 · 72 weken · 2.539 mensen"
+      },
+      "Semaglutide": {
+        "status": "Goedgekeurd",
+        "dose": "2,4 mg per week als injectie (Wegovy)",
+        "study": "STEP 1 · 68 weken · 1.961 mensen"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Bestellen",

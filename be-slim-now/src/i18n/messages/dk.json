@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "{percent} % billigere denne uge",
     "listAnd": "og",
-    "intro": "De to mest eftertragtede molekyler i stofskifteforskning, forseglet i VETUD's præcisionspen med dobbeltkammer. 20 mg eller 40 mg, ≥99 % renhed, 12 nåle i æsken, hos dig inden for få dage. Én kort formular. Ingen konto, ingen kurv, ingen ventetid.",
+    "intro": "De to mest eftertragtede molekyler i stofskifteforskning, forseglet i VETUD's præcisionspen med dobbeltkammer. 20 mg eller 40 mg, ≥99 % renhed, hos dig inden for få dage. Ingen hætteglas, ingen afmåling, ingen konto. Intet andet at købe: den forseglede patron, den genanvendelige pen og 12 nåle kommer i én æske.",
     "buyFrom": "Køb nu · fra {price}",
     "extraCode": "Ekstra kode −{percent} %",
     "guaranteedLabel": "Garanteret:",
@@ -207,6 +207,33 @@
     "perMgRow": "Pris pr. mg (40 mg)",
     "buyProduct": "Køb {product}",
     "buy": "Køb nu"
+  },
+  "trialChart": {
+    "eyebrow": "Forsøg med mennesker",
+    "title": "Gennemsnitligt vægttab i forsøg med mennesker",
+    "subtitle": "Hvert lægemiddel sammenlignet med placebogruppen i sit eget forsøg. Sorteret efter rapporteret gennemsnit; dette er ikke en direkte sammenligning. Forsøgene adskiller sig i deltagere, doser og varighed.",
+    "medicine": "Lægemiddel",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Hvert forsøg med mennesker havde forskellige deltagere, doser og varighed, så sammenlign med omtanke. Søjlerne beskriver lægemidler, der er undersøgt under lægeligt tilsyn med råd om kost og motion, ikke VETUD's forskningsprodukt.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Eksperimentelt",
+        "dose": "12 mg om ugen",
+        "study": "Fase 2 · 48 uger · 338 personer"
+      },
+      "Tirzepatide": {
+        "status": "Godkendt",
+        "dose": "15 mg om ugen (Zepbound)",
+        "study": "SURMOUNT-1 · 72 uger · 2.539 personer"
+      },
+      "Semaglutide": {
+        "status": "Godkendt",
+        "dose": "2,4 mg om ugen som injektion (Wegovy)",
+        "study": "STEP 1 · 68 uger · 1.961 personer"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Sådan bestiller du",

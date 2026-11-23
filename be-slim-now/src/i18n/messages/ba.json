@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "ove sedmice {percent} % jeftiniji",
     "listAnd": "i",
-    "intro": "Dvije najtraženije molekule metaboličkih istraživanja, zatvorene u preciznom VETUD penu sa dvije komore. 20 mg ili 40 mg, čistoća ≥99 %, 12 igala u kutiji, kod vas za nekoliko dana. Jedan kratki obrazac. Bez naloga, bez korpe, bez čekanja.",
+    "intro": "Dvije najtraženije molekule metaboličkih istraživanja, zatvorene u preciznom VETUD penu sa dvije komore. 20 mg ili 40 mg, čistoća ≥99 %, kod vas za nekoliko dana. Bez bočica, bez odmjeravanja, bez naloga. Ništa drugo ne trebate kupovati: zapečaćeni uložak, pen za višekratnu upotrebu i 12 igala stižu u jednoj kutiji.",
     "buyFrom": "Kupi sada · od {price}",
     "extraCode": "Dodatni kod −{percent} %",
     "guaranteedLabel": "Garancija:",
@@ -207,6 +207,33 @@
     "perMgRow": "Cijena po mg (40 mg)",
     "buyProduct": "Kupi {product}",
     "buy": "Kupi sada"
+  },
+  "trialChart": {
+    "eyebrow": "Ispitivanja na ljudima",
+    "title": "Prosječan gubitak tjelesne mase u ispitivanjima na ljudima",
+    "subtitle": "Svaki lijek upoređen s placebo grupom iz vlastitog ispitivanja. Poredano prema objavljenom prosjeku; ovo nije direktno poređenje. Ispitivanja se razlikuju po učesnicima, dozama i trajanju.",
+    "medicine": "Lijek",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Svako ispitivanje na ljudima imalo je druge učesnike, doze i trajanje, pa poređenje treba raditi oprezno. Stubići opisuju lijekove ispitivane pod ljekarskim nadzorom uz savjete o ishrani i tjelovježbi, a ne istraživački proizvod kompanije VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Eksperimentalni",
+        "dose": "12 mg sedmično",
+        "study": "Faza 2 · 48 sedmica · 338 osoba"
+      },
+      "Tirzepatide": {
+        "status": "Odobren",
+        "dose": "15 mg sedmično (Zepbound)",
+        "study": "SURMOUNT-1 · 72 sedmice · 2.539 osoba"
+      },
+      "Semaglutide": {
+        "status": "Odobren",
+        "dose": "2,4 mg sedmično, injekcija (Wegovy)",
+        "study": "STEP 1 · 68 sedmica · 1.961 osoba"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Kako naručiti",

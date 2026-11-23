@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "me {percent}% zbritje këtë javë",
     "listAnd": "dhe",
-    "intro": "Dy molekulat më të kërkuara të kërkimit metabolik, të mbyllura në stilolapsin preciz me dy dhoma të VETUD. 20 mg ose 40 mg, pastërti ≥99%, 12 gjilpëra në kuti, te dera juaj brenda pak ditësh. Një formular i shkurtër. Pa llogari, pa shportë, pa pritje.",
+    "intro": "Dy molekulat më të kërkuara të kërkimit metabolik, të mbyllura në stilolapsin preciz me dy dhoma të VETUD. 20 mg ose 40 mg, pastërti ≥99%, te dera juaj brenda pak ditësh. Pa shishe, pa matje, pa llogari. Asgjë tjetër për të blerë: fisheku i mbyllur, stilolapsi i ripërdorshëm dhe 12 gjilpëra vijnë në një kuti të vetme.",
     "buyFrom": "Blini tani · nga {price}",
     "extraCode": "Kod shtesë −{percent}%",
     "guaranteedLabel": "E garantuar:",
@@ -207,6 +207,33 @@
     "perMgRow": "Çmimi për mg (40 mg)",
     "buyProduct": "Bli {product}",
     "buy": "Blini tani"
+  },
+  "trialChart": {
+    "eyebrow": "Studime te njerëzit",
+    "title": "Humbja mesatare e peshës trupore në studime te njerëzit",
+    "subtitle": "Çdo ilaç krahasuar me grupin placebo të studimit të vet. Renditur sipas mesatares së raportuar; ky nuk është krahasim i drejtpërdrejtë. Studimet ndryshojnë në pjesëmarrës, doza dhe kohëzgjatje.",
+    "medicine": "Ilaç",
+    "placebo": "Placebo",
+    "percent": "{value}%",
+    "placeboValue": "Placebo {value}%",
+    "caption": "Çdo studim te njerëzit pati pjesëmarrës, doza dhe kohëzgjatje të ndryshme, ndaj krahasimi duhet bërë me kujdes. Shtyllat përshkruajnë ilaçe të studiuara nën mbikëqyrje mjekësore me këshilla për dietën dhe ushtrimet, jo produktin kërkimor të VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Eksperimental",
+        "dose": "12 mg në javë",
+        "study": "Faza 2 · 48 javë · 338 persona"
+      },
+      "Tirzepatide": {
+        "status": "I miratuar",
+        "dose": "15 mg në javë (Zepbound)",
+        "study": "SURMOUNT-1 · 72 javë · 2.539 persona"
+      },
+      "Semaglutide": {
+        "status": "I miratuar",
+        "dose": "2,4 mg në javë, injeksion (Wegovy)",
+        "study": "STEP 1 · 68 javë · 1.961 persona"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Si të porosisni",

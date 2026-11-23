@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "amb un {percent} % de descompte aquesta setmana",
     "listAnd": "i",
-    "intro": "Les dues molècules més buscades de la recerca metabòlica, segellades a la ploma de precisió de doble cambra de VETUD. 20 mg o 40 mg, puresa ≥99 %, 12 agulles a la caixa, a casa teva en pocs dies. Un sol formulari curt. Sense compte, sense cistella, sense esperes.",
+    "intro": "Les dues molècules més buscades de la recerca metabòlica, segellades a la ploma de precisió de doble cambra de VETUD. 20 mg o 40 mg, puresa ≥99 %, a casa teva en pocs dies. Sense vials, sense mesurar, sense compte. Res més a comprar: el cartutx segellat, la ploma reutilitzable i 12 agulles arriben en una sola caixa.",
     "buyFrom": "Compra ara · des de {price}",
     "extraCode": "Codi extra −{percent} %",
     "guaranteedLabel": "Garantit:",
@@ -207,6 +207,33 @@
     "perMgRow": "Preu per mg (40 mg)",
     "buyProduct": "Compra {product}",
     "buy": "Compra ara"
+  },
+  "trialChart": {
+    "eyebrow": "Assaigs en humans",
+    "title": "Pèrdua mitjana de pes corporal en assaigs en humans",
+    "subtitle": "Cada medicament comparat amb el grup placebo del seu propi assaig. Ordenats per la mitjana publicada; no és una comparació directa. Els assaigs difereixen en participants, dosis i durada.",
+    "medicine": "Medicament",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Cada assaig en humans va tenir participants, dosis i durades diferents, així que cal comparar amb prudència. Les barres descriuen medicaments estudiats sota supervisió mèdica amb consells de dieta i exercici, no el producte de recerca de VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Experimental",
+        "dose": "12 mg setmanals",
+        "study": "Fase 2 · 48 setmanes · 338 persones"
+      },
+      "Tirzepatide": {
+        "status": "Aprovat",
+        "dose": "15 mg setmanals (Zepbound)",
+        "study": "SURMOUNT-1 · 72 setmanes · 2.539 persones"
+      },
+      "Semaglutide": {
+        "status": "Aprovat",
+        "dose": "2,4 mg setmanals en injecció (Wegovy)",
+        "study": "STEP 1 · 68 setmanes · 1.961 persones"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Com comprar",

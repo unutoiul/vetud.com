@@ -95,7 +95,7 @@
     ],
     "everyPenSale": "šonedēļ par {percent}% lētāka",
     "listAnd": "un",
-    "intro": "Divas pieprasītākās vielmaiņas pētījumu molekulas, noslēgtas VETUD precizitātes divkameru pildspalvā. 20 mg vai 40 mg, tīrība ≥99%, 12 adatas kastītē, pie jums dažu dienu laikā. Viena īsa forma. Bez konta, bez groza, bez gaidīšanas.",
+    "intro": "Divas pieprasītākās vielmaiņas pētījumu molekulas, noslēgtas VETUD precizitātes divkameru pildspalvā. 20 mg vai 40 mg, tīrība ≥99%, pie jums dažu dienu laikā. Bez flakoniem, bez mērīšanas, bez konta. Nekas cits nav jāpērk: noslēgtais kārtridžs, atkārtoti lietojamā pildspalva un 12 adatas pienāk vienā kastītē.",
     "buyFrom": "Pirkt tagad · no {price}",
     "extraCode": "Papildu kods −{percent}%",
     "guaranteedLabel": "Garantija:",
@@ -206,6 +206,33 @@
     "perMgRow": "Cena par mg (40 mg)",
     "buyProduct": "Pirkt {product}",
     "buy": "Pirkt tagad"
+  },
+  "trialChart": {
+    "eyebrow": "Pētījumi ar cilvēkiem",
+    "title": "Vidējais ķermeņa svara zudums pētījumos ar cilvēkiem",
+    "subtitle": "Katrs medikaments salīdzināts ar sava pētījuma placebo grupu. Sakārtots pēc ziņotā vidējā rādītāja; tas nav tiešs salīdzinājums. Pētījumi atšķiras pēc dalībniekiem, devām un ilguma.",
+    "medicine": "Medikaments",
+    "placebo": "Placebo",
+    "percent": "{value}%",
+    "placeboValue": "Placebo {value}%",
+    "caption": "Katrā pētījumā ar cilvēkiem bija citi dalībnieki, devas un ilgums, tāpēc salīdzināt vajag piesardzīgi. Joslas attēlo medikamentus, kas pētīti ārsta uzraudzībā ar uztura un fizisko aktivitāšu ieteikumiem, nevis VETUD pētniecības produktu.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Eksperimentāls",
+        "dose": "12 mg nedēļā",
+        "study": "2. fāze · 48 nedēļas · 338 cilvēki"
+      },
+      "Tirzepatide": {
+        "status": "Apstiprināts",
+        "dose": "15 mg nedēļā (Zepbound)",
+        "study": "SURMOUNT-1 · 72 nedēļas · 2539 cilvēki"
+      },
+      "Semaglutide": {
+        "status": "Apstiprināts",
+        "dose": "2,4 mg nedēļā, injekcija (Wegovy)",
+        "study": "STEP 1 · 68 nedēļas · 1961 cilvēks"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Kā pasūtīt",

@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "à −{percent} % cette semaine",
     "listAnd": "et",
-    "intro": "Les deux molécules les plus recherchées de la recherche métabolique, scellées dans le stylo double chambre de précision VETUD. 20 mg ou 40 mg, pureté ≥99 %, 12 aiguilles dans la boîte, chez vous en quelques jours. Un seul formulaire court. Pas de compte, pas de panier, pas d’attente.",
+    "intro": "Les deux molécules les plus recherchées de la recherche métabolique, scellées dans le stylo double chambre de précision VETUD. 20 mg ou 40 mg, pureté ≥99 %, chez vous en quelques jours. Pas de flacons, rien à mesurer, pas de compte. Rien d’autre à acheter : la cartouche scellée, le stylo réutilisable et 12 aiguilles arrivent dans une seule boîte.",
     "buyFrom": "Acheter · dès {price}",
     "extraCode": "Code −{percent} % en plus",
     "guaranteedLabel": "Garanti :",
@@ -207,6 +207,33 @@
     "perMgRow": "Prix par mg (40 mg)",
     "buyProduct": "Acheter {product}",
     "buy": "Acheter"
+  },
+  "trialChart": {
+    "eyebrow": "Essais chez l’humain",
+    "title": "Perte de poids moyenne dans les essais chez l’humain",
+    "subtitle": "Chaque médicament comparé au groupe placebo de son propre essai. Classés selon la moyenne publiée ; ce n’est pas un classement en face à face. Les essais diffèrent par les participants, les doses et la durée.",
+    "medicine": "Médicament",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Chaque essai chez l’humain avait des participants, des doses et des durées différents : la comparaison demande de la prudence. Les barres décrivent des médicaments étudiés sous surveillance médicale avec des conseils d’alimentation et d’activité physique, et non le produit de recherche de VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Expérimental",
+        "dose": "12 mg par semaine",
+        "study": "Phase 2 · 48 semaines · 338 personnes"
+      },
+      "Tirzepatide": {
+        "status": "Approuvé",
+        "dose": "15 mg par semaine (Zepbound)",
+        "study": "SURMOUNT-1 · 72 semaines · 2 539 personnes"
+      },
+      "Semaglutide": {
+        "status": "Approuvé",
+        "dose": "2,4 mg par semaine en injection (Wegovy)",
+        "study": "STEP 1 · 68 semaines · 1 961 personnes"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Commander",

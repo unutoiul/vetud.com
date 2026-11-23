@@ -45,32 +45,15 @@ export const WEIGHT_LOSS = {
  * Human-trial weight-loss results shown under the hero pens. Ordered by reported average;
  * each medicine was compared with its own trial's placebo group — this is not a head-to-head
  * ranking. Trials differ in people, doses and length, so compare with care.
+ * Each trial's status, dose and study line are trialChart.trials.<name> in the messages.
+ *   Retatrutide: Phase 2 · 12 mg weekly · 48 weeks · 338 people
+ *   Tirzepatide: SURMOUNT-1 · 15 mg weekly (Zepbound) · 72 weeks · 2,539 people
+ *   Semaglutide: STEP 1 · 2.4 mg weekly injection (Wegovy) · 68 weeks · 1,961 people
  */
 export const TRIAL_DATA = [
-  {
-    name: "Retatrutide",
-    status: "Experimental",
-    dose: "12 mg weekly",
-    study: "Phase 2 · 48 weeks · 338 people",
-    medicine: 24.2,
-    placebo: 2.1,
-  },
-  {
-    name: "Tirzepatide",
-    status: "Approved",
-    dose: "15 mg weekly (Zepbound)",
-    study: "SURMOUNT-1 · 72 weeks · 2,539 people",
-    medicine: 20.9,
-    placebo: 3.1,
-  },
-  {
-    name: "Semaglutide",
-    status: "Approved",
-    dose: "2.4 mg weekly injection (Wegovy)",
-    study: "STEP 1 · 68 weeks · 1,961 people",
-    medicine: 14.9,
-    placebo: 2.4,
-  },
+  { name: "Retatrutide", medicine: 24.2, placebo: 2.1 },
+  { name: "Tirzepatide", medicine: 20.9, placebo: 3.1 },
+  { name: "Semaglutide", medicine: 14.9, placebo: 2.4 },
 ] as const
 
 /**

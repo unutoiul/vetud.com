@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "w tym tygodniu {percent}% tańszy",
     "listAnd": "i",
-    "intro": "Dwie najbardziej poszukiwane cząsteczki w badaniach nad metabolizmem, zamknięte w precyzyjnym dwukomorowym penie VETUD. 20 mg lub 40 mg, czystość ≥99%, 12 igieł w opakowaniu, u Ciebie w kilka dni. Jeden krótki formularz. Bez konta, bez koszyka, bez czekania.",
+    "intro": "Dwie najbardziej poszukiwane cząsteczki w badaniach nad metabolizmem, zamknięte w precyzyjnym dwukomorowym penie VETUD. 20 mg lub 40 mg, czystość ≥99%, u Ciebie w kilka dni. Bez fiolek, bez odmierzania, bez konta. Nic więcej nie trzeba kupować: zapieczętowany wkład, pen wielokrotnego użytku i 12 igieł w jednym opakowaniu.",
     "buyFrom": "Kup teraz · od {price}",
     "extraCode": "Dodatkowy kod −{percent}%",
     "guaranteedLabel": "Gwarancja:",
@@ -207,6 +207,33 @@
     "perMgRow": "Cena za mg (40 mg)",
     "buyProduct": "Kup {product}",
     "buy": "Kup teraz"
+  },
+  "trialChart": {
+    "eyebrow": "Badania z udziałem ludzi",
+    "title": "Średnia utrata masy ciała w badaniach z udziałem ludzi",
+    "subtitle": "Każdy lek porównano z grupą placebo z jego własnego badania. Kolejność według podanej średniej; to nie jest bezpośrednie porównanie. Badania różnią się uczestnikami, dawkami i czasem trwania.",
+    "medicine": "Lek",
+    "placebo": "Placebo",
+    "percent": "{value}%",
+    "placeboValue": "Placebo {value}%",
+    "caption": "Każde badanie z udziałem ludzi miało innych uczestników, dawki i czas trwania, dlatego porównywać należy ostrożnie. Słupki opisują leki badane pod nadzorem lekarskim, z zaleceniami dotyczącymi diety i ruchu, a nie produkt badawczy VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Eksperymentalny",
+        "dose": "12 mg tygodniowo",
+        "study": "Faza 2 · 48 tygodni · 338 osób"
+      },
+      "Tirzepatide": {
+        "status": "Zatwierdzony",
+        "dose": "15 mg tygodniowo (Zepbound)",
+        "study": "SURMOUNT-1 · 72 tygodnie · 2539 osób"
+      },
+      "Semaglutide": {
+        "status": "Zatwierdzony",
+        "dose": "2,4 mg tygodniowo we wstrzyknięciu (Wegovy)",
+        "study": "STEP 1 · 68 tygodni · 1961 osób"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Jak zamówić",

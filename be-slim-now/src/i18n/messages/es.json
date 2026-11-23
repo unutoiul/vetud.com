@@ -96,7 +96,7 @@
     ],
     "everyPenSale": "con un {percent} % de descuento esta semana",
     "listAnd": "y",
-    "intro": "Las dos moléculas más buscadas de la investigación metabólica, selladas en la pluma de precisión de doble cámara de VETUD. 20 mg o 40 mg, pureza ≥99 %, 12 agujas en la caja, en tu puerta en pocos días. Un solo formulario corto. Sin cuenta, sin carrito, sin esperas.",
+    "intro": "Las dos moléculas más buscadas de la investigación metabólica, selladas en la pluma de precisión de doble cámara de VETUD. 20 mg o 40 mg, pureza ≥99 %, en tu puerta en pocos días. Sin viales, sin medir, sin cuenta. Nada más que comprar: el cartucho sellado, la pluma reutilizable y 12 agujas llegan en una sola caja.",
     "buyFrom": "Comprar ahora · desde {price}",
     "extraCode": "Código extra −{percent} %",
     "guaranteedLabel": "Garantizado:",
@@ -207,6 +207,33 @@
     "perMgRow": "Precio por mg (40 mg)",
     "buyProduct": "Comprar {product}",
     "buy": "Comprar ahora"
+  },
+  "trialChart": {
+    "eyebrow": "Ensayos en humanos",
+    "title": "Pérdida media de peso corporal en ensayos en humanos",
+    "subtitle": "Cada medicamento comparado con el grupo placebo de su propio ensayo. Ordenados por la media publicada; no es una comparación directa. Los ensayos difieren en participantes, dosis y duración.",
+    "medicine": "Medicamento",
+    "placebo": "Placebo",
+    "percent": "{value} %",
+    "placeboValue": "Placebo {value} %",
+    "caption": "Cada ensayo en humanos tuvo participantes, dosis y duraciones distintos, así que la comparación debe hacerse con cautela. Las barras describen medicamentos estudiados bajo supervisión médica con consejos de dieta y ejercicio, no el producto de investigación de VETUD.",
+    "trials": {
+      "Retatrutide": {
+        "status": "Experimental",
+        "dose": "12 mg semanales",
+        "study": "Fase 2 · 48 semanas · 338 personas"
+      },
+      "Tirzepatide": {
+        "status": "Aprobado",
+        "dose": "15 mg semanales (Zepbound)",
+        "study": "SURMOUNT-1 · 72 semanas · 2539 personas"
+      },
+      "Semaglutide": {
+        "status": "Aprobado",
+        "dose": "2,4 mg semanales en inyección (Wegovy)",
+        "study": "STEP 1 · 68 semanas · 1961 personas"
+      }
+    }
   },
   "howToOrder": {
     "eyebrow": "Cómo pedir",
