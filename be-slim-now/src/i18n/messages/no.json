@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Tirzepatide & Retatrutide penner · BeSlimNow",
+    "description": "Tirzepatide (TZ-2) og Retatrutide penner fra VETUD. 20 mg eller 40 mg, ≥99 % renhet med COA for hver batch. Introduksjonstilbud: 40 % rabatt. Bestill på under ett minutt."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "RABATT",
+    "sealAria": "{saleLabel}: −{percent} %"
+  },
+  "promoBar": {
+    "sale": "−{percent} % på hver penn",
+    "subscribe": "Abonner og få ytterligere −{percent} % (opptil −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, tilbake til toppen",
+    "navLabel": "Seksjoner",
+    "nav": {
+      "products": "Penner",
+      "dualChamber": "Pennen",
+      "compare": "Sammenlign",
+      "how": "Slik bestiller du",
+      "faq": "FAQ"
+    }
+  },
+  "countryPicker": {
+    "aria": "Land og valuta: {country}, priser i {currency}",
+    "hint": "Landet ditt bestemmer prisene og valutaen.",
+    "groupUs": "USA",
+    "groupEurope": "Europa",
+    "groupOther": "Andre land · priser i USD",
+    "groupOtherTitle": "Andre land"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) penn",
+      "tagline": "Dobbel GIP-/GLP-1-reseptoragonist",
+      "description": "Den doble agonisten hele fagfeltet snakker om, i VETUDs presisjonspenn. Én penn, 12 nåler og en bruksanvisning per eske.",
+      "badge": "Svært populær",
+      "penAlt": "VETUD Tirzepatide penn",
+      "gallery": [
+        {
+          "label": "Eske",
+          "alt": "Eske til VETUD Tirzepatide penn, lukket"
+        },
+        {
+          "label": "Innhold",
+          "alt": "Åpen VETUD Tirzepatide eske: penn, 12 nåler og bruksanvisning"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide penn",
+      "tagline": "Trippel GIP-/GLP-1-/glukagonagonist",
+      "description": "Neste generasjons trippelagonist i VETUDs presisjonspenn. Én penn, 12 nåler og en bruksanvisning per eske.",
+      "badge": "Bestselger",
+      "penAlt": "VETUD Retatrutide penn",
+      "gallery": [
+        {
+          "label": "Eske",
+          "alt": "Eske til VETUD Retatrutide penn, lukket"
+        },
+        {
+          "label": "Innhold",
+          "alt": "Åpen VETUD Retatrutide eske: penn, 12 nåler og bruksanvisning"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % på hver penn, begge styrker",
+    "eyebrow": "VETUD Peptide Series · Pennene alle spør etter",
+    "headlineSr": "Tirzepatide & Retatrutide i penn, nå {percent} % rabatt.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "i",
+      "penn,",
+      "nå"
+    ],
+    "headlineOffer": "{percent} % rabatt.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Hver penn er ",
+    "everyPenSr": "Hver penn er {list}.",
+    "everyPen": [
+      "renhetsgarantert",
+      "leveringsgarantert",
+      "klar til sending i dag",
+      "≥99 % ren",
+      "dokumentert med COA",
+      "diskret pakket"
+    ],
+    "everyPenSale": "{percent} % billigere denne uken",
+    "listAnd": "og",
+    "intro": "De to mest ettertraktede molekylene i stoffskifteforskningen, forseglet i VETUDs presisjonspenn med to kamre. 20 mg eller 40 mg, ≥99 % renhet, 12 nåler i esken, hos deg i løpet av noen dager. Ett kort skjema. Ingen konto, ingen handlekurv, ingen venting.",
+    "buyFrom": "Kjøp nå · fra {price}",
+    "extraCode": "Ekstra kode −{percent} %",
+    "guaranteedLabel": "Garantert:",
+    "guarantees": [
+      "pengene tilbake hvis en batch tester under 99 % renhet",
+      "ny sending eller pengene tilbake hvis pakken blir borte"
+    ],
+    "trust": [
+      "≥99 % renhet, HPLC-verifisert",
+      "COA for hver batch",
+      "Sendes innen 24 timer",
+      "Diskret emballasje"
+    ],
+    "penTagFrom": "fra {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % på hver penn",
+    "title": "Velg din penn",
+    "subtitle": "Tirzepatide eller Retatrutide, 20 mg eller 40 mg. Samme laboratorierenhet, samme VETUD penn, samme tilbud. Velg, trykk på Kjøp nå, og du er ferdig på under ett minutt.",
+    "enlargeAria": "Forstørr bilder av {product}",
+    "enlarge": "Forstørr",
+    "thumbAlt": "Visning: {label}",
+    "inStock": "På lager",
+    "strengthAria": "Styrke",
+    "saleSave": "−{percent} % · du sparer {price}",
+    "perMg": "{price} per mg",
+    "bestValue": "Beste pris · {percent} % lavere per mg",
+    "switchTo40": "Spar {percent} % per mg med 40 mg →",
+    "features": [
+      "1 penn + 12 engangsnåler + bruksanvisning",
+      "≥99 % renhet, COA for batchen",
+      "Sendes innen 24 timer, diskret pakket"
+    ],
+    "subscriberCode": "Ytterligere {percent} % rabatt med abonnentkoden din",
+    "buy": "Kjøp nå · {price}",
+    "nothingToPay": "Ingenting å betale nå. Betalingsinformasjonen kommer på e-post."
+  },
+  "dualChamber": {
+    "eyebrow": "VETUD-pennen med to kamre",
+    "title": "Bygget som en penn fra apoteket.",
+    "subtitle": "To kamre, én patron: frysetørket peptid øverst, BAC-vann nederst, holdt adskilt til du blander dem. Deretter klikker patronen fast i den gjenbrukbare VETUD-pennen.",
+    "diagramAlt": "VETUD-patronen inneholder frysetørket peptid og BAC-vann og sitter i pennens patronholder",
+    "enlarge": "Forstørr",
+    "benefits": [
+      {
+        "title": "Forseglet til du blander",
+        "text": "Det frysetørkede peptidet ligger i sitt eget kammer, skilt fra væsken med en propp. Ingenting brytes ned på hyllen, og ingenting blandes før du vil."
+      },
+      {
+        "title": "BAC-vann allerede i patronen",
+        "text": "Det andre kammeret inneholder det bakteriostatiske vannet. Ingen ekstra hetteglass å kjøpe, ingen oppmåling, ingen overføring. Alt du trenger, kommer i én eske."
+      },
+      {
+        "title": "Presis teller, gjenbrukbar penn",
+        "text": "Patronen klikker fast i VETUD-pennen med tellervindu. Behold pennen, bytt patronen. Rent, presist og laget for å brukes igjen."
+      }
+    ],
+    "cta": "Hent min penn",
+    "video": "Se hvordan den virker · 40 sekunder"
+  },
+  "compare": {
+    "eyebrow": "Side om side",
+    "title": "Hvilken penn passer for deg?",
+    "subtitle": "To molekyler, én penn, én pris per mg å sammenligne. Begge kommer med samme renhet, samme eske og samme tilbud.",
+    "rows": {
+      "label": {
+        "label": "Merking på pennen",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Hva det er",
+        "tz2": "Dobbel agonist: GIP- + GLP-1-reseptorer",
+        "retatrutide": "Trippelagonist: GIP- + GLP-1- + glukagonreseptorer"
+      },
+      "generation": {
+        "label": "Generasjon",
+        "tz2": "Nåværende generasjon · mest etterspurt",
+        "retatrutide": "Neste generasjon · den nyeste"
+      },
+      "status": {
+        "label": "Utviklingsstatus",
+        "tz2": "Molekyl godkjent som legemiddel",
+        "retatrutide": "Under utprøving, i fase 3-studier"
+      },
+      "strengths": {
+        "label": "Styrker",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "I esken",
+        "tz2": "1 penn · 12 nåler · bruksanvisning",
+        "retatrutide": "1 penn · 12 nåler · bruksanvisning"
+      },
+      "purity": {
+        "label": "Renhet",
+        "tz2": "≥99 %, COA for batchen",
+        "retatrutide": "≥99 %, COA for batchen"
+      },
+      "dispatch": {
+        "label": "Sending",
+        "tz2": "Innen 24 timer etter betaling",
+        "retatrutide": "Innen 24 timer etter betaling"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Pris per mg (40 mg)",
+    "buyProduct": "Kjøp {product}",
+    "buy": "Kjøp nå"
+  },
+  "howToOrder": {
+    "eyebrow": "Slik bestiller du",
+    "title": "Fra klikk til dør i fire steg.",
+    "subtitle": "Én måte å bestille på, laget for å gå raskt. Du vet alltid hvor bestillingen din er.",
+    "steps": [
+      {
+        "title": "Velg din penn",
+        "text": "Tirzepatide eller Retatrutide, 20 mg eller 40 mg. Trykk på Kjøp nå."
+      },
+      {
+        "title": "Fyll ut ett kort skjema",
+        "text": "Navn, e-post, telefon og adresse. Ingen konto, ingen handlekurv, under ett minutt."
+      },
+      {
+        "title": "Få e-posten",
+        "text": "Bekreftelsen kommer med en gang, med betalingsinformasjon og ordrenummeret ditt."
+      },
+      {
+        "title": "Vi sender innen 24 timer",
+        "text": "Så snart betalingen er mottatt, sendes pennene dine, diskret pakket og med sporing."
+      }
+    ],
+    "cta": "Start bestillingen"
+  },
+  "quality": {
+    "eyebrow": "Kvalitet du kan sjekke",
+    "title": "Laboratorieresultater, ikke løfter.",
+    "subtitle": "Hver VETUD-batch testes med HPLC og dokumenteres før den sendes. Be oss når som helst om COA for batchen du får, så sender vi det.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Renhet",
+        "text": "HPLC-verifisert for hver batch"
+      },
+      {
+        "value": "COA",
+        "label": "Hver batch",
+        "text": "Analysesertifikat på forespørsel, knyttet til batchnummeret ditt"
+      },
+      {
+        "value": "24 timer",
+        "label": "Sending",
+        "text": "Sendes innen én virkedag etter betaling"
+      },
+      {
+        "value": "12",
+        "label": "Nåler i hver eske",
+        "text": "Med pennen og en bruksanvisning, alt klart"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Bak hver penn",
+    "title": "Rent fylt. Kaldt lagret.",
+    "subtitle": "Bilder fra stedene der VETUD-produkter fylles og lagres: en fyllelinje i renrom og deretter kjøleskap til bestillingen din sendes.",
+    "enlarge": "Forstørr",
+    "enlargeAria": "Forstørr: {title}",
+    "photos": [
+      {
+        "alt": "En ansatt i renromsdrakt, munnbind og hansker bærer et brett med forseglede hetteglass forbi fyllemaskinen",
+        "eyebrow": "Fylling",
+        "title": "Fylt i renrom",
+        "text": "Proppet og forseglet maskinelt, håndtert av personale i full drakt, munnbind og hansker."
+      },
+      {
+        "alt": "Merkede kasser med hetteglass på hyllene i et kjøleskap med glassdør",
+        "eyebrow": "Lagring",
+        "title": "Lagret kjølig",
+        "text": "Hver batch merkes og lagres i kjøleskap med glassdører til den sendes."
+      },
+      {
+        "alt": "En rekke opplyste kjøleskap med glassdører fulle av merket lager",
+        "eyebrow": "Lager",
+        "title": "Klar til sending",
+        "text": "Varer på lager, så bestillingen din forlater oss innen 24 timer etter betaling."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Spørsmål og svar.",
+    "items": [
+      {
+        "q": "Hvordan betaler jeg?",
+        "a": "Etter at du har lagt inn bestillingen, får du straks en e-post med betalingsinformasjonen og ordrenummeret ditt. Ingenting belastes på denne siden. Bruk ordrenummeret som betalingsreferanse."
+      },
+      {
+        "q": "Hvor raskt sender dere?",
+        "a": "Bestillinger sendes innen 24 timer etter betaling (virkedager), med sporingsnummer på e-post og, hvis du har valgt det, i meldingsappen din."
+      },
+      {
+        "q": "Hva dekker garantiene deres?",
+        "a": "To ting. Renhet: hver batch testes, og hvis en batch tester under 99 % renhet, får du pengene tilbake. Levering: hvis pakken blir borte underveis, sender vi den på nytt eller gir deg pengene tilbake. Skriv til oss med ordrenummeret ditt, så ordner vi det."
+      },
+      {
+        "q": "Hva er i esken?",
+        "a": "Hver VETUD-eske inneholder én penn i styrken du valgte, 12 engangsnåler og en bruksanvisning, merket med produkt og batch. Ytteremballasjen er nøytral og diskret."
+      },
+      {
+        "q": "Hva er forskjellen mellom 20 mg og 40 mg?",
+        "a": "Mengden peptid i pennen. Pennen på 40 mg koster mindre per mg, og derfor er den merket Beste pris."
+      },
+      {
+        "q": "Kan jeg få analysesertifikatet (COA)?",
+        "a": "Ja. Hver batch testes for renhet. Skriv til oss med ordrenummeret ditt, så sender vi COA for batchen du har mottatt."
+      },
+      {
+        "q": "Kan jeg endre eller avbestille bestillingen?",
+        "a": "Ja, frem til den er sendt. Svar på bekreftelses-e-posten eller skriv til oss: {contacts}."
+      },
+      {
+        "q": "Hva er produktene ment for?",
+        "a": "Alle produkter som selges på dette nettstedet, er utelukkende ment for forsknings- og identifikasjonsformål. Produktene er ikke ment for dosering, injeksjon eller inntak hos mennesker."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Med enerett."
+  },
+  "consent": {
+    "label": "Valg av informasjonskapsler",
+    "text": "Vi vil gjerne bruke informasjonskapsler til analyse (Google Analytics og Microsoft Clarity) for å se hvordan siden brukes, og gjøre den bedre. Ingenting brukes til annonsering.",
+    "accept": "Godta",
+    "decline": "Avslå",
+    "settings": "Innstillinger for informasjonskapsler"
+  },
+  "contact": {
+    "messageUs": "Skriv til oss",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-post"
+    }
+  },
+  "order": {
+    "yourOrder": "Din bestilling",
+    "shipTo": "Lever til",
+    "pricesIn": "· priser i {currency}",
+    "chooseCountry": "Velg et land",
+    "chooseCountryError": "Velg et land.",
+    "pen": "Penn",
+    "strength": "Styrke",
+    "quantity": "Antall",
+    "discountCode": "Rabattkode",
+    "codePlaceholder": "Koden din",
+    "apply": "Bruk",
+    "applied": "Brukt",
+    "getCode": "Få en kode på ytterligere {percent} %",
+    "codeApplied": "Koden {code} er brukt: ytterligere {percent} % rabatt",
+    "codeInvalid": "Koden er ikke gyldig.",
+    "codeCheckFailed": "Kunne ikke sjekke koden. Prøv igjen.",
+    "regularLine": "{quantity} × {price} ordinær pris",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Kode {code} −{percent} %",
+    "total": "Totalt",
+    "youSave": "Du sparer {price}",
+    "perks": [
+      "≥99 % renhet, COA for hver batch",
+      "Sendes innen 24 timer etter betaling",
+      "Betalingsinformasjon på e-post, ingenting å betale nå"
+    ],
+    "title": "Hvor skal vi sende den?",
+    "subtitle": "Ingen konto, ingen handlekurv. Ett kort skjema, så er du ferdig.",
+    "fullName": "Fullt navn",
+    "fullNameError": "Skriv inn fullt navn.",
+    "email": "E-post",
+    "emailError": "Skriv inn en gyldig e-postadresse.",
+    "phone": "Telefon",
+    "phoneCode": "Landskode",
+    "phoneError": "Skriv inn telefonnummeret ditt.",
+    "phonePlaceholder": "Telefonnummer",
+    "contactApp": "Den beste måten å nå deg på",
+    "contactAppEmailOnly": "Bare e-post",
+    "handleHint": {
+      "whatsapp": "WhatsApp-nummer, hvis det er et annet enn telefonnummeret ditt",
+      "telegram": "Brukernavnet ditt på Telegram, f.eks. @navn",
+      "line": "LINE-ID-en din"
+    },
+    "address": "Gateadresse",
+    "addressError": "Skriv inn gateadressen.",
+    "city": "Sted",
+    "cityError": "Skriv inn sted.",
+    "postalCode": "Postnummer",
+    "postalCodeError": "Skriv inn postnummer.",
+    "note": "Merknad (valgfritt)",
+    "researchUse": "Jeg bekrefter at produktene utelukkende er til forskningsbruk.",
+    "researchUseError": "Bekreft bruk til forskning.",
+    "placeOrder": "Bestill med betalingsforpliktelse · {price}",
+    "confirmationNote": "Du får straks en bekreftelse på e-post med betalingsinformasjonen. Spørsmål? Skriv til {email}.",
+    "genericError": "Noe gikk galt. Prøv igjen eller skriv til oss.",
+    "noConnection": "Ingen tilkobling. Prøv igjen eller skriv til oss.",
+    "doneTitle": "Bestilling {orderNumber} er reservert",
+    "doneText": "Vi har sendt betalingsinformasjonen til <b>{email}</b>. Å betale: <b>{total}</b>.",
+    "doneSpam": "Finner du den ikke? Sjekk søppelpostmappen eller skriv til oss nedenfor.",
+    "doneButton": "Ferdig"
+  },
+  "promo": {
+    "eyebrow": "Kun for abonnenter",
+    "eyebrowReady": "Koden din er klar",
+    "headline": "Ytterligere {percent} rabatt",
+    "onTop": "I tillegg til {saleLabel}-rabatten på {percent} % · opptil {best} % totalt",
+    "emailedNote": "Vi har også sendt den til deg på e-post, og den er allerede lagt inn i bestillingsskjemaet ditt.",
+    "copyAria": "Kopier koden {code}",
+    "copy": "Kopier",
+    "copied": "Kopiert",
+    "yourCode": "Koden din: {code}",
+    "orderWithCode": "Bestill nå med koden min",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Bestselger, med koden din",
+    "emailLabel": "E-posten din",
+    "emailError": "Skriv inn en gyldig e-postadresse.",
+    "emailPlaceholder": "navn@example.com",
+    "reveal": "Vis koden min på {percent} %",
+    "consent": "Du får tilbud fra VETUD på e-post. Du kan melde deg av når som helst.",
+    "noThanks": "Nei takk",
+    "genericError": "Noe gikk galt. Prøv igjen.",
+    "noConnection": "Ingen tilkobling. Prøv igjen."
+  }
+}

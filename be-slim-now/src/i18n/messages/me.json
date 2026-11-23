@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Tirzepatide & Retatrutide penovi · BeSlimNow",
+    "description": "Tirzepatide (TZ-2) i Retatrutide penovi kompanije VETUD. 20 mg ili 40 mg, čistoća ≥99 % sa COA za svaku seriju. Uvodna ponuda: 40 % popusta. Narudžba za manje od minute."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "POPUST",
+    "sealAria": "{saleLabel}: −{percent} %"
+  },
+  "promoBar": {
+    "sale": "−{percent} % na svaki pen",
+    "subscribe": "Pretplatite se za dodatnih −{percent} % (do −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, nazad na vrh",
+    "navLabel": "Odjeljci",
+    "nav": {
+      "products": "Penovi",
+      "dualChamber": "Pen",
+      "compare": "Poređenje",
+      "how": "Kako naručiti",
+      "faq": "Česta pitanja"
+    }
+  },
+  "countryPicker": {
+    "aria": "Država i valuta: {country}, cijene u {currency}",
+    "hint": "Vaša država određuje cijene i valutu.",
+    "groupUs": "Sjedinjene Američke Države",
+    "groupEurope": "Evropa",
+    "groupOther": "Ostale države · cijene u USD",
+    "groupOtherTitle": "Ostale države"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) pen",
+      "tagline": "Dvostruki agonist receptora GIP / GLP-1",
+      "description": "Dvostruki agonist o kojem govori cijela struka, u preciznom VETUD penu. Jedan pen, 12 igala i uputstvo u svakoj kutiji.",
+      "badge": "Veoma popularan",
+      "penAlt": "VETUD Tirzepatide pen",
+      "gallery": [
+        {
+          "label": "Kutija",
+          "alt": "Kutija VETUD Tirzepatide pena, zatvorena"
+        },
+        {
+          "label": "Sadržaj",
+          "alt": "Otvorena kutija VETUD Tirzepatide: pen, 12 igala i uputstvo"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide pen",
+      "tagline": "Trostruki agonist GIP / GLP-1 / glukagona",
+      "description": "Trostruki agonist nove generacije u preciznom VETUD penu. Jedan pen, 12 igala i uputstvo u svakoj kutiji.",
+      "badge": "Najprodavaniji",
+      "penAlt": "VETUD Retatrutide pen",
+      "gallery": [
+        {
+          "label": "Kutija",
+          "alt": "Kutija VETUD Retatrutide pena, zatvorena"
+        },
+        {
+          "label": "Sadržaj",
+          "alt": "Otvorena kutija VETUD Retatrutide: pen, 12 igala i uputstvo"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % na svaki pen, obje jačine",
+    "eyebrow": "VETUD Peptide Series · Penovi za kojima svi pitaju",
+    "headlineSr": "Tirzepatide & Retatrutide u penu, sada {percent} % jeftinije.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "u",
+      "penu,",
+      "sada"
+    ],
+    "headlineOffer": "{percent} % jeftinije.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Svaki pen je ",
+    "everyPenSr": "Svaki pen je {list}.",
+    "everyPen": [
+      "garantovane čistoće",
+      "garantovane dostave",
+      "spreman za slanje već danas",
+      "≥99 % čist",
+      "potkrijepljen COA-om",
+      "diskretno upakovan"
+    ],
+    "everyPenSale": "ove sedmice {percent} % jeftiniji",
+    "listAnd": "i",
+    "intro": "Dvije najtraženije molekule metaboličkih istraživanja, zatvorene u preciznom VETUD penu sa dvije komore. 20 mg ili 40 mg, čistoća ≥99 %, 12 igala u kutiji, kod vas za nekoliko dana. Jedan kratki obrazac. Bez naloga, bez korpe, bez čekanja.",
+    "buyFrom": "Kupi sada · od {price}",
+    "extraCode": "Dodatni kod −{percent} %",
+    "guaranteedLabel": "Garancija:",
+    "guarantees": [
+      "povrat novca ako serija pokaže čistoću ispod 99 %",
+      "ponovno slanje ili povrat novca ako se paket izgubi"
+    ],
+    "trust": [
+      "Čistoća ≥99 %, provjereno HPLC-om",
+      "COA za svaku seriju",
+      "Šaljemo u roku od 24 h",
+      "Diskretno pakovanje"
+    ],
+    "penTagFrom": "od {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % na svaki pen",
+    "title": "Izaberite svoj pen",
+    "subtitle": "Tirzepatide ili Retatrutide, 20 mg ili 40 mg. Ista laboratorijska čistoća, isti VETUD pen, ista ponuda. Izaberite, kliknite Kupi sada i gotovo je za manje od minute.",
+    "enlargeAria": "Povećaj slike: {product}",
+    "enlarge": "Povećaj",
+    "thumbAlt": "Prikaz: {label}",
+    "inStock": "Na stanju",
+    "strengthAria": "Jačina",
+    "saleSave": "−{percent} % · štedite {price}",
+    "perMg": "{price} po mg",
+    "bestValue": "Najbolja cijena · {percent} % jeftinije po mg",
+    "switchTo40": "Uštedite {percent} % po mg uz 40 mg →",
+    "features": [
+      "1 pen + 12 jednokratnih igala + uputstvo",
+      "Čistoća ≥99 %, COA serije",
+      "Šaljemo u roku od 24 h, diskretno upakovano"
+    ],
+    "subscriberCode": "Dodatnih {percent} % popusta uz vaš pretplatnički kod",
+    "buy": "Kupi sada · {price}",
+    "nothingToPay": "Sada ništa ne plaćate. Podaci za plaćanje stižu e-mailom."
+  },
+  "dualChamber": {
+    "eyebrow": "VETUD pen sa dvije komore",
+    "title": "Napravljen kao pen iz apoteke.",
+    "subtitle": "Dvije komore, jedan uložak: gore liofilizirani peptid, dolje BAC voda, odvojeni dok ih ne spojite. Zatim uložak klikne u višekratni VETUD pen.",
+    "diagramAlt": "VETUD uložak sadrži liofilizirani peptid i BAC vodu i smješten je u držač uloška pena",
+    "enlarge": "Povećaj",
+    "benefits": [
+      {
+        "title": "Zatvoreno do trenutka miješanja",
+        "text": "Liofilizirani peptid nalazi se u vlastitoj komori, od tečnosti odvojen čepom. Ništa se ne kvari na polici i ništa se ne miješa prije nego što vi to želite."
+      },
+      {
+        "title": "BAC voda već u ulošku",
+        "text": "Druga komora sadrži bakteriostatsku vodu. Nema dodatnih bočica za kupovinu, nema odmjeravanja ni pretakanja. Sve što vam treba stiže u jednoj kutiji."
+      },
+      {
+        "title": "Precizan brojač, višekratno tijelo pena",
+        "text": "Uložak klikne u VETUD pen sa prozorčićem brojača. Pen ostaje, uložak mijenjate. Čisto, precizno i napravljeno za ponovnu upotrebu."
+      }
+    ],
+    "cta": "Želim svoj pen",
+    "video": "Pogledajte kako radi · 40 sekundi"
+  },
+  "compare": {
+    "eyebrow": "Jedan pored drugog",
+    "title": "Koji je pen za vas?",
+    "subtitle": "Dvije molekule, jedan pen, jedna cijena po mg za poređenje. Oba stižu sa istom čistoćom, istom kutijom i istom ponudom.",
+    "rows": {
+      "label": {
+        "label": "Oznaka na penu",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Šta je to",
+        "tz2": "Dvostruki agonist: receptori GIP + GLP-1",
+        "retatrutide": "Trostruki agonist: receptori GIP + GLP-1 + glukagona"
+      },
+      "generation": {
+        "label": "Generacija",
+        "tz2": "Trenutna generacija · najtraženiji",
+        "retatrutide": "Sljedeća generacija · najnoviji"
+      },
+      "status": {
+        "label": "Faza razvoja",
+        "tz2": "Molekula odobrena kao lijek",
+        "retatrutide": "U istraživanju, u ispitivanjima faze 3"
+      },
+      "strengths": {
+        "label": "Jačine",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "U kutiji",
+        "tz2": "1 pen · 12 igala · uputstvo",
+        "retatrutide": "1 pen · 12 igala · uputstvo"
+      },
+      "purity": {
+        "label": "Čistoća",
+        "tz2": "≥99 %, COA serije",
+        "retatrutide": "≥99 %, COA serije"
+      },
+      "dispatch": {
+        "label": "Slanje",
+        "tz2": "U roku od 24 h od plaćanja",
+        "retatrutide": "U roku od 24 h od plaćanja"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Cijena po mg (40 mg)",
+    "buyProduct": "Kupi {product}",
+    "buy": "Kupi sada"
+  },
+  "howToOrder": {
+    "eyebrow": "Kako naručiti",
+    "title": "Od klika do vrata u četiri koraka.",
+    "subtitle": "Jedan način naručivanja, osmišljen da bude brz. Uvijek znate gdje je vaša narudžba.",
+    "steps": [
+      {
+        "title": "Izaberite svoj pen",
+        "text": "Tirzepatide ili Retatrutide, 20 mg ili 40 mg. Kliknite Kupi sada."
+      },
+      {
+        "title": "Popunite kratki obrazac",
+        "text": "Ime, e-mail, telefon i adresa. Bez naloga, bez korpe, za manje od minute."
+      },
+      {
+        "title": "Primite e-mail",
+        "text": "Potvrda stiže odmah, sa podacima za plaćanje i brojem narudžbe."
+      },
+      {
+        "title": "Šaljemo u roku od 24 h",
+        "text": "Čim stigne uplata, vaši penovi kreću na put, diskretno upakovani i sa praćenjem pošiljke."
+      }
+    ],
+    "cta": "Započni narudžbu"
+  },
+  "quality": {
+    "eyebrow": "Kvalitet koji možete provjeriti",
+    "title": "Laboratorijski rezultati, a ne obećanja.",
+    "subtitle": "Svaka VETUD serija se prije slanja ispituje HPLC-om i dokumentuje. U bilo kojem trenutku zatražite COA serije koju primite i poslaćemo vam ga.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Čistoća",
+        "text": "Provjereno HPLC-om u svakoj seriji"
+      },
+      {
+        "value": "COA",
+        "label": "Svaka serija",
+        "text": "Certifikat o analizi na zahtjev, prema broju vaše serije"
+      },
+      {
+        "value": "24 h",
+        "label": "Slanje",
+        "text": "Šaljemo u roku od jednog radnog dana od plaćanja"
+      },
+      {
+        "value": "12",
+        "label": "Igala u svakoj kutiji",
+        "text": "Uz pen i uputstvo, sve je spremno"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Iza svakog pena",
+    "title": "Čisto punjeno. Hladno čuvano.",
+    "subtitle": "Fotografije sa mjesta na kojima se VETUD proizvodi pune i skladište: linija za punjenje u čistoj sobi, a zatim frižideri dok vaša narudžba ne bude poslana.",
+    "enlarge": "Povećaj",
+    "enlargeAria": "Povećaj: {title}",
+    "photos": [
+      {
+        "alt": "Radnik u odjeći za čistu sobu, sa maskom i rukavicama, nosi poslužavnik zatvorenih bočica pored mašine za punjenje",
+        "eyebrow": "Punjenje",
+        "title": "Punjeno u čistoj sobi",
+        "text": "Mašinski začepljeno i zatvoreno, rukuje osoblje u punoj zaštitnoj odjeći, sa maskama i rukavicama."
+      },
+      {
+        "alt": "Označene kutije sa bočicama na policama frižidera sa staklenim vratima",
+        "eyebrow": "Skladištenje",
+        "title": "Čuvano u frižideru",
+        "text": "Svaka serija je označena i do slanja se čuva u frižiderima sa staklenim vratima."
+      },
+      {
+        "alt": "Niz osvijetljenih frižidera sa staklenim vratima punih označene robe",
+        "eyebrow": "Zalihe",
+        "title": "Spremno za slanje",
+        "text": "Roba na stanju, pa vaša narudžba kreće u roku od 24 sata od plaćanja."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Česta pitanja",
+    "title": "Pitanja i odgovori.",
+    "items": [
+      {
+        "q": "Kako se plaća?",
+        "a": "Nakon narudžbe odmah dobijate e-mail sa podacima za plaćanje i brojem narudžbe. Na ovoj stranici se ništa ne naplaćuje. Broj narudžbe upišite kao svrhu uplate."
+      },
+      {
+        "q": "Koliko brzo šaljete?",
+        "a": "Narudžbe šaljemo u roku od 24 sata od plaćanja (radnim danima), sa brojem za praćenje pošiljke e-mailom i, ako ste izabrali, u aplikaciji za poruke."
+      },
+      {
+        "q": "Šta pokrivaju vaše garancije?",
+        "a": "Dvije stvari. Čistoću: svaka serija se ispituje, a ako serija pokaže čistoću ispod 99 %, vraćamo novac. Dostavu: ako se paket izgubi na putu, šaljemo ga ponovo ili vraćamo novac. Javite nam se sa brojem narudžbe i sve ćemo riješiti."
+      },
+      {
+        "q": "Šta je u kutiji?",
+        "a": "Svaka VETUD kutija sadrži jedan pen izabrane jačine, 12 jednokratnih igala i uputstvo, sa oznakom proizvoda i serije. Vanjsko pakovanje je neutralno i diskretno."
+      },
+      {
+        "q": "Koja je razlika između 20 mg i 40 mg?",
+        "a": "Količina peptida u penu. Pen od 40 mg je jeftiniji po mg, zato je označen kao Najbolja cijena."
+      },
+      {
+        "q": "Mogu li dobiti certifikat o analizi (COA)?",
+        "a": "Da. Čistoća svake serije se ispituje. Javite nam se sa brojem narudžbe i poslaćemo vam COA serije koju ste primili."
+      },
+      {
+        "q": "Mogu li promijeniti ili otkazati narudžbu?",
+        "a": "Da, dok ne bude poslana. Odgovorite na e-mail sa potvrdom ili nam se javite: {contacts}."
+      },
+      {
+        "q": "Čemu su namijenjeni ovi proizvodi?",
+        "a": "Svi proizvodi koji se prodaju na ovoj web-stranici namijenjeni su isključivo za istraživačke i identifikacijske svrhe. Ovi proizvodi nisu namijenjeni doziranju, ubrizgavanju ni gutanju kod ljudi."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Sva prava zadržana."
+  },
+  "consent": {
+    "label": "Izbor kolačića",
+    "text": "Željeli bismo da koristimo analitičke kolačiće (Google Analytics i Microsoft Clarity) kako bismo vidjeli kako se ova stranica koristi i poboljšali je. Ništa se ne koristi za reklame.",
+    "accept": "Prihvati",
+    "decline": "Odbij",
+    "settings": "Podešavanja kolačića"
+  },
+  "contact": {
+    "messageUs": "Javite nam se",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-mail"
+    }
+  },
+  "order": {
+    "yourOrder": "Vaša narudžba",
+    "shipTo": "Dostava u",
+    "pricesIn": "· cijene u {currency}",
+    "chooseCountry": "Izaberite državu",
+    "chooseCountryError": "Izaberite državu.",
+    "pen": "Pen",
+    "strength": "Jačina",
+    "quantity": "Količina",
+    "discountCode": "Kod za popust",
+    "codePlaceholder": "Vaš kod",
+    "apply": "Primijeni",
+    "applied": "Primijenjeno",
+    "getCode": "Dobijte kod za dodatnih {percent} %",
+    "codeApplied": "Kod {code} primijenjen: dodatnih {percent} % popusta",
+    "codeInvalid": "Taj kod nije važeći.",
+    "codeCheckFailed": "Kod nije moguće provjeriti. Pokušajte ponovo.",
+    "regularLine": "{quantity} × {price} redovna cijena",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Kod {code} −{percent} %",
+    "total": "Ukupno",
+    "youSave": "Štedite {price}",
+    "perks": [
+      "Čistoća ≥99 %, COA za svaku seriju",
+      "Šaljemo u roku od 24 h od plaćanja",
+      "Podaci za plaćanje e-mailom, sada ništa ne plaćate"
+    ],
+    "title": "Gdje da pošaljemo?",
+    "subtitle": "Bez naloga, bez korpe. Jedan kratki obrazac i gotovo.",
+    "fullName": "Ime i prezime",
+    "fullNameError": "Unesite ime i prezime.",
+    "email": "E-mail",
+    "emailError": "Unesite važeću e-mail adresu.",
+    "phone": "Telefon",
+    "phoneCode": "Pozivni broj države",
+    "phoneError": "Unesite broj telefona.",
+    "phonePlaceholder": "Broj telefona",
+    "contactApp": "Kako vas najlakše možemo kontaktirati",
+    "contactAppEmailOnly": "Samo e-mail",
+    "handleHint": {
+      "whatsapp": "WhatsApp broj, ako se razlikuje od telefona",
+      "telegram": "Vaše korisničko ime na Telegramu, npr. @ime",
+      "line": "Vaš LINE ID"
+    },
+    "address": "Ulica i broj",
+    "addressError": "Unesite ulicu i broj.",
+    "city": "Grad",
+    "cityError": "Unesite grad.",
+    "postalCode": "Poštanski broj",
+    "postalCodeError": "Unesite poštanski broj.",
+    "note": "Napomena (nije obavezno)",
+    "researchUse": "Potvrđujem da su ovi proizvodi namijenjeni isključivo istraživanju.",
+    "researchUseError": "Potvrdite upotrebu u istraživanju.",
+    "placeOrder": "Narudžba sa obavezom plaćanja · {price}",
+    "confirmationNote": "Odmah ćete dobiti e-mail sa potvrdom i podacima za plaćanje. Pitanja? Pišite na {email}.",
+    "genericError": "Nešto nije u redu. Pokušajte ponovo ili nam se javite.",
+    "noConnection": "Nema veze. Pokušajte ponovo ili nam se javite.",
+    "doneTitle": "Narudžba {orderNumber} je rezervisana",
+    "doneText": "Podatke za plaćanje poslali smo na <b>{email}</b>. Iznos za plaćanje: <b>{total}</b>.",
+    "doneSpam": "Ne možete ga pronaći? Provjerite folder neželjene pošte ili nam se javite ispod.",
+    "doneButton": "Gotovo"
+  },
+  "promo": {
+    "eyebrow": "Ekskluzivno za pretplatnike",
+    "eyebrowReady": "Vaš kod je spreman",
+    "headline": "Dodatnih {percent} popusta",
+    "onTop": "Uz {saleLabel} popust od {percent} % · ukupno do {best} %",
+    "emailedNote": "Poslali smo vam ga i e-mailom, a već je upisan u vaš obrazac za narudžbu.",
+    "copyAria": "Kopiraj kod {code}",
+    "copy": "Kopiraj",
+    "copied": "Kopirano",
+    "yourCode": "Vaš kod: {code}",
+    "orderWithCode": "Naruči sada sa mojim kodom",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Najprodavaniji, sa vašim kodom",
+    "emailLabel": "Vaš e-mail",
+    "emailError": "Unesite važeću e-mail adresu.",
+    "emailPlaceholder": "ime@example.com",
+    "reveal": "Prikaži moj kod od {percent} %",
+    "consent": "Dobijaćete ponude kompanije VETUD e-mailom. Odjaviti se možete u bilo kojem trenutku.",
+    "noThanks": "Ne, hvala",
+    "genericError": "Nešto nije u redu. Pokušajte ponovo.",
+    "noConnection": "Nema veze. Pokušajte ponovo."
+  }
+}

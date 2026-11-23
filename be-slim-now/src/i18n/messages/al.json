@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent}% · Stilolapsa Tirzepatide & Retatrutide · BeSlimNow",
+    "description": "Stilolapsa Tirzepatide (TZ-2) dhe Retatrutide nga VETUD. 20 mg ose 40 mg, pastërti ≥99% me COA për çdo seri. Ofertë prezantuese: 40% zbritje. Porositni për më pak se një minutë."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "ZBRITJE",
+    "sealAria": "{saleLabel}: −{percent}%"
+  },
+  "promoBar": {
+    "sale": "−{percent}% për çdo stilolaps",
+    "subscribe": "Abonohuni për −{percent}% shtesë (deri në −{best}%)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, kthehu lart",
+    "navLabel": "Seksionet",
+    "nav": {
+      "products": "Stilolapsat",
+      "dualChamber": "Stilolapsi",
+      "compare": "Krahasimi",
+      "how": "Si të porosisni",
+      "faq": "Pyetje"
+    }
+  },
+  "countryPicker": {
+    "aria": "Shteti dhe monedha: {country}, çmimet në {currency}",
+    "hint": "Shteti juaj përcakton çmimet dhe monedhën.",
+    "groupUs": "Shtetet e Bashkuara",
+    "groupEurope": "Evropa",
+    "groupOther": "Shtete të tjera · çmimet në USD",
+    "groupOtherTitle": "Shtete të tjera"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Stilolaps Tirzepatide (TZ-2)",
+      "tagline": "Agonist i dyfishtë i receptorëve GIP / GLP-1",
+      "description": "Agonisti i dyfishtë për të cilin flet e gjithë fusha, në stilolapsin preciz të VETUD. Një stilolaps, 12 gjilpëra dhe një fletëudhëzues në çdo kuti.",
+      "badge": "Shumë i kërkuar",
+      "penAlt": "Stilolaps VETUD Tirzepatide",
+      "gallery": [
+        {
+          "label": "Kutia",
+          "alt": "Kutia e stilolapsit VETUD Tirzepatide, e mbyllur"
+        },
+        {
+          "label": "Përmbajtja",
+          "alt": "Kutia VETUD Tirzepatide e hapur: stilolaps, 12 gjilpëra dhe fletëudhëzues"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Stilolaps Retatrutide",
+      "tagline": "Agonist i trefishtë GIP / GLP-1 / glukagon",
+      "description": "Agonisti i trefishtë i gjeneratës së re, në stilolapsin preciz të VETUD. Një stilolaps, 12 gjilpëra dhe një fletëudhëzues në çdo kuti.",
+      "badge": "Më i shituri",
+      "penAlt": "Stilolaps VETUD Retatrutide",
+      "gallery": [
+        {
+          "label": "Kutia",
+          "alt": "Kutia e stilolapsit VETUD Retatrutide, e mbyllur"
+        },
+        {
+          "label": "Përmbajtja",
+          "alt": "Kutia VETUD Retatrutide e hapur: stilolaps, 12 gjilpëra dhe fletëudhëzues"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent}% për çdo stilolaps, në të dyja përqendrimet",
+    "eyebrow": "VETUD Peptide Series · Stilolapsat që i kërkojnë të gjithë",
+    "headlineSr": "Tirzepatide & Retatrutide në stilolaps, tani me {percent}% zbritje.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "në",
+      "stilolaps,",
+      "tani"
+    ],
+    "headlineOffer": "me {percent}% zbritje.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Çdo stilolaps vjen ",
+    "everyPenSr": "Çdo stilolaps vjen {list}.",
+    "everyPen": [
+      "me pastërti të garantuar",
+      "me dorëzim të garantuar",
+      "gati për dërgim sot",
+      "me pastërti ≥99%",
+      "me COA",
+      "i paketuar me diskrecion"
+    ],
+    "everyPenSale": "me {percent}% zbritje këtë javë",
+    "listAnd": "dhe",
+    "intro": "Dy molekulat më të kërkuara të kërkimit metabolik, të mbyllura në stilolapsin preciz me dy dhoma të VETUD. 20 mg ose 40 mg, pastërti ≥99%, 12 gjilpëra në kuti, te dera juaj brenda pak ditësh. Një formular i shkurtër. Pa llogari, pa shportë, pa pritje.",
+    "buyFrom": "Blini tani · nga {price}",
+    "extraCode": "Kod shtesë −{percent}%",
+    "guaranteedLabel": "E garantuar:",
+    "guarantees": [
+      "rimbursim nëse një seri rezulton me pastërti nën 99%",
+      "ridërgim ose rimbursim nëse pakoja humbet"
+    ],
+    "trust": [
+      "Pastërti ≥99%, e verifikuar me HPLC",
+      "COA për çdo seri",
+      "Dërgim brenda 24 orësh",
+      "Paketim diskret"
+    ],
+    "penTagFrom": "nga {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent}% për çdo stilolaps",
+    "title": "Zgjidhni stilolapsin tuaj",
+    "subtitle": "Tirzepatide ose Retatrutide, 20 mg ose 40 mg. E njëjta pastërti laboratorike, i njëjti stilolaps VETUD, e njëjta ofertë. Zgjidhni, shtypni Blini tani dhe mbaroi për më pak se një minutë.",
+    "enlargeAria": "Zmadho fotot: {product}",
+    "enlarge": "Zmadho",
+    "thumbAlt": "Pamja: {label}",
+    "inStock": "Në gjendje",
+    "strengthAria": "Përqendrimi",
+    "saleSave": "−{percent}% · kurseni {price}",
+    "perMg": "{price} për mg",
+    "bestValue": "Çmimi më i mirë · {percent}% më lirë për mg",
+    "switchTo40": "Kurseni {percent}% për mg me 40 mg →",
+    "features": [
+      "1 stilolaps + 12 gjilpëra njëpërdorimshe + fletëudhëzues",
+      "Pastërti ≥99%, COA e serisë",
+      "Dërgim brenda 24 orësh, paketim diskret"
+    ],
+    "subscriberCode": "{percent}% zbritje shtesë me kodin tuaj të abonentit",
+    "buy": "Blini tani · {price}",
+    "nothingToPay": "Nuk paguani asgjë tani. Të dhënat e pagesës vijnë me email."
+  },
+  "dualChamber": {
+    "eyebrow": "Stilolapsi VETUD me dy dhoma",
+    "title": "I ndërtuar si një stilolaps farmacie.",
+    "subtitle": "Dy dhoma, një fishek: peptid i liofilizuar sipër, ujë BAC poshtë, të ndara derisa t'i bashkoni. Pastaj fisheku kërcet në stilolapsin e ripërdorshëm VETUD.",
+    "diagramAlt": "Fisheku VETUD përmban peptid të liofilizuar dhe ujë BAC dhe vendoset në mbajtësen e fishekut të stilolapsit",
+    "enlarge": "Zmadho",
+    "benefits": [
+      {
+        "title": "I mbyllur deri në momentin e përzierjes",
+        "text": "Peptidi i liofilizuar qëndron në dhomën e vet, i ndarë nga lëngu me një tapë. Asgjë nuk prishet në raft dhe asgjë nuk përzihet para se ta doni."
+      },
+      {
+        "title": "Uji BAC tashmë në fishek",
+        "text": "Dhoma e dytë përmban ujin bakteriostatik. Pa shishe shtesë për të blerë, pa matje, pa derdhje. Gjithçka që ju nevojitet vjen në një kuti."
+      },
+      {
+        "title": "Numërues preciz, trup stilolapsi i ripërdorshëm",
+        "text": "Fisheku kërcet në stilolapsin VETUD me dritaren e numëruesit. Stilolapsi mbetet, fishekun e ndërroni. I pastër, i saktë dhe i bërë për t'u ripërdorur."
+      }
+    ],
+    "cta": "Dua stilolapsin tim",
+    "video": "Shikoni si funksionon · 40 sekonda"
+  },
+  "compare": {
+    "eyebrow": "Krah për krah",
+    "title": "Cili stilolaps është për ju?",
+    "subtitle": "Dy molekula, një stilolaps, një çmim për mg për krahasim. Të dyja vijnë me të njëjtën pastërti, të njëjtën kuti dhe të njëjtën ofertë.",
+    "rows": {
+      "label": {
+        "label": "Etiketa në stilolaps",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Çfarë është",
+        "tz2": "Agonist i dyfishtë: receptorët GIP + GLP-1",
+        "retatrutide": "Agonist i trefishtë: receptorët GIP + GLP-1 + glukagon"
+      },
+      "generation": {
+        "label": "Gjenerata",
+        "tz2": "Gjenerata aktuale · më i kërkuari",
+        "retatrutide": "Gjenerata e ardhshme · më i riu"
+      },
+      "status": {
+        "label": "Faza e zhvillimit",
+        "tz2": "Molekulë e miratuar si ilaç",
+        "retatrutide": "Në kërkim, në studime të fazës 3"
+      },
+      "strengths": {
+        "label": "Përqendrimet",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "Në kuti",
+        "tz2": "1 stilolaps · 12 gjilpëra · fletëudhëzues",
+        "retatrutide": "1 stilolaps · 12 gjilpëra · fletëudhëzues"
+      },
+      "purity": {
+        "label": "Pastërtia",
+        "tz2": "≥99%, COA e serisë",
+        "retatrutide": "≥99%, COA e serisë"
+      },
+      "dispatch": {
+        "label": "Dërgimi",
+        "tz2": "Brenda 24 orëve pas pagesës",
+        "retatrutide": "Brenda 24 orëve pas pagesës"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent}%",
+    "perMgRow": "Çmimi për mg (40 mg)",
+    "buyProduct": "Bli {product}",
+    "buy": "Blini tani"
+  },
+  "howToOrder": {
+    "eyebrow": "Si të porosisni",
+    "title": "Nga klikimi te dera juaj në katër hapa.",
+    "subtitle": "Një mënyrë porosie, e ndërtuar për shpejtësi. Gjithmonë e dini ku ndodhet porosia juaj.",
+    "steps": [
+      {
+        "title": "Zgjidhni stilolapsin",
+        "text": "Tirzepatide ose Retatrutide, 20 mg ose 40 mg. Shtypni Blini tani."
+      },
+      {
+        "title": "Plotësoni një formular të shkurtër",
+        "text": "Emri, email-i, telefoni dhe adresa. Pa llogari, pa shportë, për më pak se një minutë."
+      },
+      {
+        "title": "Merrni email-in",
+        "text": "Konfirmimi vjen menjëherë, me të dhënat e pagesës dhe numrin e porosisë."
+      },
+      {
+        "title": "Dërgojmë brenda 24 orësh",
+        "text": "Sapo të mbërrijë pagesa, stilolapsat tuaj nisen, të paketuar me diskrecion dhe me gjurmim."
+      }
+    ],
+    "cta": "Filloni porosinë"
+  },
+  "quality": {
+    "eyebrow": "Cilësi që mund ta verifikoni",
+    "title": "Rezultate laboratorike, jo premtime.",
+    "subtitle": "Çdo seri VETUD testohet me HPLC dhe dokumentohet para dërgimit. Na kërkoni në çdo kohë COA-në e serisë që merrni dhe do t'jua dërgojmë.",
+    "stats": [
+      {
+        "value": "≥99%",
+        "label": "Pastërtia",
+        "text": "E verifikuar me HPLC në çdo seri"
+      },
+      {
+        "value": "COA",
+        "label": "Çdo seri",
+        "text": "Certifikatë analize sipas kërkesës, sipas numrit të serisë suaj"
+      },
+      {
+        "value": "24 orë",
+        "label": "Dërgimi",
+        "text": "Dërgim brenda një dite pune pas pagesës"
+      },
+      {
+        "value": "12",
+        "label": "Gjilpëra në çdo kuti",
+        "text": "Bashkë me stilolapsin dhe fletëudhëzuesin, gjithçka gati"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Pas çdo stilolapsi",
+    "title": "Mbushje e pastër. Ruajtje në të ftohtë.",
+    "subtitle": "Foto nga vendet ku produktet VETUD mbushen dhe ruhen: një linjë mbushjeje në dhomë të pastër, pastaj dollapë frigoriferikë derisa porosia juaj të niset.",
+    "enlarge": "Zmadho",
+    "enlargeAria": "Zmadho: {title}",
+    "photos": [
+      {
+        "alt": "Një punonjës me veshje për dhomë të pastër, maskë dhe doreza mban një tabaka me shishe të mbyllura pranë makinës së mbushjes",
+        "eyebrow": "Mbushja",
+        "title": "I mbushur në dhomë të pastër",
+        "text": "Të tapuara dhe të mbyllura me makinë, të trajtuara nga personel me veshje të plotë, maska dhe doreza."
+      },
+      {
+        "alt": "Kuti të etiketuara me shishe në raftet e një dollapi frigoriferik me derë xhami",
+        "eyebrow": "Ruajtja",
+        "title": "I ruajtur në frigorifer",
+        "text": "Çdo seri etiketohet dhe ruhet në dollapë frigoriferikë me dyer xhami deri në dërgim."
+      },
+      {
+        "alt": "Një rresht dollapësh frigoriferikë të ndriçuar me dyer xhami, plot me stok të etiketuar",
+        "eyebrow": "Stoku",
+        "title": "Gati për dërgim",
+        "text": "Mallra në gjendje, kështu që porosia juaj niset brenda 24 orëve pas pagesës."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Pyetje",
+    "title": "Pyetje dhe përgjigje.",
+    "items": [
+      {
+        "q": "Si paguaj?",
+        "a": "Pasi të bëni porosinë, merrni menjëherë një email me të dhënat e pagesës dhe numrin e porosisë. Në këtë faqe nuk tarifohet asgjë. Përdorni numrin e porosisë si përshkrim të pagesës."
+      },
+      {
+        "q": "Sa shpejt dërgoni?",
+        "a": "Porositë dërgohen brenda 24 orëve pas pagesës (ditë pune), me një numër gjurmimi me email dhe, nëse e keni zgjedhur, në aplikacionin tuaj të mesazheve."
+      },
+      {
+        "q": "Çfarë mbulojnë garancitë tuaja?",
+        "a": "Dy gjëra. Pastërtinë: çdo seri testohet dhe, nëse një seri rezulton me pastërti nën 99%, ju rimbursojmë. Dorëzimin: nëse pakoja humbet gjatë rrugës, e ridërgojmë ose ju rimbursojmë. Na shkruani me numrin e porosisë dhe do ta zgjidhim."
+      },
+      {
+        "q": "Çfarë ka në kuti?",
+        "a": "Çdo kuti VETUD përmban një stilolaps në përqendrimin që zgjodhët, 12 gjilpëra njëpërdorimshe dhe një fletëudhëzues, të etiketuara me produktin dhe serinë. Paketimi i jashtëm është neutral dhe diskret."
+      },
+      {
+        "q": "Cili është ndryshimi mes 20 mg dhe 40 mg?",
+        "a": "Sasia e peptidit në stilolaps. Stilolapsi 40 mg kushton më pak për mg, prandaj është shënuar si Çmimi më i mirë."
+      },
+      {
+        "q": "A mund ta marr certifikatën e analizës (COA)?",
+        "a": "Po. Pastërtia e çdo serie testohet. Na shkruani me numrin e porosisë dhe do t'ju dërgojmë COA-në e serisë që keni marrë."
+      },
+      {
+        "q": "A mund ta ndryshoj ose ta anuloj porosinë?",
+        "a": "Po, derisa të dërgohet. Përgjigjuni email-it të konfirmimit ose na shkruani: {contacts}."
+      },
+      {
+        "q": "Për çfarë janë këto produkte?",
+        "a": "Të gjitha produktet që shiten në këtë faqe interneti janë të destinuara vetëm për qëllime kërkimore dhe identifikimi. Këto produkte nuk janë të destinuara për dozim, injektim ose gëlltitje te njerëzit."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Të gjitha të drejtat e rezervuara."
+  },
+  "consent": {
+    "label": "Zgjedhja e cookies",
+    "text": "Do të dëshironim të përdornim cookies analitike (Google Analytics dhe Microsoft Clarity) për të parë si përdoret kjo faqe dhe për ta përmirësuar. Asgjë nuk përdoret për reklama.",
+    "accept": "Prano",
+    "decline": "Refuzo",
+    "settings": "Cilësimet e cookies"
+  },
+  "contact": {
+    "messageUs": "Na shkruani",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "Email"
+    }
+  },
+  "order": {
+    "yourOrder": "Porosia juaj",
+    "shipTo": "Dërgo në",
+    "pricesIn": "· çmimet në {currency}",
+    "chooseCountry": "Zgjidhni shtetin",
+    "chooseCountryError": "Zgjidhni shtetin.",
+    "pen": "Stilolaps",
+    "strength": "Përqendrimi",
+    "quantity": "Sasia",
+    "discountCode": "Kodi i zbritjes",
+    "codePlaceholder": "Kodi juaj",
+    "apply": "Apliko",
+    "applied": "U aplikua",
+    "getCode": "Merrni një kod për {percent}% shtesë",
+    "codeApplied": "Kodi {code} u aplikua: {percent}% zbritje shtesë",
+    "codeInvalid": "Ky kod nuk është i vlefshëm.",
+    "codeCheckFailed": "Kodi nuk mund të verifikohej. Provoni përsëri.",
+    "regularLine": "{quantity} × {price} çmimi i rregullt",
+    "saleLine": "{saleLabel} −{percent}%",
+    "codeLine": "Kodi {code} −{percent}%",
+    "total": "Gjithsej",
+    "youSave": "Kurseni {price}",
+    "perks": [
+      "Pastërti ≥99%, COA për çdo seri",
+      "Dërgim brenda 24 orësh pas pagesës",
+      "Të dhënat e pagesës me email, nuk paguani asgjë tani"
+    ],
+    "title": "Ku ta dërgojmë?",
+    "subtitle": "Pa llogari, pa shportë. Një formular i shkurtër dhe mbaroi.",
+    "fullName": "Emri i plotë",
+    "fullNameError": "Shkruani emrin e plotë.",
+    "email": "Email",
+    "emailError": "Shkruani një email të vlefshëm.",
+    "phone": "Telefoni",
+    "phoneCode": "Prefiksi i shtetit",
+    "phoneError": "Shkruani numrin e telefonit.",
+    "phonePlaceholder": "Numri i telefonit",
+    "contactApp": "Mënyra më e mirë për t'ju kontaktuar",
+    "contactAppEmailOnly": "Vetëm email",
+    "handleHint": {
+      "whatsapp": "Numri i WhatsApp, nëse ndryshon nga telefoni",
+      "telegram": "Emri juaj i përdoruesit në Telegram, p.sh. @emri",
+      "line": "ID-ja juaj në LINE"
+    },
+    "address": "Rruga dhe numri",
+    "addressError": "Shkruani rrugën dhe numrin.",
+    "city": "Qyteti",
+    "cityError": "Shkruani qytetin.",
+    "postalCode": "Kodi postar",
+    "postalCodeError": "Shkruani kodin postar.",
+    "note": "Shënim (opsional)",
+    "researchUse": "Konfirmoj se këto produkte janë vetëm për përdorim kërkimor.",
+    "researchUseError": "Ju lutemi konfirmoni përdorimin kërkimor.",
+    "placeOrder": "Porosi me detyrim pagese · {price}",
+    "confirmationNote": "Do të merrni menjëherë një email konfirmimi me të dhënat e pagesës. Pyetje? Shkruani në {email}.",
+    "genericError": "Diçka shkoi keq. Provoni përsëri ose na shkruani.",
+    "noConnection": "Nuk ka lidhje. Provoni përsëri ose na shkruani.",
+    "doneTitle": "Porosia {orderNumber} është rezervuar",
+    "doneText": "I dërguam të dhënat e pagesës në <b>{email}</b>. Për të paguar: <b>{total}</b>.",
+    "doneSpam": "Nuk e gjeni? Kontrolloni dosjen e postës së padëshiruar ose na shkruani më poshtë.",
+    "doneButton": "U krye"
+  },
+  "promo": {
+    "eyebrow": "Ekskluzive për abonentët",
+    "eyebrowReady": "Kodi juaj është gati",
+    "headline": "{percent} zbritje shtesë",
+    "onTop": "Përveç −{percent}% të {saleLabel} · deri në −{best}% gjithsej",
+    "emailedNote": "Jua dërguam edhe me email dhe është aplikuar tashmë në formularin tuaj të porosisë.",
+    "copyAria": "Kopjo kodin {code}",
+    "copy": "Kopjo",
+    "copied": "U kopjua",
+    "yourCode": "Kodi juaj: {code}",
+    "orderWithCode": "Porosit tani me kodin tim",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Më i shituri, me kodin tuaj",
+    "emailLabel": "Email-i juaj",
+    "emailError": "Shkruani një email të vlefshëm.",
+    "emailPlaceholder": "emri@example.com",
+    "reveal": "Shfaq kodin tim prej {percent}%",
+    "consent": "Do të merrni oferta të VETUD me email. Mund të çabonoheni në çdo kohë.",
+    "noThanks": "Jo, faleminderit",
+    "genericError": "Diçka shkoi keq. Provoni përsëri.",
+    "noConnection": "Nuk ka lidhje. Provoni përsëri."
+  }
+}

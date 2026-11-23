@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Peresniki Tirzepatide & Retatrutide · BeSlimNow",
+    "description": "Peresniki Tirzepatide (TZ-2) in Retatrutide podjetja VETUD. 20 mg ali 40 mg, čistost ≥99 % s COA za vsako serijo. Uvodna ponudba: 40 % popusta. Naročilo v manj kot minuti."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "POPUST",
+    "sealAria": "{saleLabel}: −{percent} %"
+  },
+  "promoBar": {
+    "sale": "−{percent} % na vsak peresnik",
+    "subscribe": "Naročite se na novice za dodatnih −{percent} % (do −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, nazaj na vrh",
+    "navLabel": "Razdelki",
+    "nav": {
+      "products": "Peresniki",
+      "dualChamber": "Peresnik",
+      "compare": "Primerjava",
+      "how": "Kako naročiti",
+      "faq": "Pogosta vprašanja"
+    }
+  },
+  "countryPicker": {
+    "aria": "Država in valuta: {country}, cene v {currency}",
+    "hint": "Vaša država določa cene in valuto.",
+    "groupUs": "Združene države Amerike",
+    "groupEurope": "Evropa",
+    "groupOther": "Druge države · cene v USD",
+    "groupOtherTitle": "Druge države"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Peresnik Tirzepatide (TZ-2)",
+      "tagline": "Dvojni agonist receptorjev GIP / GLP-1",
+      "description": "Dvojni agonist, o katerem govori vsa stroka, v natančnem peresniku VETUD. En peresnik, 12 igel in navodila v vsaki škatli.",
+      "badge": "Zelo priljubljen",
+      "penAlt": "Peresnik VETUD Tirzepatide",
+      "gallery": [
+        {
+          "label": "Škatla",
+          "alt": "Škatla peresnika VETUD Tirzepatide, zaprta"
+        },
+        {
+          "label": "Vsebina",
+          "alt": "Odprta škatla VETUD Tirzepatide: peresnik, 12 igel in navodila"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Peresnik Retatrutide",
+      "tagline": "Trojni agonist GIP / GLP-1 / glukagona",
+      "description": "Trojni agonist nove generacije v natančnem peresniku VETUD. En peresnik, 12 igel in navodila v vsaki škatli.",
+      "badge": "Najbolje prodajan",
+      "penAlt": "Peresnik VETUD Retatrutide",
+      "gallery": [
+        {
+          "label": "Škatla",
+          "alt": "Škatla peresnika VETUD Retatrutide, zaprta"
+        },
+        {
+          "label": "Vsebina",
+          "alt": "Odprta škatla VETUD Retatrutide: peresnik, 12 igel in navodila"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % na vsak peresnik, obe jakosti",
+    "eyebrow": "VETUD Peptide Series · Peresniki, po katerih vsi sprašujejo",
+    "headlineSr": "Tirzepatide & Retatrutide v peresniku, zdaj {percent} % ceneje.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "v",
+      "peresniku,",
+      "zdaj"
+    ],
+    "headlineOffer": "{percent} % ceneje.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Vsak peresnik je ",
+    "everyPenSr": "Vsak peresnik je {list}.",
+    "everyPen": [
+      "z zajamčeno čistostjo",
+      "z zajamčeno dostavo",
+      "pripravljen za odpošiljanje še danes",
+      "≥99 % čist",
+      "podprt s COA",
+      "diskretno zapakiran"
+    ],
+    "everyPenSale": "ta teden {percent} % cenejši",
+    "listAnd": "in",
+    "intro": "Dve najbolj iskani molekuli presnovnih raziskav, zaprti v natančen dvoprekatni peresnik VETUD. 20 mg ali 40 mg, čistost ≥99 %, 12 igel v škatli, pri vas v nekaj dneh. En kratek obrazec. Brez računa, brez košarice, brez čakanja.",
+    "buyFrom": "Kupite zdaj · od {price}",
+    "extraCode": "Dodatna koda −{percent} %",
+    "guaranteedLabel": "Jamstvo:",
+    "guarantees": [
+      "vračilo denarja, če ima serija čistost pod 99 %",
+      "ponovno pošiljanje ali vračilo denarja, če se paket izgubi"
+    ],
+    "trust": [
+      "Čistost ≥99 %, preverjeno s HPLC",
+      "COA za vsako serijo",
+      "Pošljemo v 24 urah",
+      "Diskretna embalaža"
+    ],
+    "penTagFrom": "od {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % na vsak peresnik",
+    "title": "Izberite svoj peresnik",
+    "subtitle": "Tirzepatide ali Retatrutide, 20 mg ali 40 mg. Enaka laboratorijska čistost, enak peresnik VETUD, enaka ponudba. Izberite, kliknite Kupite zdaj in v manj kot minuti je opravljeno.",
+    "enlargeAria": "Povečaj slike: {product}",
+    "enlarge": "Povečaj",
+    "thumbAlt": "Pogled: {label}",
+    "inStock": "Na zalogi",
+    "strengthAria": "Jakost",
+    "saleSave": "−{percent} % · prihranite {price}",
+    "perMg": "{price} na mg",
+    "bestValue": "Najboljša cena · {percent} % ceneje na mg",
+    "switchTo40": "Prihranite {percent} % na mg s 40 mg →",
+    "features": [
+      "1 peresnik + 12 igel za enkratno uporabo + navodila",
+      "Čistost ≥99 %, COA serije",
+      "Pošljemo v 24 urah, diskretno zapakirano"
+    ],
+    "subscriberCode": "Dodatnih {percent} % popusta z vašo naročniško kodo",
+    "buy": "Kupite zdaj · {price}",
+    "nothingToPay": "Zdaj ne plačate ničesar. Podatki za plačilo pridejo po e-pošti."
+  },
+  "dualChamber": {
+    "eyebrow": "Dvoprekatni peresnik VETUD",
+    "title": "Izdelan kot peresnik iz lekarne.",
+    "subtitle": "Dva prekata, en vložek: zgoraj liofiliziran peptid, spodaj voda BAC, ločena, dokler ju ne združite. Nato se vložek zaskoči v peresnik VETUD za večkratno uporabo.",
+    "diagramAlt": "Vložek VETUD vsebuje liofiliziran peptid in vodo BAC ter je nameščen v nosilec vložka peresnika",
+    "enlarge": "Povečaj",
+    "benefits": [
+      {
+        "title": "Zaprto do trenutka mešanja",
+        "text": "Liofiliziran peptid je v svojem prekatu, od tekočine ločen z zamaškom. Na polici se nič ne pokvari in nič se ne zmeša, preden to želite."
+      },
+      {
+        "title": "Voda BAC že v vložku",
+        "text": "Drugi prekat vsebuje bakteriostatično vodo. Brez dodatnih vial za nakup, brez merjenja, brez pretakanja. Vse, kar potrebujete, pride v eni škatli."
+      },
+      {
+        "title": "Natančen števec, telo peresnika za večkratno uporabo",
+        "text": "Vložek se zaskoči v peresnik VETUD z okencem števca. Peresnik ostane, vložek zamenjate. Čisto, natančno in narejeno za ponovno uporabo."
+      }
+    ],
+    "cta": "Želim svoj peresnik",
+    "video": "Oglejte si, kako deluje · 40 sekund"
+  },
+  "compare": {
+    "eyebrow": "Drug ob drugem",
+    "title": "Kateri peresnik je za vas?",
+    "subtitle": "Dve molekuli, en peresnik, ena cena na mg za primerjavo. Oba prideta z enako čistostjo, enako škatlo in enako ponudbo.",
+    "rows": {
+      "label": {
+        "label": "Oznaka na peresniku",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Kaj je to",
+        "tz2": "Dvojni agonist: receptorji GIP + GLP-1",
+        "retatrutide": "Trojni agonist: receptorji GIP + GLP-1 + glukagona"
+      },
+      "generation": {
+        "label": "Generacija",
+        "tz2": "Trenutna generacija · najbolj iskan",
+        "retatrutide": "Naslednja generacija · najnovejši"
+      },
+      "status": {
+        "label": "Faza razvoja",
+        "tz2": "Molekula, odobrena kot zdravilo",
+        "retatrutide": "V raziskavah, v preskušanjih 3. faze"
+      },
+      "strengths": {
+        "label": "Jakosti",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "V škatli",
+        "tz2": "1 peresnik · 12 igel · navodila",
+        "retatrutide": "1 peresnik · 12 igel · navodila"
+      },
+      "purity": {
+        "label": "Čistost",
+        "tz2": "≥99 %, COA serije",
+        "retatrutide": "≥99 %, COA serije"
+      },
+      "dispatch": {
+        "label": "Odpošiljanje",
+        "tz2": "V 24 urah po plačilu",
+        "retatrutide": "V 24 urah po plačilu"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Cena na mg (40 mg)",
+    "buyProduct": "Kupite {product}",
+    "buy": "Kupite zdaj"
+  },
+  "howToOrder": {
+    "eyebrow": "Kako naročiti",
+    "title": "Od klika do vrat v štirih korakih.",
+    "subtitle": "En način naročanja, zasnovan za hitrost. Vedno veste, kje je vaše naročilo.",
+    "steps": [
+      {
+        "title": "Izberite peresnik",
+        "text": "Tirzepatide ali Retatrutide, 20 mg ali 40 mg. Kliknite Kupite zdaj."
+      },
+      {
+        "title": "Izpolnite kratek obrazec",
+        "text": "Ime, e-pošta, telefon in naslov. Brez računa, brez košarice, v manj kot minuti."
+      },
+      {
+        "title": "Prejmite e-pošto",
+        "text": "Potrditev pride takoj, s podatki za plačilo in številko naročila."
+      },
+      {
+        "title": "Pošljemo v 24 urah",
+        "text": "Takoj ko prispe plačilo, se vaši peresniki odpravijo na pot, diskretno zapakirani in s sledenjem."
+      }
+    ],
+    "cta": "Začni naročilo"
+  },
+  "quality": {
+    "eyebrow": "Kakovost, ki jo lahko preverite",
+    "title": "Laboratorijski rezultati, ne obljube.",
+    "subtitle": "Vsaka serija VETUD je pred odpošiljanjem preverjena s HPLC in dokumentirana. Kadar koli nas prosite za COA serije, ki jo prejmete, in vam ga pošljemo.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Čistost",
+        "text": "Preverjeno s HPLC v vsaki seriji"
+      },
+      {
+        "value": "COA",
+        "label": "Vsaka serija",
+        "text": "Certifikat analize na zahtevo, glede na številko vaše serije"
+      },
+      {
+        "value": "24 ur",
+        "label": "Odpošiljanje",
+        "text": "Pošljemo v enem delovnem dnevu po plačilu"
+      },
+      {
+        "value": "12",
+        "label": "Igel v vsaki škatli",
+        "text": "S peresnikom in navodili, vse pripravljeno"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Za vsakim peresnikom",
+    "title": "Čisto polnjeno. Hladno shranjeno.",
+    "subtitle": "Fotografije s krajev, kjer se izdelki VETUD polnijo in skladiščijo: polnilna linija v čistem prostoru, nato hladilniki, dokler vaše naročilo ne odide.",
+    "enlarge": "Povečaj",
+    "enlargeAria": "Povečaj: {title}",
+    "photos": [
+      {
+        "alt": "Delavec v oblačilih za čisti prostor, z masko in rokavicami, nese pladenj zaprtih vial mimo polnilnega stroja",
+        "eyebrow": "Polnjenje",
+        "title": "Polnjeno v čistem prostoru",
+        "text": "Strojno zamašeno in zaprto, z njimi ravna osebje v polni zaščitni opremi, z maskami in rokavicami."
+      },
+      {
+        "alt": "Označeni zaboji z vialami na policah hladilnika s steklenimi vrati",
+        "eyebrow": "Skladiščenje",
+        "title": "Shranjeno v hladilniku",
+        "text": "Vsaka serija je označena in do odpošiljanja shranjena v hladilnikih s steklenimi vrati."
+      },
+      {
+        "alt": "Vrsta osvetljenih hladilnikov s steklenimi vrati, polnih označene zaloge",
+        "eyebrow": "Zaloga",
+        "title": "Pripravljeno za odpošiljanje",
+        "text": "Blago na zalogi, zato vaše naročilo odide v 24 urah po plačilu."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Pogosta vprašanja",
+    "title": "Vprašanja in odgovori.",
+    "items": [
+      {
+        "q": "Kako plačam?",
+        "a": "Po oddaji naročila takoj prejmete e-pošto s podatki za plačilo in številko naročila. Na tej strani se nič ne zaračuna. Kot sklic plačila navedite številko naročila."
+      },
+      {
+        "q": "Kako hitro pošiljate?",
+        "a": "Naročila pošljemo v 24 urah po plačilu (ob delavnikih), s številko za sledenje po e-pošti in, če ste jo izbrali, v aplikaciji za sporočila."
+      },
+      {
+        "q": "Kaj krijejo vaša jamstva?",
+        "a": "Dve stvari. Čistost: vsaka serija je preverjena, in če ima serija čistost pod 99 %, vrnemo denar. Dostavo: če se paket na poti izgubi, ga pošljemo znova ali vrnemo denar. Pišite nam s številko naročila in bomo uredili."
+      },
+      {
+        "q": "Kaj je v škatli?",
+        "a": "Vsaka škatla VETUD vsebuje en peresnik izbrane jakosti, 12 igel za enkratno uporabo in navodila, označene z izdelkom in serijo. Zunanja embalaža je nevtralna in diskretna."
+      },
+      {
+        "q": "Kakšna je razlika med 20 mg in 40 mg?",
+        "a": "Količina peptida v peresniku. Peresnik s 40 mg je cenejši na mg, zato je označen kot Najboljša cena."
+      },
+      {
+        "q": "Ali lahko dobim certifikat analize (COA)?",
+        "a": "Da. Čistost vsake serije je preverjena. Pišite nam s številko naročila in poslali vam bomo COA serije, ki ste jo prejeli."
+      },
+      {
+        "q": "Ali lahko naročilo spremenim ali prekličem?",
+        "a": "Da, dokler ni odposlano. Odgovorite na potrditveno e-pošto ali nam pišite: {contacts}."
+      },
+      {
+        "q": "Za kaj so ti izdelki namenjeni?",
+        "a": "Vsi izdelki, ki se prodajajo na tem spletnem mestu, so namenjeni izključno raziskovalnim in identifikacijskim namenom. Ti izdelki niso namenjeni odmerjanju, injiciranju ali zaužitju pri ljudeh."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Vse pravice pridržane."
+  },
+  "consent": {
+    "label": "Izbira piškotkov",
+    "text": "Radi bi uporabljali analitične piškotke (Google Analytics in Microsoft Clarity), da vidimo, kako se ta stran uporablja, in jo izboljšamo. Nič se ne uporablja za oglaševanje.",
+    "accept": "Sprejmi",
+    "decline": "Zavrni",
+    "settings": "Nastavitve piškotkov"
+  },
+  "contact": {
+    "messageUs": "Pišite nam",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-pošta"
+    }
+  },
+  "order": {
+    "yourOrder": "Vaše naročilo",
+    "shipTo": "Dostava v",
+    "pricesIn": "· cene v {currency}",
+    "chooseCountry": "Izberite državo",
+    "chooseCountryError": "Izberite državo.",
+    "pen": "Peresnik",
+    "strength": "Jakost",
+    "quantity": "Količina",
+    "discountCode": "Koda za popust",
+    "codePlaceholder": "Vaša koda",
+    "apply": "Uveljavi",
+    "applied": "Uveljavljeno",
+    "getCode": "Pridobite kodo za dodatnih {percent} %",
+    "codeApplied": "Koda {code} uveljavljena: dodatnih {percent} % popusta",
+    "codeInvalid": "Ta koda ni veljavna.",
+    "codeCheckFailed": "Kode ni bilo mogoče preveriti. Poskusite znova.",
+    "regularLine": "{quantity} × {price} redna cena",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Koda {code} −{percent} %",
+    "total": "Skupaj",
+    "youSave": "Prihranite {price}",
+    "perks": [
+      "Čistost ≥99 %, COA za vsako serijo",
+      "Pošljemo v 24 urah po plačilu",
+      "Podatki za plačilo po e-pošti, zdaj ne plačate ničesar"
+    ],
+    "title": "Kam naj pošljemo?",
+    "subtitle": "Brez računa, brez košarice. En kratek obrazec in končano.",
+    "fullName": "Ime in priimek",
+    "fullNameError": "Vnesite ime in priimek.",
+    "email": "E-pošta",
+    "emailError": "Vnesite veljaven e-poštni naslov.",
+    "phone": "Telefon",
+    "phoneCode": "Klicna koda države",
+    "phoneError": "Vnesite telefonsko številko.",
+    "phonePlaceholder": "Telefonska številka",
+    "contactApp": "Kako vas najlažje dosežemo",
+    "contactAppEmailOnly": "Samo e-pošta",
+    "handleHint": {
+      "whatsapp": "Številka za WhatsApp, če se razlikuje od telefona",
+      "telegram": "Vaše uporabniško ime v aplikaciji Telegram, npr. @ime",
+      "line": "Vaš LINE ID"
+    },
+    "address": "Ulica in hišna številka",
+    "addressError": "Vnesite ulico in hišno številko.",
+    "city": "Kraj",
+    "cityError": "Vnesite kraj.",
+    "postalCode": "Poštna številka",
+    "postalCodeError": "Vnesite poštno številko.",
+    "note": "Opomba (neobvezno)",
+    "researchUse": "Potrjujem, da so ti izdelki namenjeni izključno raziskavam.",
+    "researchUseError": "Potrdite uporabo za raziskave.",
+    "placeOrder": "Naročilo z obveznostjo plačila · {price}",
+    "confirmationNote": "Takoj boste prejeli potrditveno e-pošto s podatki za plačilo. Vprašanja? Pišite na {email}.",
+    "genericError": "Nekaj je šlo narobe. Poskusite znova ali nam pišite.",
+    "noConnection": "Ni povezave. Poskusite znova ali nam pišite.",
+    "doneTitle": "Naročilo {orderNumber} je rezervirano",
+    "doneText": "Podatke za plačilo smo poslali na <b>{email}</b>. Za plačilo: <b>{total}</b>.",
+    "doneSpam": "Ga ne najdete? Preverite mapo z vsiljeno pošto ali nam pišite spodaj.",
+    "doneButton": "Končano"
+  },
+  "promo": {
+    "eyebrow": "Ekskluzivno za naročnike",
+    "eyebrowReady": "Vaša koda je pripravljena",
+    "headline": "Dodatnih {percent} popusta",
+    "onTop": "Poleg popusta {saleLabel} −{percent} % · skupaj do −{best} %",
+    "emailedNote": "Poslali smo vam jo tudi po e-pošti in je že vpisana v vaš obrazec za naročilo.",
+    "copyAria": "Kopiraj kodo {code}",
+    "copy": "Kopiraj",
+    "copied": "Kopirano",
+    "yourCode": "Vaša koda: {code}",
+    "orderWithCode": "Naroči zdaj z mojo kodo",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Najbolje prodajan, z vašo kodo",
+    "emailLabel": "Vaša e-pošta",
+    "emailError": "Vnesite veljaven e-poštni naslov.",
+    "emailPlaceholder": "ime@example.com",
+    "reveal": "Pokaži mojo kodo za {percent} %",
+    "consent": "Prejemali boste ponudbe VETUD po e-pošti. Odjavite se lahko kadar koli.",
+    "noThanks": "Ne, hvala",
+    "genericError": "Nekaj je šlo narobe. Poskusite znova.",
+    "noConnection": "Ni povezave. Poskusite znova."
+  }
+}

@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Tirzepatide & Retatrutide Pens · BeSlimNow",
+    "description": "Tirzepatide (TZ-2) und Retatrutide als Pens von VETUD. 20 mg oder 40 mg, ≥99 % Reinheit mit COA für jede Charge. Einführungsangebot: 40 % Rabatt. In unter einer Minute bestellt."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "RABATT",
+    "sealAria": "{saleLabel}: {percent} % Rabatt"
+  },
+  "promoBar": {
+    "sale": "−{percent} % auf jeden Pen",
+    "subscribe": "Abonnieren und zusätzlich −{percent} % sparen (bis zu −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, zurück nach oben",
+    "navLabel": "Bereiche",
+    "nav": {
+      "products": "Pens",
+      "dualChamber": "Der Pen",
+      "compare": "Vergleich",
+      "how": "So bestellen Sie",
+      "faq": "FAQ"
+    }
+  },
+  "countryPicker": {
+    "aria": "Land und Währung: {country}, Preise in {currency}",
+    "hint": "Ihr Land bestimmt Preise und Währung.",
+    "groupUs": "Vereinigte Staaten",
+    "groupEurope": "Europa",
+    "groupOther": "Andere Länder · Preise in USD",
+    "groupOtherTitle": "Andere Länder"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) Pen",
+      "tagline": "Dualer GIP-/GLP-1-Rezeptoragonist",
+      "description": "Der duale Agonist, über den die ganze Fachwelt spricht, im Präzisions-Pen von VETUD. Ein Pen, 12 Nadeln und eine Gebrauchsanleitung pro Box.",
+      "badge": "Sehr beliebt",
+      "penAlt": "VETUD Tirzepatide Pen",
+      "gallery": [
+        {
+          "label": "Box",
+          "alt": "VETUD Tirzepatide Pen-Box, geschlossen"
+        },
+        {
+          "label": "Inhalt",
+          "alt": "VETUD Tirzepatide Box, geöffnet: Pen, 12 Nadeln und Gebrauchsanleitung"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide Pen",
+      "tagline": "Dreifacher GIP-/GLP-1-/Glukagon-Agonist",
+      "description": "Der dreifache Agonist der nächsten Generation, im Präzisions-Pen von VETUD. Ein Pen, 12 Nadeln und eine Gebrauchsanleitung pro Box.",
+      "badge": "Bestseller",
+      "penAlt": "VETUD Retatrutide Pen",
+      "gallery": [
+        {
+          "label": "Box",
+          "alt": "VETUD Retatrutide Pen-Box, geschlossen"
+        },
+        {
+          "label": "Inhalt",
+          "alt": "VETUD Retatrutide Box, geöffnet: Pen, 12 Nadeln und Gebrauchsanleitung"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % auf jeden Pen, beide Stärken",
+    "eyebrow": "VETUD Peptide Series · Die Pens, nach denen alle fragen",
+    "headlineSr": "Tirzepatide & Retatrutide als Pen, jetzt {percent} % günstiger.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "als",
+      "Pen,",
+      "jetzt"
+    ],
+    "headlineOffer": "{percent} % günstiger.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Jeder Pen ist ",
+    "everyPenSr": "Jeder Pen ist {list}.",
+    "everyPen": [
+      "reinheitsgarantiert",
+      "liefergarantiert",
+      "heute versandbereit",
+      "≥99 % rein",
+      "mit COA belegt",
+      "diskret verpackt"
+    ],
+    "everyPenSale": "diese Woche {percent} % günstiger",
+    "listAnd": "und",
+    "intro": "Die zwei begehrtesten Moleküle der Stoffwechselforschung, versiegelt im Präzisions-Zweikammer-Pen von VETUD. 20 mg oder 40 mg, ≥99 % Reinheit, 12 Nadeln in der Box, in wenigen Tagen bei Ihnen. Ein kurzes Formular. Kein Konto, kein Warenkorb, kein Warten.",
+    "buyFrom": "Jetzt kaufen · ab {price}",
+    "extraCode": "Extra-Code: −{percent} %",
+    "guaranteedLabel": "Garantiert:",
+    "guarantees": [
+      "Erstattung, wenn eine Charge unter 99 % Reinheit liegt",
+      "Neuversand oder Erstattung, wenn Ihr Paket verloren geht"
+    ],
+    "trust": [
+      "≥99 % Reinheit, HPLC-geprüft",
+      "COA zu jeder Charge",
+      "Versand innerhalb von 24 h",
+      "Diskrete Verpackung"
+    ],
+    "penTagFrom": "ab {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % auf jeden Pen",
+    "title": "Wählen Sie Ihren Pen",
+    "subtitle": "Tirzepatide oder Retatrutide, 20 mg oder 40 mg. Gleiche Laborqualität, gleicher VETUD Pen, gleiches Angebot. Auswählen, auf „Jetzt kaufen“ tippen, in unter einer Minute erledigt.",
+    "enlargeAria": "Bilder vom {product} vergrössern",
+    "enlarge": "Vergrössern",
+    "thumbAlt": "Ansicht: {label}",
+    "inStock": "Auf Lager",
+    "strengthAria": "Stärke",
+    "saleSave": "−{percent} % · {price} gespart",
+    "perMg": "{price} pro mg",
+    "bestValue": "Bester Preis · {percent} % pro mg gespart",
+    "switchTo40": "Mit 40 mg {percent} % pro mg sparen →",
+    "features": [
+      "1 Pen + 12 Einwegnadeln + Gebrauchsanleitung",
+      "≥99 % Reinheit, COA zur Charge",
+      "Versand innerhalb von 24 h, diskret verpackt"
+    ],
+    "subscriberCode": "Zusätzlich {percent} % Rabatt mit Ihrem Abonnenten-Code",
+    "buy": "Jetzt kaufen · {price}",
+    "nothingToPay": "Jetzt nichts bezahlen. Die Zahlungsdaten kommen per E-Mail."
+  },
+  "dualChamber": {
+    "eyebrow": "Der VETUD Zweikammer-Pen",
+    "title": "Gebaut wie ein Pen aus der Apotheke.",
+    "subtitle": "Zwei Kammern, eine Kartusche: oben gefriergetrocknetes Peptid, unten BAC-Wasser, getrennt, bis Sie beides zusammenführen. Dann rastet sie im wiederverwendbaren VETUD Pen ein.",
+    "diagramAlt": "Die VETUD Kartusche enthält gefriergetrocknetes Peptid und BAC-Wasser und sitzt im Kartuschenhalter des Pens",
+    "enlarge": "Vergrössern",
+    "benefits": [
+      {
+        "title": "Versiegelt bis zum Mischen",
+        "text": "Das gefriergetrocknete Peptid liegt in einer eigenen Kammer, durch einen Stopfen von der Flüssigkeit getrennt. Nichts zersetzt sich im Regal, nichts wird gemischt, bevor Sie es wollen."
+      },
+      {
+        "title": "BAC-Wasser schon in der Kartusche",
+        "text": "Die zweite Kammer enthält das bakteriostatische Wasser. Keine zusätzlichen Fläschchen, kein Abmessen, kein Umfüllen. Alles, was Sie brauchen, kommt in einer Box."
+      },
+      {
+        "title": "Präzise Zählanzeige, wiederverwendbarer Pen",
+        "text": "Die Kartusche rastet im VETUD Pen mit Zählfenster ein. Den Pen behalten, die Kartusche wechseln. Sauber, exakt und zum Wiederverwenden gebaut."
+      }
+    ],
+    "cta": "Meinen Pen holen",
+    "video": "So funktioniert es · 40 Sekunden"
+  },
+  "compare": {
+    "eyebrow": "Im Vergleich",
+    "title": "Welcher Pen passt zu Ihnen?",
+    "subtitle": "Zwei Moleküle, ein Pen, ein Preis pro mg zum Vergleichen. Beide kommen mit derselben Reinheit, derselben Box und demselben Angebot.",
+    "rows": {
+      "label": {
+        "label": "Aufschrift auf dem Pen",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Was es ist",
+        "tz2": "Dualer Agonist: GIP- + GLP-1-Rezeptoren",
+        "retatrutide": "Dreifacher Agonist: GIP- + GLP-1- + Glukagon-Rezeptoren"
+      },
+      "generation": {
+        "label": "Generation",
+        "tz2": "Aktuelle Generation · am meisten gefragt",
+        "retatrutide": "Nächste Generation · die neueste"
+      },
+      "status": {
+        "label": "Entwicklungsstand",
+        "tz2": "Als Arzneimittel zugelassener Wirkstoff",
+        "retatrutide": "In klinischer Prüfung, Phase-3-Studien"
+      },
+      "strengths": {
+        "label": "Stärken",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "In der Box",
+        "tz2": "1 Pen · 12 Nadeln · Anleitung",
+        "retatrutide": "1 Pen · 12 Nadeln · Anleitung"
+      },
+      "purity": {
+        "label": "Reinheit",
+        "tz2": "≥99 %, COA zur Charge",
+        "retatrutide": "≥99 %, COA zur Charge"
+      },
+      "dispatch": {
+        "label": "Versand",
+        "tz2": "Innerhalb von 24 h nach Zahlung",
+        "retatrutide": "Innerhalb von 24 h nach Zahlung"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Preis pro mg (40 mg)",
+    "buyProduct": "{product} kaufen",
+    "buy": "Jetzt kaufen"
+  },
+  "howToOrder": {
+    "eyebrow": "So bestellen Sie",
+    "title": "Vom Klick bis zur Haustür in vier Schritten.",
+    "subtitle": "Ein Bestellweg, auf Tempo ausgelegt. Sie wissen immer, wo Ihre Bestellung steht.",
+    "steps": [
+      {
+        "title": "Pen wählen",
+        "text": "Tirzepatide oder Retatrutide, 20 mg oder 40 mg. Auf „Jetzt kaufen“ tippen."
+      },
+      {
+        "title": "Kurzes Formular ausfüllen",
+        "text": "Name, E-Mail, Telefon und Adresse. Kein Konto, kein Warenkorb, unter einer Minute."
+      },
+      {
+        "title": "E-Mail erhalten",
+        "text": "Ihre Bestätigung kommt sofort, mit den Zahlungsdaten und Ihrer Bestellnummer."
+      },
+      {
+        "title": "Versand in 24 h",
+        "text": "Sobald die Zahlung eingeht, gehen Ihre Pens raus, diskret verpackt und mit Sendungsverfolgung."
+      }
+    ],
+    "cta": "Bestellung starten"
+  },
+  "quality": {
+    "eyebrow": "Qualität, die Sie prüfen können",
+    "title": "Laborergebnisse statt Versprechen.",
+    "subtitle": "Jede VETUD Charge wird vor dem Versand per HPLC geprüft und dokumentiert. Fragen Sie uns jederzeit nach dem COA Ihrer Charge, und wir schicken es Ihnen.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Reinheit",
+        "text": "Bei jeder Charge per HPLC geprüft"
+      },
+      {
+        "value": "COA",
+        "label": "Jede Charge",
+        "text": "Analysezertifikat auf Anfrage, passend zu Ihrer Chargennummer"
+      },
+      {
+        "value": "24 h",
+        "label": "Versand",
+        "text": "Versand innerhalb eines Werktags nach Zahlung"
+      },
+      {
+        "value": "12",
+        "label": "Nadeln in jeder Box",
+        "text": "Mit dem Pen und einer Gebrauchsanleitung, sofort startklar"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Hinter jedem Pen",
+    "title": "Sauber abgefüllt. Kühl gelagert.",
+    "subtitle": "Fotos von dort, wo VETUD Produkte abgefüllt und gelagert werden: eine Reinraum-Abfülllinie, danach Kühlschränke, bis Ihre Bestellung verschickt wird.",
+    "enlarge": "Vergrössern",
+    "enlargeAria": "Vergrössern: {title}",
+    "photos": [
+      {
+        "alt": "Eine Person in Reinraumkittel, Maske und Handschuhen trägt ein Tablett verschlossener Fläschchen an der Abfüllmaschine vorbei",
+        "eyebrow": "Abfüllung",
+        "title": "Im Reinraum abgefüllt",
+        "text": "Maschinell mit Stopfen und Kappe verschlossen, betreut von Personal in voller Schutzkleidung mit Maske und Handschuhen."
+      },
+      {
+        "alt": "Beschriftete Behälter mit Fläschchen in den Fächern eines Kühlschranks mit Glastür",
+        "eyebrow": "Lagerung",
+        "title": "Gekühlt gelagert",
+        "text": "Jede Charge beschriftet und bis zum Versand in Kühlschränken mit Glastür gelagert."
+      },
+      {
+        "alt": "Eine Reihe beleuchteter Kühlschränke mit Glastür voller beschrifteter Ware",
+        "eyebrow": "Bestand",
+        "title": "Versandbereit",
+        "text": "Ware auf Lager, damit Ihre Bestellung innerhalb von 24 Stunden nach Zahlung rausgeht."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Ihre Fragen, beantwortet.",
+    "items": [
+      {
+        "q": "Wie bezahle ich?",
+        "a": "Nach Ihrer Bestellung erhalten Sie sofort eine E-Mail mit den Zahlungsdaten und Ihrer Bestellnummer. Auf dieser Seite wird nichts abgebucht. Geben Sie Ihre Bestellnummer als Verwendungszweck an."
+      },
+      {
+        "q": "Wie schnell liefern Sie?",
+        "a": "Bestellungen werden innerhalb von 24 Stunden nach Zahlungseingang versendet (an Werktagen), mit einer Sendungsnummer per E-Mail und, falls gewählt, über Ihre Messenger-App."
+      },
+      {
+        "q": "Was decken Ihre Garantien ab?",
+        "a": "Zwei Dinge. Reinheit: Jede Charge wird geprüft, und liegt eine Charge unter 99 % Reinheit, erstatten wir den Betrag. Lieferung: Geht Ihr Paket unterwegs verloren, versenden wir es neu oder erstatten Ihnen den Betrag. Schreiben Sie uns mit Ihrer Bestellnummer, und wir kümmern uns darum."
+      },
+      {
+        "q": "Was ist in der Box?",
+        "a": "Jede VETUD Box enthält einen Pen in der gewählten Stärke, 12 Einwegnadeln und eine Gebrauchsanleitung, beschriftet mit Produkt und Charge. Die äussere Verpackung ist neutral und diskret."
+      },
+      {
+        "q": "Was ist der Unterschied zwischen 20 mg und 40 mg?",
+        "a": "Die Menge an Peptid im Pen. Der 40-mg-Pen kostet weniger pro mg, deshalb ist er als „Bester Preis“ markiert."
+      },
+      {
+        "q": "Kann ich das Analysezertifikat (COA) bekommen?",
+        "a": "Ja. Jede Charge wird auf Reinheit geprüft. Schreiben Sie uns mit Ihrer Bestellnummer, und wir senden Ihnen das COA der Charge, die Sie erhalten haben."
+      },
+      {
+        "q": "Kann ich meine Bestellung ändern oder stornieren?",
+        "a": "Ja, bis sie versendet ist. Antworten Sie auf Ihre Bestätigungs-E-Mail oder schreiben Sie uns: {contacts}."
+      },
+      {
+        "q": "Wofür sind diese Produkte bestimmt?",
+        "a": "Alle auf dieser Website verkauften Produkte sind ausschliesslich für Forschungs- und Identifizierungszwecke bestimmt. Diese Produkte sind nicht zur Dosierung, Injektion oder Einnahme beim Menschen bestimmt."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Alle Rechte vorbehalten."
+  },
+  "consent": {
+    "label": "Cookie-Auswahl",
+    "text": "Wir möchten Analyse-Cookies (Google Analytics und Microsoft Clarity) verwenden, um zu sehen, wie diese Seite genutzt wird, und sie zu verbessern. Nichts davon wird für Werbung genutzt.",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen",
+    "settings": "Cookie-Einstellungen"
+  },
+  "contact": {
+    "messageUs": "Schreiben Sie uns",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-Mail"
+    }
+  },
+  "order": {
+    "yourOrder": "Ihre Bestellung",
+    "shipTo": "Lieferung nach",
+    "pricesIn": "· Preise in {currency}",
+    "chooseCountry": "Land wählen",
+    "chooseCountryError": "Bitte wählen Sie ein Land.",
+    "pen": "Pen",
+    "strength": "Stärke",
+    "quantity": "Menge",
+    "discountCode": "Rabattcode",
+    "codePlaceholder": "Ihr Code",
+    "apply": "Einlösen",
+    "applied": "Eingelöst",
+    "getCode": "Extra-Code über {percent} % holen",
+    "codeApplied": "Code {code} eingelöst: zusätzlich {percent} % Rabatt",
+    "codeInvalid": "Dieser Code ist nicht gültig.",
+    "codeCheckFailed": "Der Code konnte nicht geprüft werden. Bitte versuchen Sie es erneut.",
+    "regularLine": "{quantity} × {price} regulärer Preis",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Code {code} −{percent} %",
+    "total": "Gesamt",
+    "youSave": "Sie sparen {price}",
+    "perks": [
+      "≥99 % Reinheit, COA zu jeder Charge",
+      "Versand innerhalb von 24 h nach Zahlung",
+      "Zahlungsdaten per E-Mail, jetzt nichts bezahlen"
+    ],
+    "title": "Wohin dürfen wir liefern?",
+    "subtitle": "Kein Konto, kein Warenkorb. Ein kurzes Formular, fertig.",
+    "fullName": "Vollständiger Name",
+    "fullNameError": "Bitte geben Sie Ihren vollständigen Namen ein.",
+    "email": "E-Mail",
+    "emailError": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "phone": "Telefon",
+    "phoneCode": "Ländervorwahl",
+    "phoneError": "Bitte geben Sie Ihre Telefonnummer ein.",
+    "phonePlaceholder": "Telefonnummer",
+    "contactApp": "So erreichen wir Sie am besten",
+    "contactAppEmailOnly": "Nur E-Mail",
+    "handleHint": {
+      "whatsapp": "WhatsApp-Nummer, falls abweichend von Ihrer Telefonnummer",
+      "telegram": "Ihr Telegram-Benutzername, z. B. @name",
+      "line": "Ihre LINE-ID"
+    },
+    "address": "Strasse und Hausnummer",
+    "addressError": "Bitte geben Sie Strasse und Hausnummer ein.",
+    "city": "Ort",
+    "cityError": "Bitte geben Sie den Ort ein.",
+    "postalCode": "Postleitzahl",
+    "postalCodeError": "Bitte geben Sie die Postleitzahl ein.",
+    "note": "Anmerkung (optional)",
+    "researchUse": "Ich bestätige, dass diese Produkte ausschliesslich für Forschungszwecke bestimmt sind.",
+    "researchUseError": "Bitte bestätigen Sie die Verwendung zu Forschungszwecken.",
+    "placeOrder": "Zahlungspflichtig bestellen · {price}",
+    "confirmationNote": "Sie erhalten sofort eine Bestätigungs-E-Mail mit den Zahlungsdaten. Fragen? Schreiben Sie an {email}.",
+    "genericError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns.",
+    "noConnection": "Keine Verbindung. Bitte versuchen Sie es erneut oder schreiben Sie uns.",
+    "doneTitle": "Bestellung {orderNumber} ist reserviert",
+    "doneText": "Wir haben die Zahlungsdaten an <b>{email}</b> gesendet. Zu zahlen: <b>{total}</b>.",
+    "doneSpam": "Nicht gefunden? Sehen Sie im Spam-Ordner nach oder schreiben Sie uns unten.",
+    "doneButton": "Fertig"
+  },
+  "promo": {
+    "eyebrow": "Exklusiv für Abonnenten",
+    "eyebrowReady": "Ihr Code ist bereit",
+    "headline": "Zusätzlich {percent} Rabatt",
+    "onTop": "Zusätzlich zu {saleLabel} −{percent} % · insgesamt bis zu {best} % Rabatt",
+    "emailedNote": "Wir haben ihn Ihnen auch per E-Mail geschickt, und er ist bereits in Ihrem Bestellformular eingetragen.",
+    "copyAria": "Code {code} kopieren",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "yourCode": "Ihr Code: {code}",
+    "orderWithCode": "Jetzt mit meinem Code bestellen",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Bestseller, mit Ihrem Code",
+    "emailLabel": "Ihre E-Mail-Adresse",
+    "emailError": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "emailPlaceholder": "name@example.com",
+    "reveal": "Meinen {percent}-%-Code anzeigen",
+    "consent": "Sie erhalten Angebote von VETUD per E-Mail. Abmeldung jederzeit möglich.",
+    "noThanks": "Nein, danke",
+    "genericError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+    "noConnection": "Keine Verbindung. Bitte versuchen Sie es erneut."
+  }
+}

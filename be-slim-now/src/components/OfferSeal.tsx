@@ -1,27 +1,24 @@
 "use client"
 
+import { format } from "@/i18n/format"
 import { colors, fonts, gradients } from "@/theme/tokens"
+import { useMessages } from "./MessagesProvider"
 
 /**
  * The offer medallion: a night disc with a green rim. The label's words sit above and below the
- * percentage ("BLACK" / "−40%" / "FRIDAY"), large enough to read at card size.
+ * percentage ("BLACK" / "−40%" / "FRIDAY"), large enough to read at card size. The label is
+ * offer.saleLabel in the messages; a one-word label gets offer.sealOff ("OFF") underneath.
  */
-export default function OfferSeal({
-  percent,
-  label,
-  size = 120,
-}: {
-  percent: number
-  label: string
-  size?: number | string
-}) {
+export default function OfferSeal({ percent, size = 120 }: { percent: number; size?: number | string }) {
+  const m = useMessages()
+  const label = m.offer.saleLabel
   const words = label.toUpperCase().split(/\s+/)
   const top = words[0] ?? ""
-  const bottom = words.slice(1).join(" ") || "OFF"
+  const bottom = words.slice(1).join(" ") || m.offer.sealOff
   return (
     <div
       role="img"
-      aria-label={`${label}: ${percent}% off`}
+      aria-label={format(m.offer.sealAria, { saleLabel: label, percent })}
       style={{
         width: size,
         aspectRatio: "1",

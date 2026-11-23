@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent}% · Pen-uri Tirzepatide & Retatrutide · BeSlimNow",
+    "description": "Pen-uri Tirzepatide (TZ-2) și Retatrutide de la VETUD. 20 mg sau 40 mg, puritate ≥99% cu COA pentru fiecare lot. Ofertă de lansare: 40% reducere. Comandă în mai puțin de un minut."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "REDUCERE",
+    "sealAria": "{saleLabel}: −{percent}%"
+  },
+  "promoBar": {
+    "sale": "−{percent}% la fiecare pen",
+    "subscribe": "Abonați-vă pentru încă −{percent}% (până la −{best}%)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, înapoi sus",
+    "navLabel": "Secțiuni",
+    "nav": {
+      "products": "Pen-uri",
+      "dualChamber": "Pen-ul",
+      "compare": "Comparație",
+      "how": "Cum comandați",
+      "faq": "Întrebări"
+    }
+  },
+  "countryPicker": {
+    "aria": "Țară și monedă: {country}, prețuri în {currency}",
+    "hint": "Țara dumneavoastră stabilește prețurile și moneda.",
+    "groupUs": "Statele Unite",
+    "groupEurope": "Europa",
+    "groupOther": "Alte țări · prețuri în USD",
+    "groupOtherTitle": "Alte țări"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Pen Tirzepatide (TZ-2)",
+      "tagline": "Agonist dual al receptorilor GIP / GLP-1",
+      "description": "Agonistul dual despre care vorbește tot domeniul, în pen-ul de precizie VETUD. Un pen, 12 ace și o broșură în fiecare cutie.",
+      "badge": "Foarte popular",
+      "penAlt": "Pen VETUD Tirzepatide",
+      "gallery": [
+        {
+          "label": "Cutie",
+          "alt": "Cutia pen-ului VETUD Tirzepatide, închisă"
+        },
+        {
+          "label": "Conținut",
+          "alt": "Cutie VETUD Tirzepatide deschisă: pen, 12 ace și broșură"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Pen Retatrutide",
+      "tagline": "Agonist triplu GIP / GLP-1 / glucagon",
+      "description": "Agonistul triplu de nouă generație, în pen-ul de precizie VETUD. Un pen, 12 ace și o broșură în fiecare cutie.",
+      "badge": "Cel mai vândut",
+      "penAlt": "Pen VETUD Retatrutide",
+      "gallery": [
+        {
+          "label": "Cutie",
+          "alt": "Cutia pen-ului VETUD Retatrutide, închisă"
+        },
+        {
+          "label": "Conținut",
+          "alt": "Cutie VETUD Retatrutide deschisă: pen, 12 ace și broșură"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent}% la fiecare pen, ambele concentrații",
+    "eyebrow": "VETUD Peptide Series · Pen-urile pe care le cere toată lumea",
+    "headlineSr": "Tirzepatide & Retatrutide în pen, acum cu {percent}% reducere.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "în",
+      "pen,",
+      "acum"
+    ],
+    "headlineOffer": "cu {percent}% reducere.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Fiecare pen este ",
+    "everyPenSr": "Fiecare pen este {list}.",
+    "everyPen": [
+      "cu puritate garantată",
+      "cu livrare garantată",
+      "gata de expediere azi",
+      "pur în proporție de ≥99%",
+      "însoțit de COA",
+      "ambalat discret"
+    ],
+    "everyPenSale": "cu {percent}% mai ieftin săptămâna aceasta",
+    "listAnd": "și",
+    "intro": "Cele mai căutate două molecule din cercetarea metabolică, sigilate în pen-ul de precizie cu dublă cameră VETUD. 20 mg sau 40 mg, puritate ≥99%, 12 ace în cutie, la ușa dumneavoastră în câteva zile. Un singur formular scurt. Fără cont, fără coș, fără așteptare.",
+    "buyFrom": "Cumpărați acum · de la {price}",
+    "extraCode": "Cod extra −{percent}%",
+    "guaranteedLabel": "Garantat:",
+    "guarantees": [
+      "rambursare dacă un lot are puritate sub 99%",
+      "retrimitere sau rambursare dacă se pierde coletul"
+    ],
+    "trust": [
+      "Puritate ≥99%, verificată HPLC",
+      "COA pentru fiecare lot",
+      "Expediere în 24 h",
+      "Ambalare discretă"
+    ],
+    "penTagFrom": "de la {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent}% la fiecare pen",
+    "title": "Alegeți-vă pen-ul",
+    "subtitle": "Tirzepatide sau Retatrutide, 20 mg sau 40 mg. Aceeași puritate de laborator, același pen VETUD, aceeași ofertă. Alegeți, apăsați Cumpărați acum și ați terminat în mai puțin de un minut.",
+    "enlargeAria": "Măriți fotografiile: {product}",
+    "enlarge": "Mărire",
+    "thumbAlt": "Vedere: {label}",
+    "inStock": "În stoc",
+    "strengthAria": "Concentrație",
+    "saleSave": "−{percent}% · economisiți {price}",
+    "perMg": "{price} pe mg",
+    "bestValue": "Cel mai bun preț · cu {percent}% mai ieftin pe mg",
+    "switchTo40": "Economisiți {percent}% pe mg cu 40 mg →",
+    "features": [
+      "1 pen + 12 ace de unică folosință + broșură cu instrucțiuni",
+      "Puritate ≥99%, COA pentru lot",
+      "Expediere în 24 h, ambalare discretă"
+    ],
+    "subscriberCode": "Încă {percent}% reducere cu codul dumneavoastră de abonat",
+    "buy": "Cumpărați acum · {price}",
+    "nothingToPay": "Nu plătiți nimic acum. Datele de plată vin pe e-mail."
+  },
+  "dualChamber": {
+    "eyebrow": "Pen-ul VETUD cu dublă cameră",
+    "title": "Construit ca un pen de farmacie.",
+    "subtitle": "Două camere, un cartuș: peptidă liofilizată sus, apă BAC jos, separate până când le combinați. Apoi cartușul se fixează în pen-ul VETUD reutilizabil.",
+    "diagramAlt": "Cartușul VETUD conține peptidă liofilizată și apă BAC și se așază în suportul de cartuș al pen-ului",
+    "enlarge": "Mărire",
+    "benefits": [
+      {
+        "title": "Sigilat până în momentul amestecării",
+        "text": "Peptida liofilizată stă în propria cameră, separată de lichid printr-un dop. Nimic nu se degradează pe raft și nimic nu se amestecă înainte să doriți."
+      },
+      {
+        "title": "Apă BAC deja în cartuș",
+        "text": "A doua cameră conține apa bacteriostatică. Fără flacoane suplimentare de cumpărat, fără măsurători, fără transvazări. Tot ce vă trebuie vine într-o singură cutie."
+      },
+      {
+        "title": "Contor precis, corp de pen reutilizabil",
+        "text": "Cartușul se fixează în pen-ul VETUD cu fereastră de contor. Păstrați pen-ul, schimbați cartușul. Curat, exact și făcut pentru a fi refolosit."
+      }
+    ],
+    "cta": "Vreau pen-ul meu",
+    "video": "Vedeți cum funcționează · 40 de secunde"
+  },
+  "compare": {
+    "eyebrow": "Față în față",
+    "title": "Care pen vi se potrivește?",
+    "subtitle": "Două molecule, un pen, un preț pe mg de comparat. Ambele vin cu aceeași puritate, aceeași cutie și aceeași ofertă.",
+    "rows": {
+      "label": {
+        "label": "Eticheta de pe pen",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Ce este",
+        "tz2": "Agonist dual: receptori GIP + GLP-1",
+        "retatrutide": "Agonist triplu: receptori GIP + GLP-1 + glucagon"
+      },
+      "generation": {
+        "label": "Generație",
+        "tz2": "Generația actuală · cel mai cerut",
+        "retatrutide": "Generația următoare · cel mai nou"
+      },
+      "status": {
+        "label": "Stadiu de dezvoltare",
+        "tz2": "Moleculă aprobată ca medicament",
+        "retatrutide": "În cercetare, în studii de fază 3"
+      },
+      "strengths": {
+        "label": "Concentrații",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "În cutie",
+        "tz2": "1 pen · 12 ace · broșură",
+        "retatrutide": "1 pen · 12 ace · broșură"
+      },
+      "purity": {
+        "label": "Puritate",
+        "tz2": "≥99%, COA pentru lot",
+        "retatrutide": "≥99%, COA pentru lot"
+      },
+      "dispatch": {
+        "label": "Expediere",
+        "tz2": "În 24 h de la plată",
+        "retatrutide": "În 24 h de la plată"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent}%",
+    "perMgRow": "Preț pe mg (40 mg)",
+    "buyProduct": "Cumpărați {product}",
+    "buy": "Cumpărați acum"
+  },
+  "howToOrder": {
+    "eyebrow": "Cum comandați",
+    "title": "De la clic la ușa dumneavoastră în patru pași.",
+    "subtitle": "Un singur mod de a comanda, gândit să fie rapid. Știți mereu în ce stadiu este comanda dumneavoastră.",
+    "steps": [
+      {
+        "title": "Alegeți pen-ul",
+        "text": "Tirzepatide sau Retatrutide, 20 mg sau 40 mg. Apăsați Cumpărați acum."
+      },
+      {
+        "title": "Completați un formular scurt",
+        "text": "Nume, e-mail, telefon și adresă. Fără cont, fără coș, în mai puțin de un minut."
+      },
+      {
+        "title": "Primiți e-mailul",
+        "text": "Confirmarea sosește imediat, cu datele de plată și numărul comenzii."
+      },
+      {
+        "title": "Expediem în 24 h",
+        "text": "Imediat ce sosește plata, pen-urile pleacă, ambalate discret și cu urmărire."
+      }
+    ],
+    "cta": "Încep comanda"
+  },
+  "quality": {
+    "eyebrow": "Calitate pe care o puteți verifica",
+    "title": "Rezultate de laborator, nu promisiuni.",
+    "subtitle": "Fiecare lot VETUD este testat prin HPLC și documentat înainte de expediere. Cereți-ne oricând COA-ul lotului pe care îl primiți și vi-l trimitem.",
+    "stats": [
+      {
+        "value": "≥99%",
+        "label": "Puritate",
+        "text": "Verificată HPLC la fiecare lot"
+      },
+      {
+        "value": "COA",
+        "label": "Fiecare lot",
+        "text": "Certificat de analiză la cerere, potrivit numărului lotului dumneavoastră"
+      },
+      {
+        "value": "24 h",
+        "label": "Expediere",
+        "text": "Expediere în cel mult o zi lucrătoare de la plată"
+      },
+      {
+        "value": "12",
+        "label": "Ace în fiecare cutie",
+        "text": "Împreună cu pen-ul și broșura cu instrucțiuni, totul pregătit"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "În spatele fiecărui pen",
+    "title": "Umplut curat. Păstrat la rece.",
+    "subtitle": "Fotografii din locurile unde produsele VETUD sunt umplute și depozitate: o linie de umplere în cameră curată, apoi dulapuri frigorifice până la expedierea comenzii dumneavoastră.",
+    "enlarge": "Mărire",
+    "enlargeAria": "Mărire: {title}",
+    "photos": [
+      {
+        "alt": "Un angajat în echipament de cameră curată, mască și mănuși duce o tavă cu flacoane închise pe lângă mașina de umplere",
+        "eyebrow": "Umplere",
+        "title": "Umplut în cameră curată",
+        "text": "Închise cu dop și capsă la mașină, manipulate de personal în echipament complet, cu mască și mănuși."
+      },
+      {
+        "alt": "Cutii cu flacoane etichetate pe rafturile unui dulap frigorific cu ușă de sticlă",
+        "eyebrow": "Depozitare",
+        "title": "Păstrat la frigider",
+        "text": "Fiecare lot etichetat și păstrat în dulapuri frigorifice cu ușă de sticlă până la expediere."
+      },
+      {
+        "alt": "Un șir de dulapuri frigorifice luminate, cu uși de sticlă, pline de stoc etichetat",
+        "eyebrow": "Stoc",
+        "title": "Gata de expediere",
+        "text": "Produse pe stoc, astfel încât comanda dumneavoastră pleacă în 24 de ore de la plată."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Întrebări",
+    "title": "Întrebări și răspunsuri.",
+    "items": [
+      {
+        "q": "Cum plătesc?",
+        "a": "După ce plasați comanda primiți imediat un e-mail cu datele de plată și numărul comenzii. Pe această pagină nu se încasează nimic. Folosiți numărul comenzii ca referință a plății."
+      },
+      {
+        "q": "Cât de repede expediați?",
+        "a": "Comenzile pleacă în 24 de ore de la plată (zile lucrătoare), cu un număr de urmărire trimis pe e-mail și, dacă ați ales, în aplicația de mesagerie."
+      },
+      {
+        "q": "Ce acoperă garanțiile noastre?",
+        "a": "Două lucruri. Puritatea: fiecare lot este testat și, dacă un lot are puritate sub 99%, vi-l rambursăm. Livrarea: dacă coletul se pierde pe drum, îl retrimitem sau vă rambursăm. Scrieți-ne cu numărul comenzii și ne ocupăm noi."
+      },
+      {
+        "q": "Ce conține cutia?",
+        "a": "Fiecare cutie VETUD conține un pen în concentrația aleasă, 12 ace de unică folosință și o broșură cu instrucțiuni, etichetate cu produsul și lotul. Ambalajul exterior este simplu și discret."
+      },
+      {
+        "q": "Care este diferența dintre 20 mg și 40 mg?",
+        "a": "Cantitatea de peptidă din pen. Pen-ul de 40 mg costă mai puțin pe mg, de aceea este marcat Cel mai bun preț."
+      },
+      {
+        "q": "Pot primi certificatul de analiză (COA)?",
+        "a": "Da. Puritatea fiecărui lot este testată. Scrieți-ne cu numărul comenzii și vă trimitem COA-ul lotului primit."
+      },
+      {
+        "q": "Pot modifica sau anula comanda?",
+        "a": "Da, până la expediere. Răspundeți la e-mailul de confirmare sau scrieți-ne: {contacts}."
+      },
+      {
+        "q": "Pentru ce sunt aceste produse?",
+        "a": "Toate produsele vândute pe acest site sunt destinate exclusiv scopurilor de cercetare și identificare. Aceste produse nu sunt destinate administrării, injectării sau ingerării la om."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Toate drepturile rezervate."
+  },
+  "consent": {
+    "label": "Alegerea cookie-urilor",
+    "text": "Am dori să folosim cookie-uri de analiză (Google Analytics și Microsoft Clarity) pentru a vedea cum este folosită această pagină și a o îmbunătăți. Nimic nu este folosit pentru reclame.",
+    "accept": "Accept",
+    "decline": "Refuz",
+    "settings": "Setări cookie-uri"
+  },
+  "contact": {
+    "messageUs": "Scrieți-ne",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-mail"
+    }
+  },
+  "order": {
+    "yourOrder": "Comanda dumneavoastră",
+    "shipTo": "Livrare în",
+    "pricesIn": "· prețuri în {currency}",
+    "chooseCountry": "Alegeți o țară",
+    "chooseCountryError": "Alegeți o țară.",
+    "pen": "Pen",
+    "strength": "Concentrație",
+    "quantity": "Cantitate",
+    "discountCode": "Cod de reducere",
+    "codePlaceholder": "Codul dumneavoastră",
+    "apply": "Aplicați",
+    "applied": "Aplicat",
+    "getCode": "Obțineți un cod pentru încă {percent}%",
+    "codeApplied": "Codul {code} a fost aplicat: încă {percent}% reducere",
+    "codeInvalid": "Acest cod nu este valid.",
+    "codeCheckFailed": "Codul nu a putut fi verificat. Vă rugăm să încercați din nou.",
+    "regularLine": "{quantity} × {price} preț normal",
+    "saleLine": "{saleLabel} −{percent}%",
+    "codeLine": "Cod {code} −{percent}%",
+    "total": "Total",
+    "youSave": "Economisiți {price}",
+    "perks": [
+      "Puritate ≥99%, COA pentru fiecare lot",
+      "Expediere în 24 h de la plată",
+      "Datele de plată pe e-mail, nimic de plătit acum"
+    ],
+    "title": "Unde să vă trimitem comanda?",
+    "subtitle": "Fără cont, fără coș. Un formular scurt și gata.",
+    "fullName": "Nume complet",
+    "fullNameError": "Introduceți numele complet.",
+    "email": "E-mail",
+    "emailError": "Introduceți un e-mail valid.",
+    "phone": "Telefon",
+    "phoneCode": "Prefixul țării",
+    "phoneError": "Introduceți numărul de telefon.",
+    "phonePlaceholder": "Număr de telefon",
+    "contactApp": "Cum vă putem contacta cel mai ușor",
+    "contactAppEmailOnly": "Doar e-mail",
+    "handleHint": {
+      "whatsapp": "Numărul de WhatsApp, dacă diferă de telefon",
+      "telegram": "Numele de utilizator Telegram, de ex. @nume",
+      "line": "ID-ul LINE"
+    },
+    "address": "Adresa (stradă și număr)",
+    "addressError": "Introduceți adresa.",
+    "city": "Localitate",
+    "cityError": "Introduceți localitatea.",
+    "postalCode": "Cod poștal",
+    "postalCodeError": "Introduceți codul poștal.",
+    "note": "Notă (opțional)",
+    "researchUse": "Confirm că aceste produse sunt destinate exclusiv cercetării.",
+    "researchUseError": "Vă rugăm să confirmați utilizarea în cercetare.",
+    "placeOrder": "Comandă cu obligație de plată · {price}",
+    "confirmationNote": "Veți primi imediat un e-mail de confirmare cu datele de plată. Întrebări? Scrieți la {email}.",
+    "genericError": "Ceva nu a funcționat. Încercați din nou sau scrieți-ne.",
+    "noConnection": "Fără conexiune. Încercați din nou sau scrieți-ne.",
+    "doneTitle": "Comanda {orderNumber} este rezervată",
+    "doneText": "Am trimis datele de plată la <b>{email}</b>. Total de plată: <b>{total}</b>.",
+    "doneSpam": "Nu îl găsiți? Verificați dosarul spam sau scrieți-ne mai jos.",
+    "doneButton": "Gata"
+  },
+  "promo": {
+    "eyebrow": "Exclusiv pentru abonați",
+    "eyebrowReady": "Codul dumneavoastră este gata",
+    "headline": "Încă {percent} reducere",
+    "onTop": "Pe lângă −{percent}% de {saleLabel} · până la −{best}% în total",
+    "emailedNote": "V-am trimis codul și pe e-mail și este deja aplicat în formularul de comandă.",
+    "copyAria": "Copiați codul {code}",
+    "copy": "Copiați",
+    "copied": "Copiat",
+    "yourCode": "Codul dumneavoastră: {code}",
+    "orderWithCode": "Comandați acum cu codul meu",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Cel mai vândut, cu codul dumneavoastră",
+    "emailLabel": "E-mailul dumneavoastră",
+    "emailError": "Introduceți un e-mail valid.",
+    "emailPlaceholder": "nume@example.com",
+    "reveal": "Afișați codul meu de {percent}%",
+    "consent": "Veți primi oferte VETUD pe e-mail. Vă puteți dezabona oricând.",
+    "noThanks": "Nu, mulțumesc",
+    "genericError": "Ceva nu a funcționat. Încercați din nou.",
+    "noConnection": "Fără conexiune. Încercați din nou."
+  }
+}

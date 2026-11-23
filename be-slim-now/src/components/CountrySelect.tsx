@@ -7,8 +7,10 @@ import { useMemo, type ReactNode } from "react"
 import { DEFAULT_COUNTRY, MARKETS, MARKET_CODES, isMarket } from "@/config/markets"
 import { COUNTRY_CODES } from "@/lib/countries"
 import { currencyOf, pricingCountry } from "@/lib/pricing"
+import { format } from "@/i18n/format"
 import { colors, fonts } from "@/theme/tokens"
 import { useCountry } from "./CountryProvider"
+import { useMessages } from "./MessagesProvider"
 
 /**
  * A small flag from public/flags (country-flag-icons, MIT; see LICENSE.txt there). Images, because
@@ -67,7 +69,9 @@ const fold = (text: string) =>
  * form) every other country we ship to, which pays US prices. Names come from Intl.DisplayNames:
  * English for the page, plus each picker country's name in its own language.
  */
-function buildGroups(withOtherCountries: boolean): CountryGroup[] {
+type GroupNames = { us: string; europe: string; other: string; otherTitle: string }
+
+function buildGroups(withOtherCountries: boolean, names: GroupNames): CountryGroup[] {
   const english = new Intl.DisplayNames(["en"], { type: "region" })
   const currencyNames = new Intl.DisplayNames(["en"], { type: "currency" })
   const toOption = (code: string): CountryOption => {
@@ -84,17 +88,24 @@ function buildGroups(withOtherCountries: boolean): CountryGroup[] {
   }
   const byName = (a: CountryOption, b: CountryOption) => a.label.localeCompare(b.label, "en")
   const groups: CountryGroup[] = [
-    { label: "United States", title: "United States", options: [toOption(DEFAULT_COUNTRY)] },
-    { label: "Europe", title: "Europe", options: MARKET_CODES.filter((code) => code !== DEFAULT_COUNTRY).map(toOption).sort(byName) },
+    { label: names.us, title: names.us, options: [toOption(DEFAULT_COUNTRY)] },
+    { label: names.europe, title: names.europe, options: MARKET_CODES.filter((code) => code !== DEFAULT_COUNTRY).map(toOption).sort(byName) },
   ]
   if (withOtherCountries) {
     const others = COUNTRY_CODES.filter((code) => !isMarket(code)).map(toOption).sort(byName)
-    groups.push({ label: "Other countries · prices in USD", title: "Other countries", options: others })
+    groups.push({ label: names.other, title: names.otherTitle, options: others })
   }
   return groups
 }
 
-export const useCountryGroups = (withOtherCountries = false) => useMemo(() => buildGroups(withOtherCountries), [withOtherCountries])
+/** The group headings come from countryPicker in the messages. */
+export function useCountryGroups(withOtherCountries = false) {
+  const t = useMessages().countryPicker
+  return useMemo(
+    () => buildGroups(withOtherCountries, { us: t.groupUs, europe: t.groupEurope, other: t.groupOther, otherTitle: t.groupOtherTitle }),
+    [withOtherCountries, t.groupUs, t.groupEurope, t.groupOther, t.groupOtherTitle],
+  )
+}
 
 /**
  * Search by English or own name, ISO code, currency or a common alias ("uk", "usa", "holland").
@@ -125,6 +136,7 @@ export function renderCountryOption(option: { data: unknown }): ReactNode {
  */
 export default function CountrySelect({ compact = false, size = "middle" }: { compact?: boolean; size?: "middle" | "large" }) {
   const { country, currency, setCountry } = useCountry()
+  const t = useMessages().countryPicker
   const groups = useCountryGroups()
 
   return (
@@ -135,7 +147,7 @@ export default function CountrySelect({ compact = false, size = "middle" }: { co
       }}
       options={groups}
       size={size}
-      aria-label={`Country and currency: ${country}, prices in ${currency}`}
+      aria-label={format(t.aria, { country, currency })}
       showSearch={{ filterOption: filterCountry }}
       placement="bottomRight"
       popupMatchSelectWidth={300}
@@ -150,7 +162,7 @@ export default function CountrySelect({ compact = false, size = "middle" }: { co
       optionRender={renderCountryOption}
       popupRender={(menu) => (
         <>
-          <div style={{ padding: "6px 12px 8px", fontSize: 12, color: colors.muted }}>Your country sets the prices and the currency.</div>
+          <div style={{ padding: "6px 12px 8px", fontSize: 12, color: colors.muted }}>{t.hint}</div>
           {menu}
         </>
       )}

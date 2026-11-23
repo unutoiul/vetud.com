@@ -1,0 +1,430 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide pildspalvas · BeSlimNow",
+    "description": "VETUD Tirzepatide (TZ-2) un Retatrutide pildspalvas. 20 mg vai 40 mg, tīrība ≥99% ar COA katrai partijai. Ievadpiedāvājums: 40% atlaide. Pasūtījums mazāk nekā minūtē."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "ATLAIDE",
+    "sealAria": "{saleLabel}: −{percent}%"
+  },
+  "promoBar": {
+    "sale": "−{percent}% katrai pildspalvai",
+    "subscribe": "Abonējiet un saņemiet vēl −{percent}% (līdz −{best}%)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, uz augšu",
+    "navLabel": "Sadaļas",
+    "nav": {
+      "products": "Pildspalvas",
+      "dualChamber": "Pildspalva",
+      "compare": "Salīdzinājums",
+      "how": "Kā pasūtīt",
+      "faq": "BUJ"
+    }
+  },
+  "countryPicker": {
+    "aria": "Valsts un valūta: {country}, cenas {currency}",
+    "hint": "Jūsu valsts nosaka cenas un valūtu.",
+    "groupUs": "Amerikas Savienotās Valstis",
+    "groupEurope": "Eiropa",
+    "groupOther": "Citas valstis · cenas USD",
+    "groupOtherTitle": "Citas valstis"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) pildspalva",
+      "tagline": "Duāls GIP / GLP-1 receptoru agonists",
+      "description": "Duālais agonists, par ko runā visa nozare, VETUD precizitātes pildspalvā. Viena pildspalva, 12 adatas un lietošanas instrukcija katrā kastītē.",
+      "badge": "Ļoti populāra",
+      "penAlt": "VETUD Tirzepatide pildspalva",
+      "gallery": [
+        {
+          "label": "Kastīte",
+          "alt": "VETUD Tirzepatide pildspalvas kastīte, aizvērta"
+        },
+        {
+          "label": "Saturs",
+          "alt": "Atvērta VETUD Tirzepatide kastīte: pildspalva, 12 adatas un instrukcija"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide pildspalva",
+      "tagline": "Trīskāršs GIP / GLP-1 / glikagona agonists",
+      "description": "Nākamās paaudzes trīskāršais agonists VETUD precizitātes pildspalvā. Viena pildspalva, 12 adatas un lietošanas instrukcija katrā kastītē.",
+      "badge": "Pārdotākā",
+      "penAlt": "VETUD Retatrutide pildspalva",
+      "gallery": [
+        {
+          "label": "Kastīte",
+          "alt": "VETUD Retatrutide pildspalvas kastīte, aizvērta"
+        },
+        {
+          "label": "Saturs",
+          "alt": "Atvērta VETUD Retatrutide kastīte: pildspalva, 12 adatas un instrukcija"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent}% katrai pildspalvai, abām stiprībām",
+    "eyebrow": "VETUD Peptide Series · Pildspalvas, par kurām jautā visi",
+    "headlineSr": "Tirzepatide & Retatrutide pildspalvā, tagad par {percent}% lētāk.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "pildspalvā,",
+      "tagad"
+    ],
+    "headlineOffer": "par {percent}% lētāk.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Katra pildspalva ir ",
+    "everyPenSr": "Katra pildspalva ir {list}.",
+    "everyPen": [
+      "ar garantētu tīrību",
+      "ar garantētu piegādi",
+      "gatava nosūtīšanai jau šodien",
+      "≥99% tīra",
+      "apliecināta ar COA",
+      "diskrēti iepakota"
+    ],
+    "everyPenSale": "šonedēļ par {percent}% lētāka",
+    "listAnd": "un",
+    "intro": "Divas pieprasītākās vielmaiņas pētījumu molekulas, noslēgtas VETUD precizitātes divkameru pildspalvā. 20 mg vai 40 mg, tīrība ≥99%, 12 adatas kastītē, pie jums dažu dienu laikā. Viena īsa forma. Bez konta, bez groza, bez gaidīšanas.",
+    "buyFrom": "Pirkt tagad · no {price}",
+    "extraCode": "Papildu kods −{percent}%",
+    "guaranteedLabel": "Garantija:",
+    "guarantees": [
+      "naudas atmaksa, ja partijas tīrība ir zem 99%",
+      "atkārtota nosūtīšana vai atmaksa, ja sūtījums pazūd"
+    ],
+    "trust": [
+      "Tīrība ≥99%, pārbaudīta ar HPLC",
+      "COA katrai partijai",
+      "Nosūtām 24 h laikā",
+      "Diskrēts iepakojums"
+    ],
+    "penTagFrom": "no {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent}% katrai pildspalvai",
+    "title": "Izvēlieties savu pildspalvu",
+    "subtitle": "Tirzepatide vai Retatrutide, 20 mg vai 40 mg. Tāda pati laboratorijas tīrība, tā pati VETUD pildspalva, tas pats piedāvājums. Izvēlieties, nospiediet Pirkt tagad, un viss paveikts mazāk nekā minūtē.",
+    "enlargeAria": "Palielināt attēlus: {product}",
+    "enlarge": "Palielināt",
+    "thumbAlt": "Skats: {label}",
+    "inStock": "Noliktavā",
+    "strengthAria": "Stiprība",
+    "saleSave": "−{percent}% · ietaupāt {price}",
+    "perMg": "{price} par mg",
+    "bestValue": "Labākā cena · par {percent}% lētāk par mg",
+    "switchTo40": "Ietaupiet {percent}% par mg ar 40 mg →",
+    "features": [
+      "1 pildspalva + 12 vienreizlietojamas adatas + instrukcija",
+      "Tīrība ≥99%, partijas COA",
+      "Nosūtām 24 h laikā, diskrēts iepakojums"
+    ],
+    "subscriberCode": "Vēl {percent}% atlaide ar jūsu abonenta kodu",
+    "buy": "Pirkt tagad · {price}",
+    "nothingToPay": "Tagad nekas nav jāmaksā. Maksājuma informācija pienāks e-pastā."
+  },
+  "dualChamber": {
+    "eyebrow": "VETUD divkameru pildspalva",
+    "title": "Veidota kā aptiekas pildspalva.",
+    "subtitle": "Divas kameras, viens kārtridžs: augšā liofilizēts peptīds, apakšā BAC ūdens, atdalīti, līdz jūs tos savienojat. Pēc tam kārtridžs ieklikšķas atkārtoti lietojamajā VETUD pildspalvā.",
+    "diagramAlt": "VETUD kārtridžā ir liofilizēts peptīds un BAC ūdens, un tas atrodas pildspalvas kārtridža turētājā",
+    "enlarge": "Palielināt",
+    "benefits": [
+      {
+        "title": "Noslēgts līdz sajaukšanas brīdim",
+        "text": "Liofilizētais peptīds atrodas savā kamerā, no šķidruma atdalīts ar aizbāzni. Plauktā nekas nebojājas, un nekas netiek sajaukts, pirms jūs to vēlaties."
+      },
+      {
+        "title": "BAC ūdens jau kārtridžā",
+        "text": "Otrajā kamerā ir bakteriostatiskais ūdens. Nav jāpērk papildu flakoni, nav jāmēra, nav jāpārlej. Viss nepieciešamais pienāk vienā kastītē."
+      },
+      {
+        "title": "Precīzs skaitītājs, atkārtoti lietojams korpuss",
+        "text": "Kārtridžs ieklikšķas VETUD pildspalvā ar skaitītāja lodziņu. Pildspalva paliek, kārtridžu nomaināt. Tīri, precīzi un veidots atkārtotai lietošanai."
+      }
+    ],
+    "cta": "Gribu savu pildspalvu",
+    "video": "Skatiet, kā tā darbojas · 40 sekundes"
+  },
+  "compare": {
+    "eyebrow": "Blakus",
+    "title": "Kura pildspalva ir jums?",
+    "subtitle": "Divas molekulas, viena pildspalva, viena cena par mg salīdzināšanai. Abām ir vienāda tīrība, tā pati kastīte un tas pats piedāvājums.",
+    "rows": {
+      "label": {
+        "label": "Marķējums uz pildspalvas",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Kas tas ir",
+        "tz2": "Duāls agonists: GIP + GLP-1 receptori",
+        "retatrutide": "Trīskāršs agonists: GIP + GLP-1 + glikagona receptori"
+      },
+      "generation": {
+        "label": "Paaudze",
+        "tz2": "Pašreizējā paaudze · pieprasītākā",
+        "retatrutide": "Nākamā paaudze · jaunākā"
+      },
+      "status": {
+        "label": "Izstrādes stadija",
+        "tz2": "Molekula apstiprināta kā zāles",
+        "retatrutide": "Pētījumu stadijā, 3. fāzes pētījumos"
+      },
+      "strengths": {
+        "label": "Stiprības",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "Kastītē",
+        "tz2": "1 pildspalva · 12 adatas · instrukcija",
+        "retatrutide": "1 pildspalva · 12 adatas · instrukcija"
+      },
+      "purity": {
+        "label": "Tīrība",
+        "tz2": "≥99%, partijas COA",
+        "retatrutide": "≥99%, partijas COA"
+      },
+      "dispatch": {
+        "label": "Nosūtīšana",
+        "tz2": "24 h laikā pēc apmaksas",
+        "retatrutide": "24 h laikā pēc apmaksas"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent}%",
+    "perMgRow": "Cena par mg (40 mg)",
+    "buyProduct": "Pirkt {product}",
+    "buy": "Pirkt tagad"
+  },
+  "howToOrder": {
+    "eyebrow": "Kā pasūtīt",
+    "title": "No klikšķa līdz durvīm četros soļos.",
+    "subtitle": "Viens pasūtīšanas veids, radīts ātrumam. Jūs vienmēr zināt, kur atrodas jūsu pasūtījums.",
+    "steps": [
+      {
+        "title": "Izvēlieties pildspalvu",
+        "text": "Tirzepatide vai Retatrutide, 20 mg vai 40 mg. Nospiediet Pirkt tagad."
+      },
+      {
+        "title": "Aizpildiet vienu īsu formu",
+        "text": "Vārds, e-pasts, tālrunis un adrese. Bez konta, bez groza, mazāk nekā minūtē."
+      },
+      {
+        "title": "Saņemiet e-pastu",
+        "text": "Apstiprinājums pienāk uzreiz, ar maksājuma informāciju un pasūtījuma numuru."
+      },
+      {
+        "title": "Nosūtām 24 h laikā",
+        "text": "Tiklīdz maksājums ir saņemts, jūsu pildspalvas dodas ceļā, diskrēti iepakotas un ar izsekošanu."
+      }
+    ],
+    "cta": "Sākt pasūtījumu"
+  },
+  "quality": {
+    "eyebrow": "Kvalitāte, ko varat pārbaudīt",
+    "title": "Laboratorijas rezultāti, nevis solījumi.",
+    "subtitle": "Katra VETUD partija pirms nosūtīšanas tiek pārbaudīta ar HPLC un dokumentēta. Jebkurā laikā palūdziet mums saņemtās partijas COA, un mēs to nosūtīsim.",
+    "stats": [
+      {
+        "value": "≥99%",
+        "label": "Tīrība",
+        "text": "Pārbaudīta ar HPLC katrā partijā"
+      },
+      {
+        "value": "COA",
+        "label": "Katra partija",
+        "text": "Analīzes sertifikāts pēc pieprasījuma, atbilstoši jūsu partijas numuram"
+      },
+      {
+        "value": "24 h",
+        "label": "Nosūtīšana",
+        "text": "Nosūtām vienas darba dienas laikā pēc apmaksas"
+      },
+      {
+        "value": "12",
+        "label": "Adatas katrā kastītē",
+        "text": "Kopā ar pildspalvu un instrukciju, viss gatavs"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Aiz katras pildspalvas",
+    "title": "Tīri pildīts. Glabāts aukstumā.",
+    "subtitle": "Fotogrāfijas no vietām, kur VETUD produkti tiek pildīti un uzglabāti: tīrtelpas pildīšanas līnija un pēc tam ledusskapji līdz jūsu pasūtījuma nosūtīšanai.",
+    "enlarge": "Palielināt",
+    "enlargeAria": "Palielināt: {title}",
+    "photos": [
+      {
+        "alt": "Darbinieks tīrtelpas apģērbā, maskā un cimdos nes paplāti ar noslēgtiem flakoniem garām pildīšanas iekārtai",
+        "eyebrow": "Pildīšana",
+        "title": "Pildīts tīrtelpā",
+        "text": "Mašīnā aizbāzts un noslēgts, ar to strādā personāls pilnā aizsargtērpā, maskās un cimdos."
+      },
+      {
+        "alt": "Marķētas kastes ar flakoniem uz ledusskapja ar stikla durvīm plauktiem",
+        "eyebrow": "Uzglabāšana",
+        "title": "Glabāts vēsumā",
+        "text": "Katra partija tiek marķēta un līdz nosūtīšanai glabāta ledusskapjos ar stikla durvīm."
+      },
+      {
+        "alt": "Izgaismotu ledusskapju ar stikla durvīm rinda, pilna ar marķētiem krājumiem",
+        "eyebrow": "Krājumi",
+        "title": "Gatavs nosūtīšanai",
+        "text": "Prece ir noliktavā, tāpēc jūsu pasūtījums tiek nosūtīts 24 stundu laikā pēc apmaksas."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "BUJ",
+    "title": "Jautājumi un atbildes.",
+    "items": [
+      {
+        "q": "Kā es maksāju?",
+        "a": "Pēc pasūtījuma veikšanas jūs uzreiz saņemat e-pastu ar maksājuma informāciju un pasūtījuma numuru. Šajā lapā nekas netiek iekasēts. Maksājuma mērķī norādiet pasūtījuma numuru."
+      },
+      {
+        "q": "Cik ātri jūs nosūtāt?",
+        "a": "Pasūtījumi tiek nosūtīti 24 stundu laikā pēc apmaksas (darba dienās), un izsekošanas numurs tiek nosūtīts e-pastā un, ja to izvēlējāties, arī ziņojumapmaiņas lietotnē."
+      },
+      {
+        "q": "Ko sedz jūsu garantijas?",
+        "a": "Divas lietas. Tīrība: katra partija tiek pārbaudīta, un, ja partijas tīrība ir zem 99%, mēs atmaksājam naudu. Piegāde: ja sūtījums ceļā pazūd, mēs to nosūtām atkārtoti vai atmaksājam naudu. Rakstiet mums, norādot pasūtījuma numuru, un mēs to atrisināsim."
+      },
+      {
+        "q": "Kas ir kastītē?",
+        "a": "Katrā VETUD kastītē ir viena izvēlētās stiprības pildspalva, 12 vienreizlietojamas adatas un lietošanas instrukcija, marķēta ar produktu un partiju. Ārējais iepakojums ir neitrāls un diskrēts."
+      },
+      {
+        "q": "Kāda ir atšķirība starp 20 mg un 40 mg?",
+        "a": "Peptīda daudzums pildspalvā. 40 mg pildspalva par mg ir lētāka, tāpēc tā ir apzīmēta kā Labākā cena."
+      },
+      {
+        "q": "Vai varu saņemt analīzes sertifikātu (COA)?",
+        "a": "Jā. Katras partijas tīrība tiek pārbaudīta. Rakstiet mums, norādot pasūtījuma numuru, un mēs nosūtīsim saņemtās partijas COA."
+      },
+      {
+        "q": "Vai varu mainīt vai atcelt pasūtījumu?",
+        "a": "Jā, kamēr tas nav nosūtīts. Atbildiet uz apstiprinājuma e-pastu vai rakstiet mums: {contacts}."
+      },
+      {
+        "q": "Kam paredzēti šie produkti?",
+        "a": "Visi šajā vietnē pārdotie produkti ir paredzēti tikai pētniecības un identifikācijas nolūkiem. Šie produkti nav paredzēti dozēšanai, injicēšanai vai norīšanai cilvēkiem."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Visas tiesības aizsargātas."
+  },
+  "consent": {
+    "label": "Sīkdatņu izvēle",
+    "text": "Mēs vēlētos izmantot analītiskās sīkdatnes (Google Analytics un Microsoft Clarity), lai redzētu, kā šī lapa tiek izmantota, un to uzlabotu. Nekas netiek izmantots reklāmai.",
+    "accept": "Piekrist",
+    "decline": "Noraidīt",
+    "settings": "Sīkdatņu iestatījumi"
+  },
+  "contact": {
+    "messageUs": "Rakstiet mums",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-pasts"
+    }
+  },
+  "order": {
+    "yourOrder": "Jūsu pasūtījums",
+    "shipTo": "Piegādes valsts",
+    "pricesIn": "· cenas {currency}",
+    "chooseCountry": "Izvēlieties valsti",
+    "chooseCountryError": "Izvēlieties valsti.",
+    "pen": "Pildspalva",
+    "strength": "Stiprība",
+    "quantity": "Daudzums",
+    "discountCode": "Atlaižu kods",
+    "codePlaceholder": "Jūsu kods",
+    "apply": "Piemērot",
+    "applied": "Piemērots",
+    "getCode": "Saņemt kodu vēl {percent}% atlaidei",
+    "codeApplied": "Kods {code} piemērots: vēl {percent}% atlaide",
+    "codeInvalid": "Šis kods nav derīgs.",
+    "codeCheckFailed": "Kodu neizdevās pārbaudīt. Lūdzu, mēģiniet vēlreiz.",
+    "regularLine": "{quantity} × {price} parastā cena",
+    "saleLine": "{saleLabel} −{percent}%",
+    "codeLine": "Kods {code} −{percent}%",
+    "total": "Kopā",
+    "youSave": "Jūs ietaupāt {price}",
+    "perks": [
+      "Tīrība ≥99%, COA katrai partijai",
+      "Nosūtām 24 h laikā pēc apmaksas",
+      "Maksājuma informācija e-pastā, tagad nekas nav jāmaksā"
+    ],
+    "title": "Kur to nosūtīt?",
+    "subtitle": "Bez konta, bez groza. Viena īsa forma, un gatavs.",
+    "fullName": "Vārds un uzvārds",
+    "fullNameError": "Ievadiet vārdu un uzvārdu.",
+    "email": "E-pasts",
+    "emailError": "Ievadiet derīgu e-pasta adresi.",
+    "phone": "Tālrunis",
+    "phoneCode": "Valsts kods",
+    "phoneError": "Ievadiet tālruņa numuru.",
+    "phonePlaceholder": "Tālruņa numurs",
+    "contactApp": "Kā ar jums vislabāk sazināties",
+    "contactAppEmailOnly": "Tikai e-pasts",
+    "handleHint": {
+      "whatsapp": "WhatsApp numurs, ja tas atšķiras no tālruņa",
+      "telegram": "Jūsu Telegram lietotājvārds, piem., @vards",
+      "line": "Jūsu LINE ID"
+    },
+    "address": "Iela un mājas numurs",
+    "addressError": "Ievadiet ielu un mājas numuru.",
+    "city": "Pilsēta",
+    "cityError": "Ievadiet pilsētu.",
+    "postalCode": "Pasta indekss",
+    "postalCodeError": "Ievadiet pasta indeksu.",
+    "note": "Piezīme (nav obligāti)",
+    "researchUse": "Apstiprinu, ka šie produkti ir paredzēti tikai pētniecībai.",
+    "researchUseError": "Lūdzu, apstipriniet lietošanu pētniecībā.",
+    "placeOrder": "Pasūtīt ar pienākumu maksāt · {price}",
+    "confirmationNote": "Jūs uzreiz saņemsiet apstiprinājuma e-pastu ar maksājuma informāciju. Jautājumi? Rakstiet uz {email}.",
+    "genericError": "Kaut kas nogāja greizi. Mēģiniet vēlreiz vai rakstiet mums.",
+    "noConnection": "Nav savienojuma. Mēģiniet vēlreiz vai rakstiet mums.",
+    "doneTitle": "Pasūtījums {orderNumber} ir rezervēts",
+    "doneText": "Mēs nosūtījām maksājuma informāciju uz <b>{email}</b>. Kopā jāmaksā: <b>{total}</b>.",
+    "doneSpam": "Nevarat atrast? Pārbaudiet surogātpasta mapi vai rakstiet mums zemāk.",
+    "doneButton": "Gatavs"
+  },
+  "promo": {
+    "eyebrow": "Tikai abonentiem",
+    "eyebrowReady": "Jūsu kods ir gatavs",
+    "headline": "Vēl {percent} atlaide",
+    "onTop": "Papildus {saleLabel} −{percent}% atlaidei · kopā līdz −{best}%",
+    "emailedNote": "Mēs to nosūtījām arī e-pastā, un tas jau ir pievienots jūsu pasūtījuma formai.",
+    "copyAria": "Kopēt kodu {code}",
+    "copy": "Kopēt",
+    "copied": "Nokopēts",
+    "yourCode": "Jūsu kods: {code}",
+    "orderWithCode": "Pasūtīt tagad ar manu kodu",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Pārdotākā, ar jūsu kodu",
+    "emailLabel": "Jūsu e-pasts",
+    "emailError": "Ievadiet derīgu e-pasta adresi.",
+    "emailPlaceholder": "vards@example.com",
+    "reveal": "Parādīt manu {percent}% kodu",
+    "consent": "Jūs saņemsiet VETUD piedāvājumus e-pastā. Atrakstīties varat jebkurā laikā.",
+    "noThanks": "Nē, paldies",
+    "genericError": "Kaut kas nogāja greizi. Mēģiniet vēlreiz.",
+    "noConnection": "Nav savienojuma. Mēģiniet vēlreiz."
+  }
+}

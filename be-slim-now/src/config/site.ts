@@ -2,6 +2,9 @@
  * Everything the owner may want to change lives here: products, prices, the offer, pictures and
  * contacts. Prices are set per currency in PRICE_LISTS below; which country pays which list is in
  * src/config/markets.ts. Buyers pay the offer price worked out from these regular prices.
+ *
+ * The words on the page are not here: they are in src/i18n/messages/<country>.json (us.json is the
+ * English source). What stays here in English is used by the emails and the server.
  */
 
 export const SITE = {
@@ -11,7 +14,7 @@ export const SITE = {
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:8200").replace(/\/$/, ""),
   description:
     "Tirzepatide (TZ-2) and Retatrutide pens by VETUD. 20 mg or 40 mg, ≥99% purity with a COA for every lot. Launch offer: 40% off. Order in under a minute.",
-  // The shop's research-use notice. Keep this wording exact.
+  // The shop's research-use notice (the page shows its copy from the messages: faq). Keep this wording exact.
   ruoNotice:
     "All products sold on this website are intended for research and identification purposes only. These products are not intended for human dosing, injection, or ingestion.",
 }
@@ -24,17 +27,18 @@ export const SITE = {
  */
 export const OFFER = {
   salePercent: 40,
+  /** For the emails. The page's label is offer.saleLabel in the messages. */
   saleLabel: "Black Friday",
   subscriberPercent: 10,
 }
 
 /**
  * Weight-loss result shown in the hero. Kept separate from the discount offer so the two claims
- * aren't confused. The percent is animated with CountUp when the hero paints.
+ * aren't confused. The percent is animated with CountUp when the hero paints; the sentence around
+ * it is hero.weightLoss in the messages.
  */
 export const WEIGHT_LOSS = {
   percent: 24,
-  timeframe: "days",
 }
 
 /**
@@ -67,14 +71,6 @@ export const TRIAL_DATA = [
     medicine: 14.9,
     placebo: 2.4,
   },
-  {
-    name: "Semaglutide",
-    status: "Approved (US)",
-    dose: "25 mg daily pill (Wegovy pill)",
-    study: "OASIS 4 · 64 weeks · 307 people",
-    medicine: 13.6,
-    placebo: 2.2,
-  },
 ] as const
 
 /**
@@ -96,21 +92,27 @@ export type Strength = (typeof STRENGTHS)[number]
 export const PRODUCT_IDS = ["tz2", "retatrutide"] as const
 export type ProductId = (typeof PRODUCT_IDS)[number]
 
+/**
+ * A product's facts. Its tagline, description, badge text and picture captions are
+ * products.<id> in the messages.
+ */
 export type Product = {
   id: ProductId
+  /** The molecule's name, the same in every language. */
   name: string
   /** The label code printed on VETUD packaging, shown next to the name. */
   label?: string
+  /** For the emails; the page uses products.<id>.fullName in the messages. */
   fullName: string
   code: string
-  tagline: string
-  description: string
-  badge: { text: string; tone: "hot" | "popular" }
+  /** "hot" is the gold best seller, "popular" the navy one. */
+  tone: "hot" | "popular"
   /** The closed box, shown first. */
   image: string
   /** The molecule's artwork on vetud.com (dark, abstract), for night backgrounds. */
   art: string
-  gallery: { src: string; alt: string; label: string }[]
+  /** Pictures in the product card, in order; captions are products.<id>.gallery in the messages. */
+  gallery: string[]
 }
 
 export const PRODUCTS: Record<ProductId, Product> = {
@@ -120,30 +122,20 @@ export const PRODUCTS: Record<ProductId, Product> = {
     label: "TZ-2",
     fullName: "Tirzepatide (TZ-2) Pen",
     code: "VTD-TZ2",
-    tagline: "Dual GIP / GLP-1 receptor agonist",
-    description: "The dual agonist the whole field talks about, in VETUD's precision pen. One pen, 12 needles and a booklet per box.",
-    badge: { text: "Very popular", tone: "popular" },
+    tone: "popular",
     image: "/images/tirzepatide-closed.webp",
     art: "/images/tirzepatide-art.webp",
-    gallery: [
-      { src: "/images/tirzepatide-closed.webp", alt: "VETUD Tirzepatide pen box, closed", label: "Box" },
-      { src: "/images/tirzepatide-open.webp", alt: "VETUD Tirzepatide box, open: pen, 12 needles and booklet", label: "Inside" },
-    ],
+    gallery: ["/images/tirzepatide-closed.webp", "/images/tirzepatide-open.webp"],
   },
   retatrutide: {
     id: "retatrutide",
     name: "Retatrutide",
     fullName: "Retatrutide Pen",
     code: "VTD-RT",
-    tagline: "Triple GIP / GLP-1 / glucagon agonist",
-    description: "The next-generation triple agonist, in VETUD's precision pen. One pen, 12 needles and a booklet per box.",
-    badge: { text: "Best seller", tone: "hot" },
+    tone: "hot",
     image: "/images/retatrutide-closed.webp",
     art: "/images/retatrutide-art.webp",
-    gallery: [
-      { src: "/images/retatrutide-closed.webp", alt: "VETUD Retatrutide pen box, closed", label: "Box" },
-      { src: "/images/retatrutide-open.webp", alt: "VETUD Retatrutide box, open: pen, 12 needles and booklet", label: "Inside" },
-    ],
+    gallery: ["/images/retatrutide-closed.webp", "/images/retatrutide-open.webp"],
   },
 }
 

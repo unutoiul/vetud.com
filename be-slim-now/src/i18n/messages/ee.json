@@ -1,0 +1,430 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide pennid · BeSlimNow",
+    "description": "VETUDi Tirzepatide (TZ-2) ja Retatrutide pennid. 20 mg või 40 mg, puhtus ≥99% ja iga partii kohta COA. Avapakkumine: 40% soodsamalt. Telli vähem kui minutiga."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "SOODUS",
+    "sealAria": "{saleLabel}: −{percent}%"
+  },
+  "promoBar": {
+    "sale": "−{percent}% igalt pennilt",
+    "subscribe": "Telli uudiskiri ja saad veel −{percent}% (kuni −{best}%)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, tagasi üles",
+    "navLabel": "Jaotised",
+    "nav": {
+      "products": "Pennid",
+      "dualChamber": "Pen",
+      "compare": "Võrdlus",
+      "how": "Kuidas tellida",
+      "faq": "KKK"
+    }
+  },
+  "countryPicker": {
+    "aria": "Riik ja valuuta: {country}, hinnad valuutas {currency}",
+    "hint": "Sinu riik määrab hinnad ja valuuta.",
+    "groupUs": "Ameerika Ühendriigid",
+    "groupEurope": "Euroopa",
+    "groupOther": "Muud riigid · hinnad USD-s",
+    "groupOtherTitle": "Muud riigid"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) pen",
+      "tagline": "Kahekordne GIP / GLP-1 retseptori agonist",
+      "description": "Kahekordne agonist, millest räägib kogu valdkond, VETUDi täppispennis. Üks pen, 12 nõela ja kasutusjuhend igas karbis.",
+      "badge": "Väga populaarne",
+      "penAlt": "VETUD Tirzepatide pen",
+      "gallery": [
+        {
+          "label": "Karp",
+          "alt": "VETUD Tirzepatide peni karp, suletud"
+        },
+        {
+          "label": "Sisu",
+          "alt": "Avatud VETUD Tirzepatide karp: pen, 12 nõela ja juhend"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide pen",
+      "tagline": "Kolmekordne GIP / GLP-1 / glükagooni agonist",
+      "description": "Järgmise põlvkonna kolmekordne agonist VETUDi täppispennis. Üks pen, 12 nõela ja kasutusjuhend igas karbis.",
+      "badge": "Enimmüüdud",
+      "penAlt": "VETUD Retatrutide pen",
+      "gallery": [
+        {
+          "label": "Karp",
+          "alt": "VETUD Retatrutide peni karp, suletud"
+        },
+        {
+          "label": "Sisu",
+          "alt": "Avatud VETUD Retatrutide karp: pen, 12 nõela ja juhend"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent}% igalt pennilt, mõlemad tugevused",
+    "eyebrow": "VETUD Peptide Series · Pennid, mida kõik küsivad",
+    "headlineSr": "Tirzepatide & Retatrutide pennina, nüüd {percent}% soodsamalt.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "pennina,",
+      "nüüd"
+    ],
+    "headlineOffer": "{percent}% soodsamalt.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Iga pen on ",
+    "everyPenSr": "Iga pen on {list}.",
+    "everyPen": [
+      "garanteeritud puhtusega",
+      "garanteeritud tarnega",
+      "täna saatmiseks valmis",
+      "≥99% puhas",
+      "COA-ga tõendatud",
+      "diskreetselt pakitud"
+    ],
+    "everyPenSale": "sel nädalal {percent}% soodsam",
+    "listAnd": "ja",
+    "intro": "Ainevahetusuuringute kaks ihaldatuimat molekuli, suletud VETUDi kahekambrilisse täppispenni. 20 mg või 40 mg, puhtus ≥99%, 12 nõela karbis, sinu ukse taga mõne päevaga. Üks lühike vorm. Ei kontot, ei ostukorvi, ei ootamist.",
+    "buyFrom": "Osta kohe · alates {price}",
+    "extraCode": "Lisakood −{percent}%",
+    "guaranteedLabel": "Garantii:",
+    "guarantees": [
+      "raha tagasi, kui partii puhtus on alla 99%",
+      "uus saadetis või raha tagasi, kui pakk kaob"
+    ],
+    "trust": [
+      "Puhtus ≥99%, HPLC-ga kontrollitud",
+      "COA iga partii kohta",
+      "Saadame 24 h jooksul",
+      "Diskreetne pakend"
+    ],
+    "penTagFrom": "alates {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent}% igalt pennilt",
+    "title": "Vali oma pen",
+    "subtitle": "Tirzepatide või Retatrutide, 20 mg või 40 mg. Sama laboritaseme puhtus, sama VETUDi pen, sama pakkumine. Vali, vajuta Osta kohe ja oled vähem kui minutiga valmis.",
+    "enlargeAria": "Suurenda pilte: {product}",
+    "enlarge": "Suurenda",
+    "thumbAlt": "Vaade: {label}",
+    "inStock": "Laos",
+    "strengthAria": "Tugevus",
+    "saleSave": "−{percent}% · säästad {price}",
+    "perMg": "{price} / mg",
+    "bestValue": "Parim hind · {percent}% soodsam milligrammi kohta",
+    "switchTo40": "Säästa 40 mg pennil {percent}% milligrammi kohta →",
+    "features": [
+      "1 pen + 12 ühekordset nõela + kasutusjuhend",
+      "Puhtus ≥99%, partii COA",
+      "Saadame 24 h jooksul, diskreetne pakend"
+    ],
+    "subscriberCode": "Veel {percent}% soodsamalt sinu tellijakoodiga",
+    "buy": "Osta kohe · {price}",
+    "nothingToPay": "Praegu pole midagi maksta. Makseandmed tulevad e-postiga."
+  },
+  "dualChamber": {
+    "eyebrow": "VETUDi kahekambriline pen",
+    "title": "Ehitatud nagu apteegi pen.",
+    "subtitle": "Kaks kambrit, üks kassett: üleval külmkuivatatud peptiid, all BAC-vesi, eraldi seni, kuni need ühendad. Seejärel klõpsab kassett korduvkasutatavasse VETUDi pennisse.",
+    "diagramAlt": "VETUDi kassetis on külmkuivatatud peptiid ja BAC-vesi ning see asub peni kassetihoidikus",
+    "enlarge": "Suurenda",
+    "benefits": [
+      {
+        "title": "Suletud segamise hetkeni",
+        "text": "Külmkuivatatud peptiid on oma kambris, vedelikust korgiga eraldatud. Riiulil ei rikne midagi ja midagi ei segata enne, kui sina seda soovid."
+      },
+      {
+        "title": "BAC-vesi juba kassetis",
+        "text": "Teises kambris on bakteriostaatiline vesi. Pole vaja osta lisaviaale, mõõta ega ümber valada. Kõik vajalik tuleb ühes karbis."
+      },
+      {
+        "title": "Täpne loendur, korduvkasutatav peni korpus",
+        "text": "Kassett klõpsab loenduriaknaga VETUDi pennisse. Pen jääb, kassetti vahetad. Puhas, täpne ja tehtud korduvaks kasutamiseks."
+      }
+    ],
+    "cta": "Tahan oma penni",
+    "video": "Vaata, kuidas see töötab · 40 sekundit"
+  },
+  "compare": {
+    "eyebrow": "Kõrvuti",
+    "title": "Milline pen sobib sulle?",
+    "subtitle": "Kaks molekuli, üks pen, üks milligrammihind võrdlemiseks. Mõlemal on sama puhtus, sama karp ja sama pakkumine.",
+    "rows": {
+      "label": {
+        "label": "Märgistus pennil",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Mis see on",
+        "tz2": "Kahekordne agonist: GIP + GLP-1 retseptorid",
+        "retatrutide": "Kolmekordne agonist: GIP + GLP-1 + glükagooni retseptorid"
+      },
+      "generation": {
+        "label": "Põlvkond",
+        "tz2": "Praegune põlvkond · enim küsitud",
+        "retatrutide": "Järgmine põlvkond · uusim"
+      },
+      "status": {
+        "label": "Arendusetapp",
+        "tz2": "Ravimina heaks kiidetud molekul",
+        "retatrutide": "Uuringujärgus, 3. faasi uuringutes"
+      },
+      "strengths": {
+        "label": "Tugevused",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "Karbis",
+        "tz2": "1 pen · 12 nõela · juhend",
+        "retatrutide": "1 pen · 12 nõela · juhend"
+      },
+      "purity": {
+        "label": "Puhtus",
+        "tz2": "≥99%, partii COA",
+        "retatrutide": "≥99%, partii COA"
+      },
+      "dispatch": {
+        "label": "Saatmine",
+        "tz2": "24 h jooksul pärast makset",
+        "retatrutide": "24 h jooksul pärast makset"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent}%",
+    "perMgRow": "Hind / mg (40 mg)",
+    "buyProduct": "Osta {product}",
+    "buy": "Osta kohe"
+  },
+  "howToOrder": {
+    "eyebrow": "Kuidas tellida",
+    "title": "Klikist ukseni nelja sammuga.",
+    "subtitle": "Üks tellimisviis, loodud kiireks. Tead alati, kus su tellimus on.",
+    "steps": [
+      {
+        "title": "Vali oma pen",
+        "text": "Tirzepatide või Retatrutide, 20 mg või 40 mg. Vajuta Osta kohe."
+      },
+      {
+        "title": "Täida üks lühike vorm",
+        "text": "Nimi, e-post, telefon ja aadress. Ei kontot, ei ostukorvi, alla minuti."
+      },
+      {
+        "title": "Saad e-kirja",
+        "text": "Kinnitus tuleb kohe, koos makseandmete ja tellimuse numbriga."
+      },
+      {
+        "title": "Saadame 24 h jooksul",
+        "text": "Kohe kui makse on laekunud, lähevad su pennid teele, diskreetselt pakitult ja jälgimiskoodiga."
+      }
+    ],
+    "cta": "Alusta tellimust"
+  },
+  "quality": {
+    "eyebrow": "Kvaliteet, mida saad kontrollida",
+    "title": "Labori tulemused, mitte lubadused.",
+    "subtitle": "Iga VETUDi partii testitakse HPLC-ga ja dokumenteeritakse enne saatmist. Küsi meilt igal ajal saadud partii COA-d ja me saadame selle.",
+    "stats": [
+      {
+        "value": "≥99%",
+        "label": "Puhtus",
+        "text": "HPLC-ga kontrollitud igas partiis"
+      },
+      {
+        "value": "COA",
+        "label": "Iga partii",
+        "text": "Analüüsisertifikaat soovi korral, vastavalt sinu partii numbrile"
+      },
+      {
+        "value": "24 h",
+        "label": "Saatmine",
+        "text": "Saadame ühe tööpäeva jooksul pärast makset"
+      },
+      {
+        "value": "12",
+        "label": "Nõela igas karbis",
+        "text": "Koos peni ja kasutusjuhendiga, kõik valmis"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Iga peni taga",
+    "title": "Puhtalt täidetud. Külmas hoitud.",
+    "subtitle": "Fotod kohtadest, kus VETUDi tooteid täidetakse ja hoitakse: puhasruumi täiteliin ja seejärel külmkapid kuni su tellimuse saatmiseni.",
+    "enlarge": "Suurenda",
+    "enlargeAria": "Suurenda: {title}",
+    "photos": [
+      {
+        "alt": "Puhasruumi riietuses, maski ja kinnastega töötaja kannab suletud viaalidega kandikut täitemasinast mööda",
+        "eyebrow": "Täitmine",
+        "title": "Täidetud puhasruumis",
+        "text": "Masinaga korgitud ja suletud, käsitlevad töötajad täielikus kaitseriietuses, maskides ja kinnastes."
+      },
+      {
+        "alt": "Märgistatud viaalikastid klaasuksega külmkapi riiulitel",
+        "eyebrow": "Ladustamine",
+        "title": "Hoitud külmas",
+        "text": "Iga partii märgistatakse ja seda hoitakse klaasustega külmkappides kuni saatmiseni."
+      },
+      {
+        "alt": "Rida valgustatud klaasustega külmkappe täis märgistatud varu",
+        "eyebrow": "Varu",
+        "title": "Saatmiseks valmis",
+        "text": "Kaup on laos, nii et su tellimus lahkub 24 tunni jooksul pärast makset."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "KKK",
+    "title": "Küsimused ja vastused.",
+    "items": [
+      {
+        "q": "Kuidas ma maksan?",
+        "a": "Pärast tellimust saad kohe e-kirja makseandmete ja tellimuse numbriga. Sellel lehel ei võeta raha. Kasuta makse selgituses tellimuse numbrit."
+      },
+      {
+        "q": "Kui kiiresti te saadate?",
+        "a": "Tellimused saadetakse 24 tunni jooksul pärast makset (tööpäevadel) ning jälgimiskood saadetakse e-postiga ja, kui valisid, ka sõnumirakendusse."
+      },
+      {
+        "q": "Mida teie garantiid katavad?",
+        "a": "Kahte asja. Puhtus: iga partii testitakse ja kui partii puhtus on alla 99%, maksame raha tagasi. Tarne: kui pakk teel kaob, saadame uue või maksame raha tagasi. Kirjuta meile tellimuse numbriga ja lahendame asja."
+      },
+      {
+        "q": "Mis on karbis?",
+        "a": "Igas VETUDi karbis on üks valitud tugevusega pen, 12 ühekordset nõela ja kasutusjuhend, märgistatud toote ja partiiga. Välispakend on neutraalne ja diskreetne."
+      },
+      {
+        "q": "Mis vahe on 20 mg ja 40 mg vahel?",
+        "a": "Pennis oleva peptiidi kogus. 40 mg pen on milligrammi kohta soodsam, seepärast on see märgitud kui Parim hind."
+      },
+      {
+        "q": "Kas saan analüüsisertifikaadi (COA)?",
+        "a": "Jah. Iga partii puhtus testitakse. Kirjuta meile tellimuse numbriga ja saadame sulle saadud partii COA."
+      },
+      {
+        "q": "Kas saan tellimust muuta või tühistada?",
+        "a": "Jah, kuni see pole välja saadetud. Vasta kinnitus-e-kirjale või kirjuta meile: {contacts}."
+      },
+      {
+        "q": "Milleks need tooted on mõeldud?",
+        "a": "Kõik sellel veebisaidil müüdavad tooted on mõeldud ainult uurimis- ja tuvastamiseesmärkidel. Need tooted ei ole mõeldud inimestele doseerimiseks, süstimiseks ega allaneelamiseks."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Kõik õigused kaitstud."
+  },
+  "consent": {
+    "label": "Küpsiste valik",
+    "text": "Soovime kasutada analüütikaküpsiseid (Google Analytics ja Microsoft Clarity), et näha, kuidas seda lehte kasutatakse, ja seda paremaks teha. Midagi ei kasutata reklaami jaoks.",
+    "accept": "Nõustu",
+    "decline": "Keeldu",
+    "settings": "Küpsiste seaded"
+  },
+  "contact": {
+    "messageUs": "Kirjuta meile",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-post"
+    }
+  },
+  "order": {
+    "yourOrder": "Sinu tellimus",
+    "shipTo": "Saaja riik",
+    "pricesIn": "· hinnad valuutas {currency}",
+    "chooseCountry": "Vali riik",
+    "chooseCountryError": "Vali riik.",
+    "pen": "Pen",
+    "strength": "Tugevus",
+    "quantity": "Kogus",
+    "discountCode": "Sooduskood",
+    "codePlaceholder": "Sinu kood",
+    "apply": "Rakenda",
+    "applied": "Rakendatud",
+    "getCode": "Hangi kood veel {percent}% soodustuseks",
+    "codeApplied": "Kood {code} rakendatud: veel {percent}% soodsamalt",
+    "codeInvalid": "See kood ei kehti.",
+    "codeCheckFailed": "Koodi ei õnnestunud kontrollida. Proovi uuesti.",
+    "regularLine": "{quantity} × {price} tavahind",
+    "saleLine": "{saleLabel} −{percent}%",
+    "codeLine": "Kood {code} −{percent}%",
+    "total": "Kokku",
+    "youSave": "Säästad {price}",
+    "perks": [
+      "Puhtus ≥99%, COA iga partii kohta",
+      "Saadame 24 h jooksul pärast makset",
+      "Makseandmed e-postiga, praegu pole midagi maksta"
+    ],
+    "title": "Kuhu me selle saadame?",
+    "subtitle": "Ei kontot, ei ostukorvi. Üks lühike vorm ja valmis.",
+    "fullName": "Täisnimi",
+    "fullNameError": "Sisesta oma täisnimi.",
+    "email": "E-post",
+    "emailError": "Sisesta kehtiv e-posti aadress.",
+    "phone": "Telefon",
+    "phoneCode": "Riigikood",
+    "phoneError": "Sisesta oma telefoninumber.",
+    "phonePlaceholder": "Telefoninumber",
+    "contactApp": "Parim viis sinuga ühendust võtta",
+    "contactAppEmailOnly": "Ainult e-post",
+    "handleHint": {
+      "whatsapp": "WhatsAppi number, kui see erineb telefoninumbrist",
+      "telegram": "Sinu Telegrami kasutajanimi, nt @nimi",
+      "line": "Sinu LINE-i ID"
+    },
+    "address": "Tänav ja maja",
+    "addressError": "Sisesta tänav ja maja.",
+    "city": "Linn",
+    "cityError": "Sisesta linn.",
+    "postalCode": "Postiindeks",
+    "postalCodeError": "Sisesta postiindeks.",
+    "note": "Märkus (valikuline)",
+    "researchUse": "Kinnitan, et need tooted on mõeldud ainult uurimistööks.",
+    "researchUseError": "Palun kinnita kasutamine uurimistööks.",
+    "placeOrder": "Telli maksekohustusega · {price}",
+    "confirmationNote": "Saad kohe kinnitus-e-kirja koos makseandmetega. Küsimusi? Kirjuta aadressile {email}.",
+    "genericError": "Midagi läks valesti. Proovi uuesti või kirjuta meile.",
+    "noConnection": "Ühendus puudub. Proovi uuesti või kirjuta meile.",
+    "doneTitle": "Tellimus {orderNumber} on broneeritud",
+    "doneText": "Saatsime makseandmed aadressile <b>{email}</b>. Tasuda: <b>{total}</b>.",
+    "doneSpam": "Ei leia? Vaata rämpsposti kausta või kirjuta meile allpool.",
+    "doneButton": "Valmis"
+  },
+  "promo": {
+    "eyebrow": "Ainult tellijatele",
+    "eyebrowReady": "Sinu kood on valmis",
+    "headline": "Veel {percent} soodsamalt",
+    "onTop": "Lisaks {saleLabel} −{percent}% soodustusele · kokku kuni −{best}%",
+    "emailedNote": "Saatsime selle ka e-postiga ja see on juba sinu tellimusvormil.",
+    "copyAria": "Kopeeri kood {code}",
+    "copy": "Kopeeri",
+    "copied": "Kopeeritud",
+    "yourCode": "Sinu kood: {code}",
+    "orderWithCode": "Telli kohe minu koodiga",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Enimmüüdud, sinu koodiga",
+    "emailLabel": "Sinu e-post",
+    "emailError": "Sisesta kehtiv e-posti aadress.",
+    "emailPlaceholder": "nimi@example.com",
+    "reveal": "Näita minu {percent}% koodi",
+    "consent": "Saad VETUDi pakkumisi e-postiga. Saad tellimusest igal ajal loobuda.",
+    "noThanks": "Ei, aitäh",
+    "genericError": "Midagi läks valesti. Proovi uuesti.",
+    "noConnection": "Ühendus puudub. Proovi uuesti."
+  }
+}

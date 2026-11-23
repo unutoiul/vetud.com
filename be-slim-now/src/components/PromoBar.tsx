@@ -3,11 +3,14 @@
 import { GiftFilled, TagFilled } from "@ant-design/icons"
 import { OFFER, bestCombinedPercent } from "@/config/site"
 import { colors, fonts } from "@/theme/tokens"
+import { format } from "@/i18n/format"
+import { useMessages } from "./MessagesProvider"
 import { useOrder } from "./OrderProvider"
 
 /** The offer strip above the header: night navy, with the numbers in lime. */
 export default function PromoBar() {
   const { openPromo } = useOrder()
+  const m = useMessages()
   if (!OFFER.salePercent) return null
   return (
     <div
@@ -25,8 +28,8 @@ export default function PromoBar() {
     >
       <TagFilled style={{ color: colors.green, marginRight: 8 }} />
       <span style={{ fontFamily: fonts.display, fontSize: 15, letterSpacing: "0.02em" }}>
-        {OFFER.saleLabel}:{" "}
-        <strong style={{ color: colors.limeLight, fontWeight: 700 }}>−{OFFER.salePercent}% on every pen</strong>
+        {m.offer.saleLabel}:{" "}
+        <strong style={{ color: colors.limeLight, fontWeight: 700 }}>{format(m.promoBar.sale, { percent: OFFER.salePercent })}</strong>
       </span>
       <span style={{ opacity: 0.45, margin: "0 12px" }}>|</span>
       <button
@@ -46,7 +49,7 @@ export default function PromoBar() {
         }}
       >
         <GiftFilled style={{ color: colors.green, marginRight: 6 }} />
-        Subscribe for an extra −{OFFER.subscriberPercent}% (up to −{bestCombinedPercent()}%)
+        {format(m.promoBar.subscribe, { percent: OFFER.subscriberPercent, best: bestCombinedPercent() })}
       </button>
     </div>
   )

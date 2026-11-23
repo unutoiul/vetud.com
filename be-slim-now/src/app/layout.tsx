@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { DM_Mono, Jost, Manrope } from "next/font/google"
 import { AntdRegistry } from "@ant-design/nextjs-registry"
+import Analytics from "@/components/Analytics"
 import Providers from "@/components/Providers"
 import { SITE } from "@/config/site"
 import { colors } from "@/theme/tokens"
@@ -13,8 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · BeSlimNow",
   description: SITE.description,
-  // The per-country pages (/de, /gb…) are the same page in another currency.
-  alternates: { canonical: "/" },
+  // Canonical and hreflang links are set per country page (storefrontMetadata, src/lib/seo.ts).
   openGraph: {
     title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · VETUD",
     description: SITE.description,
@@ -22,6 +22,12 @@ export const metadata: Metadata = {
     type: "website",
   },
   robots: { index: true, follow: true },
+  // Ownership checks for Google Search Console and Bing Webmaster Tools ("HTML tag" method): paste
+  // only the content="…" value into these env vars. Not needed when the site is verified another way.
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
+  },
 }
 
 export const viewport: Viewport = {
@@ -49,6 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <AntdRegistry>
           <Providers>{children}</Providers>
         </AntdRegistry>
+        <Analytics />
       </body>
     </html>
   )

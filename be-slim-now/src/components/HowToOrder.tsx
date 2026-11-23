@@ -3,24 +3,22 @@
 import { CarOutlined, FormOutlined, MailOutlined, ShoppingOutlined } from "@ant-design/icons"
 import { Button, Col, Flex, Row, Typography } from "antd"
 import { colors, fonts, shadows } from "@/theme/tokens"
+import { useMessages } from "./MessagesProvider"
 import { useOrder } from "./OrderProvider"
 import { Section, SectionHeading } from "./ui"
 
-const STEPS = [
-  { icon: <ShoppingOutlined />, title: "Choose your pen", text: "Tirzepatide or Retatrutide, 20 mg or 40 mg. Press Buy now." },
-  { icon: <FormOutlined />, title: "Fill one short form", text: "Name, email, phone and address. No account, no cart, under a minute." },
-  { icon: <MailOutlined />, title: "Get the email", text: "Your confirmation arrives right away, with the payment details and your order number." },
-  { icon: <CarOutlined />, title: "We ship in 24 h", text: "Once payment arrives your pens ship, discreetly packed, with tracking." },
-]
+/** One icon per step, in the order of howToOrder.steps in the messages. */
+const STEP_ICONS = [<ShoppingOutlined key="choose" />, <FormOutlined key="form" />, <MailOutlined key="email" />, <CarOutlined key="ship" />]
 
 export default function HowToOrder() {
   const { openOrder } = useOrder()
+  const t = useMessages().howToOrder
   return (
     <Section id="how" background={colors.paper}>
-      <SectionHeading eyebrow="How to order" title="From click to doorstep in four steps." subtitle="One way to order, built to be fast. You always know where your order stands." />
+      <SectionHeading eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
       <Row gutter={[24, 24]}>
-        {STEPS.map((step, index) => (
-          <Col key={step.title} xs={24} sm={12} lg={6}>
+        {t.steps.map((step, index) => (
+          <Col key={index} xs={24} sm={12} lg={6}>
             <div
               style={{
                 height: "100%",
@@ -52,7 +50,7 @@ export default function HowToOrder() {
                   border: `1px solid ${colors.aqua}`,
                 }}
               >
-                {step.icon}
+                {STEP_ICONS[index]}
               </span>
               <Typography.Title level={4} style={{ fontFamily: fonts.display, fontWeight: 500, fontSize: 21, color: colors.navy, margin: "20px 0 8px" }}>
                 {step.title}
@@ -64,7 +62,7 @@ export default function HowToOrder() {
       </Row>
       <Flex justify="center" style={{ marginTop: 48 }}>
         <Button type="primary" size="large" icon={<ShoppingOutlined />} onClick={() => openOrder()} style={{ height: 56, padding: "0 40px", fontSize: 17 }}>
-          Start my order
+          {t.cta}
         </Button>
       </Flex>
     </Section>

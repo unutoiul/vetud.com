@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide pennen · BeSlimNow",
+    "description": "Tirzepatide (TZ-2) en Retatrutide pennen van VETUD. 20 mg of 40 mg, ≥99% zuiverheid met een COA voor elke batch. Introductieaanbieding: 40% korting. In minder dan een minuut besteld."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "KORTING",
+    "sealAria": "{saleLabel}: {percent}% korting"
+  },
+  "promoBar": {
+    "sale": "−{percent}% op elke pen",
+    "subscribe": "Abonneer je voor nog eens −{percent}% (tot −{best}%)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, terug naar boven",
+    "navLabel": "Onderdelen",
+    "nav": {
+      "products": "Pennen",
+      "dualChamber": "De pen",
+      "compare": "Vergelijken",
+      "how": "Bestellen",
+      "faq": "FAQ"
+    }
+  },
+  "countryPicker": {
+    "aria": "Land en valuta: {country}, prijzen in {currency}",
+    "hint": "Je land bepaalt de prijzen en de valuta.",
+    "groupUs": "Verenigde Staten",
+    "groupEurope": "Europa",
+    "groupOther": "Andere landen · prijzen in USD",
+    "groupOtherTitle": "Andere landen"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) pen",
+      "tagline": "Duale GIP-/GLP-1-receptoragonist",
+      "description": "De duale agonist waar het hele vakgebied over praat, in de precisiepen van VETUD. Eén pen, 12 naalden en een handleiding per doos.",
+      "badge": "Zeer populair",
+      "penAlt": "VETUD Tirzepatide pen",
+      "gallery": [
+        {
+          "label": "Doos",
+          "alt": "Doos van de VETUD Tirzepatide pen, gesloten"
+        },
+        {
+          "label": "Inhoud",
+          "alt": "Doos van VETUD Tirzepatide, open: pen, 12 naalden en handleiding"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide pen",
+      "tagline": "Drievoudige GIP-/GLP-1-/glucagonagonist",
+      "description": "De drievoudige agonist van de volgende generatie, in de precisiepen van VETUD. Eén pen, 12 naalden en een handleiding per doos.",
+      "badge": "Bestseller",
+      "penAlt": "VETUD Retatrutide pen",
+      "gallery": [
+        {
+          "label": "Doos",
+          "alt": "Doos van de VETUD Retatrutide pen, gesloten"
+        },
+        {
+          "label": "Inhoud",
+          "alt": "Doos van VETUD Retatrutide, open: pen, 12 naalden en handleiding"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent}% op elke pen, beide sterktes",
+    "eyebrow": "VETUD Peptide Series · De pennen waar iedereen naar vraagt",
+    "headlineSr": "Tirzepatide & Retatrutide als pen, nu {percent}% korting.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "als",
+      "pen,",
+      "nu"
+    ],
+    "headlineOffer": "{percent}% korting.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Elke pen is ",
+    "everyPenSr": "Elke pen is {list}.",
+    "everyPen": [
+      "gegarandeerd zuiver",
+      "gegarandeerd geleverd",
+      "vandaag verzendklaar",
+      "≥99% zuiver",
+      "voorzien van een COA",
+      "discreet verpakt"
+    ],
+    "everyPenSale": "deze week {percent}% goedkoper",
+    "listAnd": "en",
+    "intro": "De twee meest gewilde moleculen in stofwisselingsonderzoek, verzegeld in de precisie-tweekamerpen van VETUD. 20 mg of 40 mg, ≥99% zuiverheid, 12 naalden in de doos, binnen enkele dagen bij je thuis. Eén kort formulier. Geen account, geen winkelwagen, geen wachten.",
+    "buyFrom": "Nu kopen · vanaf {price}",
+    "extraCode": "Extra code −{percent}%",
+    "guaranteedLabel": "Gegarandeerd:",
+    "guarantees": [
+      "geld terug als een batch onder 99% zuiverheid test",
+      "opnieuw verzonden of geld terug als je pakket zoekraakt"
+    ],
+    "trust": [
+      "≥99% zuiverheid, HPLC-getest",
+      "COA bij elke batch",
+      "Verzonden binnen 24 uur",
+      "Discrete verpakking"
+    ],
+    "penTagFrom": "vanaf {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent}% op elke pen",
+    "title": "Kies je pen",
+    "subtitle": "Tirzepatide of Retatrutide, 20 mg of 40 mg. Dezelfde laboratoriumzuiverheid, dezelfde VETUD pen, hetzelfde aanbod. Kies, druk op Nu kopen en je bent in minder dan een minuut klaar.",
+    "enlargeAria": "Foto's van de {product} vergroten",
+    "enlarge": "Vergroten",
+    "thumbAlt": "Weergave: {label}",
+    "inStock": "Op voorraad",
+    "strengthAria": "Sterkte",
+    "saleSave": "−{percent}% · {price} voordeel",
+    "perMg": "{price} per mg",
+    "bestValue": "Beste prijs · {percent}% voordeel per mg",
+    "switchTo40": "Bespaar {percent}% per mg met 40 mg →",
+    "features": [
+      "1 pen + 12 wegwerpnaalden + handleiding",
+      "≥99% zuiverheid, COA van de batch",
+      "Verzonden binnen 24 uur, discreet verpakt"
+    ],
+    "subscriberCode": "Nog eens {percent}% korting met je abonneecode",
+    "buy": "Nu kopen · {price}",
+    "nothingToPay": "Nu niets betalen. De betaalgegevens krijg je per e-mail."
+  },
+  "dualChamber": {
+    "eyebrow": "De VETUD tweekamerpen",
+    "title": "Gebouwd als een pen uit de apotheek.",
+    "subtitle": "Twee kamers, één patroon: bovenin gevriesdroogd peptide, onderin BAC-water, gescheiden tot je ze samenvoegt. Daarna klikt het patroon vast in de herbruikbare VETUD pen.",
+    "diagramAlt": "Het VETUD patroon bevat gevriesdroogd peptide en BAC-water en zit in de patroonhouder van de pen",
+    "enlarge": "Vergroten",
+    "benefits": [
+      {
+        "title": "Verzegeld tot het moment van mengen",
+        "text": "Het gevriesdroogde peptide zit in een eigen kamer, door een stop gescheiden van de vloeistof. Niets gaat achteruit op de plank, niets wordt gemengd voordat jij dat wilt."
+      },
+      {
+        "title": "BAC-water al in het patroon",
+        "text": "De tweede kamer bevat het bacteriostatische water. Geen extra flacons kopen, niet afmeten, niet overbrengen. Alles wat je nodig hebt, komt in één doos."
+      },
+      {
+        "title": "Nauwkeurige teller, herbruikbare pen",
+        "text": "Het patroon klikt in de VETUD pen met zijn tellervenster. Houd de pen, wissel het patroon. Schoon, precies en gemaakt om opnieuw te gebruiken."
+      }
+    ],
+    "cta": "Mijn pen kiezen",
+    "video": "Zo werkt het · 40 seconden"
+  },
+  "compare": {
+    "eyebrow": "Naast elkaar",
+    "title": "Welke pen past bij jou?",
+    "subtitle": "Twee moleculen, één pen, één prijs per mg om te vergelijken. Beide komen met dezelfde zuiverheid, dezelfde doos en hetzelfde aanbod.",
+    "rows": {
+      "label": {
+        "label": "Opschrift op de pen",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Wat het is",
+        "tz2": "Duale agonist: GIP- + GLP-1-receptoren",
+        "retatrutide": "Drievoudige agonist: GIP- + GLP-1- + glucagonreceptoren"
+      },
+      "generation": {
+        "label": "Generatie",
+        "tz2": "Huidige generatie · het meest gevraagd",
+        "retatrutide": "Volgende generatie · de nieuwste"
+      },
+      "status": {
+        "label": "Ontwikkelingsfase",
+        "tz2": "Als geneesmiddel goedgekeurde molecule",
+        "retatrutide": "In onderzoek, in fase 3-studies"
+      },
+      "strengths": {
+        "label": "Sterktes",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "In de doos",
+        "tz2": "1 pen · 12 naalden · handleiding",
+        "retatrutide": "1 pen · 12 naalden · handleiding"
+      },
+      "purity": {
+        "label": "Zuiverheid",
+        "tz2": "≥99%, COA van de batch",
+        "retatrutide": "≥99%, COA van de batch"
+      },
+      "dispatch": {
+        "label": "Verzending",
+        "tz2": "Binnen 24 uur na betaling",
+        "retatrutide": "Binnen 24 uur na betaling"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent}%",
+    "perMgRow": "Prijs per mg (40 mg)",
+    "buyProduct": "{product} kopen",
+    "buy": "Nu kopen"
+  },
+  "howToOrder": {
+    "eyebrow": "Bestellen",
+    "title": "Van klik tot voordeur in vier stappen.",
+    "subtitle": "Eén manier van bestellen, gemaakt om snel te zijn. Je weet altijd waar je bestelling is.",
+    "steps": [
+      {
+        "title": "Kies je pen",
+        "text": "Tirzepatide of Retatrutide, 20 mg of 40 mg. Druk op Nu kopen."
+      },
+      {
+        "title": "Vul één kort formulier in",
+        "text": "Naam, e-mail, telefoon en adres. Geen account, geen winkelwagen, binnen een minuut."
+      },
+      {
+        "title": "Ontvang de e-mail",
+        "text": "Je bevestiging komt meteen, met de betaalgegevens en je bestelnummer."
+      },
+      {
+        "title": "Wij verzenden binnen 24 uur",
+        "text": "Zodra de betaling binnen is, gaan je pennen de deur uit, discreet verpakt en met track & trace."
+      }
+    ],
+    "cta": "Start mijn bestelling"
+  },
+  "quality": {
+    "eyebrow": "Kwaliteit die je kunt controleren",
+    "title": "Labresultaten, geen beloftes.",
+    "subtitle": "Elke VETUD batch wordt vóór verzending met HPLC getest en gedocumenteerd. Vraag ons op elk moment om het COA van de batch die je ontvangt en we sturen het op.",
+    "stats": [
+      {
+        "value": "≥99%",
+        "label": "Zuiverheid",
+        "text": "Bij elke batch met HPLC gecontroleerd"
+      },
+      {
+        "value": "COA",
+        "label": "Elke batch",
+        "text": "Analysecertificaat op aanvraag, passend bij je batchnummer"
+      },
+      {
+        "value": "24 uur",
+        "label": "Verzending",
+        "text": "Verzonden binnen één werkdag na betaling"
+      },
+      {
+        "value": "12",
+        "label": "Naalden in elke doos",
+        "text": "Met de pen en een handleiding, meteen klaar"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Achter elke pen",
+    "title": "Schoon gevuld. Koel bewaard.",
+    "subtitle": "Foto's van waar VETUD producten worden gevuld en opgeslagen: een vullijn in een cleanroom, daarna gekoelde kasten tot je bestelling wordt verzonden.",
+    "enlarge": "Vergroten",
+    "enlargeAria": "Vergroten: {title}",
+    "photos": [
+      {
+        "alt": "Een medewerker in cleanroompak, mondkapje en handschoenen draagt een bak met afgesloten flacons langs de vulmachine",
+        "eyebrow": "Vullen",
+        "title": "Gevuld in een cleanroom",
+        "text": "Machinaal gestopt en afgesloten, behandeld door personeel in volledig pak, met mondkapje en handschoenen."
+      },
+      {
+        "alt": "Gelabelde bakken met flacons op de planken van een koelkast met glazen deur",
+        "eyebrow": "Opslag",
+        "title": "Gekoeld bewaard",
+        "text": "Elke batch gelabeld en tot verzending bewaard in koelkasten met glazen deur."
+      },
+      {
+        "alt": "Een rij verlichte koelkasten met glazen deur vol gelabelde voorraad",
+        "eyebrow": "Voorraad",
+        "title": "Klaar voor verzending",
+        "text": "Voorraad aanwezig, zodat je bestelling binnen 24 uur na betaling vertrekt."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Je vragen, beantwoord.",
+    "items": [
+      {
+        "q": "Hoe betaal ik?",
+        "a": "Na je bestelling krijg je meteen een e-mail met de betaalgegevens en je bestelnummer. Op deze pagina wordt niets afgeschreven. Gebruik je bestelnummer als betalingskenmerk."
+      },
+      {
+        "q": "Hoe snel verzenden jullie?",
+        "a": "Bestellingen worden binnen 24 uur na betaling verzonden (werkdagen), met een trackingnummer per e-mail en, als je dat hebt gekozen, via je berichtenapp."
+      },
+      {
+        "q": "Wat dekken jullie garanties?",
+        "a": "Twee dingen. Zuiverheid: elke batch wordt getest, en als een batch onder 99% zuiverheid test, betalen we je terug. Levering: als je pakket onderweg zoekraakt, versturen we het opnieuw of betalen we je terug. Stuur ons een bericht met je bestelnummer en we regelen het."
+      },
+      {
+        "q": "Wat zit er in de doos?",
+        "a": "Elke VETUD doos bevat één pen in de gekozen sterkte, 12 wegwerpnaalden en een handleiding, gelabeld met product en batch. De buitenverpakking is neutraal en discreet."
+      },
+      {
+        "q": "Wat is het verschil tussen 20 mg en 40 mg?",
+        "a": "De hoeveelheid peptide in de pen. De pen van 40 mg kost minder per mg, daarom staat er Beste prijs bij."
+      },
+      {
+        "q": "Kan ik het analysecertificaat (COA) krijgen?",
+        "a": "Ja. Elke batch wordt op zuiverheid getest. Stuur ons een bericht met je bestelnummer en we sturen je het COA van de batch die je hebt ontvangen."
+      },
+      {
+        "q": "Kan ik mijn bestelling wijzigen of annuleren?",
+        "a": "Ja, tot ze is verzonden. Beantwoord je bevestigingsmail of stuur ons een bericht: {contacts}."
+      },
+      {
+        "q": "Waarvoor zijn deze producten bedoeld?",
+        "a": "Alle producten die op deze website worden verkocht, zijn uitsluitend bedoeld voor onderzoeks- en identificatiedoeleinden. Deze producten zijn niet bedoeld voor dosering, injectie of inname bij mensen."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Alle rechten voorbehouden."
+  },
+  "consent": {
+    "label": "Cookiekeuze",
+    "text": "We willen graag analytische cookies (Google Analytics en Microsoft Clarity) gebruiken om te zien hoe deze pagina wordt gebruikt en haar te verbeteren. Niets wordt gebruikt voor advertenties.",
+    "accept": "Accepteren",
+    "decline": "Weigeren",
+    "settings": "Cookie-instellingen"
+  },
+  "contact": {
+    "messageUs": "Stuur ons een bericht",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-mail"
+    }
+  },
+  "order": {
+    "yourOrder": "Je bestelling",
+    "shipTo": "Verzenden naar",
+    "pricesIn": "· prijzen in {currency}",
+    "chooseCountry": "Kies een land",
+    "chooseCountryError": "Kies een land.",
+    "pen": "Pen",
+    "strength": "Sterkte",
+    "quantity": "Aantal",
+    "discountCode": "Kortingscode",
+    "codePlaceholder": "Je code",
+    "apply": "Toepassen",
+    "applied": "Toegepast",
+    "getCode": "Vraag een code aan voor nog eens {percent}%",
+    "codeApplied": "Code {code} toegepast: nog eens {percent}% korting",
+    "codeInvalid": "Deze code is niet geldig.",
+    "codeCheckFailed": "De code kon niet worden gecontroleerd. Probeer het opnieuw.",
+    "regularLine": "{quantity} × {price} normale prijs",
+    "saleLine": "{saleLabel} −{percent}%",
+    "codeLine": "Code {code} −{percent}%",
+    "total": "Totaal",
+    "youSave": "Je bespaart {price}",
+    "perks": [
+      "≥99% zuiverheid, COA bij elke batch",
+      "Verzonden binnen 24 uur na betaling",
+      "Betaalgegevens per e-mail, nu niets betalen"
+    ],
+    "title": "Waar mogen we het naartoe sturen?",
+    "subtitle": "Geen account, geen winkelwagen. Eén kort formulier en klaar.",
+    "fullName": "Volledige naam",
+    "fullNameError": "Vul je volledige naam in.",
+    "email": "E-mail",
+    "emailError": "Vul een geldig e-mailadres in.",
+    "phone": "Telefoon",
+    "phoneCode": "Landcode",
+    "phoneError": "Vul je telefoonnummer in.",
+    "phonePlaceholder": "Telefoonnummer",
+    "contactApp": "Hoe we je het best bereiken",
+    "contactAppEmailOnly": "Alleen e-mail",
+    "handleHint": {
+      "whatsapp": "WhatsApp-nummer, als dat anders is dan je telefoonnummer",
+      "telegram": "Je Telegram-gebruikersnaam, bijv. @naam",
+      "line": "Je LINE-ID"
+    },
+    "address": "Straat en huisnummer",
+    "addressError": "Vul je straat en huisnummer in.",
+    "city": "Plaats",
+    "cityError": "Vul de plaats in.",
+    "postalCode": "Postcode",
+    "postalCodeError": "Vul de postcode in.",
+    "note": "Opmerking (optioneel)",
+    "researchUse": "Ik bevestig dat deze producten uitsluitend voor onderzoek bedoeld zijn.",
+    "researchUseError": "Bevestig het gebruik voor onderzoek.",
+    "placeOrder": "Bestelling met betalingsverplichting · {price}",
+    "confirmationNote": "Je krijgt meteen een bevestigingsmail met de betaalgegevens. Vragen? Mail naar {email}.",
+    "genericError": "Er ging iets mis. Probeer het opnieuw of stuur ons een bericht.",
+    "noConnection": "Geen verbinding. Probeer het opnieuw of stuur ons een bericht.",
+    "doneTitle": "Bestelling {orderNumber} is gereserveerd",
+    "doneText": "We hebben de betaalgegevens naar <b>{email}</b> gestuurd. Te betalen: <b>{total}</b>.",
+    "doneSpam": "Niet gevonden? Kijk in je spammap of stuur ons hieronder een bericht.",
+    "doneButton": "Klaar"
+  },
+  "promo": {
+    "eyebrow": "Exclusief voor abonnees",
+    "eyebrowReady": "Je code staat klaar",
+    "headline": "Nog eens {percent} korting",
+    "onTop": "Bovenop de {saleLabel}-korting van {percent}% · in totaal tot {best}% korting",
+    "emailedNote": "We hebben hem je ook gemaild, en hij staat al in je bestelformulier.",
+    "copyAria": "Code {code} kopiëren",
+    "copy": "Kopiëren",
+    "copied": "Gekopieerd",
+    "yourCode": "Je code: {code}",
+    "orderWithCode": "Nu bestellen met mijn code",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Bestseller, met je code",
+    "emailLabel": "Je e-mailadres",
+    "emailError": "Vul een geldig e-mailadres in.",
+    "emailPlaceholder": "naam@example.com",
+    "reveal": "Toon mijn code van {percent}%",
+    "consent": "Je ontvangt aanbiedingen van VETUD per e-mail. Je kunt je altijd afmelden.",
+    "noThanks": "Nee, bedankt",
+    "genericError": "Er ging iets mis. Probeer het opnieuw.",
+    "noConnection": "Geen verbinding. Probeer het opnieuw."
+  }
+}

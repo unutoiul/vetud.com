@@ -5,47 +5,34 @@ import { Button, Col, Flex, Grid, Row, Typography } from "antd"
 import { motion, MotionConfig, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react"
 import Image from "next/image"
 import { Fragment, useRef, type CSSProperties, type PointerEvent } from "react"
-import { OFFER, PRODUCTS, TRIAL_DATA, WEIGHT_LOSS, type ProductId } from "@/config/site"
+import { OFFER, PRODUCTS, WEIGHT_LOSS, type ProductId } from "@/config/site"
+import { around, format, list } from "@/i18n/format"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
 import { CountUp, enter, EnterKeyframes, FadeUp, RisingWord, Rotator, Shine, SPRING_CSS, srOnly } from "./animated"
 import { useCountry } from "./CountryProvider"
+import { useMessages } from "./MessagesProvider"
 import OfferSeal from "./OfferSeal"
 import { useOrder } from "./OrderProvider"
 import { AccentRule, Container, Eyebrow } from "./ui"
 
-const TRUST = ["≥99% purity, HPLC verified", "COA with every lot", "Ships within 24 h", "Discreet packaging"]
-
 /**
- * What the rotating line says about every pen. Only promises VETUD stands behind: the two guarantees
- * are spelled out under the Buy button and in the FAQ.
+ * The headline rises word by word (hero.headlineLineOne / headlineLineTwo in the messages), so when
+ * each part starts depends on how many words the language uses.
  */
-const EVERY_PEN = [
-  "purity-guaranteed",
-  "delivery-guaranteed",
-  ...(OFFER.salePercent > 0 ? [`${OFFER.salePercent}% off this week`] : []),
-  "ready to ship today",
-  "≥99% pure",
-  "COA-backed",
-  "discreetly packed",
-]
-
-/** The two guarantees, in full. Keep in step with the FAQ answer. */
-const GUARANTEES = ["refund if a lot tests below 99% purity", "reship or refund if your parcel is lost"]
-
-/** The headline, word by word. The full sentence is in the heading once for screen readers. */
-const LINE_ONE = ["Tirzepatide", "&", "Retatrutide"]
-const LINE_TWO = ["pens,", "now"]
 const HEADLINE_START = 0.15
 const WORD_GAP = 0.08
-const LINE_TWO_START = HEADLINE_START + LINE_ONE.length * WORD_GAP
-const OFFER_START = LINE_TWO_START + LINE_TWO.length * WORD_GAP
-const AFTER_HEADLINE = OFFER_START + 0.25
+function headlineTiming(lineOne: number, lineTwo: number) {
+  const lineTwoStart = HEADLINE_START + lineOne * WORD_GAP
+  const offerStart = lineTwoStart + lineTwo * WORD_GAP
+  return { lineTwoStart, offerStart, afterHeadline: offerStart + 0.25 }
+}
 
 function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; delay: number }) {
   const product = PRODUCTS[id]
+  const m = useMessages()
   const { priceOf, money } = useCountry()
   const { regular, sale } = priceOf(id, "20mg")
-  const hot = product.badge.tone === "hot"
+  const hot = product.tone === "hot"
   return (
     <motion.button
       type="button"
@@ -68,7 +55,7 @@ function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; de
       }}
     >
       <div style={{ fontFamily: fonts.mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: hot ? colors.sale : colors.tealDeep, fontWeight: 600 }}>
-        {product.badge.text}
+        {m.products[id].badge}
       </div>
       <div style={{ fontFamily: fonts.display, fontSize: 20, fontWeight: 500, color: colors.navy, lineHeight: 1.2 }}>
         {product.name}
@@ -76,141 +63,17 @@ function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; de
       </div>
       <div style={{ fontSize: 14 }}>
         <span style={{ color: colors.muted, textDecoration: "line-through", marginRight: 6 }}>{money(regular)}</span>
-        <span style={{ color: colors.navy, fontWeight: 700 }}>from {money(sale)}</span>
+        <span style={{ color: colors.navy, fontWeight: 700 }}>{format(m.hero.penTagFrom, { price: money(sale) })}</span>
       </div>
     </motion.button>
-  )
-}
-
-/** Average body weight lost in human trials, shown under the hero pens. */
-function TrialChart() {
-  const max = Math.max(...TRIAL_DATA.map((t) => t.medicine))
-  return (
-    <FadeUp delay={AFTER_HEADLINE + 0.45} y={10}>
-      <div style={{ maxWidth: 560, margin: "0 auto", paddingTop: 10 }}>
-        <Typography.Title
-          level={2}
-          style={{
-            fontFamily: fonts.display,
-            fontWeight: 400,
-            fontSize: "clamp(24px, 3vw, 30px)",
-            lineHeight: 1.15,
-            letterSpacing: "-0.01em",
-            color: colors.navyDeep,
-            margin: "0 0 8px",
-          }}
-        >
-          Average body weight lost in human trials
-        </Typography.Title>
-        <Typography.Paragraph
-          style={{
-            fontSize: 13,
-            lineHeight: 1.5,
-            color: colors.muted,
-            margin: "0 0 24px",
-            maxWidth: 520,
-          }}
-        >
-          Each medicine compared with its trial&apos;s placebo group. Ordered by reported average;
-          this is not a head-to-head ranking. Trials differ in people, doses and length.
-        </Typography.Paragraph>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 14,
-          }}
-        >
-          {TRIAL_DATA.map((trial) => {
-            const medicineWidth = (trial.medicine / max) * 100
-            const placeboWidth = (trial.placebo / max) * 100
-            return (
-              <div key={trial.name} style={{ position: "relative" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", gap: 10, marginBottom: 2 }}>
-                  <div style={{ minWidth: 150 }}>
-                    <span
-                      style={{
-                        fontFamily: fonts.display,
-                        fontWeight: 600,
-                        fontSize: 14,
-                        color: colors.navyDeep,
-                        display: "block",
-                      }}
-                    >
-                      {trial.name} &middot; {trial.status}
-                    </span>
-                    <span style={{ fontSize: 11.5, color: colors.muted, display: "block", marginTop: 2 }}>
-                      {trial.dose} &middot; {trial.study}
-                    </span>
-                  </div>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: colors.navyDeep, whiteSpace: "nowrap" }}>
-                    {trial.medicine}%
-                  </span>
-                </div>
-                <div style={{ width: "100%", height: 8, background: colors.aquaLight, borderRadius: 4, overflow: "hidden" }}>
-                  <div
-                    style={{
-                      width: `${medicineWidth}%`,
-                      height: "100%",
-                      background: colors.navyDeep,
-                      borderRadius: 4,
-                      transition: "width 1.2s ease-out",
-                    }}
-                  />
-                </div>
-                <div style={{ width: "100%", height: 6, background: colors.aquaLight, borderRadius: 3, overflow: "hidden", marginTop: 4 }}>
-                  <div
-                    style={{
-                      width: `${placeboWidth}%`,
-                      height: "100%",
-                      background: colors.muted,
-                      borderRadius: 3,
-                      transition: "width 1.2s ease-out",
-                    }}
-                  />
-                </div>
-                <span style={{ fontSize: 11, color: colors.muted, position: "absolute", right: 0, top: -20 }}>
-                  Placebo {trial.placebo}%
-                </span>
-              </div>
-            )
-          })}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: 10,
-              fontSize: 11,
-              color: colors.muted,
-            }}
-          >
-            <span>0%</span>
-            <span>10%</span>
-            <span>20%</span>
-            <span>30%</span>
-          </div>
-        </div>
-        <Typography.Paragraph
-          style={{
-            fontSize: 12,
-            lineHeight: 1.5,
-            color: colors.muted,
-            margin: "20px 0 0",
-            maxWidth: 520,
-          }}
-        >
-          Each human trial had different people, doses and lengths, so compare with care. The bars
-          describe medicines studied under medical supervision with diet and exercise advice, not
-          VETUD&apos;s research product.
-        </Typography.Paragraph>
-      </div>
-    </FadeUp>
   )
 }
 
 /** "40% off." counts up, a brighter green light glides through it, and a green stroke draws itself underneath. */
 function OfferWords({ delay }: { delay: number }) {
   const reduce = useReducedMotion()
+  const m = useMessages()
+  const [before, after] = around(m.hero.headlineOffer, "percent")
   return (
     <span style={{ position: "relative", display: "inline-block", whiteSpace: "nowrap" }}>
       <RisingWord delay={delay}>
@@ -228,7 +91,9 @@ function OfferWords({ delay }: { delay: number }) {
           animate={reduce ? undefined : { backgroundPosition: ["100% 0%", "0% 0%"] }}
           transition={{ duration: 1.8, ease: "easeInOut", repeat: Infinity, repeatDelay: 3.6, delay: delay + 1.5 }}
         >
-          <CountUp to={OFFER.salePercent} delay={delay + 0.05} duration={1.3} />% off.
+          {before}
+          <CountUp to={OFFER.salePercent} delay={delay + 0.05} duration={1.3} />
+          {after}
         </motion.span>
       </RisingWord>
       <svg aria-hidden viewBox="0 0 200 16" preserveAspectRatio="none" style={{ position: "absolute", left: "-1%", bottom: "-0.24em", width: "100%", height: "0.22em", overflow: "visible" }}>
@@ -294,6 +159,7 @@ function FloatingPen({
 }
 
 export default function Hero() {
+  const m = useMessages()
   const { openOrder, openPromo } = useOrder()
   const { lowestPrice, money } = useCountry()
   const reduce = useReducedMotion()
@@ -301,6 +167,13 @@ export default function Hero() {
   /** On phones the two buttons stack, each the full width: bigger targets, no ragged edge. */
   const ctaWidth: CSSProperties = screens.sm ? {} : { width: "100%" }
   const sectionRef = useRef<HTMLElement>(null)
+  const lineOne = m.hero.headlineLineOne
+  const lineTwo = m.hero.headlineLineTwo
+  const { lineTwoStart, offerStart, afterHeadline } = headlineTiming(lineOne.length, lineTwo.length)
+  // What the rotating line says about every pen; the offer joins third while there is one.
+  const everyPen = [...m.hero.everyPen]
+  if (OFFER.salePercent > 0) everyPen.splice(2, 0, format(m.hero.everyPenSale, { percent: OFFER.salePercent }))
+  const [weightBefore, weightAfter] = around(m.hero.weightLoss, "percent")
 
   // The alpine art drifts down a little as the page scrolls, so the hero has depth.
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] })
@@ -380,14 +253,14 @@ export default function Hero() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {OFFER.saleLabel.toUpperCase()}
+                  {m.offer.saleLabel.toUpperCase()}
                   <Shine delay={1.6} every={3.4} width="60%" />
                 </span>
-                −{OFFER.salePercent}% on every pen, both strengths
+                {format(m.hero.saleChip, { percent: OFFER.salePercent })}
               </span>
 
               <FadeUp delay={0.08} y={10}>
-                <Eyebrow>VETUD Peptide Series · The pens everyone is asking for</Eyebrow>
+                <Eyebrow>{m.hero.eyebrow}</Eyebrow>
               </FadeUp>
 
               <Typography.Title
@@ -402,66 +275,59 @@ export default function Hero() {
                   margin: 0,
                 }}
               >
-                <span style={srOnly}>
-                  Tirzepatide &amp; Retatrutide pens, now {OFFER.salePercent}% off.
-                </span>
+                <span style={srOnly}>{format(m.hero.headlineSr, { percent: OFFER.salePercent })}</span>
                 <span aria-hidden>
-                  {LINE_ONE.map((word, index) => (
-                    <Fragment key={word}>
+                  {lineOne.map((word, index) => (
+                    <Fragment key={`${index}-${word}`}>
                       <RisingWord delay={HEADLINE_START + index * WORD_GAP}>{word}</RisingWord>{" "}
                     </Fragment>
                   ))}
                   <br />
                   <span style={{ fontWeight: 600 }}>
-                    {LINE_TWO.map((word, index) => (
-                      <Fragment key={word}>
-                        <RisingWord delay={LINE_TWO_START + index * WORD_GAP}>{word}</RisingWord>{" "}
+                    {lineTwo.map((word, index) => (
+                      <Fragment key={`${index}-${word}`}>
+                        <RisingWord delay={lineTwoStart + index * WORD_GAP}>{word}</RisingWord>{" "}
                       </Fragment>
                     ))}
-                    <OfferWords delay={OFFER_START} />
+                    <OfferWords delay={offerStart} />
                   </span>
                 </span>
               </Typography.Title>
 
-              <FadeUp delay={AFTER_HEADLINE - 0.06} y={10} style={{ marginTop: 14 }}>
+              <FadeUp delay={afterHeadline - 0.06} y={10} style={{ marginTop: 14 }}>
                 <p style={{ fontFamily: fonts.display, fontWeight: 700, lineHeight: 1.12, color: colors.navyDeep, margin: 0, fontSize: "clamp(21px, 2.5vw, 30px)" }}>
-                  <span style={srOnly}>
-                    Lose weight up to {WEIGHT_LOSS.percent}% of body weight in {WEIGHT_LOSS.timeframe}.
-                  </span>
-                  <span aria-hidden>Lose weight up to </span>
+                  <span style={srOnly}>{format(m.hero.weightLoss, { percent: WEIGHT_LOSS.percent })}</span>
+                  <span aria-hidden>{weightBefore}</span>
                   <span style={{ color: colors.sale, fontWeight: 800 }}>
                     <CountUp
                       to={WEIGHT_LOSS.percent}
-                      delay={AFTER_HEADLINE - 0.06}
+                      delay={afterHeadline - 0.06}
                       duration={1.7}
                     />
-                  </span>%
-                  <span aria-hidden> of body weight in {WEIGHT_LOSS.timeframe}.</span>
-                </p>
-              </FadeUp>
-
-              <FadeUp delay={AFTER_HEADLINE} y={12} style={{ marginTop: 18 }}>
-                <p style={{ fontFamily: fonts.display, fontSize: "clamp(19px, 2vw, 24px)", fontWeight: 400, lineHeight: 1.3, color: colors.navyInk, margin: 0 }}>
-                  <span style={srOnly}>
-                    Every pen is {EVERY_PEN.slice(0, -1).join(", ")} and {EVERY_PEN.at(-1)}.
                   </span>
-                  <span aria-hidden>Every pen is </span>
-                  <Rotator items={EVERY_PEN} style={{ fontWeight: 600, color: colors.tealDeep }} />
+                  <span aria-hidden>{weightAfter}</span>
                 </p>
               </FadeUp>
 
-              <div style={{ transformOrigin: "0% 50%", ...enter("grow", { delay: AFTER_HEADLINE + 0.1, duration: 0.8 }) }}>
+              <FadeUp delay={afterHeadline} y={12} style={{ marginTop: 18 }}>
+                <p style={{ fontFamily: fonts.display, fontSize: "clamp(19px, 2vw, 24px)", fontWeight: 400, lineHeight: 1.3, color: colors.navyInk, margin: 0 }}>
+                  <span style={srOnly}>{format(m.hero.everyPenSr, { list: list(everyPen, m.hero.listAnd) })}</span>
+                  <span aria-hidden>{m.hero.everyPenPrefix}</span>
+                  <Rotator items={everyPen} style={{ fontWeight: 600, color: colors.tealDeep }} />
+                </p>
+              </FadeUp>
+
+              <div style={{ transformOrigin: "0% 50%", ...enter("grow", { delay: afterHeadline + 0.1, duration: 0.8 }) }}>
                 <AccentRule />
               </div>
 
-              <FadeUp delay={AFTER_HEADLINE + 0.15}>
+              <FadeUp delay={afterHeadline + 0.15}>
                 <Typography.Paragraph style={{ fontSize: "clamp(16px, 1.5vw, 18px)", lineHeight: 1.65, color: colors.navyInk, maxWidth: 520, margin: 0 }}>
-                  The two most-wanted molecules in metabolic research, sealed in VETUD&apos;s precision dual-chamber pen. 20 mg or 40 mg, ≥99% purity, 12 needles
-                  in the box, at your door within days. One short form. No account, no cart, no waiting.
+                  {m.hero.intro}
                 </Typography.Paragraph>
               </FadeUp>
 
-              <FadeUp delay={AFTER_HEADLINE + 0.25}>
+              <FadeUp delay={afterHeadline + 0.25}>
                 <Flex wrap gap={12} style={{ marginTop: 30 }}>
                   <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={ctaWidth}>
                     <Button
@@ -471,7 +337,7 @@ export default function Hero() {
                       onClick={() => openOrder()}
                       style={{ position: "relative", overflow: "hidden", height: 58, padding: "0 30px", fontSize: 18, ...ctaWidth }}
                     >
-                      Buy now · from {money(lowestPrice())}
+                      {format(m.hero.buyFrom, { price: money(lowestPrice()) })}
                       <Shine delay={2.4} every={4.2} />
                     </Button>
                   </motion.div>
@@ -490,23 +356,23 @@ export default function Hero() {
                       onClick={openPromo}
                       style={{ height: 58, padding: "0 22px", fontSize: 16, fontWeight: 600, color: colors.navy, borderColor: colors.green, background: colors.white, ...ctaWidth }}
                     >
-                      Extra −{OFFER.subscriberPercent}% code
+                      {format(m.hero.extraCode, { percent: OFFER.subscriberPercent })}
                     </Button>
                   </motion.div>
                 </Flex>
               </FadeUp>
 
-              <FadeUp delay={AFTER_HEADLINE + 0.32} y={8}>
+              <FadeUp delay={afterHeadline + 0.32} y={8}>
                 <p style={{ display: "flex", alignItems: "flex-start", gap: 8, margin: "16px 0 0", fontSize: 13.5, lineHeight: 1.5, color: colors.muted, maxWidth: 520 }}>
                   <SafetyCertificateFilled style={{ color: colors.sale, fontSize: 16, marginTop: 2 }} />
                   <span>
-                    <strong style={{ color: colors.navy }}>Guaranteed:</strong> {GUARANTEES.join(" · ")}.
+                    <strong style={{ color: colors.navy }}>{m.hero.guaranteedLabel}</strong> {m.hero.guarantees.join(" · ")}.
                   </span>
                 </p>
               </FadeUp>
 
               <Flex wrap gap="10px 22px" style={{ marginTop: 22 }}>
-                {TRUST.map((item, index) => (
+                {m.hero.trust.map((item, index) => (
                   <span
                     key={item}
                     style={{
@@ -515,7 +381,7 @@ export default function Hero() {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 8,
-                      ...enter("up", { delay: AFTER_HEADLINE + 0.45 + index * 0.07, duration: 0.6, vars: { "--enter-y": "8px" } }),
+                      ...enter("up", { delay: afterHeadline + 0.45 + index * 0.07, duration: 0.6, vars: { "--enter-y": "8px" } }),
                     }}
                   >
                     <CheckCircleFilled style={{ color: colors.teal }} />
@@ -532,7 +398,7 @@ export default function Hero() {
                   <motion.div style={{ position: "absolute", inset: 0, background: gradients.penGlow, x: glowX, y: glowY }} />
                 </div>
                 <FloatingPen
-                  alt="VETUD Tirzepatide pen"
+                  alt={m.products.tz2.penAlt}
                   style={{ left: "0%", top: "0%", width: "80%" }}
                   delay={0.2}
                   from={{ x: -40, y: 50, rotate: -6 }}
@@ -540,7 +406,7 @@ export default function Hero() {
                   parallax={{ x: backX, y: backY }}
                 />
                 <FloatingPen
-                  alt="VETUD Retatrutide pen"
+                  alt={m.products.retatrutide.penAlt}
                   style={{ left: "20%", top: "20%", width: "80%" }}
                   delay={0.38}
                   from={{ x: 70, y: 40, rotate: 7 }}
@@ -566,13 +432,12 @@ export default function Hero() {
                     />
                     <div style={enter("spin", { delay: 1.25, duration: 1, easing: SPRING_CSS })}>
                       <motion.div whileHover={{ rotate: -8, scale: 1.06 }} transition={{ type: "spring", stiffness: 260, damping: 14 }}>
-                        <OfferSeal percent={OFFER.salePercent} label={OFFER.saleLabel} size="clamp(96px, 10vw, 132px)" />
+                        <OfferSeal percent={OFFER.salePercent} size="clamp(96px, 10vw, 132px)" />
                       </motion.div>
                     </div>
                   </div>
                 )}
               </div>
-              <TrialChart />
             </Col>
           </Row>
         </Container>

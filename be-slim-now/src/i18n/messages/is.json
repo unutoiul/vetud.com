@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide pennar · BeSlimNow",
+    "description": "Tirzepatide (TZ-2) og Retatrutide pennar frá VETUD. 20 mg eða 40 mg, ≥99% hreinleiki með COA fyrir hverja lotu. Kynningartilboð: 40% afsláttur. Pantaðu á innan við mínútu."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "TILBOÐ",
+    "sealAria": "{saleLabel}: −{percent}%"
+  },
+  "promoBar": {
+    "sale": "−{percent}% af hverjum penna",
+    "subscribe": "Skráðu þig og fáðu −{percent}% til viðbótar (allt að −{best}%)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, aftur upp",
+    "navLabel": "Hlutar",
+    "nav": {
+      "products": "Pennar",
+      "dualChamber": "Penninn",
+      "compare": "Samanburður",
+      "how": "Svona pantar þú",
+      "faq": "Spurningar"
+    }
+  },
+  "countryPicker": {
+    "aria": "Land og gjaldmiðill: {country}, verð í {currency}",
+    "hint": "Landið þitt ræður verði og gjaldmiðli.",
+    "groupUs": "Bandaríkin",
+    "groupEurope": "Evrópa",
+    "groupOther": "Önnur lönd · verð í USD",
+    "groupOtherTitle": "Önnur lönd"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) penni",
+      "tagline": "Tvívirkur GIP- / GLP-1-viðtakaörvi",
+      "description": "Tvívirki örvinn sem allt sviðið talar um, í nákvæmnispenna VETUD. Einn penni, 12 nálar og leiðbeiningar í hverjum kassa.",
+      "badge": "Mjög vinsæll",
+      "penAlt": "VETUD Tirzepatide penni",
+      "gallery": [
+        {
+          "label": "Kassi",
+          "alt": "Kassi VETUD Tirzepatide pennans, lokaður"
+        },
+        {
+          "label": "Innihald",
+          "alt": "Opinn VETUD Tirzepatide kassi: penni, 12 nálar og leiðbeiningar"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide penni",
+      "tagline": "Þrívirkur GIP- / GLP-1- / glúkagonörvi",
+      "description": "Þrívirkur örvi af næstu kynslóð, í nákvæmnispenna VETUD. Einn penni, 12 nálar og leiðbeiningar í hverjum kassa.",
+      "badge": "Söluhæstur",
+      "penAlt": "VETUD Retatrutide penni",
+      "gallery": [
+        {
+          "label": "Kassi",
+          "alt": "Kassi VETUD Retatrutide pennans, lokaður"
+        },
+        {
+          "label": "Innihald",
+          "alt": "Opinn VETUD Retatrutide kassi: penni, 12 nálar og leiðbeiningar"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent}% af hverjum penna, báðir styrkleikar",
+    "eyebrow": "VETUD Peptide Series · Pennarnir sem allir spyrja um",
+    "headlineSr": "Tirzepatide & Retatrutide í penna, nú {percent}% afsláttur.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "í",
+      "penna,",
+      "nú"
+    ],
+    "headlineOffer": "{percent}% afsláttur.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Hver penni er ",
+    "everyPenSr": "Hver penni er {list}.",
+    "everyPen": [
+      "með tryggðum hreinleika",
+      "með tryggðri afhendingu",
+      "tilbúinn til sendingar í dag",
+      "≥99% hreinn",
+      "staðfestur með COA",
+      "sendur í látlausum umbúðum"
+    ],
+    "everyPenSale": "{percent}% ódýrari þessa vikuna",
+    "listAnd": "og",
+    "intro": "Tvær eftirsóttustu sameindirnar í efnaskiptarannsóknum, innsiglaðar í nákvæmnispenna VETUD með tveimur hólfum. 20 mg eða 40 mg, ≥99% hreinleiki, 12 nálar í kassanum, komnar til þín innan fárra daga. Eitt stutt eyðublað. Enginn aðgangur, engin karfa, engin bið.",
+    "buyFrom": "Kaupa núna · frá {price}",
+    "extraCode": "Aukakóði −{percent}%",
+    "guaranteedLabel": "Tryggt:",
+    "guarantees": [
+      "endurgreiðsla ef lota mælist undir 99% hreinleika",
+      "ný sending eða endurgreiðsla ef pakkinn týnist"
+    ],
+    "trust": [
+      "≥99% hreinleiki, staðfestur með HPLC",
+      "COA með hverri lotu",
+      "Sent innan 24 klst.",
+      "Látlausar umbúðir"
+    ],
+    "penTagFrom": "frá {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent}% af hverjum penna",
+    "title": "Veldu pennann þinn",
+    "subtitle": "Tirzepatide eða Retatrutide, 20 mg eða 40 mg. Sami hreinleiki á rannsóknastofustigi, sami VETUD penni, sama tilboð. Veldu, ýttu á Kaupa núna og þetta tekur innan við mínútu.",
+    "enlargeAria": "Stækka myndir af {product}",
+    "enlarge": "Stækka",
+    "thumbAlt": "Sýn: {label}",
+    "inStock": "Til á lager",
+    "strengthAria": "Styrkleiki",
+    "saleSave": "−{percent}% · þú sparar {price}",
+    "perMg": "{price} á mg",
+    "bestValue": "Besta verðið · {percent}% lægra á mg",
+    "switchTo40": "Sparaðu {percent}% á mg með 40 mg →",
+    "features": [
+      "1 penni + 12 einnota nálar + leiðbeiningar",
+      "≥99% hreinleiki, COA lotunnar",
+      "Sent innan 24 klst., látlausar umbúðir"
+    ],
+    "subscriberCode": "{percent}% aukaafsláttur með áskrifendakóðanum þínum",
+    "buy": "Kaupa núna · {price}",
+    "nothingToPay": "Ekkert að greiða núna. Greiðsluupplýsingar berast í tölvupósti."
+  },
+  "dualChamber": {
+    "eyebrow": "VETUD penninn með tveimur hólfum",
+    "title": "Smíðaður eins og penni úr apóteki.",
+    "subtitle": "Tvö hólf, eitt hylki: frostþurrkað peptíð efst, BAC-vatn neðst, aðskilin þar til þú blandar þeim saman. Síðan smellur hylkið í fjölnota VETUD pennann.",
+    "diagramAlt": "VETUD hylkið inniheldur frostþurrkað peptíð og BAC-vatn og situr í hylkishaldara pennans",
+    "enlarge": "Stækka",
+    "benefits": [
+      {
+        "title": "Innsiglað þar til blandað er",
+        "text": "Frostþurrkaða peptíðið er í eigin hólfi, aðskilið frá vökvanum með tappa. Ekkert skemmist í hillunni og ekkert blandast fyrr en þú vilt."
+      },
+      {
+        "title": "BAC-vatn þegar í hylkinu",
+        "text": "Í seinna hólfinu er bakteríuhemjandi vatn. Engin aukaglös að kaupa, engar mælingar, engin tilfærsla. Allt sem þú þarft kemur í einum kassa."
+      },
+      {
+        "title": "Nákvæmur teljari, fjölnota pennabolur",
+        "text": "Hylkið smellur í VETUD pennann með teljaraglugganum. Þú heldur pennanum og skiptir um hylki. Hreint, nákvæmt og gert til að nota aftur."
+      }
+    ],
+    "cta": "Ég vil pennann minn",
+    "video": "Sjáðu hvernig hann virkar · 40 sekúndur"
+  },
+  "compare": {
+    "eyebrow": "Hlið við hlið",
+    "title": "Hvaða penni hentar þér?",
+    "subtitle": "Tvær sameindir, einn penni, eitt verð á mg til samanburðar. Báðir koma með sama hreinleika, sama kassa og sama tilboði.",
+    "rows": {
+      "label": {
+        "label": "Merking á pennanum",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Hvað það er",
+        "tz2": "Tvívirkur örvi: GIP- + GLP-1-viðtakar",
+        "retatrutide": "Þrívirkur örvi: GIP- + GLP-1- + glúkagonviðtakar"
+      },
+      "generation": {
+        "label": "Kynslóð",
+        "tz2": "Núverandi kynslóð · mest eftirspurn",
+        "retatrutide": "Næsta kynslóð · sú nýjasta"
+      },
+      "status": {
+        "label": "Þróunarstig",
+        "tz2": "Sameind samþykkt sem lyf",
+        "retatrutide": "Í rannsóknum, í 3. stigs rannsóknum"
+      },
+      "strengths": {
+        "label": "Styrkleikar",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "Í kassanum",
+        "tz2": "1 penni · 12 nálar · leiðbeiningar",
+        "retatrutide": "1 penni · 12 nálar · leiðbeiningar"
+      },
+      "purity": {
+        "label": "Hreinleiki",
+        "tz2": "≥99%, COA lotunnar",
+        "retatrutide": "≥99%, COA lotunnar"
+      },
+      "dispatch": {
+        "label": "Sending",
+        "tz2": "Innan 24 klst. frá greiðslu",
+        "retatrutide": "Innan 24 klst. frá greiðslu"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent}%",
+    "perMgRow": "Verð á mg (40 mg)",
+    "buyProduct": "Kaupa {product}",
+    "buy": "Kaupa núna"
+  },
+  "howToOrder": {
+    "eyebrow": "Svona pantar þú",
+    "title": "Frá smelli að dyrum í fjórum skrefum.",
+    "subtitle": "Ein leið til að panta, hönnuð til að vera fljótleg. Þú veist alltaf hvar pöntunin þín er.",
+    "steps": [
+      {
+        "title": "Veldu pennann þinn",
+        "text": "Tirzepatide eða Retatrutide, 20 mg eða 40 mg. Ýttu á Kaupa núna."
+      },
+      {
+        "title": "Fylltu út eitt stutt eyðublað",
+        "text": "Nafn, netfang, sími og heimilisfang. Enginn aðgangur, engin karfa, innan við mínúta."
+      },
+      {
+        "title": "Fáðu tölvupóstinn",
+        "text": "Staðfestingin berst strax, með greiðsluupplýsingum og pöntunarnúmerinu þínu."
+      },
+      {
+        "title": "Við sendum innan 24 klst.",
+        "text": "Um leið og greiðslan berst fara pennarnir þínir af stað, í látlausum umbúðum og með rakningu."
+      }
+    ],
+    "cta": "Hefja pöntun"
+  },
+  "quality": {
+    "eyebrow": "Gæði sem þú getur sannreynt",
+    "title": "Niðurstöður rannsóknastofu, ekki loforð.",
+    "subtitle": "Hver VETUD lota er prófuð með HPLC og skjalfest áður en hún er send. Biddu okkur hvenær sem er um COA lotunnar sem þú færð og við sendum það.",
+    "stats": [
+      {
+        "value": "≥99%",
+        "label": "Hreinleiki",
+        "text": "Staðfestur með HPLC í hverri lotu"
+      },
+      {
+        "value": "COA",
+        "label": "Hver lota",
+        "text": "Greiningarvottorð ef óskað er, samkvæmt lotunúmerinu þínu"
+      },
+      {
+        "value": "24 klst.",
+        "label": "Sending",
+        "text": "Sent innan eins virks dags frá greiðslu"
+      },
+      {
+        "value": "12",
+        "label": "Nálar í hverjum kassa",
+        "text": "Með pennanum og leiðbeiningum, allt tilbúið"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Á bak við hvern penna",
+    "title": "Hreint áfyllt. Geymt í kulda.",
+    "subtitle": "Myndir frá stöðunum þar sem VETUD vörur eru fylltar og geymdar: áfyllingarlína í hreinrými og síðan kæliskápar þar til pöntunin þín er send.",
+    "enlarge": "Stækka",
+    "enlargeAria": "Stækka: {title}",
+    "photos": [
+      {
+        "alt": "Starfsmaður í hreinrýmisgalla, með grímu og hanska, ber bakka með lokuðum glösum fram hjá áfyllingarvélinni",
+        "eyebrow": "Áfylling",
+        "title": "Fyllt í hreinrými",
+        "text": "Tappað og lokað í vél, meðhöndlað af starfsfólki í fullum hlífðarfatnaði, með grímur og hanska."
+      },
+      {
+        "alt": "Merktir kassar með glösum í hillum kæliskáps með glerhurð",
+        "eyebrow": "Geymsla",
+        "title": "Geymt í kæli",
+        "text": "Hver lota er merkt og geymd í kæliskápum með glerhurðum þar til hún er send."
+      },
+      {
+        "alt": "Röð upplýstra kæliskápa með glerhurðum, fullir af merktum birgðum",
+        "eyebrow": "Birgðir",
+        "title": "Tilbúið til sendingar",
+        "text": "Vörur á lager, svo pöntunin þín fer innan 24 klukkustunda frá greiðslu."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Spurningar",
+    "title": "Spurningar og svör.",
+    "items": [
+      {
+        "q": "Hvernig greiði ég?",
+        "a": "Eftir að þú pantar færðu strax tölvupóst með greiðsluupplýsingum og pöntunarnúmerinu þínu. Ekkert er gjaldfært á þessari síðu. Notaðu pöntunarnúmerið sem tilvísun greiðslunnar."
+      },
+      {
+        "q": "Hversu fljótt sendið þið?",
+        "a": "Pantanir eru sendar innan 24 klukkustunda frá greiðslu (virka daga), með rakningarnúmeri í tölvupósti og, ef þú valdir það, í skilaboðaforritinu þínu."
+      },
+      {
+        "q": "Hvað nær ábyrgðin ykkar yfir?",
+        "a": "Tvennt. Hreinleiki: hver lota er prófuð og ef lota mælist undir 99% hreinleika endurgreiðum við hana. Afhending: ef pakkinn týnist á leiðinni sendum við hann aftur eða endurgreiðum þér. Sendu okkur skilaboð með pöntunarnúmerinu og við leysum málið."
+      },
+      {
+        "q": "Hvað er í kassanum?",
+        "a": "Í hverjum VETUD kassa er einn penni í þeim styrkleika sem þú valdir, 12 einnota nálar og leiðbeiningar, merkt með vöru og lotu. Ytri umbúðirnar eru hlutlausar og látlausar."
+      },
+      {
+        "q": "Hver er munurinn á 20 mg og 40 mg?",
+        "a": "Magn peptíðs í pennanum. 40 mg penninn kostar minna á mg og þess vegna er hann merktur Besta verðið."
+      },
+      {
+        "q": "Get ég fengið greiningarvottorðið (COA)?",
+        "a": "Já. Hreinleiki hverrar lotu er prófaður. Sendu okkur skilaboð með pöntunarnúmerinu og við sendum þér COA lotunnar sem þú fékkst."
+      },
+      {
+        "q": "Get ég breytt eða hætt við pöntunina?",
+        "a": "Já, þar til hún hefur verið send. Svaraðu staðfestingarpóstinum eða sendu okkur skilaboð: {contacts}."
+      },
+      {
+        "q": "Til hvers eru þessar vörur?",
+        "a": "Allar vörur sem seldar eru á þessari vefsíðu eru eingöngu ætlaðar til rannsókna og auðkenningar. Þessar vörur eru ekki ætlaðar til skömmtunar, inndælingar eða inntöku hjá mönnum."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Öll réttindi áskilin."
+  },
+  "consent": {
+    "label": "Val á vafrakökum",
+    "text": "Við viljum nota greiningarvafrakökur (Google Analytics og Microsoft Clarity) til að sjá hvernig þessi síða er notuð og bæta hana. Ekkert er notað í auglýsingaskyni.",
+    "accept": "Samþykkja",
+    "decline": "Hafna",
+    "settings": "Stillingar vafrakaka"
+  },
+  "contact": {
+    "messageUs": "Sendu okkur skilaboð",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "Tölvupóstur"
+    }
+  },
+  "order": {
+    "yourOrder": "Pöntunin þín",
+    "shipTo": "Senda til",
+    "pricesIn": "· verð í {currency}",
+    "chooseCountry": "Veldu land",
+    "chooseCountryError": "Veldu land.",
+    "pen": "Penni",
+    "strength": "Styrkleiki",
+    "quantity": "Magn",
+    "discountCode": "Afsláttarkóði",
+    "codePlaceholder": "Kóðinn þinn",
+    "apply": "Nota",
+    "applied": "Notaður",
+    "getCode": "Fáðu kóða fyrir {percent}% aukaafslátt",
+    "codeApplied": "Kóðinn {code} notaður: {percent}% aukaafsláttur",
+    "codeInvalid": "Þessi kóði er ekki gildur.",
+    "codeCheckFailed": "Ekki tókst að athuga kóðann. Reyndu aftur.",
+    "regularLine": "{quantity} × {price} fullt verð",
+    "saleLine": "{saleLabel} −{percent}%",
+    "codeLine": "Kóði {code} −{percent}%",
+    "total": "Samtals",
+    "youSave": "Þú sparar {price}",
+    "perks": [
+      "≥99% hreinleiki, COA með hverri lotu",
+      "Sent innan 24 klst. frá greiðslu",
+      "Greiðsluupplýsingar í tölvupósti, ekkert að greiða núna"
+    ],
+    "title": "Hvert eigum við að senda?",
+    "subtitle": "Enginn aðgangur, engin karfa. Eitt stutt eyðublað og búið.",
+    "fullName": "Fullt nafn",
+    "fullNameError": "Sláðu inn fullt nafn.",
+    "email": "Netfang",
+    "emailError": "Sláðu inn gilt netfang.",
+    "phone": "Sími",
+    "phoneCode": "Landsnúmer",
+    "phoneError": "Sláðu inn símanúmerið þitt.",
+    "phonePlaceholder": "Símanúmer",
+    "contactApp": "Besta leiðin til að ná í þig",
+    "contactAppEmailOnly": "Aðeins tölvupóstur",
+    "handleHint": {
+      "whatsapp": "WhatsApp-númer, ef það er annað en símanúmerið þitt",
+      "telegram": "Notandanafnið þitt á Telegram, t.d. @nafn",
+      "line": "LINE-auðkennið þitt"
+    },
+    "address": "Heimilisfang",
+    "addressError": "Sláðu inn heimilisfang.",
+    "city": "Staður",
+    "cityError": "Sláðu inn stað.",
+    "postalCode": "Póstnúmer",
+    "postalCodeError": "Sláðu inn póstnúmer.",
+    "note": "Athugasemd (valfrjálst)",
+    "researchUse": "Ég staðfesti að þessar vörur eru eingöngu ætlaðar til rannsókna.",
+    "researchUseError": "Staðfestu notkun til rannsókna.",
+    "placeOrder": "Panta með greiðsluskyldu · {price}",
+    "confirmationNote": "Þú færð strax staðfestingarpóst með greiðsluupplýsingum. Spurningar? Skrifaðu á {email}.",
+    "genericError": "Eitthvað fór úrskeiðis. Reyndu aftur eða sendu okkur skilaboð.",
+    "noConnection": "Engin tenging. Reyndu aftur eða sendu okkur skilaboð.",
+    "doneTitle": "Pöntun {orderNumber} er frátekin",
+    "doneText": "Við sendum greiðsluupplýsingarnar á <b>{email}</b>. Til greiðslu: <b>{total}</b>.",
+    "doneSpam": "Finnurðu hann ekki? Athugaðu ruslpóstinn eða sendu okkur skilaboð hér að neðan.",
+    "doneButton": "Lokið"
+  },
+  "promo": {
+    "eyebrow": "Aðeins fyrir áskrifendur",
+    "eyebrowReady": "Kóðinn þinn er tilbúinn",
+    "headline": "{percent} aukaafsláttur",
+    "onTop": "Ofan á {saleLabel}-afsláttinn upp á {percent}% · allt að {best}% samtals",
+    "emailedNote": "Við sendum hann líka í tölvupósti og hann er þegar kominn inn í pöntunarformið þitt.",
+    "copyAria": "Afrita kóðann {code}",
+    "copy": "Afrita",
+    "copied": "Afritað",
+    "yourCode": "Kóðinn þinn: {code}",
+    "orderWithCode": "Panta núna með kóðanum mínum",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Söluhæstur, með kóðanum þínum",
+    "emailLabel": "Netfangið þitt",
+    "emailError": "Sláðu inn gilt netfang.",
+    "emailPlaceholder": "nafn@example.com",
+    "reveal": "Sýna {percent}% kóðann minn",
+    "consent": "Þú færð tilboð frá VETUD í tölvupósti. Þú getur afskráð þig hvenær sem er.",
+    "noThanks": "Nei takk",
+    "genericError": "Eitthvað fór úrskeiðis. Reyndu aftur.",
+    "noConnection": "Engin tenging. Reyndu aftur."
+  }
+}

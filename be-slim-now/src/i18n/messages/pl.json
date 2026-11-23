@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent}% · Peny Tirzepatide & Retatrutide · BeSlimNow",
+    "description": "Peny Tirzepatide (TZ-2) i Retatrutide od VETUD. 20 mg lub 40 mg, czystość ≥99% z COA dla każdej partii. Oferta startowa: 40% rabatu. Zamówienie w mniej niż minutę."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "RABAT",
+    "sealAria": "{saleLabel}: −{percent}%"
+  },
+  "promoBar": {
+    "sale": "−{percent}% na każdy pen",
+    "subscribe": "Zapisz się i zyskaj dodatkowe −{percent}% (do −{best}%)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, wróć na górę",
+    "navLabel": "Sekcje",
+    "nav": {
+      "products": "Peny",
+      "dualChamber": "Pen",
+      "compare": "Porównanie",
+      "how": "Jak zamówić",
+      "faq": "FAQ"
+    }
+  },
+  "countryPicker": {
+    "aria": "Kraj i waluta: {country}, ceny w {currency}",
+    "hint": "Twój kraj określa ceny i walutę.",
+    "groupUs": "Stany Zjednoczone",
+    "groupEurope": "Europa",
+    "groupOther": "Inne kraje · ceny w USD",
+    "groupOtherTitle": "Inne kraje"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Pen Tirzepatide (TZ-2)",
+      "tagline": "Podwójny agonista receptorów GIP / GLP-1",
+      "description": "Podwójny agonista, o którym mówi cała branża, w precyzyjnym penie VETUD. Jeden pen, 12 igieł i ulotka w każdym opakowaniu.",
+      "badge": "Bardzo popularny",
+      "penAlt": "Pen VETUD Tirzepatide",
+      "gallery": [
+        {
+          "label": "Opakowanie",
+          "alt": "Opakowanie pena VETUD Tirzepatide, zamknięte"
+        },
+        {
+          "label": "Wnętrze",
+          "alt": "Otwarte opakowanie VETUD Tirzepatide: pen, 12 igieł i ulotka"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Pen Retatrutide",
+      "tagline": "Potrójny agonista GIP / GLP-1 / glukagonu",
+      "description": "Potrójny agonista nowej generacji w precyzyjnym penie VETUD. Jeden pen, 12 igieł i ulotka w każdym opakowaniu.",
+      "badge": "Bestseller",
+      "penAlt": "Pen VETUD Retatrutide",
+      "gallery": [
+        {
+          "label": "Opakowanie",
+          "alt": "Opakowanie pena VETUD Retatrutide, zamknięte"
+        },
+        {
+          "label": "Wnętrze",
+          "alt": "Otwarte opakowanie VETUD Retatrutide: pen, 12 igieł i ulotka"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent}% na każdy pen, w obu wariantach",
+    "eyebrow": "VETUD Peptide Series · Peny, o które wszyscy pytają",
+    "headlineSr": "Tirzepatide & Retatrutide w penie, teraz {percent}% taniej.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "w",
+      "penie,",
+      "teraz"
+    ],
+    "headlineOffer": "{percent}% taniej.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Każdy pen jest ",
+    "everyPenSr": "Każdy pen jest {list}.",
+    "everyPen": [
+      "z gwarancją czystości",
+      "z gwarancją dostawy",
+      "gotowy do wysyłki dziś",
+      "czysty w ≥99%",
+      "z certyfikatem COA",
+      "dyskretnie zapakowany"
+    ],
+    "everyPenSale": "w tym tygodniu {percent}% tańszy",
+    "listAnd": "i",
+    "intro": "Dwie najbardziej poszukiwane cząsteczki w badaniach nad metabolizmem, zamknięte w precyzyjnym dwukomorowym penie VETUD. 20 mg lub 40 mg, czystość ≥99%, 12 igieł w opakowaniu, u Ciebie w kilka dni. Jeden krótki formularz. Bez konta, bez koszyka, bez czekania.",
+    "buyFrom": "Kup teraz · od {price}",
+    "extraCode": "Dodatkowy kod −{percent}%",
+    "guaranteedLabel": "Gwarancja:",
+    "guarantees": [
+      "zwrot pieniędzy, jeśli partia ma poniżej 99% czystości",
+      "ponowna wysyłka lub zwrot, jeśli paczka zaginie"
+    ],
+    "trust": [
+      "Czystość ≥99%, potwierdzona HPLC",
+      "COA do każdej partii",
+      "Wysyłka w 24 h",
+      "Dyskretne opakowanie"
+    ],
+    "penTagFrom": "od {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent}% na każdy pen",
+    "title": "Wybierz swój pen",
+    "subtitle": "Tirzepatide lub Retatrutide, 20 mg lub 40 mg. Ta sama laboratoryjna czystość, ten sam pen VETUD, ta sama oferta. Wybierz, kliknij Kup teraz i gotowe w mniej niż minutę.",
+    "enlargeAria": "Powiększ zdjęcia: {product}",
+    "enlarge": "Powiększ",
+    "thumbAlt": "Widok: {label}",
+    "inStock": "Dostępny",
+    "strengthAria": "Wariant",
+    "saleSave": "−{percent}% · oszczędzasz {price}",
+    "perMg": "{price} za mg",
+    "bestValue": "Najlepsza cena · {percent}% taniej za mg",
+    "switchTo40": "Oszczędź {percent}% na mg z wersją 40 mg →",
+    "features": [
+      "1 pen + 12 jednorazowych igieł + instrukcja",
+      "Czystość ≥99%, COA partii",
+      "Wysyłka w 24 h, dyskretne opakowanie"
+    ],
+    "subscriberCode": "Dodatkowe {percent}% zniżki z kodem subskrybenta",
+    "buy": "Kup teraz · {price}",
+    "nothingToPay": "Teraz nic nie płacisz. Dane do płatności dostaniesz e-mailem."
+  },
+  "dualChamber": {
+    "eyebrow": "Dwukomorowy pen VETUD",
+    "title": "Zbudowany jak pen z apteki.",
+    "subtitle": "Dwie komory, jeden wkład: na górze liofilizowany peptyd, na dole woda BAC, oddzielone, dopóki ich nie połączysz. Potem wkład zatrzaskuje się w wielorazowym penie VETUD.",
+    "diagramAlt": "Wkład VETUD zawiera liofilizowany peptyd i wodę BAC i mieści się w uchwycie wkładu pena",
+    "enlarge": "Powiększ",
+    "benefits": [
+      {
+        "title": "Zamknięty aż do zmieszania",
+        "text": "Liofilizowany peptyd jest w osobnej komorze, oddzielony od płynu korkiem. Nic nie traci jakości na półce i nic nie miesza się, zanim tego zechcesz."
+      },
+      {
+        "title": "Woda BAC już we wkładzie",
+        "text": "Druga komora zawiera wodę bakteriostatyczną. Żadnych dodatkowych fiolek do kupienia, odmierzania ani przelewania. Wszystko, czego potrzebujesz, przychodzi w jednym opakowaniu."
+      },
+      {
+        "title": "Precyzyjny licznik, wielorazowy korpus",
+        "text": "Wkład zatrzaskuje się w penie VETUD z okienkiem licznika. Pen zostaje, wkład wymieniasz. Czysto, dokładnie i do wielokrotnego użytku."
+      }
+    ],
+    "cta": "Wybieram pen",
+    "video": "Zobacz, jak działa · 40 sekund"
+  },
+  "compare": {
+    "eyebrow": "Porównanie",
+    "title": "Który pen jest dla Ciebie?",
+    "subtitle": "Dwie cząsteczki, jeden pen, jedna cena za mg do porównania. Oba mają tę samą czystość, to samo opakowanie i tę samą ofertę.",
+    "rows": {
+      "label": {
+        "label": "Oznaczenie na penie",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Co to jest",
+        "tz2": "Podwójny agonista: receptory GIP + GLP-1",
+        "retatrutide": "Potrójny agonista: receptory GIP + GLP-1 + glukagonu"
+      },
+      "generation": {
+        "label": "Generacja",
+        "tz2": "Obecna generacja · najczęściej wybierany",
+        "retatrutide": "Następna generacja · najnowszy"
+      },
+      "status": {
+        "label": "Etap rozwoju",
+        "tz2": "Cząsteczka zatwierdzona jako lek",
+        "retatrutide": "W fazie badań, w badaniach 3. fazy"
+      },
+      "strengths": {
+        "label": "Warianty",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "W opakowaniu",
+        "tz2": "1 pen · 12 igieł · ulotka",
+        "retatrutide": "1 pen · 12 igieł · ulotka"
+      },
+      "purity": {
+        "label": "Czystość",
+        "tz2": "≥99%, COA partii",
+        "retatrutide": "≥99%, COA partii"
+      },
+      "dispatch": {
+        "label": "Wysyłka",
+        "tz2": "W ciągu 24 h od płatności",
+        "retatrutide": "W ciągu 24 h od płatności"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent}%",
+    "perMgRow": "Cena za mg (40 mg)",
+    "buyProduct": "Kup {product}",
+    "buy": "Kup teraz"
+  },
+  "howToOrder": {
+    "eyebrow": "Jak zamówić",
+    "title": "Od kliknięcia do drzwi w czterech krokach.",
+    "subtitle": "Jeden sposób zamawiania, zaprojektowany z myślą o szybkości. Zawsze wiesz, na jakim etapie jest Twoje zamówienie.",
+    "steps": [
+      {
+        "title": "Wybierz pen",
+        "text": "Tirzepatide lub Retatrutide, 20 mg lub 40 mg. Kliknij Kup teraz."
+      },
+      {
+        "title": "Wypełnij krótki formularz",
+        "text": "Imię i nazwisko, e-mail, telefon i adres. Bez konta, bez koszyka, w mniej niż minutę."
+      },
+      {
+        "title": "Odbierz e-mail",
+        "text": "Potwierdzenie przychodzi od razu, z danymi do płatności i numerem zamówienia."
+      },
+      {
+        "title": "Wysyłamy w 24 h",
+        "text": "Gdy tylko dotrze płatność, Twoje peny wyruszają w drogę, dyskretnie zapakowane, z numerem śledzenia."
+      }
+    ],
+    "cta": "Zacznij zamówienie"
+  },
+  "quality": {
+    "eyebrow": "Jakość, którą możesz sprawdzić",
+    "title": "Wyniki z laboratorium, nie obietnice.",
+    "subtitle": "Każda partia VETUD jest badana metodą HPLC i dokumentowana przed wysyłką. Poproś nas w dowolnym momencie o COA partii, którą otrzymasz, a je wyślemy.",
+    "stats": [
+      {
+        "value": "≥99%",
+        "label": "Czystość",
+        "text": "Potwierdzona HPLC dla każdej partii"
+      },
+      {
+        "value": "COA",
+        "label": "Każda partia",
+        "text": "Certyfikat analizy na życzenie, zgodny z numerem Twojej partii"
+      },
+      {
+        "value": "24 h",
+        "label": "Wysyłka",
+        "text": "Wysyłka w ciągu jednego dnia roboczego od płatności"
+      },
+      {
+        "value": "12",
+        "label": "Igieł w każdym opakowaniu",
+        "text": "Razem z penem i instrukcją, wszystko gotowe"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Za każdym penem",
+    "title": "Czysto napełniane. Przechowywane w chłodzie.",
+    "subtitle": "Zdjęcia z miejsc, gdzie produkty VETUD są napełniane i przechowywane: linia napełniania w pomieszczeniu czystym, a potem szafy chłodnicze aż do wysyłki Twojego zamówienia.",
+    "enlarge": "Powiększ",
+    "enlargeAria": "Powiększ: {title}",
+    "photos": [
+      {
+        "alt": "Pracownik w kombinezonie do pomieszczeń czystych, maseczce i rękawiczkach niesie tacę zamkniętych fiolek obok maszyny napełniającej",
+        "eyebrow": "Napełnianie",
+        "title": "Napełniane w pomieszczeniu czystym",
+        "text": "Korkowane i zamykane maszynowo, obsługiwane przez personel w pełnej odzieży ochronnej, maseczkach i rękawiczkach."
+      },
+      {
+        "alt": "Opisane pojemniki z fiolkami na półkach szafy chłodniczej z przeszklonymi drzwiami",
+        "eyebrow": "Przechowywanie",
+        "title": "Przechowywane w chłodzie",
+        "text": "Każda partia jest oznaczona i przechowywana w przeszklonych szafach chłodniczych aż do wysyłki."
+      },
+      {
+        "alt": "Rząd podświetlonych szaf chłodniczych z przeszklonymi drzwiami, pełnych oznaczonych zapasów",
+        "eyebrow": "Zapasy",
+        "title": "Gotowe do wysyłki",
+        "text": "Towar na stanie, więc Twoje zamówienie wyrusza w ciągu 24 godzin od płatności."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Pytania i odpowiedzi.",
+    "items": [
+      {
+        "q": "Jak zapłacić?",
+        "a": "Po złożeniu zamówienia od razu dostajesz e-mail z danymi do płatności i numerem zamówienia. Na tej stronie nic nie jest pobierane. Podaj numer zamówienia w tytule przelewu."
+      },
+      {
+        "q": "Jak szybko wysyłacie?",
+        "a": "Zamówienia wysyłamy w ciągu 24 godzin od płatności (w dni robocze), z numerem śledzenia przesłanym e-mailem i, jeśli wybierzesz, w komunikatorze."
+      },
+      {
+        "q": "Co obejmują wasze gwarancje?",
+        "a": "Dwie rzeczy. Czystość: każda partia jest badana, a jeśli partia ma poniżej 99% czystości, zwracamy pieniądze. Dostawa: jeśli paczka zaginie po drodze, wysyłamy ją ponownie albo zwracamy pieniądze. Napisz do nas z numerem zamówienia, a wszystko załatwimy."
+      },
+      {
+        "q": "Co jest w opakowaniu?",
+        "a": "Każde opakowanie VETUD zawiera jeden pen w wybranym wariancie, 12 jednorazowych igieł i instrukcję, z oznaczeniem produktu i partii. Opakowanie zewnętrzne jest gładkie i dyskretne."
+      },
+      {
+        "q": "Czym różni się 20 mg od 40 mg?",
+        "a": "Ilością peptydu w penie. Pen 40 mg kosztuje mniej za mg, dlatego ma oznaczenie Najlepsza cena."
+      },
+      {
+        "q": "Czy mogę dostać certyfikat analizy (COA)?",
+        "a": "Tak. Każda partia jest badana pod kątem czystości. Napisz do nas z numerem zamówienia, a wyślemy COA otrzymanej partii."
+      },
+      {
+        "q": "Czy mogę zmienić lub anulować zamówienie?",
+        "a": "Tak, dopóki nie zostanie wysłane. Odpowiedz na e-mail z potwierdzeniem lub napisz do nas: {contacts}."
+      },
+      {
+        "q": "Do czego służą te produkty?",
+        "a": "Wszystkie produkty sprzedawane na tej stronie są przeznaczone wyłącznie do celów badawczych i identyfikacyjnych. Produkty te nie są przeznaczone do dawkowania, wstrzykiwania ani spożycia przez ludzi."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Wszelkie prawa zastrzeżone."
+  },
+  "consent": {
+    "label": "Wybór plików cookie",
+    "text": "Chcielibyśmy używać analitycznych plików cookie (Google Analytics i Microsoft Clarity), aby zobaczyć, jak ta strona jest używana, i ją ulepszyć. Nic nie jest wykorzystywane do celów reklamowych.",
+    "accept": "Akceptuj",
+    "decline": "Odrzuć",
+    "settings": "Ustawienia plików cookie"
+  },
+  "contact": {
+    "messageUs": "Napisz do nas",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-mail"
+    }
+  },
+  "order": {
+    "yourOrder": "Twoje zamówienie",
+    "shipTo": "Wysyłka do",
+    "pricesIn": "· ceny w {currency}",
+    "chooseCountry": "Wybierz kraj",
+    "chooseCountryError": "Wybierz kraj.",
+    "pen": "Pen",
+    "strength": "Wariant",
+    "quantity": "Ilość",
+    "discountCode": "Kod rabatowy",
+    "codePlaceholder": "Twój kod",
+    "apply": "Zastosuj",
+    "applied": "Zastosowano",
+    "getCode": "Odbierz kod na dodatkowe {percent}%",
+    "codeApplied": "Kod {code} zastosowany: dodatkowe {percent}% zniżki",
+    "codeInvalid": "Ten kod jest nieprawidłowy.",
+    "codeCheckFailed": "Nie udało się sprawdzić kodu. Spróbuj ponownie.",
+    "regularLine": "{quantity} × {price} cena regularna",
+    "saleLine": "{saleLabel} −{percent}%",
+    "codeLine": "Kod {code} −{percent}%",
+    "total": "Razem",
+    "youSave": "Oszczędzasz {price}",
+    "perks": [
+      "Czystość ≥99%, COA do każdej partii",
+      "Wysyłka w 24 h od płatności",
+      "Dane do płatności e-mailem, teraz nic nie płacisz"
+    ],
+    "title": "Dokąd mamy wysłać?",
+    "subtitle": "Bez konta, bez koszyka. Jeden krótki formularz i gotowe.",
+    "fullName": "Imię i nazwisko",
+    "fullNameError": "Podaj imię i nazwisko.",
+    "email": "E-mail",
+    "emailError": "Podaj prawidłowy adres e-mail.",
+    "phone": "Telefon",
+    "phoneCode": "Numer kierunkowy kraju",
+    "phoneError": "Podaj numer telefonu.",
+    "phonePlaceholder": "Numer telefonu",
+    "contactApp": "Najlepszy sposób kontaktu",
+    "contactAppEmailOnly": "Tylko e-mail",
+    "handleHint": {
+      "whatsapp": "Numer WhatsApp, jeśli inny niż telefon",
+      "telegram": "Twoja nazwa użytkownika w Telegramie, np. @nazwa",
+      "line": "Twój identyfikator LINE"
+    },
+    "address": "Ulica i numer",
+    "addressError": "Podaj ulicę i numer.",
+    "city": "Miejscowość",
+    "cityError": "Podaj miejscowość.",
+    "postalCode": "Kod pocztowy",
+    "postalCodeError": "Podaj kod pocztowy.",
+    "note": "Uwagi (opcjonalnie)",
+    "researchUse": "Potwierdzam, że te produkty są przeznaczone wyłącznie do celów badawczych.",
+    "researchUseError": "Potwierdź przeznaczenie do celów badawczych.",
+    "placeOrder": "Zamawiam z obowiązkiem zapłaty · {price}",
+    "confirmationNote": "Od razu dostaniesz e-mail z potwierdzeniem i danymi do płatności. Pytania? Napisz na {email}.",
+    "genericError": "Coś poszło nie tak. Spróbuj ponownie lub napisz do nas.",
+    "noConnection": "Brak połączenia. Spróbuj ponownie lub napisz do nas.",
+    "doneTitle": "Zamówienie {orderNumber} jest zarezerwowane",
+    "doneText": "Wysłaliśmy dane do płatności na adres <b>{email}</b>. Do zapłaty: <b>{total}</b>.",
+    "doneSpam": "Nie widzisz wiadomości? Sprawdź folder spam lub napisz do nas poniżej.",
+    "doneButton": "Gotowe"
+  },
+  "promo": {
+    "eyebrow": "Tylko dla subskrybentów",
+    "eyebrowReady": "Twój kod jest gotowy",
+    "headline": "Dodatkowe {percent} zniżki",
+    "onTop": "Do tego −{percent}% z okazji {saleLabel} · łącznie do −{best}%",
+    "emailedNote": "Wysłaliśmy go też e-mailem i jest już wpisany w Twoim formularzu zamówienia.",
+    "copyAria": "Skopiuj kod {code}",
+    "copy": "Kopiuj",
+    "copied": "Skopiowano",
+    "yourCode": "Twój kod: {code}",
+    "orderWithCode": "Zamów teraz z moim kodem",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Bestseller, z Twoim kodem",
+    "emailLabel": "Twój e-mail",
+    "emailError": "Podaj prawidłowy adres e-mail.",
+    "emailPlaceholder": "imie@example.com",
+    "reveal": "Pokaż mój kod na {percent}%",
+    "consent": "Będziesz otrzymywać oferty VETUD e-mailem. Możesz zrezygnować w każdej chwili.",
+    "noThanks": "Nie, dziękuję",
+    "genericError": "Coś poszło nie tak. Spróbuj ponownie.",
+    "noConnection": "Brak połączenia. Spróbuj ponownie."
+  }
+}

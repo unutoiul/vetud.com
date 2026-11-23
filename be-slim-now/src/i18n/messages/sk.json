@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Perá Tirzepatide & Retatrutide · BeSlimNow",
+    "description": "Perá Tirzepatide (TZ-2) a Retatrutide od VETUD. 20 mg alebo 40 mg, čistota ≥99 % s COA pre každú šaržu. Úvodná ponuka: zľava 40 %. Objednávka za menej ako minútu."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "ZĽAVA",
+    "sealAria": "{saleLabel}: zľava {percent} %"
+  },
+  "promoBar": {
+    "sale": "−{percent} % na každé pero",
+    "subscribe": "Prihláste sa na odber a získajte ďalších −{percent} % (až −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, späť hore",
+    "navLabel": "Sekcie",
+    "nav": {
+      "products": "Perá",
+      "dualChamber": "Pero",
+      "compare": "Porovnanie",
+      "how": "Ako objednať",
+      "faq": "FAQ"
+    }
+  },
+  "countryPicker": {
+    "aria": "Krajina a mena: {country}, ceny v {currency}",
+    "hint": "Vaša krajina určuje ceny a menu.",
+    "groupUs": "Spojené štáty",
+    "groupEurope": "Európa",
+    "groupOther": "Ostatné krajiny · ceny v USD",
+    "groupOtherTitle": "Ostatné krajiny"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Pero Tirzepatide (TZ-2)",
+      "tagline": "Duálny agonista receptorov GIP / GLP-1",
+      "description": "Duálny agonista, o ktorom hovorí celý odbor, v presnom pere VETUD. Jedno pero, 12 ihiel a príbalový leták v každom balení.",
+      "badge": "Veľmi obľúbené",
+      "penAlt": "Pero VETUD Tirzepatide",
+      "gallery": [
+        {
+          "label": "Balenie",
+          "alt": "Balenie pera VETUD Tirzepatide, zatvorené"
+        },
+        {
+          "label": "Obsah",
+          "alt": "Otvorené balenie VETUD Tirzepatide: pero, 12 ihiel a leták"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Pero Retatrutide",
+      "tagline": "Trojitý agonista GIP / GLP-1 / glukagónu",
+      "description": "Trojitý agonista novej generácie v presnom pere VETUD. Jedno pero, 12 ihiel a príbalový leták v každom balení.",
+      "badge": "Najpredávanejšie",
+      "penAlt": "Pero VETUD Retatrutide",
+      "gallery": [
+        {
+          "label": "Balenie",
+          "alt": "Balenie pera VETUD Retatrutide, zatvorené"
+        },
+        {
+          "label": "Obsah",
+          "alt": "Otvorené balenie VETUD Retatrutide: pero, 12 ihiel a leták"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % na každé pero, v oboch silách",
+    "eyebrow": "VETUD Peptide Series · Perá, po ktorých sa všetci pýtajú",
+    "headlineSr": "Tirzepatide & Retatrutide v pere, teraz o {percent} % lacnejšie.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "v",
+      "pere,",
+      "teraz"
+    ],
+    "headlineOffer": "o {percent} % lacnejšie.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Každé pero je ",
+    "everyPenSr": "Každé pero je {list}.",
+    "everyPen": [
+      "so zárukou čistoty",
+      "so zárukou doručenia",
+      "pripravené na odoslanie ešte dnes",
+      "čisté na ≥99 %",
+      "doložené COA",
+      "diskrétne zabalené"
+    ],
+    "everyPenSale": "tento týždeň o {percent} % lacnejšie",
+    "listAnd": "a",
+    "intro": "Dve najžiadanejšie molekuly metabolického výskumu, uzavreté v presnom dvojkomorovom pere VETUD. 20 mg alebo 40 mg, čistota ≥99 %, 12 ihiel v balení, u vás v priebehu niekoľkých dní. Jeden krátky formulár. Žiadny účet, žiadny košík, žiadne čakanie.",
+    "buyFrom": "Kúpiť · od {price}",
+    "extraCode": "Kód na ďalších −{percent} %",
+    "guaranteedLabel": "Záruka:",
+    "guarantees": [
+      "vrátenie peňazí, ak šarža vykáže čistotu pod 99 %",
+      "nové odoslanie alebo vrátenie peňazí, ak sa zásielka stratí"
+    ],
+    "trust": [
+      "Čistota ≥99 %, overené HPLC",
+      "COA ku každej šarži",
+      "Odoslanie do 24 h",
+      "Diskrétne balenie"
+    ],
+    "penTagFrom": "od {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % na každé pero",
+    "title": "Vyberte si pero",
+    "subtitle": "Tirzepatide alebo Retatrutide, 20 mg alebo 40 mg. Rovnaká laboratórna čistota, rovnaké pero VETUD, rovnaká ponuka. Vyberte, kliknite na Kúpiť a za minútu je hotovo.",
+    "enlargeAria": "Zväčšiť fotografie: {product}",
+    "enlarge": "Zväčšiť",
+    "thumbAlt": "Pohľad: {label}",
+    "inStock": "Na sklade",
+    "strengthAria": "Sila",
+    "saleSave": "−{percent} % · ušetríte {price}",
+    "perMg": "{price} za mg",
+    "bestValue": "Najlepšia cena · o {percent} % lacnejšie za mg",
+    "switchTo40": "Ušetrite {percent} % na mg s balením 40 mg →",
+    "features": [
+      "1 pero + 12 jednorazových ihiel + návod",
+      "Čistota ≥99 %, COA k šarži",
+      "Odoslanie do 24 h, diskrétne balenie"
+    ],
+    "subscriberCode": "Ďalších {percent} % zľavy s vaším kódom odberateľa",
+    "buy": "Kúpiť · {price}",
+    "nothingToPay": "Teraz nič neplatíte. Platobné údaje prídu e-mailom."
+  },
+  "dualChamber": {
+    "eyebrow": "Dvojkomorové pero VETUD",
+    "title": "Postavené ako pero z lekárne.",
+    "subtitle": "Dve komory, jeden zásobník: hore lyofilizovaný peptid, dole voda BAC, oddelené, kým ich nespojíte. Potom zásobník zacvakne do opakovane použiteľného pera VETUD.",
+    "diagramAlt": "Zásobník VETUD obsahuje lyofilizovaný peptid a vodu BAC a je uložený v držiaku zásobníka pera",
+    "enlarge": "Zväčšiť",
+    "benefits": [
+      {
+        "title": "Uzavreté až do zmiešania",
+        "text": "Lyofilizovaný peptid je vo vlastnej komore, od kvapaliny oddelený zátkou. Nič sa na poličke neznehodnotí a nič sa nezmieša skôr, ako chcete."
+      },
+      {
+        "title": "Voda BAC už v zásobníku",
+        "text": "Druhá komora obsahuje bakteriostatickú vodu. Žiadne ďalšie fľaštičky na kúpu, žiadne odmeriavanie ani prelievanie. Všetko potrebné príde v jednom balení."
+      },
+      {
+        "title": "Presné počítadlo, opakovane použiteľné telo pera",
+        "text": "Zásobník zacvakne do pera VETUD s okienkom počítadla. Pero si necháte, zásobník vymeníte. Čisté, presné a stavané na opakované použitie."
+      }
+    ],
+    "cta": "Chcem svoje pero",
+    "video": "Pozrite sa, ako funguje · 40 sekúnd"
+  },
+  "compare": {
+    "eyebrow": "Vedľa seba",
+    "title": "Ktoré pero je pre vás?",
+    "subtitle": "Dve molekuly, jedno pero, jedna cena za mg na porovnanie. Obe majú rovnakú čistotu, rovnaké balenie a rovnakú ponuku.",
+    "rows": {
+      "label": {
+        "label": "Označenie na pere",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Čo to je",
+        "tz2": "Duálny agonista: receptory GIP + GLP-1",
+        "retatrutide": "Trojitý agonista: receptory GIP + GLP-1 + glukagónu"
+      },
+      "generation": {
+        "label": "Generácia",
+        "tz2": "Súčasná generácia · najžiadanejšie",
+        "retatrutide": "Nová generácia · najnovšie"
+      },
+      "status": {
+        "label": "Stav vývoja",
+        "tz2": "Molekula schválená ako liek",
+        "retatrutide": "Vo výskume, v štúdiách fázy 3"
+      },
+      "strengths": {
+        "label": "Sily",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "V balení",
+        "tz2": "1 pero · 12 ihiel · leták",
+        "retatrutide": "1 pero · 12 ihiel · leták"
+      },
+      "purity": {
+        "label": "Čistota",
+        "tz2": "≥99 %, COA k šarži",
+        "retatrutide": "≥99 %, COA k šarži"
+      },
+      "dispatch": {
+        "label": "Odoslanie",
+        "tz2": "Do 24 h od platby",
+        "retatrutide": "Do 24 h od platby"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Cena za mg (40 mg)",
+    "buyProduct": "Kúpiť {product}",
+    "buy": "Kúpiť"
+  },
+  "howToOrder": {
+    "eyebrow": "Ako objednať",
+    "title": "Od kliknutia k dverám v štyroch krokoch.",
+    "subtitle": "Jeden spôsob objednávky, navrhnutý na rýchlosť. Vždy viete, v akom stave je vaša objednávka.",
+    "steps": [
+      {
+        "title": "Vyberte pero",
+        "text": "Tirzepatide alebo Retatrutide, 20 mg alebo 40 mg. Kliknite na Kúpiť."
+      },
+      {
+        "title": "Vyplňte krátky formulár",
+        "text": "Meno, e-mail, telefón a adresa. Žiadny účet, žiadny košík, do minúty."
+      },
+      {
+        "title": "Príde vám e-mail",
+        "text": "Potvrdenie príde hneď, s platobnými údajmi a číslom objednávky."
+      },
+      {
+        "title": "Odosielame do 24 h",
+        "text": "Hneď ako platba dorazí, vaše perá odchádzajú, diskrétne zabalené a so sledovaním zásielky."
+      }
+    ],
+    "cta": "Začať objednávku"
+  },
+  "quality": {
+    "eyebrow": "Kvalita, ktorú si overíte",
+    "title": "Laboratórne výsledky, nie sľuby.",
+    "subtitle": "Každá šarža VETUD je pred odoslaním testovaná metódou HPLC a zdokumentovaná. Kedykoľvek nás požiadajte o COA šarže, ktorú dostanete, a my vám ho pošleme.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Čistota",
+        "text": "Overené HPLC pri každej šarži"
+      },
+      {
+        "value": "COA",
+        "label": "Každá šarža",
+        "text": "Certifikát analýzy na požiadanie, podľa čísla vašej šarže"
+      },
+      {
+        "value": "24 h",
+        "label": "Odoslanie",
+        "text": "Odoslanie do jedného pracovného dňa od platby"
+      },
+      {
+        "value": "12",
+        "label": "Ihiel v každom balení",
+        "text": "S perom a návodom, všetko pripravené"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Za každým perom",
+    "title": "Čisto plnené. V chlade skladované.",
+    "subtitle": "Fotografie z miest, kde sa produkty VETUD plnia a skladujú: plniaca linka v čistej miestnosti a potom chladiace skrine až do odoslania vašej objednávky.",
+    "enlarge": "Zväčšiť",
+    "enlargeAria": "Zväčšiť: {title}",
+    "photos": [
+      {
+        "alt": "Pracovník v odeve pre čisté priestory, rúšku a rukaviciach nesie podnos uzavretých fľaštičiek popri plniacom stroji",
+        "eyebrow": "Plnenie",
+        "title": "Plnené v čistej miestnosti",
+        "text": "Strojovo uzavreté zátkou a viečkom, obsluhované personálom v kompletnom odeve, rúšku a rukaviciach."
+      },
+      {
+        "alt": "Označené prepravky s fľaštičkami na policiach chladiacej skrine so sklenenými dverami",
+        "eyebrow": "Skladovanie",
+        "title": "Skladované v chlade",
+        "text": "Každá šarža je označená a až do odoslania uložená v chladiacich skriniach so sklenenými dverami."
+      },
+      {
+        "alt": "Rad osvetlených chladiacich skríň so sklenenými dverami plných označených zásob",
+        "eyebrow": "Zásoby",
+        "title": "Pripravené na odoslanie",
+        "text": "Tovar na sklade, takže vaša objednávka odchádza do 24 hodín od platby."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Odpovede na vaše otázky.",
+    "items": [
+      {
+        "q": "Ako zaplatím?",
+        "a": "Po odoslaní objednávky vám hneď príde e-mail s platobnými údajmi a číslom objednávky. Na tejto stránke sa nič neúčtuje. Do správy pre prijímateľa uveďte číslo objednávky."
+      },
+      {
+        "q": "Ako rýchlo odosielate?",
+        "a": "Objednávky odosielame do 24 hodín od platby (v pracovné dni), s číslom na sledovanie zásielky e-mailom a, ak ste si ju zvolili, aj v komunikačnej aplikácii."
+      },
+      {
+        "q": "Na čo sa vzťahujú vaše záruky?",
+        "a": "Na dve veci. Čistota: každá šarža je testovaná, a ak šarža vykáže čistotu pod 99 %, vrátime vám peniaze. Doručenie: ak sa zásielka cestou stratí, pošleme ju znova alebo vrátime peniaze. Napíšte nám s číslom objednávky a všetko vyriešime."
+      },
+      {
+        "q": "Čo je v balení?",
+        "a": "Každé balenie VETUD obsahuje jedno pero v zvolenej sile, 12 jednorazových ihiel a návod, označené produktom a šaržou. Vonkajší obal je neutrálny a diskrétny."
+      },
+      {
+        "q": "Aký je rozdiel medzi 20 mg a 40 mg?",
+        "a": "Množstvo peptidu v pere. Pero 40 mg je lacnejšie za mg, preto je označené ako Najlepšia cena."
+      },
+      {
+        "q": "Môžem získať certifikát analýzy (COA)?",
+        "a": "Áno. Čistota každej šarže je testovaná. Napíšte nám s číslom objednávky a pošleme vám COA šarže, ktorú ste dostali."
+      },
+      {
+        "q": "Môžem objednávku zmeniť alebo zrušiť?",
+        "a": "Áno, kým nie je odoslaná. Odpovedzte na potvrdzovací e-mail alebo nám napíšte: {contacts}."
+      },
+      {
+        "q": "Na čo sú tieto produkty určené?",
+        "a": "Všetky produkty predávané na tejto webovej stránke sú určené výhradne na výskumné a identifikačné účely. Tieto produkty nie sú určené na dávkovanie, injekčné podanie ani požitie u ľudí."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Všetky práva vyhradené."
+  },
+  "consent": {
+    "label": "Výber cookies",
+    "text": "Radi by sme používali analytické cookies (Google Analytics a Microsoft Clarity), aby sme videli, ako sa táto stránka používa, a mohli ju zlepšiť. Nič z toho nepoužívame na reklamu.",
+    "accept": "Prijať",
+    "decline": "Odmietnuť",
+    "settings": "Nastavenia cookies"
+  },
+  "contact": {
+    "messageUs": "Napíšte nám",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-mail"
+    }
+  },
+  "order": {
+    "yourOrder": "Vaša objednávka",
+    "shipTo": "Doručiť do",
+    "pricesIn": "· ceny v {currency}",
+    "chooseCountry": "Vyberte krajinu",
+    "chooseCountryError": "Vyberte krajinu.",
+    "pen": "Pero",
+    "strength": "Sila",
+    "quantity": "Množstvo",
+    "discountCode": "Zľavový kód",
+    "codePlaceholder": "Váš kód",
+    "apply": "Uplatniť",
+    "applied": "Uplatnené",
+    "getCode": "Získať kód na ďalších {percent} %",
+    "codeApplied": "Kód {code} uplatnený: ďalších {percent} % zľavy",
+    "codeInvalid": "Tento kód nie je platný.",
+    "codeCheckFailed": "Kód sa nepodarilo overiť. Skúste to znova.",
+    "regularLine": "{quantity} × {price} bežná cena",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Kód {code} −{percent} %",
+    "total": "Spolu",
+    "youSave": "Ušetríte {price}",
+    "perks": [
+      "Čistota ≥99 %, COA ku každej šarži",
+      "Odoslanie do 24 h od platby",
+      "Platobné údaje e-mailom, teraz nič neplatíte"
+    ],
+    "title": "Kam vám to máme poslať?",
+    "subtitle": "Žiadny účet, žiadny košík. Jeden krátky formulár a je hotovo.",
+    "fullName": "Meno a priezvisko",
+    "fullNameError": "Zadajte meno a priezvisko.",
+    "email": "E-mail",
+    "emailError": "Zadajte platný e-mail.",
+    "phone": "Telefón",
+    "phoneCode": "Predvoľba krajiny",
+    "phoneError": "Zadajte svoje telefónne číslo.",
+    "phonePlaceholder": "Telefónne číslo",
+    "contactApp": "Ako vás najlepšie zastihneme",
+    "contactAppEmailOnly": "Len e-mail",
+    "handleHint": {
+      "whatsapp": "Číslo WhatsApp, ak sa líši od telefónu",
+      "telegram": "Vaše používateľské meno na Telegrame, napr. @meno",
+      "line": "Vaše LINE ID"
+    },
+    "address": "Ulica a číslo domu",
+    "addressError": "Zadajte ulicu a číslo domu.",
+    "city": "Mesto",
+    "cityError": "Zadajte mesto.",
+    "postalCode": "PSČ",
+    "postalCodeError": "Zadajte PSČ.",
+    "note": "Poznámka (nepovinné)",
+    "researchUse": "Potvrdzujem, že tieto produkty sú určené výhradne na výskum.",
+    "researchUseError": "Potvrďte, prosím, použitie na výskum.",
+    "placeOrder": "Objednať s povinnosťou platby · {price}",
+    "confirmationNote": "Hneď vám príde potvrdzovací e-mail s platobnými údajmi. Otázky? Napíšte na {email}.",
+    "genericError": "Niečo sa pokazilo. Skúste to znova alebo nám napíšte.",
+    "noConnection": "Žiadne pripojenie. Skúste to znova alebo nám napíšte.",
+    "doneTitle": "Objednávka {orderNumber} je rezervovaná",
+    "doneText": "Platobné údaje sme poslali na <b>{email}</b>. Na úhradu: <b>{total}</b>.",
+    "doneSpam": "Neviete ho nájsť? Pozrite sa do spamu alebo nám napíšte nižšie.",
+    "doneButton": "Hotovo"
+  },
+  "promo": {
+    "eyebrow": "Exkluzívne pre odberateľov",
+    "eyebrowReady": "Váš kód je pripravený",
+    "headline": "Ďalších {percent} zľavy",
+    "onTop": "Navyše k zľave {saleLabel} {percent} % · spolu až {best} %",
+    "emailedNote": "Poslali sme vám ho aj e-mailom a je už vyplnený vo vašom objednávkovom formulári.",
+    "copyAria": "Skopírovať kód {code}",
+    "copy": "Kopírovať",
+    "copied": "Skopírované",
+    "yourCode": "Váš kód: {code}",
+    "orderWithCode": "Objednať s mojím kódom",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Najpredávanejšie, s vaším kódom",
+    "emailLabel": "Váš e-mail",
+    "emailError": "Zadajte platný e-mail.",
+    "emailPlaceholder": "meno@example.com",
+    "reveal": "Zobraziť môj kód na {percent} %",
+    "consent": "Budete dostávať ponuky VETUD e-mailom. Odhlásiť sa môžete kedykoľvek.",
+    "noThanks": "Nie, ďakujem",
+    "genericError": "Niečo sa pokazilo. Skúste to znova.",
+    "noConnection": "Žiadne pripojenie. Skúste to znova."
+  }
+}

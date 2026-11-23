@@ -11,7 +11,10 @@
     "emails:build": "node emails/build.mjs",
     "emails:publish": "node emails/publish.mjs",
     "images": "node scripts/prepare-images.mjs",
-    "brand": "node scripts/prepare-brand.mjs"
+    "brand": "node scripts/prepare-brand.mjs",
+    "i18n:sync": "node scripts/i18n.mjs sync",
+    "i18n:check": "node scripts/i18n.mjs check",
+    "i18n:translations": "node scripts/translations.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^6.3.4",

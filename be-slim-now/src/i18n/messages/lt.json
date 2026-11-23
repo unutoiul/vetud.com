@@ -1,0 +1,430 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Tirzepatide & Retatrutide švirkštikliai · BeSlimNow",
+    "description": "VETUD Tirzepatide (TZ-2) ir Retatrutide švirkštikliai. 20 mg arba 40 mg, grynumas ≥99 % su COA kiekvienai partijai. Įžanginis pasiūlymas: 40 % nuolaida. Užsakymas greičiau nei per minutę."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "NUOLAIDA",
+    "sealAria": "{saleLabel}: −{percent} %"
+  },
+  "promoBar": {
+    "sale": "−{percent} % kiekvienam švirkštikliui",
+    "subscribe": "Užsiprenumeruokite ir gaukite dar −{percent} % (iki −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, į viršų",
+    "navLabel": "Skyriai",
+    "nav": {
+      "products": "Švirkštikliai",
+      "dualChamber": "Švirkštiklis",
+      "compare": "Palyginimas",
+      "how": "Kaip užsisakyti",
+      "faq": "DUK"
+    }
+  },
+  "countryPicker": {
+    "aria": "Šalis ir valiuta: {country}, kainos {currency}",
+    "hint": "Jūsų šalis nustato kainas ir valiutą.",
+    "groupUs": "Jungtinės Valstijos",
+    "groupEurope": "Europa",
+    "groupOther": "Kitos šalys · kainos USD",
+    "groupOtherTitle": "Kitos šalys"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) švirkštiklis",
+      "tagline": "Dvigubas GIP / GLP-1 receptorių agonistas",
+      "description": "Dvigubas agonistas, apie kurį kalba visa sritis, – preciziškame VETUD švirkštiklyje. Vienas švirkštiklis, 12 adatų ir naudojimo instrukcija kiekvienoje dėžutėje.",
+      "badge": "Labai populiarus",
+      "penAlt": "VETUD Tirzepatide švirkštiklis",
+      "gallery": [
+        {
+          "label": "Dėžutė",
+          "alt": "VETUD Tirzepatide švirkštiklio dėžutė, uždaryta"
+        },
+        {
+          "label": "Turinys",
+          "alt": "Atidaryta VETUD Tirzepatide dėžutė: švirkštiklis, 12 adatų ir instrukcija"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide švirkštiklis",
+      "tagline": "Trigubas GIP / GLP-1 / gliukagono agonistas",
+      "description": "Naujos kartos trigubas agonistas – preciziškame VETUD švirkštiklyje. Vienas švirkštiklis, 12 adatų ir naudojimo instrukcija kiekvienoje dėžutėje.",
+      "badge": "Perkamiausias",
+      "penAlt": "VETUD Retatrutide švirkštiklis",
+      "gallery": [
+        {
+          "label": "Dėžutė",
+          "alt": "VETUD Retatrutide švirkštiklio dėžutė, uždaryta"
+        },
+        {
+          "label": "Turinys",
+          "alt": "Atidaryta VETUD Retatrutide dėžutė: švirkštiklis, 12 adatų ir instrukcija"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % kiekvienam švirkštikliui, abiem stiprumams",
+    "eyebrow": "VETUD Peptide Series · Švirkštikliai, apie kuriuos klausia visi",
+    "headlineSr": "Tirzepatide & Retatrutide švirkštiklyje, dabar {percent} % pigiau.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "švirkštiklyje,",
+      "dabar"
+    ],
+    "headlineOffer": "{percent} % pigiau.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Kiekvienas švirkštiklis ",
+    "everyPenSr": "Kiekvienas švirkštiklis {list}.",
+    "everyPen": [
+      "su garantuotu grynumu",
+      "su garantuotu pristatymu",
+      "paruoštas išsiųsti šiandien",
+      "≥99 % grynumo",
+      "patvirtintas COA",
+      "diskretiškai supakuotas"
+    ],
+    "everyPenSale": "šią savaitę {percent} % pigesnis",
+    "listAnd": "ir",
+    "intro": "Dvi geidžiamiausios medžiagų apykaitos tyrimų molekulės, uždarytos preciziškame dviejų kamerų VETUD švirkštiklyje. 20 mg arba 40 mg, grynumas ≥99 %, 12 adatų dėžutėje, pas jus per kelias dienas. Viena trumpa forma. Be paskyros, be krepšelio, be laukimo.",
+    "buyFrom": "Pirkti dabar · nuo {price}",
+    "extraCode": "Papildomas kodas −{percent} %",
+    "guaranteedLabel": "Garantija:",
+    "guarantees": [
+      "pinigų grąžinimas, jei partijos grynumas mažesnis nei 99 %",
+      "pakartotinis siuntimas arba pinigų grąžinimas, jei siunta dingsta"
+    ],
+    "trust": [
+      "Grynumas ≥99 %, patikrintas HPLC",
+      "COA kiekvienai partijai",
+      "Išsiunčiame per 24 val.",
+      "Diskreti pakuotė"
+    ],
+    "penTagFrom": "nuo {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % kiekvienam švirkštikliui",
+    "title": "Pasirinkite švirkštiklį",
+    "subtitle": "Tirzepatide arba Retatrutide, 20 mg arba 40 mg. Toks pat laboratorinis grynumas, tas pats VETUD švirkštiklis, tas pats pasiūlymas. Pasirinkite, spauskite Pirkti dabar, ir viskas atlikta greičiau nei per minutę.",
+    "enlargeAria": "Padidinti nuotraukas: {product}",
+    "enlarge": "Padidinti",
+    "thumbAlt": "Vaizdas: {label}",
+    "inStock": "Yra sandėlyje",
+    "strengthAria": "Stiprumas",
+    "saleSave": "−{percent} % · sutaupote {price}",
+    "perMg": "{price} už mg",
+    "bestValue": "Geriausia kaina · {percent} % pigiau už mg",
+    "switchTo40": "Sutaupykite {percent} % už mg su 40 mg →",
+    "features": [
+      "1 švirkštiklis + 12 vienkartinių adatų + instrukcija",
+      "Grynumas ≥99 %, partijos COA",
+      "Išsiunčiame per 24 val., diskreti pakuotė"
+    ],
+    "subscriberCode": "Dar {percent} % nuolaida su jūsų prenumeratoriaus kodu",
+    "buy": "Pirkti dabar · {price}",
+    "nothingToPay": "Dabar mokėti nereikia. Mokėjimo informacija ateis el. paštu."
+  },
+  "dualChamber": {
+    "eyebrow": "Dviejų kamerų VETUD švirkštiklis",
+    "title": "Sukurtas kaip vaistinės švirkštiklis.",
+    "subtitle": "Dvi kameros, viena kasetė: viršuje liofilizuotas peptidas, apačioje BAC vanduo, atskirti, kol juos sujungiate. Tada kasetė įsispaudžia į daugkartinį VETUD švirkštiklį.",
+    "diagramAlt": "VETUD kasetėje yra liofilizuotas peptidas ir BAC vanduo, ji įstatoma į švirkštiklio kasetės laikiklį",
+    "enlarge": "Padidinti",
+    "benefits": [
+      {
+        "title": "Uždaryta iki sumaišymo",
+        "text": "Liofilizuotas peptidas laikomas atskiroje kameroje, nuo skysčio atskirtas kamšteliu. Lentynoje niekas negenda ir niekas nesumaišoma anksčiau, nei norite."
+      },
+      {
+        "title": "BAC vanduo jau kasetėje",
+        "text": "Antrojoje kameroje yra bakteriostatinis vanduo. Nereikia pirkti papildomų buteliukų, matuoti ar perpilti. Viskas, ko reikia, atkeliauja vienoje dėžutėje."
+      },
+      {
+        "title": "Tikslus skaitiklis, daugkartinis korpusas",
+        "text": "Kasetė įsispaudžia į VETUD švirkštiklį su skaitiklio langeliu. Švirkštiklis lieka, kasetę keičiate. Švaru, tikslu ir sukurta naudoti pakartotinai."
+      }
+    ],
+    "cta": "Noriu savo švirkštiklio",
+    "video": "Pažiūrėkite, kaip veikia · 40 sekundžių"
+  },
+  "compare": {
+    "eyebrow": "Greta",
+    "title": "Kuris švirkštiklis jums?",
+    "subtitle": "Dvi molekulės, vienas švirkštiklis, viena kaina už mg palyginimui. Abu turi tokį patį grynumą, tą pačią dėžutę ir tą patį pasiūlymą.",
+    "rows": {
+      "label": {
+        "label": "Žymėjimas ant švirkštiklio",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Kas tai",
+        "tz2": "Dvigubas agonistas: GIP + GLP-1 receptoriai",
+        "retatrutide": "Trigubas agonistas: GIP + GLP-1 + gliukagono receptoriai"
+      },
+      "generation": {
+        "label": "Karta",
+        "tz2": "Dabartinė karta · paklausiausias",
+        "retatrutide": "Naujoji karta · naujausias"
+      },
+      "status": {
+        "label": "Kūrimo etapas",
+        "tz2": "Molekulė patvirtinta kaip vaistas",
+        "retatrutide": "Tiriamas, 3 fazės tyrimuose"
+      },
+      "strengths": {
+        "label": "Stiprumai",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "Dėžutėje",
+        "tz2": "1 švirkštiklis · 12 adatų · instrukcija",
+        "retatrutide": "1 švirkštiklis · 12 adatų · instrukcija"
+      },
+      "purity": {
+        "label": "Grynumas",
+        "tz2": "≥99 %, partijos COA",
+        "retatrutide": "≥99 %, partijos COA"
+      },
+      "dispatch": {
+        "label": "Išsiuntimas",
+        "tz2": "Per 24 val. nuo apmokėjimo",
+        "retatrutide": "Per 24 val. nuo apmokėjimo"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Kaina už mg (40 mg)",
+    "buyProduct": "Pirkti {product}",
+    "buy": "Pirkti dabar"
+  },
+  "howToOrder": {
+    "eyebrow": "Kaip užsisakyti",
+    "title": "Nuo paspaudimo iki durų per keturis žingsnius.",
+    "subtitle": "Vienas užsakymo būdas, sukurtas greičiui. Visada žinote, kur yra jūsų užsakymas.",
+    "steps": [
+      {
+        "title": "Pasirinkite švirkštiklį",
+        "text": "Tirzepatide arba Retatrutide, 20 mg arba 40 mg. Spauskite Pirkti dabar."
+      },
+      {
+        "title": "Užpildykite trumpą formą",
+        "text": "Vardas, el. paštas, telefonas ir adresas. Be paskyros, be krepšelio, greičiau nei per minutę."
+      },
+      {
+        "title": "Gaukite el. laišką",
+        "text": "Patvirtinimas ateina iš karto, su mokėjimo informacija ir užsakymo numeriu."
+      },
+      {
+        "title": "Išsiunčiame per 24 val.",
+        "text": "Vos gavus apmokėjimą, jūsų švirkštikliai iškeliauja, diskretiškai supakuoti ir su sekimu."
+      }
+    ],
+    "cta": "Pradėti užsakymą"
+  },
+  "quality": {
+    "eyebrow": "Kokybė, kurią galite patikrinti",
+    "title": "Laboratorijos rezultatai, ne pažadai.",
+    "subtitle": "Kiekviena VETUD partija prieš išsiunčiant patikrinama HPLC metodu ir dokumentuojama. Bet kada paprašykite gautos partijos COA, ir mes jį atsiųsime.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Grynumas",
+        "text": "Patikrintas HPLC kiekvienoje partijoje"
+      },
+      {
+        "value": "COA",
+        "label": "Kiekviena partija",
+        "text": "Analizės sertifikatas pagal pageidavimą, pagal jūsų partijos numerį"
+      },
+      {
+        "value": "24 val.",
+        "label": "Išsiuntimas",
+        "text": "Išsiunčiame per vieną darbo dieną nuo apmokėjimo"
+      },
+      {
+        "value": "12",
+        "label": "Adatų kiekvienoje dėžutėje",
+        "text": "Kartu su švirkštikliu ir instrukcija, viskas paruošta"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Už kiekvieno švirkštiklio",
+    "title": "Švariai užpildyta. Laikoma šaltai.",
+    "subtitle": "Nuotraukos iš vietų, kur VETUD produktai pildomi ir laikomi: švarios patalpos pildymo linija, o paskui šaldytuvai, kol išsiunčiamas jūsų užsakymas.",
+    "enlarge": "Padidinti",
+    "enlargeAria": "Padidinti: {title}",
+    "photos": [
+      {
+        "alt": "Darbuotojas švarios patalpos apranga, kauke ir pirštinėmis neša padėklą uždarytų buteliukų pro pildymo mašiną",
+        "eyebrow": "Pildymas",
+        "title": "Užpildyta švarioje patalpoje",
+        "text": "Mašina užkimšta ir uždaryta, dirba personalas su visa apsaugine apranga, kaukėmis ir pirštinėmis."
+      },
+      {
+        "alt": "Paženklintos dėžės su buteliukais šaldytuvo stiklinėmis durimis lentynose",
+        "eyebrow": "Laikymas",
+        "title": "Laikoma šaldytuve",
+        "text": "Kiekviena partija paženklinama ir iki išsiuntimo laikoma šaldytuvuose stiklinėmis durimis."
+      },
+      {
+        "alt": "Apšviestų šaldytuvų stiklinėmis durimis eilė, pilna paženklintų atsargų",
+        "eyebrow": "Atsargos",
+        "title": "Paruošta išsiųsti",
+        "text": "Prekės sandėlyje, todėl jūsų užsakymas išsiunčiamas per 24 valandas nuo apmokėjimo."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "DUK",
+    "title": "Klausimai ir atsakymai.",
+    "items": [
+      {
+        "q": "Kaip sumokėti?",
+        "a": "Pateikę užsakymą iš karto gaunate el. laišką su mokėjimo informacija ir užsakymo numeriu. Šiame puslapyje nieko nenuskaičiuojama. Mokėjimo paskirtyje nurodykite užsakymo numerį."
+      },
+      {
+        "q": "Kaip greitai išsiunčiate?",
+        "a": "Užsakymai išsiunčiami per 24 valandas nuo apmokėjimo (darbo dienomis), siuntos sekimo numeris siunčiamas el. paštu ir, jei pasirinkote, pokalbių programėle."
+      },
+      {
+        "q": "Ką apima jūsų garantijos?",
+        "a": "Du dalykus. Grynumą: kiekviena partija tikrinama, ir jei partijos grynumas mažesnis nei 99 %, grąžiname pinigus. Pristatymą: jei siunta pakeliui dingsta, išsiunčiame ją iš naujo arba grąžiname pinigus. Parašykite mums nurodę užsakymo numerį, ir viską sutvarkysime."
+      },
+      {
+        "q": "Kas yra dėžutėje?",
+        "a": "Kiekvienoje VETUD dėžutėje yra vienas pasirinkto stiprumo švirkštiklis, 12 vienkartinių adatų ir naudojimo instrukcija, paženklinta produktu ir partija. Išorinė pakuotė neutrali ir diskreti."
+      },
+      {
+        "q": "Kuo skiriasi 20 mg ir 40 mg?",
+        "a": "Peptido kiekiu švirkštiklyje. 40 mg švirkštiklis yra pigesnis už mg, todėl jis pažymėtas Geriausia kaina."
+      },
+      {
+        "q": "Ar galiu gauti analizės sertifikatą (COA)?",
+        "a": "Taip. Kiekvienos partijos grynumas tikrinamas. Parašykite mums nurodę užsakymo numerį, ir atsiųsime gautos partijos COA."
+      },
+      {
+        "q": "Ar galiu pakeisti arba atšaukti užsakymą?",
+        "a": "Taip, kol jis neišsiųstas. Atsakykite į patvirtinimo el. laišką arba parašykite mums: {contacts}."
+      },
+      {
+        "q": "Kam skirti šie produktai?",
+        "a": "Visi šioje svetainėje parduodami produktai skirti tik tyrimų ir identifikavimo tikslams. Šie produktai nėra skirti dozuoti, švirkšti ar nuryti žmonėms."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Visos teisės saugomos."
+  },
+  "consent": {
+    "label": "Slapukų pasirinkimas",
+    "text": "Norėtume naudoti analitinius slapukus (Google Analytics ir Microsoft Clarity), kad matytume, kaip naudojamas šis puslapis, ir galėtume jį tobulinti. Niekas nenaudojama reklamai.",
+    "accept": "Sutinku",
+    "decline": "Nesutinku",
+    "settings": "Slapukų nustatymai"
+  },
+  "contact": {
+    "messageUs": "Parašykite mums",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "El. paštas"
+    }
+  },
+  "order": {
+    "yourOrder": "Jūsų užsakymas",
+    "shipTo": "Pristatymo šalis",
+    "pricesIn": "· kainos {currency}",
+    "chooseCountry": "Pasirinkite šalį",
+    "chooseCountryError": "Pasirinkite šalį.",
+    "pen": "Švirkštiklis",
+    "strength": "Stiprumas",
+    "quantity": "Kiekis",
+    "discountCode": "Nuolaidos kodas",
+    "codePlaceholder": "Jūsų kodas",
+    "apply": "Taikyti",
+    "applied": "Pritaikyta",
+    "getCode": "Gaukite kodą dar {percent} % nuolaidai",
+    "codeApplied": "Kodas {code} pritaikytas: dar {percent} % nuolaida",
+    "codeInvalid": "Šis kodas negalioja.",
+    "codeCheckFailed": "Nepavyko patikrinti kodo. Bandykite dar kartą.",
+    "regularLine": "{quantity} × {price} įprasta kaina",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Kodas {code} −{percent} %",
+    "total": "Iš viso",
+    "youSave": "Sutaupote {price}",
+    "perks": [
+      "Grynumas ≥99 %, COA kiekvienai partijai",
+      "Išsiunčiame per 24 val. nuo apmokėjimo",
+      "Mokėjimo informacija el. paštu, dabar mokėti nereikia"
+    ],
+    "title": "Kur jį išsiųsti?",
+    "subtitle": "Be paskyros, be krepšelio. Viena trumpa forma ir viskas.",
+    "fullName": "Vardas ir pavardė",
+    "fullNameError": "Įveskite vardą ir pavardę.",
+    "email": "El. paštas",
+    "emailError": "Įveskite galiojantį el. pašto adresą.",
+    "phone": "Telefonas",
+    "phoneCode": "Šalies kodas",
+    "phoneError": "Įveskite telefono numerį.",
+    "phonePlaceholder": "Telefono numeris",
+    "contactApp": "Kaip geriausia su jumis susisiekti",
+    "contactAppEmailOnly": "Tik el. paštas",
+    "handleHint": {
+      "whatsapp": "WhatsApp numeris, jei skiriasi nuo telefono",
+      "telegram": "Jūsų Telegram vartotojo vardas, pvz., @vardas",
+      "line": "Jūsų LINE ID"
+    },
+    "address": "Gatvė ir namo numeris",
+    "addressError": "Įveskite gatvę ir namo numerį.",
+    "city": "Miestas",
+    "cityError": "Įveskite miestą.",
+    "postalCode": "Pašto kodas",
+    "postalCodeError": "Įveskite pašto kodą.",
+    "note": "Pastaba (neprivaloma)",
+    "researchUse": "Patvirtinu, kad šie produktai skirti tik tyrimams.",
+    "researchUseError": "Patvirtinkite naudojimą tyrimams.",
+    "placeOrder": "Užsakyti su įsipareigojimu sumokėti · {price}",
+    "confirmationNote": "Iš karto gausite patvirtinimo el. laišką su mokėjimo informacija. Klausimų? Rašykite {email}.",
+    "genericError": "Kažkas nepavyko. Bandykite dar kartą arba parašykite mums.",
+    "noConnection": "Nėra ryšio. Bandykite dar kartą arba parašykite mums.",
+    "doneTitle": "Užsakymas {orderNumber} rezervuotas",
+    "doneText": "Mokėjimo informaciją išsiuntėme adresu <b>{email}</b>. Mokėtina suma: <b>{total}</b>.",
+    "doneSpam": "Nerandate? Patikrinkite šlamšto aplanką arba parašykite mums žemiau.",
+    "doneButton": "Atlikta"
+  },
+  "promo": {
+    "eyebrow": "Tik prenumeratoriams",
+    "eyebrowReady": "Jūsų kodas paruoštas",
+    "headline": "Dar {percent} nuolaida",
+    "onTop": "Papildomai prie {saleLabel} −{percent} % nuolaidos · iš viso iki −{best} %",
+    "emailedNote": "Jį taip pat atsiuntėme el. paštu, ir jis jau įrašytas jūsų užsakymo formoje.",
+    "copyAria": "Kopijuoti kodą {code}",
+    "copy": "Kopijuoti",
+    "copied": "Nukopijuota",
+    "yourCode": "Jūsų kodas: {code}",
+    "orderWithCode": "Užsakyti dabar su mano kodu",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Perkamiausias, su jūsų kodu",
+    "emailLabel": "Jūsų el. paštas",
+    "emailError": "Įveskite galiojantį el. pašto adresą.",
+    "emailPlaceholder": "vardas@example.com",
+    "reveal": "Rodyti mano {percent} % kodą",
+    "consent": "Gausite VETUD pasiūlymus el. paštu. Atsisakyti galite bet kada.",
+    "noThanks": "Ne, ačiū",
+    "genericError": "Kažkas nepavyko. Bandykite dar kartą.",
+    "noConnection": "Nėra ryšio. Bandykite dar kartą."
+  }
+}

@@ -1,0 +1,430 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide tollak · BeSlimNow",
+    "description": "Tirzepatide (TZ-2) és Retatrutide tollak a VETUD-tól. 20 mg vagy 40 mg, ≥99% tisztaság, minden tételhez COA-val. Bevezető ajánlat: 40% kedvezmény. Rendelés egy percen belül."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "AKCIÓ",
+    "sealAria": "{saleLabel}: −{percent}%"
+  },
+  "promoBar": {
+    "sale": "−{percent}% minden tollra",
+    "subscribe": "Iratkozzon fel további −{percent}% kedvezményért (akár −{best}%)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, vissza az oldal tetejére",
+    "navLabel": "Szakaszok",
+    "nav": {
+      "products": "Tollak",
+      "dualChamber": "A toll",
+      "compare": "Összehasonlítás",
+      "how": "Rendelés menete",
+      "faq": "GYIK"
+    }
+  },
+  "countryPicker": {
+    "aria": "Ország és pénznem: {country}, árak {currency} pénznemben",
+    "hint": "Az országa határozza meg az árakat és a pénznemet.",
+    "groupUs": "Egyesült Államok",
+    "groupEurope": "Európa",
+    "groupOther": "Más országok · árak USD-ben",
+    "groupOtherTitle": "Más országok"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) toll",
+      "tagline": "Kettős GIP / GLP-1 receptoragonista",
+      "description": "A kettős agonista, amelyről az egész szakma beszél, a VETUD precíziós tollában. Dobozonként egy toll, 12 tű és egy használati útmutató.",
+      "badge": "Nagyon népszerű",
+      "penAlt": "VETUD Tirzepatide toll",
+      "gallery": [
+        {
+          "label": "Doboz",
+          "alt": "A VETUD Tirzepatide toll doboza, zárva"
+        },
+        {
+          "label": "Tartalom",
+          "alt": "Nyitott VETUD Tirzepatide doboz: toll, 12 tű és útmutató"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide toll",
+      "tagline": "Hármas GIP / GLP-1 / glukagon agonista",
+      "description": "Az új generációs hármas agonista a VETUD precíziós tollában. Dobozonként egy toll, 12 tű és egy használati útmutató.",
+      "badge": "Bestseller",
+      "penAlt": "VETUD Retatrutide toll",
+      "gallery": [
+        {
+          "label": "Doboz",
+          "alt": "A VETUD Retatrutide toll doboza, zárva"
+        },
+        {
+          "label": "Tartalom",
+          "alt": "Nyitott VETUD Retatrutide doboz: toll, 12 tű és útmutató"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent}% minden tollra, mindkét kiszerelésben",
+    "eyebrow": "VETUD Peptide Series · A tollak, amelyekről mindenki kérdez",
+    "headlineSr": "Tirzepatide & Retatrutide tollban, most {percent}% kedvezménnyel.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "tollban,",
+      "most"
+    ],
+    "headlineOffer": "{percent}% kedvezménnyel.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Minden toll ",
+    "everyPenSr": "Minden toll {list}.",
+    "everyPen": [
+      "garantáltan tiszta",
+      "garantáltan célba ér",
+      "ma feladásra kész",
+      "≥99%-ban tiszta",
+      "COA-val igazolt",
+      "diszkréten csomagolt"
+    ],
+    "everyPenSale": "ezen a héten {percent}%-kal olcsóbb",
+    "listAnd": "és",
+    "intro": "A metabolikus kutatás két legkeresettebb molekulája, a VETUD precíziós, kétkamrás tollába zárva. 20 mg vagy 40 mg, ≥99% tisztaság, 12 tű a dobozban, néhány napon belül Önnél. Egyetlen rövid űrlap. Nincs fiók, nincs kosár, nincs várakozás.",
+    "buyFrom": "Megveszem · már {price}",
+    "extraCode": "Extra −{percent}% kód",
+    "guaranteedLabel": "Garancia:",
+    "guarantees": [
+      "visszatérítés, ha egy tétel tisztasága 99% alatti",
+      "újraküldés vagy visszatérítés, ha a csomag elveszik"
+    ],
+    "trust": [
+      "≥99% tisztaság, HPLC-vel ellenőrizve",
+      "COA minden tételhez",
+      "Feladás 24 órán belül",
+      "Diszkrét csomagolás"
+    ],
+    "penTagFrom": "már {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent}% minden tollra",
+    "title": "Válassza ki a tollát",
+    "subtitle": "Tirzepatide vagy Retatrutide, 20 mg vagy 40 mg. Ugyanaz a laboratóriumi tisztaság, ugyanaz a VETUD toll, ugyanaz az ajánlat. Válasszon, kattintson a Megveszem gombra, és egy percen belül kész.",
+    "enlargeAria": "Képek nagyítása: {product}",
+    "enlarge": "Nagyítás",
+    "thumbAlt": "Nézet: {label}",
+    "inStock": "Raktáron",
+    "strengthAria": "Kiszerelés",
+    "saleSave": "−{percent}% · {price} megtakarítás",
+    "perMg": "{price} / mg",
+    "bestValue": "Legjobb ár · {percent}%-kal olcsóbb mg-onként",
+    "switchTo40": "Spóroljon {percent}%-ot mg-onként a 40 mg-os kiszereléssel →",
+    "features": [
+      "1 toll + 12 eldobható tű + használati útmutató",
+      "≥99% tisztaság, a tétel COA-ja",
+      "Feladás 24 órán belül, diszkrét csomagolás"
+    ],
+    "subscriberCode": "További {percent}% kedvezmény a feliratkozói kódjával",
+    "buy": "Megveszem · {price}",
+    "nothingToPay": "Most nem kell fizetnie. A fizetési adatokat e-mailben kapja meg."
+  },
+  "dualChamber": {
+    "eyebrow": "A VETUD kétkamrás toll",
+    "title": "Úgy készült, mint egy patikai toll.",
+    "subtitle": "Két kamra, egy patron: felül liofilizált peptid, alul BAC víz, külön tartva, amíg össze nem keveri őket. Ezután a patron bekattan az újrafelhasználható VETUD tollba.",
+    "diagramAlt": "A VETUD patron liofilizált peptidet és BAC vizet tartalmaz, és a toll patrontartójában ül",
+    "enlarge": "Nagyítás",
+    "benefits": [
+      {
+        "title": "Lezárva a keverés pillanatáig",
+        "text": "A liofilizált peptid saját kamrában van, egy dugó választja el a folyadéktól. A polcon semmi sem bomlik le, és semmi sem keveredik össze, mielőtt Ön akarja."
+      },
+      {
+        "title": "BAC víz már a patronban",
+        "text": "A második kamrában a bakteriosztatikus víz van. Nem kell külön üvegcséket venni, nincs kimérés, nincs áttöltés. Minden, amire szüksége van, egy dobozban érkezik."
+      },
+      {
+        "title": "Pontos számláló, újrafelhasználható tolltest",
+        "text": "A patron a számlálóablakos VETUD tollba kattan. A toll marad, a patront cseréli. Tiszta, pontos, és újrafelhasználásra készült."
+      }
+    ],
+    "cta": "Kérem a tollamat",
+    "video": "Nézze meg működés közben · 40 másodperc"
+  },
+  "compare": {
+    "eyebrow": "Egymás mellett",
+    "title": "Melyik toll az Öné?",
+    "subtitle": "Két molekula, egy toll, egy mg-onkénti ár az összehasonlításhoz. Mindkettő ugyanazzal a tisztasággal, ugyanabban a dobozban és ugyanazzal az ajánlattal érkezik.",
+    "rows": {
+      "label": {
+        "label": "Felirat a tollon",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Mi ez",
+        "tz2": "Kettős agonista: GIP + GLP-1 receptorok",
+        "retatrutide": "Hármas agonista: GIP + GLP-1 + glukagon receptorok"
+      },
+      "generation": {
+        "label": "Generáció",
+        "tz2": "Jelenlegi generáció · a legkeresettebb",
+        "retatrutide": "Következő generáció · a legújabb"
+      },
+      "status": {
+        "label": "Fejlesztési állapot",
+        "tz2": "Gyógyszerként engedélyezett molekula",
+        "retatrutide": "Kutatás alatt, 3. fázisú vizsgálatokban"
+      },
+      "strengths": {
+        "label": "Kiszerelések",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "A dobozban",
+        "tz2": "1 toll · 12 tű · útmutató",
+        "retatrutide": "1 toll · 12 tű · útmutató"
+      },
+      "purity": {
+        "label": "Tisztaság",
+        "tz2": "≥99%, a tétel COA-ja",
+        "retatrutide": "≥99%, a tétel COA-ja"
+      },
+      "dispatch": {
+        "label": "Feladás",
+        "tz2": "A fizetéstől számított 24 órán belül",
+        "retatrutide": "A fizetéstől számított 24 órán belül"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent}%",
+    "perMgRow": "Ár mg-onként (40 mg)",
+    "buyProduct": "{product} megvásárlása",
+    "buy": "Megveszem"
+  },
+  "howToOrder": {
+    "eyebrow": "Rendelés menete",
+    "title": "A kattintástól az ajtóig négy lépésben.",
+    "subtitle": "Egyetlen rendelési mód, gyorsaságra tervezve. Mindig tudja, hol tart a rendelése.",
+    "steps": [
+      {
+        "title": "Válassza ki a tollát",
+        "text": "Tirzepatide vagy Retatrutide, 20 mg vagy 40 mg. Kattintson a Megveszem gombra."
+      },
+      {
+        "title": "Töltsön ki egy rövid űrlapot",
+        "text": "Név, e-mail, telefon és cím. Nincs fiók, nincs kosár, egy perc alatt kész."
+      },
+      {
+        "title": "Megkapja az e-mailt",
+        "text": "A visszaigazolás azonnal megérkezik a fizetési adatokkal és a rendelésszámmal."
+      },
+      {
+        "title": "24 órán belül feladjuk",
+        "text": "Amint a fizetés megérkezik, a tollai útnak indulnak, diszkréten csomagolva, nyomkövetéssel."
+      }
+    ],
+    "cta": "Rendelés indítása"
+  },
+  "quality": {
+    "eyebrow": "Ellenőrizhető minőség",
+    "title": "Laboreredmények, nem ígéretek.",
+    "subtitle": "Minden VETUD tételt feladás előtt HPLC-vel vizsgálnak és dokumentálnak. Kérje bármikor a kapott tétel COA-ját, és elküldjük.",
+    "stats": [
+      {
+        "value": "≥99%",
+        "label": "Tisztaság",
+        "text": "Minden tételnél HPLC-vel ellenőrizve"
+      },
+      {
+        "value": "COA",
+        "label": "Minden tétel",
+        "text": "Analitikai tanúsítvány kérésre, a tételszámához igazítva"
+      },
+      {
+        "value": "24 óra",
+        "label": "Feladás",
+        "text": "Feladás a fizetéstől számított egy munkanapon belül"
+      },
+      {
+        "value": "12",
+        "label": "Tű minden dobozban",
+        "text": "A tollal és a használati útmutatóval, minden készen áll"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Minden toll mögött",
+    "title": "Tisztán töltve. Hidegen tárolva.",
+    "subtitle": "Fotók onnan, ahol a VETUD termékeket töltik és tárolják: egy tisztatéri töltősor, majd hűtőszekrények, amíg a rendelését fel nem adjuk.",
+    "enlarge": "Nagyítás",
+    "enlargeAria": "Nagyítás: {title}",
+    "photos": [
+      {
+        "alt": "Tisztatéri ruhát, maszkot és kesztyűt viselő dolgozó lezárt üvegcsékkel teli tálcát visz a töltőgép mellett",
+        "eyebrow": "Töltés",
+        "title": "Tisztatérben töltve",
+        "text": "Gépi dugózás és lezárás, a teljes védőruhát, maszkot és kesztyűt viselő személyzet kezeli."
+      },
+      {
+        "alt": "Címkézett üvegcsés ládák egy üvegajtós hűtőszekrény polcain",
+        "eyebrow": "Tárolás",
+        "title": "Hűtve tárolva",
+        "text": "Minden tétel felcímkézve, üvegajtós hűtőszekrényekben tárolva a feladásig."
+      },
+      {
+        "alt": "Kivilágított, üvegajtós hűtőszekrények sora címkézett készlettel",
+        "eyebrow": "Készlet",
+        "title": "Feladásra kész",
+        "text": "Készleten van, így a rendelése a fizetéstől számított 24 órán belül elindul."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "GYIK",
+    "title": "Kérdések és válaszok.",
+    "items": [
+      {
+        "q": "Hogyan fizetek?",
+        "a": "A rendelés leadása után azonnal kap egy e-mailt a fizetési adatokkal és a rendelésszámmal. Ezen az oldalon semmilyen terhelés nem történik. Közleményként a rendelésszámot adja meg."
+      },
+      {
+        "q": "Milyen gyorsan szállítanak?",
+        "a": "A rendeléseket a fizetéstől számított 24 órán belül feladjuk (munkanapokon), a nyomkövetési számot e-mailben és, ha kérte, üzenetküldő alkalmazásban is elküldjük."
+      },
+      {
+        "q": "Mire vonatkoznak a garanciák?",
+        "a": "Két dologra. Tisztaság: minden tételt bevizsgálunk, és ha egy tétel tisztasága 99% alatti, visszatérítjük az árát. Kézbesítés: ha a csomag útközben elveszik, újraküldjük vagy visszatérítjük az árát. Írjon nekünk a rendelésszámmal, és elintézzük."
+      },
+      {
+        "q": "Mi van a dobozban?",
+        "a": "Minden VETUD dobozban egy toll van a választott kiszerelésben, 12 eldobható tű és egy használati útmutató, a termék és a tétel megjelölésével. A külső csomagolás semleges és diszkrét."
+      },
+      {
+        "q": "Mi a különbség a 20 mg és a 40 mg között?",
+        "a": "A tollban lévő peptid mennyisége. A 40 mg-os toll mg-onként olcsóbb, ezért van rajta a Legjobb ár jelölés."
+      },
+      {
+        "q": "Megkaphatom az analitikai tanúsítványt (COA)?",
+        "a": "Igen. Minden tétel tisztaságát bevizsgáljuk. Írjon nekünk a rendelésszámmal, és elküldjük a kapott tétel COA-ját."
+      },
+      {
+        "q": "Módosíthatom vagy lemondhatom a rendelést?",
+        "a": "Igen, amíg fel nem adtuk. Válaszoljon a visszaigazoló e-mailre, vagy írjon nekünk: {contacts}."
+      },
+      {
+        "q": "Mire valók ezek a termékek?",
+        "a": "Az ezen a weboldalon értékesített összes termék kizárólag kutatási és azonosítási célokra szolgál. Ezek a termékek nem emberi adagolásra, befecskendezésre vagy lenyelésre szolgálnak."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Minden jog fenntartva."
+  },
+  "consent": {
+    "label": "Sütiválasztás",
+    "text": "Analitikai sütiket (Google Analytics és Microsoft Clarity) szeretnénk használni, hogy lássuk, hogyan használják ezt az oldalt, és jobbá tehessük. Semmit sem használunk hirdetésekhez.",
+    "accept": "Elfogadom",
+    "decline": "Elutasítom",
+    "settings": "Süti-beállítások"
+  },
+  "contact": {
+    "messageUs": "Írjon nekünk",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-mail"
+    }
+  },
+  "order": {
+    "yourOrder": "Az Ön rendelése",
+    "shipTo": "Szállítás ide",
+    "pricesIn": "· árak {currency} pénznemben",
+    "chooseCountry": "Válasszon országot",
+    "chooseCountryError": "Válasszon országot.",
+    "pen": "Toll",
+    "strength": "Kiszerelés",
+    "quantity": "Mennyiség",
+    "discountCode": "Kedvezménykód",
+    "codePlaceholder": "Az Ön kódja",
+    "apply": "Alkalmaz",
+    "applied": "Alkalmazva",
+    "getCode": "Kérjen kódot további {percent}% kedvezményhez",
+    "codeApplied": "{code} kód alkalmazva: további {percent}% kedvezmény",
+    "codeInvalid": "Ez a kód nem érvényes.",
+    "codeCheckFailed": "Nem sikerült ellenőrizni a kódot. Kérjük, próbálja újra.",
+    "regularLine": "{quantity} × {price} normál ár",
+    "saleLine": "{saleLabel} −{percent}%",
+    "codeLine": "{code} kód −{percent}%",
+    "total": "Összesen",
+    "youSave": "Megtakarítás: {price}",
+    "perks": [
+      "≥99% tisztaság, COA minden tételhez",
+      "Feladás a fizetéstől számított 24 órán belül",
+      "Fizetési adatok e-mailben, most nem kell fizetni"
+    ],
+    "title": "Hová küldjük?",
+    "subtitle": "Nincs fiók, nincs kosár. Egy rövid űrlap, és kész.",
+    "fullName": "Teljes név",
+    "fullNameError": "Adja meg a teljes nevét.",
+    "email": "E-mail",
+    "emailError": "Adjon meg egy érvényes e-mail-címet.",
+    "phone": "Telefon",
+    "phoneCode": "Országhívószám",
+    "phoneError": "Adja meg a telefonszámát.",
+    "phonePlaceholder": "Telefonszám",
+    "contactApp": "Hogyan érhetjük el legkönnyebben",
+    "contactAppEmailOnly": "Csak e-mail",
+    "handleHint": {
+      "whatsapp": "WhatsApp-szám, ha eltér a telefonszámától",
+      "telegram": "Telegram-felhasználóneve, pl. @nev",
+      "line": "LINE-azonosítója"
+    },
+    "address": "Utca, házszám",
+    "addressError": "Adja meg az utcát és a házszámot.",
+    "city": "Település",
+    "cityError": "Adja meg a települést.",
+    "postalCode": "Irányítószám",
+    "postalCodeError": "Adja meg az irányítószámot.",
+    "note": "Megjegyzés (nem kötelező)",
+    "researchUse": "Megerősítem, hogy ezek a termékek kizárólag kutatási célra szolgálnak.",
+    "researchUseError": "Kérjük, erősítse meg a kutatási célú felhasználást.",
+    "placeOrder": "Fizetési kötelezettséggel járó megrendelés · {price}",
+    "confirmationNote": "Azonnal kap egy visszaigazoló e-mailt a fizetési adatokkal. Kérdése van? Írjon a(z) {email} címre.",
+    "genericError": "Hiba történt. Kérjük, próbálja újra, vagy írjon nekünk.",
+    "noConnection": "Nincs kapcsolat. Kérjük, próbálja újra, vagy írjon nekünk.",
+    "doneTitle": "A(z) {orderNumber} számú rendelés lefoglalva",
+    "doneText": "A fizetési adatokat elküldtük a(z) <b>{email}</b> címre. Fizetendő: <b>{total}</b>.",
+    "doneSpam": "Nem találja? Nézze meg a spam mappát, vagy írjon nekünk lent.",
+    "doneButton": "Kész"
+  },
+  "promo": {
+    "eyebrow": "Csak feliratkozóknak",
+    "eyebrowReady": "Elkészült a kódja",
+    "headline": "További {percent} kedvezmény",
+    "onTop": "A {saleLabel} −{percent}% kedvezményén felül · összesen akár −{best}%",
+    "emailedNote": "E-mailben is elküldtük, és már szerepel a rendelési űrlapon.",
+    "copyAria": "{code} kód másolása",
+    "copy": "Másolás",
+    "copied": "Másolva",
+    "yourCode": "Az Ön kódja: {code}",
+    "orderWithCode": "Rendelés most a kódommal",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Bestseller, az Ön kódjával",
+    "emailLabel": "Az Ön e-mail-címe",
+    "emailError": "Adjon meg egy érvényes e-mail-címet.",
+    "emailPlaceholder": "nev@example.com",
+    "reveal": "{percent}%-os kódom megjelenítése",
+    "consent": "VETUD ajánlatokat fog kapni e-mailben. Bármikor leiratkozhat.",
+    "noThanks": "Köszönöm, nem",
+    "genericError": "Hiba történt. Kérjük, próbálja újra.",
+    "noConnection": "Nincs kapcsolat. Kérjük, próbálja újra."
+  }
+}

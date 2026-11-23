@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Stylos Tirzepatide & Retatrutide · BeSlimNow",
+    "description": "Stylos Tirzepatide (TZ-2) et Retatrutide de VETUD. 20 mg ou 40 mg, pureté ≥99 % avec un COA pour chaque lot. Offre de lancement : 40 % de remise. Commande en moins d’une minute."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "REMISE",
+    "sealAria": "{saleLabel} : −{percent} %"
+  },
+  "promoBar": {
+    "sale": "−{percent} % sur chaque stylo",
+    "subscribe": "Abonnez-vous pour −{percent} % de plus (jusqu’à −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, retour en haut",
+    "navLabel": "Sections",
+    "nav": {
+      "products": "Stylos",
+      "dualChamber": "Le stylo",
+      "compare": "Comparer",
+      "how": "Commander",
+      "faq": "FAQ"
+    }
+  },
+  "countryPicker": {
+    "aria": "Pays et devise : {country}, prix en {currency}",
+    "hint": "Votre pays détermine les prix et la devise.",
+    "groupUs": "États-Unis",
+    "groupEurope": "Europe",
+    "groupOther": "Autres pays · prix en USD",
+    "groupOtherTitle": "Autres pays"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Stylo Tirzepatide (TZ-2)",
+      "tagline": "Agoniste double des récepteurs GIP / GLP-1",
+      "description": "L’agoniste double dont tout le domaine parle, dans le stylo de précision VETUD. Un stylo, 12 aiguilles et une notice par boîte.",
+      "badge": "Très demandé",
+      "penAlt": "Stylo VETUD Tirzepatide",
+      "gallery": [
+        {
+          "label": "Boîte",
+          "alt": "Boîte du stylo VETUD Tirzepatide, fermée"
+        },
+        {
+          "label": "Contenu",
+          "alt": "Boîte VETUD Tirzepatide ouverte : stylo, 12 aiguilles et notice"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Stylo Retatrutide",
+      "tagline": "Agoniste triple GIP / GLP-1 / glucagon",
+      "description": "L’agoniste triple de nouvelle génération, dans le stylo de précision VETUD. Un stylo, 12 aiguilles et une notice par boîte.",
+      "badge": "Meilleure vente",
+      "penAlt": "Stylo VETUD Retatrutide",
+      "gallery": [
+        {
+          "label": "Boîte",
+          "alt": "Boîte du stylo VETUD Retatrutide, fermée"
+        },
+        {
+          "label": "Contenu",
+          "alt": "Boîte VETUD Retatrutide ouverte : stylo, 12 aiguilles et notice"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % sur chaque stylo, les deux dosages",
+    "eyebrow": "VETUD Peptide Series · Les stylos que tout le monde demande",
+    "headlineSr": "Tirzepatide & Retatrutide en stylo, désormais à −{percent} %.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "en",
+      "stylo,",
+      "désormais"
+    ],
+    "headlineOffer": "à −{percent} %.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Chaque stylo est ",
+    "everyPenSr": "Chaque stylo est {list}.",
+    "everyPen": [
+      "à pureté garantie",
+      "à livraison garantie",
+      "prêt à partir aujourd’hui",
+      "pur à ≥99 %",
+      "accompagné d’un COA",
+      "emballé discrètement"
+    ],
+    "everyPenSale": "à −{percent} % cette semaine",
+    "listAnd": "et",
+    "intro": "Les deux molécules les plus recherchées de la recherche métabolique, scellées dans le stylo double chambre de précision VETUD. 20 mg ou 40 mg, pureté ≥99 %, 12 aiguilles dans la boîte, chez vous en quelques jours. Un seul formulaire court. Pas de compte, pas de panier, pas d’attente.",
+    "buyFrom": "Acheter · dès {price}",
+    "extraCode": "Code −{percent} % en plus",
+    "guaranteedLabel": "Garanti :",
+    "guarantees": [
+      "remboursement si un lot est testé sous 99 % de pureté",
+      "réexpédition ou remboursement si votre colis est perdu"
+    ],
+    "trust": [
+      "Pureté ≥99 %, vérifiée par HPLC",
+      "COA pour chaque lot",
+      "Expédié sous 24 h",
+      "Emballage discret"
+    ],
+    "penTagFrom": "dès {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % sur chaque stylo",
+    "title": "Choisissez votre stylo",
+    "subtitle": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg. Même pureté de qualité laboratoire, même stylo VETUD, même offre. Choisissez, appuyez sur Acheter, c’est fait en moins d’une minute.",
+    "enlargeAria": "Agrandir les photos du {product}",
+    "enlarge": "Agrandir",
+    "thumbAlt": "Vue : {label}",
+    "inStock": "En stock",
+    "strengthAria": "Dosage",
+    "saleSave": "−{percent} % · {price} d’économie",
+    "perMg": "{price} par mg",
+    "bestValue": "Meilleur prix · {percent} % d’économie par mg",
+    "switchTo40": "Économisez {percent} % par mg avec 40 mg →",
+    "features": [
+      "1 stylo + 12 aiguilles jetables + notice",
+      "Pureté ≥99 %, COA du lot",
+      "Expédié sous 24 h, emballage discret"
+    ],
+    "subscriberCode": "{percent} % de remise en plus avec votre code abonné",
+    "buy": "Acheter · {price}",
+    "nothingToPay": "Rien à payer maintenant. Les informations de paiement arrivent par e-mail."
+  },
+  "dualChamber": {
+    "eyebrow": "Le stylo double chambre VETUD",
+    "title": "Conçu comme un stylo de pharmacie.",
+    "subtitle": "Deux chambres, une cartouche : le peptide lyophilisé en haut, l’eau BAC en bas, séparés jusqu’à ce que vous les réunissiez. Puis la cartouche se verrouille dans le stylo VETUD réutilisable.",
+    "diagramAlt": "La cartouche VETUD contient le peptide lyophilisé et l’eau BAC et se loge dans le porte-cartouche du stylo",
+    "enlarge": "Agrandir",
+    "benefits": [
+      {
+        "title": "Scellé jusqu’au mélange",
+        "text": "Le peptide lyophilisé repose dans sa propre chambre, séparé du liquide par un bouchon. Rien ne se dégrade en stock, rien n’est mélangé avant que vous le décidiez."
+      },
+      {
+        "title": "Eau BAC déjà dans la cartouche",
+        "text": "La seconde chambre contient l’eau bactériostatique. Pas de flacons en plus à acheter, rien à mesurer, rien à transvaser. Tout ce qu’il vous faut arrive dans une seule boîte."
+      },
+      {
+        "title": "Compteur précis, corps de stylo réutilisable",
+        "text": "La cartouche se clipse dans le stylo VETUD et sa fenêtre de compteur. Gardez le stylo, changez la cartouche. Propre, précis et conçu pour resservir."
+      }
+    ],
+    "cta": "Je choisis mon stylo",
+    "video": "Voir comment ça marche · 40 secondes"
+  },
+  "compare": {
+    "eyebrow": "Côte à côte",
+    "title": "Quel stylo est fait pour vous ?",
+    "subtitle": "Deux molécules, un stylo, un prix par mg à comparer. Les deux sont livrés avec la même pureté, la même boîte et la même offre.",
+    "rows": {
+      "label": {
+        "label": "Étiquette du stylo",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "De quoi s’agit-il",
+        "tz2": "Agoniste double : récepteurs GIP + GLP-1",
+        "retatrutide": "Agoniste triple : récepteurs GIP + GLP-1 + glucagon"
+      },
+      "generation": {
+        "label": "Génération",
+        "tz2": "Génération actuelle · la plus demandée",
+        "retatrutide": "Nouvelle génération · la plus récente"
+      },
+      "status": {
+        "label": "Stade de développement",
+        "tz2": "Molécule autorisée comme médicament",
+        "retatrutide": "En cours d’essais cliniques de phase 3"
+      },
+      "strengths": {
+        "label": "Dosages",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "Dans la boîte",
+        "tz2": "1 stylo · 12 aiguilles · notice",
+        "retatrutide": "1 stylo · 12 aiguilles · notice"
+      },
+      "purity": {
+        "label": "Pureté",
+        "tz2": "≥99 %, COA du lot",
+        "retatrutide": "≥99 %, COA du lot"
+      },
+      "dispatch": {
+        "label": "Expédition",
+        "tz2": "Sous 24 h après paiement",
+        "retatrutide": "Sous 24 h après paiement"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Prix par mg (40 mg)",
+    "buyProduct": "Acheter {product}",
+    "buy": "Acheter"
+  },
+  "howToOrder": {
+    "eyebrow": "Commander",
+    "title": "Du clic à votre porte en quatre étapes.",
+    "subtitle": "Une seule façon de commander, pensée pour aller vite. Vous savez toujours où en est votre commande.",
+    "steps": [
+      {
+        "title": "Choisissez votre stylo",
+        "text": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg. Appuyez sur Acheter."
+      },
+      {
+        "title": "Remplissez un court formulaire",
+        "text": "Nom, e-mail, téléphone et adresse. Pas de compte, pas de panier, moins d’une minute."
+      },
+      {
+        "title": "Recevez l’e-mail",
+        "text": "Votre confirmation arrive tout de suite, avec les informations de paiement et votre numéro de commande."
+      },
+      {
+        "title": "Expédition sous 24 h",
+        "text": "Dès réception du paiement, vos stylos partent, emballés discrètement, avec suivi."
+      }
+    ],
+    "cta": "Commencer ma commande"
+  },
+  "quality": {
+    "eyebrow": "Une qualité vérifiable",
+    "title": "Des résultats de laboratoire, pas des promesses.",
+    "subtitle": "Chaque lot VETUD est testé par HPLC et documenté avant l’expédition. Demandez-nous à tout moment le COA du lot que vous recevez, nous vous l’envoyons.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Pureté",
+        "text": "Vérifiée par HPLC sur chaque lot"
+      },
+      {
+        "value": "COA",
+        "label": "Chaque lot",
+        "text": "Certificat d’analyse sur demande, correspondant à votre numéro de lot"
+      },
+      {
+        "value": "24 h",
+        "label": "Expédition",
+        "text": "Expédié dans le jour ouvré qui suit le paiement"
+      },
+      {
+        "value": "12",
+        "label": "Aiguilles dans chaque boîte",
+        "text": "Avec le stylo et une notice, tout est prêt"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Derrière chaque stylo",
+    "title": "Rempli en salle propre. Conservé au froid.",
+    "subtitle": "Photos des lieux où les produits VETUD sont remplis et stockés : une ligne de remplissage en salle blanche, puis des armoires réfrigérées jusqu’à l’expédition de votre commande.",
+    "enlarge": "Agrandir",
+    "enlargeAria": "Agrandir : {title}",
+    "photos": [
+      {
+        "alt": "Une personne en tenue de salle blanche, masque et gants, porte un plateau de flacons capsulés devant la machine de remplissage",
+        "eyebrow": "Remplissage",
+        "title": "Rempli en salle blanche",
+        "text": "Bouchés et capsulés à la machine, manipulés par un personnel en tenue complète, masque et gants."
+      },
+      {
+        "alt": "Bacs de flacons étiquetés sur les étagères d’une armoire réfrigérée à porte vitrée",
+        "eyebrow": "Stockage",
+        "title": "Conservé au frais",
+        "text": "Chaque lot est étiqueté et conservé dans des armoires réfrigérées vitrées jusqu’à son expédition."
+      },
+      {
+        "alt": "Une rangée d’armoires réfrigérées vitrées et éclairées, remplies de stock étiqueté",
+        "eyebrow": "Stock",
+        "title": "Prêt à partir",
+        "text": "Du stock disponible, pour que votre commande parte dans les 24 heures suivant le paiement."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Vos questions, nos réponses.",
+    "items": [
+      {
+        "q": "Comment payer ?",
+        "a": "Après votre commande, vous recevez immédiatement un e-mail avec les informations de paiement et votre numéro de commande. Rien n’est débité sur cette page. Indiquez votre numéro de commande comme référence de paiement."
+      },
+      {
+        "q": "En combien de temps expédiez-vous ?",
+        "a": "Les commandes partent dans les 24 heures suivant le paiement (jours ouvrés), avec un numéro de suivi envoyé par e-mail et, si vous l’avez choisie, sur votre messagerie."
+      },
+      {
+        "q": "Que couvrent vos garanties ?",
+        "a": "Deux choses. La pureté : chaque lot est testé, et si un lot présente une pureté inférieure à 99 %, nous le remboursons. La livraison : si votre colis se perd en route, nous le réexpédions ou vous remboursons. Écrivez-nous avec votre numéro de commande et nous nous en occupons."
+      },
+      {
+        "q": "Que contient la boîte ?",
+        "a": "Chaque boîte VETUD contient un stylo au dosage choisi, 12 aiguilles jetables et une notice, étiquetés avec le produit et le lot. L’emballage extérieur est neutre et discret."
+      },
+      {
+        "q": "Quelle est la différence entre 20 mg et 40 mg ?",
+        "a": "La quantité de peptide dans le stylo. Le stylo de 40 mg coûte moins cher par mg, c’est pourquoi il est marqué « Meilleur prix »."
+      },
+      {
+        "q": "Puis-je obtenir le certificat d’analyse (COA) ?",
+        "a": "Oui. La pureté de chaque lot est testée. Écrivez-nous avec votre numéro de commande et nous vous enverrons le COA du lot que vous avez reçu."
+      },
+      {
+        "q": "Puis-je modifier ou annuler ma commande ?",
+        "a": "Oui, tant qu’elle n’est pas expédiée. Répondez à votre e-mail de confirmation ou écrivez-nous : {contacts}."
+      },
+      {
+        "q": "À quoi servent ces produits ?",
+        "a": "Tous les produits vendus sur ce site sont destinés exclusivement à des fins de recherche et d’identification. Ces produits ne sont pas destinés à être administrés, injectés ou ingérés chez l’être humain."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Tous droits réservés."
+  },
+  "consent": {
+    "label": "Choix des cookies",
+    "text": "Nous aimerions utiliser des cookies d’analyse (Google Analytics et Microsoft Clarity) pour voir comment cette page est utilisée et l’améliorer. Rien n’est utilisé à des fins publicitaires.",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "settings": "Paramètres des cookies"
+  },
+  "contact": {
+    "messageUs": "Écrivez-nous",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "E-mail"
+    }
+  },
+  "order": {
+    "yourOrder": "Votre commande",
+    "shipTo": "Livraison vers",
+    "pricesIn": "· prix en {currency}",
+    "chooseCountry": "Choisissez un pays",
+    "chooseCountryError": "Choisissez un pays.",
+    "pen": "Stylo",
+    "strength": "Dosage",
+    "quantity": "Quantité",
+    "discountCode": "Code de réduction",
+    "codePlaceholder": "Votre code",
+    "apply": "Appliquer",
+    "applied": "Appliqué",
+    "getCode": "Obtenir un code de −{percent} % en plus",
+    "codeApplied": "Code {code} appliqué : {percent} % de remise en plus",
+    "codeInvalid": "Ce code n’est pas valide.",
+    "codeCheckFailed": "Impossible de vérifier le code. Veuillez réessayer.",
+    "regularLine": "{quantity} × {price} prix normal",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Code {code} −{percent} %",
+    "total": "Total",
+    "youSave": "Vous économisez {price}",
+    "perks": [
+      "Pureté ≥99 %, COA pour chaque lot",
+      "Expédié sous 24 h après paiement",
+      "Paiement indiqué par e-mail, rien à payer maintenant"
+    ],
+    "title": "Où devons-nous l’envoyer ?",
+    "subtitle": "Pas de compte, pas de panier. Un court formulaire et c’est terminé.",
+    "fullName": "Nom complet",
+    "fullNameError": "Saisissez votre nom complet.",
+    "email": "E-mail",
+    "emailError": "Saisissez une adresse e-mail valide.",
+    "phone": "Téléphone",
+    "phoneCode": "Indicatif pays",
+    "phoneError": "Saisissez votre numéro de téléphone.",
+    "phonePlaceholder": "Numéro de téléphone",
+    "contactApp": "Le meilleur moyen de vous joindre",
+    "contactAppEmailOnly": "E-mail uniquement",
+    "handleHint": {
+      "whatsapp": "Numéro WhatsApp, s’il diffère de votre téléphone",
+      "telegram": "Votre nom d’utilisateur Telegram, p. ex. @nom",
+      "line": "Votre identifiant LINE"
+    },
+    "address": "Adresse",
+    "addressError": "Saisissez l’adresse.",
+    "city": "Ville",
+    "cityError": "Saisissez la ville.",
+    "postalCode": "Code postal",
+    "postalCodeError": "Saisissez le code postal.",
+    "note": "Remarque (facultatif)",
+    "researchUse": "Je confirme que ces produits sont destinés uniquement à la recherche.",
+    "researchUseError": "Veuillez confirmer l’usage pour la recherche.",
+    "placeOrder": "Commander avec obligation de paiement · {price}",
+    "confirmationNote": "Vous recevrez tout de suite un e-mail de confirmation avec les informations de paiement. Une question ? Écrivez à {email}.",
+    "genericError": "Une erreur s’est produite. Veuillez réessayer ou nous écrire.",
+    "noConnection": "Pas de connexion. Veuillez réessayer ou nous écrire.",
+    "doneTitle": "La commande {orderNumber} est réservée",
+    "doneText": "Nous avons envoyé les informations de paiement à <b>{email}</b>. Total à payer : <b>{total}</b>.",
+    "doneSpam": "Vous ne le trouvez pas ? Vérifiez vos courriers indésirables ou écrivez-nous ci-dessous.",
+    "doneButton": "Terminé"
+  },
+  "promo": {
+    "eyebrow": "Exclusivité abonnés",
+    "eyebrowReady": "Votre code est prêt",
+    "headline": "{percent} de remise en plus",
+    "onTop": "En plus des −{percent} % du {saleLabel} · jusqu’à −{best} % au total",
+    "emailedNote": "Nous vous l’avons aussi envoyé par e-mail, et il est déjà appliqué à votre bon de commande.",
+    "copyAria": "Copier le code {code}",
+    "copy": "Copier",
+    "copied": "Copié",
+    "yourCode": "Votre code : {code}",
+    "orderWithCode": "Commander avec mon code",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Meilleure vente, avec votre code",
+    "emailLabel": "Votre e-mail",
+    "emailError": "Saisissez une adresse e-mail valide.",
+    "emailPlaceholder": "nom@example.com",
+    "reveal": "Afficher mon code −{percent} %",
+    "consent": "Vous recevrez les offres VETUD par e-mail. Désinscription à tout moment.",
+    "noThanks": "Non merci",
+    "genericError": "Une erreur s’est produite. Veuillez réessayer.",
+    "noConnection": "Pas de connexion. Veuillez réessayer."
+  }
+}

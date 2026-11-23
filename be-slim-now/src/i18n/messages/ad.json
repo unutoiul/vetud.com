@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Plomes de Tirzepatide & Retatrutide · BeSlimNow",
+    "description": "Plomes de Tirzepatide (TZ-2) i Retatrutide de VETUD. 20 mg o 40 mg, puresa ≥99 % amb COA per a cada lot. Oferta de llançament: 40 % de descompte. Fes la comanda en menys d'un minut."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "DTE.",
+    "sealAria": "{saleLabel}: −{percent} %"
+  },
+  "promoBar": {
+    "sale": "−{percent} % en cada ploma",
+    "subscribe": "Subscriu-te i aconsegueix un −{percent} % extra (fins a −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, torna a dalt",
+    "navLabel": "Seccions",
+    "nav": {
+      "products": "Plomes",
+      "dualChamber": "La ploma",
+      "compare": "Compara",
+      "how": "Com comprar",
+      "faq": "Preguntes"
+    }
+  },
+  "countryPicker": {
+    "aria": "País i moneda: {country}, preus en {currency}",
+    "hint": "El teu país determina els preus i la moneda.",
+    "groupUs": "Estats Units",
+    "groupEurope": "Europa",
+    "groupOther": "Altres països · preus en USD",
+    "groupOtherTitle": "Altres països"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Ploma de Tirzepatide (TZ-2)",
+      "tagline": "Agonista dual dels receptors GIP / GLP-1",
+      "description": "L'agonista dual del qual parla tot el sector, a la ploma de precisió de VETUD. Una ploma, 12 agulles i un fullet per caixa.",
+      "badge": "Molt popular",
+      "penAlt": "Ploma VETUD Tirzepatide",
+      "gallery": [
+        {
+          "label": "Caixa",
+          "alt": "Caixa de la ploma VETUD Tirzepatide, tancada"
+        },
+        {
+          "label": "Contingut",
+          "alt": "Caixa VETUD Tirzepatide oberta: ploma, 12 agulles i fullet"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Ploma de Retatrutide",
+      "tagline": "Agonista triple GIP / GLP-1 / glucagó",
+      "description": "L'agonista triple de nova generació, a la ploma de precisió de VETUD. Una ploma, 12 agulles i un fullet per caixa.",
+      "badge": "La més venuda",
+      "penAlt": "Ploma VETUD Retatrutide",
+      "gallery": [
+        {
+          "label": "Caixa",
+          "alt": "Caixa de la ploma VETUD Retatrutide, tancada"
+        },
+        {
+          "label": "Contingut",
+          "alt": "Caixa VETUD Retatrutide oberta: ploma, 12 agulles i fullet"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % en cada ploma, en les dues concentracions",
+    "eyebrow": "VETUD Peptide Series · Les plomes que tothom demana",
+    "headlineSr": "Tirzepatide & Retatrutide en ploma, ara un {percent} % més barat.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "en",
+      "ploma,",
+      "ara"
+    ],
+    "headlineOffer": "un {percent} % més barat.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Cada ploma ve ",
+    "everyPenSr": "Cada ploma ve {list}.",
+    "everyPen": [
+      "amb puresa garantida",
+      "amb lliurament garantit",
+      "llesta per enviar avui",
+      "amb puresa ≥99 %",
+      "amb COA",
+      "embalada amb discreció"
+    ],
+    "everyPenSale": "amb un {percent} % de descompte aquesta setmana",
+    "listAnd": "i",
+    "intro": "Les dues molècules més buscades de la recerca metabòlica, segellades a la ploma de precisió de doble cambra de VETUD. 20 mg o 40 mg, puresa ≥99 %, 12 agulles a la caixa, a casa teva en pocs dies. Un sol formulari curt. Sense compte, sense cistella, sense esperes.",
+    "buyFrom": "Compra ara · des de {price}",
+    "extraCode": "Codi extra −{percent} %",
+    "guaranteedLabel": "Garantit:",
+    "guarantees": [
+      "reemborsament si un lot dona menys del 99 % de puresa",
+      "reenviament o reemborsament si el paquet es perd"
+    ],
+    "trust": [
+      "Puresa ≥99 %, verificada per HPLC",
+      "COA amb cada lot",
+      "Enviament en 24 h",
+      "Embalatge discret"
+    ],
+    "penTagFrom": "des de {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % en cada ploma",
+    "title": "Tria la teva ploma",
+    "subtitle": "Tirzepatide o Retatrutide, 20 mg o 40 mg. La mateixa puresa de laboratori, la mateixa ploma VETUD, la mateixa oferta. Tria, prem Compra ara i ja està, en menys d'un minut.",
+    "enlargeAria": "Amplia les fotos de {product}",
+    "enlarge": "Amplia",
+    "thumbAlt": "Vista: {label}",
+    "inStock": "En estoc",
+    "strengthAria": "Concentració",
+    "saleSave": "−{percent} % · estalvies {price}",
+    "perMg": "{price} per mg",
+    "bestValue": "Millor preu · estalvies un {percent} % per mg",
+    "switchTo40": "Estalvia un {percent} % per mg amb 40 mg →",
+    "features": [
+      "1 ploma + 12 agulles d'un sol ús + fullet d'instruccions",
+      "Puresa ≥99 %, COA del lot",
+      "Enviament en 24 h, embalatge discret"
+    ],
+    "subscriberCode": "Un {percent} % extra amb el teu codi de subscriptor",
+    "buy": "Compra ara · {price}",
+    "nothingToPay": "Ara no pagues res. Les dades de pagament t'arriben per correu electrònic."
+  },
+  "dualChamber": {
+    "eyebrow": "La ploma de doble cambra VETUD",
+    "title": "Feta com una ploma de farmàcia.",
+    "subtitle": "Dues cambres, un cartutx: pèptid liofilitzat a dalt, aigua BAC a baix, separats fins que els combines. Després, el cartutx encaixa a la ploma reutilitzable VETUD.",
+    "diagramAlt": "El cartutx VETUD conté pèptid liofilitzat i aigua BAC i s'encaixa al portacartutx de la ploma",
+    "enlarge": "Amplia",
+    "benefits": [
+      {
+        "title": "Segellat fins al moment de barrejar",
+        "text": "El pèptid liofilitzat és a la seva pròpia cambra, separat del líquid per un tap. Res no es degrada al prestatge i res no es barreja abans que tu vulguis."
+      },
+      {
+        "title": "Aigua BAC ja al cartutx",
+        "text": "La segona cambra conté l'aigua bacteriostàtica. Sense vials extra per comprar, sense mesurar, sense traspassar. Tot el que necessites arriba en una sola caixa."
+      },
+      {
+        "title": "Comptador precís, cos de ploma reutilitzable",
+        "text": "El cartutx encaixa a la ploma VETUD amb la seva finestreta de comptador. Et quedes la ploma i canvies el cartutx. Neta, exacta i feta per reutilitzar-se."
+      }
+    ],
+    "cta": "Vull la meva ploma",
+    "video": "Mira com funciona · 40 segons"
+  },
+  "compare": {
+    "eyebrow": "Cara a cara",
+    "title": "Quina ploma és la teva?",
+    "subtitle": "Dues molècules, una ploma, un preu per mg per comparar. Totes dues arriben amb la mateixa puresa, la mateixa caixa i la mateixa oferta.",
+    "rows": {
+      "label": {
+        "label": "Etiqueta de la ploma",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Què és",
+        "tz2": "Agonista dual: receptors GIP + GLP-1",
+        "retatrutide": "Agonista triple: receptors GIP + GLP-1 + glucagó"
+      },
+      "generation": {
+        "label": "Generació",
+        "tz2": "Generació actual · la més demanada",
+        "retatrutide": "Nova generació · la més recent"
+      },
+      "status": {
+        "label": "Fase de desenvolupament",
+        "tz2": "Molècula aprovada com a medicament",
+        "retatrutide": "En investigació, en assaigs de fase 3"
+      },
+      "strengths": {
+        "label": "Concentracions",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "A la caixa",
+        "tz2": "1 ploma · 12 agulles · fullet",
+        "retatrutide": "1 ploma · 12 agulles · fullet"
+      },
+      "purity": {
+        "label": "Puresa",
+        "tz2": "≥99 %, COA del lot",
+        "retatrutide": "≥99 %, COA del lot"
+      },
+      "dispatch": {
+        "label": "Enviament",
+        "tz2": "En 24 h després del pagament",
+        "retatrutide": "En 24 h després del pagament"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Preu per mg (40 mg)",
+    "buyProduct": "Compra {product}",
+    "buy": "Compra ara"
+  },
+  "howToOrder": {
+    "eyebrow": "Com comprar",
+    "title": "Del clic a la teva porta en quatre passos.",
+    "subtitle": "Una sola manera de comprar, pensada per ser ràpida. Sempre saps en quin punt és la teva comanda.",
+    "steps": [
+      {
+        "title": "Tria la teva ploma",
+        "text": "Tirzepatide o Retatrutide, 20 mg o 40 mg. Prem Compra ara."
+      },
+      {
+        "title": "Omple un formulari curt",
+        "text": "Nom, correu electrònic, telèfon i adreça. Sense compte, sense cistella, en menys d'un minut."
+      },
+      {
+        "title": "Rep el correu",
+        "text": "La confirmació arriba a l'instant, amb les dades de pagament i el número de comanda."
+      },
+      {
+        "title": "Enviem en 24 h",
+        "text": "Tan bon punt arriba el pagament, les teves plomes surten, embalades amb discreció i amb seguiment."
+      }
+    ],
+    "cta": "Comença la comanda"
+  },
+  "quality": {
+    "eyebrow": "Qualitat que pots comprovar",
+    "title": "Resultats de laboratori, no promeses.",
+    "subtitle": "Cada lot de VETUD s'analitza per HPLC i es documenta abans de l'enviament. Demana'ns quan vulguis el COA del lot que reps i te'l enviem.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Puresa",
+        "text": "Verificada per HPLC en cada lot"
+      },
+      {
+        "value": "COA",
+        "label": "Cada lot",
+        "text": "Certificat d'anàlisi a petició, segons el teu número de lot"
+      },
+      {
+        "value": "24 h",
+        "label": "Enviament",
+        "text": "Surt en un dia laborable després del pagament"
+      },
+      {
+        "value": "12",
+        "label": "Agulles a cada caixa",
+        "text": "Amb la ploma i un fullet d'instruccions, tot a punt"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Darrere de cada ploma",
+    "title": "Omplert net. Conservat en fred.",
+    "subtitle": "Fotos d'on s'omplen i s'emmagatzemen els productes VETUD: una línia d'omplert en sala blanca i, després, armaris refrigerats fins que surt la teva comanda.",
+    "enlarge": "Amplia",
+    "enlargeAria": "Amplia: {title}",
+    "photos": [
+      {
+        "alt": "Una persona amb bata de sala blanca, mascareta i guants porta una safata de vials tapats al costat de la màquina d'omplir",
+        "eyebrow": "Omplert",
+        "title": "Omplert en sala blanca",
+        "text": "Tapats i segellats a màquina, manipulats per personal amb equip complet, mascareta i guants."
+      },
+      {
+        "alt": "Caixes de vials etiquetats als prestatges d'un armari refrigerat amb porta de vidre",
+        "eyebrow": "Emmagatzematge",
+        "title": "Conservat en fred",
+        "text": "Cada lot, etiquetat i guardat en armaris refrigerats amb porta de vidre fins que s'envia."
+      },
+      {
+        "alt": "Una filera d'armaris refrigerats il·luminats amb porta de vidre, plens d'estoc etiquetat",
+        "eyebrow": "Estoc",
+        "title": "A punt per enviar",
+        "text": "Estoc disponible, perquè la teva comanda surti en les 24 hores posteriors al pagament."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Preguntes",
+    "title": "Les teves preguntes, respostes.",
+    "items": [
+      {
+        "q": "Com pago?",
+        "a": "En fer la comanda reps a l'instant un correu amb les dades de pagament i el número de comanda. En aquesta pàgina no es cobra res. Fes servir el número de comanda com a concepte del pagament."
+      },
+      {
+        "q": "Quant trigueu a enviar?",
+        "a": "Les comandes surten en les 24 hores posteriors al pagament (dies laborables), amb un número de seguiment per correu electrònic i, si la tries, a la teva aplicació de missatgeria."
+      },
+      {
+        "q": "Què cobreixen les vostres garanties?",
+        "a": "Dues coses. Puresa: cada lot s'analitza i, si un lot dona menys del 99 % de puresa, te'l reemborsem. Lliurament: si el paquet es perd pel camí, te'l tornem a enviar o et retornem els diners. Escriu-nos amb el número de comanda i ens n'encarreguem."
+      },
+      {
+        "q": "Què inclou la caixa?",
+        "a": "Cada caixa VETUD inclou una ploma de la concentració triada, 12 agulles d'un sol ús i un fullet d'instruccions, etiquetats amb el producte i el lot. L'embalatge exterior és neutre i discret."
+      },
+      {
+        "q": "Quina diferència hi ha entre 20 mg i 40 mg?",
+        "a": "La quantitat de pèptid a la ploma. La ploma de 40 mg costa menys per mg, per això està marcada com a Millor preu."
+      },
+      {
+        "q": "Puc obtenir el certificat d'anàlisi (COA)?",
+        "a": "Sí. Es comprova la puresa de cada lot. Escriu-nos amb el número de comanda i t'enviem el COA del lot que has rebut."
+      },
+      {
+        "q": "Puc canviar o cancel·lar la comanda?",
+        "a": "Sí, fins que s'envia. Respon al correu de confirmació o escriu-nos: {contacts}."
+      },
+      {
+        "q": "Per a què són aquests productes?",
+        "a": "Tots els productes venuts en aquest lloc web estan destinats exclusivament a finalitats de recerca i identificació. Aquests productes no estan destinats a l'administració, la injecció ni la ingestió en éssers humans."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Tots els drets reservats."
+  },
+  "consent": {
+    "label": "Elecció de galetes",
+    "text": "Ens agradaria fer servir galetes analítiques (Google Analytics i Microsoft Clarity) per veure com s'utilitza aquesta pàgina i millorar-la. No s'utilitza res per a publicitat.",
+    "accept": "Accepta",
+    "decline": "Rebutja",
+    "settings": "Configuració de galetes"
+  },
+  "contact": {
+    "messageUs": "Escriu-nos",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "Correu"
+    }
+  },
+  "order": {
+    "yourOrder": "La teva comanda",
+    "shipTo": "Envia a",
+    "pricesIn": "· preus en {currency}",
+    "chooseCountry": "Tria un país",
+    "chooseCountryError": "Tria un país.",
+    "pen": "Ploma",
+    "strength": "Concentració",
+    "quantity": "Quantitat",
+    "discountCode": "Codi de descompte",
+    "codePlaceholder": "El teu codi",
+    "apply": "Aplica",
+    "applied": "Aplicat",
+    "getCode": "Aconsegueix un codi d'un {percent} % extra",
+    "codeApplied": "Codi {code} aplicat: un {percent} % extra de descompte",
+    "codeInvalid": "Aquest codi no és vàlid.",
+    "codeCheckFailed": "No s'ha pogut comprovar el codi. Torna-ho a provar.",
+    "regularLine": "{quantity} × {price} preu normal",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Codi {code} −{percent} %",
+    "total": "Total",
+    "youSave": "Estalvies {price}",
+    "perks": [
+      "Puresa ≥99 %, COA amb cada lot",
+      "Enviament en 24 h després del pagament",
+      "Dades de pagament per correu, ara no pagues res"
+    ],
+    "title": "On te l'enviem?",
+    "subtitle": "Sense compte, sense cistella. Un formulari curt i llestos.",
+    "fullName": "Nom i cognoms",
+    "fullNameError": "Escriu el teu nom i cognoms.",
+    "email": "Correu electrònic",
+    "emailError": "Escriu un correu electrònic vàlid.",
+    "phone": "Telèfon",
+    "phoneCode": "Prefix del país",
+    "phoneError": "Escriu el teu número de telèfon.",
+    "phonePlaceholder": "Número de telèfon",
+    "contactApp": "La millor manera de contactar-te",
+    "contactAppEmailOnly": "Només correu",
+    "handleHint": {
+      "whatsapp": "Número de WhatsApp, si és diferent del teu telèfon",
+      "telegram": "El teu usuari de Telegram, p. ex. @nom",
+      "line": "El teu ID de LINE"
+    },
+    "address": "Adreça",
+    "addressError": "Escriu l'adreça.",
+    "city": "Població",
+    "cityError": "Escriu la població.",
+    "postalCode": "Codi postal",
+    "postalCodeError": "Escriu el codi postal.",
+    "note": "Nota (opcional)",
+    "researchUse": "Confirmo que aquests productes són només per a ús en recerca.",
+    "researchUseError": "Confirma l'ús en recerca.",
+    "placeOrder": "Comanda amb obligació de pagament · {price}",
+    "confirmationNote": "Rebràs a l'instant un correu de confirmació amb les dades de pagament. Dubtes? Escriu a {email}.",
+    "genericError": "Alguna cosa ha fallat. Torna-ho a provar o escriu-nos.",
+    "noConnection": "Sense connexió. Torna-ho a provar o escriu-nos.",
+    "doneTitle": "La comanda {orderNumber} està reservada",
+    "doneText": "Hem enviat les dades de pagament a <b>{email}</b>. Total a pagar: <b>{total}</b>.",
+    "doneSpam": "No el trobes? Revisa la carpeta de correu brossa o escriu-nos a sota.",
+    "doneButton": "Fet"
+  },
+  "promo": {
+    "eyebrow": "Exclusiu per a subscriptors",
+    "eyebrowReady": "El teu codi és a punt",
+    "headline": "Un {percent} extra de descompte",
+    "onTop": "A més del −{percent} % del {saleLabel} · fins a un −{best} % en total",
+    "emailedNote": "També te l'hem enviat per correu i ja està aplicat al teu formulari de comanda.",
+    "copyAria": "Copia el codi {code}",
+    "copy": "Copia",
+    "copied": "Copiat",
+    "yourCode": "El teu codi: {code}",
+    "orderWithCode": "Compra ara amb el meu codi",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "La més venuda, amb el teu codi",
+    "emailLabel": "El teu correu",
+    "emailError": "Escriu un correu electrònic vàlid.",
+    "emailPlaceholder": "nom@example.com",
+    "reveal": "Mostra el meu codi del {percent} %",
+    "consent": "Rebràs ofertes de VETUD per correu. Et pots donar de baixa quan vulguis.",
+    "noThanks": "No, gràcies",
+    "genericError": "Alguna cosa ha fallat. Torna-ho a provar.",
+    "noConnection": "Sense connexió. Torna-ho a provar."
+  }
+}

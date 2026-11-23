@@ -1,0 +1,430 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Tirzepatide- & Retatrutide-kynät · BeSlimNow",
+    "description": "VETUDin Tirzepatide (TZ-2)- ja Retatrutide-kynät. 20 mg tai 40 mg, puhtaus ≥99 % ja COA jokaiselle erälle. Lanseeraustarjous: 40 % alennus. Tilaus alle minuutissa."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "ALE",
+    "sealAria": "{saleLabel}: −{percent} %"
+  },
+  "promoBar": {
+    "sale": "−{percent} % jokaisesta kynästä",
+    "subscribe": "Tilaa uutiskirje ja saat lisäksi −{percent} % (jopa −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, takaisin ylös",
+    "navLabel": "Osiot",
+    "nav": {
+      "products": "Kynät",
+      "dualChamber": "Kynä",
+      "compare": "Vertailu",
+      "how": "Näin tilaat",
+      "faq": "UKK"
+    }
+  },
+  "countryPicker": {
+    "aria": "Maa ja valuutta: {country}, hinnat valuutassa {currency}",
+    "hint": "Maasi määrää hinnat ja valuutan.",
+    "groupUs": "Yhdysvallat",
+    "groupEurope": "Eurooppa",
+    "groupOther": "Muut maat · hinnat USD:nä",
+    "groupOtherTitle": "Muut maat"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Tirzepatide (TZ-2) -kynä",
+      "tagline": "Kaksoisvaikutteinen GIP-/GLP-1-reseptoriagonisti",
+      "description": "Kaksoisagonisti, josta koko ala puhuu, VETUDin tarkkuuskynässä. Yksi kynä, 12 neulaa ja käyttöohje jokaisessa pakkauksessa.",
+      "badge": "Erittäin suosittu",
+      "penAlt": "VETUD Tirzepatide -kynä",
+      "gallery": [
+        {
+          "label": "Pakkaus",
+          "alt": "VETUD Tirzepatide -kynän pakkaus, suljettu"
+        },
+        {
+          "label": "Sisältö",
+          "alt": "Avattu VETUD Tirzepatide -pakkaus: kynä, 12 neulaa ja käyttöohje"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Retatrutide-kynä",
+      "tagline": "Kolmoisvaikutteinen GIP-/GLP-1-/glukagoniagonisti",
+      "description": "Seuraavan sukupolven kolmoisagonisti VETUDin tarkkuuskynässä. Yksi kynä, 12 neulaa ja käyttöohje jokaisessa pakkauksessa.",
+      "badge": "Myydyin",
+      "penAlt": "VETUD Retatrutide -kynä",
+      "gallery": [
+        {
+          "label": "Pakkaus",
+          "alt": "VETUD Retatrutide -kynän pakkaus, suljettu"
+        },
+        {
+          "label": "Sisältö",
+          "alt": "Avattu VETUD Retatrutide -pakkaus: kynä, 12 neulaa ja käyttöohje"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % jokaisesta kynästä, molemmat vahvuudet",
+    "eyebrow": "VETUD Peptide Series · Kynät, joita kaikki kysyvät",
+    "headlineSr": "Tirzepatide & Retatrutide kynänä, nyt {percent} % edullisemmin.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "kynänä,",
+      "nyt"
+    ],
+    "headlineOffer": "{percent} % edullisemmin.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Jokainen kynä on ",
+    "everyPenSr": "Jokainen kynä on {list}.",
+    "everyPen": [
+      "puhtaudeltaan taattu",
+      "toimitukseltaan taattu",
+      "valmis lähtemään tänään",
+      "≥99 % puhdas",
+      "COA:lla todennettu",
+      "pakattu huomaamattomasti"
+    ],
+    "everyPenSale": "tällä viikolla {percent} % edullisempi",
+    "listAnd": "ja",
+    "intro": "Aineenvaihduntatutkimuksen kaksi halutuinta molekyyliä suljettuna VETUDin kaksikammioiseen tarkkuuskynään. 20 mg tai 40 mg, puhtaus ≥99 %, 12 neulaa pakkauksessa, perillä muutamassa päivässä. Yksi lyhyt lomake. Ei tiliä, ei ostoskoria, ei odottelua.",
+    "buyFrom": "Osta nyt · alkaen {price}",
+    "extraCode": "Lisäkoodi −{percent} %",
+    "guaranteedLabel": "Taattu:",
+    "guarantees": [
+      "rahat takaisin, jos erän puhtaus on alle 99 %",
+      "uusi lähetys tai rahat takaisin, jos paketti katoaa"
+    ],
+    "trust": [
+      "Puhtaus ≥99 %, HPLC-varmennettu",
+      "COA jokaiselle erälle",
+      "Lähtee 24 tunnissa",
+      "Huomaamaton pakkaus"
+    ],
+    "penTagFrom": "alkaen {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % jokaisesta kynästä",
+    "title": "Valitse kynäsi",
+    "subtitle": "Tirzepatide tai Retatrutide, 20 mg tai 40 mg. Sama laboratoriotason puhtaus, sama VETUD-kynä, sama tarjous. Valitse, paina Osta nyt, ja olet valmis alle minuutissa.",
+    "enlargeAria": "Suurenna kuvia: {product}",
+    "enlarge": "Suurenna",
+    "thumbAlt": "Näkymä: {label}",
+    "inStock": "Varastossa",
+    "strengthAria": "Vahvuus",
+    "saleSave": "−{percent} % · säästät {price}",
+    "perMg": "{price} / mg",
+    "bestValue": "Paras hinta · {percent} % edullisempi milligrammalta",
+    "switchTo40": "Säästä {percent} % milligrammalta 40 mg:n kynällä →",
+    "features": [
+      "1 kynä + 12 kertakäyttöneulaa + käyttöohje",
+      "Puhtaus ≥99 %, erän COA",
+      "Lähtee 24 tunnissa, huomaamaton pakkaus"
+    ],
+    "subscriberCode": "Lisäksi {percent} % alennus tilaajakoodillasi",
+    "buy": "Osta nyt · {price}",
+    "nothingToPay": "Nyt ei makseta mitään. Maksutiedot tulevat sähköpostiin."
+  },
+  "dualChamber": {
+    "eyebrow": "VETUDin kaksikammioinen kynä",
+    "title": "Rakennettu kuin apteekin kynä.",
+    "subtitle": "Kaksi kammiota, yksi ampulli: ylhäällä pakastekuivattu peptidi, alhaalla BAC-vesi, erillään kunnes yhdistät ne. Sen jälkeen ampulli napsahtaa uudelleenkäytettävään VETUD-kynään.",
+    "diagramAlt": "VETUD-ampulli sisältää pakastekuivattua peptidiä ja BAC-vettä, ja se asettuu kynän ampullipitimeen",
+    "enlarge": "Suurenna",
+    "benefits": [
+      {
+        "title": "Suljettu sekoitushetkeen asti",
+        "text": "Pakastekuivattu peptidi on omassa kammiossaan, tulpalla erotettuna nesteestä. Mikään ei pilaannu hyllyssä, eikä mitään sekoiteta ennen kuin itse haluat."
+      },
+      {
+        "title": "BAC-vesi valmiina ampullissa",
+        "text": "Toisessa kammiossa on bakteriostaattinen vesi. Ei ylimääräisiä pulloja ostettavaksi, ei mittaamista, ei siirtämistä. Kaikki tarvittava tulee yhdessä pakkauksessa."
+      },
+      {
+        "title": "Tarkka laskuri, uudelleenkäytettävä kynärunko",
+        "text": "Ampulli napsahtaa VETUD-kynään, jossa on laskurin ikkuna. Kynä jää, ampulli vaihtuu. Siisti, tarkka ja tehty käytettäväksi uudelleen."
+      }
+    ],
+    "cta": "Haluan kynäni",
+    "video": "Katso, miten se toimii · 40 sekuntia"
+  },
+  "compare": {
+    "eyebrow": "Rinnakkain",
+    "title": "Kumpi kynä sopii sinulle?",
+    "subtitle": "Kaksi molekyyliä, yksi kynä, yksi milligrammahinta vertailtavaksi. Molemmilla on sama puhtaus, sama pakkaus ja sama tarjous.",
+    "rows": {
+      "label": {
+        "label": "Merkintä kynässä",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Mikä se on",
+        "tz2": "Kaksoisagonisti: GIP- + GLP-1-reseptorit",
+        "retatrutide": "Kolmoisagonisti: GIP- + GLP-1- + glukagonireseptorit"
+      },
+      "generation": {
+        "label": "Sukupolvi",
+        "tz2": "Nykyinen sukupolvi · kysytyin",
+        "retatrutide": "Seuraava sukupolvi · uusin"
+      },
+      "status": {
+        "label": "Kehitysvaihe",
+        "tz2": "Lääkkeeksi hyväksytty molekyyli",
+        "retatrutide": "Tutkimusvaiheessa, vaiheen 3 tutkimuksissa"
+      },
+      "strengths": {
+        "label": "Vahvuudet",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "Pakkauksessa",
+        "tz2": "1 kynä · 12 neulaa · käyttöohje",
+        "retatrutide": "1 kynä · 12 neulaa · käyttöohje"
+      },
+      "purity": {
+        "label": "Puhtaus",
+        "tz2": "≥99 %, erän COA",
+        "retatrutide": "≥99 %, erän COA"
+      },
+      "dispatch": {
+        "label": "Lähetys",
+        "tz2": "24 tunnin kuluessa maksusta",
+        "retatrutide": "24 tunnin kuluessa maksusta"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Hinta / mg (40 mg)",
+    "buyProduct": "Osta {product}",
+    "buy": "Osta nyt"
+  },
+  "howToOrder": {
+    "eyebrow": "Näin tilaat",
+    "title": "Klikkauksesta ovelle neljässä vaiheessa.",
+    "subtitle": "Yksi tilaustapa, suunniteltu nopeaksi. Tiedät aina, missä tilauksesi menee.",
+    "steps": [
+      {
+        "title": "Valitse kynäsi",
+        "text": "Tirzepatide tai Retatrutide, 20 mg tai 40 mg. Paina Osta nyt."
+      },
+      {
+        "title": "Täytä lyhyt lomake",
+        "text": "Nimi, sähköposti, puhelin ja osoite. Ei tiliä, ei ostoskoria, alle minuutissa."
+      },
+      {
+        "title": "Saat sähköpostin",
+        "text": "Vahvistus tulee heti, ja siinä ovat maksutiedot ja tilausnumerosi."
+      },
+      {
+        "title": "Lähetämme 24 tunnissa",
+        "text": "Heti kun maksu on tullut, kynäsi lähtevät matkaan huomaamattomasti pakattuina ja seurantakoodin kanssa."
+      }
+    ],
+    "cta": "Aloita tilaus"
+  },
+  "quality": {
+    "eyebrow": "Laatu, jonka voit tarkistaa",
+    "title": "Laboratoriotuloksia, ei lupauksia.",
+    "subtitle": "Jokainen VETUD-erä testataan HPLC:llä ja dokumentoidaan ennen lähetystä. Pyydä meiltä milloin tahansa saamasi erän COA, niin lähetämme sen.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Puhtaus",
+        "text": "HPLC-varmennettu jokaisesta erästä"
+      },
+      {
+        "value": "COA",
+        "label": "Jokainen erä",
+        "text": "Analyysitodistus pyynnöstä, eränumerosi mukaan"
+      },
+      {
+        "value": "24 h",
+        "label": "Lähetys",
+        "text": "Lähtee yhden arkipäivän kuluessa maksusta"
+      },
+      {
+        "value": "12",
+        "label": "Neulaa joka pakkauksessa",
+        "text": "Kynän ja käyttöohjeen kanssa, kaikki valmiina"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Jokaisen kynän takana",
+    "title": "Puhtaasti täytetty. Kylmässä säilytetty.",
+    "subtitle": "Kuvia paikoista, joissa VETUD-tuotteet täytetään ja varastoidaan: puhdastilan täyttölinja ja sen jälkeen kylmäkaapit, kunnes tilauksesi lähtee.",
+    "enlarge": "Suurenna",
+    "enlargeAria": "Suurenna: {title}",
+    "photos": [
+      {
+        "alt": "Puhdastilavaatteisiin, maskiin ja käsineisiin pukeutunut työntekijä kantaa tarjottimellista suljettuja pulloja täyttökoneen ohi",
+        "eyebrow": "Täyttö",
+        "title": "Täytetty puhdastilassa",
+        "text": "Koneellisesti tulpattu ja suljettu, käsittelijöinä henkilökunta täysissä suojavaatteissa, maskeissa ja käsineissä."
+      },
+      {
+        "alt": "Merkittyjä pullolaatikoita lasiovisen kylmäkaapin hyllyillä",
+        "eyebrow": "Varastointi",
+        "title": "Säilytetty kylmässä",
+        "text": "Jokainen erä merkitään ja säilytetään lasiovisissa kylmäkaapeissa lähetykseen asti."
+      },
+      {
+        "alt": "Rivi valaistuja lasiovisia kylmäkaappeja täynnä merkittyä varastoa",
+        "eyebrow": "Varasto",
+        "title": "Valmiina lähtöön",
+        "text": "Tuotteet varastossa, joten tilauksesi lähtee 24 tunnin kuluessa maksusta."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "UKK",
+    "title": "Kysymykset ja vastaukset.",
+    "items": [
+      {
+        "q": "Miten maksan?",
+        "a": "Tilauksen jälkeen saat heti sähköpostin, jossa ovat maksutiedot ja tilausnumerosi. Tällä sivulla ei veloiteta mitään. Käytä tilausnumeroa maksun viitteenä."
+      },
+      {
+        "q": "Kuinka nopeasti lähetätte?",
+        "a": "Tilaukset lähtevät 24 tunnin kuluessa maksusta (arkipäivisin), ja seurantanumero lähetetään sähköpostiin ja, jos valitsit niin, viestisovellukseesi."
+      },
+      {
+        "q": "Mitä takuunne kattavat?",
+        "a": "Kaksi asiaa. Puhtaus: jokainen erä testataan, ja jos erän puhtaus on alle 99 %, palautamme rahat. Toimitus: jos paketti katoaa matkalla, lähetämme uuden tai palautamme rahat. Kirjoita meille tilausnumerosi kanssa, niin hoidamme asian."
+      },
+      {
+        "q": "Mitä pakkauksessa on?",
+        "a": "Jokaisessa VETUD-pakkauksessa on yksi valitsemasi vahvuinen kynä, 12 kertakäyttöneulaa ja käyttöohje, merkittynä tuotteella ja erällä. Ulkopakkaus on neutraali ja huomaamaton."
+      },
+      {
+        "q": "Mikä ero on 20 mg:n ja 40 mg:n välillä?",
+        "a": "Kynän sisältämän peptidin määrä. 40 mg:n kynä on milligrammaa kohden edullisempi, ja siksi se on merkitty Paras hinta."
+      },
+      {
+        "q": "Saanko analyysitodistuksen (COA)?",
+        "a": "Kyllä. Jokaisen erän puhtaus testataan. Kirjoita meille tilausnumerosi kanssa, niin lähetämme saamasi erän COA:n."
+      },
+      {
+        "q": "Voinko muuttaa tai perua tilaukseni?",
+        "a": "Kyllä, kunnes se on lähetetty. Vastaa vahvistussähköpostiin tai kirjoita meille: {contacts}."
+      },
+      {
+        "q": "Mihin nämä tuotteet on tarkoitettu?",
+        "a": "Kaikki tällä verkkosivustolla myytävät tuotteet on tarkoitettu ainoastaan tutkimus- ja tunnistustarkoituksiin. Tuotteita ei ole tarkoitettu ihmisille annosteltaviksi, injektoitaviksi tai nieltäviksi."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Kaikki oikeudet pidätetään."
+  },
+  "consent": {
+    "label": "Evästevalinta",
+    "text": "Haluaisimme käyttää analytiikkaevästeitä (Google Analytics ja Microsoft Clarity) nähdäksemme, miten tätä sivua käytetään, ja parantaaksemme sitä. Mitään ei käytetä mainontaan.",
+    "accept": "Hyväksy",
+    "decline": "Hylkää",
+    "settings": "Evästeasetukset"
+  },
+  "contact": {
+    "messageUs": "Lähetä viesti",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "Sähköposti"
+    }
+  },
+  "order": {
+    "yourOrder": "Tilauksesi",
+    "shipTo": "Toimitusmaa",
+    "pricesIn": "· hinnat valuutassa {currency}",
+    "chooseCountry": "Valitse maa",
+    "chooseCountryError": "Valitse maa.",
+    "pen": "Kynä",
+    "strength": "Vahvuus",
+    "quantity": "Määrä",
+    "discountCode": "Alennuskoodi",
+    "codePlaceholder": "Koodisi",
+    "apply": "Käytä",
+    "applied": "Käytössä",
+    "getCode": "Hanki koodi {percent} %:n lisäalennukseen",
+    "codeApplied": "Koodi {code} käytössä: {percent} % lisäalennus",
+    "codeInvalid": "Koodi ei ole voimassa.",
+    "codeCheckFailed": "Koodia ei voitu tarkistaa. Yritä uudelleen.",
+    "regularLine": "{quantity} × {price} normaalihinta",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Koodi {code} −{percent} %",
+    "total": "Yhteensä",
+    "youSave": "Säästät {price}",
+    "perks": [
+      "Puhtaus ≥99 %, COA jokaiselle erälle",
+      "Lähtee 24 tunnissa maksusta",
+      "Maksutiedot sähköpostiin, nyt ei makseta mitään"
+    ],
+    "title": "Minne lähetämme sen?",
+    "subtitle": "Ei tiliä, ei ostoskoria. Yksi lyhyt lomake, ja valmista.",
+    "fullName": "Koko nimi",
+    "fullNameError": "Anna koko nimesi.",
+    "email": "Sähköposti",
+    "emailError": "Anna kelvollinen sähköpostiosoite.",
+    "phone": "Puhelin",
+    "phoneCode": "Maatunnus",
+    "phoneError": "Anna puhelinnumerosi.",
+    "phonePlaceholder": "Puhelinnumero",
+    "contactApp": "Paras tapa tavoittaa sinut",
+    "contactAppEmailOnly": "Vain sähköposti",
+    "handleHint": {
+      "whatsapp": "WhatsApp-numero, jos eri kuin puhelinnumerosi",
+      "telegram": "Telegram-käyttäjänimesi, esim. @nimi",
+      "line": "LINE-tunnuksesi"
+    },
+    "address": "Katuosoite",
+    "addressError": "Anna katuosoite.",
+    "city": "Paikkakunta",
+    "cityError": "Anna paikkakunta.",
+    "postalCode": "Postinumero",
+    "postalCodeError": "Anna postinumero.",
+    "note": "Lisätietoja (valinnainen)",
+    "researchUse": "Vahvistan, että tuotteet ovat vain tutkimuskäyttöön.",
+    "researchUseError": "Vahvista tutkimuskäyttö.",
+    "placeOrder": "Tilaa maksuvelvollisena · {price}",
+    "confirmationNote": "Saat heti vahvistussähköpostin, jossa ovat maksutiedot. Kysyttävää? Kirjoita osoitteeseen {email}.",
+    "genericError": "Jokin meni pieleen. Yritä uudelleen tai lähetä meille viesti.",
+    "noConnection": "Ei yhteyttä. Yritä uudelleen tai lähetä meille viesti.",
+    "doneTitle": "Tilaus {orderNumber} on varattu",
+    "doneText": "Lähetimme maksutiedot osoitteeseen <b>{email}</b>. Maksettavaa: <b>{total}</b>.",
+    "doneSpam": "Etkö löydä sitä? Tarkista roskapostikansio tai lähetä meille viesti alla.",
+    "doneButton": "Valmis"
+  },
+  "promo": {
+    "eyebrow": "Vain tilaajille",
+    "eyebrowReady": "Koodisi on valmis",
+    "headline": "Lisäksi {percent} alennusta",
+    "onTop": "{saleLabel}-alennuksen {percent} % lisäksi · yhteensä jopa {best} %",
+    "emailedNote": "Lähetimme sen myös sähköpostiisi, ja se on jo lisätty tilauslomakkeeseesi.",
+    "copyAria": "Kopioi koodi {code}",
+    "copy": "Kopioi",
+    "copied": "Kopioitu",
+    "yourCode": "Koodisi: {code}",
+    "orderWithCode": "Tilaa nyt koodillani",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Myydyin, koodillasi",
+    "emailLabel": "Sähköpostisi",
+    "emailError": "Anna kelvollinen sähköpostiosoite.",
+    "emailPlaceholder": "nimi@example.com",
+    "reveal": "Näytä {percent} %:n koodini",
+    "consent": "Saat VETUDin tarjouksia sähköpostiin. Voit perua tilauksen milloin tahansa.",
+    "noThanks": "Ei kiitos",
+    "genericError": "Jokin meni pieleen. Yritä uudelleen.",
+    "noConnection": "Ei yhteyttä. Yritä uudelleen."
+  }
+}

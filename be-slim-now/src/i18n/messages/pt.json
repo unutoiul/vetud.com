@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent}% · Canetas Tirzepatide & Retatrutide · BeSlimNow",
+    "description": "Canetas de Tirzepatide (TZ-2) e Retatrutide da VETUD. 20 mg ou 40 mg, pureza ≥99% com COA para cada lote. Oferta de lançamento: 40% de desconto. Encomende em menos de um minuto."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "DESC.",
+    "sealAria": "{saleLabel}: −{percent}%"
+  },
+  "promoBar": {
+    "sale": "−{percent}% em cada caneta",
+    "subscribe": "Subscreva e ganhe mais −{percent}% (até −{best}%)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, voltar ao topo",
+    "navLabel": "Secções",
+    "nav": {
+      "products": "Canetas",
+      "dualChamber": "A caneta",
+      "compare": "Comparar",
+      "how": "Como encomendar",
+      "faq": "FAQ"
+    }
+  },
+  "countryPicker": {
+    "aria": "País e moeda: {country}, preços em {currency}",
+    "hint": "O seu país define os preços e a moeda.",
+    "groupUs": "Estados Unidos",
+    "groupEurope": "Europa",
+    "groupOther": "Outros países · preços em USD",
+    "groupOtherTitle": "Outros países"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Caneta Tirzepatide (TZ-2)",
+      "tagline": "Agonista duplo dos recetores GIP / GLP-1",
+      "description": "O agonista duplo de que toda a área fala, na caneta de precisão da VETUD. Uma caneta, 12 agulhas e um folheto por caixa.",
+      "badge": "Muito procurada",
+      "penAlt": "Caneta VETUD Tirzepatide",
+      "gallery": [
+        {
+          "label": "Caixa",
+          "alt": "Caixa da caneta VETUD Tirzepatide, fechada"
+        },
+        {
+          "label": "Interior",
+          "alt": "Caixa VETUD Tirzepatide aberta: caneta, 12 agulhas e folheto"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Caneta Retatrutide",
+      "tagline": "Agonista triplo GIP / GLP-1 / glucagon",
+      "description": "O agonista triplo de nova geração, na caneta de precisão da VETUD. Uma caneta, 12 agulhas e um folheto por caixa.",
+      "badge": "Mais vendida",
+      "penAlt": "Caneta VETUD Retatrutide",
+      "gallery": [
+        {
+          "label": "Caixa",
+          "alt": "Caixa da caneta VETUD Retatrutide, fechada"
+        },
+        {
+          "label": "Interior",
+          "alt": "Caixa VETUD Retatrutide aberta: caneta, 12 agulhas e folheto"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent}% em cada caneta, nas duas concentrações",
+    "eyebrow": "VETUD Peptide Series · As canetas que todos procuram",
+    "headlineSr": "Tirzepatide & Retatrutide em caneta, agora com −{percent}%.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "em",
+      "caneta,",
+      "agora"
+    ],
+    "headlineOffer": "com −{percent}%.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Cada caneta tem ",
+    "everyPenSr": "Cada caneta tem {list}.",
+    "everyPen": [
+      "pureza garantida",
+      "entrega garantida",
+      "envio pronto para hoje",
+      "pureza ≥99%",
+      "COA",
+      "embalagem discreta"
+    ],
+    "everyPenSale": "−{percent}% esta semana",
+    "listAnd": "e",
+    "intro": "As duas moléculas mais procuradas da investigação metabólica, seladas na caneta de precisão de dupla câmara da VETUD. 20 mg ou 40 mg, pureza ≥99%, 12 agulhas na caixa, em sua casa em poucos dias. Um só formulário curto. Sem conta, sem carrinho, sem esperas.",
+    "buyFrom": "Comprar agora · desde {price}",
+    "extraCode": "Código extra −{percent}%",
+    "guaranteedLabel": "Garantido:",
+    "guarantees": [
+      "reembolso se um lote tiver menos de 99% de pureza",
+      "reenvio ou reembolso se a encomenda se perder"
+    ],
+    "trust": [
+      "Pureza ≥99%, verificada por HPLC",
+      "COA com cada lote",
+      "Envio em 24 h",
+      "Embalagem discreta"
+    ],
+    "penTagFrom": "desde {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent}% em cada caneta",
+    "title": "Escolha a sua caneta",
+    "subtitle": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg. A mesma pureza de laboratório, a mesma caneta VETUD, a mesma oferta. Escolha, carregue em Comprar agora e fica feito em menos de um minuto.",
+    "enlargeAria": "Ampliar as fotos de {product}",
+    "enlarge": "Ampliar",
+    "thumbAlt": "Vista: {label}",
+    "inStock": "Em stock",
+    "strengthAria": "Concentração",
+    "saleSave": "−{percent}% · poupa {price}",
+    "perMg": "{price} por mg",
+    "bestValue": "Melhor preço · poupa {percent}% por mg",
+    "switchTo40": "Poupe {percent}% por mg com 40 mg →",
+    "features": [
+      "1 caneta + 12 agulhas descartáveis + folheto de instruções",
+      "Pureza ≥99%, COA do lote",
+      "Envio em 24 h, embalagem discreta"
+    ],
+    "subscriberCode": "Mais {percent}% de desconto com o seu código de subscritor",
+    "buy": "Comprar agora · {price}",
+    "nothingToPay": "Nada a pagar agora. Os dados de pagamento chegam por email."
+  },
+  "dualChamber": {
+    "eyebrow": "A caneta de dupla câmara VETUD",
+    "title": "Construída como uma caneta de farmácia.",
+    "subtitle": "Duas câmaras, um cartucho: péptido liofilizado em cima, água BAC em baixo, separados até os juntar. Depois, o cartucho encaixa na caneta reutilizável VETUD.",
+    "diagramAlt": "O cartucho VETUD contém péptido liofilizado e água BAC e fica no porta-cartucho da caneta",
+    "enlarge": "Ampliar",
+    "benefits": [
+      {
+        "title": "Selado até ao momento de misturar",
+        "text": "O péptido liofilizado fica na sua própria câmara, separado do líquido por uma rolha. Nada se degrada na prateleira, nada se mistura antes de o querer."
+      },
+      {
+        "title": "Água BAC já no cartucho",
+        "text": "A segunda câmara contém a água bacteriostática. Sem frascos extra para comprar, sem medições, sem transferências. Tudo o que precisa chega numa só caixa."
+      },
+      {
+        "title": "Contador preciso, corpo de caneta reutilizável",
+        "text": "O cartucho encaixa na caneta VETUD com a sua janela de contador. Fique com a caneta, troque o cartucho. Limpa, exata e feita para voltar a usar."
+      }
+    ],
+    "cta": "Quero a minha caneta",
+    "video": "Veja como funciona · 40 segundos"
+  },
+  "compare": {
+    "eyebrow": "Lado a lado",
+    "title": "Qual é a sua caneta?",
+    "subtitle": "Duas moléculas, uma caneta, um preço por mg para comparar. Ambas chegam com a mesma pureza, a mesma caixa e a mesma oferta.",
+    "rows": {
+      "label": {
+        "label": "Rótulo da caneta",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "O que é",
+        "tz2": "Agonista duplo: recetores GIP + GLP-1",
+        "retatrutide": "Agonista triplo: recetores GIP + GLP-1 + glucagon"
+      },
+      "generation": {
+        "label": "Geração",
+        "tz2": "Geração atual · a mais pedida",
+        "retatrutide": "Nova geração · a mais recente"
+      },
+      "status": {
+        "label": "Fase de desenvolvimento",
+        "tz2": "Molécula aprovada como medicamento",
+        "retatrutide": "Em investigação, em ensaios de fase 3"
+      },
+      "strengths": {
+        "label": "Concentrações",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "Na caixa",
+        "tz2": "1 caneta · 12 agulhas · folheto",
+        "retatrutide": "1 caneta · 12 agulhas · folheto"
+      },
+      "purity": {
+        "label": "Pureza",
+        "tz2": "≥99%, COA do lote",
+        "retatrutide": "≥99%, COA do lote"
+      },
+      "dispatch": {
+        "label": "Envio",
+        "tz2": "Em 24 h após o pagamento",
+        "retatrutide": "Em 24 h após o pagamento"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent}%",
+    "perMgRow": "Preço por mg (40 mg)",
+    "buyProduct": "Comprar {product}",
+    "buy": "Comprar agora"
+  },
+  "howToOrder": {
+    "eyebrow": "Como encomendar",
+    "title": "Do clique à sua porta em quatro passos.",
+    "subtitle": "Uma só forma de encomendar, pensada para ser rápida. Sabe sempre em que ponto está a sua encomenda.",
+    "steps": [
+      {
+        "title": "Escolha a sua caneta",
+        "text": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg. Carregue em Comprar agora."
+      },
+      {
+        "title": "Preencha um formulário curto",
+        "text": "Nome, email, telefone e morada. Sem conta, sem carrinho, em menos de um minuto."
+      },
+      {
+        "title": "Receba o email",
+        "text": "A confirmação chega de imediato, com os dados de pagamento e o número da encomenda."
+      },
+      {
+        "title": "Enviamos em 24 h",
+        "text": "Assim que o pagamento chega, as suas canetas seguem, em embalagem discreta e com seguimento."
+      }
+    ],
+    "cta": "Começar a minha encomenda"
+  },
+  "quality": {
+    "eyebrow": "Qualidade que pode verificar",
+    "title": "Resultados de laboratório, não promessas.",
+    "subtitle": "Cada lote VETUD é testado por HPLC e documentado antes do envio. Peça-nos a qualquer momento o COA do lote que recebe e enviamos-lho.",
+    "stats": [
+      {
+        "value": "≥99%",
+        "label": "Pureza",
+        "text": "Verificada por HPLC em cada lote"
+      },
+      {
+        "value": "COA",
+        "label": "Cada lote",
+        "text": "Certificado de análise a pedido, correspondente ao número do seu lote"
+      },
+      {
+        "value": "24 h",
+        "label": "Envio",
+        "text": "Enviado até um dia útil após o pagamento"
+      },
+      {
+        "value": "12",
+        "label": "Agulhas em cada caixa",
+        "text": "Com a caneta e um folheto de instruções, tudo pronto"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Por trás de cada caneta",
+    "title": "Enchimento limpo. Conservação a frio.",
+    "subtitle": "Fotos de onde os produtos VETUD são enchidos e armazenados: uma linha de enchimento em sala limpa e, depois, armários refrigerados até a sua encomenda seguir.",
+    "enlarge": "Ampliar",
+    "enlargeAria": "Ampliar: {title}",
+    "photos": [
+      {
+        "alt": "Uma pessoa com bata de sala limpa, máscara e luvas transporta um tabuleiro de frascos fechados junto à máquina de enchimento",
+        "eyebrow": "Enchimento",
+        "title": "Enchido em sala limpa",
+        "text": "Rolhados e selados à máquina, manuseados por pessoal com equipamento completo, máscara e luvas."
+      },
+      {
+        "alt": "Caixas de frascos etiquetados nas prateleiras de um armário refrigerado com porta de vidro",
+        "eyebrow": "Armazenamento",
+        "title": "Conservado no frio",
+        "text": "Cada lote etiquetado e guardado em armários refrigerados com porta de vidro até ser enviado."
+      },
+      {
+        "alt": "Uma fila de armários refrigerados iluminados com porta de vidro, cheios de stock etiquetado",
+        "eyebrow": "Stock",
+        "title": "Pronto a enviar",
+        "text": "Stock disponível, para que a sua encomenda saia nas 24 horas seguintes ao pagamento."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "As suas perguntas, respondidas.",
+    "items": [
+      {
+        "q": "Como pago?",
+        "a": "Depois de fazer a encomenda, recebe de imediato um email com os dados de pagamento e o número da encomenda. Nada é cobrado nesta página. Use o número da encomenda como referência do pagamento."
+      },
+      {
+        "q": "Com que rapidez enviam?",
+        "a": "As encomendas seguem nas 24 horas seguintes ao pagamento (dias úteis), com um número de seguimento enviado por email e, se o escolheu, pela sua app de mensagens."
+      },
+      {
+        "q": "O que cobrem as vossas garantias?",
+        "a": "Duas coisas. Pureza: cada lote é testado e, se um lote tiver menos de 99% de pureza, reembolsamo-lo. Entrega: se a sua encomenda se perder pelo caminho, reenviamo-la ou devolvemos o dinheiro. Envie-nos uma mensagem com o número da encomenda e tratamos do assunto."
+      },
+      {
+        "q": "O que vem na caixa?",
+        "a": "Cada caixa VETUD contém uma caneta na concentração escolhida, 12 agulhas descartáveis e um folheto de instruções, com rótulo do produto e do lote. A embalagem exterior é simples e discreta."
+      },
+      {
+        "q": "Qual é a diferença entre 20 mg e 40 mg?",
+        "a": "A quantidade de péptido na caneta. A caneta de 40 mg custa menos por mg, por isso está assinalada como Melhor preço."
+      },
+      {
+        "q": "Posso obter o certificado de análise (COA)?",
+        "a": "Sim. A pureza de cada lote é testada. Envie-nos uma mensagem com o número da encomenda e enviamos-lhe o COA do lote que recebeu."
+      },
+      {
+        "q": "Posso alterar ou cancelar a encomenda?",
+        "a": "Sim, até ser enviada. Responda ao email de confirmação ou envie-nos uma mensagem: {contacts}."
+      },
+      {
+        "q": "Para que servem estes produtos?",
+        "a": "Todos os produtos vendidos neste site destinam-se exclusivamente a fins de investigação e identificação. Estes produtos não se destinam a administração, injeção ou ingestão em seres humanos."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Todos os direitos reservados."
+  },
+  "consent": {
+    "label": "Escolha de cookies",
+    "text": "Gostaríamos de utilizar cookies de análise (Google Analytics e Microsoft Clarity) para ver como esta página é utilizada e melhorá-la. Nada é utilizado para publicidade.",
+    "accept": "Aceitar",
+    "decline": "Recusar",
+    "settings": "Definições de cookies"
+  },
+  "contact": {
+    "messageUs": "Envie-nos uma mensagem",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "Email"
+    }
+  },
+  "order": {
+    "yourOrder": "A sua encomenda",
+    "shipTo": "Enviar para",
+    "pricesIn": "· preços em {currency}",
+    "chooseCountry": "Escolha um país",
+    "chooseCountryError": "Escolha um país.",
+    "pen": "Caneta",
+    "strength": "Concentração",
+    "quantity": "Quantidade",
+    "discountCode": "Código de desconto",
+    "codePlaceholder": "O seu código",
+    "apply": "Aplicar",
+    "applied": "Aplicado",
+    "getCode": "Obtenha um código com mais {percent}%",
+    "codeApplied": "Código {code} aplicado: mais {percent}% de desconto",
+    "codeInvalid": "Esse código não é válido.",
+    "codeCheckFailed": "Não foi possível verificar o código. Tente novamente.",
+    "regularLine": "{quantity} × {price} preço normal",
+    "saleLine": "{saleLabel} −{percent}%",
+    "codeLine": "Código {code} −{percent}%",
+    "total": "Total",
+    "youSave": "Poupa {price}",
+    "perks": [
+      "Pureza ≥99%, COA com cada lote",
+      "Envio em 24 h após o pagamento",
+      "Dados de pagamento por email, nada a pagar agora"
+    ],
+    "title": "Para onde enviamos?",
+    "subtitle": "Sem conta, sem carrinho. Um formulário curto e está feito.",
+    "fullName": "Nome completo",
+    "fullNameError": "Introduza o seu nome completo.",
+    "email": "Email",
+    "emailError": "Introduza um email válido.",
+    "phone": "Telefone",
+    "phoneCode": "Indicativo do país",
+    "phoneError": "Introduza o seu número de telefone.",
+    "phonePlaceholder": "Número de telefone",
+    "contactApp": "A melhor forma de o contactar",
+    "contactAppEmailOnly": "Só email",
+    "handleHint": {
+      "whatsapp": "Número de WhatsApp, se for diferente do telefone",
+      "telegram": "O seu nome de utilizador do Telegram, p. ex. @nome",
+      "line": "O seu ID do LINE"
+    },
+    "address": "Morada",
+    "addressError": "Introduza a morada.",
+    "city": "Localidade",
+    "cityError": "Introduza a localidade.",
+    "postalCode": "Código postal",
+    "postalCodeError": "Introduza o código postal.",
+    "note": "Nota (opcional)",
+    "researchUse": "Confirmo que estes produtos se destinam apenas a investigação.",
+    "researchUseError": "Confirme a utilização para investigação.",
+    "placeOrder": "Encomenda com obrigação de pagamento · {price}",
+    "confirmationNote": "Vai receber de imediato um email de confirmação com os dados de pagamento. Dúvidas? Escreva para {email}.",
+    "genericError": "Algo correu mal. Tente novamente ou envie-nos uma mensagem.",
+    "noConnection": "Sem ligação. Tente novamente ou envie-nos uma mensagem.",
+    "doneTitle": "A encomenda {orderNumber} está reservada",
+    "doneText": "Enviámos os dados de pagamento para <b>{email}</b>. Total a pagar: <b>{total}</b>.",
+    "doneSpam": "Não o encontra? Veja na pasta de spam ou envie-nos uma mensagem abaixo.",
+    "doneButton": "Concluído"
+  },
+  "promo": {
+    "eyebrow": "Exclusivo para subscritores",
+    "eyebrowReady": "O seu código está pronto",
+    "headline": "Mais {percent} de desconto",
+    "onTop": "Além dos −{percent}% da {saleLabel} · até −{best}% no total",
+    "emailedNote": "Também lho enviámos por email e já está aplicado no seu formulário de encomenda.",
+    "copyAria": "Copiar o código {code}",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "yourCode": "O seu código: {code}",
+    "orderWithCode": "Encomendar agora com o meu código",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Mais vendida, com o seu código",
+    "emailLabel": "O seu email",
+    "emailError": "Introduza um email válido.",
+    "emailPlaceholder": "nome@example.com",
+    "reveal": "Ver o meu código de {percent}%",
+    "consent": "Vai receber ofertas da VETUD por email. Pode cancelar a subscrição a qualquer momento.",
+    "noThanks": "Não, obrigado",
+    "genericError": "Algo correu mal. Tente novamente.",
+    "noConnection": "Sem ligação. Tente novamente."
+  }
+}

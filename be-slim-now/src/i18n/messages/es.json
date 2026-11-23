@@ -1,0 +1,431 @@
+{
+  "meta": {
+    "title": "{saleLabel} −{percent} % · Plumas de Tirzepatide & Retatrutide · BeSlimNow",
+    "description": "Plumas de Tirzepatide (TZ-2) y Retatrutide de VETUD. 20 mg o 40 mg, pureza ≥99 % con COA para cada lote. Oferta de lanzamiento: 40 % de descuento. Pide en menos de un minuto."
+  },
+  "offer": {
+    "saleLabel": "Black Friday",
+    "sealOff": "DTO.",
+    "sealAria": "{saleLabel}: −{percent} %"
+  },
+  "promoBar": {
+    "sale": "−{percent} % en cada pluma",
+    "subscribe": "Suscríbete y llévate un −{percent} % extra (hasta −{best} %)"
+  },
+  "header": {
+    "logoAlt": "BeSlimNow",
+    "backToTop": "BeSlimNow, volver arriba",
+    "navLabel": "Secciones",
+    "nav": {
+      "products": "Plumas",
+      "dualChamber": "La pluma",
+      "compare": "Comparar",
+      "how": "Cómo pedir",
+      "faq": "Preguntas"
+    }
+  },
+  "countryPicker": {
+    "aria": "País y moneda: {country}, precios en {currency}",
+    "hint": "Tu país determina los precios y la moneda.",
+    "groupUs": "Estados Unidos",
+    "groupEurope": "Europa",
+    "groupOther": "Otros países · precios en USD",
+    "groupOtherTitle": "Otros países"
+  },
+  "products": {
+    "tz2": {
+      "fullName": "Pluma de Tirzepatide (TZ-2)",
+      "tagline": "Agonista dual de los receptores GIP / GLP-1",
+      "description": "El agonista dual del que habla todo el sector, en la pluma de precisión de VETUD. Una pluma, 12 agujas y un folleto por caja.",
+      "badge": "Muy popular",
+      "penAlt": "Pluma VETUD Tirzepatide",
+      "gallery": [
+        {
+          "label": "Caja",
+          "alt": "Caja de la pluma VETUD Tirzepatide, cerrada"
+        },
+        {
+          "label": "Contenido",
+          "alt": "Caja VETUD Tirzepatide abierta: pluma, 12 agujas y folleto"
+        }
+      ]
+    },
+    "retatrutide": {
+      "fullName": "Pluma de Retatrutide",
+      "tagline": "Agonista triple GIP / GLP-1 / glucagón",
+      "description": "El agonista triple de nueva generación, en la pluma de precisión de VETUD. Una pluma, 12 agujas y un folleto por caja.",
+      "badge": "Más vendida",
+      "penAlt": "Pluma VETUD Retatrutide",
+      "gallery": [
+        {
+          "label": "Caja",
+          "alt": "Caja de la pluma VETUD Retatrutide, cerrada"
+        },
+        {
+          "label": "Contenido",
+          "alt": "Caja VETUD Retatrutide abierta: pluma, 12 agujas y folleto"
+        }
+      ]
+    }
+  },
+  "hero": {
+    "saleChip": "−{percent} % en cada pluma, en ambas concentraciones",
+    "eyebrow": "VETUD Peptide Series · Las plumas que todos piden",
+    "headlineSr": "Tirzepatide & Retatrutide en pluma, ahora un {percent} % más barato.",
+    "headlineLineOne": [
+      "Tirzepatide",
+      "&",
+      "Retatrutide"
+    ],
+    "headlineLineTwo": [
+      "en",
+      "pluma,",
+      "ahora"
+    ],
+    "headlineOffer": "un {percent} % más barato.",
+    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
+    "everyPenPrefix": "Cada pluma viene ",
+    "everyPenSr": "Cada pluma viene {list}.",
+    "everyPen": [
+      "con pureza garantizada",
+      "con entrega garantizada",
+      "lista para enviar hoy",
+      "con pureza ≥99 %",
+      "con COA",
+      "embalada con discreción"
+    ],
+    "everyPenSale": "con un {percent} % de descuento esta semana",
+    "listAnd": "y",
+    "intro": "Las dos moléculas más buscadas de la investigación metabólica, selladas en la pluma de precisión de doble cámara de VETUD. 20 mg o 40 mg, pureza ≥99 %, 12 agujas en la caja, en tu puerta en pocos días. Un solo formulario corto. Sin cuenta, sin carrito, sin esperas.",
+    "buyFrom": "Comprar ahora · desde {price}",
+    "extraCode": "Código extra −{percent} %",
+    "guaranteedLabel": "Garantizado:",
+    "guarantees": [
+      "reembolso si un lote da menos del 99 % de pureza",
+      "reenvío o reembolso si tu paquete se pierde"
+    ],
+    "trust": [
+      "Pureza ≥99 %, verificada por HPLC",
+      "COA con cada lote",
+      "Envío en 24 h",
+      "Embalaje discreto"
+    ],
+    "penTagFrom": "desde {price}"
+  },
+  "productsSection": {
+    "eyebrow": "{saleLabel} · −{percent} % en cada pluma",
+    "title": "Elige tu pluma",
+    "subtitle": "Tirzepatide o Retatrutide, 20 mg o 40 mg. Misma pureza de laboratorio, misma pluma VETUD, misma oferta. Elige, pulsa Comprar ahora y listo en menos de un minuto.",
+    "enlargeAria": "Ampliar las fotos de {product}",
+    "enlarge": "Ampliar",
+    "thumbAlt": "Vista: {label}",
+    "inStock": "En stock",
+    "strengthAria": "Concentración",
+    "saleSave": "−{percent} % · ahorras {price}",
+    "perMg": "{price} por mg",
+    "bestValue": "Mejor precio · ahorras un {percent} % por mg",
+    "switchTo40": "Ahorra un {percent} % por mg con 40 mg →",
+    "features": [
+      "1 pluma + 12 agujas desechables + folleto de instrucciones",
+      "Pureza ≥99 %, COA del lote",
+      "Envío en 24 h, embalaje discreto"
+    ],
+    "subscriberCode": "Un {percent} % extra con tu código de suscriptor",
+    "buy": "Comprar ahora · {price}",
+    "nothingToPay": "No pagas nada ahora. Los datos de pago te llegan por email."
+  },
+  "dualChamber": {
+    "eyebrow": "La pluma de doble cámara VETUD",
+    "title": "Fabricada como una pluma de farmacia.",
+    "subtitle": "Dos cámaras, un cartucho: péptido liofilizado arriba, agua BAC abajo, separados hasta que los combinas. Después, el cartucho encaja en la pluma reutilizable VETUD.",
+    "diagramAlt": "El cartucho VETUD contiene péptido liofilizado y agua BAC y se coloca en el portacartuchos de la pluma",
+    "enlarge": "Ampliar",
+    "benefits": [
+      {
+        "title": "Sellado hasta el momento de mezclar",
+        "text": "El péptido liofilizado está en su propia cámara, separado del líquido por un tapón. Nada se degrada en la estantería y nada se mezcla antes de que tú quieras."
+      },
+      {
+        "title": "Agua BAC ya en el cartucho",
+        "text": "La segunda cámara contiene el agua bacteriostática. Sin viales extra que comprar, sin medir, sin trasvasar. Todo lo que necesitas llega en una sola caja."
+      },
+      {
+        "title": "Contador preciso, cuerpo de pluma reutilizable",
+        "text": "El cartucho encaja en la pluma VETUD con su ventana de contador. Conservas la pluma y cambias el cartucho. Limpia, exacta y hecha para reutilizarse."
+      }
+    ],
+    "cta": "Quiero mi pluma",
+    "video": "Mira cómo funciona · 40 segundos"
+  },
+  "compare": {
+    "eyebrow": "Cara a cara",
+    "title": "¿Qué pluma es la tuya?",
+    "subtitle": "Dos moléculas, una pluma, un precio por mg para comparar. Las dos llegan con la misma pureza, la misma caja y la misma oferta.",
+    "rows": {
+      "label": {
+        "label": "Etiqueta de la pluma",
+        "tz2": "TZ-2",
+        "retatrutide": "Retatrutide"
+      },
+      "what": {
+        "label": "Qué es",
+        "tz2": "Agonista dual: receptores GIP + GLP-1",
+        "retatrutide": "Agonista triple: receptores GIP + GLP-1 + glucagón"
+      },
+      "generation": {
+        "label": "Generación",
+        "tz2": "Generación actual · la más solicitada",
+        "retatrutide": "Nueva generación · la más reciente"
+      },
+      "status": {
+        "label": "Fase de desarrollo",
+        "tz2": "Molécula aprobada como medicamento",
+        "retatrutide": "En investigación, en ensayos de fase 3"
+      },
+      "strengths": {
+        "label": "Concentraciones",
+        "tz2": "20 mg · 40 mg",
+        "retatrutide": "20 mg · 40 mg"
+      },
+      "box": {
+        "label": "En la caja",
+        "tz2": "1 pluma · 12 agujas · folleto",
+        "retatrutide": "1 pluma · 12 agujas · folleto"
+      },
+      "purity": {
+        "label": "Pureza",
+        "tz2": "≥99 %, COA del lote",
+        "retatrutide": "≥99 %, COA del lote"
+      },
+      "dispatch": {
+        "label": "Envío",
+        "tz2": "En 24 h tras el pago",
+        "retatrutide": "En 24 h tras el pago"
+      }
+    },
+    "priceRow": "{strength} · {saleLabel} −{percent} %",
+    "perMgRow": "Precio por mg (40 mg)",
+    "buyProduct": "Comprar {product}",
+    "buy": "Comprar ahora"
+  },
+  "howToOrder": {
+    "eyebrow": "Cómo pedir",
+    "title": "Del clic a tu puerta en cuatro pasos.",
+    "subtitle": "Una sola forma de pedir, pensada para ser rápida. Siempre sabes en qué punto está tu pedido.",
+    "steps": [
+      {
+        "title": "Elige tu pluma",
+        "text": "Tirzepatide o Retatrutide, 20 mg o 40 mg. Pulsa Comprar ahora."
+      },
+      {
+        "title": "Rellena un formulario corto",
+        "text": "Nombre, email, teléfono y dirección. Sin cuenta, sin carrito, en menos de un minuto."
+      },
+      {
+        "title": "Recibe el email",
+        "text": "Tu confirmación llega al instante, con los datos de pago y tu número de pedido."
+      },
+      {
+        "title": "Enviamos en 24 h",
+        "text": "En cuanto llega el pago, tus plumas salen, embaladas con discreción y con seguimiento."
+      }
+    ],
+    "cta": "Empezar mi pedido"
+  },
+  "quality": {
+    "eyebrow": "Calidad que puedes comprobar",
+    "title": "Resultados de laboratorio, no promesas.",
+    "subtitle": "Cada lote de VETUD se analiza por HPLC y se documenta antes del envío. Pídenos cuando quieras el COA del lote que recibes y te lo enviamos.",
+    "stats": [
+      {
+        "value": "≥99 %",
+        "label": "Pureza",
+        "text": "Verificada por HPLC en cada lote"
+      },
+      {
+        "value": "COA",
+        "label": "Cada lote",
+        "text": "Certificado de análisis a petición, según tu número de lote"
+      },
+      {
+        "value": "24 h",
+        "label": "Envío",
+        "text": "Sale en un día laborable tras el pago"
+      },
+      {
+        "value": "12",
+        "label": "Agujas en cada caja",
+        "text": "Con la pluma y un folleto de instrucciones, todo listo"
+      }
+    ]
+  },
+  "facility": {
+    "eyebrow": "Detrás de cada pluma",
+    "title": "Llenado limpio. Conservación en frío.",
+    "subtitle": "Fotos de donde se llenan y almacenan los productos VETUD: una línea de llenado en sala limpia y, después, armarios refrigerados hasta que sale tu pedido.",
+    "enlarge": "Ampliar",
+    "enlargeAria": "Ampliar: {title}",
+    "photos": [
+      {
+        "alt": "Una persona con bata de sala limpia, mascarilla y guantes lleva una bandeja de viales tapados junto a la máquina de llenado",
+        "eyebrow": "Llenado",
+        "title": "Llenado en sala limpia",
+        "text": "Tapados y sellados a máquina, manipulados por personal con bata completa, mascarilla y guantes."
+      },
+      {
+        "alt": "Cajas de viales etiquetados en los estantes de un armario refrigerado con puerta de cristal",
+        "eyebrow": "Almacenamiento",
+        "title": "Conservado en frío",
+        "text": "Cada lote, etiquetado y guardado en armarios refrigerados con puerta de cristal hasta su envío."
+      },
+      {
+        "alt": "Una fila de armarios refrigerados iluminados con puerta de cristal, llenos de existencias etiquetadas",
+        "eyebrow": "Existencias",
+        "title": "Listo para enviar",
+        "text": "Existencias disponibles, para que tu pedido salga en las 24 horas siguientes al pago."
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Preguntas",
+    "title": "Tus preguntas, respondidas.",
+    "items": [
+      {
+        "q": "¿Cómo pago?",
+        "a": "Al hacer el pedido recibes al momento un email con los datos de pago y tu número de pedido. En esta página no se cobra nada. Usa tu número de pedido como concepto del pago."
+      },
+      {
+        "q": "¿Cuánto tardáis en enviar?",
+        "a": "Los pedidos salen en las 24 horas siguientes al pago (días laborables), con un número de seguimiento por email y, si la elegiste, en tu app de mensajería."
+      },
+      {
+        "q": "¿Qué cubren vuestras garantías?",
+        "a": "Dos cosas. Pureza: cada lote se analiza y, si un lote da menos del 99 % de pureza, te lo reembolsamos. Entrega: si tu paquete se pierde por el camino, te lo reenviamos o te devolvemos el dinero. Escríbenos con tu número de pedido y nos encargamos."
+      },
+      {
+        "q": "¿Qué incluye la caja?",
+        "a": "Cada caja VETUD incluye una pluma de la concentración elegida, 12 agujas desechables y un folleto de instrucciones, etiquetados con el producto y el lote. El embalaje exterior es neutro y discreto."
+      },
+      {
+        "q": "¿Qué diferencia hay entre 20 mg y 40 mg?",
+        "a": "La cantidad de péptido en la pluma. La pluma de 40 mg cuesta menos por mg, por eso está marcada como Mejor precio."
+      },
+      {
+        "q": "¿Puedo obtener el certificado de análisis (COA)?",
+        "a": "Sí. Se analiza la pureza de cada lote. Escríbenos con tu número de pedido y te enviamos el COA del lote que has recibido."
+      },
+      {
+        "q": "¿Puedo cambiar o cancelar mi pedido?",
+        "a": "Sí, hasta que se envíe. Responde a tu email de confirmación o escríbenos: {contacts}."
+      },
+      {
+        "q": "¿Para qué son estos productos?",
+        "a": "Todos los productos vendidos en este sitio web están destinados exclusivamente a fines de investigación e identificación. Estos productos no están destinados a su administración, inyección o ingestión en seres humanos."
+      }
+    ]
+  },
+  "footer": {
+    "logoAlt": "BeSlimNow",
+    "copyright": "© {year} {brand}. Todos los derechos reservados."
+  },
+  "consent": {
+    "label": "Elección de cookies",
+    "text": "Nos gustaría usar cookies analíticas (Google Analytics y Microsoft Clarity) para ver cómo se usa esta página y mejorarla. Nada se usa con fines publicitarios.",
+    "accept": "Aceptar",
+    "decline": "Rechazar",
+    "settings": "Configuración de cookies"
+  },
+  "contact": {
+    "messageUs": "Escríbenos",
+    "apps": {
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "line": "LINE",
+      "email": "Email"
+    }
+  },
+  "order": {
+    "yourOrder": "Tu pedido",
+    "shipTo": "Enviar a",
+    "pricesIn": "· precios en {currency}",
+    "chooseCountry": "Elige un país",
+    "chooseCountryError": "Elige un país.",
+    "pen": "Pluma",
+    "strength": "Concentración",
+    "quantity": "Cantidad",
+    "discountCode": "Código de descuento",
+    "codePlaceholder": "Tu código",
+    "apply": "Aplicar",
+    "applied": "Aplicado",
+    "getCode": "Consigue un código de un {percent} % extra",
+    "codeApplied": "Código {code} aplicado: un {percent} % extra de descuento",
+    "codeInvalid": "Ese código no es válido.",
+    "codeCheckFailed": "No se pudo comprobar el código. Inténtalo de nuevo.",
+    "regularLine": "{quantity} × {price} precio normal",
+    "saleLine": "{saleLabel} −{percent} %",
+    "codeLine": "Código {code} −{percent} %",
+    "total": "Total",
+    "youSave": "Ahorras {price}",
+    "perks": [
+      "Pureza ≥99 %, COA con cada lote",
+      "Envío en 24 h tras el pago",
+      "Datos de pago por email, no pagas nada ahora"
+    ],
+    "title": "¿Adónde te lo enviamos?",
+    "subtitle": "Sin cuenta, sin carrito. Un formulario corto y listo.",
+    "fullName": "Nombre y apellidos",
+    "fullNameError": "Escribe tu nombre y apellidos.",
+    "email": "Email",
+    "emailError": "Escribe un email válido.",
+    "phone": "Teléfono",
+    "phoneCode": "Prefijo del país",
+    "phoneError": "Escribe tu número de teléfono.",
+    "phonePlaceholder": "Número de teléfono",
+    "contactApp": "La mejor forma de contactarte",
+    "contactAppEmailOnly": "Solo email",
+    "handleHint": {
+      "whatsapp": "Número de WhatsApp, si es distinto de tu teléfono",
+      "telegram": "Tu usuario de Telegram, p. ej. @nombre",
+      "line": "Tu ID de LINE"
+    },
+    "address": "Dirección",
+    "addressError": "Escribe la dirección.",
+    "city": "Ciudad",
+    "cityError": "Escribe la ciudad.",
+    "postalCode": "Código postal",
+    "postalCodeError": "Escribe el código postal.",
+    "note": "Nota (opcional)",
+    "researchUse": "Confirmo que estos productos son solo para uso en investigación.",
+    "researchUseError": "Confirma el uso en investigación.",
+    "placeOrder": "Pedido con obligación de pago · {price}",
+    "confirmationNote": "Recibirás al momento un email de confirmación con los datos de pago. ¿Preguntas? Escribe a {email}.",
+    "genericError": "Algo ha fallado. Inténtalo de nuevo o escríbenos.",
+    "noConnection": "Sin conexión. Inténtalo de nuevo o escríbenos.",
+    "doneTitle": "El pedido {orderNumber} está reservado",
+    "doneText": "Hemos enviado los datos de pago a <b>{email}</b>. Total a pagar: <b>{total}</b>.",
+    "doneSpam": "¿No lo encuentras? Revisa la carpeta de spam o escríbenos abajo.",
+    "doneButton": "Hecho"
+  },
+  "promo": {
+    "eyebrow": "Exclusivo para suscriptores",
+    "eyebrowReady": "Tu código está listo",
+    "headline": "Un {percent} extra de descuento",
+    "onTop": "Además del −{percent} % del {saleLabel} · hasta un −{best} % en total",
+    "emailedNote": "También te lo hemos enviado por email y ya está aplicado en tu formulario de pedido.",
+    "copyAria": "Copiar el código {code}",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "yourCode": "Tu código: {code}",
+    "orderWithCode": "Pedir ahora con mi código",
+    "exampleTitle": "{product} 40 mg",
+    "exampleNote": "Más vendida, con tu código",
+    "emailLabel": "Tu email",
+    "emailError": "Escribe un email válido.",
+    "emailPlaceholder": "nombre@example.com",
+    "reveal": "Ver mi código del {percent} %",
+    "consent": "Recibirás ofertas de VETUD por email. Puedes darte de baja cuando quieras.",
+    "noThanks": "No, gracias",
+    "genericError": "Algo ha fallado. Inténtalo de nuevo.",
+    "noConnection": "Sin conexión. Inténtalo de nuevo."
+  }
+}

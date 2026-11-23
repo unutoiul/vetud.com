@@ -5,17 +5,20 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import { colors, fonts } from "@/theme/tokens"
 import CountrySelect from "./CountrySelect"
+import { useMessages } from "./MessagesProvider"
 import { Container } from "./ui"
 
+/** Section anchors, with their labels from header.nav in the messages. */
 const NAV = [
-  { href: "#products", label: "Pens" },
-  { href: "#dual-chamber", label: "The pen" },
-  { href: "#compare", label: "Compare" },
-  { href: "#how", label: "How to order" },
-  { href: "#faq", label: "FAQ" },
-]
+  { href: "#products", key: "products" },
+  { href: "#dual-chamber", key: "dualChamber" },
+  { href: "#compare", key: "compare" },
+  { href: "#how", key: "how" },
+  { href: "#faq", key: "faq" },
+] as const
 
 export default function Header() {
+  const m = useMessages()
   const screens = Grid.useBreakpoint()
   const [scrolled, setScrolled] = useState(false)
 
@@ -41,10 +44,10 @@ export default function Header() {
     >
       <Container>
         <Flex align="center" justify="space-between" gap={12} style={{ height: 80 }}>
-          <a href="#top" aria-label="BeSlimNow, back to top" style={{ display: "flex", alignItems: "center", minWidth: 0 }}>
+          <a href="#top" aria-label={m.header.backToTop} style={{ display: "flex", alignItems: "center", minWidth: 0 }}>
             <Image
               src="/brand/beslimnow-logo.png"
-              alt="BeSlimNow"
+              alt={m.header.logoAlt}
               width={1200}
               height={252}
               sizes="228px"
@@ -54,7 +57,7 @@ export default function Header() {
             />
           </a>
           {screens.lg && (
-            <nav aria-label="Sections">
+            <nav aria-label={m.header.navLabel}>
               <Flex gap={32}>
                 {NAV.map((item) => (
                   <a
@@ -62,7 +65,7 @@ export default function Header() {
                     href={item.href}
                     style={{ color: colors.navyInk, textDecoration: "none", fontSize: 14, fontWeight: 500, fontFamily: fonts.body }}
                   >
-                    {item.label}
+                    {m.header.nav[item.key]}
                   </a>
                 ))}
               </Flex>

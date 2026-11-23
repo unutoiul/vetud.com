@@ -5,20 +5,23 @@ import { Button, Col, Flex, Image as AntImage, Row, Segmented, Tag, Typography }
 import NextImage from "next/image"
 import { useState } from "react"
 import { OFFER, PRODUCT_IDS, PRODUCTS, STRENGTHS, strengthLabel, type Product, type Strength } from "@/config/site"
+import { format } from "@/i18n/format"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
 import { useCountry } from "./CountryProvider"
+import { useMessages } from "./MessagesProvider"
 import OfferSeal from "./OfferSeal"
 import { useOrder } from "./OrderProvider"
 import { Section, SectionHeading } from "./ui"
-
-const FEATURES = ["1 pen + 12 disposable needles + instruction booklet", "≥99% purity, COA for the lot", "Ships within 24 h, discreetly packed"]
 
 function ProductCard({ product }: { product: Product }) {
   const { openOrder, openPromo } = useOrder()
   const [strength, setStrength] = useState<Strength>("40mg")
   const [shown, setShown] = useState(0)
   const [previewOpen, setPreviewOpen] = useState(false)
-  const hot = product.badge.tone === "hot"
+  const hot = product.tone === "hot"
+  const m = useMessages()
+  const text = m.products[product.id]
+  const t = m.productsSection
   const { priceOf, pricePerMg, money } = useCountry()
   const { regular, sale } = priceOf(product.id, strength)
   const perMg = pricePerMg(product.id, strength)
@@ -61,21 +64,21 @@ function ProductCard({ product }: { product: Product }) {
         }}
       >
         {hot ? <FireFilled /> : <StarFilled />}
-        {product.badge.text}
+        {text.badge}
       </div>
       {OFFER.salePercent > 0 && (
         <div style={{ position: "absolute", zIndex: 2, top: 10, right: 10 }}>
-          <OfferSeal percent={OFFER.salePercent} label={OFFER.saleLabel} size={88} />
+          <OfferSeal percent={OFFER.salePercent} size={88} />
         </div>
       )}
 
       <button
         type="button"
         onClick={() => setPreviewOpen(true)}
-        aria-label={`Enlarge pictures of the ${product.fullName}`}
+        aria-label={format(t.enlargeAria, { product: text.fullName })}
         style={{ position: "relative", display: "block", width: "100%", aspectRatio: "16 / 11", background: colors.white, border: 0, padding: 0, cursor: "zoom-in" }}
       >
-        <NextImage src={product.gallery[shown].src} alt={product.gallery[shown].alt} fill sizes="(max-width: 768px) 100vw, 560px" style={{ objectFit: "contain" }} />
+        <NextImage src={product.gallery[shown]} alt={text.gallery[shown]?.alt ?? ""} fill sizes="(max-width: 768px) 100vw, 560px" style={{ objectFit: "contain" }} />
         <span
           style={{
             position: "absolute",
@@ -92,17 +95,17 @@ function ProductCard({ product }: { product: Product }) {
             padding: "4px 10px",
           }}
         >
-          <ZoomInOutlined /> Enlarge
+          <ZoomInOutlined /> {t.enlarge}
         </span>
       </button>
       <AntImage.PreviewGroup
-        items={product.gallery.map((item) => ({ src: item.src, alt: item.alt }))}
+        items={product.gallery.map((src, index) => ({ src, alt: text.gallery[index]?.alt ?? "" }))}
         preview={{ open: previewOpen, current: shown, onOpenChange: (open) => setPreviewOpen(open) }}
       />
       <Flex gap={12} justify="center" style={{ padding: "0 0 4px", marginTop: -8 }}>
-        {product.gallery.map((item, index) => (
+        {product.gallery.map((src, index) => (
           <button
-            key={item.src}
+            key={src}
             type="button"
             onClick={() => setShown(index)}
             aria-pressed={shown === index}
@@ -118,7 +121,7 @@ function ProductCard({ product }: { product: Product }) {
               border: `2px solid ${shown === index ? colors.navy : colors.line}`,
             }}
           >
-            <NextImage src={item.src} alt={`${item.label} view`} fill sizes="112px" style={{ objectFit: "cover" }} />
+            <NextImage src={src} alt={format(t.thumbAlt, { label: text.gallery[index]?.label ?? "" })} fill sizes="112px" style={{ objectFit: "cover" }} />
             <span
               style={{
                 position: "absolute",
@@ -133,7 +136,7 @@ function ProductCard({ product }: { product: Product }) {
                 letterSpacing: "0.08em",
               }}
             >
-              {item.label}
+              {text.gallery[index]?.label}
             </span>
           </button>
         ))}
@@ -143,7 +146,7 @@ function ProductCard({ product }: { product: Product }) {
         <Flex align="center" gap={8} wrap>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: colors.success }}>
             <span aria-hidden style={{ width: 8, height: 8, borderRadius: 999, background: colors.success, boxShadow: `0 0 0 3px ${colors.successWash}` }} />
-            In stock
+            {t.inStock}
           </span>
           <span style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.12em", color: colors.muted }}>{product.code}</span>
         </Flex>
@@ -168,9 +171,9 @@ function ProductCard({ product }: { product: Product }) {
               {product.label}
             </span>
           )}
-          <span style={{ display: "block", fontSize: 15, fontFamily: fonts.body, fontWeight: 500, color: colors.tealDeep, marginTop: 6 }}>{product.tagline}</span>
+          <span style={{ display: "block", fontSize: 15, fontFamily: fonts.body, fontWeight: 500, color: colors.tealDeep, marginTop: 6 }}>{text.tagline}</span>
         </Typography.Title>
-        <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.6, margin: "10px 0 18px", minHeight: "4.8em" }}>{product.description}</Typography.Paragraph>
+        <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.6, margin: "10px 0 18px", minHeight: "4.8em" }}>{text.description}</Typography.Paragraph>
 
         <Segmented<Strength>
           block
@@ -178,7 +181,7 @@ function ProductCard({ product }: { product: Product }) {
           value={strength}
           onChange={setStrength}
           options={STRENGTHS.map((value) => ({ value, label: strengthLabel(value) }))}
-          aria-label="Strength"
+          aria-label={t.strengthAria}
         />
 
         {/* Price: regular struck through, offer price big */}
@@ -199,7 +202,7 @@ function ProductCard({ product }: { product: Product }) {
                     fontWeight: 700,
                   }}
                 >
-                  −{OFFER.salePercent}% · save {money(regular - sale)}
+                  {format(t.saleSave, { percent: OFFER.salePercent, price: money(regular - sale) })}
                 </span>
               </div>
             )}
@@ -207,22 +210,22 @@ function ProductCard({ product }: { product: Product }) {
               {money(sale)}
             </span>
           </div>
-          <span style={{ color: colors.muted, fontSize: 14 }}>{money(perMg)} per mg</span>
+          <span style={{ color: colors.muted, fontSize: 14 }}>{format(t.perMg, { price: money(perMg) })}</span>
         </Flex>
         <div style={{ minHeight: 26 }}>
           {strength === "40mg" ? (
             <Tag variant="filled" style={{ margin: 0, fontWeight: 600, color: colors.tealDeep, background: colors.aquaLight }}>
-              Best value · save {bulkSaving}% per mg
+              {format(t.bestValue, { percent: bulkSaving })}
             </Tag>
           ) : (
             <Typography.Link onClick={() => setStrength("40mg")} style={{ fontSize: 13 }}>
-              Save {bulkSaving}% per mg with 40 mg →
+              {format(t.switchTo40, { percent: bulkSaving })}
             </Typography.Link>
           )}
         </div>
 
         <Flex vertical gap={10} style={{ margin: "20px 0 24px" }}>
-          {FEATURES.map((feature) => (
+          {t.features.map((feature) => (
             <span key={feature} style={{ fontSize: 14, color: colors.navyInk, display: "flex", gap: 10 }}>
               <CheckOutlined style={{ color: colors.success, marginTop: 4 }} />
               {feature}
@@ -230,7 +233,7 @@ function ProductCard({ product }: { product: Product }) {
           ))}
           <Typography.Link onClick={openPromo} style={{ fontSize: 14, color: colors.sale, fontWeight: 600, display: "flex", gap: 10 }}>
             <GiftFilled style={{ marginTop: 3 }} />
-            Extra {OFFER.subscriberPercent}% off with your subscriber code
+            {format(t.subscriberCode, { percent: OFFER.subscriberPercent })}
           </Typography.Link>
         </Flex>
 
@@ -242,21 +245,23 @@ function ProductCard({ product }: { product: Product }) {
           onClick={() => openOrder({ product: product.id, strength })}
           style={{ height: 58, fontSize: 17, marginTop: "auto" }}
         >
-          Buy now · {money(sale)}
+          {format(t.buy, { price: money(sale) })}
         </Button>
-        <span style={{ textAlign: "center", fontSize: 12, color: colors.muted, marginTop: 10 }}>Nothing to pay now. Payment details come by email.</span>
+        <span style={{ textAlign: "center", fontSize: 12, color: colors.muted, marginTop: 10 }}>{t.nothingToPay}</span>
       </Flex>
     </article>
   )
 }
 
 export default function Products() {
+  const m = useMessages()
+  const t = m.productsSection
   return (
     <Section id="products" background={colors.paper}>
       <SectionHeading
-        eyebrow={`${OFFER.saleLabel} · −${OFFER.salePercent}% on every pen`}
-        title="Choose your pen"
-        subtitle="Tirzepatide or Retatrutide, 20 mg or 40 mg. Same lab-grade purity, same VETUD pen, same offer. Pick yours, press Buy now, done in under a minute."
+        eyebrow={format(t.eyebrow, { saleLabel: m.offer.saleLabel, percent: OFFER.salePercent })}
+        title={t.title}
+        subtitle={t.subtitle}
       />
       <Row gutter={[{ xs: 16, md: 32 }, 40]} justify="center">
         {PRODUCT_IDS.map((id) => (

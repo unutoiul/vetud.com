@@ -3,14 +3,16 @@
 import { CheckCircleFilled, ShoppingOutlined } from "@ant-design/icons"
 import { Button, Grid } from "antd"
 import type { ReactNode } from "react"
-import { OFFER, PRODUCTS, PRODUCT_IDS, type ProductId, type Strength } from "@/config/site"
+import { OFFER, PRODUCTS, PRODUCT_IDS, STRENGTHS, strengthLabel, type ProductId, type Strength } from "@/config/site"
+import { format } from "@/i18n/format"
 import Image from "next/image"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
 import { useCountry } from "./CountryProvider"
+import { useMessages } from "./MessagesProvider"
 import { useOrder } from "./OrderProvider"
 import { Section, SectionHeading } from "./ui"
 
-type Row = { label: string; cells: Record<ProductId, ReactNode>; strong?: boolean }
+type Row = { key: string; label: string; cells: Record<ProductId, ReactNode>; strong?: boolean }
 
 /** Regular price struck through, then the offer price, in the visitor's currency. */
 function Strike({ product, strength }: { product: ProductId; strength: Strength }) {
@@ -36,39 +38,41 @@ const Yes = ({ children }: { children: ReactNode }) => (
   </span>
 )
 
-const ROWS: Row[] = [
-  { label: "Label on the pen", cells: { tz2: "TZ-2", retatrutide: "Retatrutide" } },
-  { label: "What it is", cells: { tz2: "Dual agonist: GIP + GLP-1 receptors", retatrutide: "Triple agonist: GIP + GLP-1 + glucagon receptors" } },
-  { label: "Generation", cells: { tz2: "Current generation · the most requested", retatrutide: "Next generation · the newest" } },
-  { label: "Development status", cells: { tz2: "Molecule approved as a medicine", retatrutide: "Investigational, in phase 3 trials" } },
-  { label: "Strengths", cells: { tz2: "20 mg · 40 mg", retatrutide: "20 mg · 40 mg" } },
-  { label: "In the box", cells: { tz2: <Yes>1 pen · 12 needles · booklet</Yes>, retatrutide: <Yes>1 pen · 12 needles · booklet</Yes> } },
-  { label: "Purity", cells: { tz2: <Yes>≥99%, COA for the lot</Yes>, retatrutide: <Yes>≥99%, COA for the lot</Yes> } },
-  { label: "Dispatch", cells: { tz2: <Yes>Within 24 h of payment</Yes>, retatrutide: <Yes>Within 24 h of payment</Yes> } },
-  {
-    label: `20 mg · ${OFFER.saleLabel} −${OFFER.salePercent}%`,
-    cells: { tz2: <Strike product="tz2" strength="20mg" />, retatrutide: <Strike product="retatrutide" strength="20mg" /> },
+/** The text rows (compare.rows in the messages); these get a check mark. */
+const CHECKED = new Set(["box", "purity", "dispatch"])
+
+/** Every row of the table: the facts from the messages, then the prices in the visitor's currency. */
+function useRows(): Row[] {
+  const m = useMessages()
+  const t = m.compare
+  const facts = Object.entries(t.rows).map(([key, row]) => ({
+    key,
+    label: row.label,
+    cells: Object.fromEntries(PRODUCT_IDS.map((id) => [id, CHECKED.has(key) ? <Yes>{row[id]}</Yes> : row[id]])) as Record<ProductId, ReactNode>,
+  }))
+  const prices = STRENGTHS.map((strength) => ({
+    key: `price-${strength}`,
+    label: format(t.priceRow, { strength: strengthLabel(strength), saleLabel: m.offer.saleLabel, percent: OFFER.salePercent }),
+    cells: Object.fromEntries(PRODUCT_IDS.map((id) => [id, <Strike key={id} product={id} strength={strength} />])) as Record<ProductId, ReactNode>,
     strong: true,
-  },
-  {
-    label: `40 mg · ${OFFER.saleLabel} −${OFFER.salePercent}%`,
-    cells: { tz2: <Strike product="tz2" strength="40mg" />, retatrutide: <Strike product="retatrutide" strength="40mg" /> },
-    strong: true,
-  },
-  { label: "Price per mg (40 mg)", cells: { tz2: <PerMg product="tz2" />, retatrutide: <PerMg product="retatrutide" /> } },
-]
+  }))
+  const perMg = { key: "per-mg", label: t.perMgRow, cells: { tz2: <PerMg product="tz2" />, retatrutide: <PerMg product="retatrutide" /> } }
+  return [...facts, ...prices, perMg]
+}
 
 export default function Compare() {
   const { openOrder } = useOrder()
+  const m = useMessages()
+  const rows = useRows()
   const screens = Grid.useBreakpoint()
   const labelWidth = screens.md ? "220px" : "96px"
 
   return (
     <Section id="compare" background={colors.paper}>
       <SectionHeading
-        eyebrow="Side by side"
-        title="Which pen is yours?"
-        subtitle="Two molecules, one pen, one price per mg to compare. Both ship with the same purity, the same box and the same offer."
+        eyebrow={m.compare.eyebrow}
+        title={m.compare.title}
+        subtitle={m.compare.subtitle}
       />
       <div style={{ borderRadius: 24, overflow: "hidden", border: `1px solid ${colors.line}`, boxShadow: shadows.lifted, background: colors.white }}>
         {/* Header */}
@@ -76,7 +80,7 @@ export default function Compare() {
           <div />
           {PRODUCT_IDS.map((id) => {
             const product = PRODUCTS[id]
-            const hot = product.badge.tone === "hot"
+            const hot = product.tone === "hot"
             return (
               <div
                 key={id}
@@ -96,7 +100,7 @@ export default function Compare() {
                 <Image src={product.art} alt="" fill sizes="(max-width: 768px) 40vw, 480px" style={{ objectFit: "cover", objectPosition: "center" }} />
                 <div aria-hidden style={{ position: "absolute", inset: 0, background: gradients.artFade }} />
                 <div style={{ position: "relative", fontFamily: fonts.mono, fontSize: 10.5, letterSpacing: "0.16em", textTransform: "uppercase", color: hot ? colors.limeLight : colors.tealBright }}>
-                  {product.badge.text}
+                  {m.products[id].badge}
                 </div>
                 <div style={{ position: "relative", fontFamily: fonts.display, fontSize: screens.md ? 30 : 20, fontWeight: 500, color: colors.white, lineHeight: 1.15, marginTop: 4 }}>
                   {product.name}
@@ -106,9 +110,9 @@ export default function Compare() {
           })}
         </div>
         {/* Rows */}
-        {ROWS.map((row, index) => (
+        {rows.map((row, index) => (
           <div
-            key={row.label}
+            key={row.key}
             style={{
               display: "grid",
               gridTemplateColumns: `${labelWidth} 1fr 1fr`,
@@ -151,7 +155,7 @@ export default function Compare() {
                   onClick={() => openOrder({ product: id })}
                   style={{ height: screens.md ? 54 : 46, fontSize: screens.md ? 16 : 14, padding: screens.sm ? undefined : "0 8px" }}
                 >
-                  {screens.md ? `Buy ${PRODUCTS[id].name}` : "Buy now"}
+                  {screens.md ? format(m.compare.buyProduct, { product: PRODUCTS[id].name }) : m.compare.buy}
                 </Button>
               </div>
             )

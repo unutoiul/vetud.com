@@ -4,9 +4,11 @@ import { CheckOutlined, CloseOutlined, CopyOutlined, LockOutlined, ShoppingOutli
 import { App, Button, Flex, Form, Grid, Input, Modal, Typography } from "antd"
 import { useState } from "react"
 import { OFFER, PRODUCTS, bestCombinedPercent } from "@/config/site"
+import { around, format } from "@/i18n/format"
 import { EMAIL_PATTERN, LIMITS, orderTotal } from "@/lib/order"
 import { colors, fonts, gradients } from "@/theme/tokens"
 import { useCountry } from "./CountryProvider"
+import { useMessages } from "./MessagesProvider"
 import { useOrder } from "./OrderProvider"
 import Image from "next/image"
 
@@ -14,6 +16,9 @@ import Image from "next/image"
 export default function PromoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { savePromoCode, openOrder, promoCode } = useOrder()
   const { message } = App.useApp()
+  const m = useMessages()
+  const t = m.promo
+  const [headlineBefore, headlineAfter] = around(t.headline, "percent")
   const screens = Grid.useBreakpoint()
   const [sending, setSending] = useState(false)
   const [code, setCode] = useState<string | null>(promoCode)
@@ -29,17 +34,17 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
       const res = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, country }),
       })
       const data = (await res.json().catch(() => ({}))) as { code?: string; error?: string }
       if (!res.ok || !data.code) {
-        message.error(data.error || "Something went wrong. Please try again.")
+        message.error(data.error || t.genericError)
         return
       }
       setCode(data.code)
       savePromoCode(data.code)
     } catch {
-      message.error("No connection. Please try again.")
+      message.error(t.noConnection)
     } finally {
       setSending(false)
     }
@@ -51,7 +56,7 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
       await navigator.clipboard.writeText(code)
       setCopied(true)
     } catch {
-      message.info(`Your code: ${code}`)
+      message.info(format(t.yourCode, { code }))
     }
   }
 
@@ -73,10 +78,10 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
         <div aria-hidden style={{ position: "absolute", inset: 0, background: gradients.nightScrim }} />
         <Flex vertical align="center" justify="center" style={{ position: "relative", height: "100%", textAlign: "center", padding: "0 24px" }}>
           <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase", color: colors.limeLight }}>
-            {code ? "Your code is ready" : "Subscriber exclusive"}
+            {code ? t.eyebrowReady : t.eyebrow}
           </div>
           <div style={{ fontFamily: fonts.display, fontWeight: 300, fontSize: screens.sm ? 58 : 46, lineHeight: 1, color: colors.white, marginTop: 10 }}>
-            Extra{" "}
+            {headlineBefore}
             <span
               style={{
                 fontWeight: 500,
@@ -88,11 +93,11 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
               }}
             >
               {OFFER.subscriberPercent}%
-            </span>{" "}
-            off
+            </span>
+            {headlineAfter}
           </div>
           <div style={{ color: colors.onNavyMuted, fontSize: 14, marginTop: 10 }}>
-            On top of the {OFFER.saleLabel} {OFFER.salePercent}% · up to {bestCombinedPercent()}% off in total
+            {format(t.onTop, { saleLabel: m.offer.saleLabel, percent: OFFER.salePercent, best: bestCombinedPercent() })}
           </div>
         </Flex>
       </div>
@@ -101,12 +106,12 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
         {code ? (
           <Flex vertical gap={16}>
             <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, margin: 0, textAlign: "center" }}>
-              We&apos;ve also emailed it to you, and it&apos;s already applied to your order form.
+              {t.emailedNote}
             </Typography.Paragraph>
             <button
               type="button"
               onClick={copy}
-              aria-label={`Copy code ${code}`}
+              aria-label={format(t.copyAria, { code })}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -122,7 +127,7 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
               <span style={{ fontFamily: fonts.mono, fontSize: 26, fontWeight: 500, letterSpacing: "0.2em", color: colors.navy }}>{code}</span>
               <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: colors.sale }}>
                 {copied ? <CheckOutlined /> : <CopyOutlined />}
-                {copied ? "Copied" : "Copy"}
+                {copied ? t.copied : t.copy}
               </span>
             </button>
             <Button
@@ -136,7 +141,7 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
               }}
               style={{ height: 54, fontSize: 16 }}
             >
-              Order now with my code
+              {t.orderWithCode}
             </Button>
           </Flex>
         ) : (
@@ -149,8 +154,8 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
               style={{ padding: "12px 16px", borderRadius: 14, background: colors.aquaWash, border: `1px solid ${colors.line}`, marginBottom: 22 }}
             >
               <div style={{ fontSize: 13, color: colors.muted, lineHeight: 1.4 }}>
-                <div style={{ color: colors.navyInk, fontWeight: 600 }}>{PRODUCTS.retatrutide.name} 40 mg</div>
-                Best seller, with your code
+                <div style={{ color: colors.navyInk, fontWeight: 600 }}>{format(t.exampleTitle, { product: PRODUCTS.retatrutide.name })}</div>
+                {t.exampleNote}
               </div>
               <div style={{ textAlign: "right", whiteSpace: "nowrap" }}>
                 <span style={{ color: colors.muted, textDecoration: "line-through", fontSize: 14, marginRight: 8 }}>{money(example.regular)}</span>
@@ -161,25 +166,25 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
             <Form layout="vertical" requiredMark={false} onFinish={subscribe}>
               <Form.Item
                 name="email"
-                label={<span style={{ fontWeight: 600 }}>Your email</span>}
-                rules={[{ required: true, pattern: EMAIL_PATTERN, message: "Enter a valid email." }]}
+                label={<span style={{ fontWeight: 600 }}>{t.emailLabel}</span>}
+                rules={[{ required: true, pattern: EMAIL_PATTERN, message: t.emailError }]}
                 style={{ marginBottom: 14 }}
               >
-                <Input size="large" type="email" autoComplete="email" inputMode="email" placeholder="you@example.com" maxLength={LIMITS.email} />
+                <Input size="large" type="email" autoComplete="email" inputMode="email" placeholder={t.emailPlaceholder} maxLength={LIMITS.email} />
               </Form.Item>
               <Form.Item name="website" hidden>
                 <Input tabIndex={-1} autoComplete="off" />
               </Form.Item>
               <Button type="primary" htmlType="submit" size="large" block loading={sending} icon={<LockOutlined />} style={{ height: 54, fontSize: 16 }}>
-                Reveal my {OFFER.subscriberPercent}% code
+                {format(t.reveal, { percent: OFFER.subscriberPercent })}
               </Button>
             </Form>
             <Typography.Paragraph style={{ color: colors.muted, fontSize: 12, margin: "14px 0 0", textAlign: "center" }}>
-              You&apos;ll get VETUD offers by email. Unsubscribe any time.
+              {t.consent}
             </Typography.Paragraph>
             <Flex justify="center">
               <Button type="link" onClick={onClose} style={{ color: colors.muted, fontSize: 13, height: 36 }}>
-                No thanks
+                {t.noThanks}
               </Button>
             </Flex>
           </>

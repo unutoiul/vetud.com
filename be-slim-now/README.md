@@ -22,15 +22,16 @@ npm run lint && npm run typecheck && npm run build
 
 | What | File |
 |---|---|
-| Names, badges ("Best seller", "Very popular"), texts, pictures | `src/config/site.ts` (`PRODUCTS`) |
+| Every word on the page (headings, buttons, FAQ, form labels, badges, product texts) | `src/i18n/messages/<country>.json`, see [Page text by country](#page-text-by-country) |
+| Product names, label codes, pictures | `src/config/site.ts` (`PRODUCTS`) |
 | Prices, one list per currency (USD, EUR, GBP, CHF, SEK, NOK, DKK, PLN, CZK, HUF, RON) | `src/config/site.ts` (`PRICE_LISTS`) |
 | Which countries are in the country picker, their currency and number format | `src/config/markets.ts` (`MARKETS`) |
-| The launch offer (percent, label) and the subscriber discount percent | `src/config/site.ts` (`OFFER`); `salePercent: 0` ends the sale |
+| The launch offer (percent) and the subscriber discount percent | `src/config/site.ts` (`OFFER`); `salePercent: 0` ends the sale. The label ("Black Friday") is `offer.saleLabel` in the message files (`OFFER.saleLabel` is the emails' copy) |
 | The subscriber code itself | env var `PROMO_CODE` (default `VETUD10`) |
 | Telegram / WhatsApp / LINE / email | `src/config/site.ts` (`CONTACTS`). An empty value hides that button |
 | Colours, fonts, Ant Design theme | `src/theme/tokens.ts` (every colour is a named token there) |
 | Page sections | `src/components/*` (PromoBar, Header, Hero, Products, HowToOrder, Quality, Faq, Footer) |
-| Hero animation: word timing, the rotating "Every pen is …" phrases | `src/components/Hero.tsx` (`EVERY_PEN`, `HEADLINE_START`, `WORD_GAP`); the pieces are in `src/components/animated.tsx` |
+| Hero animation: word timing, the rotating "Every pen is …" phrases | timing in `src/components/Hero.tsx` (`HEADLINE_START`, `WORD_GAP`); the phrases are `hero.everyPen` in the message files; the pieces are in `src/components/animated.tsx` |
 | The order form / the pop-up | `src/components/OrderModal.tsx` / `src/components/PromoModal.tsx` |
 | Payment details in the buyer's email | env vars `PAYMENT_INSTRUCTIONS`, `PAYMENT_BANK_DETAILS`, `PAYMENT_CRYPTO_DETAILS` |
 | Email wording and layout | `emails/templates/*.html` + `.txt`, then `npm run emails:publish` |
@@ -48,11 +49,24 @@ Every price on the page is in the visitor's currency, written the way people the
 
 Flags in `public/flags` come from country-flag-icons (MIT, see the LICENSE there).
 
+## Page text by country
+
+All the page's words live in `src/i18n/messages`, one JSON file per country in the picker (`us.json`, `de.json`, `gb.json`… 46 files). **`us.json` is the English source.** Every other file is translated into its country's language (32 languages, from each country's locale in `src/config/markets.ts`). The one line kept in English everywhere is `hero.weightLoss`, a weight-loss claim we don't translate.
+
+- **Languages.** `LANGUAGES` in `scripts/translations.mjs` lists each language and its countries; the first country's file holds the translation and the others get a copy (Germany → Austria, Liechtenstein and, with "ss" for "ß", Switzerland; France → Luxembourg, Monaco; Italy → San Marino, Vatican; Greece → Cyprus; Romania → Moldova; Netherlands → Belgium; Albania → Kosovo; Britain → Ireland, Malta).
+- **After changing English text:** `npm run i18n:sync` (adds new keys in English), then `npm run i18n:translations -- --stale` lists, per language, the texts whose English changed since they were translated. Translate those in the first country file of each language and run `npm run i18n:translations -- de fr …`: it checks numbers, placeholders, tags, brand names (`scripts/translation-glossary.json`) and list lengths against `us.json`, copies the file to that language's other countries and records which English it was made from (`src/i18n/translations.json`). `-- --check` re-checks every language without changing anything.
+
+- **Which file.** The page uses the visitor's country (the same one that sets the prices). Choosing another country in the header, or a picker country as Ship to in the order form, loads that country's file and every section switches. Each file is its own small chunk, so a page only downloads its own country's words.
+- **Translating.** Change only the words. Keep the keys, every `{placeholder}` (`{price}`, `{percent}`, `{saleLabel}`…, filled in by the page), every `<b>…</b>` tag, and the number of items in a list. `hero.headlineLineOne` / `headlineLineTwo` are the headline's words, one per item, as they rise in.
+- **`npm run i18n:check`** lists missing files, missing or extra keys and placeholders that don't match `us.json`.
+- **`npm run i18n:sync`** after adding text to `us.json` (or a country to `MARKETS`): creates missing files as copies of `us.json`, adds new keys in English to every file and removes keys `us.json` no longer has. It never overwrites text that's already there.
+- **Not in the files:** prices and percentages (`src/config`), product and molecule names, country names in the pickers (from the browser, in English for now), messages from the server (order errors) and the emails (Resend templates, English). The page title and description are `meta` in each file.
+
 ## Hero animation
 
 The headline rises in word by word, "40% off." counts up with a brighter green light gliding through it and a green stroke drawn underneath, a line below cycles through "Every pen is purity-guaranteed / delivery-guaranteed / 40% off this week / ready to ship today / ≥99% pure / COA-backed / discreetly packed", the pens glide in, float and lean toward the mouse, and the offer seal spins in with a soft pulse.
 
-- **The two guarantees** (refund if a lot tests below 99% purity; reship or refund if a parcel is lost) are written out under the Buy button (`GUARANTEES` in `Hero.tsx`) and in the FAQ. If the policy changes, change both, and the rotating phrases.
+- **The two guarantees** (refund if a lot tests below 99% purity; reship or refund if a parcel is lost) are written out under the Buy button (`hero.guarantees` in the message files) and in the FAQ (`faq.items`). If the policy changes, change both, and the rotating phrases.
 - **Entrances are CSS animations** in the server HTML (`enter()` in `animated.tsx`), so they play on first paint and the hero is never blank while JavaScript loads. The background picture only scales (no fade), so it still counts as painted at once for Largest Contentful Paint (about 0.55 s locally).
 - **Everything live** (count-up, rotating words, light sweeps, floating, mouse parallax, hover) uses [Motion](https://motion.dev) (`motion` package, pinned).
 - Visitors with "reduce motion" on get plain fades, no loops, and the rotating line stays on its first phrase. Screen readers hear the headline and the rotating line once, in full.
@@ -93,6 +107,13 @@ Everything comes from one file of the owner's logo kit, `public/logos/recommende
 | `public/brand/icon-192.png`, `icon-512.png` | Android home screen, via `src/app/manifest.ts` |
 
 The B's S-shaped waist is see-through in the artwork, so the script fills it white and it shows on any background. Next.js adds the icon `<link>` tags on its own.
+
+## Search engines and analytics
+
+- Every country's page is indexed at its own address (`/` for the US, `/de`, `/fr`, `/gb`…) with hreflang links between them and `x-default` → `/` (`src/lib/seo.ts`); `/us` points at `/` and `/xk` at `/al`. `/sitemap.xml` (`src/app/sitemap.ts`) lists those pages; `/robots.txt` (`src/app/robots.ts`) points every crawler to it. Submit `https://www.beslimnow.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools (Bing can import the site from Search Console).
+- Google Analytics 4 and Microsoft Clarity load when `NEXT_PUBLIC_GA_ID` / `NEXT_PUBLIC_CLARITY_ID` are set (`src/components/Analytics.tsx`, settings in `src/lib/analytics.ts`). Redeploy after setting them.
+- Visitors on a European price list or a European clock get a small cookie question (`CookieConsent.tsx`, text in the messages under `consent`). Until they accept, GA gets cookieless pings only (Consent Mode, EEA/UK/CH) and Clarity records without cookies. "Cookie settings" in the footer asks again. Ad storage is denied everywhere.
+- Optional: `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` add the "HTML tag" ownership meta tags.
 
 ## Deploy (Vercel)
 

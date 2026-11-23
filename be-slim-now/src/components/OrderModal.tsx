@@ -6,14 +6,17 @@ import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 import { isMarket, type CountryCode } from "@/config/markets"
 import { MAX_QUANTITY, OFFER, PRODUCT_IDS, PRODUCTS, SITE, STRENGTHS, contactLinks, strengthLabel, type ProductId, type Strength } from "@/config/site"
-import { countryName } from "@/lib/countries"
-import { CONTACT_APP_LABELS, CONTACT_APPS, EMAIL_PATTERN, LIMITS, PHONE_PATTERN, orderTotal, type ContactApp } from "@/lib/order"
+import { format, rich } from "@/i18n/format"
+import { countryName, internationalPhone } from "@/lib/countries"
+import { CONTACT_APPS, EMAIL_PATTERN, LIMITS, PHONE_PATTERN, orderTotal, type ContactApp } from "@/lib/order"
 import { currencyOf, formatPrice, priceOf, pricingCountry } from "@/lib/pricing"
 import { colors, fonts } from "@/theme/tokens"
 import { useCountry } from "./CountryProvider"
 import { CountryFlag, filterCountry, renderCountryOption, useCountryGroups } from "./CountrySelect"
 import { CONTACT_COLORS, ContactIcon } from "./icons/ContactIcon"
+import { useMessages } from "./MessagesProvider"
 import { useOrder } from "./OrderProvider"
+import PhoneField from "./PhoneField"
 
 type FormValues = {
   product: ProductId
@@ -33,13 +36,6 @@ type FormValues = {
   website?: string
 }
 
-const HANDLE_HINT: Record<ContactApp, string> = {
-  whatsapp: "WhatsApp number, if different from your phone",
-  telegram: "Your Telegram username, e.g. @name",
-  line: "Your LINE ID",
-  email: "",
-}
-
 export default function OrderModal({
   open,
   initial,
@@ -50,6 +46,8 @@ export default function OrderModal({
   onClose: () => void
 }) {
   const [form] = Form.useForm<FormValues>()
+  const m = useMessages()
+  const t = m.order
   const { message } = App.useApp()
   const screens = Grid.useBreakpoint()
   const [submitting, setSubmitting] = useState(false)
@@ -89,17 +87,17 @@ export default function OrderModal({
         if (data.valid) {
           setManualCode(code)
           setCodeInput(code)
-          if (!quiet) message.success(`Code ${code} applied: extra ${OFFER.subscriberPercent}% off`)
+          if (!quiet) message.success(format(t.codeApplied, { code, percent: OFFER.subscriberPercent }))
         } else if (!quiet) {
-          message.error("That code isn't valid.")
+          message.error(t.codeInvalid)
         }
       } catch {
-        if (!quiet) message.error("Couldn't check the code. Please try again.")
+        if (!quiet) message.error(t.codeCheckFailed)
       } finally {
         setCheckingCode(false)
       }
     },
-    [message],
+    [message, t.codeApplied, t.codeInvalid, t.codeCheckFailed],
   )
 
 
@@ -126,14 +124,14 @@ export default function OrderModal({
       const res = await fetch("/api/order", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...all, quantity: submittedQuantity, promoCode: appliedCode ?? "", researchUse: all.researchUse === true }),
+        body: JSON.stringify({ ...all, phone: internationalPhone(all.phone ?? ""), quantity: submittedQuantity, promoCode: appliedCode ?? "", researchUse: all.researchUse === true }),
       })
       const data = (await res.json().catch(() => ({}))) as { orderNumber?: string; total?: number; error?: string; fields?: Record<string, string> }
       if (!res.ok || !data.orderNumber) {
         if (data.fields) {
           form.setFields(Object.entries(data.fields).map(([name, error]) => ({ name: name as keyof FormValues, errors: [error] })))
         }
-        message.error(data.error || "Something went wrong. Please try again or message us.")
+        message.error(data.error || t.genericError)
         return
       }
       setDone({
@@ -144,7 +142,7 @@ export default function OrderModal({
       })
       form.resetFields(["note", "quantity"])
     } catch {
-      message.error("No connection. Please try again or message us.")
+      message.error(t.noConnection)
     } finally {
       setSubmitting(false)
     }
@@ -173,12 +171,12 @@ export default function OrderModal({
         <div style={{ padding: "48px clamp(20px, 5vw, 56px)" }}>
           <Result
             icon={<CheckCircleFilled style={{ color: colors.success }} />}
-            title={<span style={{ fontFamily: fonts.display, fontSize: 30, color: colors.navy }}>Order {done.orderNumber} is reserved</span>}
+            title={<span style={{ fontFamily: fonts.display, fontSize: 30, color: colors.navy }}>{format(t.doneTitle, { orderNumber: done.orderNumber })}</span>}
             subTitle={
               <span style={{ fontSize: 16, lineHeight: 1.6 }}>
-                We sent the payment details to <strong>{done.email}</strong>. Total to pay: <strong>{formatPrice(done.total, done.country)}</strong>.
+                {rich(t.doneText, { email: done.email, total: formatPrice(done.total, done.country) }, { b: (text) => <strong>{text}</strong> })}
                 <br />
-                Can&apos;t find it? Check your spam folder or message us below.
+                {t.doneSpam}
               </span>
             }
             extra={
@@ -191,11 +189,11 @@ export default function OrderModal({
                     target={link.key === "email" ? undefined : "_blank"}
                     icon={<ContactIcon kind={link.key} style={{ color: CONTACT_COLORS[link.key] }} />}
                   >
-                    {link.label}
+                    {m.contact.apps[link.key]}
                   </Button>
                 ))}
                 <Button size="large" type="primary" onClick={onClose}>
-                  Done
+                  {t.doneButton}
                 </Button>
               </Flex>
             }
@@ -215,15 +213,15 @@ export default function OrderModal({
             <Col xs={24} md={10} style={{ background: colors.aquaWash, borderRight: screens.md ? `1px solid ${colors.line}` : undefined }}>
               <div style={{ padding: "28px clamp(20px, 3vw, 32px)" }}>
                 <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: colors.tealDeep }}>
-                  Your order
+                  {t.yourOrder}
                 </div>
                 <Flex align="center" gap={16} style={{ margin: "16px 0 20px" }}>
                   <div style={{ width: 88, height: 88, position: "relative", flex: "none", borderRadius: 14, background: colors.white, border: `1px solid ${colors.line}` }}>
-                    <Image src={selected.image} alt={selected.fullName} fill sizes="88px" style={{ objectFit: "contain", padding: 4 }} />
+                    <Image src={selected.image} alt={m.products[product].fullName} fill sizes="88px" style={{ objectFit: "contain", padding: 4 }} />
                   </div>
                   <div>
                     <div style={{ fontFamily: fonts.display, fontSize: 22, color: colors.navy, lineHeight: 1.2 }}>{selected.name}</div>
-                    <div style={{ color: colors.muted, fontSize: 13 }}>{selected.label ? `${selected.label} · ` : ""}{selected.tagline}</div>
+                    <div style={{ color: colors.muted, fontSize: 13 }}>{selected.label ? `${selected.label} · ` : ""}{m.products[product].tagline}</div>
                   </div>
                 </Flex>
 
@@ -232,10 +230,10 @@ export default function OrderModal({
                   name="country"
                   label={
                     <span>
-                      Ship to <span style={{ color: colors.muted, fontWeight: 400 }}>· prices in {currencyOf(priceCountry)}</span>
+                      {t.shipTo} <span style={{ color: colors.muted, fontWeight: 400 }}>{format(t.pricesIn, { currency: currencyOf(priceCountry) })}</span>
                     </span>
                   }
-                  rules={[{ required: true, message: "Choose a country." }]}
+                  rules={[{ required: true, message: t.chooseCountryError }]}
                   style={{ marginBottom: 16 }}
                 >
                   <Select<string>
@@ -250,7 +248,7 @@ export default function OrderModal({
                         </span>
                       ) : null
                     }
-                    placeholder="Choose a country"
+                    placeholder={t.chooseCountry}
                     autoComplete="country"
                     listHeight={320}
                     // A country from the header picker becomes the visitor's country for the whole page too.
@@ -260,20 +258,20 @@ export default function OrderModal({
                   />
                 </Form.Item>
 
-                <Form.Item name="product" label="Pen" style={{ marginBottom: 16 }}>
+                <Form.Item name="product" label={t.pen} style={{ marginBottom: 16 }}>
                   <Segmented block options={PRODUCT_IDS.map((id) => ({ value: id, label: PRODUCTS[id].name }))} />
                 </Form.Item>
-                <Form.Item name="strength" label="Strength" style={{ marginBottom: 16 }}>
+                <Form.Item name="strength" label={t.strength} style={{ marginBottom: 16 }}>
                   <Segmented
                     block
                     options={STRENGTHS.map((value) => ({ value, label: `${strengthLabel(value)} · ${money(priceOf(product, value, priceCountry).sale)}` }))}
                   />
                 </Form.Item>
-                <Form.Item name="quantity" label="Quantity" style={{ marginBottom: 20 }}>
+                <Form.Item name="quantity" label={t.quantity} style={{ marginBottom: 20 }}>
                   <InputNumber min={1} max={MAX_QUANTITY} precision={0} style={{ width: 120 }} />
                 </Form.Item>
 
-                <Form.Item label="Discount code" style={{ marginBottom: 6 }}>
+                <Form.Item label={t.discountCode} style={{ marginBottom: 6 }}>
                   <Space.Compact block>
                     <Input
                       value={inputValue}
@@ -285,18 +283,18 @@ export default function OrderModal({
                         event.preventDefault()
                         void applyCode(inputValue)
                       }}
-                      placeholder="Your code"
+                      placeholder={t.codePlaceholder}
                       maxLength={LIMITS.promoCode}
                       style={{ textTransform: "uppercase" }}
                     />
                     <Button onClick={() => applyCode(inputValue)} loading={checkingCode} disabled={!inputValue.trim() || !!appliedCode}>
-                      {appliedCode ? "Applied" : "Apply"}
+                      {appliedCode ? t.applied : t.apply}
                     </Button>
                   </Space.Compact>
                 </Form.Item>
                 {!appliedCode && (
                   <Typography.Link onClick={openPromo} style={{ fontSize: 13, color: colors.sale, fontWeight: 600 }}>
-                    <GiftFilled /> Get an extra {OFFER.subscriberPercent}% code
+                    <GiftFilled /> {format(t.getCode, { percent: OFFER.subscriberPercent })}
                   </Typography.Link>
                 )}
 
@@ -304,14 +302,14 @@ export default function OrderModal({
                 <Flex vertical gap={6} style={{ fontSize: 14 }}>
                   <Flex justify="space-between" style={{ color: colors.muted }}>
                     <span>
-                      {safeQuantity} × {money(amounts.regular)} regular price
+                      {format(t.regularLine, { quantity: safeQuantity, price: money(amounts.regular) })}
                     </span>
                     <span style={{ textDecoration: amounts.saved ? "line-through" : undefined }}>{money(amounts.regularTotal)}</span>
                   </Flex>
                   {OFFER.salePercent > 0 && (
                     <Flex justify="space-between" style={{ color: colors.sale, fontWeight: 600 }}>
                       <span>
-                        {OFFER.saleLabel} −{OFFER.salePercent}%
+                        {format(t.saleLine, { saleLabel: m.offer.saleLabel, percent: OFFER.salePercent })}
                       </span>
                       <span>−{money(amounts.regularTotal - amounts.subtotal)}</span>
                     </Flex>
@@ -319,14 +317,14 @@ export default function OrderModal({
                   {appliedCode && (
                     <Flex justify="space-between" style={{ color: colors.success, fontWeight: 600 }}>
                       <span>
-                        Code {appliedCode} −{OFFER.subscriberPercent}%
+                        {format(t.codeLine, { code: appliedCode, percent: OFFER.subscriberPercent })}
                       </span>
                       <span>−{money(amounts.codeDiscount)}</span>
                     </Flex>
                   )}
                 </Flex>
                 <Flex justify="space-between" align="baseline" style={{ marginTop: 10 }}>
-                  <span style={{ fontWeight: 600 }}>Total</span>
+                  <span style={{ fontWeight: 600 }}>{t.total}</span>
                   <span style={{ fontFamily: fonts.display, fontSize: 36, color: colors.navy, fontWeight: 600 }}>{money(total)}</span>
                 </Flex>
                 <Flex justify="flex-end">
@@ -342,24 +340,18 @@ export default function OrderModal({
                         border: `1px solid ${colors.limeLight}`,
                       }}
                     >
-                      You save {money(amounts.saved)}
+                      {format(t.youSave, { price: money(amounts.saved) })}
                     </span>
                   )}
                 </Flex>
 
                 <Flex vertical gap={8} style={{ marginTop: 20, fontSize: 13, color: colors.navyInk, display: screens.md ? undefined : "none" }}>
-                  <span>
-                    <SafetyCertificateOutlined style={{ color: colors.teal, marginRight: 8 }} />
-                    ≥99% purity, COA with every lot
-                  </span>
-                  <span>
-                    <ThunderboltOutlined style={{ color: colors.teal, marginRight: 8 }} />
-                    Ships within 24 h of payment
-                  </span>
-                  <span>
-                    <MailOutlined style={{ color: colors.teal, marginRight: 8 }} />
-                    Payment details by email, nothing to pay now
-                  </span>
+                  {[SafetyCertificateOutlined, ThunderboltOutlined, MailOutlined].map((Icon, index) => (
+                    <span key={index}>
+                      <Icon style={{ color: colors.teal, marginRight: 8 }} />
+                      {t.perks[index]}
+                    </span>
+                  ))}
                 </Flex>
               </div>
             </Col>
@@ -368,57 +360,61 @@ export default function OrderModal({
             <Col xs={24} md={14}>
               <div style={{ padding: "28px clamp(20px, 3vw, 32px) 24px" }}>
                 <Typography.Title level={3} style={{ fontFamily: fonts.display, fontWeight: 400, color: colors.navy, margin: "0 0 4px" }}>
-                  Where should we send it?
+                  {t.title}
                 </Typography.Title>
                 <Typography.Paragraph style={{ color: colors.muted, marginBottom: 20 }}>
-                  No account, no cart. One short form and you&apos;re done.
+                  {t.subtitle}
                 </Typography.Paragraph>
 
-                <Form.Item name="name" label="Full name" rules={[{ required: true, min: 2, message: "Enter your full name." }]}>
+                <Form.Item name="name" label={t.fullName} rules={[{ required: true, min: 2, message: t.fullNameError }]}>
                   <Input autoComplete="name" maxLength={LIMITS.name} />
                 </Form.Item>
                 <Row gutter={12}>
                   <Col xs={24} sm={12}>
-                    <Form.Item name="email" label="Email" rules={[{ required: true, pattern: EMAIL_PATTERN, message: "Enter a valid email." }]}>
+                    <Form.Item name="email" label={t.email} rules={[{ required: true, pattern: EMAIL_PATTERN, message: t.emailError }]}>
                       <Input type="email" autoComplete="email" inputMode="email" maxLength={LIMITS.email} />
                     </Form.Item>
                   </Col>
                   <Col xs={24} sm={12}>
                     <Form.Item
                       name="phone"
-                      label="Phone (with country code)"
-                      rules={[{ required: true, pattern: PHONE_PATTERN, message: "Enter a phone number, e.g. +1 555 123 4567." }]}
+                      label={t.phone}
+                      rules={[{ required: true, pattern: PHONE_PATTERN, message: t.phoneError }]}
                     >
-                      <Input type="tel" autoComplete="tel" inputMode="tel" placeholder="+1 555 123 4567" maxLength={LIMITS.phone} />
+                      <PhoneField country={shipTo} placeholder={t.phonePlaceholder} codeLabel={t.phoneCode} maxLength={LIMITS.phone} />
                     </Form.Item>
                   </Col>
                 </Row>
 
-                <Form.Item name="contactApp" label="Best way to reach you">
-                  <Radio.Group optionType="button" buttonStyle="solid" options={CONTACT_APPS.map((app) => ({ value: app, label: CONTACT_APP_LABELS[app] }))} />
+                <Form.Item name="contactApp" label={t.contactApp}>
+                  <Radio.Group
+                    optionType="button"
+                    buttonStyle="solid"
+                    options={CONTACT_APPS.map((app) => ({ value: app, label: app === "email" ? t.contactAppEmailOnly : m.contact.apps[app] }))}
+                  />
                 </Form.Item>
                 {contactApp !== "email" && (
                   <Form.Item name="contactHandle" style={{ marginTop: -8 }}>
-                    <Input placeholder={HANDLE_HINT[contactApp]} maxLength={LIMITS.contactHandle} />
+                    <Input placeholder={t.handleHint[contactApp]} maxLength={LIMITS.contactHandle} />
                   </Form.Item>
                 )}
 
-                <Form.Item name="address" label="Street address" rules={[{ required: true, min: 4, message: "Enter the street address." }]}>
+                <Form.Item name="address" label={t.address} rules={[{ required: true, min: 4, message: t.addressError }]}>
                   <Input autoComplete="street-address" maxLength={LIMITS.address} />
                 </Form.Item>
                 <Row gutter={12}>
                   <Col xs={14}>
-                    <Form.Item name="city" label="City" rules={[{ required: true, min: 2, message: "Enter the city." }]}>
+                    <Form.Item name="city" label={t.city} rules={[{ required: true, min: 2, message: t.cityError }]}>
                       <Input autoComplete="address-level2" maxLength={LIMITS.city} />
                     </Form.Item>
                   </Col>
                   <Col xs={10}>
-                    <Form.Item name="postalCode" label="Postal code" rules={[{ required: true, message: "Enter the postal code." }]}>
+                    <Form.Item name="postalCode" label={t.postalCode} rules={[{ required: true, message: t.postalCodeError }]}>
                       <Input autoComplete="postal-code" maxLength={LIMITS.postalCode} />
                     </Form.Item>
                   </Col>
                 </Row>
-                <Form.Item name="note" label="Note (optional)">
+                <Form.Item name="note" label={t.note}>
                   <Input.TextArea autoSize={{ minRows: 2, maxRows: 4 }} maxLength={LIMITS.note} />
                 </Form.Item>
 
@@ -430,16 +426,16 @@ export default function OrderModal({
                 <Form.Item
                   name="researchUse"
                   valuePropName="checked"
-                  rules={[{ validator: (_, value) => (value ? Promise.resolve() : Promise.reject(new Error("Please confirm research use."))) }]}
+                  rules={[{ validator: (_, value) => (value ? Promise.resolve() : Promise.reject(new Error(t.researchUseError))) }]}
                 >
-                  <Checkbox>I confirm these products are for research use only.</Checkbox>
+                  <Checkbox>{t.researchUse}</Checkbox>
                 </Form.Item>
 
                 <Button type="primary" htmlType="submit" size="large" block loading={submitting} icon={<LockOutlined />} style={{ height: 56, fontSize: 17 }}>
-                  Place order · {money(total)}
+                  {format(t.placeOrder, { price: money(total) })}
                 </Button>
                 <Typography.Paragraph style={{ color: colors.muted, fontSize: 12, textAlign: "center", margin: "12px 0 0" }}>
-                  You&apos;ll get a confirmation email with payment details right away. Questions? Write to {SITE.email}.
+                  {format(t.confirmationNote, { email: SITE.email })}
                 </Typography.Paragraph>
               </div>
             </Col>
