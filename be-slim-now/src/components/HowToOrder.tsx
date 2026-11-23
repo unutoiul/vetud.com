@@ -14,7 +14,7 @@ export default function HowToOrder() {
   const { openOrder } = useOrder()
   const t = useMessages().howToOrder
   return (
-    <Section id="how" background={colors.paper}>
+    <Section id="how" background={colors.paper} joined>
       <SectionHeading eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
       <Row gutter={[24, 24]}>
         {t.steps.map((step, index) => (

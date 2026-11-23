@@ -5,12 +5,12 @@ import { colors, fonts, gradients } from "@/theme/tokens"
 import Image from "next/image"
 import { PRODUCTS } from "@/config/site"
 import { useMessages } from "./MessagesProvider"
-import { Container, SectionHeading } from "./ui"
+import { Container, SECTION_PADDING, SectionHeading } from "./ui"
 
 export default function Quality() {
   const t = useMessages().quality
   return (
-    <section id="quality" style={{ position: "relative", overflow: "hidden", background: gradients.night, padding: "clamp(64px, 9vw, 112px) 0" }}>
+    <section id="quality" style={{ position: "relative", overflow: "hidden", background: gradients.night, padding: SECTION_PADDING }}>
       <div aria-hidden style={{ position: "absolute", inset: 0, opacity: 0.7 }}>
         <Image src={PRODUCTS.retatrutide.art} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center" }} />
       </div>

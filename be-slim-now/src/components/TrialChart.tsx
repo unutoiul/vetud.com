@@ -61,6 +61,18 @@ export default function TrialChart() {
   return (
     <Section id="trial-chart" background={colors.aquaWash}>
       <SectionHeading eyebrow={m.eyebrow} title={m.title} subtitle={m.subtitle} />
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', margin: '20px 0' }}>
+          <img
+            src="/images/transformation-man.png"
+            alt="Man's transformation"
+            style={{ maxWidth: '300px', borderRadius: '10px', boxShadow: '0px 4px 15px rgba(0,0,0,0.15)' }}
+          />
+          <img
+            src="/images/transformation-woman.png"
+            alt="Woman's transformation"
+            style={{ maxWidth: '300px', borderRadius: '10px', boxShadow: '0px 4px 15px rgba(0,0,0,0.15)' }}
+          />
+        </div>
       <FadeUp delay={0.05} y={10}>
         <figure
           style={{

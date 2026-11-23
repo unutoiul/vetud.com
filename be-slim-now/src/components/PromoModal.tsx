@@ -1,16 +1,37 @@
 "use client"
 
-import { CheckOutlined, CloseOutlined, CopyOutlined, LockOutlined, ShoppingOutlined } from "@ant-design/icons"
+import {
+  CheckOutlined,
+  CloseOutlined,
+  CopyOutlined,
+  ExclamationCircleFilled,
+  LockOutlined,
+  MailOutlined,
+  QuestionCircleFilled,
+  ShoppingOutlined,
+} from "@ant-design/icons"
 import { App, Button, Flex, Form, Grid, Input, Modal, Typography } from "antd"
-import { useState } from "react"
+import { useState, type ReactNode } from "react"
 import { OFFER, PRODUCTS, bestCombinedPercent } from "@/config/site"
 import { around, format } from "@/i18n/format"
+import { suggestEmail } from "@/lib/emailTypos"
 import { EMAIL_PATTERN, LIMITS, orderTotal } from "@/lib/order"
 import { colors, fonts, gradients } from "@/theme/tokens"
 import { useCountry } from "./CountryProvider"
 import { useMessages } from "./MessagesProvider"
 import { useOrder } from "./OrderProvider"
 import Image from "next/image"
+
+/** A field's error, with an icon so it reads as a note rather than a stray red line. */
+function FieldNote({ children }: { children: ReactNode }) {
+  return (
+    // antd drops the field's bottom margin while a note shows, so the note brings its own.
+    <Flex align="center" gap={6} style={{ padding: "6px 0 12px", fontSize: 13, fontWeight: 500 }}>
+      <ExclamationCircleFilled />
+      {children}
+    </Flex>
+  )
+}
 
 /** "Extra 10% off": subscribe with an email, get the code on screen and by email. */
 export default function PromoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -48,6 +69,32 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
     } finally {
       setSending(false)
     }
+  }
+
+  // Validation: quiet while typing, checked when the field is left, then live until it's right.
+  const [form] = Form.useForm<{ email: string; website?: string }>()
+  const [live, setLive] = useState(false)
+  // "Did you mean name@gmail.com?" for a misspelt provider. It doesn't block: the first press of
+  // the button shows it, a second press sends the address as typed.
+  const [suggestion, setSuggestion] = useState<string>()
+  const [askedAbout, setAskedAbout] = useState<string>()
+  const [typoBefore, typoAfter] = around(t.emailTypo, "email")
+
+  function acceptSuggestion() {
+    if (!suggestion) return
+    form.setFieldValue("email", suggestion)
+    setSuggestion(undefined)
+    void form.validateFields(["email"]).catch(() => undefined)
+  }
+
+  function submit(values: { email: string; website?: string }) {
+    const fix = suggestEmail(values.email)
+    if (fix && askedAbout !== values.email) {
+      setSuggestion(fix)
+      setAskedAbout(values.email)
+      return
+    }
+    void subscribe(values)
   }
 
   async function copy() {
@@ -163,14 +210,52 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
               </div>
             </Flex>
 
-            <Form layout="vertical" requiredMark={false} onFinish={subscribe}>
+            <Form form={form} layout="vertical" requiredMark={false} onFinish={submit} onFinishFailed={() => setLive(true)}>
               <Form.Item
                 name="email"
                 label={<span style={{ fontWeight: 600 }}>{t.emailLabel}</span>}
-                rules={[{ required: true, pattern: EMAIL_PATTERN, message: t.emailError }]}
+                // Checked when the visitor leaves the field (or presses the button), then live on every
+                // key, so the error clears the moment the address is right.
+                validateTrigger={live ? "onChange" : "onBlur"}
+                normalize={(value: string) => value.replace(/\s/g, "")}
+                hasFeedback={live}
+                // A likely typo isn't an error, but it isn't a green tick either.
+                validateStatus={suggestion ? "warning" : undefined}
+                rules={[
+                  { required: true, message: <FieldNote>{t.emailRequired}</FieldNote> },
+                  { pattern: EMAIL_PATTERN, message: <FieldNote>{t.emailError}</FieldNote> },
+                ]}
+                extra={
+                  suggestion && (
+                    <Flex align="center" gap={6} wrap style={{ marginTop: 6, fontSize: 13, color: colors.navyInk }}>
+                      <QuestionCircleFilled style={{ color: colors.warning }} />
+                      <span>
+                        {typoBefore}
+                        <Typography.Link onClick={acceptSuggestion} style={{ fontWeight: 600, textDecoration: "underline" }}>
+                          {suggestion}
+                        </Typography.Link>
+                        {typoAfter}
+                      </span>
+                    </Flex>
+                  )
+                }
                 style={{ marginBottom: 14 }}
               >
-                <Input size="large" type="email" autoComplete="email" inputMode="email" placeholder={t.emailPlaceholder} maxLength={LIMITS.email} />
+                <Input
+                  size="large"
+                  type="email"
+                  autoComplete="email"
+                  inputMode="email"
+                  placeholder={t.emailPlaceholder}
+                  maxLength={LIMITS.email}
+                  prefix={<MailOutlined style={{ color: colors.muted, marginRight: 4 }} />}
+                  onBlur={(event) => {
+                    setLive(true)
+                    const value = event.target.value.replace(/\s/g, "")
+                    setSuggestion(EMAIL_PATTERN.test(value) ? suggestEmail(value) : undefined)
+                  }}
+                  onChange={() => setSuggestion(undefined)}
+                />
               </Form.Item>
               <Form.Item name="website" hidden>
                 <Input tabIndex={-1} autoComplete="off" />

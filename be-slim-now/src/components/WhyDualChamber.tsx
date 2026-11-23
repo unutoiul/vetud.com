@@ -14,7 +14,7 @@ export default function WhyDualChamber() {
   const { openOrder } = useOrder()
   const t = useMessages().dualChamber
   return (
-    <Section id="dual-chamber" background={colors.aquaWash}>
+    <Section id="dual-chamber" background={colors.aquaWash} joined>
       <SectionHeading
         eyebrow={t.eyebrow}
         title={t.title}

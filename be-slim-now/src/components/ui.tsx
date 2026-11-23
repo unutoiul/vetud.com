@@ -9,19 +9,31 @@ export function Container({ children, style }: { children: ReactNode; style?: CS
   return <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(16px, 4vw, 32px)", ...style }}>{children}</div>
 }
 
+/** Space above and below every section's content (two of these sit between neighbouring sections). */
+export const SECTION_PADDING = "clamp(48px, 6.5vw, 80px) 0"
+
+/** Top space for a section that continues the section above in the same background colour. */
+const JOINED_TOP = "clamp(8px, 1.5vw, 16px)"
+
 export function Section({
   id,
   children,
   background,
+  joined = false,
   style,
 }: {
   id?: string
   children: ReactNode
   background?: string
+  /**
+   * Set when the section above has the same background. Without a colour change the two paddings
+   * read as one big empty band, so this section starts almost straight after the one above.
+   */
+  joined?: boolean
   style?: CSSProperties
 }) {
   return (
-    <section id={id} style={{ padding: "clamp(64px, 9vw, 112px) 0", background, ...style }}>
+    <section id={id} style={{ padding: SECTION_PADDING, ...(joined && { paddingTop: JOINED_TOP }), background, ...style }}>
       <Container>{children}</Container>
     </section>
   )
@@ -58,7 +70,7 @@ export function SectionHeading({
   inverse?: boolean
 }) {
   return (
-    <div style={{ textAlign: align, maxWidth: align === "center" ? 720 : undefined, margin: align === "center" ? "0 auto 56px" : "0 0 32px" }}>
+    <div style={{ textAlign: align, maxWidth: align === "center" ? 720 : undefined, margin: align === "center" ? "0 auto clamp(32px, 4vw, 48px)" : "0 0 32px" }}>
       {eyebrow && <Eyebrow color={inverse ? colors.onNavyMuted : colors.tealDeep}>{eyebrow}</Eyebrow>}
       <Typography.Title
         level={2}
