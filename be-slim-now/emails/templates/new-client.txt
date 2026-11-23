@@ -1,0 +1,25 @@
+Welcome to VETUD
+
+Welcome, {{{NAME}}}.
+
+{{{WELCOME_LINE}}}
+
+TWO PENS FOR WEIGHT-MANAGEMENT RESEARCH
+
+{{{PRODUCTS_LINE}}}
+
+WHAT THEY ARE
+Tirzepatide (TZ-2) — dual GIP / GLP-1 receptor agonist.
+Retatrutide — next-generation triple GIP / GLP-1 / glucagon agonist.
+
+HOW TO ORDER
+1. Choose Tirzepatide (TZ-2) or Retatrutide, and the strength (20 mg or 40 mg).
+2. Complete the short order form — it takes under a minute.
+3. Pay using the details in your confirmation and we ship discreetly with tracking.
+
+Order here: {{{SITE_URL}}}
+
+QUESTIONS? MESSAGE US
+{{{CONTACT_LINKS}}}
+
+We'll reach you by email. Just reply to this message any time.

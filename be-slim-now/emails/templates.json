@@ -1,0 +1,86 @@
+{
+  "order-confirmation": {
+    "id": "08d4fe11-7544-4d5b-bc37-d25018eab6ce",
+    "name": "VETUD Pens · Order confirmation (buyer)",
+    "alias": "vetud-pens-order-confirmation",
+    "subject": "Order {{{ORDER_NUMBER}}} received: how to pay",
+    "preheader": "Your {{{ITEM}}} is reserved. Payment details are inside.",
+    "variables": [
+      "SITE_URL",
+      "NAME",
+      "ORDER_NUMBER",
+      "ITEM",
+      "QUANTITY",
+      "UNIT_PRICE",
+      "ORDER_TOTAL",
+      "SAVINGS",
+      "SHIP_TO",
+      "CONTACT_PREF",
+      "PAYMENT_INSTRUCTIONS",
+      "PAYMENT_DETAILS",
+      "CONTACT_LINKS"
+    ]
+  },
+  "order-admin": {
+    "id": "96882a52-dc77-4ea3-9ab2-fb0d3435d79e",
+    "name": "VETUD Pens · New order (store owner)",
+    "alias": "vetud-pens-order-admin",
+    "subject": "New order {{{ORDER_NUMBER}}} · {{{ORDER_TOTAL}}} · {{{NAME}}}",
+    "preheader": "{{{NAME}}} ordered {{{QUANTITY}}} × {{{ITEM}}}.",
+    "variables": [
+      "SITE_URL",
+      "NAME",
+      "ORDER_NUMBER",
+      "ITEM",
+      "QUANTITY",
+      "UNIT_PRICE",
+      "ORDER_TOTAL",
+      "SAVINGS",
+      "SHIP_TO",
+      "CONTACT_PREF",
+      "CUSTOMER_EMAIL",
+      "PHONE",
+      "NOTE",
+      "PLACED_AT"
+    ]
+  },
+  "promo-code": {
+    "id": "741e9210-bf59-45e9-96dd-d463c6c34fca",
+    "name": "VETUD Pens · Subscriber discount code",
+    "alias": "vetud-pens-promo-code",
+    "subject": "Your extra {{{PERCENT}}} code: {{{CODE}}}",
+    "preheader": "Use {{{CODE}}} in the order form for an extra {{{PERCENT}}} off.",
+    "variables": [
+      "SITE_URL",
+      "CODE",
+      "PERCENT",
+      "OFFER_LINE"
+    ]
+  },
+  "subscribe-admin": {
+    "id": "23cd25a2-62e3-47fc-a2bf-736cfa071be1",
+    "name": "VETUD Pens · New subscriber (store owner)",
+    "alias": "vetud-pens-subscribe-admin",
+    "subject": "New subscriber: {{{SUBSCRIBER_EMAIL}}}",
+    "preheader": "{{{SUBSCRIBER_EMAIL}}} signed up for the discount code.",
+    "variables": [
+      "SITE_URL",
+      "SUBSCRIBER_EMAIL",
+      "SUBSCRIBED_AT"
+    ]
+  },
+  "new-client": {
+    "id": "2d5d18af-96c2-46a5-8b57-0d7fb22536b8",
+    "name": "VETUD Peptide Series · New client welcome",
+    "alias": "vetud-peptide-new-client",
+    "subject": "Welcome to VETUD, {{{NAME}}} — your Tirzepatide & Retatrutide pens",
+    "preheader": "Your new-client guide: the two pens, how to order, and where to ask questions.",
+    "variables": [
+      "SITE_URL",
+      "NAME",
+      "WELCOME_LINE",
+      "PRODUCTS_LINE",
+      "CONTACT_LINKS"
+    ]
+  }
+}
