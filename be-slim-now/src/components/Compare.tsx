@@ -86,7 +86,7 @@ export default function Compare() {
                   minHeight: screens.md ? 132 : 104,
                   padding: screens.md ? "22px 24px" : "16px 12px",
                   borderLeft: `1px solid ${colors.onNavyLine}`,
-                  borderTop: hot ? `3px solid ${colors.gold}` : `3px solid ${colors.clear}`,
+                  borderTop: hot ? `3px solid ${colors.green}` : `3px solid ${colors.clear}`,
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "flex-end",
@@ -95,7 +95,7 @@ export default function Compare() {
                 {/* Each molecule's artwork from vetud.com */}
                 <Image src={product.art} alt="" fill sizes="(max-width: 768px) 40vw, 480px" style={{ objectFit: "cover", objectPosition: "center" }} />
                 <div aria-hidden style={{ position: "absolute", inset: 0, background: gradients.artFade }} />
-                <div style={{ position: "relative", fontFamily: fonts.mono, fontSize: 10.5, letterSpacing: "0.16em", textTransform: "uppercase", color: hot ? colors.goldLight : colors.ribbonIce }}>
+                <div style={{ position: "relative", fontFamily: fonts.mono, fontSize: 10.5, letterSpacing: "0.16em", textTransform: "uppercase", color: hot ? colors.limeLight : colors.tealBright }}>
                   {product.badge.text}
                 </div>
                 <div style={{ position: "relative", fontFamily: fonts.display, fontSize: screens.md ? 30 : 20, fontWeight: 500, color: colors.white, lineHeight: 1.15, marginTop: 4 }}>
@@ -112,7 +112,7 @@ export default function Compare() {
             style={{
               display: "grid",
               gridTemplateColumns: `${labelWidth} 1fr 1fr`,
-              background: index % 2 ? colors.iceWash : colors.white,
+              background: index % 2 ? colors.aquaWash : colors.white,
               borderTop: `1px solid ${colors.line}`,
               fontSize: screens.md ? 15 : 13,
             }}
@@ -142,14 +142,14 @@ export default function Compare() {
           <div />
           {PRODUCT_IDS.map((id) => {
             return (
-              <div key={id} style={{ padding: screens.md ? "20px 24px" : "14px 12px", borderLeft: `1px solid ${colors.line}` }}>
+              <div key={id} style={{ minWidth: 0, padding: screens.md ? "20px 24px" : "14px 10px", borderLeft: `1px solid ${colors.line}` }}>
                 <Button
                   type="primary"
                   size="large"
                   block
-                  icon={<ShoppingOutlined />}
+                  icon={screens.sm ? <ShoppingOutlined /> : undefined}
                   onClick={() => openOrder({ product: id })}
-                  style={{ height: screens.md ? 54 : 46, fontSize: screens.md ? 16 : 14 }}
+                  style={{ height: screens.md ? 54 : 46, fontSize: screens.md ? 16 : 14, padding: screens.sm ? undefined : "0 8px" }}
                 >
                   {screens.md ? `Buy ${PRODUCTS[id].name}` : "Buy now"}
                 </Button>

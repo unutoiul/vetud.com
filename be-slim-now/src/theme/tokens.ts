@@ -6,7 +6,7 @@ import type { ThemeConfig } from "antd"
  * offer accent. Teal is the brand (buttons, links, icons); green-lime only marks the offer and
  * savings. Components use these names, never colour literals.
  */
-const palette = {
+export const colors = {
   // Navy: the logo's lettering.
   navy: "#072542",
   navyDeep: "#041a2e",
@@ -59,21 +59,6 @@ const palette = {
   telegram: "#229ed9",
   whatsapp: "#25d366",
   line_app: "#06c755",
-} as const
-
-export const colors = {
-  ...palette,
-  // Old names still used by Hero, Compare and HowToOrder while another change is open on those
-  // files. TODO: rename them there and delete these.
-  blue: palette.teal,
-  blueDeep: palette.tealDeep,
-  blueSoft: palette.tealDeep,
-  ice: palette.aqua,
-  iceLight: palette.aquaLight,
-  iceWash: palette.aquaWash,
-  gold: palette.green,
-  goldLight: palette.limeLight,
-  ribbonIce: palette.tealBright,
 } as const
 
 export const gradients = {

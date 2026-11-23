@@ -24,6 +24,7 @@ export default function HowToOrder() {
             <div
               style={{
                 height: "100%",
+                boxSizing: "border-box",
                 background: colors.white,
                 border: `1px solid ${colors.line}`,
                 borderRadius: 20,
@@ -34,7 +35,7 @@ export default function HowToOrder() {
             >
               <span
                 aria-hidden
-                style={{ position: "absolute", top: 18, right: 22, fontFamily: fonts.display, fontSize: 44, fontWeight: 300, color: colors.ice, lineHeight: 1 }}
+                style={{ position: "absolute", top: 18, right: 22, fontFamily: fonts.display, fontSize: 44, fontWeight: 300, color: colors.aqua, lineHeight: 1 }}
               >
                 {index + 1}
               </span>
@@ -47,8 +48,8 @@ export default function HowToOrder() {
                   placeItems: "center",
                   fontSize: 20,
                   color: colors.navy,
-                  background: colors.iceLight,
-                  border: `1px solid ${colors.ice}`,
+                  background: colors.aquaLight,
+                  border: `1px solid ${colors.aqua}`,
                 }}
               >
                 {step.icon}

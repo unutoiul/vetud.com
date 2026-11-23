@@ -50,7 +50,7 @@ Flags in `public/flags` come from country-flag-icons (MIT, see the LICENSE there
 
 ## Hero animation
 
-The headline rises in word by word, "40% off." counts up with a champagne light gliding through it and a gold stroke drawn underneath, a line below cycles through "Every pen is purity-guaranteed / delivery-guaranteed / 40% off this week / ready to ship today / ≥99% pure / COA-backed / discreetly packed", the pens glide in, float and lean toward the mouse, and the offer seal spins in with a soft pulse.
+The headline rises in word by word, "40% off." counts up with a brighter green light gliding through it and a green stroke drawn underneath, a line below cycles through "Every pen is purity-guaranteed / delivery-guaranteed / 40% off this week / ready to ship today / ≥99% pure / COA-backed / discreetly packed", the pens glide in, float and lean toward the mouse, and the offer seal spins in with a soft pulse.
 
 - **The two guarantees** (refund if a lot tests below 99% purity; reship or refund if a parcel is lost) are written out under the Buy button (`GUARANTEES` in `Hero.tsx`) and in the FAQ. If the policy changes, change both, and the rotating phrases.
 - **Entrances are CSS animations** in the server HTML (`enter()` in `animated.tsx`), so they play on first paint and the hero is never blank while JavaScript loads. The background picture only scales (no fade), so it still counts as painted at once for Largest Contentful Paint (about 0.55 s locally).

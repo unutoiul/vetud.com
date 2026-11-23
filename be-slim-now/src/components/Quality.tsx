@@ -30,7 +30,7 @@ export default function Quality() {
         <Row gutter={[1, 1]} style={{ borderRadius: 20, overflow: "hidden", border: `1px solid ${colors.onNavyLine}` }}>
           {STATS.map((stat) => (
             <Col key={stat.label} xs={24} sm={12} lg={6}>
-              <div style={{ height: "100%", padding: "36px 28px", outline: `1px solid ${colors.onNavyLine}`, background: colors.nightGlass, backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
+              <div style={{ height: "100%", boxSizing: "border-box", padding: "36px 28px", outline: `1px solid ${colors.onNavyLine}`, background: colors.nightGlass, backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}>
                 <div style={{ fontFamily: fonts.display, fontSize: "clamp(44px, 5vw, 56px)", fontWeight: 300, color: colors.onNavy, lineHeight: 1 }}>{stat.value}</div>
                 <div style={{ fontFamily: fonts.mono, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: colors.aqua, margin: "14px 0 8px" }}>
                   {stat.label}

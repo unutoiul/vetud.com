@@ -1,11 +1,11 @@
 "use client"
 
 import { CheckCircleFilled, GiftFilled, SafetyCertificateFilled, ShoppingOutlined } from "@ant-design/icons"
-import { Button, Col, Flex, Row, Typography } from "antd"
+import { Button, Col, Flex, Grid, Row, Typography } from "antd"
 import { motion, MotionConfig, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react"
 import Image from "next/image"
 import { Fragment, useRef, type CSSProperties, type PointerEvent } from "react"
-import { OFFER, PRODUCTS, type ProductId } from "@/config/site"
+import { OFFER, PRODUCTS, WEIGHT_LOSS, type ProductId } from "@/config/site"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
 import { CountUp, enter, EnterKeyframes, FadeUp, RisingWord, Rotator, Shine, SPRING_CSS, srOnly } from "./animated"
 import { useCountry } from "./CountryProvider"
@@ -58,7 +58,7 @@ function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; de
         textAlign: "left",
         cursor: "pointer",
         background: colors.white,
-        border: `1px solid ${hot ? colors.gold : colors.line}`,
+        border: `1px solid ${hot ? colors.green : colors.line}`,
         borderRadius: 14,
         padding: "10px 16px",
         boxShadow: shadows.card,
@@ -67,7 +67,7 @@ function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; de
         ...enter("pop", { delay, duration: 0.8, easing: SPRING_CSS }),
       }}
     >
-      <div style={{ fontFamily: fonts.mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: hot ? colors.sale : colors.blueSoft, fontWeight: 600 }}>
+      <div style={{ fontFamily: fonts.mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: hot ? colors.sale : colors.tealDeep, fontWeight: 600 }}>
         {product.badge.text}
       </div>
       <div style={{ fontFamily: fonts.display, fontSize: 20, fontWeight: 500, color: colors.navy, lineHeight: 1.2 }}>
@@ -82,7 +82,7 @@ function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; de
   )
 }
 
-/** "40% off." counts up, a champagne light glides through it, and a gold stroke draws itself underneath. */
+/** "40% off." counts up, a brighter green light glides through it, and a green stroke draws itself underneath. */
 function OfferWords({ delay }: { delay: number }) {
   const reduce = useReducedMotion()
   return (
@@ -112,7 +112,7 @@ function OfferWords({ delay }: { delay: number }) {
           strokeDasharray="1 1"
           strokeDashoffset={0}
           fill="none"
-          stroke={colors.gold}
+          stroke={colors.green}
           strokeWidth={4}
           strokeLinecap="round"
           vectorEffect="non-scaling-stroke"
@@ -171,6 +171,9 @@ export default function Hero() {
   const { openOrder, openPromo } = useOrder()
   const { lowestPrice, money } = useCountry()
   const reduce = useReducedMotion()
+  const screens = Grid.useBreakpoint()
+  /** On phones the two buttons stack, each the full width: bigger targets, no ragged edge. */
+  const ctaWidth: CSSProperties = screens.sm ? {} : { width: "100%" }
   const sectionRef = useRef<HTMLElement>(null)
 
   // The alpine art drifts down a little as the page scrolls, so the hero has depth.
@@ -294,13 +297,30 @@ export default function Hero() {
                 </span>
               </Typography.Title>
 
+              <FadeUp delay={AFTER_HEADLINE - 0.06} y={10} style={{ marginTop: 14 }}>
+                <p style={{ fontFamily: fonts.display, fontWeight: 700, lineHeight: 1.12, color: colors.navyDeep, margin: 0, fontSize: "clamp(21px, 2.5vw, 30px)" }}>
+                  <span style={srOnly}>
+                    Lose weight up to {WEIGHT_LOSS.percent}% of body weight in {WEIGHT_LOSS.timeframe}.
+                  </span>
+                  <span aria-hidden>Lose weight up to </span>
+                  <span style={{ color: colors.sale, fontWeight: 800 }}>
+                    <CountUp
+                      to={WEIGHT_LOSS.percent}
+                      delay={AFTER_HEADLINE - 0.06}
+                      duration={1.7}
+                    />
+                  </span>%
+                  <span aria-hidden> of body weight in {WEIGHT_LOSS.timeframe}.</span>
+                </p>
+              </FadeUp>
+
               <FadeUp delay={AFTER_HEADLINE} y={12} style={{ marginTop: 18 }}>
                 <p style={{ fontFamily: fonts.display, fontSize: "clamp(19px, 2vw, 24px)", fontWeight: 400, lineHeight: 1.3, color: colors.navyInk, margin: 0 }}>
                   <span style={srOnly}>
                     Every pen is {EVERY_PEN.slice(0, -1).join(", ")} and {EVERY_PEN.at(-1)}.
                   </span>
                   <span aria-hidden>Every pen is </span>
-                  <Rotator items={EVERY_PEN} style={{ fontWeight: 600, color: colors.blueDeep }} />
+                  <Rotator items={EVERY_PEN} style={{ fontWeight: 600, color: colors.tealDeep }} />
                 </p>
               </FadeUp>
 
@@ -317,19 +337,19 @@ export default function Hero() {
 
               <FadeUp delay={AFTER_HEADLINE + 0.25}>
                 <Flex wrap gap={12} style={{ marginTop: 30 }}>
-                  <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+                  <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={ctaWidth}>
                     <Button
                       type="primary"
                       size="large"
                       icon={<ShoppingOutlined />}
                       onClick={() => openOrder()}
-                      style={{ position: "relative", overflow: "hidden", height: 58, padding: "0 30px", fontSize: 18 }}
+                      style={{ position: "relative", overflow: "hidden", height: 58, padding: "0 30px", fontSize: 18, ...ctaWidth }}
                     >
                       Buy now · from {money(lowestPrice())}
                       <Shine delay={2.4} every={4.2} />
                     </Button>
                   </motion.div>
-                  <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }}>
+                  <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} style={ctaWidth}>
                     <Button
                       size="large"
                       icon={
@@ -342,7 +362,7 @@ export default function Hero() {
                         </motion.span>
                       }
                       onClick={openPromo}
-                      style={{ height: 58, padding: "0 22px", fontSize: 16, fontWeight: 600, color: colors.navy, borderColor: colors.gold, background: colors.white }}
+                      style={{ height: 58, padding: "0 22px", fontSize: 16, fontWeight: 600, color: colors.navy, borderColor: colors.green, background: colors.white, ...ctaWidth }}
                     >
                       Extra −{OFFER.subscriberPercent}% code
                     </Button>
@@ -372,7 +392,7 @@ export default function Hero() {
                       ...enter("up", { delay: AFTER_HEADLINE + 0.45 + index * 0.07, duration: 0.6, vars: { "--enter-y": "8px" } }),
                     }}
                   >
-                    <CheckCircleFilled style={{ color: colors.blue }} />
+                    <CheckCircleFilled style={{ color: colors.teal }} />
                     {item}
                   </span>
                 ))}
@@ -413,7 +433,7 @@ export default function Hero() {
                   <div style={{ position: "absolute", right: "4%", bottom: "4%" }}>
                     <motion.div
                       aria-hidden
-                      style={{ position: "absolute", inset: 0, borderRadius: 999, border: `2px solid ${colors.gold}` }}
+                      style={{ position: "absolute", inset: 0, borderRadius: 999, border: `2px solid ${colors.green}` }}
                       initial={{ scale: 1, opacity: 0 }}
                       animate={reduce ? undefined : { scale: [1, 1.45], opacity: [0.6, 0] }}
                       transition={{ duration: 2, ease: "easeOut", repeat: Infinity, repeatDelay: 1.6, delay: 2.4 }}

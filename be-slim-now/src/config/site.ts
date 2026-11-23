@@ -29,6 +29,15 @@ export const OFFER = {
 }
 
 /**
+ * Weight-loss result shown in the hero. Kept separate from the discount offer so the two claims
+ * aren't confused. The percent is animated with CountUp when the hero paints.
+ */
+export const WEIGHT_LOSS = {
+  percent: 24,
+  timeframe: "days",
+}
+
+/**
  * Chat contacts. Fill in a value to show that button everywhere on the page; leave it empty to hide it.
  * - telegram: the username without "@" (https://t.me/<username>)
  * - whatsapp: the full number with country code, digits only (https://wa.me/<number>)
