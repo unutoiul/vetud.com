@@ -133,6 +133,10 @@ export const theme: ThemeConfig = {
     Steps: { colorPrimary: colors.tealDeep },
     Statistic: { contentFontSize: 40, titleFontSize: 13 },
     // Country lists: a light aqua row for the chosen country instead of antd's grey.
-    Select: { optionSelectedBg: colors.aquaLight, optionSelectedColor: colors.navy, optionActiveBg: colors.aquaWash, optionSelectedFontWeight: 600 },
+    // Text fields at 16px: phones (iOS Safari) zoom the whole page into any field smaller than that
+    // when it's tapped, and the page stays zoomed. The country lists' search box is the Select's.
+    Select: { fontSize: 16, optionSelectedBg: colors.aquaLight, optionSelectedColor: colors.navy, optionActiveBg: colors.aquaWash, optionSelectedFontWeight: 600 },
+    Input: { fontSize: 16 },
+    InputNumber: { fontSize: 16 },
   },
 }
