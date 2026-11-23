@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Пенкала Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Пенкала Tirzepatide (TZ-2) и Retatrutide од VETUD. 20 mg или 40 mg, чистота ≥99% со COA за секоја серија. Воведна понуда: 40% попуст. Нарачка за помалку од една минута."
+    "description": "Пенкала Tirzepatide (TZ-2) и Retatrutide од VETUD. 20 mg или 40 mg, чистота ≥99% со COA за секоја серија. {saleLabel}: {percent}% попуст. Нарачка за помалку од една минута."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "{percent}% поевтино.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "на секое пенкало оваа недела",
-      "text": "Tirzepatide или Retatrutide, 20 mg или 40 mg."
+      "title": "Секое пенкало. Само оваа недела.",
+      "text": "Tirzepatide или Retatrutide, 20 или 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "просечно изгубена телесна тежина",
-      "text": "Студија од 48 недели со Retatrutide ({placebo}% со плацебо)."
+      "title": "од телесната тежина. Ги нема.",
+      "text": "Просек во 48-неделната студија со Retatrutide."
     },
     "appetitePoint": {
-      "title": "Помалку глад",
-      "text": "Двата делуваат на GIP и GLP-1, сигналите што му кажуваат на телото дека е сито."
+      "title": "Гладот, исклучен.",
+      "text": "Побрзо заситување, помалку храна. GIP + GLP-1 ја вршат работата."
     },
     "buyFrom": "Купете сега · од {price}",
     "extraCode": "Дополнителен код −{percent}%",

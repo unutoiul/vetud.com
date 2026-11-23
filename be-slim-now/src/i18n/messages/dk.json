@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Tirzepatide & Retatrutide penne · BeSlimNow",
-    "description": "Tirzepatide (TZ-2) og Retatrutide penne fra VETUD. 20 mg eller 40 mg, ≥99 % renhed med COA for hvert parti. Introduktionstilbud: 40 % rabat. Bestil på under et minut."
+    "description": "Tirzepatide (TZ-2) og Retatrutide penne fra VETUD. 20 mg eller 40 mg, ≥99 % renhed med COA for hvert parti. {saleLabel}: {percent} % rabat. Bestil på under et minut."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "{percent} % rabat.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "på hver pen i denne uge",
-      "text": "Tirzepatide eller Retatrutide, 20 mg eller 40 mg."
+      "title": "Hver pen. Kun denne uge.",
+      "text": "Tirzepatide eller Retatrutide, 20 eller 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "gennemsnitligt vægttab",
-      "text": "Retatrutides 48 uger lange forsøg ({placebo} % med placebo)."
+      "title": "af kropsvægten. Væk.",
+      "text": "Gennemsnit i Retatrutides 48 uger lange forsøg."
     },
     "appetitePoint": {
-      "title": "Mindre sult",
-      "text": "Begge virker på GIP og GLP-1, signalerne der fortæller kroppen, at den er mæt."
+      "title": "Sulten, slukket.",
+      "text": "Mæt hurtigere, mindre mad. GIP + GLP-1 gør arbejdet."
     },
     "buyFrom": "Køb nu · fra {price}",
     "extraCode": "Ekstra kode −{percent} %",

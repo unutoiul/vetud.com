@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Πένες Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Πένες Tirzepatide (TZ-2) και Retatrutide της VETUD. 20 mg ή 40 mg, καθαρότητα ≥99% με COA για κάθε παρτίδα. Προσφορά κυκλοφορίας: 40% έκπτωση. Παραγγελία σε λιγότερο από ένα λεπτό."
+    "description": "Πένες Tirzepatide (TZ-2) και Retatrutide της VETUD. 20 mg ή 40 mg, καθαρότητα ≥99% με COA για κάθε παρτίδα. {saleLabel}: {percent}% έκπτωση. Παραγγελία σε λιγότερο από ένα λεπτό."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "με {percent}% έκπτωση.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "σε κάθε πένα αυτή την εβδομάδα",
-      "text": "Tirzepatide ή Retatrutide, 20 mg ή 40 mg."
+      "title": "Κάθε πένα. Μόνο αυτή την εβδομάδα.",
+      "text": "Tirzepatide ή Retatrutide, 20 ή 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "μέση απώλεια σωματικού βάρους",
-      "text": "Μελέτη 48 εβδομάδων με Retatrutide ({placebo}% με εικονικό φάρμακο)."
+      "title": "του σωματικού βάρους. Χάθηκε.",
+      "text": "Μέσος όρος στη μελέτη 48 εβδομάδων με Retatrutide."
     },
     "appetitePoint": {
-      "title": "Λιγότερη πείνα",
-      "text": "Και τα δύο δρουν στα GIP και GLP-1, τα σήματα που λένε στον οργανισμό ότι χόρτασε."
+      "title": "Η πείνα, σβηστή.",
+      "text": "Γρηγορότερος κορεσμός, λιγότερο φαγητό. Τα GIP + GLP-1 κάνουν τη δουλειά."
     },
     "buyFrom": "Αγορά τώρα · από {price}",
     "extraCode": "Επιπλέον κωδικός −{percent}%",

@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Plomes de Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Plomes de Tirzepatide (TZ-2) i Retatrutide de VETUD. 20 mg o 40 mg, puresa ≥99 % amb COA per a cada lot. Oferta de llançament: 40 % de descompte. Fes la comanda en menys d'un minut."
+    "description": "Plomes de Tirzepatide (TZ-2) i Retatrutide de VETUD. 20 mg o 40 mg, puresa ≥99 % amb COA per a cada lot. {saleLabel}: {percent} % de descompte. Fes la comanda en menys d'un minut."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "un {percent} % més barat.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "a cada ploma aquesta setmana",
-      "text": "Tirzepatide o Retatrutide, 20 mg o 40 mg."
+      "title": "Cada ploma. Només aquesta setmana.",
+      "text": "Tirzepatide o Retatrutide, 20 o 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "de pes corporal perdut de mitjana",
-      "text": "Assaig de 48 setmanes amb Retatrutide ({placebo} % amb placebo)."
+      "title": "de pes corporal. Fora.",
+      "text": "Mitjana de l’assaig de 48 setmanes amb Retatrutide."
     },
     "appetitePoint": {
-      "title": "Menys gana",
-      "text": "Tots dos actuen sobre GIP i GLP-1, els senyals que diuen al cos que està sadollat."
+      "title": "La gana, apagada.",
+      "text": "Sacietat més ràpida i menys menjar. GIP + GLP-1 fan la feina."
     },
     "buyFrom": "Compra ara · des de {price}",
     "extraCode": "Codi extra −{percent} %",

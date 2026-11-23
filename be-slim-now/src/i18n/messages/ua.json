@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Шприц-ручки Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Шприц-ручки Tirzepatide (TZ-2) і Retatrutide від VETUD. 20 mg або 40 mg, чистота ≥99 % із COA для кожної партії. Стартова пропозиція: знижка 40 %. Замовлення менш ніж за хвилину."
+    "description": "Шприц-ручки Tirzepatide (TZ-2) і Retatrutide від VETUD. 20 mg або 40 mg, чистота ≥99 % із COA для кожної партії. {saleLabel}: знижка {percent} %. Замовлення менш ніж за хвилину."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "на {percent} % дешевше.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "на кожну шприц-ручку цього тижня",
-      "text": "Tirzepatide або Retatrutide, 20 mg або 40 mg."
+      "title": "Кожна шприц-ручка. Лише цього тижня.",
+      "text": "Tirzepatide або Retatrutide, 20 або 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "середня втрата маси тіла",
-      "text": "48-тижневе дослідження Retatrutide ({placebo} % у групі плацебо)."
+      "title": "маси тіла. Зникли.",
+      "text": "Середнє у 48-тижневому дослідженні Retatrutide."
     },
     "appetitePoint": {
-      "title": "Менше голоду",
-      "text": "Обидва діють на GIP і GLP-1 — сигнали, які кажуть організму, що він ситий."
+      "title": "Голод вимкнено.",
+      "text": "Швидше насичення, менше їжі. GIP + GLP-1 роблять свою справу."
     },
     "buyFrom": "Купити зараз · від {price}",
     "extraCode": "Додатковий код −{percent} %",

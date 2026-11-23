@@ -3,7 +3,7 @@ import { DM_Mono, Jost, Manrope } from "next/font/google"
 import { AntdRegistry } from "@ant-design/nextjs-registry"
 import Analytics from "@/components/Analytics"
 import Providers from "@/components/Providers"
-import { SITE } from "@/config/site"
+import { OFFER, SITE } from "@/config/site"
 import { colors } from "@/theme/tokens"
 
 const display = Jost({ subsets: ["latin"], weight: ["300", "400", "500", "600"], variable: "--font-display", display: "swap" })
@@ -12,11 +12,11 @@ const mono = DM_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · BeSlimNow",
+  title: `${OFFER.saleLabel} −${OFFER.salePercent}% · Tirzepatide & Retatrutide Pens · BeSlimNow`,
   description: SITE.description,
   // Canonical and hreflang links are set per country page (storefrontMetadata, src/lib/seo.ts).
   openGraph: {
-    title: "Black Friday −40% · Tirzepatide & Retatrutide Pens · VETUD",
+    title: `${OFFER.saleLabel} −${OFFER.salePercent}% · Tirzepatide & Retatrutide Pens · VETUD`,
     description: SITE.description,
     images: [{ url: "/images/retatrutide-closed.webp", width: 1400, height: 1050, alt: "VETUD Retatrutide pen box" }],
     type: "website",

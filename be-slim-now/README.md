@@ -4,7 +4,7 @@ One page that sells two products, Tirzepatide (TZ-2) and Retatrutide pens by VET
 
 On top of that:
 
-- **Launch offer:** a percentage off every regular price (40% now). The regular price is shown struck through; buyers pay the offer price.
+- **Black Friday offer:** a percentage off every regular price (50% now, `OFFER.salePercent`; every percentage on the page, in the title and in the emails follows it). The regular price is shown struck through; buyers pay the offer price.
 - **Subscriber code:** a pop-up offers an extra 10% for an email address. The visitor gets the code on screen and by email, it's filled into their order form, and the server checks it before giving the discount. Subscribers are saved as Resend contacts.
 
 Built with Next.js 16, React 19 and Ant Design 6. It is independent of `vetud-shop/` and `vetud-education/` and shares no code with them.
@@ -64,7 +64,7 @@ All the page's words live in `src/i18n/messages`, one JSON file per country in t
 
 ## Hero animation
 
-The headline rises in word by word, "40% off." counts up with a brighter green light gliding through it and a green stroke drawn underneath, three short selling points follow (−40% off every pen; 24.2% average weight lost in retatrutide's 48-week trial, counting up; less hunger through GIP and GLP-1), the pens glide in, float and lean toward the mouse, and the offer seal spins in with a soft pulse.
+The headline rises in word by word, "50% off." counts up with a brighter green light gliding through it and a green stroke drawn underneath, three short selling points follow (−50% off every pen; 24.2% average weight lost in retatrutide's 48-week trial, counting up; less hunger through GIP and GLP-1), the pens glide in, float and lean toward the mouse, and the offer seal spins in with a soft pulse.
 
 - **The two guarantees** (refund if a lot tests below 99% purity; reship or refund if a parcel is lost) are written out under the Buy button (`hero.guarantees` in the message files) and in the FAQ (`faq.items`). If the policy changes, change both.
 - **Entrances are CSS animations** in the server HTML (`enter()` in `animated.tsx`), so they play on first paint and the hero is never blank while JavaScript loads. The background picture only scales (no fade), so it still counts as painted at once for Largest Contentful Paint (about 0.55 s locally).

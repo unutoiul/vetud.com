@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Stilolapsa Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Stilolapsa Tirzepatide (TZ-2) dhe Retatrutide nga VETUD. 20 mg ose 40 mg, pastërti ≥99% me COA për çdo seri. Ofertë prezantuese: 40% zbritje. Porositni për më pak se një minutë."
+    "description": "Stilolapsa Tirzepatide (TZ-2) dhe Retatrutide nga VETUD. 20 mg ose 40 mg, pastërti ≥99% me COA për çdo seri. {saleLabel}: {percent}% zbritje. Porositni për më pak se një minutë."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "me {percent}% zbritje.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "për çdo stilolaps këtë javë",
-      "text": "Tirzepatide ose Retatrutide, 20 mg ose 40 mg."
+      "title": "Çdo stilolaps. Vetëm këtë javë.",
+      "text": "Tirzepatide ose Retatrutide, 20 ose 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "humbje mesatare e peshës trupore",
-      "text": "Studim 48-javor me Retatrutide ({placebo}% me placebo)."
+      "title": "e peshës trupore. Zhduket.",
+      "text": "Mesatarja në studimin 48-javor me Retatrutide."
     },
     "appetitePoint": {
-      "title": "Më pak uri",
-      "text": "Të dy veprojnë mbi GIP dhe GLP-1, sinjalet që i thonë trupit se është ngopur."
+      "title": "Uria, e fikur.",
+      "text": "Ngopje më e shpejtë, më pak ushqim. GIP + GLP-1 bëjnë punën."
     },
     "buyFrom": "Blini tani · nga {price}",
     "extraCode": "Kod shtesë −{percent}%",

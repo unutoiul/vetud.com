@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Plumas de Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Plumas de Tirzepatide (TZ-2) y Retatrutide de VETUD. 20 mg o 40 mg, pureza ≥99 % con COA para cada lote. Oferta de lanzamiento: 40 % de descuento. Pide en menos de un minuto."
+    "description": "Plumas de Tirzepatide (TZ-2) y Retatrutide de VETUD. 20 mg o 40 mg, pureza ≥99 % con COA para cada lote. {saleLabel}: {percent} % de descuento. Pide en menos de un minuto."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "un {percent} % más barato.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "en cada pluma esta semana",
-      "text": "Tirzepatide o Retatrutide, 20 mg o 40 mg."
+      "title": "Cada pluma. Solo esta semana.",
+      "text": "Tirzepatide o Retatrutide, 20 o 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "de peso corporal perdido de media",
-      "text": "Ensayo de 48 semanas con Retatrutide ({placebo} % con placebo)."
+      "title": "de peso corporal. Fuera.",
+      "text": "Media del ensayo de 48 semanas con Retatrutide."
     },
     "appetitePoint": {
-      "title": "Menos hambre",
-      "text": "Ambos actúan sobre GIP y GLP-1, las señales que le dicen al cuerpo que está saciado."
+      "title": "El hambre, apagada.",
+      "text": "Saciedad antes y menos comida. GIP + GLP-1 hacen el trabajo."
     },
     "buyFrom": "Comprar ahora · desde {price}",
     "extraCode": "Código extra −{percent} %",

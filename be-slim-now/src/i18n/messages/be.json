@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide pennen · BeSlimNow",
-    "description": "Tirzepatide (TZ-2) en Retatrutide pennen van VETUD. 20 mg of 40 mg, ≥99% zuiverheid met een COA voor elke batch. Introductieaanbieding: 40% korting. In minder dan een minuut besteld."
+    "description": "Tirzepatide (TZ-2) en Retatrutide pennen van VETUD. 20 mg of 40 mg, ≥99% zuiverheid met een COA voor elke batch. {saleLabel}: {percent}% korting. In minder dan een minuut besteld."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "{percent}% korting.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "op elke pen deze week",
-      "text": "Tirzepatide of Retatrutide, 20 mg of 40 mg."
+      "title": "Elke pen. Alleen deze week.",
+      "text": "Tirzepatide of Retatrutide, 20 of 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "gemiddeld verlies van lichaamsgewicht",
-      "text": "Studie van 48 weken met Retatrutide ({placebo}% met placebo)."
+      "title": "lichaamsgewicht. Weg.",
+      "text": "Gemiddelde in de 48 weken durende studie met Retatrutide."
     },
     "appetitePoint": {
-      "title": "Minder honger",
-      "text": "Beide werken op GIP en GLP-1, de signalen die je lichaam vertellen dat het vol zit."
+      "title": "Honger, uitgeschakeld.",
+      "text": "Sneller vol, minder eten. GIP + GLP-1 doen het werk."
     },
     "buyFrom": "Nu kopen · vanaf {price}",
     "extraCode": "Extra code −{percent}%",

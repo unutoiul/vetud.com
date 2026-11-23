@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide pennar · BeSlimNow",
-    "description": "Tirzepatide (TZ-2) og Retatrutide pennar frá VETUD. 20 mg eða 40 mg, ≥99% hreinleiki með COA fyrir hverja lotu. Kynningartilboð: 40% afsláttur. Pantaðu á innan við mínútu."
+    "description": "Tirzepatide (TZ-2) og Retatrutide pennar frá VETUD. 20 mg eða 40 mg, ≥99% hreinleiki með COA fyrir hverja lotu. {saleLabel}: {percent}% afsláttur. Pantaðu á innan við mínútu."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "{percent}% afsláttur.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "af hverjum penna þessa viku",
-      "text": "Tirzepatide eða Retatrutide, 20 mg eða 40 mg."
+      "title": "Hver penni. Aðeins þessa viku.",
+      "text": "Tirzepatide eða Retatrutide, 20 eða 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "meðalþyngdartap",
-      "text": "48 vikna rannsókn á Retatrutide ({placebo}% með lyfleysu)."
+      "title": "af líkamsþyngd. Farin.",
+      "text": "Meðaltal í 48 vikna rannsókn á Retatrutide."
     },
     "appetitePoint": {
-      "title": "Minni hungur",
-      "text": "Bæði verka á GIP og GLP-1, boðin sem segja líkamanum að hann sé saddur."
+      "title": "Hungrið, slökkt.",
+      "text": "Fyrr saddur, minni matur. GIP + GLP-1 vinna verkið."
     },
     "buyFrom": "Kaupa núna · frá {price}",
     "extraCode": "Aukakóði −{percent}%",

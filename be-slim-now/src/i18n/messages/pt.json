@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Canetas Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Canetas de Tirzepatide (TZ-2) e Retatrutide da VETUD. 20 mg ou 40 mg, pureza ≥99% com COA para cada lote. Oferta de lançamento: 40% de desconto. Encomende em menos de um minuto."
+    "description": "Canetas de Tirzepatide (TZ-2) e Retatrutide da VETUD. 20 mg ou 40 mg, pureza ≥99% com COA para cada lote. {saleLabel}: {percent}% de desconto. Encomende em menos de um minuto."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "com −{percent}%.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "em cada caneta esta semana",
-      "text": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg."
+      "title": "Cada caneta. Só esta semana.",
+      "text": "Tirzepatide ou Retatrutide, 20 ou 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "de peso corporal perdido em média",
-      "text": "Ensaio de 48 semanas com Retatrutide ({placebo}% com placebo)."
+      "title": "de peso corporal. Foi-se.",
+      "text": "Média do ensaio de 48 semanas com Retatrutide."
     },
     "appetitePoint": {
-      "title": "Menos fome",
-      "text": "Ambos atuam no GIP e no GLP-1, os sinais que dizem ao corpo que está saciado."
+      "title": "Fome, desligada.",
+      "text": "Saciedade mais rápida, menos comida. GIP + GLP-1 fazem o trabalho."
     },
     "buyFrom": "Comprar agora · desde {price}",
     "extraCode": "Código extra −{percent}%",

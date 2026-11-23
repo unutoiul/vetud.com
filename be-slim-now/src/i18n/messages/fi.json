@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Tirzepatide- & Retatrutide-kynät · BeSlimNow",
-    "description": "VETUDin Tirzepatide (TZ-2)- ja Retatrutide-kynät. 20 mg tai 40 mg, puhtaus ≥99 % ja COA jokaiselle erälle. Lanseeraustarjous: 40 % alennus. Tilaus alle minuutissa."
+    "description": "VETUDin Tirzepatide (TZ-2)- ja Retatrutide-kynät. 20 mg tai 40 mg, puhtaus ≥99 % ja COA jokaiselle erälle. {saleLabel}: {percent} % alennus. Tilaus alle minuutissa."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -84,17 +84,17 @@
     "headlineOffer": "{percent} % edullisemmin.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "jokaisesta kynästä tällä viikolla",
-      "text": "Tirzepatide tai Retatrutide, 20 mg tai 40 mg."
+      "title": "Jokainen kynä. Vain tällä viikolla.",
+      "text": "Tirzepatide tai Retatrutide, 20 tai 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "keskimääräinen painonlasku",
-      "text": "Retatrutiden 48 viikon tutkimus (lumeella {placebo} %)."
+      "title": "kehon painosta. Poissa.",
+      "text": "Keskiarvo Retatrutiden 48 viikon tutkimuksessa."
     },
     "appetitePoint": {
-      "title": "Vähemmän nälkää",
-      "text": "Molemmat vaikuttavat GIP- ja GLP-1-signaaleihin, jotka kertovat keholle, että se on kylläinen."
+      "title": "Nälkä pois päältä.",
+      "text": "Nopeampi kylläisyys, vähemmän syömistä. GIP + GLP-1 hoitavat työn."
     },
     "buyFrom": "Osta nyt · alkaen {price}",
     "extraCode": "Lisäkoodi −{percent} %",

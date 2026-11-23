@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide pildspalvas · BeSlimNow",
-    "description": "VETUD Tirzepatide (TZ-2) un Retatrutide pildspalvas. 20 mg vai 40 mg, tīrība ≥99% ar COA katrai partijai. Ievadpiedāvājums: 40% atlaide. Pasūtījums mazāk nekā minūtē."
+    "description": "VETUD Tirzepatide (TZ-2) un Retatrutide pildspalvas. 20 mg vai 40 mg, tīrība ≥99% ar COA katrai partijai. {saleLabel}: {percent}% atlaide. Pasūtījums mazāk nekā minūtē."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -84,17 +84,17 @@
     "headlineOffer": "par {percent}% lētāk.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "katrai pildspalvai šonedēļ",
-      "text": "Tirzepatide vai Retatrutide, 20 mg vai 40 mg."
+      "title": "Katra pildspalva. Tikai šonedēļ.",
+      "text": "Tirzepatide vai Retatrutide, 20 vai 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "vidējais ķermeņa svara zudums",
-      "text": "48 nedēļu Retatrutide pētījums ({placebo}% ar placebo)."
+      "title": "ķermeņa svara. Prom.",
+      "text": "Vidējais 48 nedēļu Retatrutide pētījumā."
     },
     "appetitePoint": {
-      "title": "Mazāk izsalkuma",
-      "text": "Abi iedarbojas uz GIP un GLP-1 – signāliem, kas ķermenim saka, ka tas ir paēdis."
+      "title": "Izsalkums izslēgts.",
+      "text": "Ātrāka sāta sajūta, mazāk ēdiena. GIP + GLP-1 paveic darbu."
     },
     "buyFrom": "Pirkt tagad · no {price}",
     "extraCode": "Papildu kods −{percent}%",

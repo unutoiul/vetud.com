@@ -7,30 +7,30 @@
  * English source). What stays here in English is used by the emails and the server.
  */
 
+/**
+ * The offer. `salePercent` comes off every regular price, and is what buyers pay (the server works
+ * the price out from here). Every percentage on the page, in the page title and in the emails is
+ * read from here. The extra subscriber discount comes on top; its code is set in the
+ * PROMO_CODE env var (default VETUD10) and is only revealed after subscribing.
+ * Set salePercent to 0 to end the sale.
+ */
+export const OFFER = {
+  salePercent: 50,
+  /** For the emails. The page's label is offer.saleLabel in the messages. */
+  saleLabel: "Black Friday",
+  subscriberPercent: 10,
+}
+
 export const SITE = {
   name: "VETUD Tirzepatide & Retatrutide Pens",
   brand: "VETUD Peptide Series",
   // Shown on the page and in emails; mail to @beslimnow.com is forwarded to contact@vetud.com (Forward Email, DNS).
   email: "contact@beslimnow.com",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:8200").replace(/\/$/, ""),
-  description:
-    "Tirzepatide (TZ-2) and Retatrutide pens by VETUD. 20 mg or 40 mg, ≥99% purity with a COA for every lot. Launch offer: 40% off. Order in under a minute.",
+  description: `Tirzepatide (TZ-2) and Retatrutide pens by VETUD. 20 mg or 40 mg, ≥99% purity with a COA for every lot. ${OFFER.saleLabel}: ${OFFER.salePercent}% off. Order in under a minute.`,
   // The shop's research-use notice (the page shows its copy from the messages: faq). Keep this wording exact.
   ruoNotice:
     "All products sold on this website are intended for research and identification purposes only. These products are not intended for human dosing, injection, or ingestion.",
-}
-
-/**
- * The offer. `salePercent` comes off every regular price, and is what buyers pay (the server works
- * the price out from here). The extra subscriber discount comes on top; its code is set in the
- * PROMO_CODE env var (default VETUD10) and is only revealed after subscribing.
- * Set salePercent to 0 to end the sale.
- */
-export const OFFER = {
-  salePercent: 40,
-  /** For the emails. The page's label is offer.saleLabel in the messages. */
-  saleLabel: "Black Friday",
-  subscriberPercent: 10,
 }
 
 /**
@@ -152,7 +152,7 @@ export const MAX_QUANTITY = 10
 
 export const strengthLabel = (strength: Strength) => strength.replace("mg", " mg")
 
-/** The most a buyer can save with the offer and the subscriber code together (40% then 10% = 46%). */
+/** The most a buyer can save with the offer and the subscriber code together (50% then 10% = 55%). */
 export const bestCombinedPercent = () => Math.round(100 - ((100 - OFFER.salePercent) * (100 - OFFER.subscriberPercent)) / 100)
 
 export type ContactKey = keyof typeof CONTACTS

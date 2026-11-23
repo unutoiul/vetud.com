@@ -6,7 +6,7 @@ import { useMessages } from "./MessagesProvider"
 
 /**
  * The offer medallion: a night disc with a green rim. The label's words sit above and below the
- * percentage ("BLACK" / "−40%" / "FRIDAY"), large enough to read at card size. The label is
+ * percentage ("BLACK" / "−50%" / "FRIDAY"), large enough to read at card size. The label is
  * offer.saleLabel in the messages; a one-word label gets offer.sealOff ("OFF") underneath.
  */
 export default function OfferSeal({ percent, size = 120 }: { percent: number; size?: number | string }) {

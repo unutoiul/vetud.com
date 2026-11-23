@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Stylos Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Stylos Tirzepatide (TZ-2) et Retatrutide de VETUD. 20 mg ou 40 mg, pureté ≥99 % avec un COA pour chaque lot. Offre de lancement : 40 % de remise. Commande en moins d’une minute."
+    "description": "Stylos Tirzepatide (TZ-2) et Retatrutide de VETUD. 20 mg ou 40 mg, pureté ≥99 % avec un COA pour chaque lot. {saleLabel} : {percent} % de remise. Commande en moins d’une minute."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "à −{percent} %.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "sur chaque stylo cette semaine",
-      "text": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg."
+      "title": "Chaque stylo. Cette semaine seulement.",
+      "text": "Tirzepatide ou Retatrutide, 20 ou 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "de poids corporel perdu en moyenne",
-      "text": "Essai de 48 semaines sur Retatrutide ({placebo} % sous placebo)."
+      "title": "de poids corporel. Envolés.",
+      "text": "Moyenne de l’essai de 48 semaines sur Retatrutide."
     },
     "appetitePoint": {
-      "title": "Moins de faim",
-      "text": "Les deux agissent sur GIP et GLP-1, les signaux qui disent au corps qu’il est rassasié."
+      "title": "La faim, coupée.",
+      "text": "Rassasié plus vite, on mange moins. GIP + GLP-1 font le travail."
     },
     "buyFrom": "Acheter · dès {price}",
     "extraCode": "Code −{percent} % en plus",

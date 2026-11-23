@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Pera Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Pera Tirzepatide (TZ-2) a Retatrutide od VETUD. 20 mg nebo 40 mg, čistota ≥99 % s COA pro každou šarži. Úvodní nabídka: sleva 40 %. Objednávka za méně než minutu."
+    "description": "Pera Tirzepatide (TZ-2) a Retatrutide od VETUD. 20 mg nebo 40 mg, čistota ≥99 % s COA pro každou šarži. {saleLabel}: sleva {percent} %. Objednávka za méně než minutu."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "o {percent} % levněji.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "na každé pero tento týden",
-      "text": "Tirzepatide nebo Retatrutide, 20 mg nebo 40 mg."
+      "title": "Každé pero. Jen tento týden.",
+      "text": "Tirzepatide nebo Retatrutide, 20 nebo 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "průměrný úbytek tělesné hmotnosti",
-      "text": "48týdenní studie Retatrutide ({placebo} % u placeba)."
+      "title": "tělesné hmotnosti. Pryč.",
+      "text": "Průměr ve 48týdenní studii Retatrutide."
     },
     "appetitePoint": {
-      "title": "Menší hlad",
-      "text": "Oba působí na GIP a GLP-1, signály, které tělu říkají, že je syté."
+      "title": "Hlad vypnutý.",
+      "text": "Rychlejší sytost, méně jídla. GIP + GLP-1 odvedou práci."
     },
     "buyFrom": "Koupit · od {price}",
     "extraCode": "Kód na dalších −{percent} %",

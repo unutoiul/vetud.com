@@ -70,7 +70,7 @@ function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; de
   )
 }
 
-/** "40% off." counts up, a brighter green light glides through it, and a green stroke draws itself underneath. */
+/** The offer's "NN% off." counts up, a brighter green light glides through it, and a green stroke draws itself underneath. */
 function OfferWords({ delay }: { delay: number }) {
   const reduce = useReducedMotion()
   const m = useMessages()
@@ -180,7 +180,6 @@ function SellingPoints({ delay }: { delay: number }) {
   const locale = MARKETS[country].locale
   const trial = TRIAL_DATA.find((item) => item.name === "Retatrutide") ?? TRIAL_DATA[0]
   const [before, after] = around(m.weightPoint.value, "percent")
-  const placebo = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(trial.placebo)
   const badge: CSSProperties = {
     flex: "none",
     minWidth: screens.sm ? 116 : 94,
@@ -212,7 +211,7 @@ function SellingPoints({ delay }: { delay: number }) {
         </span>
       ),
       title: m.weightPoint.title,
-      text: format(m.weightPoint.text, { placebo }),
+      text: m.weightPoint.text,
     },
     {
       key: "appetite",

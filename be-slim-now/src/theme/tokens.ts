@@ -77,7 +77,7 @@ export const gradients = {
   heroScrim: `linear-gradient(180deg, ${colors.heroFade} 55%, ${colors.paper} 100%)`,
   /** A band of light that slides across a button or chip. */
   shine: `linear-gradient(105deg, ${colors.clear} 0%, ${colors.sheen} 50%, ${colors.clear} 100%)`,
-  /** "40% off." in the hero: deep green with a brighter green band that glides through it. */
+  /** The hero's "NN% off.": deep green with a brighter green band that glides through it. */
   saleShimmer: `linear-gradient(100deg, ${colors.sale} 0%, ${colors.sale} 38%, ${colors.green} 50%, ${colors.sale} 62%, ${colors.sale} 100%)`,
   /** Soft aqua light behind the hero pens. */
   penGlow: `radial-gradient(circle at 50% 50%, ${colors.aqua} 0%, ${colors.clear} 68%)`,

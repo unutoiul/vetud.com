@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide pennid · BeSlimNow",
-    "description": "VETUDi Tirzepatide (TZ-2) ja Retatrutide pennid. 20 mg või 40 mg, puhtus ≥99% ja iga partii kohta COA. Avapakkumine: 40% soodsamalt. Telli vähem kui minutiga."
+    "description": "VETUDi Tirzepatide (TZ-2) ja Retatrutide pennid. 20 mg või 40 mg, puhtus ≥99% ja iga partii kohta COA. {saleLabel}: {percent}% soodsamalt. Telli vähem kui minutiga."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -84,17 +84,17 @@
     "headlineOffer": "{percent}% soodsamalt.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "igale pen'ile sel nädalal",
-      "text": "Tirzepatide või Retatrutide, 20 mg või 40 mg."
+      "title": "Iga pen. Ainult sel nädalal.",
+      "text": "Tirzepatide või Retatrutide, 20 või 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "keskmine kehakaalu langus",
-      "text": "48-nädalane Retatrutide uuring ({placebo}% platseeboga)."
+      "title": "kehakaalust. Läinud.",
+      "text": "Keskmine 48-nädalases Retatrutide uuringus."
     },
     "appetitePoint": {
-      "title": "Vähem nälga",
-      "text": "Mõlemad toimivad GIP-ile ja GLP-1-le, signaalidele, mis annavad kehale teada, et kõht on täis."
+      "title": "Nälg välja lülitatud.",
+      "text": "Kiirem täiskõhutunne, vähem sööki. GIP + GLP-1 teevad töö ära."
     },
     "buyFrom": "Osta kohe · alates {price}",
     "extraCode": "Lisakood −{percent}%",

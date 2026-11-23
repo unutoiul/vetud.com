@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Peresniki Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Peresniki Tirzepatide (TZ-2) in Retatrutide podjetja VETUD. 20 mg ali 40 mg, čistost ≥99 % s COA za vsako serijo. Uvodna ponudba: 40 % popusta. Naročilo v manj kot minuti."
+    "description": "Peresniki Tirzepatide (TZ-2) in Retatrutide podjetja VETUD. 20 mg ali 40 mg, čistost ≥99 % s COA za vsako serijo. {saleLabel}: {percent} % popusta. Naročilo v manj kot minuti."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "{percent} % ceneje.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "na vsak peresnik ta teden",
-      "text": "Tirzepatide ali Retatrutide, 20 mg ali 40 mg."
+      "title": "Vsak peresnik. Samo ta teden.",
+      "text": "Tirzepatide ali Retatrutide, 20 ali 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "povprečna izguba telesne mase",
-      "text": "48-tedenska študija Retatrutide ({placebo} % pri placebu)."
+      "title": "telesne mase. Izginilo.",
+      "text": "Povprečje v 48-tedenski študiji Retatrutide."
     },
     "appetitePoint": {
-      "title": "Manj lakote",
-      "text": "Oba delujeta na GIP in GLP-1, signala, ki telesu sporočata, da je sito."
+      "title": "Lakota, izklopljena.",
+      "text": "Hitrejša sitost, manj hrane. GIP + GLP-1 opravita delo."
     },
     "buyFrom": "Kupite zdaj · od {price}",
     "extraCode": "Dodatna koda −{percent} %",

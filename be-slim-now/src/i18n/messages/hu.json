@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide tollak · BeSlimNow",
-    "description": "Tirzepatide (TZ-2) és Retatrutide tollak a VETUD-tól. 20 mg vagy 40 mg, ≥99% tisztaság, minden tételhez COA-val. Bevezető ajánlat: 40% kedvezmény. Rendelés egy percen belül."
+    "description": "Tirzepatide (TZ-2) és Retatrutide tollak a VETUD-tól. 20 mg vagy 40 mg, ≥99% tisztaság, minden tételhez COA-val. {saleLabel}: {percent}% kedvezmény. Rendelés egy percen belül."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -84,17 +84,17 @@
     "headlineOffer": "{percent}% kedvezménnyel.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "minden tollra ezen a héten",
-      "text": "Tirzepatide vagy Retatrutide, 20 mg vagy 40 mg."
+      "title": "Minden toll. Csak ezen a héten.",
+      "text": "Tirzepatide vagy Retatrutide, 20 vagy 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "átlagos testtömegcsökkenés",
-      "text": "48 hetes Retatrutide-vizsgálat (placebóval {placebo}%)."
+      "title": "testsúly. Eltűnt.",
+      "text": "Átlag a 48 hetes Retatrutide-vizsgálatban."
     },
     "appetitePoint": {
-      "title": "Kevesebb éhség",
-      "text": "Mindkettő a GIP-re és a GLP-1-re hat, azokra a jelekre, amelyek jelzik a szervezetnek, hogy jóllakott."
+      "title": "Éhség kikapcsolva.",
+      "text": "Hamarabb jön a teltség, kevesebb az evés. A GIP + GLP-1 elvégzi a munkát."
     },
     "buyFrom": "Megveszem · már {price}",
     "extraCode": "Extra −{percent}% kód",

@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Tirzepatide & Retatrutide Pens · BeSlimNow",
-    "description": "Tirzepatide (TZ-2) and Retatrutide pens by VETUD. 20 mg or 40 mg, ≥99% purity with a COA for every lot. Launch offer: 40% off. Order in under a minute."
+    "description": "Tirzepatide (TZ-2) and Retatrutide pens by VETUD. 20 mg or 40 mg, ≥99% purity with a COA for every lot. {saleLabel}: {percent}% off. Order in under a minute."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -84,17 +84,17 @@
     "headlineOffer": "{percent}% off.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "off every pen this week",
-      "text": "Tirzepatide or Retatrutide, 20 mg or 40 mg."
+      "title": "Every pen. This week only.",
+      "text": "Tirzepatide or Retatrutide, 20 or 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "average body weight lost",
-      "text": "Retatrutide's 48-week human trial ({placebo}% on placebo)."
+      "title": "of body weight. Gone.",
+      "text": "Average in Retatrutide's 48-week human trial."
     },
     "appetitePoint": {
-      "title": "Hunger, turned down",
-      "text": "Both act on GIP and GLP-1, the signals that tell your body it's full."
+      "title": "Hunger, switched off.",
+      "text": "Feel full sooner and eat less. GIP + GLP-1 do the work."
     },
     "buyFrom": "Buy now · from {price}",
     "extraCode": "Extra −{percent}% code",

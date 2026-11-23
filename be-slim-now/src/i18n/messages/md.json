@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Pen-uri Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Pen-uri Tirzepatide (TZ-2) și Retatrutide de la VETUD. 20 mg sau 40 mg, puritate ≥99% cu COA pentru fiecare lot. Ofertă de lansare: 40% reducere. Comandă în mai puțin de un minut."
+    "description": "Pen-uri Tirzepatide (TZ-2) și Retatrutide de la VETUD. 20 mg sau 40 mg, puritate ≥99% cu COA pentru fiecare lot. {saleLabel}: {percent}% reducere. Comandă în mai puțin de un minut."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "cu {percent}% reducere.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "la fiecare pen săptămâna aceasta",
-      "text": "Tirzepatide sau Retatrutide, 20 mg sau 40 mg."
+      "title": "Fiecare pen. Doar săptămâna aceasta.",
+      "text": "Tirzepatide sau Retatrutide, 20 sau 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "greutate corporală pierdută în medie",
-      "text": "Studiu de 48 de săptămâni cu Retatrutide ({placebo}% cu placebo)."
+      "title": "din greutatea corporală. Dispărut.",
+      "text": "Media din studiul de 48 de săptămâni cu Retatrutide."
     },
     "appetitePoint": {
-      "title": "Mai puțină foame",
-      "text": "Ambele acționează asupra GIP și GLP-1, semnalele care îi spun corpului că s-a săturat."
+      "title": "Foamea, oprită.",
+      "text": "Sațietate mai rapidă, mai puțină mâncare. GIP + GLP-1 fac treaba."
     },
     "buyFrom": "Cumpărați acum · de la {price}",
     "extraCode": "Cod extra −{percent}%",

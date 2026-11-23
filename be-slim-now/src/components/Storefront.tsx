@@ -26,16 +26,18 @@ import WhyDualChamber from "./WhyDualChamber"
 /** The page title and description in the country's language (src/i18n/messages). */
 export async function storefrontMetadata(country: CountryCode): Promise<Metadata> {
   const m = await loadMessages(country)
-  const title = format(m.meta.title, { saleLabel: m.offer.saleLabel, percent: OFFER.salePercent })
+  const offer = { saleLabel: m.offer.saleLabel, percent: OFFER.salePercent }
+  const title = format(m.meta.title, offer)
+  const description = format(m.meta.description, offer)
   return {
     title,
-    description: m.meta.description,
+    description,
     // Each country's page is indexed at its own address, linked to the others by language.
     alternates: { canonical: pagePath(country), languages: languageAlternates() },
     // Replaces the root layout's openGraph as a whole, so the picture is repeated here.
     openGraph: {
       title,
-      description: m.meta.description,
+      description,
       url: pageUrl(country),
       locale: MARKETS[country].locale.replaceAll("-", "_"),
       type: "website",

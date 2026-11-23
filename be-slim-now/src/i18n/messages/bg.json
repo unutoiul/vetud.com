@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent}% · Писалки Tirzepatide & Retatrutide · BeSlimNow",
-    "description": "Писалки Tirzepatide (TZ-2) и Retatrutide от VETUD. 20 mg или 40 mg, чистота ≥99% със COA за всяка партида. Встъпителна оферта: 40% отстъпка. Поръчка за по-малко от минута."
+    "description": "Писалки Tirzepatide (TZ-2) и Retatrutide от VETUD. 20 mg или 40 mg, чистота ≥99% със COA за всяка партида. {saleLabel}: {percent}% отстъпка. Поръчка за по-малко от минута."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "с {percent}% отстъпка.",
     "offerPoint": {
       "value": "−{percent}%",
-      "title": "за всяка писалка тази седмица",
-      "text": "Tirzepatide или Retatrutide, 20 mg или 40 mg."
+      "title": "Всяка писалка. Само тази седмица.",
+      "text": "Tirzepatide или Retatrutide, 20 или 40 mg."
     },
     "weightPoint": {
       "value": "{percent}%",
-      "title": "средна загуба на телесно тегло",
-      "text": "48-седмично проучване с Retatrutide ({placebo}% при плацебо)."
+      "title": "от телесното тегло. Изчезнали.",
+      "text": "Средно в 48-седмичното проучване с Retatrutide."
     },
     "appetitePoint": {
-      "title": "По-малко глад",
-      "text": "И двете действат върху GIP и GLP-1, сигналите, които казват на тялото, че е сито."
+      "title": "Гладът – изключен.",
+      "text": "По-бързо засищане, по-малко храна. GIP + GLP-1 вършат работата."
     },
     "buyFrom": "Купете сега · от {price}",
     "extraCode": "Допълнителен код −{percent}%",

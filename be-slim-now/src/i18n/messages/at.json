@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Tirzepatide & Retatrutide Pens · BeSlimNow",
-    "description": "Tirzepatide (TZ-2) und Retatrutide als Pens von VETUD. 20 mg oder 40 mg, ≥99 % Reinheit mit COA für jede Charge. Einführungsangebot: 40 % Rabatt. In unter einer Minute bestellt."
+    "description": "Tirzepatide (TZ-2) und Retatrutide als Pens von VETUD. 20 mg oder 40 mg, ≥99 % Reinheit mit COA für jede Charge. {saleLabel}: {percent} % Rabatt. In unter einer Minute bestellt."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "{percent} % günstiger.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "auf jeden Pen, nur diese Woche",
-      "text": "Tirzepatide oder Retatrutide, 20 mg oder 40 mg."
+      "title": "Jeder Pen. Nur diese Woche.",
+      "text": "Tirzepatide oder Retatrutide, 20 oder 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "durchschnittlicher Gewichtsverlust",
-      "text": "Retatrutide-Studie über 48 Wochen ({placebo} % unter Placebo)."
+      "title": "Körpergewicht. Weg.",
+      "text": "Durchschnitt in der 48-wöchigen Retatrutide-Studie."
     },
     "appetitePoint": {
-      "title": "Weniger Hunger",
-      "text": "Beide wirken auf GIP und GLP-1, die Signale, die dem Körper sagen, dass er satt ist."
+      "title": "Hunger, abgeschaltet.",
+      "text": "Schneller satt, weniger essen. GIP + GLP-1 machen die Arbeit."
     },
     "buyFrom": "Jetzt kaufen · ab {price}",
     "extraCode": "Extra-Code: −{percent} %",

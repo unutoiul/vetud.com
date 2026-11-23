@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Tirzepatide & Retatrutide пенови · BeSlimNow",
-    "description": "Tirzepatide (TZ-2) и Retatrutide пенови компаније VETUD. 20 мг или 40 мг, чистоћа ≥99 % са COA за сваку серију. Уводна понуда: 40 % попуста. Поруџбина за мање од минута."
+    "description": "Tirzepatide (TZ-2) и Retatrutide пенови компаније VETUD. 20 мг или 40 мг, чистоћа ≥99 % са COA за сваку серију. {saleLabel}: {percent} % попуста. Поруџбина за мање од минута."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -85,17 +85,17 @@
     "headlineOffer": "{percent} % јефтиније.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "на сваки пен ове недеље",
-      "text": "Tirzepatide или Retatrutide, 20 мг или 40 мг."
+      "title": "Сваки пен. Само ове недеље.",
+      "text": "Tirzepatide или Retatrutide, 20 или 40 мг."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "просечан губитак телесне масе",
-      "text": "Испитивање Retatrutide од 48 недеља ({placebo} % уз плацебо)."
+      "title": "телесне масе. Нестало.",
+      "text": "Просек у 48-недељном испитивању Retatrutide."
     },
     "appetitePoint": {
-      "title": "Мање глади",
-      "text": "Оба делују на GIP и GLP-1, сигнале који телу говоре да је сито."
+      "title": "Глад, искључена.",
+      "text": "Бржа ситост, мање хране. GIP + GLP-1 обављају посао."
     },
     "buyFrom": "Купи сада · од {price}",
     "extraCode": "Додатни код −{percent} %",

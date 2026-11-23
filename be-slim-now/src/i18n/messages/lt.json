@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "{saleLabel} −{percent} % · Tirzepatide & Retatrutide švirkštikliai · BeSlimNow",
-    "description": "VETUD Tirzepatide (TZ-2) ir Retatrutide švirkštikliai. 20 mg arba 40 mg, grynumas ≥99 % su COA kiekvienai partijai. Įžanginis pasiūlymas: 40 % nuolaida. Užsakymas greičiau nei per minutę."
+    "description": "VETUD Tirzepatide (TZ-2) ir Retatrutide švirkštikliai. 20 mg arba 40 mg, grynumas ≥99 % su COA kiekvienai partijai. {saleLabel}: {percent} % nuolaida. Užsakymas greičiau nei per minutę."
   },
   "offer": {
     "saleLabel": "Black Friday",
@@ -84,17 +84,17 @@
     "headlineOffer": "{percent} % pigiau.",
     "offerPoint": {
       "value": "−{percent} %",
-      "title": "kiekvienam švirkštikliui šią savaitę",
-      "text": "Tirzepatide arba Retatrutide, 20 mg arba 40 mg."
+      "title": "Kiekvienas švirkštiklis. Tik šią savaitę.",
+      "text": "Tirzepatide arba Retatrutide, 20 arba 40 mg."
     },
     "weightPoint": {
       "value": "{percent} %",
-      "title": "vidutinis kūno svorio sumažėjimas",
-      "text": "48 savaičių Retatrutide tyrimas ({placebo} % placebo grupėje)."
+      "title": "kūno svorio. Dingo.",
+      "text": "Vidurkis 48 savaičių Retatrutide tyrime."
     },
     "appetitePoint": {
-      "title": "Mažiau alkio",
-      "text": "Abu veikia GIP ir GLP-1 – signalus, kurie kūnui praneša, kad jis sotus."
+      "title": "Alkis išjungtas.",
+      "text": "Greitesnis sotumas, mažiau maisto. GIP + GLP-1 atlieka darbą."
     },
     "buyFrom": "Pirkti dabar · nuo {price}",
     "extraCode": "Papildomas kodas −{percent} %",
