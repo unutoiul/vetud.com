@@ -89,6 +89,17 @@ npm run emails:publish   # creates/updates and publishes them in Resend, then wr
 
 `publish` needs `RESEND_API_KEY` (from the environment, `.env.local`, or `vetud-shop/backend/.env`). Commit the updated `emails/templates.json` and `src/lib/email/template-ids.ts`, then redeploy. The sender address in `RESEND_FROM_EMAIL` must be on a domain verified in Resend.
 
+### Campaigns (Resend Broadcasts)
+
+Marketing emails live in `emails/campaigns/`: `<name>.html` + `<name>.txt`, with subject, preview text, sender and Resend segment in `campaigns.json`. Prices in a campaign are written in by hand, so check them against `src/config/site.ts` when the offer changes.
+
+```bash
+npm run emails:campaign-images            # pictures → public/brand/email/campaign/ (JPEG; deploy before sending)
+npm run emails:campaign -- black-friday-2026   # creates/updates the Resend Broadcast draft; never sends
+```
+
+Review the draft in Resend → Broadcasts, send yourself a test, then send it there. Only mail people who subscribed: every campaign carries the research-use notice and an unsubscribe link (`{{{RESEND_UNSUBSCRIBE_URL}}}`).
+
 ## Pictures
 
 `npm run images` rebuilds `public/images/` from VETUD's own artwork: the closed and open boxes from `assets/vetud_product_white_background/`, the reusable pen from `assets/VETUD_Reusable_Dual_Chamber_Pen_poster.png` (cut out of its background), and the alpine background from the shop. It also grades the filling-line and cold-storage photos in `assets/VETUD_Facility_Photos/` for the "Made clean. Kept cold." section (`src/components/Facility.tsx`): cropped clear of clutter, colour casts evened out, levels, softer saturation, sharpening and a faint vignette. The crop and colour settings for each photo are in the `facility` list in `scripts/prepare-images.mjs`.
