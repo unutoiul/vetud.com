@@ -5,10 +5,11 @@ import { Button, Col, Flex, Grid, Row, Typography } from "antd"
 import { motion, MotionConfig, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react"
 import Image from "next/image"
 import { Fragment, useRef, type CSSProperties, type PointerEvent } from "react"
-import { OFFER, PRODUCTS, WEIGHT_LOSS, type ProductId } from "@/config/site"
-import { around, format, list } from "@/i18n/format"
+import { MARKETS } from "@/config/markets"
+import { OFFER, PRODUCTS, TRIAL_DATA, type ProductId } from "@/config/site"
+import { around, format } from "@/i18n/format"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
-import { CountUp, enter, EnterKeyframes, FadeUp, RisingWord, Rotator, Shine, SPRING_CSS, srOnly } from "./animated"
+import { CountUp, enter, EnterKeyframes, FadeUp, RisingWord, Shine, SPRING_CSS, srOnly } from "./animated"
 import { useCountry } from "./CountryProvider"
 import { useMessages } from "./MessagesProvider"
 import OfferSeal from "./OfferSeal"
@@ -158,6 +159,100 @@ function FloatingPen({
   )
 }
 
+/** A knife and fork: the "less hunger" point. */
+function AppetiteIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M7 3v8M4.5 3v5a2.5 2.5 0 0 0 5 0V3M7 11v10" />
+      <path d="M17 21V3c-2 1.2-3 3.6-3 6.5V13h3" />
+    </svg>
+  )
+}
+
+/**
+ * The three short reasons under the headline (hero.offerPoint / weightPoint / appetitePoint): the
+ * price cut, retatrutide's trial result (TRIAL_DATA, counted up) and how both molecules work.
+ */
+function SellingPoints({ delay }: { delay: number }) {
+  const m = useMessages().hero
+  const { country } = useCountry()
+  const screens = Grid.useBreakpoint()
+  const locale = MARKETS[country].locale
+  const trial = TRIAL_DATA.find((item) => item.name === "Retatrutide") ?? TRIAL_DATA[0]
+  const [before, after] = around(m.weightPoint.value, "percent")
+  const placebo = new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(trial.placebo)
+  const badge: CSSProperties = {
+    flex: "none",
+    minWidth: screens.sm ? 116 : 94,
+    fontFamily: fonts.display,
+    fontWeight: 700,
+    fontSize: screens.sm ? 34 : 27,
+    lineHeight: 1,
+    letterSpacing: "-0.02em",
+    whiteSpace: "nowrap",
+  }
+  const rows = [
+    ...(OFFER.salePercent > 0
+      ? [
+          {
+            key: "offer",
+            value: <span style={{ ...badge, color: colors.sale }}>{format(m.offerPoint.value, { percent: OFFER.salePercent })}</span>,
+            title: m.offerPoint.title,
+            text: m.offerPoint.text,
+          },
+        ]
+      : []),
+    {
+      key: "weight",
+      value: (
+        <span style={{ ...badge, color: colors.tealDeep }}>
+          {before}
+          <CountUp to={trial.medicine} decimals={1} locale={locale} delay={delay + 0.12} duration={1.7} />
+          {after}
+        </span>
+      ),
+      title: m.weightPoint.title,
+      text: format(m.weightPoint.text, { placebo }),
+    },
+    {
+      key: "appetite",
+      value: (
+        <span style={badge}>
+          <span style={{ display: "inline-grid", placeItems: "center", width: 50, height: 50, borderRadius: 999, background: colors.aquaLight, color: colors.tealDeep }}>
+            <AppetiteIcon />
+          </span>
+        </span>
+      ),
+      title: m.appetitePoint.title,
+      text: m.appetitePoint.text,
+    },
+  ]
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", maxWidth: 520, marginTop: 4 }}>
+      {rows.map((row, index) => (
+        <FadeUp key={row.key} delay={delay + index * 0.12} y={10}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: screens.sm ? 18 : 14,
+              padding: "14px 0",
+              borderTop: index ? `1px solid ${colors.line}` : "none",
+            }}
+          >
+            {row.value}
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontWeight: 700, fontSize: screens.sm ? 18 : 16.5, color: colors.navy, lineHeight: 1.3 }}>{row.title}</div>
+              <div style={{ fontSize: screens.sm ? 15 : 14, color: colors.navyInk, lineHeight: 1.45, marginTop: 2 }}>{row.text}</div>
+            </div>
+          </div>
+        </FadeUp>
+      ))}
+    </div>
+  )
+}
+
 export default function Hero() {
   const m = useMessages()
   const { openOrder, openPromo } = useOrder()
@@ -170,10 +265,6 @@ export default function Hero() {
   const lineOne = m.hero.headlineLineOne
   const lineTwo = m.hero.headlineLineTwo
   const { lineTwoStart, offerStart, afterHeadline } = headlineTiming(lineOne.length, lineTwo.length)
-  // What the rotating line says about every pen; the offer joins third while there is one.
-  const everyPen = [...m.hero.everyPen]
-  if (OFFER.salePercent > 0) everyPen.splice(2, 0, format(m.hero.everyPenSale, { percent: OFFER.salePercent }))
-  const [weightBefore, weightAfter] = around(m.hero.weightLoss, "percent")
 
   // The alpine art drifts down a little as the page scrolls, so the hero has depth.
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] })
@@ -294,38 +385,11 @@ export default function Hero() {
                 </span>
               </Typography.Title>
 
-              <FadeUp delay={afterHeadline - 0.06} y={10} style={{ marginTop: 14 }}>
-                <p style={{ fontFamily: fonts.display, fontWeight: 700, lineHeight: 1.12, color: colors.navyDeep, margin: 0, fontSize: "clamp(21px, 2.5vw, 30px)" }}>
-                  <span style={srOnly}>{format(m.hero.weightLoss, { percent: WEIGHT_LOSS.percent })}</span>
-                  <span aria-hidden>{weightBefore}</span>
-                  <span style={{ color: colors.sale, fontWeight: 800 }}>
-                    <CountUp
-                      to={WEIGHT_LOSS.percent}
-                      delay={afterHeadline - 0.06}
-                      duration={1.7}
-                    />
-                  </span>
-                  <span aria-hidden>{weightAfter}</span>
-                </p>
-              </FadeUp>
-
-              <FadeUp delay={afterHeadline} y={12} style={{ marginTop: 18 }}>
-                <p style={{ fontFamily: fonts.display, fontSize: "clamp(19px, 2vw, 24px)", fontWeight: 400, lineHeight: 1.3, color: colors.navyInk, margin: 0 }}>
-                  <span style={srOnly}>{format(m.hero.everyPenSr, { list: list(everyPen, m.hero.listAnd) })}</span>
-                  <span aria-hidden>{m.hero.everyPenPrefix}</span>
-                  <Rotator items={everyPen} style={{ fontWeight: 600, color: colors.tealDeep }} />
-                </p>
-              </FadeUp>
-
-              <div style={{ transformOrigin: "0% 50%", ...enter("grow", { delay: afterHeadline + 0.1, duration: 0.8 }) }}>
+              <div style={{ transformOrigin: "0% 50%", ...enter("grow", { delay: afterHeadline - 0.1, duration: 0.8 }) }}>
                 <AccentRule />
               </div>
 
-              <FadeUp delay={afterHeadline + 0.15}>
-                <Typography.Paragraph style={{ fontSize: "clamp(16px, 1.5vw, 18px)", lineHeight: 1.65, color: colors.navyInk, maxWidth: 520, margin: 0 }}>
-                  {m.hero.intro}
-                </Typography.Paragraph>
-              </FadeUp>
+              <SellingPoints delay={afterHeadline - 0.06} />
 
               <FadeUp delay={afterHeadline + 0.25}>
                 <Flex wrap gap={12} style={{ marginTop: 30 }}>

@@ -100,9 +100,24 @@ export function RisingWord({ children, delay }: { children: ReactNode; delay: nu
  * so the number is right even before JavaScript runs; if the page wakes up after the word has
  * landed, it just stays put.
  */
-export function CountUp({ to, delay = 0, duration = 1.2 }: { to: number; delay?: number; duration?: number }) {
+export function CountUp({
+  to,
+  delay = 0,
+  duration = 1.2,
+  decimals = 0,
+  locale = "en-US",
+}: {
+  to: number
+  delay?: number
+  duration?: number
+  /** Digits after the decimal separator (24.2 → 1), written the way `locale` writes them. */
+  decimals?: number
+  locale?: string
+}) {
   const value = useMotionValue(to)
-  const text = useTransform(value, (latest) => String(Math.round(latest)))
+  const text = useTransform(value, (latest) =>
+    new Intl.NumberFormat(locale, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }).format(latest),
+  )
   const reduce = useReducedMotion()
 
   useEffect(() => {

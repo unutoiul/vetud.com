@@ -65,8 +65,8 @@ export const LANGUAGES = {
   be: { name: "Belarusian", countries: ["by"] },
 }
 
-/** Kept in English everywhere: a weight-loss claim that isn't translated into other languages. */
-const KEEP_ENGLISH = new Set(["hero.weightLoss"])
+/** Texts kept exactly as in us.json in every language (none at the moment). */
+const KEEP_ENGLISH = new Set([])
 /** Word lists whose length may differ per language (the hero headline rises word by word). */
 const FREE_LENGTH = new Set(["hero.headlineLineOne", "hero.headlineLineTwo"])
 

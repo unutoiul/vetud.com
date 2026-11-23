@@ -83,20 +83,20 @@
       "acum"
     ],
     "headlineOffer": "cu {percent}% reducere.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Fiecare pen este ",
-    "everyPenSr": "Fiecare pen este {list}.",
-    "everyPen": [
-      "cu puritate garantată",
-      "cu livrare garantată",
-      "gata de expediere azi",
-      "pur în proporție de ≥99%",
-      "însoțit de COA",
-      "ambalat discret"
-    ],
-    "everyPenSale": "cu {percent}% mai ieftin săptămâna aceasta",
-    "listAnd": "și",
-    "intro": "Cele mai căutate două molecule din cercetarea metabolică, sigilate în pen-ul de precizie cu dublă cameră VETUD. 20 mg sau 40 mg, puritate ≥99%, la ușa dumneavoastră în câteva zile. Fără flacoane, fără măsurători, fără cont. Nimic altceva de cumpărat: cartușul sigilat, pen-ul reutilizabil și 12 ace vin într-o singură cutie.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "la fiecare pen săptămâna aceasta",
+      "text": "Tirzepatide sau Retatrutide, 20 mg sau 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "greutate corporală pierdută în medie",
+      "text": "Studiu de 48 de săptămâni cu Retatrutide ({placebo}% cu placebo)."
+    },
+    "appetitePoint": {
+      "title": "Mai puțină foame",
+      "text": "Ambele acționează asupra GIP și GLP-1, semnalele care îi spun corpului că s-a săturat."
+    },
     "buyFrom": "Cumpărați acum · de la {price}",
     "extraCode": "Cod extra −{percent}%",
     "guaranteedLabel": "Garantat:",

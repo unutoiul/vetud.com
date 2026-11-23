@@ -83,20 +83,20 @@
       "teraz"
     ],
     "headlineOffer": "{percent}% taniej.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Każdy pen jest ",
-    "everyPenSr": "Każdy pen jest {list}.",
-    "everyPen": [
-      "z gwarancją czystości",
-      "z gwarancją dostawy",
-      "gotowy do wysyłki dziś",
-      "czysty w ≥99%",
-      "z certyfikatem COA",
-      "dyskretnie zapakowany"
-    ],
-    "everyPenSale": "w tym tygodniu {percent}% tańszy",
-    "listAnd": "i",
-    "intro": "Dwie najbardziej poszukiwane cząsteczki w badaniach nad metabolizmem, zamknięte w precyzyjnym dwukomorowym penie VETUD. 20 mg lub 40 mg, czystość ≥99%, u Ciebie w kilka dni. Bez fiolek, bez odmierzania, bez konta. Nic więcej nie trzeba kupować: zapieczętowany wkład, pen wielokrotnego użytku i 12 igieł w jednym opakowaniu.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "na każdy pen w tym tygodniu",
+      "text": "Tirzepatide lub Retatrutide, 20 mg lub 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "średnia utrata masy ciała",
+      "text": "48-tygodniowe badanie Retatrutide ({placebo}% przy placebo)."
+    },
+    "appetitePoint": {
+      "title": "Mniejszy głód",
+      "text": "Oba działają na GIP i GLP-1, sygnały, które mówią organizmowi, że jest syty."
+    },
     "buyFrom": "Kup teraz · od {price}",
     "extraCode": "Dodatkowy kod −{percent}%",
     "guaranteedLabel": "Gwarancja:",

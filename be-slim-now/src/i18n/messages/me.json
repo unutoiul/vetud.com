@@ -83,20 +83,20 @@
       "sada"
     ],
     "headlineOffer": "{percent} % jeftinije.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Svaki pen je ",
-    "everyPenSr": "Svaki pen je {list}.",
-    "everyPen": [
-      "garantovane čistoće",
-      "garantovane dostave",
-      "spreman za slanje već danas",
-      "≥99 % čist",
-      "potkrijepljen COA-om",
-      "diskretno upakovan"
-    ],
-    "everyPenSale": "ove sedmice {percent} % jeftiniji",
-    "listAnd": "i",
-    "intro": "Dvije najtraženije molekule metaboličkih istraživanja, zatvorene u preciznom VETUD penu sa dvije komore. 20 mg ili 40 mg, čistoća ≥99 %, kod vas za nekoliko dana. Bez bočica, bez odmjeravanja, bez naloga. Ništa drugo ne treba da kupujete: zapečaćeni uložak, pen za višekratnu upotrebu i 12 igala stižu u jednoj kutiji.",
+    "offerPoint": {
+      "value": "−{percent} %",
+      "title": "na svaki pen ove nedjelje",
+      "text": "Tirzepatide ili Retatrutide, 20 mg ili 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent} %",
+      "title": "prosječan gubitak tjelesne mase",
+      "text": "Ispitivanje Retatrutide od 48 nedjelja ({placebo} % uz placebo)."
+    },
+    "appetitePoint": {
+      "title": "Manje gladi",
+      "text": "Oba djeluju na GIP i GLP-1, signale koji tijelu govore da je sito."
+    },
     "buyFrom": "Kupi sada · od {price}",
     "extraCode": "Dodatni kod −{percent} %",
     "guaranteedLabel": "Garancija:",

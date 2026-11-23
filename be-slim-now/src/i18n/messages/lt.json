@@ -82,20 +82,20 @@
       "dabar"
     ],
     "headlineOffer": "{percent} % pigiau.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Kiekvienas švirkštiklis ",
-    "everyPenSr": "Kiekvienas švirkštiklis {list}.",
-    "everyPen": [
-      "su garantuotu grynumu",
-      "su garantuotu pristatymu",
-      "paruoštas išsiųsti šiandien",
-      "≥99 % grynumo",
-      "patvirtintas COA",
-      "diskretiškai supakuotas"
-    ],
-    "everyPenSale": "šią savaitę {percent} % pigesnis",
-    "listAnd": "ir",
-    "intro": "Dvi geidžiamiausios medžiagų apykaitos tyrimų molekulės, uždarytos preciziškame dviejų kamerų VETUD švirkštiklyje. 20 mg arba 40 mg, grynumas ≥99 %, pas jus per kelias dienas. Jokių buteliukų, jokio matavimo, jokios paskyros. Nieko daugiau pirkti nereikia: užsandarinta kasetė, daugkartinis švirkštiklis ir 12 adatų atkeliauja vienoje dėžutėje.",
+    "offerPoint": {
+      "value": "−{percent} %",
+      "title": "kiekvienam švirkštikliui šią savaitę",
+      "text": "Tirzepatide arba Retatrutide, 20 mg arba 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent} %",
+      "title": "vidutinis kūno svorio sumažėjimas",
+      "text": "48 savaičių Retatrutide tyrimas ({placebo} % placebo grupėje)."
+    },
+    "appetitePoint": {
+      "title": "Mažiau alkio",
+      "text": "Abu veikia GIP ir GLP-1 – signalus, kurie kūnui praneša, kad jis sotus."
+    },
     "buyFrom": "Pirkti dabar · nuo {price}",
     "extraCode": "Papildomas kodas −{percent} %",
     "guaranteedLabel": "Garantija:",

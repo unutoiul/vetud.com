@@ -83,20 +83,20 @@
       "nu"
     ],
     "headlineOffer": "{percent}% korting.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Elke pen is ",
-    "everyPenSr": "Elke pen is {list}.",
-    "everyPen": [
-      "gegarandeerd zuiver",
-      "gegarandeerd geleverd",
-      "vandaag verzendklaar",
-      "≥99% zuiver",
-      "voorzien van een COA",
-      "discreet verpakt"
-    ],
-    "everyPenSale": "deze week {percent}% goedkoper",
-    "listAnd": "en",
-    "intro": "De twee meest gewilde moleculen in stofwisselingsonderzoek, verzegeld in de precisie-tweekamerpen van VETUD. 20 mg of 40 mg, ≥99% zuiverheid, binnen enkele dagen bij je thuis. Geen flesjes, geen afmeten, geen account. Verder niets te kopen: de verzegelde cartridge, de herbruikbare pen en 12 naalden zitten in één doos.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "op elke pen deze week",
+      "text": "Tirzepatide of Retatrutide, 20 mg of 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "gemiddeld verlies van lichaamsgewicht",
+      "text": "Studie van 48 weken met Retatrutide ({placebo}% met placebo)."
+    },
+    "appetitePoint": {
+      "title": "Minder honger",
+      "text": "Beide werken op GIP en GLP-1, de signalen die je lichaam vertellen dat het vol zit."
+    },
     "buyFrom": "Nu kopen · vanaf {price}",
     "extraCode": "Extra code −{percent}%",
     "guaranteedLabel": "Gegarandeerd:",

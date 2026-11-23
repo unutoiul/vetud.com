@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
 
   const owner = process.env.STORE_OWNER_EMAIL || CONTACTS.email
   const [buyer, admin] = await Promise.allSettled([
-    sendTemplate({ template: "order-confirmation", to: order.email, variables: confirmationVariables(order, number, withCode), replyTo: owner }),
+    sendTemplate({ template: "order-confirmation", to: order.email, variables: confirmationVariables(order, number, withCode), replyTo: CONTACTS.email }),
     sendTemplate({ template: "order-admin", to: owner, variables: adminVariables(order, number, placedAt, withCode), replyTo: order.email }),
   ])
   if (admin.status === "rejected") console.error(`[order ${number}] owner alert failed`, admin.reason)

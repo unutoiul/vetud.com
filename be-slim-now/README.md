@@ -31,7 +31,7 @@ npm run lint && npm run typecheck && npm run build
 | Telegram / WhatsApp / LINE / email | `src/config/site.ts` (`CONTACTS`). An empty value hides that button |
 | Colours, fonts, Ant Design theme | `src/theme/tokens.ts` (every colour is a named token there) |
 | Page sections | `src/components/*` (PromoBar, Header, Hero, Products, HowToOrder, Quality, Faq, Footer) |
-| Hero animation: word timing, the rotating "Every pen is …" phrases | timing in `src/components/Hero.tsx` (`HEADLINE_START`, `WORD_GAP`); the phrases are `hero.everyPen` in the message files; the pieces are in `src/components/animated.tsx` |
+| Hero: word timing and the three selling points under the headline | timing in `src/components/Hero.tsx` (`HEADLINE_START`, `WORD_GAP`); the points are `hero.offerPoint`, `hero.weightPoint` and `hero.appetitePoint` in the message files (the weight figure is retatrutide in `TRIAL_DATA`, `src/config/site.ts`); the pieces are in `src/components/animated.tsx` |
 | The order form / the pop-up | `src/components/OrderModal.tsx` / `src/components/PromoModal.tsx` |
 | Payment details in the buyer's email | env vars `PAYMENT_INSTRUCTIONS`, `PAYMENT_BANK_DETAILS`, `PAYMENT_CRYPTO_DETAILS` |
 | Email wording and layout | `emails/templates/*.html` + `.txt`, then `npm run emails:publish` |
@@ -51,7 +51,7 @@ Flags in `public/flags` come from country-flag-icons (MIT, see the LICENSE there
 
 ## Page text by country
 
-All the page's words live in `src/i18n/messages`, one JSON file per country in the picker (`us.json`, `de.json`, `gb.json`… 46 files). **`us.json` is the English source.** Every other file is translated into its country's language (32 languages, from each country's locale in `src/config/markets.ts`). The one line kept in English everywhere is `hero.weightLoss`, a weight-loss claim we don't translate.
+All the page's words live in `src/i18n/messages`, one JSON file per country in the picker (`us.json`, `de.json`, `gb.json`… 46 files). **`us.json` is the English source.** Every other file is translated into its country's language (32 languages, from each country's locale in `src/config/markets.ts`).
 
 - **Languages.** `LANGUAGES` in `scripts/translations.mjs` lists each language and its countries; the first country's file holds the translation and the others get a copy (Germany → Austria, Liechtenstein and, with "ss" for "ß", Switzerland; France → Luxembourg, Monaco; Italy → San Marino, Vatican; Greece → Cyprus; Romania → Moldova; Netherlands → Belgium; Albania → Kosovo; Britain → Ireland, Malta).
 - **After changing English text:** `npm run i18n:sync` (adds new keys in English), then `npm run i18n:translations -- --stale` lists, per language, the texts whose English changed since they were translated. Translate those in the first country file of each language and run `npm run i18n:translations -- de fr …`: it checks numbers, placeholders, tags, brand names (`scripts/translation-glossary.json`) and list lengths against `us.json`, copies the file to that language's other countries and records which English it was made from (`src/i18n/translations.json`). `-- --check` re-checks every language without changing anything.
@@ -64,12 +64,12 @@ All the page's words live in `src/i18n/messages`, one JSON file per country in t
 
 ## Hero animation
 
-The headline rises in word by word, "40% off." counts up with a brighter green light gliding through it and a green stroke drawn underneath, a line below cycles through "Every pen is purity-guaranteed / delivery-guaranteed / 40% off this week / ready to ship today / ≥99% pure / COA-backed / discreetly packed", the pens glide in, float and lean toward the mouse, and the offer seal spins in with a soft pulse.
+The headline rises in word by word, "40% off." counts up with a brighter green light gliding through it and a green stroke drawn underneath, three short selling points follow (−40% off every pen; 24.2% average weight lost in retatrutide's 48-week trial, counting up; less hunger through GIP and GLP-1), the pens glide in, float and lean toward the mouse, and the offer seal spins in with a soft pulse.
 
-- **The two guarantees** (refund if a lot tests below 99% purity; reship or refund if a parcel is lost) are written out under the Buy button (`hero.guarantees` in the message files) and in the FAQ (`faq.items`). If the policy changes, change both, and the rotating phrases.
+- **The two guarantees** (refund if a lot tests below 99% purity; reship or refund if a parcel is lost) are written out under the Buy button (`hero.guarantees` in the message files) and in the FAQ (`faq.items`). If the policy changes, change both.
 - **Entrances are CSS animations** in the server HTML (`enter()` in `animated.tsx`), so they play on first paint and the hero is never blank while JavaScript loads. The background picture only scales (no fade), so it still counts as painted at once for Largest Contentful Paint (about 0.55 s locally).
-- **Everything live** (count-up, rotating words, light sweeps, floating, mouse parallax, hover) uses [Motion](https://motion.dev) (`motion` package, pinned).
-- Visitors with "reduce motion" on get plain fades, no loops, and the rotating line stays on its first phrase. Screen readers hear the headline and the rotating line once, in full.
+- **Everything live** (count-ups, light sweeps, floating, mouse parallax, hover) uses [Motion](https://motion.dev) (`motion` package, pinned).
+- Visitors with "reduce motion" on get plain fades and no loops. Screen readers hear the headline once, in full.
 
 The pop-up opens by itself after 12 seconds or when the mouse leaves the page, at most once every three days per browser, never over the order form, and never again once the visitor has the code.
 
@@ -77,9 +77,9 @@ The pop-up opens by itself after 12 seconds or when the mouse leaves the page, a
 
 All emails are Resend templates, built from `emails/` with the same VETUD Peptide Series layout as the shop's emails:
 
-- `order-confirmation` to the buyer: the order, the savings, the total, how to pay and the contact links. Reply-to is the owner.
+- `order-confirmation` to the buyer: the order, the savings, the total, how to pay and the contact links. Reply-to is the site address (`SITE.email`, contact@beslimnow.com, forwarded to contact@vetud.com).
 - `order-admin` to `STORE_OWNER_EMAIL`: every field the buyer filled in. Reply-to is the buyer.
-- `promo-code` to a new subscriber: their code.
+- `promo-code` to a new subscriber: their code. Reply-to is the site address too.
 - `subscribe-admin` to `STORE_OWNER_EMAIL`: who subscribed.
 
 ```bash

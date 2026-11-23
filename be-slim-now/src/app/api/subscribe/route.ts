@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
   const results = await Promise.allSettled([
     saveSubscriberRow(email, country),
     saveSubscriber(email),
-    sendTemplate({ template: "promo-code", to: email, variables: promoCodeVariables(code), replyTo: owner }),
+    sendTemplate({ template: "promo-code", to: email, variables: promoCodeVariables(code), replyTo: CONTACTS.email }),
     sendTemplate({ template: "subscribe-admin", to: owner, variables: subscribeAdminVariables(email, new Date()), replyTo: email }),
   ])
   results.forEach((result, index) => {

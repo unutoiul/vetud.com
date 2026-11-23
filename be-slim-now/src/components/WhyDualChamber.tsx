@@ -20,8 +20,10 @@ export default function WhyDualChamber() {
         title={t.title}
         subtitle={t.subtitle}
       />
-      <Row gutter={[{ xs: 16, md: 48 }, 40]} align="middle">
-        <Col xs={24} md={12}>
+      {/* The diagram (square) and the video (16:9) side by side, sized 9:16 so they stand the same
+          height; stacked on phones. The three benefits sit underneath. */}
+      <Row gutter={[{ xs: 16, md: 24 }, 24]} align="top">
+        <Col xs={24} md={{ flex: "9 1 0%" }} style={{ minWidth: 0 }}>
           <div style={{ borderRadius: 24, overflow: "hidden", boxShadow: shadows.lifted, border: `1px solid ${colors.line}`, background: colors.white }}>
             <AntImage
               src="/images/pen-diagram.webp"
@@ -33,60 +35,61 @@ export default function WhyDualChamber() {
             />
           </div>
         </Col>
-        <Col xs={24} md={12}>
-          <Flex vertical gap={28}>
-            {t.benefits.map((benefit, index) => (
-              <Flex key={index} gap={18} align="flex-start">
-                <span
-                  style={{
-                    flex: "none",
-                    width: 52,
-                    height: 52,
-                    borderRadius: 14,
-                    display: "grid",
-                    placeItems: "center",
-                    fontSize: 22,
-                    color: colors.white,
-                    background: `linear-gradient(135deg, ${colors.teal}, ${colors.navy})`,
-                  }}
-                >
-                  {BENEFIT_ICONS[index]}
-                </span>
-                <div>
-                  <Typography.Title level={4} style={{ fontFamily: fonts.display, fontWeight: 500, color: colors.navy, margin: "2px 0 6px", fontSize: 22 }}>
-                    {benefit.title}
-                  </Typography.Title>
-                  <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.65, margin: 0 }}>{benefit.text}</Typography.Paragraph>
-                </div>
-              </Flex>
-            ))}
-            <div>
-              <Button type="primary" size="large" icon={<ShoppingOutlined />} onClick={() => openOrder()} style={{ height: 54, padding: "0 28px", fontSize: 16 }}>
-                {t.cta}
-              </Button>
-            </div>
+        <Col xs={24} md={{ flex: "16 1 0%" }} style={{ minWidth: 0 }}>
+          <div style={{ borderRadius: 24, overflow: "hidden", boxShadow: shadows.lifted, border: `1px solid ${colors.line}`, background: colors.navyDeep }}>
+            <video
+              controls
+              muted
+              playsInline
+              preload="none"
+              poster="/images/explainer-poster.webp"
+              aria-label={t.video}
+              style={{ display: "block", width: "100%", aspectRatio: "16 / 9", background: colors.navyDeep }}
+            >
+              <source src="/videos/dual-chamber-explainer.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <Flex align="center" gap={10} style={{ marginTop: 14, color: colors.navy }}>
+            <PlayCircleFilled style={{ color: colors.teal, fontSize: 18 }} />
+            <span style={{ fontFamily: fonts.mono, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>{t.video}</span>
           </Flex>
         </Col>
       </Row>
 
-      <div style={{ marginTop: "clamp(48px, 7vw, 88px)" }}>
-        <Flex align="center" gap={10} justify="center" style={{ marginBottom: 20, color: colors.navy }}>
-          <PlayCircleFilled style={{ color: colors.teal, fontSize: 20 }} />
-          <span style={{ fontFamily: fonts.mono, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>{t.video}</span>
-        </Flex>
-        <div style={{ maxWidth: 960, margin: "0 auto", borderRadius: 24, overflow: "hidden", boxShadow: shadows.lifted, border: `1px solid ${colors.line}`, background: colors.navyDeep }}>
-          <video
-            controls
-            muted
-            playsInline
-            preload="none"
-            poster="/images/explainer-poster.webp"
-            style={{ display: "block", width: "100%", aspectRatio: "16 / 9", background: colors.navyDeep }}
-          >
-            <source src="/videos/dual-chamber-explainer.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
+      <Row gutter={[{ xs: 16, lg: 40 }, 28]} style={{ marginTop: "clamp(36px, 5vw, 56px)" }}>
+        {t.benefits.map((benefit, index) => (
+          <Col key={index} xs={24} lg={8}>
+            <Flex gap={18} align="flex-start">
+              <span
+                style={{
+                  flex: "none",
+                  width: 52,
+                  height: 52,
+                  borderRadius: 14,
+                  display: "grid",
+                  placeItems: "center",
+                  fontSize: 22,
+                  color: colors.white,
+                  background: `linear-gradient(135deg, ${colors.teal}, ${colors.navy})`,
+                }}
+              >
+                {BENEFIT_ICONS[index]}
+              </span>
+              <div style={{ minWidth: 0 }}>
+                <Typography.Title level={4} style={{ fontFamily: fonts.display, fontWeight: 500, color: colors.navy, margin: "2px 0 6px", fontSize: 22 }}>
+                  {benefit.title}
+                </Typography.Title>
+                <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.65, margin: 0 }}>{benefit.text}</Typography.Paragraph>
+              </div>
+            </Flex>
+          </Col>
+        ))}
+      </Row>
+      <Flex justify="center" style={{ marginTop: 40 }}>
+        <Button type="primary" size="large" icon={<ShoppingOutlined />} onClick={() => openOrder()} style={{ height: 54, padding: "0 28px", fontSize: 16 }}>
+          {t.cta}
+        </Button>
+      </Flex>
     </Section>
   )
 }

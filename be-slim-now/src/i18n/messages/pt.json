@@ -83,20 +83,20 @@
       "agora"
     ],
     "headlineOffer": "com −{percent}%.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Cada caneta tem ",
-    "everyPenSr": "Cada caneta tem {list}.",
-    "everyPen": [
-      "pureza garantida",
-      "entrega garantida",
-      "envio pronto para hoje",
-      "pureza ≥99%",
-      "COA",
-      "embalagem discreta"
-    ],
-    "everyPenSale": "−{percent}% esta semana",
-    "listAnd": "e",
-    "intro": "As duas moléculas mais procuradas da investigação metabólica, seladas na caneta de precisão de dupla câmara da VETUD. 20 mg ou 40 mg, pureza ≥99%, em sua casa em poucos dias. Sem frascos, sem medições, sem conta. Nada mais a comprar: o cartucho selado, a caneta reutilizável e 12 agulhas chegam numa só caixa.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "em cada caneta esta semana",
+      "text": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "de peso corporal perdido em média",
+      "text": "Ensaio de 48 semanas com Retatrutide ({placebo}% com placebo)."
+    },
+    "appetitePoint": {
+      "title": "Menos fome",
+      "text": "Ambos atuam no GIP e no GLP-1, os sinais que dizem ao corpo que está saciado."
+    },
     "buyFrom": "Comprar agora · desde {price}",
     "extraCode": "Código extra −{percent}%",
     "guaranteedLabel": "Garantido:",

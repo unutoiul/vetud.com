@@ -83,20 +83,20 @@
       "nyní"
     ],
     "headlineOffer": "o {percent} % levněji.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Každé pero je ",
-    "everyPenSr": "Každé pero je {list}.",
-    "everyPen": [
-      "se zárukou čistoty",
-      "se zárukou doručení",
-      "připravené k odeslání ještě dnes",
-      "z ≥99 % čisté",
-      "doložené COA",
-      "diskrétně zabalené"
-    ],
-    "everyPenSale": "tento týden o {percent} % levnější",
-    "listAnd": "a",
-    "intro": "Dvě nejžádanější molekuly metabolického výzkumu, uzavřené v přesném dvoukomorovém peru VETUD. 20 mg nebo 40 mg, čistota ≥99 %, u vás během několika dní. Žádné lahvičky, žádné odměřování, žádný účet. Nic dalšího nekupujete: zapečetěný zásobník, opakovaně použitelné pero a 12 jehel v jednom balení.",
+    "offerPoint": {
+      "value": "−{percent} %",
+      "title": "na každé pero tento týden",
+      "text": "Tirzepatide nebo Retatrutide, 20 mg nebo 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent} %",
+      "title": "průměrný úbytek tělesné hmotnosti",
+      "text": "48týdenní studie Retatrutide ({placebo} % u placeba)."
+    },
+    "appetitePoint": {
+      "title": "Menší hlad",
+      "text": "Oba působí na GIP a GLP-1, signály, které tělu říkají, že je syté."
+    },
     "buyFrom": "Koupit · od {price}",
     "extraCode": "Kód na dalších −{percent} %",
     "guaranteedLabel": "Záruka:",

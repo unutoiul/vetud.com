@@ -83,20 +83,20 @@
       "ahora"
     ],
     "headlineOffer": "un {percent} % más barato.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Cada pluma viene ",
-    "everyPenSr": "Cada pluma viene {list}.",
-    "everyPen": [
-      "con pureza garantizada",
-      "con entrega garantizada",
-      "lista para enviar hoy",
-      "con pureza ≥99 %",
-      "con COA",
-      "embalada con discreción"
-    ],
-    "everyPenSale": "con un {percent} % de descuento esta semana",
-    "listAnd": "y",
-    "intro": "Las dos moléculas más buscadas de la investigación metabólica, selladas en la pluma de precisión de doble cámara de VETUD. 20 mg o 40 mg, pureza ≥99 %, en tu puerta en pocos días. Sin viales, sin medir, sin cuenta. Nada más que comprar: el cartucho sellado, la pluma reutilizable y 12 agujas llegan en una sola caja.",
+    "offerPoint": {
+      "value": "−{percent} %",
+      "title": "en cada pluma esta semana",
+      "text": "Tirzepatide o Retatrutide, 20 mg o 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent} %",
+      "title": "de peso corporal perdido de media",
+      "text": "Ensayo de 48 semanas con Retatrutide ({placebo} % con placebo)."
+    },
+    "appetitePoint": {
+      "title": "Menos hambre",
+      "text": "Ambos actúan sobre GIP y GLP-1, las señales que le dicen al cuerpo que está saciado."
+    },
     "buyFrom": "Comprar ahora · desde {price}",
     "extraCode": "Código extra −{percent} %",
     "guaranteedLabel": "Garantizado:",

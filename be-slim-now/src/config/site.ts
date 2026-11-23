@@ -10,7 +10,8 @@
 export const SITE = {
   name: "VETUD Tirzepatide & Retatrutide Pens",
   brand: "VETUD Peptide Series",
-  email: "contact@vetud.com",
+  // Shown on the page and in emails; mail to @beslimnow.com is forwarded to contact@vetud.com (Forward Email, DNS).
+  email: "contact@beslimnow.com",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:8200").replace(/\/$/, ""),
   description:
     "Tirzepatide (TZ-2) and Retatrutide pens by VETUD. 20 mg or 40 mg, ≥99% purity with a COA for every lot. Launch offer: 40% off. Order in under a minute.",
@@ -33,15 +34,6 @@ export const OFFER = {
 }
 
 /**
- * Weight-loss result shown in the hero. Kept separate from the discount offer so the two claims
- * aren't confused. The percent is animated with CountUp when the hero paints; the sentence around
- * it is hero.weightLoss in the messages.
- */
-export const WEIGHT_LOSS = {
-  percent: 24,
-}
-
-/**
  * Human-trial weight-loss results shown under the hero pens. Ordered by reported average;
  * each medicine was compared with its own trial's placebo group — this is not a head-to-head
  * ranking. Trials differ in people, doses and length, so compare with care.
@@ -58,13 +50,14 @@ export const TRIAL_DATA = [
 
 /**
  * Chat contacts. Fill in a value to show that button everywhere on the page; leave it empty to hide it.
- * - telegram: the username without "@" (https://t.me/<username>)
- * - whatsapp: the full number with country code, digits only (https://wa.me/<number>)
+ * - telegram: the username without "@" (https://t.me/<username>), or a phone number starting with
+ *   "+" (https://t.me/+<digits>; works when the account lets everybody find it by its number)
+ * - whatsapp: the full number with country code (https://wa.me/<digits>); spaces are only for show
  * - line: the LINE ID (https://line.me/ti/p/~<id>)
  */
 export const CONTACTS = {
-  telegram: "",
-  whatsapp: "",
+  telegram: "+31 97 010266311",
+  whatsapp: "+31 97 010266311",
   line: "",
   email: SITE.email,
 }
@@ -166,8 +159,12 @@ export type ContactKey = keyof typeof CONTACTS
 
 export function contactLinks() {
   const links: { key: ContactKey; label: string; value: string; href: string }[] = []
-  if (CONTACTS.telegram) links.push({ key: "telegram", label: "Telegram", value: `@${CONTACTS.telegram}`, href: `https://t.me/${CONTACTS.telegram}` })
-  if (CONTACTS.whatsapp) links.push({ key: "whatsapp", label: "WhatsApp", value: `+${CONTACTS.whatsapp}`, href: `https://wa.me/${CONTACTS.whatsapp}` })
+  const digits = (value: string) => value.replace(/\D/g, "")
+  const telegram = CONTACTS.telegram.trim()
+  if (telegram.startsWith("+")) links.push({ key: "telegram", label: "Telegram", value: telegram, href: `https://t.me/+${digits(telegram)}` })
+  else if (telegram) links.push({ key: "telegram", label: "Telegram", value: `@${telegram.replace(/^@/, "")}`, href: `https://t.me/${telegram.replace(/^@/, "")}` })
+  const whatsapp = CONTACTS.whatsapp.trim()
+  if (whatsapp) links.push({ key: "whatsapp", label: "WhatsApp", value: whatsapp.startsWith("+") ? whatsapp : `+${whatsapp}`, href: `https://wa.me/${digits(whatsapp)}` })
   if (CONTACTS.line) links.push({ key: "line", label: "LINE", value: CONTACTS.line, href: `https://line.me/ti/p/~${CONTACTS.line}` })
   if (CONTACTS.email) links.push({ key: "email", label: "Email", value: CONTACTS.email, href: `mailto:${CONTACTS.email}` })
   return links

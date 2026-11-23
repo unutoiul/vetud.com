@@ -83,20 +83,20 @@
       "ora"
     ],
     "headlineOffer": "al −{percent}%.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Ogni penna è ",
-    "everyPenSr": "Ogni penna è {list}.",
-    "everyPen": [
-      "a purezza garantita",
-      "a consegna garantita",
-      "pronta a partire oggi",
-      "pura al ≥99%",
-      "con COA",
-      "imballata con discrezione"
-    ],
-    "everyPenSale": "al −{percent}% questa settimana",
-    "listAnd": "e",
-    "intro": "Le due molecole più ricercate della ricerca metabolica, sigillate nella penna di precisione a doppia camera VETUD. 20 mg o 40 mg, purezza ≥99%, a casa tua in pochi giorni. Niente flaconi, niente misurazioni, niente account. Nient'altro da comprare: la cartuccia sigillata, la penna riutilizzabile e 12 aghi arrivano in un'unica confezione.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "su ogni penna questa settimana",
+      "text": "Tirzepatide o Retatrutide, 20 mg o 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "di peso corporeo perso in media",
+      "text": "Studio di 48 settimane su Retatrutide ({placebo}% con placebo)."
+    },
+    "appetitePoint": {
+      "title": "Meno fame",
+      "text": "Entrambi agiscono su GIP e GLP-1, i segnali che dicono al corpo che è sazio."
+    },
     "buyFrom": "Acquista ora · da {price}",
     "extraCode": "Codice extra −{percent}%",
     "guaranteedLabel": "Garantito:",

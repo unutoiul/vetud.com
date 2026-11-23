@@ -83,20 +83,20 @@
       "désormais"
     ],
     "headlineOffer": "à −{percent} %.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Chaque stylo est ",
-    "everyPenSr": "Chaque stylo est {list}.",
-    "everyPen": [
-      "à pureté garantie",
-      "à livraison garantie",
-      "prêt à partir aujourd’hui",
-      "pur à ≥99 %",
-      "accompagné d’un COA",
-      "emballé discrètement"
-    ],
-    "everyPenSale": "à −{percent} % cette semaine",
-    "listAnd": "et",
-    "intro": "Les deux molécules les plus recherchées de la recherche métabolique, scellées dans le stylo double chambre de précision VETUD. 20 mg ou 40 mg, pureté ≥99 %, chez vous en quelques jours. Pas de flacons, rien à mesurer, pas de compte. Rien d’autre à acheter : la cartouche scellée, le stylo réutilisable et 12 aiguilles arrivent dans une seule boîte.",
+    "offerPoint": {
+      "value": "−{percent} %",
+      "title": "sur chaque stylo cette semaine",
+      "text": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent} %",
+      "title": "de poids corporel perdu en moyenne",
+      "text": "Essai de 48 semaines sur Retatrutide ({placebo} % sous placebo)."
+    },
+    "appetitePoint": {
+      "title": "Moins de faim",
+      "text": "Les deux agissent sur GIP et GLP-1, les signaux qui disent au corps qu’il est rassasié."
+    },
     "buyFrom": "Acheter · dès {price}",
     "extraCode": "Code −{percent} % en plus",
     "guaranteedLabel": "Garanti :",

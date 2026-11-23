@@ -83,20 +83,20 @@
       "ara"
     ],
     "headlineOffer": "un {percent} % més barat.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Cada ploma ve ",
-    "everyPenSr": "Cada ploma ve {list}.",
-    "everyPen": [
-      "amb puresa garantida",
-      "amb lliurament garantit",
-      "llesta per enviar avui",
-      "amb puresa ≥99 %",
-      "amb COA",
-      "embalada amb discreció"
-    ],
-    "everyPenSale": "amb un {percent} % de descompte aquesta setmana",
-    "listAnd": "i",
-    "intro": "Les dues molècules més buscades de la recerca metabòlica, segellades a la ploma de precisió de doble cambra de VETUD. 20 mg o 40 mg, puresa ≥99 %, a casa teva en pocs dies. Sense vials, sense mesurar, sense compte. Res més a comprar: el cartutx segellat, la ploma reutilitzable i 12 agulles arriben en una sola caixa.",
+    "offerPoint": {
+      "value": "−{percent} %",
+      "title": "a cada ploma aquesta setmana",
+      "text": "Tirzepatide o Retatrutide, 20 mg o 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent} %",
+      "title": "de pes corporal perdut de mitjana",
+      "text": "Assaig de 48 setmanes amb Retatrutide ({placebo} % amb placebo)."
+    },
+    "appetitePoint": {
+      "title": "Menys gana",
+      "text": "Tots dos actuen sobre GIP i GLP-1, els senyals que diuen al cos que està sadollat."
+    },
     "buyFrom": "Compra ara · des de {price}",
     "extraCode": "Codi extra −{percent} %",
     "guaranteedLabel": "Garantit:",

@@ -82,20 +82,20 @@
       "now"
     ],
     "headlineOffer": "{percent}% off.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Every pen is ",
-    "everyPenSr": "Every pen is {list}.",
-    "everyPen": [
-      "purity-guaranteed",
-      "delivery-guaranteed",
-      "ready to ship today",
-      "≥99% pure",
-      "COA-backed",
-      "discreetly packed"
-    ],
-    "everyPenSale": "{percent}% off this week",
-    "listAnd": "and",
-    "intro": "The two most-wanted molecules in metabolic research, sealed in VETUD's precision dual-chamber pen. 20 mg or 40 mg, ≥99% purity, at your door within days. No vials, no measuring, no account. Nothing else to buy: the sealed cartridge, the reusable pen and 12 needles come in one box.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "off every pen this week",
+      "text": "Tirzepatide or Retatrutide, 20 mg or 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "average body weight lost",
+      "text": "Retatrutide's 48-week human trial ({placebo}% on placebo)."
+    },
+    "appetitePoint": {
+      "title": "Hunger, turned down",
+      "text": "Both act on GIP and GLP-1, the signals that tell your body it's full."
+    },
     "buyFrom": "Buy now · from {price}",
     "extraCode": "Extra −{percent}% code",
     "guaranteedLabel": "Guaranteed:",

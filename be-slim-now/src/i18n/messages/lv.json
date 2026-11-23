@@ -82,20 +82,20 @@
       "tagad"
     ],
     "headlineOffer": "par {percent}% lētāk.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Katra pildspalva ir ",
-    "everyPenSr": "Katra pildspalva ir {list}.",
-    "everyPen": [
-      "ar garantētu tīrību",
-      "ar garantētu piegādi",
-      "gatava nosūtīšanai jau šodien",
-      "≥99% tīra",
-      "apliecināta ar COA",
-      "diskrēti iepakota"
-    ],
-    "everyPenSale": "šonedēļ par {percent}% lētāka",
-    "listAnd": "un",
-    "intro": "Divas pieprasītākās vielmaiņas pētījumu molekulas, noslēgtas VETUD precizitātes divkameru pildspalvā. 20 mg vai 40 mg, tīrība ≥99%, pie jums dažu dienu laikā. Bez flakoniem, bez mērīšanas, bez konta. Nekas cits nav jāpērk: noslēgtais kārtridžs, atkārtoti lietojamā pildspalva un 12 adatas pienāk vienā kastītē.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "katrai pildspalvai šonedēļ",
+      "text": "Tirzepatide vai Retatrutide, 20 mg vai 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "vidējais ķermeņa svara zudums",
+      "text": "48 nedēļu Retatrutide pētījums ({placebo}% ar placebo)."
+    },
+    "appetitePoint": {
+      "title": "Mazāk izsalkuma",
+      "text": "Abi iedarbojas uz GIP un GLP-1 – signāliem, kas ķermenim saka, ka tas ir paēdis."
+    },
     "buyFrom": "Pirkt tagad · no {price}",
     "extraCode": "Papildu kods −{percent}%",
     "guaranteedLabel": "Garantija:",

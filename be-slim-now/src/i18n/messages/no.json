@@ -83,20 +83,20 @@
       "nå"
     ],
     "headlineOffer": "{percent} % rabatt.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Hver penn er ",
-    "everyPenSr": "Hver penn er {list}.",
-    "everyPen": [
-      "renhetsgarantert",
-      "leveringsgarantert",
-      "klar til sending i dag",
-      "≥99 % ren",
-      "dokumentert med COA",
-      "diskret pakket"
-    ],
-    "everyPenSale": "{percent} % billigere denne uken",
-    "listAnd": "og",
-    "intro": "De to mest ettertraktede molekylene i stoffskifteforskningen, forseglet i VETUDs presisjonspenn med to kamre. 20 mg eller 40 mg, ≥99 % renhet, hos deg i løpet av noen dager. Ingen hetteglass, ingen avmåling, ingen konto. Ingenting annet å kjøpe: den forseglede patronen, den gjenbrukbare pennen og 12 nåler kommer i én eske.",
+    "offerPoint": {
+      "value": "−{percent} %",
+      "title": "på hver penn denne uken",
+      "text": "Tirzepatide eller Retatrutide, 20 mg eller 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent} %",
+      "title": "gjennomsnittlig vekttap",
+      "text": "Retatrutides 48 uker lange studie ({placebo} % med placebo)."
+    },
+    "appetitePoint": {
+      "title": "Mindre sult",
+      "text": "Begge virker på GIP og GLP-1, signalene som forteller kroppen at den er mett."
+    },
     "buyFrom": "Kjøp nå · fra {price}",
     "extraCode": "Ekstra kode −{percent} %",
     "guaranteedLabel": "Garantert:",

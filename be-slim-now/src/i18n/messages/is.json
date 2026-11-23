@@ -83,20 +83,20 @@
       "nú"
     ],
     "headlineOffer": "{percent}% afsláttur.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Hver penni er ",
-    "everyPenSr": "Hver penni er {list}.",
-    "everyPen": [
-      "með tryggðum hreinleika",
-      "með tryggðri afhendingu",
-      "tilbúinn til sendingar í dag",
-      "≥99% hreinn",
-      "staðfestur með COA",
-      "sendur í látlausum umbúðum"
-    ],
-    "everyPenSale": "{percent}% ódýrari þessa vikuna",
-    "listAnd": "og",
-    "intro": "Tvær eftirsóttustu sameindirnar í efnaskiptarannsóknum, innsiglaðar í nákvæmnispenna VETUD með tveimur hólfum. 20 mg eða 40 mg, ≥99% hreinleiki, hjá þér innan fárra daga. Engin glös, engar mælingar, enginn aðgangur. Ekkert annað að kaupa: innsiglaða hylkið, fjölnota penninn og 12 nálar koma í einum kassa.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "af hverjum penna þessa viku",
+      "text": "Tirzepatide eða Retatrutide, 20 mg eða 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "meðalþyngdartap",
+      "text": "48 vikna rannsókn á Retatrutide ({placebo}% með lyfleysu)."
+    },
+    "appetitePoint": {
+      "title": "Minni hungur",
+      "text": "Bæði verka á GIP og GLP-1, boðin sem segja líkamanum að hann sé saddur."
+    },
     "buyFrom": "Kaupa núna · frá {price}",
     "extraCode": "Aukakóði −{percent}%",
     "guaranteedLabel": "Tryggt:",

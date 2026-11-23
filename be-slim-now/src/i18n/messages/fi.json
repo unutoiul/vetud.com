@@ -82,20 +82,20 @@
       "nyt"
     ],
     "headlineOffer": "{percent} % edullisemmin.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Jokainen kynä on ",
-    "everyPenSr": "Jokainen kynä on {list}.",
-    "everyPen": [
-      "puhtaudeltaan taattu",
-      "toimitukseltaan taattu",
-      "valmis lähtemään tänään",
-      "≥99 % puhdas",
-      "COA:lla todennettu",
-      "pakattu huomaamattomasti"
-    ],
-    "everyPenSale": "tällä viikolla {percent} % edullisempi",
-    "listAnd": "ja",
-    "intro": "Aineenvaihduntatutkimuksen kaksi halutuinta molekyyliä suljettuna VETUDin kaksikammioiseen tarkkuuskynään. 20 mg tai 40 mg, puhtaus ≥99 %, perillä muutamassa päivässä. Ei pulloja, ei mittaamista, ei tiliä. Muuta ei tarvitse ostaa: suljettu patruuna, uudelleenkäytettävä kynä ja 12 neulaa tulevat samassa pakkauksessa.",
+    "offerPoint": {
+      "value": "−{percent} %",
+      "title": "jokaisesta kynästä tällä viikolla",
+      "text": "Tirzepatide tai Retatrutide, 20 mg tai 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent} %",
+      "title": "keskimääräinen painonlasku",
+      "text": "Retatrutiden 48 viikon tutkimus (lumeella {placebo} %)."
+    },
+    "appetitePoint": {
+      "title": "Vähemmän nälkää",
+      "text": "Molemmat vaikuttavat GIP- ja GLP-1-signaaleihin, jotka kertovat keholle, että se on kylläinen."
+    },
     "buyFrom": "Osta nyt · alkaen {price}",
     "extraCode": "Lisäkoodi −{percent} %",
     "guaranteedLabel": "Taattu:",

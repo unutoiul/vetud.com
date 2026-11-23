@@ -83,20 +83,20 @@
       "tani"
     ],
     "headlineOffer": "me {percent}% zbritje.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Çdo stilolaps vjen ",
-    "everyPenSr": "Çdo stilolaps vjen {list}.",
-    "everyPen": [
-      "me pastërti të garantuar",
-      "me dorëzim të garantuar",
-      "gati për dërgim sot",
-      "me pastërti ≥99%",
-      "me COA",
-      "i paketuar me diskrecion"
-    ],
-    "everyPenSale": "me {percent}% zbritje këtë javë",
-    "listAnd": "dhe",
-    "intro": "Dy molekulat më të kërkuara të kërkimit metabolik, të mbyllura në stilolapsin preciz me dy dhoma të VETUD. 20 mg ose 40 mg, pastërti ≥99%, te dera juaj brenda pak ditësh. Pa shishe, pa matje, pa llogari. Asgjë tjetër për të blerë: fisheku i mbyllur, stilolapsi i ripërdorshëm dhe 12 gjilpëra vijnë në një kuti të vetme.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "për çdo stilolaps këtë javë",
+      "text": "Tirzepatide ose Retatrutide, 20 mg ose 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "humbje mesatare e peshës trupore",
+      "text": "Studim 48-javor me Retatrutide ({placebo}% me placebo)."
+    },
+    "appetitePoint": {
+      "title": "Më pak uri",
+      "text": "Të dy veprojnë mbi GIP dhe GLP-1, sinjalet që i thonë trupit se është ngopur."
+    },
     "buyFrom": "Blini tani · nga {price}",
     "extraCode": "Kod shtesë −{percent}%",
     "guaranteedLabel": "E garantuar:",

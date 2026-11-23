@@ -82,20 +82,20 @@
       "most"
     ],
     "headlineOffer": "{percent}% kedvezménnyel.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Minden toll ",
-    "everyPenSr": "Minden toll {list}.",
-    "everyPen": [
-      "garantáltan tiszta",
-      "garantáltan célba ér",
-      "ma feladásra kész",
-      "≥99%-ban tiszta",
-      "COA-val igazolt",
-      "diszkréten csomagolt"
-    ],
-    "everyPenSale": "ezen a héten {percent}%-kal olcsóbb",
-    "listAnd": "és",
-    "intro": "A metabolikus kutatás két legkeresettebb molekulája, a VETUD precíziós, kétkamrás tollába zárva. 20 mg vagy 40 mg, ≥99% tisztaság, néhány napon belül Önnél. Nincs fiola, nincs kimérés, nincs fiók. Semmi mást nem kell venni: a lezárt patron, az újrahasználható toll és 12 tű egy dobozban érkezik.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "minden tollra ezen a héten",
+      "text": "Tirzepatide vagy Retatrutide, 20 mg vagy 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "átlagos testtömegcsökkenés",
+      "text": "48 hetes Retatrutide-vizsgálat (placebóval {placebo}%)."
+    },
+    "appetitePoint": {
+      "title": "Kevesebb éhség",
+      "text": "Mindkettő a GIP-re és a GLP-1-re hat, azokra a jelekre, amelyek jelzik a szervezetnek, hogy jóllakott."
+    },
     "buyFrom": "Megveszem · már {price}",
     "extraCode": "Extra −{percent}% kód",
     "guaranteedLabel": "Garancia:",

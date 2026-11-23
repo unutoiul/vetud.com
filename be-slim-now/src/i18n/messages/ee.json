@@ -82,20 +82,20 @@
       "nüüd"
     ],
     "headlineOffer": "{percent}% soodsamalt.",
-    "weightLoss": "Tirzepatide & Retatrutide — lose up to {percent}% of your body mass, fast.",
-    "everyPenPrefix": "Iga pen on ",
-    "everyPenSr": "Iga pen on {list}.",
-    "everyPen": [
-      "garanteeritud puhtusega",
-      "garanteeritud tarnega",
-      "täna saatmiseks valmis",
-      "≥99% puhas",
-      "COA-ga tõendatud",
-      "diskreetselt pakitud"
-    ],
-    "everyPenSale": "sel nädalal {percent}% soodsam",
-    "listAnd": "ja",
-    "intro": "Ainevahetusuuringute kaks ihaldatuimat molekuli, suletud VETUDi kahekambrilisse täppispenni. 20 mg või 40 mg, puhtus ≥99%, sinu ukse taga mõne päevaga. Ei viaale, ei mõõtmist, ei kontot. Muud pole vaja osta: suletud padrun, korduvkasutatav penn ja 12 nõela tulevad ühes karbis.",
+    "offerPoint": {
+      "value": "−{percent}%",
+      "title": "igale pen'ile sel nädalal",
+      "text": "Tirzepatide või Retatrutide, 20 mg või 40 mg."
+    },
+    "weightPoint": {
+      "value": "{percent}%",
+      "title": "keskmine kehakaalu langus",
+      "text": "48-nädalane Retatrutide uuring ({placebo}% platseeboga)."
+    },
+    "appetitePoint": {
+      "title": "Vähem nälga",
+      "text": "Mõlemad toimivad GIP-ile ja GLP-1-le, signaalidele, mis annavad kehale teada, et kõht on täis."
+    },
     "buyFrom": "Osta kohe · alates {price}",
     "extraCode": "Lisakood −{percent}%",
     "guaranteedLabel": "Garantii:",
