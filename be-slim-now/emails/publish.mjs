@@ -2,7 +2,7 @@
 // templates.json), updates it afterwards, publishes it and reads it back to verify. Then rewrites
 // src/lib/email/template-ids.ts, so the site sends exactly these templates.
 // Needs RESEND_API_KEY (environment, this project's .env.local/.env, or vetud-shop/backend/.env).
-// Usage: node publish.mjs [template-name ...]     (no names: all templates)
+// Usage: node publish.mjs [--logo-pending] [template-name ...]     (no names: all templates)
 import { readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
@@ -32,12 +32,19 @@ function apiKey() {
 const key = apiKey()
 if (!key) throw new Error("Set RESEND_API_KEY, or add it to .env.local")
 
-const logo = await fetch(LOGO_URL)
-if (!logo.ok || !logo.headers.get("content-type")?.startsWith("image/png")) {
-  throw new Error(`The logo isn't live at ${LOGO_URL} (${logo.status}).`)
+// --logo-pending: publish even though the logo isn't served yet (the site that serves it, and sends the
+// emails, is about to be deployed). Without it, a missing logo stops the publish.
+const logoPending = process.argv.includes("--logo-pending")
+const logo = await fetch(LOGO_URL).catch(() => null)
+// Only the headers matter; an unread body keeps the connection, and so the script, alive.
+await logo?.body?.cancel()
+if (!logo?.ok || !logo.headers.get("content-type")?.startsWith("image/png")) {
+  const problem = `The logo isn't live at ${LOGO_URL} (${logo?.status ?? "no answer"}).`
+  if (!logoPending) throw new Error(`${problem} Deploy the site first, or pass --logo-pending.`)
+  console.warn(`${problem} Publishing anyway (--logo-pending): it shows once the site is deployed.`)
 }
 
-const only = process.argv.slice(2)
+const only = process.argv.slice(2).filter((arg) => !arg.startsWith("--"))
 const emails = buildAll().filter((email) => !only.length || only.includes(email.name))
 if (only.length && emails.length !== only.length) throw new Error(`Unknown template in: ${only.join(", ")}`)
 

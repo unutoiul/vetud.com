@@ -53,6 +53,15 @@ export const colors = {
   nightGlass: "rgba(10, 18, 48, 0.55)",
   nightVeil: "rgba(10, 18, 48, 0.88)",
   sealShadow: "rgba(10, 18, 48, 0.32)",
+  // BeSlimNow logo: navy wordmark, teal "Slim", and the B mark's cyan-to-green sweep.
+  brandNavy: "#06233f",
+  brandTeal: "#00ad9f",
+  /** The logo teal deepened just enough for white button text (4.5:1). */
+  brandTealDeep: "#008579",
+  brandTealHover: "#007a6f",
+  brandTealPress: "#006f66",
+  brandCyan: "#00c6d4",
+  brandGreen: "#53bc33",
   telegram: "#229ed9",
   whatsapp: "#25d366",
   line_app: "#06c755",
@@ -95,7 +104,7 @@ export const shadows = {
 
 export const theme: ThemeConfig = {
   token: {
-    colorPrimary: colors.navy,
+    colorPrimary: colors.brandTealDeep,
     colorInfo: colors.blue,
     colorLink: colors.blueSoft,
     colorSuccess: colors.success,
@@ -116,9 +125,16 @@ export const theme: ThemeConfig = {
     controlHeightLG: 52,
   },
   components: {
-    Button: { fontWeight: 600, primaryShadow: "none", contentFontSizeLG: 16 },
+    // Darker on hover and press, so the white label never drops below 4.5:1.
+    Button: {
+      fontWeight: 600,
+      primaryShadow: "none",
+      contentFontSizeLG: 16,
+      colorPrimaryHover: colors.brandTealHover,
+      colorPrimaryActive: colors.brandTealPress,
+    },
     Card: { borderRadiusLG: 20 },
-    Segmented: { itemSelectedBg: colors.navy, itemSelectedColor: colors.onNavy, trackBg: colors.iceLight, trackPadding: 4 },
+    Segmented: { itemSelectedBg: colors.brandTealDeep, itemSelectedColor: colors.onNavy, trackBg: colors.iceLight, trackPadding: 4 },
     Collapse: { headerBg: colors.white, contentBg: colors.white },
     Modal: { borderRadiusLG: 20 },
     Form: { itemMarginBottom: 16, verticalLabelPadding: "0 0 4px" },

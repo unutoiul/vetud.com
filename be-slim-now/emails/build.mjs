@@ -1,5 +1,5 @@
-// Builds this site's two Resend email templates (buyer confirmation + owner alert): one shared VETUD
-// Peptide Series layout (logo header, research-use footer) around each template's body in templates/.
+// Builds this site's Resend email templates: one shared layout (BeSlimNow logo header, research-use
+// footer) around each template's body in templates/.
 // Adapted from vetud-shop/emails/build.mjs; this project owns its copy.
 // Usage: node build.mjs        (checks and writes dist/<name>.html and dist/<name>.txt)
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs"
@@ -7,8 +7,11 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url))
-/** The shop's PNG render of the Peptide Series logo; mail apps don't show SVG. */
-export const LOGO_URL = "https://www.pep.company/brand/email/vetud-peptide-series-logo.png"
+/**
+ * The BeSlimNow logo as served by this site (public/brand/email/, made by `npm run brand`): a PNG on
+ * white, since mail apps don't show SVG. It must be deployed before emails can show it.
+ */
+export const LOGO_URL = "https://www.beslimnow.com/brand/email/beslimnow-logo.png"
 const FONT = "Manrope,'Helvetica Neue',Arial,Helvetica,sans-serif"
 const RESEARCH_USE =
   "All products sold on this website are intended for research and identification purposes only. These products are not intended for human dosing, injection, or ingestion."
@@ -35,7 +38,7 @@ function layout({ preheader, rows }) {
 <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="max-width:600px;background-color:#ffffff;border:1px solid #e2e8f0;">
   <tr><td style="padding:24px 32px 20px;border-bottom:3px solid #15265e;">
-    <img src="${LOGO_URL}" width="220" height="46" alt="VETUD Peptide Series" style="display:block;width:220px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none;font-family:${FONT};font-size:20px;line-height:28px;font-weight:700;color:#15265e;">
+    <img src="${LOGO_URL}" width="220" height="45" alt="BeSlimNow" style="display:block;width:220px;max-width:100%;height:auto;border:0;outline:none;text-decoration:none;font-family:${FONT};font-size:20px;line-height:28px;font-weight:700;color:#15265e;">
   </td></tr>
 ${rows.trim()}
   <tr><td style="padding:0 32px 28px;">
