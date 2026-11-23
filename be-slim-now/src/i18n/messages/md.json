@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% la fiecare pen",
-    "title": "Alegeți-vă pen-ul",
+    "title": "Cele mai căutate două pen-uri.",
+    "titleHalf": "La jumătate de preț.",
+    "titleOff": "Cu {percent}% reducere.",
     "subtitle": "Tirzepatide sau Retatrutide, 20 mg sau 40 mg. Aceeași puritate de laborator, același pen VETUD, aceeași ofertă. Alegeți, apăsați Cumpărați acum și ați terminat în mai puțin de un minut.",
     "enlargeAria": "Măriți fotografiile: {product}",
     "enlarge": "Mărire",

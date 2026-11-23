@@ -59,6 +59,7 @@ export default async function Storefront({ country }: { country: CountryCode }) 
         <main>
           <Hero />
           <Products />
+          <TransformationImages />
           <TrialChart />
           <WhyDualChamber />
           <Compare />

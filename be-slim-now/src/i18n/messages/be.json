@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% op elke pen",
-    "title": "Kies je pen",
+    "title": "De twee meest gewilde pennen.",
+    "titleHalf": "Halve prijs.",
+    "titleOff": "{percent}% korting.",
     "subtitle": "Tirzepatide of Retatrutide, 20 mg of 40 mg. Dezelfde laboratoriumzuiverheid, dezelfde VETUD pen, hetzelfde aanbod. Kies, druk op Nu kopen en je bent in minder dan een minuut klaar.",
     "enlargeAria": "Foto's van de {product} vergroten",
     "enlarge": "Vergroten",

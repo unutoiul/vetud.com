@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % på varje penna",
-    "title": "Välj din penna",
+    "title": "De två mest efterfrågade pennorna.",
+    "titleHalf": "Till halva priset.",
+    "titleOff": "{percent} % rabatt.",
     "subtitle": "Tirzepatide eller Retatrutide, 20 mg eller 40 mg. Samma renhet av laboratoriekvalitet, samma VETUD penna, samma erbjudande. Välj, tryck på Köp nu, klart på under en minut.",
     "enlargeAria": "Förstora bilder på {product}",
     "enlarge": "Förstora",

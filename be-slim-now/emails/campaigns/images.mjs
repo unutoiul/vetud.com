@@ -14,19 +14,6 @@ mkdirSync(OUT, { recursive: true })
 
 const jpeg = { quality: 80, mozjpeg: true, chromaSubsampling: "4:4:4" }
 
-// Hero: the reusable pen over the alpine landscape, 1200 × 640.
-{
-  const width = 1200
-  const height = 640
-  const background = await sharp(path.join(IMAGES, "alpine.webp")).resize(width, height, { fit: "cover", position: "bottom" }).toBuffer()
-  const pen = await sharp(path.join(IMAGES, "vetud-pen.webp")).resize({ height: 560 }).png().toBuffer()
-  const { width: penWidth } = await sharp(pen).metadata()
-  await sharp(background)
-    .composite([{ input: pen, left: Math.round((width - penWidth) / 2), top: 40 }])
-    .jpeg(jpeg)
-    .toFile(path.join(OUT, "hero-pen.jpg"))
-}
-
 // The two closed boxes, trimmed to the box and padded on white, 560 wide.
 for (const name of ["tirzepatide", "retatrutide"]) {
   const trimmed = await sharp(path.join(IMAGES, `${name}-closed.webp`)).trim({ background: "#ffffff", threshold: 12 }).toBuffer()
@@ -38,10 +25,7 @@ for (const name of ["tirzepatide", "retatrutide"]) {
     .toFile(path.join(OUT, `${name}-box.jpg`))
 }
 
-// The dual-chamber diagram, 560 square.
-await sharp(path.join(IMAGES, "pen-diagram.webp")).resize(560, 560).jpeg(jpeg).toFile(path.join(OUT, "pen-diagram.jpg"))
-
-for (const file of ["hero-pen.jpg", "tirzepatide-box.jpg", "retatrutide-box.jpg", "pen-diagram.jpg"]) {
+for (const file of ["tirzepatide-box.jpg", "retatrutide-box.jpg"]) {
   const meta = await sharp(path.join(OUT, file)).metadata()
   console.log(`${file}  ${meta.width}×${meta.height}  ${Math.round(statSync(path.join(OUT, file)).size / 1024)} KB`)
 }

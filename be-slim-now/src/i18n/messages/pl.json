@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% na każdy pen",
-    "title": "Wybierz swój pen",
+    "title": "Dwa najbardziej pożądane peny.",
+    "titleHalf": "Za pół ceny.",
+    "titleOff": "{percent}% taniej.",
     "subtitle": "Tirzepatide lub Retatrutide, 20 mg lub 40 mg. Ta sama laboratoryjna czystość, ten sam pen VETUD, ta sama oferta. Wybierz, kliknij Kup teraz i gotowe w mniej niż minutę.",
     "enlargeAria": "Powiększ zdjęcia: {product}",
     "enlarge": "Powiększ",

@@ -256,11 +256,14 @@ function ProductCard({ product }: { product: Product }) {
 export default function Products() {
   const m = useMessages()
   const t = m.productsSection
+  // "The two most-wanted pens." then the offer: "Half price." at exactly 50%, "NN% off." otherwise,
+  // nothing when there's no sale, so the heading always follows OFFER.salePercent.
+  const offer = OFFER.salePercent === 50 ? t.titleHalf : OFFER.salePercent > 0 ? format(t.titleOff, { percent: OFFER.salePercent }) : ""
   return (
     <Section id="products" background={colors.paper}>
       <SectionHeading
         eyebrow={format(t.eyebrow, { saleLabel: m.offer.saleLabel, percent: OFFER.salePercent })}
-        title={t.title}
+        title={offer ? `${t.title} ${offer}` : t.title}
         subtitle={t.subtitle}
       />
       <Row gutter={[{ xs: 16, md: 32 }, 40]} justify="center">

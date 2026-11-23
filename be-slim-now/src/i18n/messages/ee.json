@@ -113,7 +113,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% igalt pennilt",
-    "title": "Vali oma pen",
+    "title": "Kaks kõige ihaldatumat penni.",
+    "titleHalf": "Poole hinnaga.",
+    "titleOff": "{percent}% soodsamalt.",
     "subtitle": "Tirzepatide või Retatrutide, 20 mg või 40 mg. Sama laboritaseme puhtus, sama VETUDi pen, sama pakkumine. Vali, vajuta Osta kohe ja oled vähem kui minutiga valmis.",
     "enlargeAria": "Suurenda pilte: {product}",
     "enlarge": "Suurenda",

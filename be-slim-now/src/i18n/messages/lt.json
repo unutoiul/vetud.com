@@ -113,7 +113,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % kiekvienam švirkštikliui",
-    "title": "Pasirinkite švirkštiklį",
+    "title": "Du labiausiai geidžiami švirkštikliai.",
+    "titleHalf": "Perpus pigiau.",
+    "titleOff": "{percent} % pigiau.",
     "subtitle": "Tirzepatide arba Retatrutide, 20 mg arba 40 mg. Toks pat laboratorinis grynumas, tas pats VETUD švirkštiklis, tas pats pasiūlymas. Pasirinkite, spauskite Pirkti dabar, ir viskas atlikta greičiau nei per minutę.",
     "enlargeAria": "Padidinti nuotraukas: {product}",
     "enlarge": "Padidinti",

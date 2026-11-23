@@ -1,3 +1,18 @@
+import React from "react";
+import Image from "next/image";
+import transformationMan from "@/public/images/transformation-man.png";
+import transformationWoman from "@/public/images/transformation-woman.png";
+
+export const TransformationImages = () => {
+  return (
+    <div style={{ display: 'flex', gap: '20px', marginBottom: '40px' }}>
+      <Image src={transformationMan} alt="Man's transformation" width={200} height={300} style={{ borderRadius: '8px', objectFit: 'cover' }} />
+      <Image src={transformationWoman} alt="Woman's transformation" width={200} height={300} style={{ borderRadius: '8px', objectFit: 'cover' }} />
+    </div>
+  );
+};
+
+export default TransformationImages;
 "use client"
 
 import { Fragment } from "react"

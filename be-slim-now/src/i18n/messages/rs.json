@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % на сваки пен",
-    "title": "Изаберите свој пен",
+    "title": "Два најтраженија пена.",
+    "titleHalf": "Упола цене.",
+    "titleOff": "{percent} % попуста.",
     "subtitle": "Tirzepatide или Retatrutide, 20 мг или 40 мг. Иста лабораторијска чистоћа, исти VETUD пен, иста понуда. Изаберите, кликните Купи сада и готово је за мање од минута.",
     "enlargeAria": "Увећај слике: {product}",
     "enlarge": "Увећај",

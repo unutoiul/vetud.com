@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% për çdo stilolaps",
-    "title": "Zgjidhni stilolapsin tuaj",
+    "title": "Dy stilolapsat më të kërkuar.",
+    "titleHalf": "Me gjysmë çmimi.",
+    "titleOff": "{percent}% zbritje.",
     "subtitle": "Tirzepatide ose Retatrutide, 20 mg ose 40 mg. E njëjta pastërti laboratorike, i njëjti stilolaps VETUD, e njëjta ofertë. Zgjidhni, shtypni Blini tani dhe mbaroi për më pak se një minutë.",
     "enlargeAria": "Zmadho fotot: {product}",
     "enlarge": "Zmadho",

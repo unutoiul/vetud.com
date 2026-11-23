@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% af hverjum penna",
-    "title": "Veldu pennann þinn",
+    "title": "Tveir eftirsóttustu pennarnir.",
+    "titleHalf": "Á hálfvirði.",
+    "titleOff": "{percent}% afsláttur.",
     "subtitle": "Tirzepatide eða Retatrutide, 20 mg eða 40 mg. Sami hreinleiki á rannsóknastofustigi, sami VETUD penni, sama tilboð. Veldu, ýttu á Kaupa núna og þetta tekur innan við mínútu.",
     "enlargeAria": "Stækka myndir af {product}",
     "enlarge": "Stækka",

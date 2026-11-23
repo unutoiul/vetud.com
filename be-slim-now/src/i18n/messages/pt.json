@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% em cada caneta",
-    "title": "Escolha a sua caneta",
+    "title": "As duas canetas mais procuradas.",
+    "titleHalf": "A metade do preço.",
+    "titleOff": "{percent}% de desconto.",
     "subtitle": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg. A mesma pureza de laboratório, a mesma caneta VETUD, a mesma oferta. Escolha, carregue em Comprar agora e fica feito em menos de um minuto.",
     "enlargeAria": "Ampliar as fotos de {product}",
     "enlarge": "Ampliar",

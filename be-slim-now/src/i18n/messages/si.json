@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % na vsak peresnik",
-    "title": "Izberite svoj peresnik",
+    "title": "Najbolj iskana peresnika.",
+    "titleHalf": "Za pol cene.",
+    "titleOff": "{percent} % popusta.",
     "subtitle": "Tirzepatide ali Retatrutide, 20 mg ali 40 mg. Enaka laboratorijska čistost, enak peresnik VETUD, enaka ponudba. Izberite, kliknite Kupite zdaj in v manj kot minuti je opravljeno.",
     "enlargeAria": "Povečaj slike: {product}",
     "enlarge": "Povečaj",

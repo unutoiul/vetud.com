@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % sur chaque stylo",
-    "title": "Choisissez votre stylo",
+    "title": "Les deux stylos les plus demandés.",
+    "titleHalf": "À moitié prix.",
+    "titleOff": "{percent} % de réduction.",
     "subtitle": "Tirzepatide ou Retatrutide, 20 mg ou 40 mg. Même pureté de qualité laboratoire, même stylo VETUD, même offre. Choisissez, appuyez sur Acheter, c’est fait en moins d’une minute.",
     "enlargeAria": "Agrandir les photos du {product}",
     "enlarge": "Agrandir",

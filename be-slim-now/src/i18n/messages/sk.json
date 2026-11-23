@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % na každé pero",
-    "title": "Vyberte si pero",
+    "title": "Dve najžiadanejšie perá.",
+    "titleHalf": "Za polovičnú cenu.",
+    "titleOff": "Zľava {percent} %.",
     "subtitle": "Tirzepatide alebo Retatrutide, 20 mg alebo 40 mg. Rovnaká laboratórna čistota, rovnaké pero VETUD, rovnaká ponuka. Vyberte, kliknite na Kúpiť a za minútu je hotovo.",
     "enlargeAria": "Zväčšiť fotografie: {product}",
     "enlarge": "Zväčšiť",

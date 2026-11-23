@@ -113,7 +113,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% minden tollra",
-    "title": "Válassza ki a tollát",
+    "title": "A két legkeresettebb toll.",
+    "titleHalf": "Féláron.",
+    "titleOff": "{percent}% kedvezménnyel.",
     "subtitle": "Tirzepatide vagy Retatrutide, 20 mg vagy 40 mg. Ugyanaz a laboratóriumi tisztaság, ugyanaz a VETUD toll, ugyanaz az ajánlat. Válasszon, kattintson a Megveszem gombra, és egy percen belül kész.",
     "enlargeAria": "Képek nagyítása: {product}",
     "enlarge": "Nagyítás",

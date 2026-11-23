@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% σε κάθε πένα",
-    "title": "Επιλέξτε την πένα σας",
+    "title": "Οι δύο πιο περιζήτητες πένες.",
+    "titleHalf": "Στη μισή τιμή.",
+    "titleOff": "Με έκπτωση {percent}%.",
     "subtitle": "Tirzepatide ή Retatrutide, 20 mg ή 40 mg. Ίδια εργαστηριακή καθαρότητα, ίδια πένα VETUD, ίδια προσφορά. Επιλέξτε, πατήστε Αγορά τώρα και τελειώσατε σε λιγότερο από ένα λεπτό.",
     "enlargeAria": "Μεγέθυνση φωτογραφιών: {product}",
     "enlarge": "Μεγέθυνση",

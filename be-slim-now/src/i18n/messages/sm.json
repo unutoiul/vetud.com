@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% su ogni penna",
-    "title": "Scegli la tua penna",
+    "title": "Le due penne più richieste.",
+    "titleHalf": "A metà prezzo.",
+    "titleOff": "{percent}% di sconto.",
     "subtitle": "Tirzepatide o Retatrutide, 20 mg o 40 mg. Stessa purezza da laboratorio, stessa penna VETUD, stessa offerta. Scegli, premi Acquista ora, fatto in meno di un minuto.",
     "enlargeAria": "Ingrandisci le foto di {product}",
     "enlarge": "Ingrandisci",

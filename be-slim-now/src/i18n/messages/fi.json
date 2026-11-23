@@ -113,7 +113,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % jokaisesta kynästä",
-    "title": "Valitse kynäsi",
+    "title": "Kaksi halutuinta kynää.",
+    "titleHalf": "Puoleen hintaan.",
+    "titleOff": "{percent} % alennus.",
     "subtitle": "Tirzepatide tai Retatrutide, 20 mg tai 40 mg. Sama laboratoriotason puhtaus, sama VETUD-kynä, sama tarjous. Valitse, paina Osta nyt, ja olet valmis alle minuutissa.",
     "enlargeAria": "Suurenna kuvia: {product}",
     "enlarge": "Suurenna",

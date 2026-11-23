@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % en cada pluma",
-    "title": "Elige tu pluma",
+    "title": "Las dos plumas más buscadas.",
+    "titleHalf": "A mitad de precio.",
+    "titleOff": "{percent} % de descuento.",
     "subtitle": "Tirzepatide o Retatrutide, 20 mg o 40 mg. Misma pureza de laboratorio, misma pluma VETUD, misma oferta. Elige, pulsa Comprar ahora y listo en menos de un minuto.",
     "enlargeAria": "Ampliar las fotos de {product}",
     "enlarge": "Ampliar",

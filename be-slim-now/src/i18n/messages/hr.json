@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % na svaki pen",
-    "title": "Odaberite svoj pen",
+    "title": "Dva najtraženija pena.",
+    "titleHalf": "Upola cijene.",
+    "titleOff": "{percent} % popusta.",
     "subtitle": "Tirzepatide ili Retatrutide, 20 mg ili 40 mg. Ista laboratorijska čistoća, isti VETUD pen, ista ponuda. Odaberite, kliknite Kupi sada i gotovo je za manje od minute.",
     "enlargeAria": "Povećaj slike: {product}",
     "enlarge": "Povećaj",

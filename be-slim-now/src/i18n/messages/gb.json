@@ -113,7 +113,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% on every pen",
-    "title": "Choose your pen",
+    "title": "The two most-wanted pens.",
+    "titleHalf": "Half price.",
+    "titleOff": "{percent}% off.",
     "subtitle": "Tirzepatide or Retatrutide, 20 mg or 40 mg. Same lab-grade purity, same VETUD pen, same offer. Pick yours, press Buy now, done in under a minute.",
     "enlargeAria": "Enlarge pictures of the {product}",
     "enlarge": "Enlarge",

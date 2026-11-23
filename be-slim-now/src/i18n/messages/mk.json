@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% на секое пенкало",
-    "title": "Изберете го вашето пенкало",
+    "title": "Двете најбарани пенкала.",
+    "titleHalf": "Половина цена.",
+    "titleOff": "{percent}% попуст.",
     "subtitle": "Tirzepatide или Retatrutide, 20 mg или 40 mg. Иста лабораториска чистота, исто пенкало VETUD, иста понуда. Изберете, кликнете Купете сега и готово е за помалку од една минута.",
     "enlargeAria": "Зголеми ги сликите: {product}",
     "enlarge": "Зголеми",

@@ -114,7 +114,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent} % en cada ploma",
-    "title": "Tria la teva ploma",
+    "title": "Les dues plomes més buscades.",
+    "titleHalf": "A meitat de preu.",
+    "titleOff": "{percent} % de descompte.",
     "subtitle": "Tirzepatide o Retatrutide, 20 mg o 40 mg. La mateixa puresa de laboratori, la mateixa ploma VETUD, la mateixa oferta. Tria, prem Compra ara i ja està, en menys d'un minut.",
     "enlargeAria": "Amplia les fotos de {product}",
     "enlarge": "Amplia",

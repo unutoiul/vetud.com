@@ -11,6 +11,8 @@ import { around, format } from "@/i18n/format"
 import { colors, fonts, gradients, shadows } from "@/theme/tokens"
 import { CountUp, enter, EnterKeyframes, FadeUp, RisingWord, Shine, SPRING_CSS, srOnly } from "./animated"
 import { useCountry } from "./CountryProvider"
+import transformationMan from "@/public/images/transformation-man.png"
+import transformationWoman from "@/public/images/transformation-woman.png"
 import { useMessages } from "./MessagesProvider"
 import OfferSeal from "./OfferSeal"
 import { useOrder } from "./OrderProvider"
@@ -26,6 +28,14 @@ function headlineTiming(lineOne: number, lineTwo: number) {
   const lineTwoStart = HEADLINE_START + lineOne * WORD_GAP
   const offerStart = lineTwoStart + lineTwo * WORD_GAP
   return { lineTwoStart, offerStart, afterHeadline: offerStart + 0.25 }
+}
+function HeroTransformation() {
+  return (
+    <div style={{ display: 'flex', gap: '20px', marginTop: '40px' }}>
+      <Image src={transformationMan} alt="Man's transformation" width={200} height={300} style={{ borderRadius: '8px', objectFit: 'cover', boxShadow: shadows.main }} />
+      <Image src={transformationWoman} alt="Woman's transformation" width={200} height={300} style={{ borderRadius: '8px', objectFit: 'cover', boxShadow: shadows.main }} />
+    </div>
+  )
 }
 
 function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; delay: number }) {

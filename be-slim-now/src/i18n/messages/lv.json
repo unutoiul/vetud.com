@@ -113,7 +113,9 @@
   },
   "productsSection": {
     "eyebrow": "{saleLabel} · −{percent}% katrai pildspalvai",
-    "title": "Izvēlieties savu pildspalvu",
+    "title": "Divas pieprasītākās pildspalvas.",
+    "titleHalf": "Par pusi lētāk.",
+    "titleOff": "Par {percent}% lētāk.",
     "subtitle": "Tirzepatide vai Retatrutide, 20 mg vai 40 mg. Tāda pati laboratorijas tīrība, tā pati VETUD pildspalva, tas pats piedāvājums. Izvēlieties, nospiediet Pirkt tagad, un viss paveikts mazāk nekā minūtē.",
     "enlargeAria": "Palielināt attēlus: {product}",
     "enlarge": "Palielināt",
