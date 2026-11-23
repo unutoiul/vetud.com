@@ -3,7 +3,7 @@
 import { colors, fonts, gradients } from "@/theme/tokens"
 
 /**
- * The offer medallion: a night disc with a champagne rim. The label's words sit above and below the
+ * The offer medallion: a night disc with a green rim. The label's words sit above and below the
  * percentage ("BLACK" / "−40%" / "FRIDAY"), large enough to read at card size.
  */
 export default function OfferSeal({
@@ -33,14 +33,14 @@ export default function OfferSeal({
     >
       <div style={{ width: "100%", height: "100%", borderRadius: 999, background: colors.night, position: "relative" }}>
         <svg aria-hidden viewBox="0 0 100 100" width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
-          <circle cx="50" cy="50" r="44" fill="none" stroke={colors.gold} strokeOpacity="0.5" strokeWidth="0.8" />
-          <text x="50" y="33" textAnchor="middle" fontFamily={fonts.body} fontSize="10" fontWeight="800" letterSpacing="1.5" fill={colors.goldLight}>
+          <circle cx="50" cy="50" r="44" fill="none" stroke={colors.green} strokeOpacity="0.5" strokeWidth="0.8" />
+          <text x="50" y="33" textAnchor="middle" fontFamily={fonts.body} fontSize="10" fontWeight="800" letterSpacing="1.5" fill={colors.limeLight}>
             {top}
           </text>
           <text x="50" y="62" textAnchor="middle" fontFamily={fonts.display} fontSize="30" fontWeight="600" fill={colors.white} letterSpacing="-0.8">
             −{percent}%
           </text>
-          <text x="50" y="77" textAnchor="middle" fontFamily={fonts.body} fontSize="10" fontWeight="800" letterSpacing="1.5" fill={colors.goldLight}>
+          <text x="50" y="77" textAnchor="middle" fontFamily={fonts.body} fontSize="10" fontWeight="800" letterSpacing="1.5" fill={colors.limeLight}>
             {bottom}
           </text>
         </svg>

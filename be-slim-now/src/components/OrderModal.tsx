@@ -212,9 +212,9 @@ export default function OrderModal({
         >
           <Row>
             {/* Left: the pen, the strength and the total */}
-            <Col xs={24} md={10} style={{ background: colors.iceWash, borderRight: screens.md ? `1px solid ${colors.line}` : undefined }}>
+            <Col xs={24} md={10} style={{ background: colors.aquaWash, borderRight: screens.md ? `1px solid ${colors.line}` : undefined }}>
               <div style={{ padding: "28px clamp(20px, 3vw, 32px)" }}>
-                <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: colors.blueSoft }}>
+                <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: colors.tealDeep }}>
                   Your order
                 </div>
                 <Flex align="center" gap={16} style={{ margin: "16px 0 20px" }}>
@@ -338,8 +338,8 @@ export default function OrderModal({
                         padding: "3px 12px",
                         borderRadius: 999,
                         color: colors.saleDeep,
-                        background: colors.goldWash,
-                        border: `1px solid ${colors.goldLight}`,
+                        background: colors.limeWash,
+                        border: `1px solid ${colors.limeLight}`,
                       }}
                     >
                       You save {money(amounts.saved)}
@@ -349,15 +349,15 @@ export default function OrderModal({
 
                 <Flex vertical gap={8} style={{ marginTop: 20, fontSize: 13, color: colors.navyInk, display: screens.md ? undefined : "none" }}>
                   <span>
-                    <SafetyCertificateOutlined style={{ color: colors.blue, marginRight: 8 }} />
+                    <SafetyCertificateOutlined style={{ color: colors.teal, marginRight: 8 }} />
                     ≥99% purity, COA with every lot
                   </span>
                   <span>
-                    <ThunderboltOutlined style={{ color: colors.blue, marginRight: 8 }} />
+                    <ThunderboltOutlined style={{ color: colors.teal, marginRight: 8 }} />
                     Ships within 24 h of payment
                   </span>
                   <span>
-                    <MailOutlined style={{ color: colors.blue, marginRight: 8 }} />
+                    <MailOutlined style={{ color: colors.teal, marginRight: 8 }} />
                     Payment details by email, nothing to pay now
                   </span>
                 </Flex>

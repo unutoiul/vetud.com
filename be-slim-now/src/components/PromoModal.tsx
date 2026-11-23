@@ -72,7 +72,7 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
         <Image src={PRODUCTS.retatrutide.art} alt="" fill sizes="520px" style={{ objectFit: "cover", objectPosition: "center 55%" }} />
         <div aria-hidden style={{ position: "absolute", inset: 0, background: gradients.nightScrim }} />
         <Flex vertical align="center" justify="center" style={{ position: "relative", height: "100%", textAlign: "center", padding: "0 24px" }}>
-          <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase", color: colors.goldLight }}>
+          <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase", color: colors.limeLight }}>
             {code ? "Your code is ready" : "Subscriber exclusive"}
           </div>
           <div style={{ fontFamily: fonts.display, fontWeight: 300, fontSize: screens.sm ? 58 : 46, lineHeight: 1, color: colors.white, marginTop: 10 }}>
@@ -80,11 +80,11 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
             <span
               style={{
                 fontWeight: 500,
-                backgroundImage: gradients.champagneText,
+                backgroundImage: gradients.glowText,
                 WebkitBackgroundClip: "text",
                 backgroundClip: "text",
                 WebkitTextFillColor: "transparent",
-                color: colors.gold,
+                color: colors.green,
               }}
             >
               {OFFER.subscriberPercent}%
@@ -113,9 +113,9 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
                 justifyContent: "space-between",
                 gap: 12,
                 padding: "16px 20px",
-                border: `1.5px dashed ${colors.gold}`,
+                border: `1.5px dashed ${colors.green}`,
                 borderRadius: 14,
-                background: colors.goldWash,
+                background: colors.limeWash,
                 cursor: "pointer",
               }}
             >
@@ -146,7 +146,7 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
               align="center"
               justify="space-between"
               gap={12}
-              style={{ padding: "12px 16px", borderRadius: 14, background: colors.iceWash, border: `1px solid ${colors.line}`, marginBottom: 22 }}
+              style={{ padding: "12px 16px", borderRadius: 14, background: colors.aquaWash, border: `1px solid ${colors.line}`, marginBottom: 22 }}
             >
               <div style={{ fontSize: 13, color: colors.muted, lineHeight: 1.4 }}>
                 <div style={{ color: colors.navyInk, fontWeight: 600 }}>{PRODUCTS.retatrutide.name} 40 mg</div>

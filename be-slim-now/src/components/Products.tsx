@@ -32,9 +32,9 @@ function ProductCard({ product }: { product: Product }) {
         display: "flex",
         flexDirection: "column",
         background: colors.white,
-        border: hot ? `1.5px solid ${colors.gold}` : `1px solid ${colors.line}`,
+        border: hot ? `1.5px solid ${colors.green}` : `1px solid ${colors.line}`,
         borderRadius: 24,
-        boxShadow: hot ? `0 0 0 5px ${colors.goldWash}, ${shadows.lifted}` : shadows.lifted,
+        boxShadow: hot ? `0 0 0 5px ${colors.limeWash}, ${shadows.lifted}` : shadows.lifted,
         overflow: "hidden",
       }}
     >
@@ -158,8 +158,8 @@ function ProductCard({ product }: { product: Product }) {
                 fontWeight: 600,
                 letterSpacing: "0.1em",
                 color: colors.navy,
-                background: colors.iceLight,
-                border: `1px solid ${colors.ice}`,
+                background: colors.aquaLight,
+                border: `1px solid ${colors.aqua}`,
                 borderRadius: 6,
                 padding: "3px 8px",
               }}
@@ -167,7 +167,7 @@ function ProductCard({ product }: { product: Product }) {
               {product.label}
             </span>
           )}
-          <span style={{ display: "block", fontSize: 15, fontFamily: fonts.body, fontWeight: 500, color: colors.blueSoft, marginTop: 6 }}>{product.tagline}</span>
+          <span style={{ display: "block", fontSize: 15, fontFamily: fonts.body, fontWeight: 500, color: colors.tealDeep, marginTop: 6 }}>{product.tagline}</span>
         </Typography.Title>
         <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.6, margin: "10px 0 18px", minHeight: "4.8em" }}>{product.description}</Typography.Paragraph>
 
@@ -190,8 +190,8 @@ function ProductCard({ product }: { product: Product }) {
                   style={{
                     marginLeft: 10,
                     color: colors.saleDeep,
-                    background: colors.goldWash,
-                    border: `1px solid ${colors.goldLight}`,
+                    background: colors.limeWash,
+                    border: `1px solid ${colors.limeLight}`,
                     borderRadius: 999,
                     padding: "2px 10px",
                     fontSize: 13,
@@ -210,7 +210,7 @@ function ProductCard({ product }: { product: Product }) {
         </Flex>
         <div style={{ minHeight: 26 }}>
           {strength === "40mg" ? (
-            <Tag color="blue" variant="filled" style={{ margin: 0, fontWeight: 600 }}>
+            <Tag variant="filled" style={{ margin: 0, fontWeight: 600, color: colors.tealDeep, background: colors.aquaLight }}>
               Best value · save {bulkSaving}% per mg
             </Tag>
           ) : (

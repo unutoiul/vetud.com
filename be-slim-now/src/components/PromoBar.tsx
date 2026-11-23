@@ -5,7 +5,7 @@ import { OFFER, bestCombinedPercent } from "@/config/site"
 import { colors, fonts } from "@/theme/tokens"
 import { useOrder } from "./OrderProvider"
 
-/** The offer strip above the header: navy, with the numbers in gold. */
+/** The offer strip above the header: night navy, with the numbers in lime. */
 export default function PromoBar() {
   const { openPromo } = useOrder()
   if (!OFFER.salePercent) return null
@@ -23,10 +23,10 @@ export default function PromoBar() {
         borderBottom: `1px solid ${colors.onNavyLine}`,
       }}
     >
-      <TagFilled style={{ color: colors.gold, marginRight: 8 }} />
+      <TagFilled style={{ color: colors.green, marginRight: 8 }} />
       <span style={{ fontFamily: fonts.display, fontSize: 15, letterSpacing: "0.02em" }}>
         {OFFER.saleLabel}:{" "}
-        <strong style={{ color: colors.goldLight, fontWeight: 700 }}>−{OFFER.salePercent}% on every pen</strong>
+        <strong style={{ color: colors.limeLight, fontWeight: 700 }}>−{OFFER.salePercent}% on every pen</strong>
       </span>
       <span style={{ opacity: 0.45, margin: "0 12px" }}>|</span>
       <button
@@ -41,11 +41,11 @@ export default function PromoBar() {
           fontWeight: 700,
           textDecoration: "underline",
           textUnderlineOffset: 3,
-          textDecorationColor: colors.gold,
+          textDecorationColor: colors.green,
           cursor: "pointer",
         }}
       >
-        <GiftFilled style={{ color: colors.gold, marginRight: 6 }} />
+        <GiftFilled style={{ color: colors.green, marginRight: 6 }} />
         Subscribe for an extra −{OFFER.subscriberPercent}% (up to −{bestCombinedPercent()}%)
       </button>
     </div>

@@ -1,12 +1,10 @@
 "use client"
 
-import { ShoppingOutlined } from "@ant-design/icons"
-import { Button, Flex, Grid } from "antd"
+import { Flex, Grid } from "antd"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import { colors, fonts } from "@/theme/tokens"
 import CountrySelect from "./CountrySelect"
-import { useOrder } from "./OrderProvider"
 import { Container } from "./ui"
 
 const NAV = [
@@ -18,7 +16,6 @@ const NAV = [
 ]
 
 export default function Header() {
-  const { openOrder } = useOrder()
   const screens = Grid.useBreakpoint()
   const [scrolled, setScrolled] = useState(false)
 
@@ -52,8 +49,8 @@ export default function Header() {
               height={252}
               sizes="228px"
               priority
-              // On narrow phones the logo gives up a little width so the country picker and the button fit.
-              style={{ width: screens.md ? 228 : "clamp(136px, calc(100vw - 222px), 176px)", height: "auto", display: "block" }}
+              // On narrow phones the logo gives up a little width so the country picker fits beside it.
+              style={{ width: screens.md ? 228 : "clamp(140px, calc(100vw - 172px), 184px)", height: "auto", display: "block" }}
             />
           </a>
           {screens.lg && (
@@ -71,12 +68,9 @@ export default function Header() {
               </Flex>
             </nav>
           )}
-          <Flex align="center" gap={screens.sm ? 12 : 8} style={{ flex: "none" }}>
-            <CountrySelect compact={!screens.sm} size={screens.sm ? "large" : "middle"} />
-            <Button type="primary" size={screens.sm ? "large" : "middle"} icon={screens.sm ? <ShoppingOutlined /> : undefined} onClick={() => openOrder()}>
-              Order now
-            </Button>
-          </Flex>
+          <div style={{ flex: "none" }}>
+            <CountrySelect size={screens.sm ? "large" : "middle"} />
+          </div>
         </Flex>
       </Container>
     </header>

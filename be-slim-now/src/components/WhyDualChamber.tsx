@@ -27,7 +27,7 @@ const BENEFITS = [
 export default function WhyDualChamber() {
   const { openOrder } = useOrder()
   return (
-    <Section id="dual-chamber" background={colors.iceWash}>
+    <Section id="dual-chamber" background={colors.aquaWash}>
       <SectionHeading
         eyebrow="The VETUD dual-chamber pen"
         title="Built like a pharmacy pen."
@@ -60,7 +60,7 @@ export default function WhyDualChamber() {
                     placeItems: "center",
                     fontSize: 22,
                     color: colors.white,
-                    background: `linear-gradient(135deg, ${colors.blue}, ${colors.navy})`,
+                    background: `linear-gradient(135deg, ${colors.teal}, ${colors.navy})`,
                   }}
                 >
                   {benefit.icon}
@@ -84,7 +84,7 @@ export default function WhyDualChamber() {
 
       <div style={{ marginTop: "clamp(48px, 7vw, 88px)" }}>
         <Flex align="center" gap={10} justify="center" style={{ marginBottom: 20, color: colors.navy }}>
-          <PlayCircleFilled style={{ color: colors.blue, fontSize: 20 }} />
+          <PlayCircleFilled style={{ color: colors.teal, fontSize: 20 }} />
           <span style={{ fontFamily: fonts.mono, fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase" }}>Watch it work · 40 seconds</span>
         </Flex>
         <div style={{ maxWidth: 960, margin: "0 auto", borderRadius: 24, overflow: "hidden", boxShadow: shadows.lifted, border: `1px solid ${colors.line}`, background: colors.navyDeep }}>

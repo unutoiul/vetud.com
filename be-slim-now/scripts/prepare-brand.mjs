@@ -21,7 +21,7 @@ const BRAND = path.join(ROOT, "public/brand")
 /** Logo width in pixels: about three times its widest use on the page. */
 const LOGO_WIDTH = 1200
 /** colors.onNavy and colors.white in src/theme/tokens.ts. */
-const ON_NAVY = [245, 249, 251]
+const ON_NAVY = [243, 250, 250]
 const WHITE = { r: 255, g: 255, b: 255, alpha: 1 }
 const CLEAR = { r: 0, g: 0, b: 0, alpha: 0 }
 

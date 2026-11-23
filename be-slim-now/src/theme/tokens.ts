@@ -1,94 +1,101 @@
 import type { ThemeConfig } from "antd"
 
 /**
- * Every colour on the site. The palette comes from VETUD's product artwork: laboratory navy,
- * VETUD blue, glacier ice and brushed silver. Components use these names, never colour literals.
+ * Every colour on the site, taken from the BeSlimNow logo: the navy of its lettering, the teal of
+ * "Slim", aqua washes from the B's upper bowl, and the green-to-lime of its lower bowl as the one
+ * offer accent. Teal is the brand (buttons, links, icons); green-lime only marks the offer and
+ * savings. Components use these names, never colour literals.
  */
-export const colors = {
-  navy: "#15265e",
-  navyDeep: "#0d1838",
-  navyInk: "#192b4a",
-  blue: "#2c70d5",
-  blueDeep: "#1b438f",
-  blueSoft: "#3268aa",
-  ice: "#dce9f7",
-  iceLight: "#edf3fb",
-  iceWash: "#f3f7fc",
-  paper: "#fbfcfe",
+const palette = {
+  // Navy: the logo's lettering.
+  navy: "#072542",
+  navyDeep: "#041a2e",
+  navyInk: "#0d2a42",
+  // Teal: "Slim". Plain teal is for icons, dots and rules; tealDeep is the readable shade for text,
+  // links and buttons with white labels (4.8:1), with darker hover and press shades.
+  teal: "#01afa2",
+  tealDeep: "#008176",
+  tealHover: "#00756b",
+  tealPress: "#00695f",
+  /** Teal on night backgrounds. */
+  tealBright: "#7fe3da",
+  // Aqua washes and lines, tinted toward the teal.
+  aqua: "#d4efec",
+  aquaLight: "#e8f6f4",
+  aquaWash: "#f2faf9",
+  paper: "#fbfdfd",
   white: "#ffffff",
-  silver: "#c5ced8",
-  line: "#e2e8f0",
-  lineStrong: "#cbd6e6",
-  muted: "#67758b",
-  onNavy: "#f5f9fb",
-  onNavyMuted: "#b4c9d5",
-  onNavyLine: "rgba(245, 249, 251, 0.14)",
-  success: "#2f7a55",
-  successWash: "#e8f4ee",
+  line: "#dfeae9",
+  lineStrong: "#c5d9d7",
+  muted: "#5c7080",
+  onNavy: "#f3fafa",
+  onNavyMuted: "#a9c6cc",
+  onNavyLine: "rgba(243, 250, 250, 0.14)",
+  success: "#177f35",
+  successWash: "#e7f5ea",
   warning: "#c07d12",
   error: "#b42318",
-  shadow: "rgba(21, 38, 94, 0.10)",
-  shadowStrong: "rgba(21, 38, 94, 0.18)",
-  glass: "rgba(251, 252, 254, 0.78)",
-  heroFade: "rgba(243, 247, 252, 0)",
-  // The one accent: champagne gold. "sale" is its dark shade, readable on white (5:1).
-  sale: "#94681a",
-  saleDeep: "#6f4d12",
-  saleWash: "#fbf6ea",
-  saleBright: "#e8c77a",
-  gold: "#d4af62",
-  goldLight: "#f1dfae",
-  goldDeep: "#8a6420",
-  goldWash: "#fbf7ee",
-  // Night scenes with glass ribbons (pop-up header, quality section).
-  night: "#0a1230",
-  nightLift: "#1b2b66",
-  ribbonIce: "#8fd8f2",
-  ribbonLavender: "#b9a6ec",
-  ribbonGold: "#e8c77a",
-  ribbonSheen: "#ffffff",
+  shadow: "rgba(7, 37, 66, 0.10)",
+  shadowStrong: "rgba(7, 37, 66, 0.18)",
+  glass: "rgba(251, 253, 253, 0.8)",
+  heroFade: "rgba(242, 250, 249, 0)",
+  // The one accent, for the offer and savings: the B's lower bowl, green to lime.
+  // "sale" is its dark shade, readable on white (5.5:1); "saleDeep" sits on limeWash.
+  sale: "#08794c",
+  saleDeep: "#065c39",
+  green: "#03a169",
+  lime: "#79e63d",
+  limeLight: "#c5f2a0",
+  limeWash: "#f1fbe9",
+  // Night scenes (offer strip, seal, pop-up header, quality section).
+  night: "#041a2e",
+  nightLift: "#0c3f5e",
   clear: "rgba(0, 0, 0, 0)",
   /** The light that sweeps across the offer chip and the Buy button. */
   sheen: "rgba(255, 255, 255, 0.38)",
-  nightGlass: "rgba(10, 18, 48, 0.55)",
-  nightVeil: "rgba(10, 18, 48, 0.88)",
-  sealShadow: "rgba(10, 18, 48, 0.32)",
-  // BeSlimNow logo: navy wordmark, teal "Slim", and the B mark's cyan-to-green sweep.
-  brandNavy: "#06233f",
-  brandTeal: "#00ad9f",
-  /** The logo teal deepened just enough for white button text (4.5:1). */
-  brandTealDeep: "#008579",
-  brandTealHover: "#007a6f",
-  brandTealPress: "#006f66",
-  brandCyan: "#00c6d4",
-  brandGreen: "#53bc33",
+  nightGlass: "rgba(4, 26, 46, 0.55)",
+  nightVeil: "rgba(4, 26, 46, 0.88)",
+  sealShadow: "rgba(4, 26, 46, 0.32)",
   telegram: "#229ed9",
   whatsapp: "#25d366",
   line_app: "#06c755",
 } as const
 
+export const colors = {
+  ...palette,
+  // Old names still used by Hero, Compare and HowToOrder while another change is open on those
+  // files. TODO: rename them there and delete these.
+  blue: palette.teal,
+  blueDeep: palette.tealDeep,
+  blueSoft: palette.tealDeep,
+  ice: palette.aqua,
+  iceLight: palette.aquaLight,
+  iceWash: palette.aquaWash,
+  gold: palette.green,
+  goldLight: palette.limeLight,
+  ribbonIce: palette.tealBright,
+} as const
+
 export const gradients = {
-  hero: `linear-gradient(180deg, ${colors.iceWash} 0%, ${colors.paper} 100%)`,
-  navy: `linear-gradient(135deg, ${colors.navyDeep} 0%, ${colors.navy} 55%, ${colors.blueDeep} 100%)`,
-  accent: `linear-gradient(90deg, ${colors.blue} 0%, ${colors.blueDeep} 100%)`,
-  card: `linear-gradient(180deg, ${colors.white} 0%, ${colors.iceWash} 100%)`,
-  hot: `linear-gradient(135deg, ${colors.goldLight} 0%, ${colors.gold} 55%, ${colors.goldDeep} 100%)`,
+  hero: `linear-gradient(180deg, ${colors.aquaWash} 0%, ${colors.paper} 100%)`,
+  /** The best seller's badge, the offer chip and the seal's rim: the B's lower bowl. */
+  hot: `linear-gradient(135deg, ${colors.limeLight} 0%, ${colors.lime} 50%, ${colors.green} 100%)`,
   popular: `linear-gradient(135deg, ${colors.navy} 0%, ${colors.navyDeep} 100%)`,
-  promoBar: `linear-gradient(90deg, ${colors.navyDeep} 0%, ${colors.navy} 50%, ${colors.navyDeep} 100%)`,
-  champagneText: `linear-gradient(180deg, ${colors.goldLight} 0%, ${colors.gold} 60%, ${colors.goldDeep} 100%)`,
+  /** Offer numbers on night backgrounds. */
+  glowText: `linear-gradient(180deg, ${colors.limeLight} 0%, ${colors.lime} 55%, ${colors.green} 100%)`,
   night: `radial-gradient(circle at 25% 15%, ${colors.nightLift} 0%, ${colors.night} 62%)`,
   /** Darkens the bottom of artwork so a label on it stays readable. */
   artFade: `linear-gradient(180deg, ${colors.clear} 0%, ${colors.nightGlass} 45%, ${colors.nightVeil} 100%)`,
   /** Darkens the middle of a ribbon scene so text on it stays readable. */
   nightScrim: `radial-gradient(ellipse 58% 62% at 50% 50%, ${colors.nightVeil} 0%, ${colors.nightVeil} 45%, ${colors.clear} 100%)`,
-  heroSide: `linear-gradient(90deg, ${colors.paper} 0%, rgba(251, 252, 254, 0.86) 38%, rgba(251, 252, 254, 0) 70%)`,
+  heroSide: `linear-gradient(90deg, ${colors.paper} 0%, rgba(251, 253, 253, 0.86) 38%, rgba(251, 253, 253, 0) 70%)`,
   heroScrim: `linear-gradient(180deg, ${colors.heroFade} 55%, ${colors.paper} 100%)`,
   /** A band of light that slides across a button or chip. */
   shine: `linear-gradient(105deg, ${colors.clear} 0%, ${colors.sheen} 50%, ${colors.clear} 100%)`,
-  /** "40% off." in the hero: dark champagne with a brighter band that glides through it. */
-  saleShimmer: `linear-gradient(100deg, ${colors.sale} 0%, ${colors.sale} 38%, ${colors.gold} 50%, ${colors.sale} 62%, ${colors.sale} 100%)`,
-  /** Soft ice light behind the hero pens. */
-  penGlow: `radial-gradient(circle at 50% 50%, ${colors.ice} 0%, ${colors.clear} 68%)`,
+  /** "40% off." in the hero: deep green with a brighter green band that glides through it. */
+  saleShimmer: `linear-gradient(100deg, ${colors.sale} 0%, ${colors.sale} 38%, ${colors.green} 50%, ${colors.sale} 62%, ${colors.sale} 100%)`,
+  /** Soft aqua light behind the hero pens. */
+  penGlow: `radial-gradient(circle at 50% 50%, ${colors.aqua} 0%, ${colors.clear} 68%)`,
 } as const
 
 export const fonts = {
@@ -104,9 +111,9 @@ export const shadows = {
 
 export const theme: ThemeConfig = {
   token: {
-    colorPrimary: colors.brandTealDeep,
-    colorInfo: colors.blue,
-    colorLink: colors.blueSoft,
+    colorPrimary: colors.tealDeep,
+    colorInfo: colors.teal,
+    colorLink: colors.tealDeep,
     colorSuccess: colors.success,
     colorWarning: colors.warning,
     colorError: colors.error,
@@ -130,17 +137,17 @@ export const theme: ThemeConfig = {
       fontWeight: 600,
       primaryShadow: "none",
       contentFontSizeLG: 16,
-      colorPrimaryHover: colors.brandTealHover,
-      colorPrimaryActive: colors.brandTealPress,
+      colorPrimaryHover: colors.tealHover,
+      colorPrimaryActive: colors.tealPress,
     },
     Card: { borderRadiusLG: 20 },
-    Segmented: { itemSelectedBg: colors.brandTealDeep, itemSelectedColor: colors.onNavy, trackBg: colors.iceLight, trackPadding: 4 },
+    Segmented: { itemSelectedBg: colors.tealDeep, itemSelectedColor: colors.white, trackBg: colors.aquaLight, trackPadding: 4 },
     Collapse: { headerBg: colors.white, contentBg: colors.white },
     Modal: { borderRadiusLG: 20 },
     Form: { itemMarginBottom: 16, verticalLabelPadding: "0 0 4px" },
-    Steps: { colorPrimary: colors.blue },
+    Steps: { colorPrimary: colors.tealDeep },
     Statistic: { contentFontSize: 40, titleFontSize: 13 },
-    // Country lists: a light ice row for the chosen country instead of antd's grey derived from navy.
-    Select: { optionSelectedBg: colors.iceLight, optionSelectedColor: colors.navy, optionActiveBg: colors.iceWash, optionSelectedFontWeight: 600 },
+    // Country lists: a light aqua row for the chosen country instead of antd's grey.
+    Select: { optionSelectedBg: colors.aquaLight, optionSelectedColor: colors.navy, optionActiveBg: colors.aquaWash, optionSelectedFontWeight: 600 },
   },
 }

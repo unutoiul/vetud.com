@@ -100,7 +100,7 @@ function PhotoTile({
         <ZoomInOutlined /> Enlarge
       </span>
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "clamp(18px, 2.4vw, 28px)" }}>
-        <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: colors.goldLight }}>{photo.eyebrow}</div>
+        <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: colors.tealBright }}>{photo.eyebrow}</div>
         <div style={{ fontFamily: fonts.display, fontSize: "clamp(22px, 2.2vw, 28px)", fontWeight: 500, color: colors.white, lineHeight: 1.2, margin: "6px 0 4px" }}>
           {photo.title}
         </div>
@@ -117,7 +117,7 @@ export default function Facility() {
   const wide = !!screens.md
 
   return (
-    <Section id="facility" background={colors.iceWash}>
+    <Section id="facility" background={colors.aquaWash}>
       <SectionHeading
         eyebrow="Behind every pen"
         title="Made clean. Kept cold."

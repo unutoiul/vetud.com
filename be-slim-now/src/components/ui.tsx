@@ -27,7 +27,7 @@ export function Section({
   )
 }
 
-export function Eyebrow({ children, color = colors.blueSoft }: { children: ReactNode; color?: string }) {
+export function Eyebrow({ children, color = colors.tealDeep }: { children: ReactNode; color?: string }) {
   return (
     <div
       style={{
@@ -59,7 +59,7 @@ export function SectionHeading({
 }) {
   return (
     <div style={{ textAlign: align, maxWidth: align === "center" ? 720 : undefined, margin: align === "center" ? "0 auto 56px" : "0 0 32px" }}>
-      {eyebrow && <Eyebrow color={inverse ? colors.onNavyMuted : colors.blueSoft}>{eyebrow}</Eyebrow>}
+      {eyebrow && <Eyebrow color={inverse ? colors.onNavyMuted : colors.tealDeep}>{eyebrow}</Eyebrow>}
       <Typography.Title
         level={2}
         style={{
@@ -84,7 +84,7 @@ export function SectionHeading({
   )
 }
 
-/** The short blue rule under headings, as on VETUD's artwork. */
+/** The short teal rule under headings. */
 export function AccentRule({ align = "left" }: { align?: "center" | "left" }) {
   return (
     <div
@@ -92,7 +92,7 @@ export function AccentRule({ align = "left" }: { align?: "center" | "left" }) {
       style={{
         width: 72,
         height: 2,
-        background: `linear-gradient(90deg, ${colors.blue}, ${colors.ice})`,
+        background: `linear-gradient(90deg, ${colors.teal}, ${colors.aqua})`,
         margin: align === "center" ? "20px auto" : "20px 0",
       }}
     />
