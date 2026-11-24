@@ -5,11 +5,8 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import Checkbox from "@mui/material/Checkbox"
 import CircularProgress from "@mui/material/CircularProgress"
 import Dialog from "@mui/material/Dialog"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import FormHelperText from "@mui/material/FormHelperText"
 import IconButton from "@mui/material/IconButton"
 import Link from "@mui/material/Link"
 import TextField from "@mui/material/TextField"
@@ -107,7 +104,6 @@ export default function OfferPopup({ enabled = true }: { enabled?: boolean }) {
   const [offer, setOffer] = useState<Offer | null>(null)
   const [open, setOpen] = useState(false)
   const [email, setEmail] = useState("")
-  const [consent, setConsent] = useState(false)
   const [website, setWebsite] = useState("")
   const [showErrors, setShowErrors] = useState(false)
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle")
@@ -141,7 +137,7 @@ export default function OfferPopup({ enabled = true }: { enabled?: boolean }) {
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setShowErrors(true)
-    if (emailError || !consent) return
+    if (emailError) return
     setStatus("sending")
     try {
       await subscribeToNewsletter({ email, consent: true, countryCode, website })
@@ -178,16 +174,13 @@ export default function OfferPopup({ enabled = true }: { enabled?: boolean }) {
             <Box aria-hidden sx={{ position: "absolute", left: -9999, width: 1, height: 1, overflow: "hidden" }}>
               <input type="text" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
             </Box>
-            <FormControlLabel
-              sx={{ mt: 1.5, alignItems: "flex-start", mr: 0 }}
-              control={<Checkbox checked={consent} onChange={(event) => setConsent(event.target.checked)} sx={{ pt: .5 }} />}
-              label={<Typography variant="body2" sx={{ lineHeight: 1.6 }}>{t("consent")} <Link href={localize("/legal/privacy")} target="_blank" rel="noopener">{t("privacy")}</Link></Typography>}
-            />
-            {showErrors && !consent ? <FormHelperText error>{t("consentRequired")}</FormHelperText> : null}
             {status === "error" ? <Alert severity="error" sx={{ mt: 1.5 }}>{t("error")}</Alert> : null}
             <Button type="submit" variant="contained" size="large" fullWidth disabled={status === "sending"} startIcon={status === "sending" ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" />} sx={{ mt: 2.5, minHeight: 52 }}>
               {ct(status === "sending" ? t("sending") : t("cta", { discount: offer.discount }))}
             </Button>
+            <Typography variant="body2" sx={{ mt: 1.25, textAlign: "center", fontSize: 12.5, lineHeight: 1.6, color: "text.secondary" }}>
+              {ct("Free to join. Unsubscribe whenever you like.")} <Link href={localize("/legal/privacy")} target="_blank" rel="noopener">{t("privacy")}</Link>
+            </Typography>
             <Button onClick={close} fullWidth sx={{ mt: 1, color: "text.secondary" }}>{t("noThanks")}</Button>
           </Box>
         )}

@@ -2,9 +2,6 @@ import { sdk } from "@/lib/medusa/sdk"
 
 export const EMAIL_LIST_KEY = "vetud_email_list"
 
-/** The exact wording the visitor ticks. The backend stores its own copy, so keep the two the same. */
-export const EMAIL_LIST_CONSENT = "Yes, email me new VETUD guides and answered community questions. I can unsubscribe at any time."
-
 /** A preference marker only. Email addresses are never saved in browser storage. */
 export function subscribedInBrowser() {
   try {

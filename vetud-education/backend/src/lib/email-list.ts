@@ -4,11 +4,14 @@ import { MedusaError } from "@medusajs/framework/utils"
 export const LIST_LOCALES = ["en", "fr"] as const
 export type ListLocale = (typeof LIST_LOCALES)[number]
 
-/** The exact wording the visitor ticked, stored with their consent. Change the version when the wording changes. */
-export const CONSENT_VERSION = "2026-11"
+/**
+ * What the visitor agreed to by entering their email and pressing the sign-up button (there is no
+ * tick box), stored with their consent. Change the version when the wording changes.
+ */
+export const CONSENT_VERSION = "2026-11-24"
 export const CONSENT_TEXT: Record<ListLocale, string> = {
-  en: "Yes, email me new VETUD guides and answered community questions. I can unsubscribe at any time.",
-  fr: "Oui, envoyez-moi par e-mail les nouveaux guides VETUD et les questions de la communauté ayant reçu une réponse. Je peux me désinscrire à tout moment.",
+  en: "Signed up with the VETUD email list form to get new guides and answered community questions by email. Free to join; unsubscribe whenever you like.",
+  fr: "Inscription via le formulaire de la liste e-mail VETUD pour recevoir par e-mail les nouveaux guides et les questions de la communauté ayant reçu une réponse. Gratuit ; désinscription possible à tout moment.",
 }
 
 /** Custom event emitted when a pending sign-up is confirmed; it emails the owner. */

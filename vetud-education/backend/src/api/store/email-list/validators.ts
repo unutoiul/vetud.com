@@ -6,7 +6,7 @@ const Token = z.string().trim().min(10).max(200)
 
 export const StoreEmailListSchema = z.object({
   email: Email,
-  // Consent must be given explicitly; the checkbox starts unticked.
+  // Sent by the sign-up form when the visitor presses its button; that press is the consent.
   consent: z.literal(true),
   locale: z.enum(LIST_LOCALES).default("en"),
   // Honeypot: real visitors never see or fill this field.

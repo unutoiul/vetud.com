@@ -2,7 +2,7 @@ import { z } from "@medusajs/framework/zod"
 
 export const StoreNewsletterSchema = z.object({
   email: z.string().trim().email().max(254),
-  // Consent must be given explicitly; the checkbox starts unticked.
+  // Sent by the sign-up form when the visitor presses its button; that press is the consent.
   consent: z.literal(true),
   country_code: z.string().trim().toLowerCase().regex(/^[a-z]{2}$/).optional(),
   // Honeypot: real visitors never see or fill this field.

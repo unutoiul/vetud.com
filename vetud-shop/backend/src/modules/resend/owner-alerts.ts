@@ -29,7 +29,7 @@ export type NewsletterSignupAlertData = {
   customer_url: string
 }
 
-/** Someone ticked the consent box in the shop's sign-up pop-up. */
+/** Someone joined the newsletter from one of the shop's sign-up forms. */
 export function newsletterSignupAlert(data: NewsletterSignupAlertData) {
   return {
     subject: `New newsletter sign-up: ${data.email}`,

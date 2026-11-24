@@ -2,11 +2,8 @@
 
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
-import Checkbox from "@mui/material/Checkbox"
 import CircularProgress from "@mui/material/CircularProgress"
 import Dialog from "@mui/material/Dialog"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import FormHelperText from "@mui/material/FormHelperText"
 import { alpha, keyframes, type SxProps, type Theme } from "@mui/material/styles"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
@@ -19,7 +16,7 @@ import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { AppLink } from "../common/links"
-import { EMAIL_LIST_CONSENT, subscribeToEmailList } from "../newsletter/subscription"
+import { subscribeToEmailList } from "../newsletter/subscription"
 import { useLanguage } from "../common/language"
 import Button from "@mui/material/Button"
 import HoldButton from "./HoldButton"
@@ -53,7 +50,7 @@ const screenSx: SxProps<Theme> = {
   boxShadow: `0 40px 120px ${brand.blackA22}`,
   overflow: "hidden",
   // The theme's blue focus ring is too faint on this navy screen.
-  "& a:focus-visible, & button:focus-visible, & .MuiCheckbox-root.Mui-focusVisible": { outline: `2px solid ${brand.cyan}`, outlineOffset: 4 },
+  "& a:focus-visible, & button:focus-visible": { outline: `2px solid ${brand.cyan}`, outlineOffset: 4 },
 }
 
 const descriptionSx: SxProps<Theme> = { maxWidth: 450, color: "brand.onNavyMuted", fontSize: { xs: 15, sm: 16 }, lineHeight: 1.75 }
@@ -106,7 +103,6 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const footerText = useTranslations("Footer")
   const language = useLanguage()
   const [email, setEmail] = useState("")
-  const [consent, setConsent] = useState(false)
   const [website, setWebsite] = useState("")
   const [showErrors, setShowErrors] = useState(false)
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
@@ -122,8 +118,8 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const submit = async () => {
     if (submitting.current) return
     setShowErrors(true)
-    if (emailInvalid || !consent) {
-      form.current?.querySelector<HTMLInputElement>(emailInvalid ? 'input[type="email"]' : 'input[type="checkbox"]')?.focus()
+    if (emailInvalid) {
+      form.current?.querySelector<HTMLInputElement>('input[type="email"]')?.focus()
       return
     }
     submitting.current = true
@@ -231,26 +227,6 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
               />
               <Box aria-hidden="true" sx={{ position: "absolute", left: -9999, width: "1px", height: "1px", overflow: "hidden" }}>
                 <label>{ct("Leave this field empty")}<input type="text" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)} /></label>
-              </Box>
-              <Box sx={{ mt: 2, p: "4px 12px 4px 4px", border: "1px solid", borderColor: "brand.navySoft", borderRadius: "12px", bgcolor: alpha(brand.onNavy, .03) }}>
-                <FormControlLabel
-                  sx={{
-                    width: "100%",
-                    m: 0,
-                    alignItems: "flex-start",
-                    gap: .5,
-                    "& .MuiFormControlLabel-label, & .MuiFormControlLabel-label.Mui-disabled": { minWidth: 0, py: "11px", fontSize: 13, lineHeight: 1.65, color: "brand.onNavyMuted" },
-                  }}
-                  control={<Checkbox
-                    checked={consent}
-                    onChange={event => setConsent(event.target.checked)}
-                    disabled={status === "sending"}
-                    slotProps={{ input: { "aria-invalid": showErrors && !consent, "aria-describedby": showErrors && !consent ? "welcome-consent-error" : undefined } }}
-                    sx={{ p: 1, minWidth: 44, minHeight: 44, color: "brand.onNavyMuted", "&.Mui-checked": { color: "brand.cyan" } }}
-                  />}
-                  label={ct(EMAIL_LIST_CONSENT)}
-                />
-                {showErrors && !consent ? <FormHelperText error id="welcome-consent-error" sx={{ m: "0 0 8px 48px", lineHeight: 1.6, "&.Mui-error": { color: "error.light" } }}>{ct("Please tick the box to receive our emails.")}</FormHelperText> : null}
               </Box>
               {status === "error" ? <Alert severity="error" sx={{ mt: 2 }}>{ct("We couldn't save your signup. Please try again.")}</Alert> : null}
               <Button type="submit" variant="contained" fullWidth size="large" disabled={status === "sending"}

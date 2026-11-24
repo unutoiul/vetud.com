@@ -8,9 +8,12 @@ export const NEWSLETTER_GROUP = "Newsletter"
 /** A campaign whose identifier starts with this is shown in the storefront sign-up pop-up. */
 export const POPUP_CAMPAIGN_PREFIX = "popup-"
 
-/** The exact wording the visitor ticked, stored with their consent. Change the version when the wording changes. */
-export const CONSENT_TEXT = "Yes, email me VETUD offers and news. I can unsubscribe at any time."
-export const CONSENT_VERSION = "2026-11"
+/**
+ * What the visitor agreed to by entering their email and pressing the sign-up button (there is no
+ * tick box), stored with their consent. Change the version when the wording changes.
+ */
+export const CONSENT_TEXT = "Signed up with the VETUD newsletter form to get offers and news by email. Free to join; unsubscribe whenever you like."
+export const CONSENT_VERSION = "2026-11-24"
 
 export type NewsletterOffer = {
   promotion_id: string
