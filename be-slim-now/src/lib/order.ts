@@ -29,7 +29,6 @@ export type OrderInput = {
   note: string
   /** The subscriber code as typed; the server decides whether it counts. */
   promoCode: string
-  researchUse: boolean
   /** Honeypot: people never see this field, so it must stay empty. */
   website?: string
 }
@@ -84,7 +83,6 @@ export function parseOrder(body: unknown): Result {
     postalCode: text(raw.postalCode, LIMITS.postalCode),
     note: text(raw.note, LIMITS.note),
     promoCode: text(raw.promoCode, LIMITS.promoCode).toUpperCase(),
-    researchUse: raw.researchUse === true,
     website: text(raw.website, 200),
   }
 
@@ -95,7 +93,6 @@ export function parseOrder(body: unknown): Result {
   if (order.address.length < 4) errors.address = "Enter the street address."
   if (order.city.length < 2) errors.city = "Enter the city."
   if (!order.postalCode) errors.postalCode = "Enter the postal code."
-  if (!order.researchUse) errors.researchUse = "Please confirm research use."
 
   return Object.keys(errors).length ? { ok: false, errors } : { ok: true, order }
 }

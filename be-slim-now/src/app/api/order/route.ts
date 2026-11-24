@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
       city: order.city,
       postal_code: order.postalCode,
       note: order.note || null,
-      research_use_confirmed: true,
+      research_use_confirmed: false,
       confirmation_sent: buyer.status === "fulfilled",
     })
   } catch (error) {

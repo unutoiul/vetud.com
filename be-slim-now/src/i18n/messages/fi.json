@@ -345,10 +345,6 @@
       {
         "q": "Voinko muuttaa tai perua tilaukseni?",
         "a": "Kyllä, kunnes se on lähetetty. Vastaa vahvistussähköpostiin tai kirjoita meille: {contacts}."
-      },
-      {
-        "q": "Mihin nämä tuotteet on tarkoitettu?",
-        "a": "Kaikki tällä verkkosivustolla myytävät tuotteet on tarkoitettu ainoastaan tutkimus- ja tunnistustarkoituksiin. Tuotteita ei ole tarkoitettu ihmisille annosteltaviksi, injektoitaviksi tai nieltäviksi."
       }
     ]
   },
@@ -423,8 +419,6 @@
     "postalCode": "Postinumero",
     "postalCodeError": "Anna postinumero.",
     "note": "Lisätietoja (valinnainen)",
-    "researchUse": "Vahvistan, että tuotteet ovat vain tutkimuskäyttöön.",
-    "researchUseError": "Vahvista tutkimuskäyttö.",
     "placeOrder": "Tilaa maksuvelvollisena · {price}",
     "confirmationNote": "Saat heti vahvistussähköpostin, jossa ovat maksutiedot. Kysyttävää? Kirjoita osoitteeseen {email}.",
     "genericError": "Jokin meni pieleen. Yritä uudelleen tai lähetä meille viesti.",

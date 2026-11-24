@@ -346,10 +346,6 @@
       {
         "q": "Kan ik mijn bestelling wijzigen of annuleren?",
         "a": "Ja, tot ze is verzonden. Beantwoord je bevestigingsmail of stuur ons een bericht: {contacts}."
-      },
-      {
-        "q": "Waarvoor zijn deze producten bedoeld?",
-        "a": "Alle producten die op deze website worden verkocht, zijn uitsluitend bedoeld voor onderzoeks- en identificatiedoeleinden. Deze producten zijn niet bedoeld voor dosering, injectie of inname bij mensen."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Postcode",
     "postalCodeError": "Vul de postcode in.",
     "note": "Opmerking (optioneel)",
-    "researchUse": "Ik bevestig dat deze producten uitsluitend voor onderzoek bedoeld zijn.",
-    "researchUseError": "Bevestig het gebruik voor onderzoek.",
     "placeOrder": "Bestelling met betalingsverplichting · {price}",
     "confirmationNote": "Je krijgt meteen een bevestigingsmail met de betaalgegevens. Vragen? Mail naar {email}.",
     "genericError": "Er ging iets mis. Probeer het opnieuw of stuur ons een bericht.",

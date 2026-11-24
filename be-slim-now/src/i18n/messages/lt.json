@@ -345,10 +345,6 @@
       {
         "q": "Ar galiu pakeisti arba atšaukti užsakymą?",
         "a": "Taip, kol jis neišsiųstas. Atsakykite į patvirtinimo el. laišką arba parašykite mums: {contacts}."
-      },
-      {
-        "q": "Kam skirti šie produktai?",
-        "a": "Visi šioje svetainėje parduodami produktai skirti tik tyrimų ir identifikavimo tikslams. Šie produktai nėra skirti dozuoti, švirkšti ar nuryti žmonėms."
       }
     ]
   },
@@ -423,8 +419,6 @@
     "postalCode": "Pašto kodas",
     "postalCodeError": "Įveskite pašto kodą.",
     "note": "Pastaba (neprivaloma)",
-    "researchUse": "Patvirtinu, kad šie produktai skirti tik tyrimams.",
-    "researchUseError": "Patvirtinkite naudojimą tyrimams.",
     "placeOrder": "Užsakyti su įsipareigojimu sumokėti · {price}",
     "confirmationNote": "Iš karto gausite patvirtinimo el. laišką su mokėjimo informacija. Klausimų? Rašykite {email}.",
     "genericError": "Kažkas nepavyko. Bandykite dar kartą arba parašykite mums.",

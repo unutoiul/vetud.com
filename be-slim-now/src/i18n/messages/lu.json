@@ -346,10 +346,6 @@
       {
         "q": "Puis-je modifier ou annuler ma commande ?",
         "a": "Oui, tant qu’elle n’est pas expédiée. Répondez à votre e-mail de confirmation ou écrivez-nous : {contacts}."
-      },
-      {
-        "q": "À quoi servent ces produits ?",
-        "a": "Tous les produits vendus sur ce site sont destinés exclusivement à des fins de recherche et d’identification. Ces produits ne sont pas destinés à être administrés, injectés ou ingérés chez l’être humain."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Code postal",
     "postalCodeError": "Saisissez le code postal.",
     "note": "Remarque (facultatif)",
-    "researchUse": "Je confirme que ces produits sont destinés uniquement à la recherche.",
-    "researchUseError": "Veuillez confirmer l’usage pour la recherche.",
     "placeOrder": "Commander avec obligation de paiement · {price}",
     "confirmationNote": "Vous recevrez tout de suite un e-mail de confirmation avec les informations de paiement. Une question ? Écrivez à {email}.",
     "genericError": "Une erreur s’est produite. Veuillez réessayer ou nous écrire.",

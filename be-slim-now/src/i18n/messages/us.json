@@ -345,10 +345,6 @@
       {
         "q": "Can I change or cancel my order?",
         "a": "Yes, until it ships. Reply to your confirmation email or message us: {contacts}."
-      },
-      {
-        "q": "What are these products for?",
-        "a": "All products sold on this website are intended for research and identification purposes only. These products are not intended for human dosing, injection, or ingestion."
       }
     ]
   },
@@ -423,8 +419,6 @@
     "postalCode": "Postal code",
     "postalCodeError": "Enter the postal code.",
     "note": "Note (optional)",
-    "researchUse": "I confirm these products are for research use only.",
-    "researchUseError": "Please confirm research use.",
     "placeOrder": "Place order · {price}",
     "confirmationNote": "You'll get a confirmation email with payment details right away. Questions? Write to {email}.",
     "genericError": "Something went wrong. Please try again or message us.",

@@ -346,10 +346,6 @@
       {
         "q": "Kan jag ändra eller avbryta min beställning?",
         "a": "Ja, tills den har skickats. Svara på bekräftelsemejlet eller skriv till oss: {contacts}."
-      },
-      {
-        "q": "Vad är produkterna avsedda för?",
-        "a": "Alla produkter som säljs på den här webbplatsen är endast avsedda för forsknings- och identifieringsändamål. Produkterna är inte avsedda för dosering, injektion eller intag hos människor."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Postnummer",
     "postalCodeError": "Ange postnummer.",
     "note": "Meddelande (valfritt)",
-    "researchUse": "Jag bekräftar att produkterna endast är avsedda för forskning.",
-    "researchUseError": "Bekräfta användning för forskning.",
     "placeOrder": "Beställ med betalningsskyldighet · {price}",
     "confirmationNote": "Du får direkt ett bekräftelsemejl med betalningsuppgifterna. Frågor? Skriv till {email}.",
     "genericError": "Något gick fel. Försök igen eller skriv till oss.",

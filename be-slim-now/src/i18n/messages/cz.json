@@ -346,10 +346,6 @@
       {
         "q": "Mohu objednávku změnit nebo zrušit?",
         "a": "Ano, dokud není odeslána. Odpovězte na potvrzovací e-mail nebo nám napište: {contacts}."
-      },
-      {
-        "q": "K čemu jsou tyto produkty určeny?",
-        "a": "Všechny produkty prodávané na tomto webu jsou určeny výhradně pro výzkumné a identifikační účely. Tyto produkty nejsou určeny k dávkování, injekčnímu podání ani požití u lidí."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "PSČ",
     "postalCodeError": "Zadejte PSČ.",
     "note": "Poznámka (nepovinné)",
-    "researchUse": "Potvrzuji, že tyto produkty jsou určeny výhradně pro výzkum.",
-    "researchUseError": "Potvrďte prosím použití pro výzkum.",
     "placeOrder": "Objednat s povinností platby · {price}",
     "confirmationNote": "Hned vám přijde potvrzovací e-mail s platebními údaji. Dotazy? Napište na {email}.",
     "genericError": "Něco se pokazilo. Zkuste to prosím znovu nebo nám napište.",

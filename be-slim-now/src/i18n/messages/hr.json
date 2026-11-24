@@ -346,10 +346,6 @@
       {
         "q": "Mogu li promijeniti ili otkazati narudžbu?",
         "a": "Da, dok ne bude poslana. Odgovorite na e-poruku s potvrdom ili nam se javite: {contacts}."
-      },
-      {
-        "q": "Čemu su namijenjeni ovi proizvodi?",
-        "a": "Svi proizvodi koji se prodaju na ovoj web-stranici namijenjeni su isključivo u istraživačke i identifikacijske svrhe. Ovi proizvodi nisu namijenjeni doziranju, ubrizgavanju ni gutanju kod ljudi."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Poštanski broj",
     "postalCodeError": "Unesite poštanski broj.",
     "note": "Napomena (nije obavezno)",
-    "researchUse": "Potvrđujem da su ovi proizvodi namijenjeni isključivo istraživanju.",
-    "researchUseError": "Potvrdite uporabu u istraživanju.",
     "placeOrder": "Narudžba s obvezom plaćanja · {price}",
     "confirmationNote": "Odmah ćete primiti e-poruku s potvrdom i podacima za plaćanje. Pitanja? Pišite na {email}.",
     "genericError": "Nešto nije u redu. Pokušajte ponovno ili nam se javite.",

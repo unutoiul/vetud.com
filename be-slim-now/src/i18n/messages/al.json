@@ -346,10 +346,6 @@
       {
         "q": "A mund ta ndryshoj ose ta anuloj porosinë?",
         "a": "Po, derisa të dërgohet. Përgjigjuni email-it të konfirmimit ose na shkruani: {contacts}."
-      },
-      {
-        "q": "Për çfarë janë këto produkte?",
-        "a": "Të gjitha produktet që shiten në këtë faqe interneti janë të destinuara vetëm për qëllime kërkimore dhe identifikimi. Këto produkte nuk janë të destinuara për dozim, injektim ose gëlltitje te njerëzit."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Kodi postar",
     "postalCodeError": "Shkruani kodin postar.",
     "note": "Shënim (opsional)",
-    "researchUse": "Konfirmoj se këto produkte janë vetëm për përdorim kërkimor.",
-    "researchUseError": "Ju lutemi konfirmoni përdorimin kërkimor.",
     "placeOrder": "Porosi me detyrim pagese · {price}",
     "confirmationNote": "Do të merrni menjëherë një email konfirmimi me të dhënat e pagesës. Pyetje? Shkruani në {email}.",
     "genericError": "Diçka shkoi keq. Provoni përsëri ose na shkruani.",

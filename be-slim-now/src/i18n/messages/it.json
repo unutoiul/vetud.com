@@ -346,10 +346,6 @@
       {
         "q": "Posso modificare o annullare l'ordine?",
         "a": "Sì, finché non è stato spedito. Rispondi all'email di conferma o scrivici: {contacts}."
-      },
-      {
-        "q": "A cosa servono questi prodotti?",
-        "a": "Tutti i prodotti venduti su questo sito sono destinati esclusivamente a scopi di ricerca e identificazione. Questi prodotti non sono destinati alla somministrazione, all'iniezione o all'ingestione nell'uomo."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "CAP",
     "postalCodeError": "Inserisci il CAP.",
     "note": "Note (facoltative)",
-    "researchUse": "Confermo che questi prodotti sono destinati esclusivamente alla ricerca.",
-    "researchUseError": "Conferma l'uso a scopo di ricerca.",
     "placeOrder": "Ordina con obbligo di pagamento · {price}",
     "confirmationNote": "Riceverai subito un'email di conferma con i dati per il pagamento. Domande? Scrivi a {email}.",
     "genericError": "Qualcosa è andato storto. Riprova o scrivici.",

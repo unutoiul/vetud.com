@@ -345,10 +345,6 @@
       {
         "q": "Vai varu mainīt vai atcelt pasūtījumu?",
         "a": "Jā, kamēr tas nav nosūtīts. Atbildiet uz apstiprinājuma e-pastu vai rakstiet mums: {contacts}."
-      },
-      {
-        "q": "Kam paredzēti šie produkti?",
-        "a": "Visi šajā vietnē pārdotie produkti ir paredzēti tikai pētniecības un identifikācijas nolūkiem. Šie produkti nav paredzēti dozēšanai, injicēšanai vai norīšanai cilvēkiem."
       }
     ]
   },
@@ -423,8 +419,6 @@
     "postalCode": "Pasta indekss",
     "postalCodeError": "Ievadiet pasta indeksu.",
     "note": "Piezīme (nav obligāti)",
-    "researchUse": "Apstiprinu, ka šie produkti ir paredzēti tikai pētniecībai.",
-    "researchUseError": "Lūdzu, apstipriniet lietošanu pētniecībā.",
     "placeOrder": "Pasūtīt ar pienākumu maksāt · {price}",
     "confirmationNote": "Jūs uzreiz saņemsiet apstiprinājuma e-pastu ar maksājuma informāciju. Jautājumi? Rakstiet uz {email}.",
     "genericError": "Kaut kas nogāja greizi. Mēģiniet vēlreiz vai rakstiet mums.",

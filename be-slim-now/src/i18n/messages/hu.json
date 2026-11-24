@@ -345,10 +345,6 @@
       {
         "q": "Módosíthatom vagy lemondhatom a rendelést?",
         "a": "Igen, amíg fel nem adtuk. Válaszoljon a visszaigazoló e-mailre, vagy írjon nekünk: {contacts}."
-      },
-      {
-        "q": "Mire valók ezek a termékek?",
-        "a": "Az ezen a weboldalon értékesített összes termék kizárólag kutatási és azonosítási célokra szolgál. Ezek a termékek nem emberi adagolásra, befecskendezésre vagy lenyelésre szolgálnak."
       }
     ]
   },
@@ -423,8 +419,6 @@
     "postalCode": "Irányítószám",
     "postalCodeError": "Adja meg az irányítószámot.",
     "note": "Megjegyzés (nem kötelező)",
-    "researchUse": "Megerősítem, hogy ezek a termékek kizárólag kutatási célra szolgálnak.",
-    "researchUseError": "Kérjük, erősítse meg a kutatási célú felhasználást.",
     "placeOrder": "Fizetési kötelezettséggel járó megrendelés · {price}",
     "confirmationNote": "Azonnal kap egy visszaigazoló e-mailt a fizetési adatokkal. Kérdése van? Írjon a(z) {email} címre.",
     "genericError": "Hiba történt. Kérjük, próbálja újra, vagy írjon nekünk.",

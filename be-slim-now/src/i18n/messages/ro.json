@@ -346,10 +346,6 @@
       {
         "q": "Pot modifica sau anula comanda?",
         "a": "Da, până la expediere. Răspundeți la e-mailul de confirmare sau scrieți-ne: {contacts}."
-      },
-      {
-        "q": "Pentru ce sunt aceste produse?",
-        "a": "Toate produsele vândute pe acest site sunt destinate exclusiv scopurilor de cercetare și identificare. Aceste produse nu sunt destinate administrării, injectării sau ingerării la om."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Cod poștal",
     "postalCodeError": "Introduceți codul poștal.",
     "note": "Notă (opțional)",
-    "researchUse": "Confirm că aceste produse sunt destinate exclusiv cercetării.",
-    "researchUseError": "Vă rugăm să confirmați utilizarea în cercetare.",
     "placeOrder": "Comandă cu obligație de plată · {price}",
     "confirmationNote": "Veți primi imediat un e-mail de confirmare cu datele de plată. Întrebări? Scrieți la {email}.",
     "genericError": "Ceva nu a funcționat. Încercați din nou sau scrieți-ne.",

@@ -346,10 +346,6 @@
       {
         "q": "Kan jeg ændre eller annullere min ordre?",
         "a": "Ja, indtil den er sendt. Svar på bekræftelsesmailen, eller skriv til os: {contacts}."
-      },
-      {
-        "q": "Hvad er produkterne beregnet til?",
-        "a": "Alle produkter, der sælges på denne hjemmeside, er udelukkende beregnet til forsknings- og identifikationsformål. Produkterne er ikke beregnet til dosering, injektion eller indtagelse hos mennesker."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Postnummer",
     "postalCodeError": "Indtast postnummeret.",
     "note": "Bemærkning (valgfri)",
-    "researchUse": "Jeg bekræfter, at produkterne udelukkende er til forskningsbrug.",
-    "researchUseError": "Bekræft venligst brug til forskning.",
     "placeOrder": "Bestil med betalingsforpligtelse · {price}",
     "confirmationNote": "Du får straks en bekræftelsesmail med betalingsoplysningerne. Spørgsmål? Skriv til {email}.",
     "genericError": "Noget gik galt. Prøv igen, eller skriv til os.",

@@ -1,14 +1,14 @@
 "use client"
 
 import { CheckCircleFilled, GiftFilled, LockOutlined, MailOutlined, SafetyCertificateOutlined, ThunderboltOutlined } from "@ant-design/icons"
-import { App, Button, Checkbox, Col, Divider, Flex, Form, Grid, Input, InputNumber, Modal, Radio, Result, Row, Segmented, Select, Space, Typography } from "antd"
+import { App, Button, Col, Divider, Flex, Form, Grid, Input, InputNumber, Modal, Result, Row, Segmented, Select, Space, Typography } from "antd"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 import { isMarket, type CountryCode } from "@/config/markets"
 import { MAX_QUANTITY, OFFER, PRODUCT_IDS, PRODUCTS, SITE, STRENGTHS, contactLinks, strengthLabel, type ProductId, type Strength } from "@/config/site"
 import { format, rich } from "@/i18n/format"
 import { countryName, internationalPhone } from "@/lib/countries"
-import { CONTACT_APPS, EMAIL_PATTERN, LIMITS, PHONE_PATTERN, orderTotal, type ContactApp } from "@/lib/order"
+import { EMAIL_PATTERN, LIMITS, PHONE_PATTERN, orderTotal, type ContactApp } from "@/lib/order"
 import { currencyOf, formatPrice, priceOf, pricingCountry } from "@/lib/pricing"
 import { colors, fonts } from "@/theme/tokens"
 import { useCountry } from "./CountryProvider"
@@ -32,7 +32,6 @@ type FormValues = {
   city: string
   postalCode: string
   note?: string
-  researchUse: boolean
   website?: string
 }
 
@@ -63,7 +62,6 @@ export default function OrderModal({
   const product = Form.useWatch("product", form) ?? initial.product
   const strength = Form.useWatch("strength", form) ?? initial.strength
   const quantity = Form.useWatch("quantity", form) ?? 1
-  const contactApp = Form.useWatch("contactApp", form) ?? "whatsapp"
   const safeQuantity = Math.min(Math.max(Number(quantity) || 1, 1), MAX_QUANTITY)
   // Prices follow the country the order ships to (its own prices when it's in the header's country
   // picker, US prices anywhere else), exactly as the server will work them out.
@@ -124,7 +122,7 @@ export default function OrderModal({
       const res = await fetch("/api/order", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...all, phone: internationalPhone(all.phone ?? ""), quantity: submittedQuantity, promoCode: appliedCode ?? "", researchUse: all.researchUse === true }),
+        body: JSON.stringify({ ...all, phone: internationalPhone(all.phone ?? ""), quantity: submittedQuantity, promoCode: appliedCode ?? "" }),
       })
       const data = (await res.json().catch(() => ({}))) as { orderNumber?: string; total?: number; error?: string; fields?: Record<string, string> }
       if (!res.ok || !data.orderNumber) {
@@ -205,7 +203,7 @@ export default function OrderModal({
           layout="vertical"
           requiredMark={false}
           onFinish={submit}
-          initialValues={{ product: initial.product, strength: initial.strength, quantity: 1, contactApp: "whatsapp", country: visitorCountry, researchUse: false }}
+          initialValues={{ product: initial.product, strength: initial.strength, quantity: 1, contactApp: "whatsapp", country: visitorCountry }}
           scrollToFirstError
         >
           <Row>
@@ -386,19 +384,6 @@ export default function OrderModal({
                   </Col>
                 </Row>
 
-                <Form.Item name="contactApp" label={t.contactApp}>
-                  <Radio.Group
-                    optionType="button"
-                    buttonStyle="solid"
-                    options={CONTACT_APPS.map((app) => ({ value: app, label: app === "email" ? t.contactAppEmailOnly : m.contact.apps[app] }))}
-                  />
-                </Form.Item>
-                {contactApp !== "email" && (
-                  <Form.Item name="contactHandle" style={{ marginTop: -8 }}>
-                    <Input placeholder={t.handleHint[contactApp]} maxLength={LIMITS.contactHandle} />
-                  </Form.Item>
-                )}
-
                 <Form.Item name="address" label={t.address} rules={[{ required: true, min: 4, message: t.addressError }]}>
                   <Input autoComplete="street-address" maxLength={LIMITS.address} />
                 </Form.Item>
@@ -421,14 +406,6 @@ export default function OrderModal({
                 {/* Honeypot: hidden from people, filled by bots */}
                 <Form.Item name="website" hidden>
                   <Input tabIndex={-1} autoComplete="off" />
-                </Form.Item>
-
-                <Form.Item
-                  name="researchUse"
-                  valuePropName="checked"
-                  rules={[{ validator: (_, value) => (value ? Promise.resolve() : Promise.reject(new Error(t.researchUseError))) }]}
-                >
-                  <Checkbox>{t.researchUse}</Checkbox>
                 </Form.Item>
 
                 <Button type="primary" htmlType="submit" size="large" block loading={submitting} icon={<LockOutlined />} style={{ height: 56, fontSize: 17 }}>

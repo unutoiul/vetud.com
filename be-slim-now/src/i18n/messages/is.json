@@ -346,10 +346,6 @@
       {
         "q": "Get ég breytt eða hætt við pöntunina?",
         "a": "Já, þar til hún hefur verið send. Svaraðu staðfestingarpóstinum eða sendu okkur skilaboð: {contacts}."
-      },
-      {
-        "q": "Til hvers eru þessar vörur?",
-        "a": "Allar vörur sem seldar eru á þessari vefsíðu eru eingöngu ætlaðar til rannsókna og auðkenningar. Þessar vörur eru ekki ætlaðar til skömmtunar, inndælingar eða inntöku hjá mönnum."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Póstnúmer",
     "postalCodeError": "Sláðu inn póstnúmer.",
     "note": "Athugasemd (valfrjálst)",
-    "researchUse": "Ég staðfesti að þessar vörur eru eingöngu ætlaðar til rannsókna.",
-    "researchUseError": "Staðfestu notkun til rannsókna.",
     "placeOrder": "Panta með greiðsluskyldu · {price}",
     "confirmationNote": "Þú færð strax staðfestingarpóst með greiðsluupplýsingum. Spurningar? Skrifaðu á {email}.",
     "genericError": "Eitthvað fór úrskeiðis. Reyndu aftur eða sendu okkur skilaboð.",

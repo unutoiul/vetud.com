@@ -346,10 +346,6 @@
       {
         "q": "Czy mogę zmienić lub anulować zamówienie?",
         "a": "Tak, dopóki nie zostanie wysłane. Odpowiedz na e-mail z potwierdzeniem lub napisz do nas: {contacts}."
-      },
-      {
-        "q": "Do czego służą te produkty?",
-        "a": "Wszystkie produkty sprzedawane na tej stronie są przeznaczone wyłącznie do celów badawczych i identyfikacyjnych. Produkty te nie są przeznaczone do dawkowania, wstrzykiwania ani spożycia przez ludzi."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Kod pocztowy",
     "postalCodeError": "Podaj kod pocztowy.",
     "note": "Uwagi (opcjonalnie)",
-    "researchUse": "Potwierdzam, że te produkty są przeznaczone wyłącznie do celów badawczych.",
-    "researchUseError": "Potwierdź przeznaczenie do celów badawczych.",
     "placeOrder": "Zamawiam z obowiązkiem zapłaty · {price}",
     "confirmationNote": "Od razu dostaniesz e-mail z potwierdzeniem i danymi do płatności. Pytania? Napisz na {email}.",
     "genericError": "Coś poszło nie tak. Spróbuj ponownie lub napisz do nas.",

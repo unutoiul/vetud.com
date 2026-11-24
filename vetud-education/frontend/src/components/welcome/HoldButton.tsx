@@ -34,7 +34,7 @@ type HoldButtonProps = Omit<ButtonProps, "onClick" | "href" | "type" | "endIcon"
   fill: string
   /** "full" shows "Hold 3s" before the hold starts; "short" shows only "3s", for small buttons. */
   hint?: "full" | "short"
-  /** Explains the hold gesture on hover and keyboard focus. */
+  /** Explains the hold gesture on hover and keyboard focus (on by default). */
   showHoldTooltip?: boolean
   /** Extra styles for the counter, e.g. to push it to the button's edge. */
   counterSx?: SxProps<Theme>
@@ -46,7 +46,7 @@ type HoldButtonProps = Omit<ButtonProps, "onClick" | "href" | "type" | "endIcon"
  * keyboard (hold Space or Enter). An assistive-technology click starts the same three-second
  * countdown, since it may not produce pointer or keyboard press events.
  */
-export default function HoldButton({ onConfirm, fill, hint = "full", showHoldTooltip = false, counterSx, children, disabled, sx, ...props }: HoldButtonProps) {
+export default function HoldButton({ onConfirm, fill, hint = "full", showHoldTooltip = true, counterSx, children, disabled, sx, ...props }: HoldButtonProps) {
   const ct = useContentTranslator()
   const hintId = useId()
   const [holding, setHolding] = useState(false)

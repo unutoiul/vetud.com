@@ -345,10 +345,6 @@
       {
         "q": "Kas saan tellimust muuta või tühistada?",
         "a": "Jah, kuni see pole välja saadetud. Vasta kinnitus-e-kirjale või kirjuta meile: {contacts}."
-      },
-      {
-        "q": "Milleks need tooted on mõeldud?",
-        "a": "Kõik sellel veebisaidil müüdavad tooted on mõeldud ainult uurimis- ja tuvastamiseesmärkidel. Need tooted ei ole mõeldud inimestele doseerimiseks, süstimiseks ega allaneelamiseks."
       }
     ]
   },
@@ -423,8 +419,6 @@
     "postalCode": "Postiindeks",
     "postalCodeError": "Sisesta postiindeks.",
     "note": "Märkus (valikuline)",
-    "researchUse": "Kinnitan, et need tooted on mõeldud ainult uurimistööks.",
-    "researchUseError": "Palun kinnita kasutamine uurimistööks.",
     "placeOrder": "Telli maksekohustusega · {price}",
     "confirmationNote": "Saad kohe kinnitus-e-kirja koos makseandmetega. Küsimusi? Kirjuta aadressile {email}.",
     "genericError": "Midagi läks valesti. Proovi uuesti või kirjuta meile.",

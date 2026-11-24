@@ -28,9 +28,6 @@ export const SITE = {
   email: "contact@beslimnow.com",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:8200").replace(/\/$/, ""),
   description: `Tirzepatide (TZ-2) and Retatrutide pens by VETUD. 20 mg or 40 mg, ≥99% purity with a COA for every lot. ${OFFER.saleLabel}: ${OFFER.salePercent}% off. Order in under a minute.`,
-  // The shop's research-use notice (the page shows its copy from the messages: faq). Keep this wording exact.
-  ruoNotice:
-    "All products sold on this website are intended for research and identification purposes only. These products are not intended for human dosing, injection, or ingestion.",
 }
 
 /**

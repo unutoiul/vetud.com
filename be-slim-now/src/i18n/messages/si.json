@@ -346,10 +346,6 @@
       {
         "q": "Ali lahko naročilo spremenim ali prekličem?",
         "a": "Da, dokler ni odposlano. Odgovorite na potrditveno e-pošto ali nam pišite: {contacts}."
-      },
-      {
-        "q": "Za kaj so ti izdelki namenjeni?",
-        "a": "Vsi izdelki, ki se prodajajo na tem spletnem mestu, so namenjeni izključno raziskovalnim in identifikacijskim namenom. Ti izdelki niso namenjeni odmerjanju, injiciranju ali zaužitju pri ljudeh."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Poštna številka",
     "postalCodeError": "Vnesite poštno številko.",
     "note": "Opomba (neobvezno)",
-    "researchUse": "Potrjujem, da so ti izdelki namenjeni izključno raziskavam.",
-    "researchUseError": "Potrdite uporabo za raziskave.",
     "placeOrder": "Naročilo z obveznostjo plačila · {price}",
     "confirmationNote": "Takoj boste prejeli potrditveno e-pošto s podatki za plačilo. Vprašanja? Pišite na {email}.",
     "genericError": "Nekaj je šlo narobe. Poskusite znova ali nam pišite.",

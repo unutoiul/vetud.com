@@ -98,7 +98,7 @@ npm run emails:campaign-images            # pictures → public/brand/email/camp
 npm run emails:campaign -- black-friday-2026   # creates/updates the Resend Broadcast draft; never sends
 ```
 
-Review the draft in Resend → Broadcasts, send yourself a test, then send it there. Only mail people who subscribed: every campaign carries the research-use notice and an unsubscribe link (`{{{RESEND_UNSUBSCRIBE_URL}}}`).
+Review the draft in Resend → Broadcasts, send yourself a test, then send it there. Only mail people who subscribed: every campaign carries an unsubscribe link (`{{{RESEND_UNSUBSCRIBE_URL}}}`).
 
 ## Pictures
 

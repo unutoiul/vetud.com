@@ -346,10 +346,6 @@
       {
         "q": "Posso alterar ou cancelar a encomenda?",
         "a": "Sim, até ser enviada. Responda ao email de confirmação ou envie-nos uma mensagem: {contacts}."
-      },
-      {
-        "q": "Para que servem estes produtos?",
-        "a": "Todos os produtos vendidos neste site destinam-se exclusivamente a fins de investigação e identificação. Estes produtos não se destinam a administração, injeção ou ingestão em seres humanos."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Código postal",
     "postalCodeError": "Introduza o código postal.",
     "note": "Nota (opcional)",
-    "researchUse": "Confirmo que estes produtos se destinam apenas a investigação.",
-    "researchUseError": "Confirme a utilização para investigação.",
     "placeOrder": "Encomenda com obrigação de pagamento · {price}",
     "confirmationNote": "Vai receber de imediato um email de confirmação com os dados de pagamento. Dúvidas? Escreva para {email}.",
     "genericError": "Algo correu mal. Tente novamente ou envie-nos uma mensagem.",

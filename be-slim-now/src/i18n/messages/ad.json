@@ -346,10 +346,6 @@
       {
         "q": "Puc canviar o cancel·lar la comanda?",
         "a": "Sí, fins que s'envia. Respon al correu de confirmació o escriu-nos: {contacts}."
-      },
-      {
-        "q": "Per a què són aquests productes?",
-        "a": "Tots els productes venuts en aquest lloc web estan destinats exclusivament a finalitats de recerca i identificació. Aquests productes no estan destinats a l'administració, la injecció ni la ingestió en éssers humans."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Codi postal",
     "postalCodeError": "Escriu el codi postal.",
     "note": "Nota (opcional)",
-    "researchUse": "Confirmo que aquests productes són només per a ús en recerca.",
-    "researchUseError": "Confirma l'ús en recerca.",
     "placeOrder": "Comanda amb obligació de pagament · {price}",
     "confirmationNote": "Rebràs a l'instant un correu de confirmació amb les dades de pagament. Dubtes? Escriu a {email}.",
     "genericError": "Alguna cosa ha fallat. Torna-ho a provar o escriu-nos.",

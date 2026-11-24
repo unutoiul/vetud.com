@@ -346,10 +346,6 @@
       {
         "q": "Kann ich meine Bestellung ändern oder stornieren?",
         "a": "Ja, bis sie versendet ist. Antworten Sie auf Ihre Bestätigungs-E-Mail oder schreiben Sie uns: {contacts}."
-      },
-      {
-        "q": "Wofür sind diese Produkte bestimmt?",
-        "a": "Alle auf dieser Website verkauften Produkte sind ausschließlich für Forschungs- und Identifizierungszwecke bestimmt. Diese Produkte sind nicht zur Dosierung, Injektion oder Einnahme beim Menschen bestimmt."
       }
     ]
   },
@@ -424,8 +420,6 @@
     "postalCode": "Postleitzahl",
     "postalCodeError": "Bitte geben Sie die Postleitzahl ein.",
     "note": "Anmerkung (optional)",
-    "researchUse": "Ich bestätige, dass diese Produkte ausschließlich für Forschungszwecke bestimmt sind.",
-    "researchUseError": "Bitte bestätigen Sie die Verwendung zu Forschungszwecken.",
     "placeOrder": "Zahlungspflichtig bestellen · {price}",
     "confirmationNote": "Sie erhalten sofort eine Bestätigungs-E-Mail mit den Zahlungsdaten. Fragen? Schreiben Sie an {email}.",
     "genericError": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns.",
