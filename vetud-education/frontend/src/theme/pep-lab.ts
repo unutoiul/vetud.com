@@ -1,4 +1,4 @@
-﻿import { createTheme, type CSSObject } from "@mui/material/styles"
+﻿import { alpha, createTheme, type CSSObject } from "@mui/material/styles"
 import { brand, fonts, motion } from "./tokens"
 
 declare module "@mui/material/styles" {
@@ -88,29 +88,51 @@ export const pepLabTheme = createTheme({
     MuiAccordion: { defaultProps: { disableGutters: true, elevation: 0, square: true }, styleOverrides: { root: { backgroundColor: "transparent", borderBottom: `1px solid ${brand.line}`, "&::before": { display: "none" } } } },
     MuiAccordionSummary: { styleOverrides: { root: { paddingInline: 0, minHeight: 80 }, content: { margin: "22px 0", gap: 20, alignItems: "center" } } },
     MuiAccordionDetails: { styleOverrides: { root: { padding: "0 0 26px" } } },
-    // Every text field, select and autocomplete shares this look (the same as the shop's).
+    // Every text field, select and autocomplete shares this look (owner, 2026-11-24): the label sits
+    // above the field instead of floating inside its border, and the field is a soft, rounded box
+    // that turns white with a blue ring while you type in it.
     MuiOutlinedInput: {
+      defaultProps: { notched: false },
       styleOverrides: {
         root: {
-          borderRadius: 6, backgroundColor: brand.white,
-          transition: `box-shadow .2s ${motion}`,
-          "& .MuiOutlinedInput-notchedOutline": { borderColor: brand.lineStrong, transition: `border-color .2s ${motion}` },
-          "&:hover:not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: brand.navySoft },
-          "&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: brand.blue, borderWidth: 2 },
-          "&.Mui-focused": { boxShadow: `0 0 0 4px ${brand.mintLight}` },
-          "&.Mui-disabled": { backgroundColor: brand.mintWash },
+          borderRadius: 12, backgroundColor: brand.mintWash,
+          transition: `box-shadow .2s ${motion}, background-color .2s ${motion}`,
+          "& .MuiOutlinedInput-notchedOutline": { top: 0, borderColor: brand.line, transition: `border-color .2s ${motion}`, "& legend": { display: "none" } },
+          "&:hover:not(.Mui-disabled):not(.Mui-focused)": { backgroundColor: brand.white },
+          "&:hover:not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: brand.lineStrong },
+          "&.Mui-focused": { backgroundColor: brand.white, boxShadow: `0 0 0 4px ${alpha(brand.blue, .14)}` },
+          "&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: brand.blue, borderWidth: 1.5 },
+          "&.Mui-error .MuiOutlinedInput-notchedOutline": { borderColor: brand.red600 },
+          "&.Mui-error.Mui-focused": { boxShadow: `0 0 0 4px ${alpha(brand.red600, .12)}` },
+          "&.Mui-disabled": { backgroundColor: brand.mintLight, "& .MuiOutlinedInput-notchedOutline": { borderColor: brand.line } },
           "& input:-webkit-autofill": autofill,
           "& input:-webkit-autofill:hover": autofill,
           "& input:-webkit-autofill:focus": autofill,
           "& input:autofill": autofill,
         },
-        input: { "&::placeholder": { color: brand.muted, opacity: 1 } },
-        adornedStart: { "& .MuiInputAdornment-root": { color: brand.ink } },
+        input: { padding: "14px 16px", fontSize: "1rem", "&::placeholder": { color: brand.muted, opacity: .8 }, ".MuiInputBase-sizeSmall &": { padding: "10px 14px" } },
+        multiline: { padding: "14px 16px", "& textarea": { padding: 0 } },
+        adornedStart: { paddingLeft: 14, "& .MuiInputAdornment-root": { color: brand.ink } },
+        adornedEnd: { paddingRight: 10 },
       },
     },
-    MuiInputLabel: { styleOverrides: { root: { color: brand.muted, "&.Mui-focused:not(.Mui-error)": { color: brand.blue } }, asterisk: { color: brand.muted } } },
-    MuiFormHelperText: { styleOverrides: { root: { marginTop: 6, fontSize: ".78rem", lineHeight: 1.45, color: brand.muted, "&.Mui-error": { color: brand.red600 } } } },
-    MuiAutocomplete: { styleOverrides: { paper: { borderRadius: 8, marginTop: 4, boxShadow: `0 12px 40px ${brand.blue825A12}`, border: `1px solid ${brand.line}` }, option: { minHeight: 44 }, noOptions: { color: brand.muted } } },
+    // The label above the field, always (never inside it), in the ink colour.
+    MuiInputLabel: {
+      defaultProps: { shrink: true },
+      styleOverrides: {
+        root: {
+          position: "relative", transform: "none", maxWidth: "100%", marginBottom: 7,
+          whiteSpace: "normal", overflow: "visible",
+          fontSize: ".86rem", fontWeight: 600, lineHeight: 1.4, color: brand.ink,
+          "&.Mui-focused": { color: brand.ink },
+          "&.Mui-error": { color: brand.ink },
+          "&.Mui-disabled": { color: brand.muted },
+        },
+        asterisk: { color: brand.muted, fontWeight: 400 },
+      },
+    },
+    MuiFormHelperText: { styleOverrides: { root: { margin: "7px 2px 0", fontSize: ".8rem", lineHeight: 1.45, color: brand.muted, "&.Mui-error": { color: brand.red600, fontWeight: 500 } } } },
+    MuiAutocomplete: { styleOverrides: { root: { "& .MuiOutlinedInput-root": { paddingTop: 6, paddingBottom: 6 } }, paper: { borderRadius: 8, marginTop: 4, boxShadow: `0 12px 40px ${brand.blue825A12}`, border: `1px solid ${brand.line}` }, option: { minHeight: 44 }, noOptions: { color: brand.muted } } },
     MuiTextField: { defaultProps: { fullWidth: true } },
     MuiAppBar: { defaultProps: { elevation: 0, color: "inherit" } },
     MuiTab: { styleOverrides: { root: { textTransform: "none", fontWeight: 600, fontSize: ".95rem", minHeight: 58, paddingInline: 4, marginRight: 24, minWidth: 0 } } },

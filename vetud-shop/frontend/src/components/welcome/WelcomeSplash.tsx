@@ -61,17 +61,22 @@ const primaryButtonSx = {
 }
 
 const emailInputSx: SxProps<Theme> = {
-  bgcolor: alpha(brand.onNavy, .05),
-  "& input": { minHeight: 24, fontSize: 16, color: "brand.onNavy" },
+  bgcolor: alpha(brand.onNavy, .06),
+  "& input": { color: "brand.onNavy", "&::placeholder": { color: "brand.onNavyMuted", opacity: .7 } },
   "& input:-webkit-autofill": { WebkitTextFillColor: brand.onNavy, boxShadow: `0 0 0 40px ${brand.navy} inset`, caretColor: brand.onNavy },
-  "& .MuiOutlinedInput-notchedOutline, &.Mui-error .MuiOutlinedInput-notchedOutline, &.Mui-disabled .MuiOutlinedInput-notchedOutline": { borderColor: alpha(brand.cyan, .5) },
-  "&:hover .MuiOutlinedInput-notchedOutline, &.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "brand.cyan" },
+  "& .MuiOutlinedInput-notchedOutline, &.Mui-disabled .MuiOutlinedInput-notchedOutline": { borderColor: alpha(brand.cyan, .32) },
+  "&:hover:not(.Mui-disabled):not(.Mui-focused)": { bgcolor: alpha(brand.onNavy, .09) },
+  "&:hover:not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: alpha(brand.cyan, .6) },
+  "&.Mui-focused": { bgcolor: alpha(brand.onNavy, .09), boxShadow: `0 0 0 4px ${alpha(brand.cyan, .18)}` },
+  "&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: "brand.cyan" },
+  "&.Mui-error .MuiOutlinedInput-notchedOutline": { borderColor: "error.light" },
+  "&.Mui-error.Mui-focused": { boxShadow: `0 0 0 4px ${alpha(brand.cyan, .12)}` },
 }
 
 const emailLabelSx: SxProps<Theme> = {
-  color: "brand.onNavyMuted",
-  "&.Mui-error, &.Mui-disabled": { color: "brand.onNavyMuted" },
-  "&.Mui-focused": { color: "brand.cyan" },
+  color: "brand.onNavy",
+  "&.Mui-focused, &.Mui-error": { color: "brand.onNavy" },
+  "&.Mui-disabled": { color: "brand.onNavyMuted" },
 }
 
 const legalLinkSx: SxProps<Theme> = {
@@ -207,7 +212,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
                 error={showErrors && emailInvalid}
                 helperText={showErrors && emailInvalid ? offerText("invalidEmail") : undefined}
                 slotProps={{
-                  htmlInput: { autoComplete: "email", inputMode: "email", spellCheck: false, maxLength: 254, autoCapitalize: "none" },
+                  htmlInput: { autoComplete: "email", inputMode: "email", spellCheck: false, maxLength: 254, autoCapitalize: "none", placeholder: "name@example.com" },
                   input: { sx: emailInputSx },
                   inputLabel: { sx: emailLabelSx },
                   formHelperText: { sx: { "&.Mui-error": { color: "error.light" } } },
