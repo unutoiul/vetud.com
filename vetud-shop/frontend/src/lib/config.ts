@@ -11,8 +11,8 @@ export const MEDUSA_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE
  */
 export const EDUCATION_URL = (process.env.NEXT_PUBLIC_EDUCATION_URL || "https://www.vetud.com").replace(/\/$/, "")
 
-/** The shop's public address since it moved off vetud.com on 2026-11-11. */
-const SHOP_URL = "https://www.pep.company"
+/** The shop's public address (www.pep.company from 2026-11-11, www.vetudpeptides.com since 2026-11-24). */
+const SHOP_URL = "https://www.vetudpeptides.com"
 const hostOf = (url: string) => { try { return new URL(url).host.replace(/^www\./, "") } catch { return "" } }
 const configuredBaseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000").replace(/\/$/, "")
 

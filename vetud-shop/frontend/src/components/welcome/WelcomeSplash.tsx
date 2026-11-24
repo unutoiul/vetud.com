@@ -11,7 +11,6 @@ import { alpha, keyframes, type SxProps, type Theme } from "@mui/material/styles
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useTranslations } from "next-intl"
-import Image from "next/image"
 import { useRef, useState, type FormEvent } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
@@ -22,6 +21,8 @@ import { subscribeToNewsletter } from "../newsletter/subscription"
 import { useStore } from "../store/StoreProvider"
 import Button from "@mui/material/Button"
 import HoldButton from "./HoldButton"
+import NewsletterPreview from "./NewsletterPreview"
+import SplashBackdrop from "./SplashBackdrop"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -30,13 +31,22 @@ const arrival = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `
 
+// A centred window over the page (not a full screen), so the site stays in view behind it.
 const screenSx: SxProps<Theme> = {
-  m: 0,
-  borderRadius: 0,
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  width: { xs: "calc(100% - 24px)", sm: "calc(100% - 48px)" },
+  maxWidth: 1120,
+  maxHeight: { xs: "calc(100% - 24px)", sm: "calc(100% - 48px)" },
+  m: { xs: 1.5, sm: 3 },
+  borderRadius: { xs: "20px", md: "28px" },
   color: "brand.onNavy",
   bgcolor: "brand.navyDeep",
   backgroundImage: `radial-gradient(ellipse at 22% 46%, ${alpha(brand.blue, .42)}, transparent 65%)`,
-  overflowX: "hidden",
+  border: `1px solid ${alpha(brand.cyan, .22)}`,
+  boxShadow: `0 40px 120px ${brand.blackA22}`,
+  overflow: "hidden",
   // The theme's blue focus ring is too faint on this navy screen.
   "& a:focus-visible, & button:focus-visible, & .MuiCheckbox-root.Mui-focusVisible": { outline: `2px solid ${brand.cyan}`, outlineOffset: 4 },
 }
@@ -121,25 +131,22 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
 
   return <Dialog
     open={open}
-    onClose={onDismiss}
-    fullScreen
+    // Escape still closes it (accessibility); a click on the page around it doesn't, like every other way out.
+    onClose={(_, reason) => { if (reason !== "backdropClick") onDismiss() }}
+    maxWidth={false}
     aria-labelledby="welcome-title"
     aria-describedby="welcome-description"
-    slotProps={{ paper: { sx: screenSx } }}
+    slotProps={{ paper: { sx: screenSx }, backdrop: { sx: { bgcolor: alpha(brand.navyDeep, .55), backdropFilter: "blur(6px)" } } }}
   >
+    <SplashBackdrop primary="/images/newsletter/ribbons-tirzepatide.webp" secondary="/images/newsletter/ribbons-semaglutide.webp" />
     <Box sx={{
+      position: "relative",
+      zIndex: 1,
       display: "flex",
       flexDirection: "column",
-      width: "100%",
-      maxWidth: 1560,
-      minHeight: "100%",
-      m: "auto",
-      p: {
-        xs: "max(20px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left))",
-        sm: "28px 40px",
-        md: "32px 56px",
-        xl: "36px 72px",
-      },
+      minHeight: 0,
+      overflowY: "auto",
+      p: { xs: "16px 18px 14px", sm: "22px 32px 18px", md: "24px 40px 20px" },
     }}>
       <Box component="header" sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2, "& > span": { minWidth: 0 } }}>
         <Logo tone="light" />
@@ -160,36 +167,28 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, 1.1fr) minmax(0, 1fr)" },
         alignContent: "center",
         alignItems: "center",
-        gap: { xs: 3.25, sm: 4, md: 8, xl: 11 },
-        pt: { xs: 2.5, sm: 4, md: 3.5 },
-        pb: { xs: 3.75, sm: 4, md: 3.5 },
+        gap: { xs: 2.5, sm: 3, md: 5 },
+        pt: { xs: 1.5, md: 1 },
+        pb: { xs: 3, md: 3 },
         animation: `${arrival} 500ms ease-out both`,
       }}>
-        <Box component="figure" sx={{ width: "100%", minWidth: 0, m: { xs: 0, sm: "auto", md: 0 }, maxWidth: { sm: 520, md: "none" } }}>
-          <Box sx={{ position: "relative", height: { xs: 175, sm: 235, md: "min(42vh, 430px)" }, filter: `drop-shadow(0 20px 35px ${brand.blackA22})` }}>
-            <Image
-              src="/images/welcome-peptide-building-blocks-blue.webp"
-              alt={ct("Illustration of blue building blocks linked into a chain across an open book, representing amino acids forming a peptide.")}
-              fill
-              preload
-              sizes="(min-width: 900px) 650px, (min-width: 600px) 520px, 350px"
-              style={{ objectFit: "contain" }}
-            />
-          </Box>
-          <Box component="figcaption" sx={{ display: { xs: "none", md: "block" }, maxWidth: 470, m: "24px auto 0" }}>
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 2.5, fontWeight: 600, color: "brand.onNavy", fontSize: 13 }}>
-              <span>{ct("Amino acids")}</span><Icon name="arrowRight" sx={{ width: 36, color: "brand.cyan" }} /><span>{ct("A peptide chain")}</span>
-            </Box>
-            <Typography sx={{ mt: 1.5, textAlign: "center", fontSize: 13, lineHeight: 1.75, color: "brand.onNavyMuted" }}>{ct("Peptides are short chains of amino acids, the building blocks of proteins. We'll help you connect the dots.")}</Typography>
-          </Box>
-        </Box>
+        <NewsletterPreview
+          label={ct("Preview of the VETUD newsletter: subscriber offers, research news and lab updates.")}
+          subject={ct("Offers and research news")}
+          stories={[
+            { kicker: ct("Subscriber offer"), title: ct("Codes for subscribers only, straight to your inbox"), image: "/images/newsletter/ribbons-tirzepatide.webp" },
+            { kicker: ct("Research news"), title: ct("New trials and rulings, explained in plain language"), image: "/images/newsletter/research-news.webp" },
+            { kicker: ct("Lab standards"), title: ct("Every lot, on the record"), image: "/images/newsletter/lab-vial-filling.webp" },
+          ]}
+          chips={[ct("Subscriber-only codes"), ct("Research news"), ct("Unsubscribe anytime")]}
+        />
 
         <Box component="section" sx={{ width: "100%", maxWidth: 490, minWidth: 0, mx: "auto" }}>
           <Typography sx={{ mb: { xs: 1.5, md: 2.25 }, color: "brand.cyan", fontSize: { xs: 12, md: 13 }, fontWeight: 600 }}>{ct("The VETUD research newsletter")}</Typography>
           <Typography id="welcome-title" variant="h2" sx={{
             maxWidth: 490,
             mb: 2.25,
-            fontSize: { xs: "clamp(36px, 4.4vw, 64px)", sm: 46, md: "clamp(44px, min(4.4vw, 6.7vh), 64px)" },
+            fontSize: { xs: 34, sm: 42, md: "clamp(40px, 3.6vw, 52px)" },
             lineHeight: 1.08,
             letterSpacing: "-.055em",
           }}>{ct("Peptide science. Made simple.")}</Typography>
@@ -253,8 +252,8 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         display: "grid",
         gridTemplateColumns: { md: "minmax(0, 1fr) auto" },
         alignItems: { md: "center" },
-        gap: { xs: 1.5, md: 4 },
-        pt: 2.5,
+        gap: { xs: 1, md: 4 },
+        pt: 2,
         borderTop: "1px solid",
         borderColor: "brand.navySoft",
         color: "brand.onNavyMuted",

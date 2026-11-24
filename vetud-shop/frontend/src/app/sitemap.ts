@@ -18,7 +18,7 @@ function isoDate(value: string | undefined) {
 }
 
 /**
- * The shop's pages on its own domain (BASE_URL, https://www.pep.company in production), one entry per
+ * The shop's pages on its own domain (BASE_URL, https://www.vetudpeptides.com in production), one entry per
  * country with hreflang alternates. Learning pages, news, videos and the community are listed by the
  * education site's sitemap.
  */

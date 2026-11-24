@@ -11,35 +11,47 @@ import { alpha, keyframes, type SxProps, type Theme } from "@mui/material/styles
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useTranslations } from "next-intl"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { useRef, useState, type FormEvent } from "react"
-import { CATEGORIES } from "@/content/learn/categories"
-import { translateAction } from "@/i18n/actions"
+import { getArticle } from "@/content/learn/articles"
+import { getLearnIllustration } from "@/content/learn/illustrations"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
-import { AppLink, useLocalizedHref } from "../common/links"
+import { AppLink } from "../common/links"
 import { EMAIL_LIST_CONSENT, subscribeToEmailList } from "../newsletter/subscription"
 import { useLanguage } from "../common/language"
 import Button from "@mui/material/Button"
 import HoldButton from "./HoldButton"
+import NewsletterPreview from "./NewsletterPreview"
+import SplashBackdrop from "./SplashBackdrop"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/** Real stories from the site, shown in the newsletter preview. */
+const PREVIEW_ARTICLES = ["retatrutide-triumph-1-28-percent", "bpc-157-human-evidence", "copper-peptides-hair-growth"]
 
 const arrival = keyframes`
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 `
 
+// A centred window over the page (not a full screen), so the site stays in view behind it.
 const screenSx: SxProps<Theme> = {
-  m: 0,
-  borderRadius: 0,
+  position: "relative",
+  display: "flex",
+  flexDirection: "column",
+  width: { xs: "calc(100% - 24px)", sm: "calc(100% - 48px)" },
+  maxWidth: 1120,
+  maxHeight: { xs: "calc(100% - 24px)", sm: "calc(100% - 48px)" },
+  m: { xs: 1.5, sm: 3 },
+  borderRadius: { xs: "20px", md: "28px" },
   color: "brand.onNavy",
   bgcolor: "brand.navyDeep",
   backgroundImage: `radial-gradient(ellipse at 22% 46%, ${alpha(brand.blue, .42)}, transparent 65%)`,
-  overflowX: "hidden",
+  border: `1px solid ${alpha(brand.cyan, .22)}`,
+  boxShadow: `0 40px 120px ${brand.blackA22}`,
+  overflow: "hidden",
   // The theme's blue focus ring is too faint on this navy screen.
   "& a:focus-visible, & button:focus-visible, & .MuiCheckbox-root.Mui-focusVisible": { outline: `2px solid ${brand.cyan}`, outlineOffset: 4 },
 }
@@ -86,7 +98,6 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const ct = useContentTranslator()
   const offerText = useTranslations("Offer")
   const actions = useTranslations("Actions")
-  const heroText = useTranslations("LearnHero")
   const footerText = useTranslations("Footer")
   const language = useLanguage()
   const [email, setEmail] = useState("")
@@ -96,18 +107,11 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
   const submitting = useRef(false)
   const form = useRef<HTMLFormElement>(null)
-  const router = useRouter()
-  const localize = useLocalizedHref()
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     void submit()
-  }
-
-  const go = (href: string) => {
-    onDismiss()
-    router.push(localize(href))
   }
 
   const submit = async () => {
@@ -132,25 +136,22 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
 
   return <Dialog
     open={open}
-    onClose={onDismiss}
-    fullScreen
+    // Escape still closes it (accessibility); a click on the page around it doesn't, like every other way out.
+    onClose={(_, reason) => { if (reason !== "backdropClick") onDismiss() }}
+    maxWidth={false}
     aria-labelledby="welcome-title"
     aria-describedby="welcome-description"
-    slotProps={{ paper: { sx: screenSx } }}
+    slotProps={{ paper: { sx: screenSx }, backdrop: { sx: { bgcolor: alpha(brand.navyDeep, .55), backdropFilter: "blur(6px)" } } }}
   >
+    <SplashBackdrop primary="/images/learn/spotlights/retatrutide.webp" secondary="/images/learn/spotlights/tirzepatide.webp" />
     <Box sx={{
+      position: "relative",
+      zIndex: 1,
       display: "flex",
       flexDirection: "column",
-      width: "100%",
-      maxWidth: 1560,
-      minHeight: "100%",
-      m: "auto",
-      p: {
-        xs: "max(20px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left))",
-        sm: "28px 40px",
-        md: "32px 56px",
-        xl: "36px 72px",
-      },
+      minHeight: 0,
+      overflowY: "auto",
+      p: { xs: "16px 18px 14px", sm: "22px 32px 18px", md: "24px 40px 20px" },
     }}>
       <Box component="header" sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2, "& > span": { minWidth: 0 } }}>
         <Logo tone="light" />
@@ -171,36 +172,28 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         gridTemplateColumns: { xs: "minmax(0, 1fr)", md: "minmax(0, 1.1fr) minmax(0, 1fr)" },
         alignContent: "center",
         alignItems: "center",
-        gap: { xs: 3.25, sm: 4, md: 8, xl: 11 },
-        pt: { xs: 2.5, sm: 4, md: 3.5 },
-        pb: { xs: 3.75, sm: 4, md: 3.5 },
+        gap: { xs: 2.5, sm: 3, md: 5 },
+        pt: { xs: 1.5, md: 1 },
+        pb: { xs: 3, md: 3 },
         animation: `${arrival} 500ms ease-out both`,
       }}>
-        <Box component="figure" sx={{ width: "100%", minWidth: 0, m: { xs: 0, sm: "auto", md: 0 }, maxWidth: { sm: 520, md: "none" } }}>
-          <Box sx={{ position: "relative", height: { xs: 175, sm: 235, md: "min(42vh, 430px)" }, filter: `drop-shadow(0 20px 35px ${brand.blackA22})` }}>
-            <Image
-              src="/images/welcome-peptide-building-blocks-blue.webp"
-              alt={ct("Illustration of blue building blocks linked into a chain across an open book, representing amino acids forming a peptide.")}
-              fill
-              preload
-              sizes="(min-width: 900px) 650px, (min-width: 600px) 520px, 350px"
-              style={{ objectFit: "contain" }}
-            />
-          </Box>
-          <Box component="figcaption" sx={{ display: { xs: "none", md: "block" }, maxWidth: 470, m: "24px auto 0" }}>
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 2.5, fontWeight: 600, color: "brand.onNavy", fontSize: 13 }}>
-              <span>{ct("Amino acids")}</span><Icon name="arrowRight" sx={{ width: 36, color: "brand.cyan" }} /><span>{ct("A peptide chain")}</span>
-            </Box>
-            <Typography sx={{ mt: 1.5, textAlign: "center", fontSize: 13, lineHeight: 1.75, color: "brand.onNavyMuted" }}>{ct("Peptides are short chains of amino acids, the building blocks of proteins. We'll help you connect the dots.")}</Typography>
-          </Box>
-        </Box>
+        <NewsletterPreview
+          label={ct("Preview of the VETUD newsletter: recent stories, written in plain language.")}
+          subject={ct("The latest from VETUD")}
+          stories={PREVIEW_ARTICLES.flatMap(slug => {
+            const article = getArticle(slug)
+            const image = getLearnIllustration(slug)
+            return article && image ? [{ kicker: ct(article.kind), title: ct(article.headline.join("")), image: image.src }] : []
+          })}
+          chips={[ct("Plain language"), ct("Every number sourced"), ct("Unsubscribe anytime")]}
+        />
 
         <Box component="section" sx={{ width: "100%", maxWidth: 490, minWidth: 0, mx: "auto" }}>
           <Typography sx={{ mb: { xs: 1.5, md: 2.25 }, color: "brand.cyan", fontSize: { xs: 12, md: 13 }, fontWeight: 600 }}>{ct("The VETUD research newsletter")}</Typography>
           <Typography id="welcome-title" variant="h2" sx={{
             maxWidth: 490,
             mb: 2.25,
-            fontSize: { xs: "clamp(36px, 4.4vw, 64px)", sm: 46, md: "clamp(44px, min(4.4vw, 6.7vh), 64px)" },
+            fontSize: { xs: 34, sm: 42, md: "clamp(40px, 3.6vw, 52px)" },
             lineHeight: 1.08,
             letterSpacing: "-.055em",
           }}>{ct(status === "success" ? "Check your inbox." : "Peptide science. Made simple.")}</Typography>
@@ -266,52 +259,12 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         </Box>
       </Box>
 
-      <Box component="nav" aria-labelledby="welcome-topics-title" sx={{ minWidth: 0, mb: { xs: 2.5, md: 3 } }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 2, mb: 1.25 }}>
-          <Typography id="welcome-topics-title" component="h3" sx={{ fontSize: 13, fontWeight: 600, color: "brand.cyan" }}>{heroText("topics")}</Typography>
-          <Typography sx={{ display: { sm: "none" }, fontSize: 11, color: "brand.onNavyMuted" }}>{ct("Swipe to explore")}</Typography>
-        </Box>
-        <Box component="ul" role="list" sx={{
-          display: "flex",
-          flexWrap: { sm: "wrap" },
-          gap: 1,
-          m: "0 -6px",
-          p: { xs: "6px 6px 12px", sm: "6px" },
-          listStyle: "none",
-          overflowX: { xs: "auto", sm: "visible" },
-          scrollbarWidth: "thin",
-          scrollbarColor: `${brand.navySoft} ${brand.navyDeep}`,
-        }}>
-          {CATEGORIES.map(topic => <Box component="li" key={topic.id} sx={{ flexShrink: 0 }}>
-            <HoldButton onConfirm={() => go(`/learn#${topic.id}`)} hint="short" fill={alpha(brand.cyan, .3)} startIcon={<Icon name={topic.icon} sx={{ width: 17, height: 17, color: "brand.cyan" }} />} counterSx={{ ml: 1, fontSize: 10, px: .6 }} sx={{
-              gap: 0,
-              minHeight: 44,
-              p: "8px 10px 8px 14px",
-              border: "1px solid",
-              borderColor: "brand.navySoft",
-              borderRadius: 999,
-              color: "brand.onNavy",
-              bgcolor: alpha(brand.onNavy, .04),
-              whiteSpace: "nowrap",
-              fontSize: { xs: 12, md: 13 },
-              fontWeight: 500,
-              textTransform: "none",
-              transition: "border-color 150ms ease, background-color 150ms ease",
-              "& .MuiButton-startIcon": { ml: 0, mr: 1 },
-              "&:hover": { borderColor: "brand.cyan", bgcolor: alpha(brand.cyan, .12) },
-            }}>
-              {translateAction(actions, topic.name)}
-            </HoldButton>
-          </Box>)}
-        </Box>
-      </Box>
-
       <Box component="footer" sx={{
         display: "grid",
         gridTemplateColumns: { md: "minmax(0, 1fr) auto" },
         alignItems: { md: "center" },
-        gap: { xs: 1.5, md: 4 },
-        pt: 2.5,
+        gap: { xs: 1, md: 4 },
+        pt: 2,
         borderTop: "1px solid",
         borderColor: "brand.navySoft",
         color: "brand.onNavyMuted",
