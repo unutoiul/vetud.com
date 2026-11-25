@@ -19,7 +19,6 @@ import * as cartQueryConfig from "@medusajs/medusa/api/store/carts/query-config"
 import { StoreGetCartsCart } from "@medusajs/medusa/api/store/carts/validators"
 import { StoreSetCartDeliveryAddressSchema } from "./store/carts/[id]/delivery-address/validators"
 import { paygateGuardRoutes, preparePaygateSession } from "./paygate-guards"
-import { paypalGuardRoutes, preparePayPalSession } from "./paypal-guards"
 import { cartBillingRoutes } from "./cart-billing"
 import { checkoutEmailGuardRoutes } from "./checkout-email-guard"
 import { StoreSetCheckoutEmailSchema } from "./store/carts/[id]/contact/validators"
@@ -34,7 +33,6 @@ export default defineMiddlewares({
     ...cartOwnerGuardRoutes,
     ...checkoutEmailGuardRoutes,
     ...paygateGuardRoutes,
-    ...paypalGuardRoutes,
     ...cartBillingRoutes,
     {
       method: ["POST"],
@@ -43,7 +41,6 @@ export default defineMiddlewares({
         authenticate("customer", ["session", "bearer"], { allowUnauthenticated: true }),
         prepareNmiSession,
         preparePaygateSession,
-        preparePayPalSession,
       ],
     },
     {

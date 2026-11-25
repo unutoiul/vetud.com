@@ -4,7 +4,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY package.json package-lock.json ./
-COPY patches ./patches
 RUN npm ci --include=dev --no-audit --no-fund
 
 COPY . .

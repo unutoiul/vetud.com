@@ -1,7 +1,7 @@
 "use client"
 
 import Box from "@mui/material/Box"
-import { alpha, keyframes } from "@mui/material/styles"
+import { alpha, keyframes, type SxProps, type Theme } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
 import Image from "next/image"
 import type { ReactNode } from "react"
@@ -39,15 +39,16 @@ const CHIP_PLACES = [
  * the newsletter email, with a few stories from it and what subscribers get. It's an illustration,
  * so assistive technology reads only its label.
  */
-export default function NewsletterPreview({ art, label, subject, stories, chips }: {
+export default function NewsletterPreview({ art, label, subject, stories, chips, sx }: {
   /** A glass-ribbon artwork right behind the card; leave it out when the page behind is busy already. */
   art?: string
   label: string
   subject: string
   stories: PreviewStory[]
   chips: ReactNode[]
+  sx?: SxProps<Theme>
 }) {
-  return <Box component="figure" role="img" aria-label={label} sx={{
+  return <Box component="figure" role="img" aria-label={label} sx={[{
     position: "relative",
     display: "grid",
     placeItems: "center",
@@ -55,7 +56,7 @@ export default function NewsletterPreview({ art, label, subject, stories, chips 
     minWidth: 0,
     height: { xs: 236, sm: 300, md: 430 },
     m: 0,
-  }}>
+  }, ...(Array.isArray(sx) ? sx : [sx])]}>
     {/* The glass ribbons, faded out before the artwork's own dark background ends. The box has the
         artwork's 3:2 shape, so the fade reaches every edge. */}
     {art && <Box aria-hidden sx={{
