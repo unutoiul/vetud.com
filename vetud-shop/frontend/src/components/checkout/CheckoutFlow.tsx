@@ -113,6 +113,14 @@ function rememberedPayment() {
     return ""
   }
 }
+/**
+ * The payment method the shop picked when it made this cart as an order link (Admin > Order links).
+ * It's only where the checkout starts: the customer can still choose another method.
+ */
+function orderLinkPayment(cart: HttpTypes.StoreCart) {
+  const id = cart.metadata?.order_link_payment
+  return typeof id === "string" ? id : ""
+}
 function rememberPayment(providerId: string) {
   try {
     window.localStorage.setItem(PAYMENT_MEMORY, providerId)
@@ -260,7 +268,8 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const [loadedPayPal, setLoadedPayPal] = useState<{ key: string; config: PayPalConfig | null } | null>(null)
   const payPalAttempt = useRef<{ id: string; fingerprint: string; assertCurrent: () => void } | null>(null)
   const sessions = cart.payment_collection?.payment_sessions ?? []
-  const [wantedProvider, setWantedProvider] = useState(() => sessions[0]?.provider_id || rememberedPayment())
+  // The customer's own pick first, then the one the shop chose for an order link, then this browser's last.
+  const [wantedProvider, setWantedProvider] = useState(() => sessions[0]?.provider_id || orderLinkPayment(cart) || rememberedPayment())
   const attempted = useRef({ delivery: "", payment: "" })
 
   // A member's cart is linked to their account first; a guest's cart is just refreshed.

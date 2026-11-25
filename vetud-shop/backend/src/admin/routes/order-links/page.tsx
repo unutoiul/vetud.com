@@ -22,6 +22,7 @@ type OrderLink = {
   whatsapp: string | null
   email: string | null
   note: string | null
+  payment_provider: string | null
   step: Step
   ship_to: string | null
   currency_code: string | null
@@ -31,15 +32,37 @@ type OrderLink = {
 }
 
 type ProductOption = { variant_id: string; title: string; sku: string | null }
-type CountryOption = { code: string; name: string; currency_code: string | null }
+type CountryOption = { code: string; name: string; currency_code: string | null; payment_providers: string[] }
 type Data = { links: OrderLink[]; truncated: boolean; products: ProductOption[]; countries: CountryOption[] }
 type Line = { variant_id: string; title: string; quantity: number }
 type Address = { first_name: string; last_name: string; company: string; address_1: string; address_2: string; city: string; province: string; postal_code: string; country_code: string }
-type Form = { country: string; promo: string; whatsapp: string; email: string; note: string; address: Address }
+/** `payment` is a provider id, or "" when the customer chooses. */
+type Form = { country: string; promo: string; whatsapp: string; email: string; note: string; payment: string; address: Address }
 
 const EMPTY_ADDRESS: Address = { first_name: "", last_name: "", company: "", address_1: "", address_2: "", city: "", province: "", postal_code: "", country_code: "" }
-const EMPTY_FORM: Form = { country: "", promo: "", whatsapp: "", email: "", note: "", address: EMPTY_ADDRESS }
+const EMPTY_FORM: Form = { country: "", promo: "", whatsapp: "", email: "", note: "", payment: "", address: EMPTY_ADDRESS }
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/**
+ * The payment methods the shop's checkout can take, by provider id, in the order they're offered
+ * here. Methods turned on in a region but not listed here can't be pre-selected.
+ */
+const PAYMENT_METHODS: Record<string, string> = {
+  pp_system_default: "Bank transfer / invoice",
+  pp_nmi_primary: "Card or bank account",
+  pp_paygate_card: "Card (PayGate)",
+  pp_paypal_paypal: "PayPal",
+  pp_makepay_makepay: "Cryptocurrency (MakePay)",
+  pp_paygate_crypto: "Cryptocurrency (PayGate)",
+}
+// The select can't hold an empty value, so "the customer chooses" has its own.
+const CUSTOMER_CHOOSES = "customer"
+
+/** The methods that can be pre-selected for a country: turned on there and known to the checkout. */
+function paymentOptions(countries: CountryOption[] | undefined, code: string) {
+  const enabled = countries?.find((country) => country.code === code)?.payment_providers ?? []
+  return Object.keys(PAYMENT_METHODS).filter((id) => enabled.includes(id))
+}
 
 const STEPS: Record<Step, { label: string; color: "grey" | "blue" | "purple" | "orange" | "green" }> = {
   cart: { label: "Waiting for details", color: "grey" },
@@ -152,7 +175,12 @@ const OrderLinksPage = () => {
       .slice(0, 8)
   }, [search, data, lines])
 
+  const payments = paymentOptions(data?.countries, form.country)
+
   const update = (patch: Partial<Form>) => setForm((current) => ({ ...current, ...patch }))
+  // Another country can have other payment methods; drop a choice that isn't offered there.
+  const chooseCountry = (country: string) =>
+    setForm((current) => ({ ...current, country, payment: paymentOptions(data?.countries, country).includes(current.payment) ? current.payment : "" }))
   const updateAddress = (patch: Partial<Address>) => setForm((current) => ({ ...current, address: { ...current.address, ...patch } }))
   const addLine = (product: ProductOption) => {
     setLines((current) => [...current, { variant_id: product.variant_id, title: product.title, quantity: 1 }])
@@ -197,6 +225,7 @@ const OrderLinksPage = () => {
         ...(email ? { email } : {}),
         ...(shippingAddress ? { shipping_address: shippingAddress } : {}),
         ...(form.note.trim() ? { note: form.note.trim() } : {}),
+        ...(form.payment ? { payment_provider: form.payment } : {}),
       })
       const { link } = await adminFetch<{ link: OrderLink }>("/admin/order-links", { method: "POST", body })
       setCreated(link)
@@ -226,7 +255,7 @@ const OrderLinksPage = () => {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="flex flex-col gap-y-2">
               <Label size="small" weight="plus">Customer&apos;s country</Label>
-              <Select value={form.country} onValueChange={(country) => update({ country })}>
+              <Select value={form.country} onValueChange={chooseCountry}>
                 <Select.Trigger><Select.Value placeholder="Choose a country" /></Select.Trigger>
                 <Select.Content>
                   {(data?.countries ?? []).map((country) => (
@@ -241,6 +270,27 @@ const OrderLinksPage = () => {
             <div className="flex flex-col gap-y-2">
               <Label htmlFor="link-promo" size="small" weight="plus">Discount code (optional)</Label>
               <Input id="link-promo" value={form.promo} maxLength={60} onChange={(event) => update({ promo: event.target.value })} />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <Label size="small" weight="plus">Payment method</Label>
+              <Select
+                value={form.payment || CUSTOMER_CHOOSES}
+                onValueChange={(value) => update({ payment: value === CUSTOMER_CHOOSES ? "" : value })}
+                disabled={!form.country}
+              >
+                <Select.Trigger><Select.Value /></Select.Trigger>
+                <Select.Content>
+                  <Select.Item value={CUSTOMER_CHOOSES}>The customer chooses</Select.Item>
+                  {payments.map((id) => (
+                    <Select.Item key={id} value={id}>{PAYMENT_METHODS[id]}</Select.Item>
+                  ))}
+                </Select.Content>
+              </Select>
+              <Text size="xsmall" className="text-ui-fg-muted">
+                {form.country
+                  ? "Already chosen when the customer opens the checkout. They can still switch, for example if their card is declined."
+                  : "Choose the country first: it decides which methods are available."}
+              </Text>
             </div>
           </div>
 
@@ -347,6 +397,7 @@ const OrderLinksPage = () => {
             <Input readOnly value={created.url} onFocus={(event) => event.target.select()} aria-label="Order link" />
             <Text size="small" className="text-ui-fg-subtle">
               {created.items.map((item) => `${item.quantity} × ${item.title}`).join(", ")}: {money(created.total, created.currency_code)} before delivery.
+              {created.payment_provider ? ` Payment: ${PAYMENT_METHODS[created.payment_provider] ?? created.payment_provider} (already chosen).` : ""}
             </Text>
             <SendButtons link={created} />
           </div>
@@ -398,6 +449,9 @@ const OrderLinksPage = () => {
                         <a href={`/app/orders/${link.order.id}`} className="text-ui-fg-interactive txt-compact-small">Order #{link.order.display_id ?? link.order.id}</a>
                       ) : null}
                       {link.ship_to ? <Text size="xsmall" className="text-ui-fg-muted">{link.ship_to}</Text> : null}
+                      {link.payment_provider ? (
+                        <Text size="xsmall" className="text-ui-fg-muted">Pay by: {PAYMENT_METHODS[link.payment_provider] ?? link.payment_provider}</Text>
+                      ) : null}
                     </div>
                   </Table.Cell>
                   <Table.Cell>

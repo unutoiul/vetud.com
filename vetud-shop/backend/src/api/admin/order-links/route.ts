@@ -48,6 +48,7 @@ function toLink(cart: LinkCart) {
     whatsapp: text(meta.order_link_whatsapp),
     email: text(meta.order_link_email) ?? cart.email ?? null,
     note: text(meta.order_link_note),
+    payment_provider: text(meta.order_link_payment),
     step: furthestCheckoutStep(cart),
     ship_to: address?.address_1
       ? [[address.first_name, address.last_name].filter(Boolean).join(" "), address.city, address.country_code?.toUpperCase()].filter(Boolean).join(", ")
@@ -80,7 +81,10 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
       fields: ["id", "title", "variants.id", "variants.title", "variants.sku"],
       filters: { status: "published" },
     }),
-    query.graph({ entity: "region", fields: ["id", "name", "currency_code", "countries.iso_2", "countries.display_name"] }),
+    query.graph({
+      entity: "region",
+      fields: ["id", "name", "currency_code", "countries.iso_2", "countries.display_name", "payment_providers.id", "payment_providers.is_enabled"],
+    }),
   ])
 
   const productOptions = (products.data as { id: string; title: string; variants?: { id: string; title?: string | null; sku?: string | null }[] | null }[])
@@ -93,12 +97,21 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     )
     .sort((a, b) => a.title.localeCompare(b.title))
 
-  const countries = (regions.data as { currency_code?: string | null; countries?: { iso_2?: string | null; display_name?: string | null }[] | null }[])
-    .flatMap((region) =>
-      (region.countries ?? []).flatMap((country) =>
-        country.iso_2 ? [{ code: country.iso_2, name: country.display_name ?? country.iso_2.toUpperCase(), currency_code: region.currency_code ?? null }] : []
+  type RegionRow = {
+    currency_code?: string | null
+    countries?: { iso_2?: string | null; display_name?: string | null }[] | null
+    payment_providers?: ({ id?: string | null; is_enabled?: boolean | null } | null)[] | null
+  }
+  const countries = (regions.data as RegionRow[])
+    .flatMap((region) => {
+      // The payment methods turned on where this country is sold, for the form's "Payment method".
+      const paymentProviders = (region.payment_providers ?? []).flatMap((provider) => (provider?.id && provider.is_enabled !== false ? [provider.id] : []))
+      return (region.countries ?? []).flatMap((country) =>
+        country.iso_2
+          ? [{ code: country.iso_2, name: country.display_name ?? country.iso_2.toUpperCase(), currency_code: region.currency_code ?? null, payment_providers: paymentProviders }]
+          : []
       )
-    )
+    })
     .sort((a, b) => a.name.localeCompare(b.name))
 
   res.setHeader("Cache-Control", "private, no-store")

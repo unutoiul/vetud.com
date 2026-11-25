@@ -38,6 +38,11 @@ export const AdminCreateOrderLink = z.object({
   whatsapp: optionalText(40),
   email: z.email("Enter a valid email address.").max(254).optional(),
   shipping_address: ShippingAddress.optional(),
+  /**
+   * The payment method already chosen when the customer opens the checkout. They can still pick
+   * another one, e.g. after a declined card (owner, 2026-11-25).
+   */
+  payment_provider: z.string().trim().regex(/^pp_[A-Za-z0-9_-]{1,100}$/, "Choose a payment method from the list.").optional(),
   note: optionalText(500),
 })
 
