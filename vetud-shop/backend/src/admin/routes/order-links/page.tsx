@@ -34,9 +34,12 @@ type ProductOption = { variant_id: string; title: string; sku: string | null }
 type CountryOption = { code: string; name: string; currency_code: string | null }
 type Data = { links: OrderLink[]; truncated: boolean; products: ProductOption[]; countries: CountryOption[] }
 type Line = { variant_id: string; title: string; quantity: number }
-type Form = { country: string; promo: string; name: string; whatsapp: string; email: string; note: string }
+type Address = { first_name: string; last_name: string; company: string; address_1: string; address_2: string; city: string; province: string; postal_code: string; country_code: string }
+type Form = { country: string; promo: string; whatsapp: string; email: string; note: string; address: Address }
 
-const EMPTY_FORM: Form = { country: "", promo: "", name: "", whatsapp: "", email: "", note: "" }
+const EMPTY_ADDRESS: Address = { first_name: "", last_name: "", company: "", address_1: "", address_2: "", city: "", province: "", postal_code: "", country_code: "" }
+const EMPTY_FORM: Form = { country: "", promo: "", whatsapp: "", email: "", note: "", address: EMPTY_ADDRESS }
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const STEPS: Record<Step, { label: string; color: "grey" | "blue" | "purple" | "orange" | "green" }> = {
   cart: { label: "Waiting for details", color: "grey" },
@@ -68,7 +71,10 @@ const showDate = (iso: string) => new Date(iso).toLocaleString(undefined, { date
 /** The text sent with the link, on WhatsApp, by SMS or by email. */
 function message(link: OrderLink) {
   const hello = link.customer_name ? `Hi ${link.customer_name.split(" ")[0]},` : "Hi,"
-  return `${hello} here is your VETUD order: ${link.url}\n\nOpen it, add your delivery details and choose how to pay. You'll get a confirmation email with the payment details.`
+  const next = link.ship_to
+    ? "Open it, check your details and choose how to pay."
+    : "Open it, add your delivery details and choose how to pay."
+  return `${hello} here is your VETUD order: ${link.url}\n\n${next} You'll get a confirmation email with the payment details.`
 }
 
 /** wa.me wants the number with country code and digits only; without one, WhatsApp lets you pick the chat. */
@@ -147,6 +153,7 @@ const OrderLinksPage = () => {
   }, [search, data, lines])
 
   const update = (patch: Partial<Form>) => setForm((current) => ({ ...current, ...patch }))
+  const updateAddress = (patch: Partial<Address>) => setForm((current) => ({ ...current, address: { ...current.address, ...patch } }))
   const addLine = (product: ProductOption) => {
     setLines((current) => [...current, { variant_id: product.variant_id, title: product.title, quantity: 1 }])
     setSearch("")
@@ -161,15 +168,34 @@ const OrderLinksPage = () => {
     event.preventDefault()
     if (!form.country) return toast.error("Choose the customer's country")
     if (!lines.length) return toast.error("Add at least one product")
+    const email = form.email.trim()
+    if (email && !EMAIL.test(email)) return toast.error("Check the email address")
+    const address = Object.fromEntries(Object.entries(form.address).map(([key, value]) => [key, value.trim()])) as Address
+    const hasAddress = Object.entries(address).some(([key, value]) => key !== "country_code" && Boolean(value))
+    if (hasAddress) {
+      const missing = [
+        !address.first_name && "first name",
+        !address.last_name && "last name",
+        !address.address_1 && "street address",
+        !address.city && "city",
+        !address.postal_code && "postal code",
+        !form.whatsapp.trim() && "phone (the courier needs it)",
+      ].filter(Boolean)
+      if (missing.length) return toast.error("Complete the delivery address", { description: `Missing: ${missing.join(", ")}.` })
+    }
     setSaving(true)
     try {
+      const shippingAddress = hasAddress
+        ? Object.fromEntries(Object.entries({ ...address, country_code: address.country_code || form.country, phone: form.whatsapp.trim() }).filter(([, value]) => value))
+        : null
       const body = JSON.stringify({
         country_code: form.country,
         items: lines.map(({ variant_id, quantity }) => ({ variant_id, quantity })),
         ...(form.promo.trim() ? { promo_code: form.promo.trim() } : {}),
-        ...(form.name.trim() ? { customer_name: form.name.trim() } : {}),
+        ...(hasAddress ? { customer_name: `${address.first_name} ${address.last_name}` } : {}),
         ...(form.whatsapp.trim() ? { whatsapp: form.whatsapp.trim() } : {}),
-        ...(form.email.trim() ? { email: form.email.trim() } : {}),
+        ...(email ? { email } : {}),
+        ...(shippingAddress ? { shipping_address: shippingAddress } : {}),
         ...(form.note.trim() ? { note: form.note.trim() } : {}),
       })
       const { link } = await adminFetch<{ link: OrderLink }>("/admin/order-links", { method: "POST", body })
@@ -191,7 +217,7 @@ const OrderLinksPage = () => {
         <div className="px-6 py-4">
           <Heading level="h2">Order links</Heading>
           <Text size="small" className="text-ui-fg-subtle">
-            For customers who order on WhatsApp. Choose the products, make a link and send it. The customer opens it on the shop, adds their email, phone and address, chooses how to pay and places the order. They get the usual confirmation email with the payment details, and you get the order alert with their address. Shop prices apply; add a discount code if you agreed one.
+            For customers who order on WhatsApp. Choose the products, add the customer&apos;s details, make a link and send it. With email and address filled in, the link opens the checkout at payment: the customer checks the details, chooses how to pay and places the order. They get the usual confirmation email with the payment details, and you get the order alert with their address. Shop prices apply; add a discount code if you agreed one.
           </Text>
         </div>
 
@@ -250,18 +276,59 @@ const OrderLinksPage = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="flex flex-col gap-y-1">
+            <Heading level="h3">Customer</Heading>
+            <Text size="xsmall" className="text-ui-fg-muted">
+              Fill in the email and delivery address and the customer goes straight to payment: they only check the details and pay. Leave them empty and the customer fills them in.
+            </Text>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="flex flex-col gap-y-2">
-              <Label htmlFor="link-name" size="small" weight="plus">Customer name (optional)</Label>
-              <Input id="link-name" value={form.name} maxLength={120} onChange={(event) => update({ name: event.target.value })} />
+              <Label htmlFor="link-email" size="small" weight="plus">Email</Label>
+              <Input id="link-email" value={form.email} type="email" maxLength={254} placeholder="For the confirmation and bill" onChange={(event) => update({ email: event.target.value })} />
             </div>
             <div className="flex flex-col gap-y-2">
-              <Label htmlFor="link-whatsapp" size="small" weight="plus">WhatsApp / phone (optional)</Label>
-              <Input id="link-whatsapp" value={form.whatsapp} maxLength={40} placeholder="+49 151 …" onChange={(event) => update({ whatsapp: event.target.value })} />
+              <Label htmlFor="link-whatsapp" size="small" weight="plus">WhatsApp / phone</Label>
+              <Input id="link-whatsapp" value={form.whatsapp} maxLength={40} placeholder="+46 70 …" onChange={(event) => update({ whatsapp: event.target.value })} />
             </div>
             <div className="flex flex-col gap-y-2">
-              <Label htmlFor="link-email" size="small" weight="plus">Email (optional)</Label>
-              <Input id="link-email" type="email" value={form.email} maxLength={254} onChange={(event) => update({ email: event.target.value })} />
+              <Label htmlFor="link-first" size="small" weight="plus">First name</Label>
+              <Input id="link-first" value={form.address.first_name} maxLength={120} onChange={(event) => updateAddress({ first_name: event.target.value })} />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <Label htmlFor="link-last" size="small" weight="plus">Last name</Label>
+              <Input id="link-last" value={form.address.last_name} maxLength={120} onChange={(event) => updateAddress({ last_name: event.target.value })} />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <Label htmlFor="link-address1" size="small" weight="plus">Street address</Label>
+              <Input id="link-address1" value={form.address.address_1} maxLength={240} onChange={(event) => updateAddress({ address_1: event.target.value })} />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <Label htmlFor="link-address2" size="small" weight="plus">Apartment, floor (optional)</Label>
+              <Input id="link-address2" value={form.address.address_2} maxLength={240} onChange={(event) => updateAddress({ address_2: event.target.value })} />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <Label htmlFor="link-postal" size="small" weight="plus">Postal code</Label>
+              <Input id="link-postal" value={form.address.postal_code} maxLength={24} onChange={(event) => updateAddress({ postal_code: event.target.value })} />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <Label htmlFor="link-city" size="small" weight="plus">City</Label>
+              <Input id="link-city" value={form.address.city} maxLength={120} onChange={(event) => updateAddress({ city: event.target.value })} />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <Label htmlFor="link-province" size="small" weight="plus">State / province (if needed)</Label>
+              <Input id="link-province" value={form.address.province} maxLength={80} onChange={(event) => updateAddress({ province: event.target.value })} />
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <Label size="small" weight="plus">Ship to</Label>
+              <Select value={form.address.country_code || form.country} onValueChange={(country_code) => updateAddress({ country_code })}>
+                <Select.Trigger><Select.Value placeholder="Same as the customer's country" /></Select.Trigger>
+                <Select.Content>
+                  {(data?.countries ?? []).map((country) => (
+                    <Select.Item key={country.code} value={country.code}>{country.name}</Select.Item>
+                  ))}
+                </Select.Content>
+              </Select>
             </div>
           </div>
           <div className="flex flex-col gap-y-2">
