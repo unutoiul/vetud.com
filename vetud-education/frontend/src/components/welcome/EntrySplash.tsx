@@ -13,7 +13,7 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
-import HoldButton from "./HoldButton"
+import HoldButton, { HOLD_MS } from "./HoldButton"
 
 export default function EntrySplash({ open, onEnter }: { open: boolean; onEnter: () => void }) {
   const ct = useContentTranslator()
@@ -79,7 +79,7 @@ export default function EntrySplash({ open, onEnter }: { open: boolean; onEnter:
             <HoldButton fullWidth variant="contained" onConfirm={() => { if (confirmed) onEnter() }} fill={alpha(brand.onNavy, .2)} startIcon={<Icon name="arrowRight" />} sx={{ minHeight: 54, borderRadius: "12px" }}>
               {ct("Enter website")}
             </HoldButton>
-            <Typography sx={{ mt: 1.5, color: "text.secondary", fontSize: 12, lineHeight: 1.7, textAlign: "center" }}>{ct("Press and hold for 3 seconds to enter.")}</Typography>
+            <Typography sx={{ mt: 1.5, color: "text.secondary", fontSize: 12, lineHeight: 1.7, textAlign: "center" }}>{ct.template("Press and hold for {v0} seconds to enter.", { v0: HOLD_MS / 1000 })}</Typography>
             <Button type="button" fullWidth onClick={() => setAge(null)} sx={{ mt: 1, minHeight: 44 }}>{ct("Back")}</Button>
           </> : <>
             <Box role="group" aria-labelledby="entry-title">

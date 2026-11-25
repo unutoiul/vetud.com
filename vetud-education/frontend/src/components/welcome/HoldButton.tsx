@@ -6,8 +6,8 @@ import { keyframes, type SxProps, type Theme } from "@mui/material/styles"
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-/** How long a splash button has to be held before it acts. */
-export const HOLD_MS = 3000
+/** How long a splash button has to be held before it acts (owner: 2 seconds, 2026-11-25). */
+export const HOLD_MS = 2000
 const SECONDS = Math.round(HOLD_MS / 1000)
 
 const isHoldKey = (key: string) => key === " " || key === "Enter"
