@@ -24,9 +24,15 @@ const BACKEND_URL = (process.env.MEDUSA_BACKEND_URL || "http://localhost:9000").
 // `openssl rand -base64 32`); then connect the store in Admin > Settings > MakePay and enable
 // `pp_makepay_makepay` on each region (see README).
 const MAKEPAY_ENABLED = Boolean(process.env.MAKEPAY_ENCRYPTION_KEY)
+// MakePay is tied to the backend address it was connected on: its webhook callback is
+// `<address>/hooks/makepay/makepay_makepay`, and a different address blocks crypto checkout until
+// a reconnect (which MakeCrypto refused after the Admin moved to admin.vetudpeptides.com,
+// 2026-11-25). MAKEPAY_BACKEND_URL keeps MakePay on the address it was connected on
+// (production: the railway.app address, which must stay attached to medusa-server).
+const MAKEPAY_BACKEND_URL = (process.env.MAKEPAY_BACKEND_URL || BACKEND_URL).replace(/\/$/, "")
 const makePayOptions = {
   authMode: "oauth" as const,
-  backendUrl: BACKEND_URL,
+  backendUrl: MAKEPAY_BACKEND_URL,
   checkoutBaseUrl: process.env.MAKEPAY_CHECKOUT_ORIGIN || "https://pay.makecrypto.io",
   storefrontReturnUrl: `${(process.env.STOREFRONT_URL || "http://localhost:8000").replace(/\/$/, "")}/order/makepay-return`,
   encryptionKey: process.env.MAKEPAY_ENCRYPTION_KEY,
