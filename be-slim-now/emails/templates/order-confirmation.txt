@@ -27,6 +27,4 @@ WHAT HAPPENS NEXT
 
 QUESTIONS? MESSAGE US
 
-{{{CONTACT_LINKS}}}
-
-We'll reach you by {{{CONTACT_PREF}}}. Just reply to this email if anything needs changing.
+{{{CONTACT_LINKS_TEXT}}}

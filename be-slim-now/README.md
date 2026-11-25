@@ -1,6 +1,6 @@
 # VETUD Tirzepatide & Retatrutide pens: one-page order site
 
-One page that sells two products, Tirzepatide (TZ-2) and Retatrutide pens by VETUD, at 20 mg or 40 mg. There's no cart and no account: **Buy now** opens one short form, the buyer gets a confirmation email with payment details, and the owner gets an order alert. There's no database; those emails are the order record.
+One page that sells two products, Tirzepatide (TZ-2) and Retatrutide pens by VETUD, at 20 mg or 40 mg. There's no cart and no account: **Buy now** opens one short form, the buyer gets a confirmation email with payment details, and the owner gets an order alert. Every order and pop-up signup is also saved in the VETUD shop's database, in the tables `beslimnow_orders` and `beslimnow_subscribers` (every row marked `source = 'beslimnow'`). This site posts them to the shop's backend (`SHOP_API_URL/beslimnow/*` with `BESLIMNOW_API_SECRET`); the tables are defined in `vetud-shop/backend/src/modules/beslimnow`.
 
 On top of that:
 

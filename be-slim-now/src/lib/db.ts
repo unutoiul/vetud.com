@@ -1,41 +1,40 @@
 import "server-only"
 
 /**
- * The BeSlimNow Supabase project (tables `subscribers` and `orders`, see supabase/schema.sql). Only
- * the server writes, with the secret key; row level security has no policies, so the public key can
- * do nothing. Without SUPABASE_URL / SUPABASE_SECRET_KEY (local development) the row is printed to
- * the console instead, like the emails.
+ * Orders and pop-up signups are saved by the VETUD shop's backend, in its tables `beslimnow_orders`
+ * and `beslimnow_subscribers` (vetud-shop/backend/src/modules/beslimnow), every row marked
+ * `source = 'beslimnow'`. This server posts to SHOP_API_URL/beslimnow/* with BESLIMNOW_API_SECRET,
+ * the same value as on the shop's medusa-server. Without both (local development) the row is printed
+ * to the console instead, like the emails.
  */
 
 type Json = Record<string, unknown>
 
 function connection() {
-  const url = process.env.SUPABASE_URL?.trim().replace(/\/$/, "")
-  const key = process.env.SUPABASE_SECRET_KEY?.trim()
-  return url && key ? { url, key } : null
+  const url = process.env.SHOP_API_URL?.trim().replace(/\/$/, "")
+  const secret = process.env.BESLIMNOW_API_SECRET?.trim()
+  return url && secret ? { url, secret } : null
 }
 
-async function post(path: string, body: Json) {
-  const db = connection()
-  if (!db) {
-    console.info(`[db:dev] ${path}\n${JSON.stringify(body, null, 2)}`)
+async function post(path: "orders" | "subscribers", body: Json) {
+  const shop = connection()
+  if (!shop) {
+    console.info(`[db:dev] beslimnow_${path}\n${JSON.stringify(body, null, 2)}`)
     return
   }
-  // New secret keys (sb_secret_…) go in the apikey header only; a legacy service_role key is a JWT
-  // and also goes in Authorization.
-  const auth: Record<string, string> = db.key.startsWith("sb_") ? {} : { authorization: `Bearer ${db.key}` }
-  const res = await fetch(`${db.url}/rest/v1/${path}`, {
+  const res = await fetch(`${shop.url}/beslimnow/${path}`, {
     method: "POST",
-    headers: { apikey: db.key, ...auth, "content-type": "application/json", prefer: "return=minimal" },
+    headers: { "content-type": "application/json", "x-beslimnow-secret": shop.secret },
     body: JSON.stringify(body),
     cache: "no-store",
+    signal: AbortSignal.timeout(10_000),
   })
-  if (!res.ok) throw new Error(`Supabase ${path} ${res.status}: ${(await res.text()).slice(0, 300)}`)
+  if (!res.ok) throw new Error(`Shop /beslimnow/${path} ${res.status}: ${(await res.text()).slice(0, 300)}`)
 }
 
 /** One row per address; asking again only updates last_seen_at and times_subscribed. */
 export function saveSubscriberRow(email: string, country: string | null) {
-  return post("rpc/upsert_subscriber", { p_email: email, p_country: country ?? "", p_source: "promo-popup" })
+  return post("subscribers", { email, country: country || null, signup_form: "promo-popup" })
 }
 
 export type OrderRow = {

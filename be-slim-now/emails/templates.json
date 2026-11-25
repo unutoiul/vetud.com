@@ -15,10 +15,10 @@
       "ORDER_TOTAL",
       "SAVINGS",
       "SHIP_TO",
-      "CONTACT_PREF",
       "PAYMENT_INSTRUCTIONS",
       "PAYMENT_DETAILS",
-      "CONTACT_LINKS"
+      "CONTACT_LINKS",
+      "CONTACT_LINKS_TEXT"
     ]
   },
   "order-admin": {

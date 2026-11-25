@@ -23,6 +23,9 @@ import { cartBillingRoutes } from "./cart-billing"
 import { checkoutEmailGuardRoutes } from "./checkout-email-guard"
 import { StoreSetCheckoutEmailSchema } from "./store/carts/[id]/contact/validators"
 import { StoreSignInCodeSchema } from "./store/sign-in-code/validators"
+import { requireBeslimnowSecret } from "./beslimnow/guard"
+import { BeslimnowOrderSchema } from "./beslimnow/orders/validators"
+import { BeslimnowSubscriberSchema } from "./beslimnow/subscribers/validators"
 
 export default defineMiddlewares({
   routes: [
@@ -121,6 +124,17 @@ export default defineMiddlewares({
       method: ["POST"],
       matcher: "/store/newsletter/unsubscribe",
       middlewares: [validateAndTransformBody(StoreNewsletterUnsubscribeSchema)],
+    },
+    {
+      // The BeSlimNow pen page (be-slim-now/, on Vercel) saves its orders and pop-up signups here.
+      method: ["POST"],
+      matcher: "/beslimnow/orders",
+      middlewares: [requireBeslimnowSecret, validateAndTransformBody(BeslimnowOrderSchema)],
+    },
+    {
+      method: ["POST"],
+      matcher: "/beslimnow/subscribers",
+      middlewares: [requireBeslimnowSecret, validateAndTransformBody(BeslimnowSubscriberSchema)],
     },
     {
       method: ["POST"],

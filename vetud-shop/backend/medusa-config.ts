@@ -49,6 +49,9 @@ const modules: ModuleConfig[] = [
     },
   },
   { resolve: "./src/modules/localized-content" },
+  // Orders and pop-up signups from the BeSlimNow pen page (be-slim-now/), in the tables
+  // beslimnow_orders and beslimnow_subscribers. That site posts them to /beslimnow/* (owner, 2026-11-25).
+  { resolve: "./src/modules/beslimnow" },
   // Product images and other uploads. Files are written to `<server dir>/static` and served at
   // /static; on Railway that folder is a persistent volume (see README).
   {

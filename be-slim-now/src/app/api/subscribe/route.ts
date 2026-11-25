@@ -8,7 +8,7 @@ import { promoCode } from "@/lib/promo"
 import { limited } from "@/lib/rate-limit"
 
 /**
- * The "extra 10%" pop-up: saves the subscriber in Supabase (table `subscribers`) and as a Resend
+ * The "extra 10%" pop-up: saves the subscriber in the shop database (table `beslimnow_subscribers`) and as a Resend
  * contact, emails them the code, tells the owner, and returns the code so it can be shown (and
  * applied) straight away.
  */

@@ -10,7 +10,7 @@ import { isPromoCode } from "@/lib/promo"
 import { limited } from "@/lib/rate-limit"
 
 /**
- * One way to order: the form posts here, the order is saved in Supabase (table `orders`), the buyer
+ * One way to order: the form posts here, the order is saved in the shop database (table `beslimnow_orders`), the buyer
  * gets a confirmation with payment details and the owner gets an alert.
  */
 

@@ -61,10 +61,11 @@ const resend = async (method, url, body) => {
 
 for (const email of emails) {
   const meta = manifest[email.name]
-  const content = { subject: email.subject, html: email.html, text: email.text }
+  // The declared variables go with every update too, so a new or removed variable reaches Resend.
+  const variables = meta.variables.map((variable) => ({ key: variable, type: "string", fallback_value: "" }))
+  const content = { subject: email.subject, html: email.html, text: email.text, variables }
   if (!meta.id) {
-    const variables = meta.variables.map((variable) => ({ key: variable, type: "string", fallback_value: "" }))
-    const created = await resend("POST", "/templates", { name: meta.name, alias: meta.alias, ...content, variables })
+    const created = await resend("POST", "/templates", { name: meta.name, alias: meta.alias, ...content })
     meta.id = created.id
     writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2) + "\n")
   } else {

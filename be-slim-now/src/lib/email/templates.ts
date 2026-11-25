@@ -54,16 +54,27 @@ export function confirmationVariables(order: OrderInput, orderNumber: string, wi
     .map((line) => line?.trim())
     .filter(Boolean)
     .join("\n")
-  return escapeAll({
-    ...shared(order, orderNumber, withCode),
-    PAYMENT_INSTRUCTIONS:
-      process.env.PAYMENT_INSTRUCTIONS?.trim() ||
-      "Pay using the details below and put your order number in the payment reference. We ship as soon as the payment arrives.",
-    PAYMENT_DETAILS: payment || "We'll send your payment details within a few hours, by email and on the app you chose.",
-    CONTACT_LINKS: contactLinks()
-      .map((link) => `${link.label}: ${link.key === "email" ? link.value : link.href}`)
-      .join("\n"),
-  })
+  // The buyer's own contact choice (CONTACT_PREF) stays out of their email: it only goes to the owner.
+  const variables: Partial<ReturnType<typeof shared>> = shared(order, orderNumber, withCode)
+  delete variables.CONTACT_PREF
+  const links = contactLinks()
+  return {
+    ...escapeAll({
+      ...variables,
+      PAYMENT_INSTRUCTIONS:
+        process.env.PAYMENT_INSTRUCTIONS?.trim() ||
+        "Pay using the details below and put your order number in the payment reference. We ship as soon as the payment arrives.",
+      PAYMENT_DETAILS: payment || "We'll send your payment details within a few hours, by email and on the app you chose.",
+      CONTACT_LINKS_TEXT: links.map((link) => `${link.label}: ${link.key === "email" ? link.value : link.href}`).join("\n"),
+    }),
+    // Clickable links for the HTML part, built here from our own contact settings (escaped piece by piece).
+    CONTACT_LINKS: links
+      .map((link) => {
+        const text = escape(link.key === "email" ? link.value : link.href)
+        return `${escape(link.label)}: <a href="${escape(link.href)}" style="color:#3268aa;text-decoration:underline">${text}</a>`
+      })
+      .join("<br>"),
+  }
 }
 
 export function adminVariables(order: OrderInput, orderNumber: string, placedAt: Date, withCode: boolean) {
