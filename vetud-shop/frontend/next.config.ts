@@ -46,9 +46,10 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:countryCode/checkout", headers: [{ key: "Content-Security-Policy", value: checkoutCsp }] }]
   },
-  // The Medusa Admin lives on the backend under /app. This makes vetud.com/admin a shortcut to it.
+  // The Medusa Admin lives on the backend under /app, at admin.vetudpeptides.com in production
+  // (MEDUSA_ADMIN_URL, owner 2026-11-25). This makes vetudpeptides.com/admin a shortcut to it.
   async redirects() {
-    const adminUrl = `${(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")}/app`
+    const adminUrl = (process.env.MEDUSA_ADMIN_URL || `${(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")}/app`).replace(/\/$/, "")
     return [
       ...educationRedirects,
       { source: "/:countryCode/legal/shipping-returns", destination: "/:countryCode/legal/shipping", permanent: true },
