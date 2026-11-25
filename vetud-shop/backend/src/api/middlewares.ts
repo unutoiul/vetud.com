@@ -11,6 +11,7 @@ import { CustomerOrderQuery, CustomerOrdersQuery } from "./store/account/orders/
 import { StoreGuestOrderAccountSchema } from "./store/guest-orders/[id]/account/validators"
 import { AdminCreateStorewideSale, AdminUpdateStorewideSale } from "./admin/storewide-sales/validators"
 import { AdminSetFreeShipping } from "./admin/free-shipping/validators"
+import { AdminCreateOrderLink } from "./admin/order-links/validators"
 import { prepareNmiSession } from "./nmi-session"
 import { nmiGuardRoutes } from "./nmi-guards"
 import { cartOwnerGuardRoutes, requireCartOwner } from "./cart-owner-guards"
@@ -135,6 +136,12 @@ export default defineMiddlewares({
       method: ["POST"],
       matcher: "/beslimnow/subscribers",
       middlewares: [requireBeslimnowSecret, validateAndTransformBody(BeslimnowSubscriberSchema)],
+    },
+    {
+      // Admin > Order links: a ready-made cart for a customer who ordered on WhatsApp.
+      method: ["POST"],
+      matcher: "/admin/order-links",
+      middlewares: [validateAndTransformBody(AdminCreateOrderLink)],
     },
     {
       method: ["POST"],
