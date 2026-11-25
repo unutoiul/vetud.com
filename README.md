@@ -296,7 +296,7 @@ Checkout then offers "Pay with cryptocurrency": the order is created, the shoppe
 
 ### Card and ACH checkout (NMI)
 
-The backend pins the community [`medusa-payment-nmi` provider](https://medusajs.com/integrations/medusa-payment-nmi) at **0.4.2**. A local wrapper adds currency validation, authenticated payment state, server-derived billing, and capture safeguards. This does **not** create or approve a merchant account. MakePay and manual payments remain separate options; PayPal is unchanged.
+The backend pins the community [`medusa-payment-nmi` provider](https://medusajs.com/integrations/medusa-payment-nmi) at **0.4.2**. A local wrapper adds currency validation, authenticated payment state, server-derived billing, and capture safeguards. This does **not** create or approve a merchant account. MakePay and manual payments remain separate options.
 
 The storefront uses the plugin's Classic API-compatible **Collect.js hosted fields** for cards and optional US ACH. It does not install the unverified React SDK. [NMI now recommends its newer Payment Component/REST API for new integrations](https://docs.nmi.com/docs/collectjs); confirm continued Classic API support with your processor. **Apple Pay/Google Pay are not exposed by this storefront yet**: leave `NMI_WALLETS_ENABLED=false` until a compatible wallet UI, domain registration and sandbox/device testing are completed. Changing that flag alone does not implement wallets.
 
@@ -344,17 +344,9 @@ For a qualifying US RUO business, AllayPay, Signature Payments and 2Accept are r
 
 AllayPay's published RUO checklist additionally asks for a 21+ gate, product lab reports, registered buyers, research field/company and explicit acknowledgements; guest checkout is not acceptable for that program. The current storefront's general checkout and pen/spray catalog must be reviewed with the underwriter before applying. Do not fabricate COAs, research credentials or corporate details.
 
-### PayPal
+### PayPal (removed)
 
-A pinned [Medusa-listed PayPal module](https://medusajs.com/integrations/@easypaymentmedusa-payment-paypal), `@easypayment/medusa-payment-paypal@1.3.3`, provides Admin onboarding, encrypted credentials, verified webhooks and capture/refund handling. The storefront uses official PayPal buttons and its authenticated Medusa SDK. Only the wallet provider (`pp_paypal_paypal`) is registered.
-
-1. Set the same random `PAYPAL_ENCRYPTION_KEY` on **both** Railway services, with `PAYPAL_ENCRYPTION_STRICT=true`. Keep the key in protected environment variables. `MEDUSA_BACKEND_URL` and `STOREFRONT_URL` must be their public HTTPS URLs.
-2. Deploy server and worker; run `medusa db:migrate` to create the plugin's tables. The Docker build and runtime preserve the versioned `patch-package` patch. It removes two invalid webhook subscriptions rejected by PayPal (`CHECKOUT.ORDER.CANCELLED` and `PAYMENT.AUTHORIZATION.DENIED`). `PAYPAL_MULTI_CURRENCY=true` (default in config) removes the module's fixed EUR override so GBP/EUR/USD carts retain their own currency; no conversion is performed.
-3. Open **Medusa Admin → Settings → PayPal**, select **Live**, then **Connect to PayPal** and approve your business account. The module saves merchant credentials and registers `/hooks/paypal/webhook`. Manual REST app credentials can also be entered there. Existing `PAYPAL_CLIENT_ID`/`PAYPAL_CLIENT_SECRET` environment values and ChatGPT connector access are not merchant onboarding for this module. The initialization migration defaults Advanced Card Payments off; card payments use the store's existing providers.
-4. Run `npx medusa exec ./src/scripts/enable-paypal.ts` for a connection check and dry run. With verified live credentials and a registered webhook, set `PAYPAL_SETUP_APPLY=true` and rerun to enable PayPal for active USD, EUR and GBP regions while retaining other methods. `PAYPAL_REGION_CURRENCIES` can select other supported currencies. The production API and storefront refuse sandbox connections.
-5. On development/staging, connect a sandbox merchant and test with a sandbox buyer, including cancel, declined payment, repeated approval, currency changes and webhook recovery. A production account connection and an approved end-to-end payment are still required before claiming live checkout works.
-
-Flow: create a Medusa session, create a PayPal order from server-calculated totals, approve through PayPal, capture/authorize through the module, then complete the Medusa cart. Customer/cart guards apply to every additional checkout endpoint; shopper-supplied session state is discarded and amount/currency are rechecked before capture. Verified webhooks retry settlement updates and recover paid carts if the browser closes. Capture mode charges at checkout; authorize mode reserves funds for later Admin capture. Refunds from Admin use the module's PayPal refund handling. Reconcile disputes and reviews in PayPal.
+PayPal was removed on 2026-11-25. Migration `vetud-payments-03-retire-paypal` takes it off every region; refunds for past PayPal payments are made in PayPal.
 
 ### Card payments
 

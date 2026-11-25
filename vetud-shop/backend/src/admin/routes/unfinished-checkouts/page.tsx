@@ -45,7 +45,6 @@ const STEP_COLORS: Record<Step, "grey" | "blue" | "purple" | "orange" | "green">
 
 const PAYMENT_NAMES: Record<string, string> = {
   pp_system_default: "Bank transfer",
-  pp_paypal_paypal: "PayPal",
   pp_makepay_makepay: "Crypto (MakePay)",
 }
 

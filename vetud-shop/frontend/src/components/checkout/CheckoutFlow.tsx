@@ -26,14 +26,13 @@ import Skeleton from "@mui/material/Skeleton"
 import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
 import { Suspense, useEffect, useMemo, useRef, useState } from "react"
 import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib/makepay"
 import { PAYGATE_CARD, PAYGATE_CRYPTO, isPaygate, paygateAvailable, readPaygateRedirect, type PaygateConfig } from "@/lib/paygate"
 import { SITE } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
-import { PAYPAL_PROVIDER_ID, payPalAvailable, payPalCartFingerprint, type PayPalConfig } from "@/lib/paypal"
 import { useMoney } from "@/lib/money"
 import { hasShippingPrice } from "@/lib/shipping"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
@@ -44,12 +43,10 @@ import { useAccount } from "../account/AccountProvider"
 import { ButtonLink } from "../common/links"
 import { CART_FIELDS, useStore } from "../store/StoreProvider"
 import AddressFields, { toAddressValues, validateAddress, type AddressValues } from "./AddressFields"
-import PayPalReturn from "./PayPalReturn"
 import CheckoutOrderSummary from "./CheckoutOrderSummary"
 import { brand } from "@/theme/tokens"
 
 const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
-const PayPalPaymentForm = dynamic(() => import("./PayPalPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={48} /> })
 
 /** Display labels are translated without changing payment provider identifiers. */
 const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payBank" | "payCrypto"; description: string; icon?: IconName }> = {
@@ -82,17 +79,11 @@ const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payBank" | "pa
     description:
       "Place your order, then pay on MakePay's secure hosted page. Your order is confirmed as soon as the network confirms your payment.",
   },
-  [PAYPAL_PROVIDER_ID]: {
-    icon: "wallet",
-    title: "PayPal",
-    description:
-      "Approve securely with PayPal. Your order is placed after payment is confirmed.",
-  },
 }
 
 /** Providers whose session is bound to one amount, so choosing them always starts a fresh session. */
 function needsFreshSession(providerId: string) {
-  return isPaygate(providerId) || providerId === MAKEPAY_PROVIDER_ID || providerId === PAYPAL_PROVIDER_ID || providerId === NMI_PROVIDER_ID
+  return isPaygate(providerId) || providerId === MAKEPAY_PROVIDER_ID || providerId === NMI_PROVIDER_ID
 }
 
 /**
@@ -198,14 +189,7 @@ function selectableSx(selected: boolean) {
 }
 
 export default function CheckoutFlow() {
-  return <Suspense fallback={<Skeleton variant="rounded" height={420} />}><CheckoutRoute /></Suspense>
-}
-
-function CheckoutRoute() {
-  const params = useSearchParams()
-  // The module's full-page fallback returns to /checkout?token=… . Use the same
-  // verified capture/completion flow as the dedicated PayPal return page.
-  return params.get("token") ? <PayPalReturn /> : <CheckoutContent />
+  return <Suspense fallback={<Skeleton variant="rounded" height={420} />}><CheckoutContent /></Suspense>
 }
 
 function CheckoutContent() {
@@ -265,8 +249,6 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   // Each list remembers what it was loaded for, so a stale list is never shown or acted on.
   const [loadedOptions, setLoadedOptions] = useState<{ key: string; list: HttpTypes.StoreCartShippingOption[] } | null>(null)
   const [loadedProviders, setLoadedProviders] = useState<{ key: string; list: HttpTypes.StorePaymentProvider[] } | null>(null)
-  const [loadedPayPal, setLoadedPayPal] = useState<{ key: string; config: PayPalConfig | null } | null>(null)
-  const payPalAttempt = useRef<{ id: string; fingerprint: string; assertCurrent: () => void } | null>(null)
   const sessions = cart.payment_collection?.payment_sessions ?? []
   // The customer's own pick first, then the one the shop chose for an order link, then this browser's last.
   const [wantedProvider, setWantedProvider] = useState(() => sessions[0]?.provider_id || orderLinkPayment(cart) || rememberedPayment())
@@ -288,7 +270,6 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const addressKey = [address?.country_code, address?.postal_code, address?.address_1].join("|")
   const optionsKey = [cart.id, cart.region_id, addressKey, cart.item_total].join("|")
   const providersKey = [cart.id, cart.region_id, cart.currency_code].join("|")
-  const payPalConfig = loadedPayPal?.key === providersKey ? loadedPayPal.config : null
   const options = loadedOptions?.key === optionsKey ? loadedOptions.list : null
   const providers = loadedProviders?.key === providersKey ? loadedProviders.list : null
   const onlyProvider = providers?.length === 1 ? providers[0].id : ""
@@ -324,16 +305,13 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     Promise.all([
       sdk.store.payment.listPaymentProviders({ region_id: cart.region_id ?? "" }),
       sdk.client.fetch<NmiConfig>("/store/nmi/config", { method: "GET", cache: "no-store" }).catch(() => null),
-      sdk.client.fetch<PayPalConfig>("/store/paypal/config", { method: "GET", query: { cart_id: cart.id }, cache: "no-store" }).catch(() => null),
       sdk.client.fetch<PaygateConfig>("/store/paygate/config", { method: "GET", cache: "no-store" }).catch(() => null),
     ])
-      .then(([{ payment_providers }, config, paypal, paygate]) => {
+      .then(([{ payment_providers }, config, paygate]) => {
         if (cancelled) return
-        setLoadedPayPal({ key: providersKey, config: paypal })
         setLoadedProviders({ key: providersKey, list: payment_providers.filter((provider) => {
           if (!isCheckoutPaymentProvider(provider.id)) return false
           if (isPaygate(provider.id)) return paygateAvailable(paygate, provider.id)
-          if (provider.id === PAYPAL_PROVIDER_ID) return payPalAvailable(paypal, cart.currency_code)
           return provider.id !== NMI_PROVIDER_ID || nmiAvailable(config, cart.currency_code)
         }) })
       })
@@ -489,28 +467,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     void startPayment(chosenProvider)
   })
 
-  const createPayPalOrder = async () => {
-    let orderId = ""
-    await guard(async (assertCurrent) => {
-      const checkoutCart = await syncCart()
-      assertCurrent()
-      if (payPalCartFingerprint(checkoutCart) !== payPalCartFingerprint(cart)) {
-        setCart(checkoutCart)
-        throw new Error("Your checkout changed. Review your order before paying with PayPal.")
-      }
-      const result = await sdk.client.fetch<{ id: string }>("/store/paypal/create-order", {
-        method: "POST", body: { cart_id: cart.id }, headers: { "Idempotency-Key": crypto.randomUUID() },
-      })
-      assertCurrent()
-      if (!result.id) throw new Error("PayPal could not prepare your payment. Please try again.")
-      orderId = result.id
-      payPalAttempt.current = { id: orderId, fingerprint: payPalCartFingerprint(checkoutCart), assertCurrent }
-    })
-    if (!orderId) throw new Error("Review your checkout before paying with PayPal.")
-    return orderId
-  }
-
-  const placeOrder = (nmiToken?: NmiToken, confirmPayPal?: () => Promise<void>) =>
+  const placeOrder = (nmiToken?: NmiToken) =>
     guard(async (assertCurrent) => {
       // A hosted payment page is opened now, for exactly this total.
       let checkoutCart = preparedOnPay(chosenProvider) ? await preparePayment(chosenProvider, assertCurrent) : await syncCart()
@@ -535,15 +492,6 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
           throw new Error("Your total or delivery details changed. Review the order before paying.")
         }
         checkoutCart = refreshed
-      }
-      if (chosenProvider === PAYPAL_PROVIDER_ID) {
-        if (!confirmPayPal || payPalAttempt.current?.fingerprint !== payPalCartFingerprint(checkoutCart)) {
-          setCart(checkoutCart)
-          throw new Error("Your checkout changed. Review your order and approve the PayPal payment again.")
-        }
-        payPalAttempt.current.assertCurrent()
-        await confirmPayPal()
-        assertCurrent()
       }
       // Validate hosted redirects before reserving the order, then open the payment page.
       const isMakePay = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
@@ -668,15 +616,7 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
                 </RadioGroup>
                 {chosenProvider ? (
                   activeSession || preparedOnPay(chosenProvider) ? (
-                    <PayPanel cart={cart} provider={chosenProvider} busy={busy} onRefresh={() => void startPayment(chosenProvider)} onPlaceOrder={() => void placeOrder()} onNmiToken={async (token) => { await placeOrder(token) }} payPalConfig={payPalConfig} createPayPalOrder={createPayPalOrder} onPayPalApprove={async (orderId) => {
-                      await placeOrder(undefined, async () => {
-                        const attempt = payPalAttempt.current
-                        if (!attempt || attempt.id !== orderId) throw new Error("This PayPal payment does not match your checkout.")
-                        attempt.assertCurrent()
-                        await sdk.client.fetch("/store/paypal/capture-order", { method: "POST", body: { cart_id: cart.id, order_id: orderId } })
-                        attempt.assertCurrent()
-                      })
-                    }} />
+                    <PayPanel cart={cart} provider={chosenProvider} busy={busy} onRefresh={() => void startPayment(chosenProvider)} onPlaceOrder={() => void placeOrder()} onNmiToken={async (token) => { await placeOrder(token) }} />
                   ) : (
                     <Stack direction="row" spacing={1.5} sx={{ mt: 3, alignItems: "center", color: "text.secondary" }}>
                       {busy ? <CircularProgress size={18} color="secondary" /> : null}
@@ -1127,9 +1067,6 @@ function PayPanel({
   onRefresh,
   onPlaceOrder,
   onNmiToken,
-  payPalConfig,
-  createPayPalOrder,
-  onPayPalApprove,
 }: {
   cart: HttpTypes.StoreCart
   provider: string
@@ -1137,9 +1074,6 @@ function PayPanel({
   onRefresh: () => void
   onPlaceOrder: () => void
   onNmiToken: (token: NmiToken) => Promise<void>
-  payPalConfig: PayPalConfig | null
-  createPayPalOrder: () => Promise<string>
-  onPayPalApprove: (orderId: string) => Promise<void>
 }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
@@ -1152,9 +1086,6 @@ function PayPanel({
       {provider === NMI_PROVIDER_ID ? (
         nmiSession ? <NmiPaymentForm key={`${nmiSession.id}:${nmiCartFingerprint(cart)}`} session={nmiSession} busy={busy} onToken={onNmiToken} />
           : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>{ct("Your secure payment session needs refreshing.")}</Alert>
-      ) : provider === PAYPAL_PROVIDER_ID ? (
-        payPalConfig ? <PayPalPaymentForm key={`${cart.id}:${payPalConfig.client_id}:${payPalConfig.currency}:${payPalConfig.intent}`} config={payPalConfig} busy={busy} createOrder={createPayPalOrder} onApprove={onPayPalApprove} />
-          : <Alert severity="warning">{ct("PayPal is unavailable. Please choose another payment method.")}</Alert>
       ) : (
         <Button
           variant="contained"
@@ -1164,18 +1095,12 @@ function PayPanel({
           startIcon={busy ? <CircularProgress size={16} color="inherit" /> : <LockOutlinedIcon />}
           sx={{ minWidth: { xs: 0, sm: 260 }, width: { xs: "100%", sm: "auto" } }}
         >
-          {ct(busy
-            ? provider === PAYPAL_PROVIDER_ID
-              ? act("openingPayPal")
-              : act("placingOrder")
-            : act("orderAmount", { action: provider === PAYPAL_PROVIDER_ID ? act("payPal") : act("placeOrder"), amount: total }))}
+          {ct(busy ? act("placingOrder") : act("orderAmount", { action: act("placeOrder"), amount: total }))}
         </Button>
       )}
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 2, fontSize: 13 }}>
         {ct(provider === NMI_PROVIDER_ID
           ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
-          : provider === PAYPAL_PROVIDER_ID
-          ? "By paying with PayPal you agree to our terms of sale and confirm the products are for laboratory research use only. We ship after payment is confirmed."
           : isPaygate(provider)
           ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Continue to PayGate to pay. You can resume an unpaid payment from your order history. We ship after payment is verified."
           : provider === MAKEPAY_PROVIDER_ID

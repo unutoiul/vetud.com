@@ -51,7 +51,6 @@ const PAYMENT_METHODS: Record<string, string> = {
   pp_system_default: "Bank transfer / invoice",
   pp_nmi_primary: "Card or bank account",
   pp_paygate_card: "Card (PayGate)",
-  pp_paypal_paypal: "PayPal",
   pp_makepay_makepay: "Cryptocurrency (MakePay)",
   pp_paygate_crypto: "Cryptocurrency (PayGate)",
 }

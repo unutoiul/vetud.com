@@ -173,8 +173,7 @@ if (REDIS_URL) {
 
 // Payment providers besides the built-in manual/bank-transfer one. The Payment Module takes a single
 // providers list, so every optional provider is added here. Enable each one on a region in Admin
-// (Settings > Regions) as `pp_<resolve id>_<id>`, e.g. pp_nmi_primary. PayPal was removed
-// (owner, 2026-11-25).
+// (Settings > Regions) as `pp_<resolve id>_<id>`, e.g. pp_nmi_primary.
 const paymentProviders: ModuleConfig[] = []
 const paygate = getPaygateConfig()
 // Checkout and settlement use the same configured wallets and callback secret.

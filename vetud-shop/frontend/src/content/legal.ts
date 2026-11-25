@@ -49,7 +49,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         heading: "4. Prices and payment",
         paragraphs: [
           "Prices are shown in the currency of your selected region. Taxes and duties are shown at checkout where applicable; import duties for your country may be charged by the carrier.",
-          "You can pay with the payment methods offered at checkout, which may include card, PayPal, cryptocurrency and bank transfer. For bank transfer orders, stock is reserved for 3 business days after the order is placed, and orders not paid within that time may be cancelled.",
+          "You can pay with the payment methods offered at checkout, which may include card, cryptocurrency and bank transfer. For bank transfer orders, stock is reserved for 3 business days after the order is placed, and orders not paid within that time may be cancelled.",
         ],
       },
       {

@@ -44,7 +44,7 @@ export default function AcceptedPaymentMethods({ regionId, currency, enabled = t
   }, [enabled, id, code, key])
 
   if (!methods.length) return null
-  const labels = { visa: "Visa", mastercard: "Mastercard", paypal: "PayPal", bank: checkout("payBank"), crypto: checkout("payCrypto") }
+  const labels = { visa: "Visa", mastercard: "Mastercard", bank: checkout("payBank"), crypto: checkout("payCrypto") }
   return (
     <Box sx={{ textAlign: align }}>
       {caption ? <Typography sx={{ mb: 1, fontSize: 12, color: tone === "inverse" ? "brand.onNavyMuted" : "text.secondary" }}>{t("accepted")}</Typography> : null}
