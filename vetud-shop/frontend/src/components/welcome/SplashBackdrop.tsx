@@ -4,6 +4,7 @@ import Box from "@mui/material/Box"
 import { alpha, keyframes, type SxProps, type Theme } from "@mui/material/styles"
 import Image from "next/image"
 import { brand } from "@/theme/tokens"
+import { SPLASH_RIBBONS } from "./splash-art"
 
 const driftA = keyframes`
   0%, 100% { transform: rotate(-8deg) scale(1); }
@@ -20,15 +21,19 @@ const breathe = keyframes`
 
 const still = { "@media (prefers-reduced-motion: reduce)": { animation: "none" } }
 
-/** One glass-ribbon artwork. The box keeps the artwork's 3:2 shape so the fade reaches every edge. */
-function Ribbon({ src, sx }: { src: string; sx: SxProps<Theme> }) {
+/**
+ * One glass-ribbon artwork. The box keeps the artwork's 3:2 shape so the fade reaches every edge.
+ * The main ribbon is the page's largest paint while the splash is open, so it asks for high priority
+ * (and the page head preloads it, see SplashPreload).
+ */
+function Ribbon({ art, main = false, sx }: { art: { src: string; sizes: string }; main?: boolean; sx: SxProps<Theme> }) {
   return <Box sx={[{
     position: "absolute",
     aspectRatio: "3 / 2",
     maskImage: "radial-gradient(closest-side, black 50%, transparent 97%)",
     ...still,
   }, ...(Array.isArray(sx) ? sx : [sx])]}>
-    <Image src={src} alt="" fill loading="eager" sizes="(min-width: 900px) 1120px, 190vw" style={{ objectFit: "contain" }} />
+    <Image src={art.src} alt="" fill loading="eager" fetchPriority={main ? "high" : "auto"} sizes={art.sizes} style={{ objectFit: "contain" }} />
   </Box>
 }
 
@@ -37,7 +42,7 @@ function Ribbon({ src, sx }: { src: string; sx: SxProps<Theme> }) {
  * everything, soft light, a faint dot grid, and darker edges where the form and footer sit so their
  * text stays easy to read. It covers the whole window and stays put while the window's content scrolls.
  */
-export default function SplashBackdrop({ primary, secondary }: { primary: string; secondary: string }) {
+export default function SplashBackdrop() {
   return <Box aria-hidden sx={{ position: "absolute", inset: 0, zIndex: 0, overflow: "hidden", pointerEvents: "none" }}>
     {/* Soft light. */}
     <Box sx={{
@@ -53,7 +58,7 @@ export default function SplashBackdrop({ primary, secondary }: { primary: string
     }} />
 
     {/* The big ribbon sweeping up from the lower left, behind the preview. */}
-    <Ribbon src={primary} sx={{
+    <Ribbon art={SPLASH_RIBBONS.main} main sx={{
       width: { xs: "190%", md: "100%" },
       left: { xs: "-62%", md: "-36%" },
       bottom: { xs: "-8%", md: "-48%" },
@@ -62,7 +67,7 @@ export default function SplashBackdrop({ primary, secondary }: { primary: string
     }} />
 
     {/* A second ribbon in the top right, softer, behind the headline. */}
-    <Ribbon src={secondary} sx={{
+    <Ribbon art={SPLASH_RIBBONS.second} sx={{
       width: { xs: "150%", md: "70%" },
       right: { xs: "-70%", md: "-26%" },
       top: { xs: "-14%", md: "-42%" },

@@ -41,7 +41,7 @@ function layout({ preheader, rows }) {
 ${rows.trim()}
   <tr><td style="padding:0 32px 28px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:1px solid #e2e8f0;padding-top:20px;">
-      <p style="margin:0;font-family:${FONT};font-size:13px;line-height:20px;color:#67758b;">VETUD Peptide Series &middot; Dual-Chamber Pens &middot; <a href="{{{SITE_URL}}}" style="font-family:${FONT};color:#3268aa;text-decoration:underline;">{{{SITE_URL}}}</a></p>
+      <p style="margin:0;font-family:${FONT};font-size:13px;line-height:20px;color:#67758b;">VETUD Peptide Series &middot; <a href="{{{SITE_URL}}}" style="font-family:${FONT};color:#3268aa;text-decoration:underline;">{{{SITE_URL}}}</a></p>
     </td></tr></table>
   </td></tr>
 </table>
@@ -53,7 +53,7 @@ ${rows.trim()}
 }
 
 function plainText(body) {
-  return `${body.trim()}\n\n${"-".repeat(40)}\n\nVETUD Peptide Series · Dual-Chamber Pens · {{{SITE_URL}}}\n`
+  return `${body.trim()}\n\n${"-".repeat(40)}\n\nVETUD Peptide Series · {{{SITE_URL}}}\n`
 }
 
 /** Every template, built and checked: { name, id, subject, html, text }. */

@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography"
 import { useTranslations } from "next-intl"
 import { useRef, useState, type FormEvent } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
+import OwnStyleSheet from "@/theme/OwnStyleSheet"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
@@ -103,6 +104,9 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const submitting = useRef(false)
   const form = useRef<HTMLFormElement>(null)
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
+  // Rendered only while open or fading out, so all its styles arrive together when it opens.
+  const [present, setPresent] = useState(open)
+  if (open && !present) setPresent(true)
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -130,16 +134,23 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
     }
   }
 
-  return <Dialog
+  if (!present) return null
+
+  // Its own style sheet, so opening it doesn't re-lay out the whole page (see OwnStyleSheet).
+  return <OwnStyleSheet name="splash"><Dialog
     open={open}
     // Escape still closes it (accessibility); a click on the page around it doesn't, like every other way out.
     onClose={(_, reason) => { if (reason !== "backdropClick") onDismiss() }}
     maxWidth={false}
     aria-labelledby="welcome-title"
     aria-describedby="welcome-description"
-    slotProps={{ paper: { sx: screenSx }, backdrop: { sx: { bgcolor: alpha(brand.navyDeep, .55), backdropFilter: "blur(6px)" } } }}
+    slotProps={{
+      paper: { sx: screenSx },
+      backdrop: { sx: { bgcolor: alpha(brand.navyDeep, .55), backdropFilter: "blur(6px)" } },
+      transition: { onExited: () => setPresent(false) },
+    }}
   >
-    <SplashBackdrop primary="/images/newsletter/ribbons-tirzepatide.webp" secondary="/images/newsletter/ribbons-semaglutide.webp" />
+    <SplashBackdrop />
     <Box sx={{
       position: "relative",
       zIndex: 1,
@@ -209,7 +220,9 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
                 helperText={showErrors && emailInvalid ? offerText("invalidEmail") : undefined}
                 slotProps={{
                   htmlInput: { autoComplete: "email", inputMode: "email", spellCheck: false, maxLength: 254, autoCapitalize: "none", placeholder: "name@example.com" },
-                  input: { sx: emailInputSx },
+                  // Labels never float in this theme, so the input's autofill-detection keyframes aren't
+                  // needed; adding them would put a sheet before all others each time the splash opens.
+                  input: { sx: emailInputSx, disableInjectingGlobalStyles: true },
                   inputLabel: { sx: emailLabelSx },
                   formHelperText: { sx: { "&.Mui-error": { color: "error.light" } } },
                 }}
@@ -253,5 +266,5 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         </Box>
       </Box>
     </Box>
-  </Dialog>
+  </Dialog></OwnStyleSheet>
 }

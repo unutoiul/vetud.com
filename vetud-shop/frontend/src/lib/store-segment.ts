@@ -16,6 +16,9 @@ export function isStoreCurrency(value: string | undefined | null): value is Stor
   return Boolean(value) && (CURRENCIES as readonly string[]).includes(value as string)
 }
 
+/** Whether a first path segment can be a store at all ("se", "se-usd"), as opposed to a file name like "llms.txt". */
+export const isStoreSegment = (segment: string) => SEGMENT.test(segment.toLowerCase())
+
 /** "se" → Sweden in its own currency; "se-usd" → Sweden in US dollars. */
 export function parseStoreSegment(segment: string): { country: string; currency: StoreCurrency | null } {
   const match = SEGMENT.exec(segment.toLowerCase())

@@ -22,6 +22,12 @@ import ProductPhoto from "../product/ProductPhoto"
 import ProductBadges from "../product/ProductBadges"
 
 /** A wide fan of product cards with a prominent, fully readable centre card. */
+/**
+ * The photo area is 165–245px tall and wider than that, and the square photos are fitted inside it,
+ * so they're drawn at about the area's height, whatever the screen width.
+ */
+const CAROUSEL_PHOTO_SIZES = "(max-width: 600px) 160px, (max-width: 900px) 190px, (max-width: 1200px) 220px, 240px"
+
 export default function CollectionCarousel({ products, researchById }: { products: HttpTypes.StoreProduct[]; researchById: Record<string, CollectionResearch> }) {
   const ct = useContentTranslator()
   const t = useTranslations("Common")
@@ -121,7 +127,7 @@ export default function CollectionCarousel({ products, researchById }: { product
             <Box sx={{ height: { xs: 165, sm: 195, md: 225, lg: 245 }, flexShrink: 0, display: "flex", flexDirection: "column", p: .5, borderRadius: "8px", bgcolor: brand.white }}>
               <ProductBadges metadata={product.metadata} />
               <Box sx={{ position: "relative", flex: 1, minHeight: 0 }}>
-                <ProductPhoto images={images} title={ct(product.title)} sizes="(max-width: 600px) 75vw, (max-width: 900px) 44vw, (max-width: 1600px) 27vw, 420px" preload={productIndex === 0} />
+                <ProductPhoto images={images} title={ct(product.title)} sizes={CAROUSEL_PHOTO_SIZES} preload={productIndex === 0} />
               </Box>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", flex: 1, px: .5, pb: .5 }}>

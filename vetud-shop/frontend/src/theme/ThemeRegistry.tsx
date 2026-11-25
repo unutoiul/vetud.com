@@ -6,6 +6,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter"
 import { useMemo, type ReactNode } from "react"
 import { useTranslations } from "next-intl"
 import { pepLabTheme } from "./pep-lab"
+import SingleServerStyles from "./SingleServerStyles"
 
 export default function ThemeRegistry({ children }: { children: ReactNode }) {
   const act = useTranslations("Actions")
@@ -20,11 +21,13 @@ export default function ThemeRegistry({ children }: { children: ReactNode }) {
     },
   }), [act])
   return (
-    <AppRouterCacheProvider options={{ key: "vetud", enableCssLayer: true }}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
-    </AppRouterCacheProvider>
+    <SingleServerStyles>
+      <AppRouterCacheProvider options={{ key: "vetud", enableCssLayer: true }}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
+      </AppRouterCacheProvider>
+    </SingleServerStyles>
   )
 }

@@ -35,6 +35,11 @@ const educationRedirects = [
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
+  experimental: {
+    // The only stylesheet is next/font's @font-face rules (about 3.5 KB; MUI's styles are already in
+    // the HTML). As a <link> it blocked the first paint for a whole extra request; inlined it doesn't.
+    inlineCss: true,
+  },
   // Vercel needs nothing extra. For a VPS or Docker host, build with NEXT_OUTPUT=standalone.
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   poweredByHeader: false,

@@ -2,6 +2,8 @@ import { getContentTranslator } from "@/i18n/server-content"
 import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import type { Metadata } from "next"
+import { notFound } from "next/navigation"
+import { lang } from "next/root-params"
 import Icon from "@/components/brand/Icon"
 import { ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
@@ -15,6 +17,7 @@ import VideoGallery from "@/components/learn/VideoGallery"
 import WeightLossChart from "@/components/learn/WeightLossChart"
 import { ARTICLES } from "@/content/learn/articles"
 import { getVideos } from "@/content/learn/videos"
+import { isLanguage } from "@/i18n/languages"
 import { articleUrl, collectionMetadata } from "@/lib/article-seo"
 import { SITE } from "@/lib/config"
 
@@ -27,6 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
+  // Files the proxy skips (/ads.txt, /logo.png) arrive here as if their name were a language: 404, not the home page.
+  if (!isLanguage(await lang())) notFound()
   const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const website = { "@context": "https://schema.org", "@type": "WebSite", name: SITE.name, url: articleUrl("", ct.locale), inLanguage: ct.locale }
