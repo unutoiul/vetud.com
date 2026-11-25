@@ -1,4 +1,5 @@
-import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
+import { MedusaError } from "@medusajs/framework/utils"
+import { listOrderLinkCountries } from "../lib/order-link-countries"
 import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { createCartWorkflow } from "@medusajs/medusa/core-flows"
 import { setCartDeliveryAddressWorkflow, type CartAddressInput } from "./set-cart-delivery-address"
@@ -30,32 +31,22 @@ export type CreateOrderLinkInput = {
   note?: string
 }
 
-type RegionRow = {
-  id: string
-  countries?: { iso_2?: string | null }[] | null
-  payment_providers?: ({ id?: string | null; is_enabled?: boolean | null } | null)[] | null
-}
-
 /**
- * The region that sells to the chosen country; the link opens the shop for that country. A
- * pre-selected payment method must be turned on in that region, or the checkout couldn't offer it.
+ * The region and shop address for the chosen country (lib/order-link-countries.ts): the country's own
+ * region, or for the rest of the world the US dollar region and the /us shop. A pre-selected payment
+ * method must be turned on in that region, or the checkout couldn't offer it.
  */
 const findOrderLinkRegionStep = createStep(
   "find-order-link-region",
   async (input: { country_code: string; payment_provider?: string }, { container }) => {
-    const query = container.resolve(ContainerRegistrationKeys.QUERY)
-    const { data } = await query.graph({
-      entity: "region",
-      fields: ["id", "countries.iso_2", "payment_providers.id", "payment_providers.is_enabled"],
-    })
-    const region = (data as RegionRow[]).find((candidate) => candidate.countries?.some((country) => country.iso_2 === input.country_code))
-    if (!region) {
-      throw new MedusaError(MedusaError.Types.INVALID_DATA, `The shop doesn't sell to ${input.country_code.toUpperCase()}.`)
+    const country = (await listOrderLinkCountries(container)).find((candidate) => candidate.code === input.country_code)
+    if (!country) {
+      throw new MedusaError(MedusaError.Types.INVALID_DATA, `The shop doesn't deliver to ${input.country_code.toUpperCase()}.`)
     }
-    if (input.payment_provider && !region.payment_providers?.some((provider) => provider?.id === input.payment_provider && provider?.is_enabled !== false)) {
+    if (input.payment_provider && !country.payment_providers.includes(input.payment_provider)) {
       throw new MedusaError(MedusaError.Types.INVALID_DATA, `That payment method isn't available for ${input.country_code.toUpperCase()}. Choose another one.`)
     }
-    return new StepResponse({ id: region.id })
+    return new StepResponse({ id: country.region_id, store_country: country.store_country })
   }
 )
 
@@ -67,9 +58,11 @@ export const createOrderLinkWorkflow = createWorkflow("create-order-link", funct
     const name = input.customer_name || [address?.first_name, address?.last_name].filter(Boolean).join(" ")
     const metadata: Record<string, unknown> = {
       order_link: true,
-      order_link_country: input.country_code,
+      // The shop the link opens; the customer's own country when that's the rest of the world (USD).
+      order_link_country: region.store_country,
       order_link_created_at: new Date().toISOString(),
     }
+    if (region.store_country !== input.country_code) metadata.order_link_customer_country = input.country_code
     if (name) metadata.order_link_customer = name
     if (input.whatsapp || address?.phone) metadata.order_link_whatsapp = input.whatsapp || address?.phone
     if (input.email) metadata.order_link_email = input.email

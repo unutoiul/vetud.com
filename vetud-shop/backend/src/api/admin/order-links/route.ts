@@ -2,6 +2,7 @@ import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { furthestCheckoutStep, type CartProgress } from "../../../lib/checkout-progress"
 import { emailSettings } from "../../../lib/notifications"
+import { listOrderLinkCountries } from "../../../lib/order-link-countries"
 import { createOrderLinkWorkflow } from "../../../workflows/order-link"
 import type { AdminCreateOrderLinkBody } from "./validators"
 
@@ -43,7 +44,7 @@ function toLink(cart: LinkCart) {
     url: orderLinkUrl(cart),
     created_at: text(meta.order_link_created_at) ?? cart.created_at,
     last_activity_at: cart.updated_at,
-    country_code: text(meta.order_link_country),
+    country_code: text(meta.order_link_customer_country) ?? text(meta.order_link_country),
     customer_name: text(meta.order_link_customer),
     whatsapp: text(meta.order_link_whatsapp),
     email: text(meta.order_link_email) ?? cart.email ?? null,
@@ -69,7 +70,7 @@ function toLink(cart: LinkCart) {
  */
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
-  const [carts, products, regions] = await Promise.all([
+  const [carts, products] = await Promise.all([
     query.graph({
       entity: "cart",
       fields: LINK_FIELDS,
@@ -80,10 +81,6 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
       entity: "product",
       fields: ["id", "title", "variants.id", "variants.title", "variants.sku"],
       filters: { status: "published" },
-    }),
-    query.graph({
-      entity: "region",
-      fields: ["id", "name", "currency_code", "countries.iso_2", "countries.display_name", "payment_providers.id", "payment_providers.is_enabled"],
     }),
   ])
 
@@ -97,22 +94,8 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     )
     .sort((a, b) => a.title.localeCompare(b.title))
 
-  type RegionRow = {
-    currency_code?: string | null
-    countries?: { iso_2?: string | null; display_name?: string | null }[] | null
-    payment_providers?: ({ id?: string | null; is_enabled?: boolean | null } | null)[] | null
-  }
-  const countries = (regions.data as RegionRow[])
-    .flatMap((region) => {
-      // The payment methods turned on where this country is sold, for the form's "Payment method".
-      const paymentProviders = (region.payment_providers ?? []).flatMap((provider) => (provider?.id && provider.is_enabled !== false ? [provider.id] : []))
-      return (region.countries ?? []).flatMap((country) =>
-        country.iso_2
-          ? [{ code: country.iso_2, name: country.display_name ?? country.iso_2.toUpperCase(), currency_code: region.currency_code ?? null, payment_providers: paymentProviders }]
-          : []
-      )
-    })
-    .sort((a, b) => a.name.localeCompare(b.name))
+  // Every country the shop delivers to; outside the regions in US dollars (lib/order-link-countries.ts).
+  const countries = (await listOrderLinkCountries(req.scope)).map(({ code, name, currency_code, payment_providers }) => ({ code, name, currency_code, payment_providers }))
 
   res.setHeader("Cache-Control", "private, no-store")
   res.json({
