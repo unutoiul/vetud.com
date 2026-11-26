@@ -8,7 +8,9 @@ function dateTime(value: string | Date) {
   return new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(new Date(value)) + " UTC"
 }
 
-const LANGUAGES: Record<string, string> = { en: "English", fr: "French" }
+const LANGUAGES: Record<string, string> = {
+  en: "English", es: "Spanish", pt: "Portuguese", fr: "French", de: "German", it: "Italian", nl: "Dutch", pl: "Polish",
+}
 
 export type EmailListSignupAlertData = {
   email: string

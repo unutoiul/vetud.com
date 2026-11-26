@@ -1,7 +1,8 @@
 import { createHmac, timingSafeEqual } from "node:crypto"
 import { MedusaError } from "@medusajs/framework/utils"
 
-export const LIST_LOCALES = ["en", "fr"] as const
+/** Every language the education site is published in (frontend src/i18n/languages.ts). */
+export const LIST_LOCALES = ["en", "es", "pt", "fr", "de", "it", "nl", "pl"] as const
 export type ListLocale = (typeof LIST_LOCALES)[number]
 
 /**
@@ -9,10 +10,13 @@ export type ListLocale = (typeof LIST_LOCALES)[number]
  * tick box), stored with their consent. Change the version when the wording changes.
  */
 export const CONSENT_VERSION = "2026-11-24"
-export const CONSENT_TEXT: Record<ListLocale, string> = {
+export const CONSENT_TEXT: { en: string } & Partial<Record<ListLocale, string>> = {
   en: "Signed up with the VETUD email list form to get new guides and answered community questions by email. Free to join; unsubscribe whenever you like.",
   fr: "Inscription via le formulaire de la liste e-mail VETUD pour recevoir par e-mail les nouveaux guides et les questions de la communauté ayant reçu une réponse. Gratuit ; désinscription possible à tout moment.",
 }
+
+/** The wording stored with a sign-up; languages without their own wording keep the English one. */
+export const consentText = (locale: ListLocale) => CONSENT_TEXT[locale] ?? CONSENT_TEXT.en
 
 /** Custom event emitted when a pending sign-up is confirmed; it emails the owner. */
 export const EMAIL_LIST_CONFIRMED_EVENT = "email_list.confirmed"

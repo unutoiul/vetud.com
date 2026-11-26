@@ -5,7 +5,7 @@ import { emitEventStep } from "@medusajs/medusa/core-flows"
 import {
   CONFIRM_LINK_TTL_MS,
   confirmToken,
-  CONSENT_TEXT,
+  consentText,
   CONSENT_VERSION,
   isValidConfirmToken,
   isValidUnsubscribeToken,
@@ -55,7 +55,7 @@ const upsertEmailSubscriberStep = createStep<SubscribeInput, SubscriberResult, S
     const values = {
       locale: input.locale,
       status: "pending" as const,
-      consent_text: CONSENT_TEXT[input.locale],
+      consent_text: consentText(input.locale),
       consent_version: CONSENT_VERSION,
       consented_at: now,
       unsubscribed_at: null,
