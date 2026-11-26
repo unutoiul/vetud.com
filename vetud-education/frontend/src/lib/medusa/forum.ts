@@ -53,14 +53,15 @@ export async function getForumMember(handle: string): Promise<ForumMemberPage | 
 }
 
 /** Latest thread IDs, for prerendering and the sitemap. */
-export async function listForumThreadIds(limit = 50): Promise<string[]> {
+/** Every public thread's id and slug, newest first, for the sitemap and prerendering. */
+export async function listForumThreadLinks(limit = 50): Promise<{ id: string; slug: string }[]> {
   "use cache"
   cacheLife("minutes")
   cacheTag("forum")
-  const ids: string[] = []
+  const ids: { id: string; slug: string }[] = []
   for (let offset = 0; offset < limit; offset += 50) {
     const { threads, count } = await sdk.client.fetch<ForumThreadList>("/store/forum/threads", { query: { offset, limit: Math.min(50, limit - offset) } })
-    ids.push(...threads.map(thread => thread.id))
+    ids.push(...threads.map(thread => ({ id: thread.id, slug: thread.slug })))
     if (offset + 50 >= count) break
   }
   return ids

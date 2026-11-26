@@ -17,6 +17,6 @@ export default function OrdersRoute() {
   const ct = useContentTranslator()
   return <>
     <PageHeader eyebrow={ct("Your account")} title={ct("Every order. Every shipment.")} description={ct("Your order details and delivery updates, together in one place.")} />
-    <Section tone="white" tight><AccountPage view="orders" /></Section>
+    <Section tone="white" tight data-clarity-mask="True"><AccountPage view="orders" /></Section>
   </>
 }

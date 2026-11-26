@@ -115,7 +115,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       {
         heading: "Service providers",
         paragraphs: [
-          "We use providers that process data on our behalf: website hosting (Vercel), commerce backend hosting (Railway), transactional email (Resend) and our bank. They may process data outside your country under appropriate safeguards.",
+          "We use providers that process data on our behalf: website hosting (Vercel), commerce backend hosting (Railway), transactional email (Resend), site analytics (Microsoft Clarity) and our bank. They may process data outside your country under appropriate safeguards.",
         ],
       },
       {
@@ -132,6 +132,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         heading: "Cookies and storage",
         paragraphs: [
           "We store a cart identifier in your browser's local storage so your cart persists between visits. We do not use advertising cookies.",
+          "We use Microsoft Clarity to see how people use the site (clicks, scrolling and recordings of visits) so we can improve it. Anything you type is hidden, and checkout, account and order pages are hidden in full. For visitors in the EEA, the UK and Switzerland, Clarity uses no cookies; elsewhere it sets analytics cookies.",
         ],
       },
     ],

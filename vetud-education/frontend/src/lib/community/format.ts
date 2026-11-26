@@ -46,8 +46,15 @@ export const REPORT_REASONS = [
   { value: "other", label: "Something else" },
 ] as const
 
-export function threadHref(thread: Pick<ForumThread, "id">) {
-  return `/community/${thread.id}`
+/** A thread's address: readable words from its title, then its id ("/community/is-bpc-157-stable-fthr_01…"). */
+export function threadHref(thread: Pick<ForumThread, "id" | "slug">) {
+  const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(thread.slug ?? "") ? thread.slug.slice(0, 80).replace(/-+$/, "") : ""
+  return `/community/${slug ? `${slug}-` : ""}${thread.id}`
+}
+
+/** The thread id at the end of a thread address; old addresses are the bare id. */
+export function threadIdFromSegment(segment: string) {
+  return segment.match(/(?:^|-)(fthr_[A-Za-z0-9]{10,40})$/)?.[1] ?? null
 }
 
 export function formatForumDate(date: string, locale = "en-US") {

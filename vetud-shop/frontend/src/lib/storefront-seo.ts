@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import type { HttpTypes } from "@medusajs/types"
-import { BASE_URL, SITE, SUPPORTED_COUNTRIES } from "@/lib/config"
+import { BASE_URL, SHARE_IMAGE, SITE, SUPPORTED_COUNTRIES } from "@/lib/config"
 import { getProductImages } from "@/lib/product-images"
 import { isVariantInStock, readProductMeta, variantPrice } from "@/lib/product"
 import { defaultVariant } from "@/lib/product-formats"
@@ -29,14 +29,14 @@ export async function storefrontMetadata({ title, description, country, path, im
   const { ct, openGraphLocale } = await getPageLocalization()
   title = ct(title)
   description = ct(description)
-  images = images.map(image => ({ ...image, alt: ct(image.alt) }))
+  images = images.length ? images.map(image => ({ ...image, alt: ct(image.alt) })) : [SHARE_IMAGE]
   const url = storefrontUrl(country, path)
   return {
     title: { absolute: title }, description,
     alternates: { canonical: url, ...(!noindex ? { languages: storefrontLanguages(path) } : {}) },
     openGraph: { type: "website", siteName: "VETUD", title, description, url,
       locale: openGraphLocale, images },
-    twitter: { card: images.length ? "summary_large_image" : "summary", title, description, images: images.map(image => image.url) },
+    twitter: { card: "summary_large_image", title, description, images: images.map(image => image.url) },
     robots: { index: !noindex, follow: true, googleBot: { index: !noindex, follow: true, "max-image-preview": "large" } },
   }
 }
@@ -45,9 +45,11 @@ export async function productMetadata(product: HttpTypes.StoreProduct, country: 
   const { ct } = await getPageLocalization()
   const meta = readProductMeta(product)
   const form = meta.form && !product.title.toLowerCase().includes(meta.form.replace(/ solution$/i, "").toLowerCase()) ? ` ${ct(meta.form)}` : ""
+  // A single format reads well in the title ("BPC-157 Nasal spray"); a list of formats stays in the description.
+  const titleForm = meta.form && /,| or /i.test(meta.form) ? "" : form
   const market = country === "gb" ? "UK" : country.toUpperCase()
   return storefrontMetadata({
-    title: ct.template("{v0}{v1} for Research | VETUD {v2}", { v0: ct(product.title), v1: form, v2: market }, { translateValues: false }),
+    title: ct.template("{v0}{v1} for Research | VETUD {v2}", { v0: ct(product.title), v1: titleForm, v2: market }, { translateValues: false }),
     description: ct.template("{v0}{v1}. Available amounts, regional prices, stock and lot documentation. Laboratory research only; not for human use.", { v0: ct(product.title), v1: form }, { translateValues: false }),
     country, path: `/products/${product.handle}`,
     images: getProductImages(product).map(image => ({ ...image, url: new URL(image.url, BASE_URL).href })),

@@ -1,4 +1,5 @@
-import { localizeMetadata } from "@/i18n/metadata"
+import { getPageLocalization, localizeMetadata } from "@/i18n/metadata"
+import { articleLanguages, articleUrl } from "@/lib/article-seo"
 import { getContentTranslator } from "@/i18n/server-content"
 import { ClockIcon as AccessTimeOutlinedIcon, MailIcon as MailOutlineIcon } from "@/components/brand/Icon"
 import Grid from "@mui/material/Grid"
@@ -16,8 +17,10 @@ import { SITE } from "@/lib/config"
 import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
+  const { language } = await getPageLocalization()
   return localizeMetadata({
   title: "Contact",
+  alternates: { canonical: articleUrl("/contact", language), languages: articleLanguages("/contact") },
   description: "Questions about a guide or the community? Write to the VETUD team.",
 })
 }

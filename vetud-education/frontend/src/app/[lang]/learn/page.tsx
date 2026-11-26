@@ -23,7 +23,7 @@ const PROFILE_COUNT = PEPTIDES.length
 
 export async function generateMetadata() {
   return collectionMetadata({
-  path: "/learn", title: "Peptides Explained: Research, Evidence & Learning Guides",
+  path: "/learn", title: "Peptide Guides: What the Research Shows",
   description: `Plain-language guides to ${PROFILE_COUNT} peptides and related compounds, from approved medicines to early research: what they are, what studies found, approval status and known risks.`,
 })
 }

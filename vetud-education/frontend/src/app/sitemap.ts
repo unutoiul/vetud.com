@@ -7,7 +7,8 @@ import { PEPTIDES } from "@/content/learn/peptides"
 import { DEFAULT_LANGUAGE, LANGUAGES } from "@/i18n/languages"
 import { articleLanguages, articleUrl } from "@/lib/article-seo"
 import { BASE_URL } from "@/lib/config"
-import { listForumThreadIds } from "@/lib/medusa/forum"
+import { listForumThreadLinks } from "@/lib/medusa/forum"
+import { threadHref } from "@/lib/community/format"
 
 const COLLECTIONS = ["", "/learn", "/news", "/videos", "/community", "/community/guidelines", "/community/apply", "/contact"]
 
@@ -45,14 +46,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return everyLanguage(path, { changeFrequency: "monthly", priority: 0.7, ...dated(date), ...(image ? { images: [`${BASE_URL}${image.src}`] } : {}) })
   })
 
-  let threads: string[] = []
+  let threads: { id: string; slug: string }[] = []
   try {
-    threads = await listForumThreadIds(500)
+    threads = await listForumThreadLinks(500)
   } catch {
     threads = []
   }
   // Member posts are written in one language, so each thread is listed once.
-  const community = threads.map((id) => ({ url: articleUrl(`/community/${id}`, DEFAULT_LANGUAGE), changeFrequency: "weekly" as const, priority: 0.5 }))
+  const community = threads.map((thread) => ({ url: articleUrl(threadHref(thread), DEFAULT_LANGUAGE), changeFrequency: "weekly" as const, priority: 0.5 }))
 
   return [...collections, ...legal, ...editorial, ...community]
 }

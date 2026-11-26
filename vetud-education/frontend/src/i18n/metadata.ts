@@ -1,5 +1,6 @@
 import "server-only"
 import type { Metadata } from "next"
+import { SHARE_IMAGE } from "@/lib/config"
 import { lang } from "next/root-params"
 import { asLanguage, type Language } from "./languages"
 import { getContentTranslator } from "./server-content"
@@ -24,7 +25,7 @@ export async function localizeMetadata(input: Metadata): Promise<Metadata> {
   }
   return {
     ...input, title: translateTitle(input.title), description: ct(input.description),
-    ...(input.openGraph ? { openGraph: { ...input.openGraph, title: translateTitle(input.openGraph.title) ?? undefined, description: ct(input.openGraph.description), locale: openGraphLocale } } : {}),
+    ...(input.openGraph ? { openGraph: { images: [SHARE_IMAGE], ...input.openGraph, title: translateTitle(input.openGraph.title) ?? undefined, description: ct(input.openGraph.description), locale: openGraphLocale } } : {}),
     ...(input.twitter ? { twitter: { ...input.twitter, title: translateTitle(input.twitter.title) ?? undefined, description: ct(input.twitter.description) ?? undefined } } : {}),
   }
 }

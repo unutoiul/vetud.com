@@ -6,6 +6,7 @@ import { DM_Mono, Manrope } from "next/font/google"
 import { lang } from "next/root-params"
 import { Suspense } from "react"
 import AccountProvider from "@/components/account/AccountProvider"
+import ClarityAnalytics from "@/components/common/ClarityAnalytics"
 import { LanguageProvider } from "@/components/common/language"
 import Footer from "@/components/layout/Footer"
 import Header from "@/components/layout/Header"
@@ -80,6 +81,7 @@ export default async function LanguageLayout({ children }: LayoutProps<"/[lang]"
                   {children}
                 </Box>
                 <Footer />
+                <ClarityAnalytics language={language} />
                 <Suspense fallback={null}>
                   <WelcomeExperience />
                 </Suspense>

@@ -23,7 +23,7 @@ import { SITE } from "@/lib/config"
 
 export async function generateMetadata(): Promise<Metadata> {
   return collectionMetadata({
-    title: "Peptides Explained: Research Guides, News and Videos",
+    title: "Peptides Explained: Guides, News and Videos",
     description: "Plain-language guides to peptide research, including Retatrutide, Tirzepatide and Semaglutide: the evidence, the risks and what is approved.",
     path: "",
   })

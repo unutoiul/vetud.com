@@ -25,7 +25,7 @@ export default function OrderLinkPage() {
         title={ct("Your order is ready.")}
         description={ct("We've added the items we agreed. Add your details and choose how to pay to finish your order.")}
       />
-      <Section tone="white" tight>
+      <Section tone="white" tight data-clarity-mask="True">
         <Suspense fallback={<Stack sx={{ alignItems: "center", py: 6 }}><CircularProgress size={32} /></Stack>}>
           <OrderLinkLoader />
         </Suspense>

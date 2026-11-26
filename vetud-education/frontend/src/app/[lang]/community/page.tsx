@@ -31,7 +31,7 @@ export async function generateMetadata({ searchParams }: PageProps<"/[lang]/comm
   const topic = getTopic(typeof topicParam === "string" ? topicParam : undefined)
   return topic
     ? communityMetadata({ path: `/community?topic=${topic.id}`, title: `${topic.name}: Peptide Research Questions and Discussions`, description: `${topic.description} Questions and discussions about the research, without doses.` })
-    : communityMetadata({ path: "/community", title: "Peptide Research Community: Questions, Discussions and Expert Answers", description: "Questions answered by verified experts and open discussions about peptide research, by topic and without doses." })
+    : communityMetadata({ path: "/community", title: "Peptide Questions and Expert Answers", description: "Questions answered by verified experts and open discussions about peptide research, by topic and without doses." })
 }
 
 const PAGE_SIZE = 20

@@ -8,27 +8,28 @@ import CommunityDisclaimer from "@/components/community/CommunityDisclaimer"
 import ThreadView from "@/components/community/ThreadView"
 import { ArticleJsonLd } from "@/components/learn/ReadingLayout"
 import { articleUrl } from "@/lib/article-seo"
+import { threadHref, threadIdFromSegment } from "@/lib/community/format"
 import { communityMetadata } from "@/lib/community/seo"
 import type { ForumAuthor, ForumThreadDetail } from "@/lib/community/types"
-import { getForumThread, listForumThreadIds } from "@/lib/medusa/forum"
+import { getForumThread, listForumThreadLinks } from "@/lib/medusa/forum"
 import { getPageLocalization } from "@/i18n/metadata"
 
 // Prerendered only so the route's static shell is validated; real threads render on first visit.
 const PLACEHOLDER = "__placeholder__"
-const THREAD_ID = /^fthr_[A-Za-z0-9]{10,40}$/
 
 export async function generateStaticParams() {
   try {
-    const ids = await listForumThreadIds(20)
-    return ids.length ? ids.map(thread => ({ thread })) : [{ thread: PLACEHOLDER }]
+    const threads = await listForumThreadLinks(20)
+    return threads.length ? threads.map(thread => ({ thread: threadHref(thread).replace("/community/", "") })) : [{ thread: PLACEHOLDER }]
   } catch {
     // Backend unreachable at build time: threads render on first request instead.
     return [{ thread: PLACEHOLDER }]
   }
 }
 
-async function load(id: string) {
-  if (!THREAD_ID.test(id)) return null
+async function load(segment: string) {
+  const id = threadIdFromSegment(segment)
+  if (!id) return null
   try {
     return await getForumThread(id)
   } catch {
@@ -37,10 +38,11 @@ async function load(id: string) {
 }
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/community/[thread]">): Promise<Metadata> {
-  const { thread: id } = await params
-  const detail = await load(id)
+  const { thread: segment } = await params
+  const detail = await load(segment)
   if (!detail) return { title: "Community thread", robots: { index: false, follow: true } }
-  return communityMetadata({ title: detail.thread.title, description: detail.thread.excerpt, path: `/community/${id}`, type: "article", memberContent: true })
+  // Old bare-id addresses and renamed threads point search engines at the current readable address.
+  return communityMetadata({ title: detail.thread.title, description: detail.thread.excerpt, path: threadHref(detail.thread), type: "article", memberContent: true })
 }
 
 export default function ThreadPage({ params }: PageProps<"/[lang]/community/[thread]">) {
@@ -55,13 +57,14 @@ export default function ThreadPage({ params }: PageProps<"/[lang]/community/[thr
 }
 
 async function ThreadContent({ params }: Pick<PageProps<"/[lang]/community/[thread]">, "params">) {
-  const { thread: id } = await params
-  if (id !== PLACEHOLDER && !THREAD_ID.test(id)) notFound()
-  const detail = await load(id)
+  const { thread: segment } = await params
+  const id = threadIdFromSegment(segment)
+  if (segment !== PLACEHOLDER && !id) notFound()
+  const detail = await load(segment)
   return <>
     {detail ? <ArticleJsonLd data={await structuredData(detail)} /> : null}
     {/* Unknown threads, and threads waiting for review (visible to their author), resolve in the browser. */}
-    <ThreadView key={id} threadId={id} initial={detail} />
+    <ThreadView key={id ?? segment} threadId={id ?? segment} initial={detail} />
   </>
 }
 
@@ -72,7 +75,7 @@ function person(author: ForumAuthor, language: string) {
 /** Google's discussion forum markup: the opening post, its replies and their counts. */
 async function structuredData({ thread, opening, posts }: ForumThreadDetail) {
   const { language } = await getPageLocalization()
-  const url = articleUrl(`/community/${thread.id}`, language)
+  const url = articleUrl(threadHref(thread), language)
   return {
     "@context": "https://schema.org",
     "@type": "DiscussionForumPosting",

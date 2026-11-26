@@ -18,7 +18,7 @@ import Icon from "../brand/Icon"
 import { useState, type FormEvent } from "react"
 import { getPeptide, PEPTIDES } from "@/content/learn/peptides"
 import { revalidateCommunity } from "@/lib/community/actions"
-import { findDose, KIND_LABELS, THREAD_KINDS } from "@/lib/community/format"
+import { findDose, KIND_LABELS, THREAD_KINDS, threadHref } from "@/lib/community/format"
 import { COMMUNITY_TOPICS, getTopic, topicForPeptide, type TopicId } from "@/lib/community/topics"
 import type { ForumImage, ForumThreadDetail, ThreadKind } from "@/lib/community/types"
 import { sdk } from "@/lib/medusa/sdk"
@@ -80,7 +80,7 @@ export default function Composer() {
         body: { kind, topic, title: title.trim(), body: body.trim(), peptide, images: images.map(image => image.id) },
       })
       await revalidateCommunity(detail.thread.id)
-      router.push(localize(`/community/${detail.thread.id}`))
+      router.push(localize(threadHref(detail.thread)))
     } catch (caught) {
       setError(forumError(caught, "We couldn't post your thread. Please try again."))
       setPosting(false)

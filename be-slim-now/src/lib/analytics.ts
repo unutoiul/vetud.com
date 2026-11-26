@@ -3,7 +3,8 @@
  * Environment Variables, then redeploy: NEXT_PUBLIC_* values are built into the page):
  *
  * - NEXT_PUBLIC_GA_ID: the GA4 measurement ID, "G-XXXXXXXXXX" (Admin → Data streams → the web stream).
- * - NEXT_PUBLIC_CLARITY_ID: the Clarity project ID (Settings → Overview → Project ID).
+ * - NEXT_PUBLIC_CLARITY_ID: the Clarity project ID (Settings → Overview → Project ID). Defaults to
+ *   the "Be Slim Now" project, zjowjn818r, so Clarity is on without it.
  *
  * Visitors in the EEA, the UK and Switzerland are asked first (CookieConsent). Until they accept,
  * Google gets cookieless pings only (Consent Mode) and Clarity records without cookies. Elsewhere
@@ -17,7 +18,7 @@ const clean = (value: string | undefined, pattern: RegExp) => {
 }
 
 export const GA_ID = clean(process.env.NEXT_PUBLIC_GA_ID, /^G-[A-Z0-9]+$/i)
-export const CLARITY_ID = clean(process.env.NEXT_PUBLIC_CLARITY_ID, /^[a-z0-9]+$/i)
+export const CLARITY_ID = clean(process.env.NEXT_PUBLIC_CLARITY_ID || "zjowjn818r", /^[a-z0-9]+$/i)
 export const ANALYTICS_ENABLED = Boolean(GA_ID || CLARITY_ID)
 
 /** The visitor's answer, kept in this browser. */
@@ -82,7 +83,8 @@ try{var saved=localStorage.getItem(${JSON.stringify(CONSENT_KEY)});if(saved==='g
 gtag('js',new Date());gtag('config',${JSON.stringify(GA_ID)});`
 }
 
+/** Clarity stays off on a local copy of the site (localhost), so testing never shows up in the recordings. */
 export function clarityBootstrap(): string {
-  return `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",${JSON.stringify(CLARITY_ID)});
-try{var saved=localStorage.getItem(${JSON.stringify(CONSENT_KEY)});if(saved==='granted'||saved==='denied')window.clarity('consentv2',{ad_Storage:'denied',analytics_Storage:saved});}catch(e){}`
+  return `if(!/^(localhost|127\\.0\\.0\\.1|\\[::1\\])$/.test(location.hostname)){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",${JSON.stringify(CLARITY_ID)});
+try{var saved=localStorage.getItem(${JSON.stringify(CONSENT_KEY)});if(saved==='granted'||saved==='denied')window.clarity('consentv2',{ad_Storage:'denied',analytics_Storage:saved});}catch(e){}}`
 }

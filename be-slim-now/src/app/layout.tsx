@@ -30,6 +30,18 @@ export const metadata: Metadata = {
   },
 }
 
+/**
+ * Tells search engines the site's name and who runs it (shown as the site name above results).
+ * Products aren't marked up: Google doesn't allow rich results or Shopping listings for these pens.
+ */
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "WebSite", "@id": `${SITE.url}/#website`, url: SITE.url, name: "BeSlimNow", alternateName: "beslimnow.com", publisher: { "@id": `${SITE.url}/#organization` } },
+    { "@type": "Organization", "@id": `${SITE.url}/#organization`, name: "BeSlimNow", url: SITE.url, email: SITE.email, logo: { "@type": "ImageObject", url: `${SITE.url}/brand/icon-512.png`, width: 512, height: 512 } },
+  ],
+}
+
 export const viewport: Viewport = {
   themeColor: colors.navy,
   colorScheme: "light",
@@ -52,6 +64,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           overflowX: "clip",
         }}
       >
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
         <AntdRegistry>
           <Providers>{children}</Providers>
         </AntdRegistry>

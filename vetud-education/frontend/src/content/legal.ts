@@ -39,8 +39,8 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       { heading: "Why we use it", paragraphs: [
         "To run your account and the community because you asked us to (contract), to keep the community safe and to moderate it (legitimate interests), and to send the email list only if you agreed and confirmed (consent).",
       ] },
-      { heading: "Who handles it for us", paragraphs: ["We use Vercel to host the website, Railway to host our servers and database, and Resend to send email. They process data for us under their own security and data protection terms. Some may process it outside your country."] },
-      { heading: "Browser storage", paragraphs: ["We keep your sign-in in your browser's local storage and your language choice in a cookie. We use no advertising or analytics cookies on this site."] },
+      { heading: "Who handles it for us", paragraphs: ["We use Vercel to host the website, Railway to host our servers and database, Resend to send email, and Microsoft Clarity to see how pages are used. They process data for us under their own security and data protection terms. Some may process it outside your country."] },
+      { heading: "Browser storage", paragraphs: ["We keep your sign-in in your browser's local storage and your language choice in a cookie. We use no advertising cookies.", "We use Microsoft Clarity to see how people use the site (clicks, scrolling and recordings of visits) so we can improve it. Anything you type is hidden, and your account page is hidden in full. If your browser is set to a European time zone, Clarity uses no cookies; elsewhere it sets analytics cookies."] },
       { heading: "How long we keep it", paragraphs: ["[Retention periods to be confirmed.] You can unsubscribe from the email list at any time using the link in our emails."] },
       { heading: "Your rights", paragraphs: [`Depending on where you live, you can ask to see, correct, delete or move your data, object to how we use it, or withdraw consent. Write to ${EMAIL}. You can also complain to your data protection authority.`] },
     ],

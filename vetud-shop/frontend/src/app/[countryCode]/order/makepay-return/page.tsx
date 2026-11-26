@@ -19,7 +19,7 @@ export default function MakePayReturnPage() {
   return (
     <>
       <PageHeader eyebrow={ct("Payment")} title={ct("Confirming your payment.")} />
-      <Section tone="white" tight>
+      <Section tone="white" tight data-clarity-mask="True">
         <Suspense fallback={<Skeleton variant="rounded" height={200} />}>
           <MakePayReturn />
         </Suspense>

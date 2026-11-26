@@ -23,6 +23,9 @@ const configuredBaseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost
  */
 export const BASE_URL = hostOf(configuredBaseUrl) === hostOf(EDUCATION_URL) ? SHOP_URL : configuredBaseUrl
 
+/** Shown when a page is shared or listed without a picture of its own (1200 × 630). */
+export const SHARE_IMAGE = { url: `${BASE_URL}/images/og-default.jpg`, width: 1200, height: 630, alt: "VETUD" }
+
 /** A page on the education site, which is in English for now: educationHref("/learn/bpc-157"). */
 export const educationHref = (path = "") => `${EDUCATION_URL}/en${path}`
 

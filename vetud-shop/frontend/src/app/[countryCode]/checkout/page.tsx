@@ -37,7 +37,7 @@ export default async function CheckoutPage() {
           </Stack>
         </Stack>
       </Box>
-      <Section tone="white" tight>
+      <Section tone="white" tight data-clarity-mask="True">
         <CheckoutFlow />
       </Section>
     </>

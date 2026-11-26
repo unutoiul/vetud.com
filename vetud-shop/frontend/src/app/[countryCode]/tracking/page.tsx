@@ -1,4 +1,5 @@
 import { localizeMetadata } from "@/i18n/metadata"
+import { storefrontAlternates } from "@/lib/storefront-seo"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { useTranslations } from "next-intl"
 import type { Metadata } from "next"
@@ -13,6 +14,7 @@ import TrackingForm from "@/components/tracking/TrackingForm"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
+  alternates: await storefrontAlternates("/tracking"),
   title: "Tracking",
   description: "Follow your parcel using the tracking number from your shipping email.",
 })

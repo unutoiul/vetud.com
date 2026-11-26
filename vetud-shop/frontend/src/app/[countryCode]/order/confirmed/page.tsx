@@ -19,7 +19,7 @@ export default function OrderConfirmedPage() {
   return (
     <>
       <PageHeader eyebrow={ct("Thank you")} title={ct("Your order is in.")} />
-      <Section tone="white" tight>
+      <Section tone="white" tight data-clarity-mask="True">
         <Suspense fallback={<Skeleton variant="rounded" height={360} />}>
           <OrderConfirmation />
         </Suspense>

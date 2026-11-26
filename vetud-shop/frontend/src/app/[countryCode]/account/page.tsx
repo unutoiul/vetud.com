@@ -18,7 +18,7 @@ export default function AccountRoute() {
   return (
     <>
       <PageHeader eyebrow={ct("Account")} title={ct("A simpler way to order.")} description={ct("Save your details once, then manage addresses, orders and tracking in one place.")} />
-      <Section tone="white" tight>
+      <Section tone="white" tight data-clarity-mask="True">
         <AccountPage />
       </Section>
     </>

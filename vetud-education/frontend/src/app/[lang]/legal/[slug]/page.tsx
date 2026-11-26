@@ -11,6 +11,8 @@ import { AppLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
 import { getLegalDocument, LEGAL_DOCUMENTS } from "@/content/legal"
+import { getPageLocalization } from "@/i18n/metadata"
+import { articleLanguages, articleUrl } from "@/lib/article-seo"
 import { brand } from "@/theme/tokens"
 
 export function generateStaticParams() {
@@ -18,10 +20,12 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/legal/[slug]">): Promise<Metadata> {
-  const ct = await getContentTranslator()
-  const { slug } = await params
+  const [{ ct, language }, { slug }] = await Promise.all([getPageLocalization(), params])
   const document = getLegalDocument(slug)
-  return document ? { title: ct(document.title), description: ct(document.summary) } : { title: ct("Not found") }
+  const path = `/legal/${slug}`
+  return document
+    ? { title: ct(document.title), description: ct(document.summary), alternates: { canonical: articleUrl(path, language), languages: articleLanguages(path) } }
+    : { title: ct("Not found") }
 }
 
 export default function LegalPage({ params }: PageProps<"/[lang]/legal/[slug]">) {
