@@ -121,7 +121,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
               <Box component="main" id="main" sx={{ minHeight: "60vh" }}>
                 {children}
               </Box>
-              <Footer />
+              <Footer country={code} />
               <CartDrawer />
               <SplashPreload />
               <Suspense fallback={null}>

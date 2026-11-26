@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
 import { cacheLife } from "next/cache"
 import { LEGAL_DOCUMENTS } from "@/content/legal"
+import { getLocalDelivery, LOCAL_DELIVERY_COUNTRIES } from "@/content/local-delivery"
 import { BASE_URL } from "@/lib/config"
 import { listProductSitemapEntries } from "@/lib/medusa/products"
 import { listCountryCodes } from "@/lib/medusa/regions"
@@ -40,7 +41,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...products.map((product) => ({ path: `/products/${product.handle}`, lastModified: product.updatedAt })),
   ]
 
-  return countries.flatMap((country) =>
+  // Delivery pages exist only in their own countries (content/local-delivery.ts) and point at each other.
+  const deliveryLanguages = Object.fromEntries([
+    ...LOCAL_DELIVERY_COUNTRIES.map((country) => [getLocalDelivery(country)!.locale, `${BASE_URL}/${country}/delivery`]),
+    ["x-default", `${BASE_URL}/gb/delivery`],
+  ])
+  const deliveryPages = LOCAL_DELIVERY_COUNTRIES.filter((country) => countries.includes(country)).map((country) => ({
+    url: `${BASE_URL}/${country}/delivery`,
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+    alternates: { languages: deliveryLanguages },
+  }))
+
+  return [...countries.flatMap((country) =>
     pages.map(({ path, lastModified }) => ({
       url: country === "us" && path === "" ? BASE_URL : `${BASE_URL}/${country}${path}`,
       ...(lastModified ? { lastModified } : {}),
@@ -49,5 +62,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...(path === "" ? { alternates: { languages: { ...storefrontLanguages(""), "en-US": BASE_URL, "x-default": BASE_URL } } }
         : path.startsWith("/products") || path === "/shop" ? { alternates: { languages: storefrontLanguages(path) } } : {}),
     }))
-  )
+  ), ...deliveryPages]
 }

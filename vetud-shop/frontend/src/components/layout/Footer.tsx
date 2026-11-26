@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
 import { cacheLife } from "next/cache"
 import { getTranslations } from "next-intl/server"
+import { getLocalDelivery } from "@/content/local-delivery"
 import { SITE } from "@/lib/config"
 import { brand, gutter } from "@/theme/tokens"
 import Icon from "../brand/Icon"
@@ -45,9 +46,11 @@ async function LinkColumn({ title, links }: { title: string; links: { label: str
   )
 }
 
-export default async function Footer() {
+/** `country`: the shop country, for its delivery page link where it has one (content/local-delivery.ts). */
+export default async function Footer({ country }: { country: string }) {
   const ct = await getContentTranslator()
   const t = await getTranslations("Footer")
+  const localDelivery = getLocalDelivery(country)
   return (
     <Box component="footer" sx={{ bgcolor: "brand.navyDeep", color: "brand.onNavy", borderTop: "1px solid", borderColor: brand.whiteA13, px: gutter, pt: { xs: 6, md: 8 }, pb: 4 }}>
       <Box sx={{ maxWidth: 1360, mx: "auto" }}>
@@ -72,7 +75,7 @@ export default async function Footer() {
             <LinkColumn title={t("explore")} links={FOOTER_LINKS.explore} />
           </Grid>
           <Grid size={{ xs: 6, md: 2.75 }}>
-            <LinkColumn title={t("information")} links={FOOTER_LINKS.information} />
+            <LinkColumn title={t("information")} links={localDelivery ? [{ label: localDelivery.linkLabel, href: "/delivery" }, ...FOOTER_LINKS.information] : FOOTER_LINKS.information} />
           </Grid>
           <Grid size={{ xs: 12, md: 2.75 }}>
             <LinkColumn title={t("legal")} links={FOOTER_LINKS.legal} />

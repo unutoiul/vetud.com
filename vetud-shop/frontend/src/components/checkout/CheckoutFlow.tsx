@@ -30,14 +30,14 @@ import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
 import { Suspense, useEffect, useMemo, useRef, useState } from "react"
 import { MAKEPAY_PROVIDER_ID, MAKEPAY_STORAGE, readMakePayRedirect } from "@/lib/makepay"
-import { PAYGATE_CARD, PAYGATE_CRYPTO, isPaygate, paygateAvailable, readPaygateRedirect, type PaygateConfig } from "@/lib/paygate"
+import { PAYGATE_CARD, PAYGATE_CRYPTO, isPaygate, readPaygateRedirect, type PaygateConfig } from "@/lib/paygate"
 import { SITE } from "@/lib/config"
 import { sdk } from "@/lib/medusa/sdk"
 import { useMoney } from "@/lib/money"
 import { hasShippingPrice } from "@/lib/shipping"
 import { serializeOrderReceipt } from "@/lib/order-receipt"
-import { NMI_PROVIDER_ID, nmiAvailable, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
-import { isCheckoutPaymentProvider } from "@/lib/payment-providers"
+import { NMI_PROVIDER_ID, nmiCartFingerprint, readNmiSession, type NmiConfig, type NmiToken } from "@/lib/nmi"
+import { isOfferedPaymentProvider } from "@/lib/payment-providers"
 import { AuthPanel } from "../account/AccountPage"
 import { useAccount } from "../account/AccountProvider"
 import { ButtonLink } from "../common/links"
@@ -309,11 +309,8 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     ])
       .then(([{ payment_providers }, config, paygate]) => {
         if (cancelled) return
-        setLoadedProviders({ key: providersKey, list: payment_providers.filter((provider) => {
-          if (!isCheckoutPaymentProvider(provider.id)) return false
-          if (isPaygate(provider.id)) return paygateAvailable(paygate, provider.id)
-          return provider.id !== NMI_PROVIDER_ID || nmiAvailable(config, cart.currency_code)
-        }) })
+        setLoadedProviders({ key: providersKey, list: payment_providers.filter((provider) =>
+          isOfferedPaymentProvider(provider.id, { nmi: config, paygate, currency: cart.currency_code })) })
       })
       .catch((err) => {
         if (cancelled) return
