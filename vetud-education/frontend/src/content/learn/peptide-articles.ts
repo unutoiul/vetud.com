@@ -88,7 +88,7 @@ export const PEPTIDE_ARTICLES: Article[] = [
     date: "2026-11-02",
     kind: "Study",
     topic: "Performance & growth",
-    headline: ["Tesamorelin cut ", "deep belly fat by 15%", " in its main trial"],
+    headline: ["In its main trial, tesamorelin reduced ", "deep belly fat by about 15%", " in people with HIV"],
     dek: "The growth-hormone-releasing medicine is approved for a narrow use in people with HIV. A later trial measured liver fat too.",
     art: "bars",
     glance: [
@@ -252,7 +252,7 @@ export const PEPTIDE_ARTICLES: Article[] = [
     kind: "Study",
     topic: "Longevity",
     headline: ["Epitalon lengthened telomeres in lab cells, ", "including cancer cells"],
-    dek: "A 2025 study found the anti-aging peptide extended the protective caps on chromosomes in normal and breast cancer cell lines, by two different routes.",
+    dek: "A 2025 study found the peptide, promoted for anti-aging, extended the protective caps on chromosomes in normal and breast cancer cell lines, by two different routes.",
     art: "cells",
     glance: [
       { label: "What was tested", value: "Normal human epithelial cells and fibroblasts, plus two breast cancer cell lines" },

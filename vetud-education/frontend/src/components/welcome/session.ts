@@ -1,4 +1,5 @@
 const DISMISSED_KEY = "vetud_education_welcome_dismissed"
+const CLOSED_KEY = "vetud_education_welcome_closed"
 export const WELCOME_COOLDOWN_MS = 30 * 1000
 
 /** A tab-scoped preference; it contains no signup or personal information. */
@@ -32,4 +33,24 @@ export function dismissWelcomeForSession(now = Date.now()) {
     // The caller still closes the splash in React when browser storage is blocked.
   }
   return until
+}
+
+/**
+ * Once skipped or closed, the newsletter offer stays closed for the rest of the visit (this tab).
+ * It used to return every 30 seconds; Meta treats repeated pop-ups as a disruptive landing page.
+ */
+export function welcomeClosedForVisit() {
+  try {
+    return window.sessionStorage.getItem(CLOSED_KEY) === "1"
+  } catch {
+    return false
+  }
+}
+
+export function closeWelcomeForVisit() {
+  try {
+    window.sessionStorage.setItem(CLOSED_KEY, "1")
+  } catch {
+    // The caller still keeps it closed in React when browser storage is blocked.
+  }
 }

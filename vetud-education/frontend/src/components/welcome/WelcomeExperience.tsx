@@ -6,13 +6,14 @@ import { subscribedInBrowser } from "../newsletter/subscription"
 import WelcomeSplash from "./WelcomeSplash"
 import EntrySplash from "./EntrySplash"
 import { entryVisitor, rememberEntryVisitor, type EntryVisitor } from "./entry-session"
-import { dismissWelcomeForSession, startWelcomeForSession } from "./session"
+import { closeWelcomeForVisit, dismissWelcomeForSession, startWelcomeForSession, welcomeClosedForVisit } from "./session"
 
 // Pages opened from an email link, where a full-screen sign-up would get in the way.
 const QUIET_PATHS = /^\/[^/]+\/(newsletter)(\/|$)/
 
 /**
- * Offer the email list thirty seconds after entry and after each dismissal, until subscribed.
+ * Offer the email list once per visit, thirty seconds after entry (owner, 2026-11-27: it used to
+ * return every 30 seconds until subscribed).
  * Check browser preferences before opening so navigation and reloads cannot flash the splash.
  */
 export default function WelcomeExperience() {
@@ -21,12 +22,14 @@ export default function WelcomeExperience() {
   const [subscribed, setSubscribed] = useState<boolean | null>(null)
   const [cooldownUntil, setCooldownUntil] = useState(0)
   const [thanking, setThanking] = useState(false)
+  const [closed, setClosed] = useState(false)
   const [visitor, setVisitor] = useState<EntryVisitor | null | undefined>(undefined)
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
       setCooldownUntil(value => Math.max(value, startWelcomeForSession()))
       setSubscribed(subscribedInBrowser())
+      setClosed(welcomeClosedForVisit())
       setVisitor(entryVisitor())
     })
     return () => window.cancelAnimationFrame(frame)
@@ -52,7 +55,7 @@ export default function WelcomeExperience() {
 
   const asking = subscribed === false && !QUIET_PATHS.test(pathname)
   // After signing up, the thank-you stays until it is closed, and the splash doesn't return.
-  const open = !!visitor && cooldownUntil === 0 && (asking || thanking)
+  const open = !!visitor && cooldownUntil === 0 && (thanking || (asking && !closed))
 
   return <>
     <EntrySplash open={visitor === null} onEnter={() => {
@@ -65,7 +68,8 @@ export default function WelcomeExperience() {
     <WelcomeSplash
       open={open}
       onDismiss={() => {
-        setCooldownUntil(dismissWelcomeForSession())
+        closeWelcomeForVisit()
+        setClosed(true)
         setThanking(false)
       }}
       onSubscribed={() => {

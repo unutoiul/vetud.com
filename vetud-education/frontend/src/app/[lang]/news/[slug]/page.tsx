@@ -19,7 +19,8 @@ import { getLearnIllustration } from "@/content/learn/illustrations"
 import { ARTICLE_SEARCH_TITLES } from "@/content/learn/search-titles"
 import { getPeptide } from "@/content/learn/peptides"
 import { getArticleVideoResources } from "@/content/learn/video-resources"
-import { articleMetadata, articleStructuredData, readingMinutes } from "@/lib/article-seo"
+import { articleMetadata, articleStructuredData, articleUrl, readingMinutes } from "@/lib/article-seo"
+import ShareLinks from "@/components/learn/ShareLinks"
 
 export function generateStaticParams() {
   return ARTICLES.map(article => ({ slug: article.slug }))
@@ -38,7 +39,7 @@ export default function ArticlePage({ params }: PageProps<"/[lang]/news/[slug]">
 async function ArticleContent({ params }: Pick<PageProps<"/[lang]/news/[slug]">, "params">) {
   const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
-  const { slug } = await params
+  const { lang, slug } = await params
   const article = getArticle(slug)
   if (!article) notFound()
   const peptides = article.peptides.flatMap(id => { const peptide = getPeptide(id); return peptide ? [peptide] : [] })
@@ -89,6 +90,7 @@ async function ArticleContent({ params }: Pick<PageProps<"/[lang]/news/[slug]">,
         <ReadingSection id="sources" title={ct("Sources and references")}>
           <SourceList sources={article.sources} />
           <Typography sx={{ mt: 3, fontSize: 14, lineHeight: 1.8, color: "brand.navySoft" }}>{ct(LEARN_DISCLAIMER)}</Typography>
+          <ShareLinks url={articleUrl(`/news/${article.slug}`, lang)} title={ct(title)} />
         </ReadingSection>
         <ReadingSection id="comments" title={ct("Comments")}><ArticleComments article={article.slug} /></ReadingSection>
       </ReadingLayout>

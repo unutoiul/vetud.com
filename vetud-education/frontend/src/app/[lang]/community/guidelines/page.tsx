@@ -69,7 +69,7 @@ export default function GuidelinesPage() {
             {HOW.map(item => <div key={item.title}><dt>{ct(item.title)}</dt><dd>{ct(item.text)}</dd></div>)}
           </Box>
         </Box>
-        <Typography sx={{ fontSize: 14, lineHeight: 1.7, color: "text.secondary" }}>{ct.rich("{v0} Questions about these guidelines? <slot0>{v1}</slot0>. Read the <slot1>{v2}</slot1> and <slot2>{v3}</slot2>.", { v0: ct(COMMUNITY_DISCLAIMER), v1: act("contact"), v2: act("researchPolicy"), v3: act("privacyPolicy") }, { slot0: chunks => <AppLink href="/contact" key="slot0">{chunks}</AppLink>, slot1: chunks => <AppLink href="/legal/research-use" key="slot1">{chunks}</AppLink>, slot2: chunks => <AppLink href="/legal/privacy" key="slot2">{chunks}</AppLink> })}</Typography>
+        <Typography sx={{ fontSize: 14, lineHeight: 1.7, color: "text.secondary" }}>{ct.rich("{v0} Questions about these guidelines? <slot0>{v1}</slot0>. Read the <slot1>{v2}</slot1> and <slot2>{v3}</slot2>.", { v0: ct(COMMUNITY_DISCLAIMER), v1: act("contact"), v2: act("researchPolicy"), v3: act("privacyPolicy") }, { slot0: chunks => <AppLink href="/contact" key="slot0">{chunks}</AppLink>, slot1: chunks => <AppLink href="/legal/disclaimer" key="slot1">{chunks}</AppLink>, slot2: chunks => <AppLink href="/legal/privacy" key="slot2">{chunks}</AppLink> })}</Typography>
         <Box><ButtonLink href="/community" variant="contained">{act("community")}</ButtonLink></Box>
       </Box>
     </Section>

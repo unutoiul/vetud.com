@@ -35,6 +35,8 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: SITE.description,
     openGraph: { siteName: SITE.name, type: "website" },
+    // Meta Business > Brand safety > Domains, "meta tag" method: paste only the content="…" value.
+    ...(process.env.FACEBOOK_DOMAIN_VERIFICATION ? { verification: { other: { "facebook-domain-verification": process.env.FACEBOOK_DOMAIN_VERIFICATION } } } : {}),
   })
 }
 

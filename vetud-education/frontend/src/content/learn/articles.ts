@@ -120,7 +120,7 @@ export const ARTICLES: Article[] = [
     date: "2026-10",
     kind: "Study",
     topic: "Skin",
-    headline: ["A cream that targets an “aging switch” ", "firmed skin in 12 weeks"],
+    headline: ["A cream targeting an “aging switch” ", "improved skin firmness", " in a 12-week trial"],
     dek: "In a controlled trial, a serum containing RLX-201 improved firmness, elasticity and sagging compared with the same cream without it.",
     art: "skin",
     glance: [
@@ -149,7 +149,7 @@ export const ARTICLES: Article[] = [
     date: "2026-10-01",
     kind: "Study",
     topic: "Weight management",
-    headline: ["A new injection makes ", "fat cells self-destruct", ", and might help stop weight coming back"],
+    headline: ["An experimental injection that destroys ", "fat cells", ": what an early MRI study found"],
     dek: "A small MRI analysis found a 12% reduction in visceral-fat volume, not body weight. A possible effect on weight regain after GLP-1 medicines is still an animal finding.",
     art: "cells",
     glance: [
@@ -208,8 +208,8 @@ export const ARTICLES: Article[] = [
     date: "2026-07-23",
     kind: "Study",
     topic: "Weight management",
-    headline: ["Two more wins for retatrutide, in people with ", "diabetes and heart disease"],
-    dek: "New phase 3 results show strong weight loss in people with type 2 diabetes or heart disease. Lilly plans to apply for US approval by early 2027.",
+    headline: ["Retatrutide’s next phase 3 trials, in people with ", "diabetes and heart disease"],
+    dek: "New phase 3 results report average weight loss of up to 20.8% and 22.6% in people with type 2 diabetes or heart disease. Retatrutide is still experimental; Lilly plans to apply for US approval by early 2027.",
     art: "bars",
     glance: [
       { label: "TRIUMPH-2", value: "1,152 adults with type 2 diabetes: up to 20.8% weight loss vs 4.0% on placebo" },
@@ -238,8 +238,8 @@ export const ARTICLES: Article[] = [
     date: "2026-05-21",
     kind: "Study",
     topic: "Weight management",
-    headline: ["Retatrutide’s first big trial: ", "28% weight loss", " in 80 weeks"],
-    dek: "Eli Lilly’s experimental “triple” hormone medicine helped people lose more than a quarter of their body weight on the top dose.",
+    headline: ["Retatrutide’s first big trial: ", "28% average weight loss", " on the top dose"],
+    dek: "Eli Lilly’s “triple” hormone medicine is experimental and not approved. In this supervised 80-week trial, people on the top dose lost more than a quarter of their body weight on average.",
     art: "triple",
     glance: [
       { label: "Who took part", value: "2,339 adults with obesity, or overweight plus a related health problem, without diabetes" },

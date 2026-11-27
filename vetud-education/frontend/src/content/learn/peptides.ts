@@ -463,7 +463,7 @@ export const PEPTIDES: PeptideProfile[] = [
     category: "skin",
     status: "early",
     statusNote: "Used in many skin creams and serums as a cosmetic ingredient. Not approved as a medicine; injected use is unregulated.",
-    oneLiner: "A copper-carrying peptide found in skin care for its anti-aging effects.",
+    oneLiner: "A copper-carrying peptide used in skin care, where it is marketed for anti-aging.",
     whatItIs: "GHK is a tiny peptide made of three amino acids (glycine, histidine and lysine) that occurs naturally in blood and saliva. It grabs copper, and this copper-bound form is called GHK-Cu. Levels in the body fall as we age.",
     howItWorks: "In lab studies it encourages skin cells to make collagen and other “scaffolding” proteins, and it affects many genes involved in repair.",
     findings: [

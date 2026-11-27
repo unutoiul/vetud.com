@@ -19,7 +19,7 @@ export type LegalDocument = {
 const EMAIL = SITE.email
 const OPERATOR = "Vetud LTD"
 const ADDRESS = "120 Kings Road, London SW6 3BX, United Kingdom"
-const UPDATED = "11 November 2026"
+const UPDATED = "27 November 2026"
 
 export const LEGAL_DOCUMENTS: LegalDocument[] = [
   {
@@ -30,7 +30,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     sections: [
       { heading: "Who is responsible", paragraphs: [`${OPERATOR}, ${ADDRESS}, runs this site and is responsible for your personal data. Contact us at ${EMAIL}.`] },
       { heading: "What we collect", paragraphs: [
-        "Account details: your name, email address and a protected version of your password.",
+        "Account details: your name and email address. You sign in with a one-time code we email you, so we store no password.",
         "What you publish: community posts, photos, votes, your display name and any biography. These are public.",
         "Email list: your address, your language, the wording you agreed to, and when you agreed and confirmed.",
         "Contact messages: your name, email address and whatever you write to us.",
@@ -41,7 +41,13 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       ] },
       { heading: "Who handles it for us", paragraphs: ["We use Vercel to host the website, Railway to host our servers and database, Resend to send email, and Microsoft Clarity to see how pages are used. They process data for us under their own security and data protection terms. Some may process it outside your country."] },
       { heading: "Browser storage", paragraphs: ["We keep your sign-in in your browser's local storage and your language choice in a cookie. We use no advertising cookies.", "We use Microsoft Clarity to see how people use the site (clicks, scrolling and recordings of visits) so we can improve it. Anything you type is hidden, and your account page is hidden in full. If your browser is set to a European time zone, Clarity uses no cookies; elsewhere it sets analytics cookies."] },
-      { heading: "How long we keep it", paragraphs: ["[Retention periods to be confirmed.] You can unsubscribe from the email list at any time using the link in our emails."] },
+      { heading: "Videos and sharing", paragraphs: ["Videos on this site are hosted by YouTube. They load from youtube-nocookie.com only when you press play; YouTube (Google) then receives data under its own privacy policy.", "The share buttons are ordinary links. Nothing is sent to Facebook, X or WhatsApp unless you click one, and then that service's own privacy policy applies. We use no Facebook or Meta tracking."] },
+      { heading: "How long we keep it", paragraphs: [
+        "Your account and what you publish: until you delete your account or ask us to delete them.",
+        "Email list: until you unsubscribe, using the link in any of our emails. We keep the record of your agreement for as long as we may need to show it.",
+        "Contact messages: up to 24 months.",
+        "Microsoft Clarity keeps visit recordings for 30 days and usage summaries for up to 13 months. Server logs are kept for the short periods our hosts set.",
+      ] },
       { heading: "Your rights", paragraphs: [`Depending on where you live, you can ask to see, correct, delete or move your data, object to how we use it, or withdraw consent. Write to ${EMAIL}. You can also complain to your data protection authority.`] },
     ],
   },
@@ -53,13 +59,17 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
     sections: [
       { heading: "About this site", paragraphs: [`This site is run by ${OPERATOR}. It explains published peptide research for education. By using it you accept these terms.`] },
       { heading: "Not medical advice", paragraphs: ["Nothing here is medical advice, a diagnosis or a recommendation to use any substance. See our medical disclaimer."] },
-      { heading: "Your account", paragraphs: ["Keep your password private. You are responsible for what is posted from your account. You must be at least 18 to create one."] },
+      { heading: "Your account", paragraphs: ["Sign-in codes are sent to your email, so keep your email account secure. You are responsible for what is posted from your account. You must be at least 18 to create one."] },
       { heading: "What you post", paragraphs: [
         "You keep ownership of what you post. You give us a worldwide, royalty-free licence to host, display and moderate it on this site for as long as it stays here.",
         "Follow the community guidelines. Do not post doses, personal protocols, medical claims, or anything unlawful, abusive or misleading. We may hold, edit, hide or remove posts and suspend accounts.",
       ] },
       { heading: "Accuracy", paragraphs: ["We work to keep our guides accurate and sourced, but research changes and we cannot promise that everything is complete or current."] },
-      { heading: "Liability and law", paragraphs: ["[Liability wording and governing law to be confirmed by a lawyer.]"] },
+      { heading: "Liability and law", paragraphs: [
+        "We provide this site for general education, without warranties. As far as the law allows, we are not liable for loss arising from using the site, relying on its content, or posts by community members.",
+        "Nothing in these terms limits liability that the law does not allow us to limit, such as for death or personal injury caused by negligence, or for fraud.",
+        "These terms are governed by the law of England and Wales, and its courts have jurisdiction. If you live elsewhere, you keep the protection of your local consumer law.",
+      ] },
     ],
   },
   {

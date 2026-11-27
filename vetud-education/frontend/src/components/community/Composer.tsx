@@ -125,7 +125,7 @@ export default function Composer() {
     </Box>
 
     <TextField label={act("title")} value={title} onChange={event => setTitle(event.target.value.slice(0, 140))} required fullWidth
-      placeholder={ct(kind === "question" ? "e.g. How do you store vials after opening?" : "")}
+      placeholder={ct(kind === "question" ? "e.g. What did the trials report about side effects?" : "")}
       helperText={`${title.length}/140`} slotProps={{ htmlInput: { maxLength: 140 } }} />
 
     <TextField label={ct(kind === "question" ? act("questionPrompt") : act("discussionPrompt"))} value={body} onChange={event => setBody(event.target.value.slice(0, 10000))} required multiline minRows={6} fullWidth

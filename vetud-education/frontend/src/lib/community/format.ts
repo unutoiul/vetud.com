@@ -32,7 +32,7 @@ export const HOLD_MESSAGES: Record<string, string> = {
 
 /** The short version of /community/guidelines, shown when joining and posting. */
 export const GUIDELINE_SUMMARY = [
-  "Never share doses, dosing schedules or sources outside Vetud.",
+  "Never share doses, dosing schedules, or where to buy anything.",
   "Share observations, not medical advice. Encourage others to talk to a doctor.",
   "Be accurate: cite your sources and say when something is a guess.",
   "Your community name, posts and photos are public.",

@@ -19,7 +19,6 @@ const nextConfig: NextConfig = {
     return [
       // Temporary until the launch has settled, because browsers keep permanent redirects.
       ...oldAddressRedirects({
-        shopUrl: (process.env.NEXT_PUBLIC_SHOP_URL || "").replace(/\/$/, ""),
         permanent: process.env.REDIRECTS_PERMANENT === "true",
       }),
       // The Medusa Admin lives on the backend under /app.

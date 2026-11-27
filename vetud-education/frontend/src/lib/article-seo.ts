@@ -33,7 +33,7 @@ export async function articleMetadata({ title, description, path, image }: {
     title: { absolute: `${title} | VETUD Learn` }, description,
     alternates: { canonical: url, languages: articleLanguages(path) },
     authors: [{ name: "VETUD Learn", url: articleUrl("/learn", language) }],
-    openGraph: { type: "article", siteName: "VETUD Peptides Education", locale: openGraphLocale, title, description, url, images },
+    openGraph: { type: "article", siteName: "VETUD Learn", locale: openGraphLocale, title, description, url, images },
     twitter: { card: "summary_large_image", title, description, images: images.map(image => image.url) },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
   }

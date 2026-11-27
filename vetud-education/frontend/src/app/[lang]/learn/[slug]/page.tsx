@@ -29,7 +29,8 @@ import { getPlannedPeptide, PLANNED_PEPTIDES } from "@/content/learn/planned-pep
 import PlannedGuide from "@/components/learn/PlannedGuide"
 import { getProfileVideoResources } from "@/content/learn/video-resources"
 import { WEIGHT_LOSS_TRIALS } from "@/content/learn/weight-loss-trials"
-import { articleMetadata, articleStructuredData, readingMinutes } from "@/lib/article-seo"
+import { articleMetadata, articleStructuredData, articleUrl, readingMinutes } from "@/lib/article-seo"
+import ShareLinks from "@/components/learn/ShareLinks"
 
 const GUIDES_WITH_FILMS = new Set(["tirzepatide", "cagrilintide", "survodutide"])
 
@@ -152,6 +153,7 @@ async function PeptideProfilePage({ params }: Pick<PageProps<"/[lang]/learn/[slu
         <ReadingSection id="sources" title={ct("Sources and references")}>
           <SourceList sources={peptide.sources} />
           <Typography sx={{ mt: 3, fontSize: 14, lineHeight: 1.8, color: "brand.navySoft" }}>{ct(LEARN_DISCLAIMER)}</Typography>
+          <ShareLinks url={articleUrl(`/learn/${peptide.slug}`, lang)} title={ct(title)} />
         </ReadingSection>
       </ReadingLayout>
     </Box>

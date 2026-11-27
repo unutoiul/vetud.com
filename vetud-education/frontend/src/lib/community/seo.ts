@@ -19,7 +19,7 @@ export async function communityMetadata({ title, description, path, index = true
     title: { absolute: ct.template("{v0} | VETUD Community", { v0: title }, { translateValues: false }) },
     description,
     alternates: { canonical: url, ...(memberContent ? {} : { languages: articleLanguages(path) }) },
-    openGraph: { type, siteName: ct("VETUD Peptides Community"), locale: openGraphLocale, title, description, url, images: [SHARE_IMAGE] },
+    openGraph: { type, siteName: ct("VETUD Community"), locale: openGraphLocale, title, description, url, images: [SHARE_IMAGE] },
     twitter: { card: "summary_large_image", title, description, images: [SHARE_IMAGE.url] },
     robots: index && !translatedCopy ? { index: true, follow: true } : { index: false, follow: true },
   }

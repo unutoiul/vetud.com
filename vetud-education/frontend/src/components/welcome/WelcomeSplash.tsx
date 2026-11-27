@@ -4,11 +4,12 @@ import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import CircularProgress from "@mui/material/CircularProgress"
 import Dialog from "@mui/material/Dialog"
+import IconButton from "@mui/material/IconButton"
 import { alpha, keyframes, type SxProps, type Theme } from "@mui/material/styles"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useTranslations } from "next-intl"
-import { useRef, useState, type FormEvent } from "react"
+import { useEffect, useRef, useState, type FormEvent } from "react"
 import { getArticle } from "@/content/learn/articles"
 import { getLearnIllustration } from "@/content/learn/illustrations"
 import { useContentTranslator } from "@/i18n/use-content-translator"
@@ -26,7 +27,7 @@ import SplashBackdrop from "./SplashBackdrop"
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /** Real stories from the site, shown in the newsletter preview. */
-const PREVIEW_ARTICLES = ["retatrutide-triumph-1-28-percent", "bpc-157-human-evidence", "copper-peptides-hair-growth"]
+const PREVIEW_ARTICLES = ["wegovy-pill-approved", "fda-advisers-review-bpc-157-and-six-peptides", "from-cells-to-human-trials"]
 
 const arrival = keyframes`
   from { opacity: 0; transform: translateY(8px); }
@@ -39,8 +40,30 @@ const shine = keyframes`
   100% { transform: translateX(110%); }
 `
 
+/** How long the "check your inbox" message stays before the window closes itself. */
+const SUCCESS_MS = 2000
+
+// The success mark: the ring draws itself, then the tick, then a soft pulse.
+const drawRing = keyframes`
+  from { stroke-dashoffset: 164; }
+  to { stroke-dashoffset: 0; }
+`
+const drawTick = keyframes`
+  from { stroke-dashoffset: 30; }
+  to { stroke-dashoffset: 0; }
+`
+const pulse = keyframes`
+  from { transform: scale(.85); opacity: .6; }
+  to { transform: scale(1.6); opacity: 0; }
+`
+// The thin line along the bottom of the window shows the time left before it closes.
+const countdown = keyframes`
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+`
+
 // A centred window over the page (not a full screen), so the site stays in view behind it.
-const screenSx: SxProps<Theme> = {
+const screenSx = {
   position: "relative",
   display: "flex",
   flexDirection: "column",
@@ -59,14 +82,34 @@ const screenSx: SxProps<Theme> = {
   "& a:focus-visible, & button:focus-visible": { outline: `2px solid ${brand.cyan}`, outlineOffset: 4 },
 }
 
-const descriptionSx: SxProps<Theme> = { maxWidth: 450, color: "brand.onNavyMuted", fontSize: { xs: 15, sm: 16 }, lineHeight: 1.75 }
+const noMotion = "@media (prefers-reduced-motion: reduce)"
 
-/** The success screen's plain Close button. */
-const primaryButtonSx = {
-  bgcolor: "brand.mintLight",
-  color: "brand.navy",
-  "&:hover": { bgcolor: "brand.onNavy" },
-  "&.Mui-disabled": { bgcolor: "brand.navySoft", color: "brand.onNavyMuted" },
+/** The message shown after joining: a tick that draws itself, a short line and the address used. */
+function JoinedMessage({ email, title, text }: { email: string; title: string; text: string }) {
+  return <Box
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+    sx={{ position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", textAlign: "center", p: { xs: "4px 20px 36px", sm: "4px 40px 44px" }, animation: `${arrival} 400ms ease-out both` }}
+  >
+    <Box aria-hidden sx={{ position: "relative", width: 72, height: 72, mb: 2.5 }}>
+      <Box sx={{ position: "absolute", inset: 0, borderRadius: "50%", bgcolor: alpha(brand.cyan, .3), animation: `${pulse} 900ms 600ms ease-out both`, [noMotion]: { display: "none" } }} />
+      <Box component="svg" viewBox="0 0 56 56" sx={{
+        position: "relative", display: "block", width: 72, height: 72,
+        "& circle": { strokeDasharray: 164, transform: "rotate(-90deg)", transformOrigin: "center", animation: `${drawRing} 550ms ease-out both` },
+        "& path": { strokeDasharray: 30, animation: `${drawTick} 320ms 420ms ease-out both` },
+        [noMotion]: { "& circle, & path": { animation: "none" } },
+      }}>
+        <circle cx="28" cy="28" r="26" fill={alpha(brand.cyan, .14)} stroke={brand.cyan} strokeWidth="2.5" />
+        <path d="M17 29l8 8 15-16" fill="none" stroke={brand.cyan} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+      </Box>
+    </Box>
+    <Typography id="welcome-title" variant="h2" sx={{ fontSize: { xs: 30, sm: 38 }, lineHeight: 1.08, letterSpacing: "-.05em" }}>{title}</Typography>
+    <Typography id="welcome-description" sx={{ mt: 1.25, maxWidth: 380, color: "brand.onNavyMuted", fontSize: { xs: 15, sm: 16 }, lineHeight: 1.6 }}>
+      {text}
+      {email ? <Box component="span" sx={{ display: "block", mt: .5, color: "brand.onNavy", fontWeight: 600, overflowWrap: "anywhere" }}>{email}</Box> : null}
+    </Typography>
+  </Box>
 }
 
 /**
@@ -153,6 +196,17 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const submitting = useRef(false)
   const form = useRef<HTMLFormElement>(null)
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
+  const joined = status === "success"
+
+  // After joining, the message shows for SUCCESS_MS and the window closes itself. The ref keeps the
+  // timer from restarting when the parent re-renders with a new onDismiss.
+  const dismiss = useRef(onDismiss)
+  useEffect(() => { dismiss.current = onDismiss })
+  useEffect(() => {
+    if (!joined) return
+    const timer = window.setTimeout(() => dismiss.current(), SUCCESS_MS)
+    return () => window.clearTimeout(timer)
+  }, [joined])
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -186,7 +240,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
     maxWidth={false}
     aria-labelledby="welcome-title"
     aria-describedby="welcome-description"
-    slotProps={{ paper: { sx: screenSx }, backdrop: { sx: { bgcolor: alpha(brand.navyDeep, .55), backdropFilter: "blur(6px)" } } }}
+    slotProps={{ paper: { sx: joined ? { ...screenSx, maxWidth: 520 } : screenSx }, backdrop: { sx: { bgcolor: alpha(brand.navyDeep, .55), backdropFilter: "blur(6px)" } } }}
   >
     <SplashBackdrop primary="/images/learn/spotlights/retatrutide.webp" secondary="/images/learn/spotlights/tirzepatide.webp" />
     {/* The logo and "Skip for now" stay put at the top; only the content below scrolls on short screens. */}
@@ -202,7 +256,9 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
       "& > span": { minWidth: 0 },
     }}>
       <Logo tone="light" />
-      <HoldButton onConfirm={onDismiss} hint="short" fill={alpha(brand.cyan, .24)} startIcon={<Icon name="close" />} sx={{
+      {joined ? <IconButton onClick={onDismiss} aria-label={actions("close")} sx={{ color: "brand.onNavyMuted", "&:hover": { color: "brand.onNavy", bgcolor: "brand.navy" } }}>
+        <Icon name="close" sx={{ fontSize: 20 }} />
+      </IconButton> : <HoldButton onConfirm={onDismiss} hint="short" fill={alpha(brand.cyan, .24)} startIcon={<Icon name="close" />} sx={{
         flexShrink: 0,
         p: { xs: "8px", sm: "8px 12px" },
         minHeight: 44,
@@ -210,9 +266,13 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         fontSize: { xs: 12, sm: 13 },
         "& .MuiButton-startIcon": { mr: 1 },
         "&:hover": { color: "brand.onNavy", bgcolor: "brand.navy" },
-      }}>{ct("Skip for now")}</HoldButton>
+      }}>{ct("Skip for now")}</HoldButton>}
     </Box>
-    <Box sx={{
+    {joined ? <>
+      <JoinedMessage email={email.trim()} title={ct("You're in. Check your inbox.")} text={ct("Tap the link we just sent to confirm your email:")} />
+      {/* Time left before the window closes itself. */}
+      <Box aria-hidden sx={{ position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 2, height: 3, bgcolor: "brand.cyan", transformOrigin: "left", animation: `${countdown} ${SUCCESS_MS}ms linear both` }} />
+    </> : <Box sx={{
       position: "relative",
       zIndex: 1,
       display: "flex",
@@ -249,19 +309,11 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
           <Typography sx={{ mb: { xs: .75, md: 2.25 }, color: "brand.cyan", fontSize: { xs: 12, md: 13 }, fontWeight: 600 }}>{ct("The VETUD research newsletter")}</Typography>
           <Typography id="welcome-title" variant="h2" sx={{
             maxWidth: 490,
-            mb: status === "success" ? 2.25 : 0,
             fontSize: { xs: "clamp(26px, 7.6vw, 30px)", sm: 42, md: "clamp(40px, 3.6vw, 52px)" },
             lineHeight: 1.08,
             letterSpacing: "-.055em",
-          }}>{ct(status === "success" ? "Check your inbox." : "Peptide science. Made simple.")}</Typography>
+          }}>{ct("Peptide science. Made simple.")}</Typography>
 
-          {status === "success" ? <div role="status" aria-live="polite" aria-atomic="true">
-            <Box sx={{ display: "grid", placeItems: "center", width: 52, height: 52, my: 2.75, borderRadius: "50%", bgcolor: "brand.navy", color: "brand.cyan" }}><Icon name="check" sx={{ fontSize: 28 }} /></Box>
-            <Typography id="welcome-description" sx={descriptionSx}>{ct("We've sent you a link to confirm your email. Explore our peptide guides and meet the community in the meantime.")}</Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mt: 3.25 }}>
-              <Button variant="contained" onClick={onDismiss} sx={primaryButtonSx}>{actions("close")}</Button>
-            </Box>
-          </div> : <>
             <Box component="form" ref={form} onSubmit={handleSubmit} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 2, md: 3.75 } }}>
               <TextField
                 label={offerText("email")}
@@ -296,9 +348,8 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
                 <AppLink href="/legal/privacy" target="_blank" rel="noopener" sx={privacyLinkSx}>{footerText("privacy")}</AppLink>
               </Typography>
             </Box>
-          </>}
         </Box>
       </Box>
-    </Box>
+    </Box>}
   </Dialog>
 }

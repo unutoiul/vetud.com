@@ -58,7 +58,7 @@ export default function WeightLossChart({ highlight }: { highlight?: string }) {
             <Box key={`${trial.trial}-${trial.dose}`} sx={{ display: "contents" }}>
               <Box sx={{ pt: { xs: 2.5, md: 2 }, pb: { md: 2 }, borderTop: { md: "1px solid" }, borderColor: { md: "divider" }, opacity: muted ? .5 : 1 }}>
                 <Typography sx={{ fontWeight: 650, fontSize: 15 }}><AppLink href={`/learn/${trial.peptide}`} underline="hover" sx={{ fontWeight: "inherit", color: "inherit" }}>{ct(trial.medicine)}</AppLink> <Box component="span" sx={{ fontWeight: 400, color: "text.secondary" }}>· {ct(trial.status)}</Box></Typography>
-                <Typography sx={{ fontSize: 12.5, color: "text.secondary", lineHeight: 1.5 }}>{ct(trial.dose)}<br />{ct(trial.trial)} · {ct.count(trial.weeks, "week")} · {ct.count(trial.people, "person", "people")}</Typography>
+                <Typography sx={{ fontSize: 12.5, color: "text.secondary", lineHeight: 1.5 }}>{ct.template("Dose tested in the trial: {v0}", { v0: ct(trial.dose) }, { translateValues: false })}<br />{ct(trial.trial)} · {ct.count(trial.weeks, "week")} · {ct.count(trial.people, "person", "people")}</Typography>
               </Box>
               <Box sx={{ position: "relative", py: { xs: 1, md: 2 }, borderTop: { md: "1px solid" }, borderColor: { md: "divider" }, opacity: muted ? .5 : 1, display: "grid", alignContent: "center" }}>
                 <Box sx={{ borderLeft: `1px solid ${brand.lineStrong}`, display: "grid", rowGap: "2px", mr: 6,
