@@ -15,14 +15,6 @@ export default function BookLanding({ buyBox }: { buyBox: ReactNode }) {
     { title: ct("Check your email"), text: ct("Your download link arrives by email after payment. Stripe sends your receipt separately.") },
     { title: ct("Download and read"), text: ct("Save the PDF to your phone, tablet or computer. Keep the email to download it again.") },
   ]
-  const questions = [
-    { q: ct("What's in the book?"), a: ct("32 peptides, grouped by what they're studied for. For each one: what it is, how it works, and what the research says so far, in plain words.") },
-    { q: ct("Is this medical advice?"), a: ct("No. The book explains published research for education. It gives no doses and doesn't tell you to use anything. Talk to a doctor before starting, stopping or changing any treatment.") },
-    { q: ct("How do I get the book?"), a: ct("After you pay, we email you a link to download the PDF. Keep the email: the link keeps working if you need the book again.") },
-    { q: ct("Why might I see another currency?"), a: ct("The price is US$4.99. Stripe may offer to show it in your own currency; you can choose either at checkout.") },
-    { q: ct("Who handles the payment?"), a: ct("Stripe sells the book for us as our reseller. It takes the payment, handles any sales tax or VAT and emails your receipt. We never see your card details.") },
-    { q: ct("What if something goes wrong?"), a: ct("If the email doesn't arrive or the file doesn't open, write to contact@vetud.com and we'll fix it or refund you.") },
-  ]
 
   return <article className={styles.page} aria-labelledby="book-title">
     <section className={styles.hero}>
@@ -97,21 +89,6 @@ export default function BookLanding({ buyBox }: { buyBox: ReactNode }) {
             <div><h3>{step.title}</h3><p>{step.text}</p></div>
           </li>)}
         </ol>
-      </div>
-    </section>
-
-    <section className={styles.section} aria-labelledby="questions-title">
-      <div className={styles.split}>
-        <div className={styles.sectionIntro}>
-          <h2 id="questions-title">{ct("Before you buy")}</h2>
-          <a href="#buy" className={styles.textLink}>{ct.template("Get the PDF for {v0}", { v0: BOOK.price }, { translateValues: false })}<Icon name="arrowRight" /></a>
-        </div>
-        <div className={styles.index}>
-          {questions.map(item => <details key={item.q} className={styles.question}>
-            <summary>{item.q}<Icon name="chevronDown" className={styles.chevron} /></summary>
-            <p>{item.a}</p>
-          </details>)}
-        </div>
       </div>
     </section>
 

@@ -41,7 +41,7 @@
   font-size: 14px;
 }
 .edition svg, .textLink svg, .supportLink svg { font-size: 18px; }
-.intro .lead, .sectionIntro p, .steps p, .question p, .support p, .entries p {
+.intro .lead, .sectionIntro p, .steps p, .support p, .entries p {
   color: var(--secondary);
   line-height: 1.65;
 }
@@ -135,7 +135,7 @@
 .sectionIntro p { margin-top: 16px; max-width: 34ch; }
 .sectionIntro .textLink { margin-top: 12px; }
 .index { border-top: 1px solid var(--line); }
-.topic, .question { border-bottom: 1px solid var(--line); }
+.topic { border-bottom: 1px solid var(--line); }
 .page summary {
   display: flex;
   align-items: center;
@@ -208,8 +208,6 @@
 }
 .steps h3 { font-size: 18px; font-weight: 650; line-height: 32px; }
 .steps p { margin-top: 6px; font-size: 15px; max-width: 40ch; }
-.question summary { justify-content: space-between; min-height: 62px; font-size: 17px; font-weight: 600; }
-.question p { padding: 0 28px 20px 4px; }
 .support { background: #edf3fb; }
 .supportInner { padding-block: 30px; display: flex; align-items: center; gap: 18px; }
 .supportIcon { border-radius: 50%; background: white; width: 52px; height: 52px; }
