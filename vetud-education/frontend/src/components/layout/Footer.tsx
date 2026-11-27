@@ -38,7 +38,7 @@ export default async function Footer() {
   return (
     <Box component="footer" sx={{ bgcolor: "brand.navyDeep", color: "brand.onNavy", borderTop: "1px solid", borderColor: brand.whiteA13, px: gutter, pt: { xs: 6, md: 8 }, pb: 4 }}>
       <Box sx={{ maxWidth: 1360, mx: "auto" }}>
-        <Stack direction={{ xs: "column", md: "row" }} sx={{ justifyContent: "space-between", alignItems: { md: "center" }, gap: 3, pb: { xs: 5, md: 7 }, mb: { xs: 5, md: 7 }, borderBottom: `1px solid ${brand.whiteA13}` }}>
+        <Stack data-footer-invitation direction={{ xs: "column", md: "row" }} sx={{ justifyContent: "space-between", alignItems: { md: "center" }, gap: 3, pb: { xs: 5, md: 7 }, mb: { xs: 5, md: 7 }, borderBottom: `1px solid ${brand.whiteA13}` }}>
           <Box><Typography variant="mono" component="p" sx={{ fontSize: 10, letterSpacing: ".16em", color: "brand.onNavyMuted", mb: 2 }}>{t("tagline")}</Typography><Typography component="h2" sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 400, letterSpacing: "-.045em", lineHeight: 1.2 }}>{t("title")}</Typography></Box>
           <ButtonLink href="/contact" variant="outlined" endIcon={<Icon name="arrowUpRight" />} sx={{ alignSelf: { xs: "flex-start", md: "center" }, borderColor: brand.whiteA33, color: brand.white, "&:hover": { bgcolor: brand.whiteA07, borderColor: brand.white } }}>{t("talk")}</ButtonLink>
         </Stack>

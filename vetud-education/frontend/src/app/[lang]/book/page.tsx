@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
  */
 export default function BookPage() {
   return <BookLanding buyBox={
-    <Suspense fallback={<Skeleton variant="rounded" height={360} sx={{ borderRadius: "22px" }} />}>
+    <Suspense fallback={<Skeleton variant="rounded" height={188} sx={{ mt: 2.5, borderRadius: "8px" }} />}>
       <Box data-clarity-mask="True"><BookBuyBox /></Box>
     </Suspense>
   } />

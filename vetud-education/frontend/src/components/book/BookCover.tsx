@@ -1,10 +1,13 @@
 "use client"
 
 import Box from "@mui/material/Box"
+import IconButton from "@mui/material/IconButton"
 import { alpha, type SxProps, type Theme } from "@mui/material/styles"
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
+import Icon from "../brand/Icon"
 import { BOOK } from "./book"
 
 /**
@@ -24,16 +27,20 @@ function canPlayFilm() {
  * The Peptides Explained book, standing on a soft glow. The still cover shows first; where the browser
  * can, the animated cover (ribbons moving) fades in over it. Size it with `sx` (maxWidth).
  */
-export default function BookCover({ alt, sizes, priority, sx }: { alt: string; sizes: string; priority?: boolean; sx?: SxProps<Theme> }) {
+export default function BookCover({ alt, sizes, priority, controlMotion = false, sx }: { alt: string; sizes: string; priority?: boolean; controlMotion?: boolean; sx?: SxProps<Theme> }) {
+  const ct = useContentTranslator()
   const [film, setFilm] = useState(false)
   const [playing, setPlaying] = useState(false)
+  const [requested, setRequested] = useState(false)
+  const showFilm = film && (!controlMotion || requested)
+  const motionLabel = requested ? ct("Stop cover animation") : ct("Play cover animation")
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => setFilm(canPlayFilm()))
     return () => window.cancelAnimationFrame(frame)
   }, [])
 
-  return <Box sx={[{
+  return <><Box sx={[{
     position: "relative",
     width: "100%",
     mx: "auto",
@@ -49,20 +56,29 @@ export default function BookCover({ alt, sizes, priority, sx }: { alt: string; s
     },
     "& img, & video": { filter: `drop-shadow(0 24px 30px ${alpha(brand.navyDeep, .6)})` },
   }, ...(Array.isArray(sx) ? sx : [sx])]}>
-    <Image src={BOOK.cover} alt={alt} fill priority={priority} sizes={sizes} style={{ objectFit: "contain", opacity: playing ? 0 : 1, transition: "opacity .4s ease" }} />
-    {film ? <Box
+    <Image src={BOOK.cover} alt={alt} fill preload={priority} sizes={sizes} style={{ objectFit: "contain", opacity: showFilm && playing ? 0 : 1, transition: "opacity .4s ease" }} />
+    {showFilm ? <Box
       component="video"
       src={BOOK.film}
       autoPlay
       muted
       loop
       playsInline
+      disablePictureInPicture
+      disableRemotePlayback
       preload="auto"
       aria-hidden
       // React doesn't always set the muted property, and browsers only autoplay muted video.
       ref={(element: HTMLVideoElement | null) => { if (element) element.muted = true }}
       onPlaying={() => setPlaying(true)}
-      sx={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", opacity: playing ? 1 : 0, transition: "opacity .4s ease" }}
+      onError={() => setFilm(false)}
+      sx={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", pointerEvents: "none", opacity: playing ? 1 : 0, transition: "opacity .4s ease" }}
     /> : null}
   </Box>
+    {controlMotion && film && <IconButton aria-label={motionLabel} title={motionLabel}
+      onClick={() => { setPlaying(false); setRequested(!requested) }}
+      sx={{ position: "absolute", right: 8, bottom: 8, color: "brand.navyDeep", bgcolor: "brand.whiteA80", border: 1, borderColor: "brand.slate125", "&:hover": { bgcolor: "white" } }}>
+      <Icon name={requested ? "pause" : "play"} sx={{ fontSize: 18 }} />
+    </IconButton>}
+  </>
 }
