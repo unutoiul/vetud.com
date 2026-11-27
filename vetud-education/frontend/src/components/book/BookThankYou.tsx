@@ -68,7 +68,7 @@ export default function BookThankYou() {
         </Typography>
         <Box component="ol" sx={{ listStyle: "none", p: 0, m: "20px 0 0", display: "grid", gap: 1 }}>
           <Box component="li" sx={stepSx}><Box component="span" sx={numberSx}>1</Box>{ct("Open the email \"Your copy of Peptides Explained\". It usually arrives within a minute.")}</Box>
-          <Box component="li" sx={stepSx}><Box component="span" sx={numberSx}>2</Box>{ct("Press \"Download the book\" to save the PDF.")}</Box>
+          <Box component="li" sx={stepSx}><Box component="span" sx={numberSx}>2</Box>{ct("Press \"Open your book\": it opens the book's Google Drive folder, where you can download the PDF.")}</Box>
           <Box component="li" sx={stepSx}><Box component="span" sx={numberSx}>3</Box>{ct("Keep the email: the link works again whenever you need it.")}</Box>
         </Box>
         <Typography sx={{ mt: 2.5, color: "brand.onNavyMuted", fontSize: 13, lineHeight: 1.6 }}>

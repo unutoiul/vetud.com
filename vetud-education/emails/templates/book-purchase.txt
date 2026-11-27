@@ -2,12 +2,12 @@ Thank you for buying Peptides Explained
 
 Your payment went through. Here's how to get your book:
 
-1. Open the download link below.
-2. The PDF opens or saves to your device. On a phone, look in Files or Downloads.
+1. Open the link below. It opens the book's Google Drive folder.
+2. Tap the PDF, then the download arrow to save it. You don't need a Google account.
 3. Read it with any PDF reader, on your phone, tablet or computer.
 
-Download the book: {{{DOWNLOAD_URL}}}
+Open your book: {{{DOWNLOAD_URL}}}
 
-Keep this email: the link keeps working, so you can download the book again whenever you need it.
+Keep this email: the link keeps working, so you can download the book again whenever you need it. Please don't share it.
 
 Your receipt comes separately from Stripe, which handles the payment for us. Questions? Reply to this email or write to contact@vetud.com.
