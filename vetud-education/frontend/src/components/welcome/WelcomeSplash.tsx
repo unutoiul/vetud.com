@@ -9,16 +9,17 @@ import { alpha, keyframes, type SxProps, type Theme } from "@mui/material/styles
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useTranslations } from "next-intl"
-import { useEffect, useRef, useState, type FormEvent } from "react"
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react"
 import { getArticle } from "@/content/learn/articles"
 import { getLearnIllustration } from "@/content/learn/illustrations"
 import { useContentTranslator } from "@/i18n/use-content-translator"
+import OwnStyleSheet from "@/theme/OwnStyleSheet"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { AppLink } from "../common/links"
 import { subscribeToEmailList } from "../newsletter/subscription"
-import { BOOK, requestBook } from "../book/book"
+import { BOOK, requestBook, startBookCheckout } from "../book/book"
 import BookCover from "../book/BookCover"
 import { useLanguage } from "../common/language"
 import Button from "@mui/material/Button"
@@ -87,7 +88,7 @@ const screenSx = {
 const noMotion = "@media (prefers-reduced-motion: reduce)"
 
 /** The message shown after joining: a tick that draws itself, a short line and the address used. */
-function JoinedMessage({ email, title, text }: { email: string; title: string; text: string }) {
+function JoinedMessage({ email, title, text, children }: { email: string; title: string; text: string; children?: ReactNode }) {
   return <Box
     role="status"
     aria-live="polite"
@@ -111,10 +112,11 @@ function JoinedMessage({ email, title, text }: { email: string; title: string; t
       {text}
       {email ? <Box component="span" sx={{ display: "block", mt: .5, color: "brand.onNavy", fontWeight: 600, overflowWrap: "anywhere" }}>{email}</Box> : null}
     </Typography>
+    {children}
   </Box>
 }
 
-/** What the window offers: the newsletter, or the $4.99 PDF book (email first; payment is on the page the email links to). */
+/** What the window offers: the newsletter, or the $4.99 PDF book (email first; then pay at once, or later from the emailed link). */
 export type WelcomeOffer = "newsletter" | "book"
 
 /**
@@ -199,11 +201,15 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
   const [website, setWebsite] = useState("")
   const [showErrors, setShowErrors] = useState(false)
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
+  const [payStatus, setPayStatus] = useState<"idle" | "opening" | "error">("idle")
   const submitting = useRef(false)
   const form = useRef<HTMLFormElement>(null)
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
   const joined = status === "success"
   const book = offer === "book"
+  // Rendered only once it has opened, so all its styles arrive together when it opens.
+  const [present, setPresent] = useState(open)
+  if (open && !present) setPresent(true)
 
   // After joining the newsletter, the message shows for SUCCESS_MS and the window closes itself. The
   // book's "check your email" message stays until it is closed. The ref keeps the timer from
@@ -243,7 +249,22 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
     }
   }
 
-  return <Dialog
+  // The book: once the email with the pay link is sent, they can also pay at once. Stripe takes the
+  // same address, and after payment the book's link is emailed to it (the thank-you page says so).
+  const payNow = async () => {
+    if (payStatus === "opening") return
+    setPayStatus("opening")
+    try {
+      window.location.assign(await startBookCheckout({ email: email.trim(), language }))
+    } catch {
+      setPayStatus("error")
+    }
+  }
+
+  if (!present) return null
+
+  // Its own style sheet, so opening it doesn't re-lay out the whole page (see OwnStyleSheet).
+  return <OwnStyleSheet name="splash"><Dialog
     open={open}
     // Escape still closes it (accessibility); a click on the page around it doesn't, like every other way out.
     onClose={(_, reason) => { if (reason !== "backdropClick") onDismiss() }}
@@ -278,7 +299,18 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
         "&:hover": { color: "brand.onNavy", bgcolor: "brand.navy" },
       }}>{ct("Skip for now")}</HoldButton>}
     </Box>
-    {joined && book ? <JoinedMessage email={email.trim()} title={ct("Check your email.")} text={ct("We sent you the link to download Peptides Explained. Open the email to get your PDF:")} />
+    {joined && book ? <JoinedMessage email={email.trim()} title={ct("Check your email.")} text={ct("We emailed you a link to get Peptides Explained, so you can pay later. Or pay now, and the PDF link goes straight to:")}>
+      <Box sx={{ width: "100%", maxWidth: 380, mt: 3 }}>
+        {payStatus === "error" ? <Alert severity="error" sx={{ mb: 1.5, textAlign: "left" }}>{ct("We couldn't open the checkout. Please try again, or use the link in your email.")}</Alert> : null}
+        <Button fullWidth variant="contained" onClick={() => void payNow()} disabled={payStatus === "opening"}
+          startIcon={payStatus === "opening" ? <CircularProgress size={18} color="inherit" /> : <Icon name="lock" />}
+          endIcon={payStatus === "opening" ? undefined : <Icon name="arrowRight" />}
+          sx={[joinButtonSx, { mt: 0 }] as SxProps<Theme>}>
+          {payStatus === "opening" ? ct("Opening secure checkout...") : ct.template("Pay {v0} now", { v0: BOOK.price }, { translateValues: false })}
+        </Button>
+        <Typography sx={{ mt: 1.5, color: "brand.onNavyMuted", fontSize: 13, lineHeight: 1.6 }}>{ct("Secure payment with Stripe. Your receipt and the book link come by email.")}</Typography>
+      </Box>
+    </JoinedMessage>
     : joined ? <>
       <JoinedMessage email={email.trim()} title={ct("You're in. Check your inbox.")} text={ct("Tap the link we just sent to confirm your email:")} />
       {/* Time left before the window closes itself. */}
@@ -346,7 +378,7 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
                 helperText={showErrors && emailInvalid ? offerText("invalidEmail") : undefined}
                 slotProps={{
                   htmlInput: { autoComplete: "email", inputMode: "email", spellCheck: false, maxLength: 254, autoCapitalize: "none", placeholder: "name@example.com" },
-                  input: { sx: emailInputSx },
+                  input: { sx: emailInputSx, disableInjectingGlobalStyles: true },
                   inputLabel: { sx: emailLabelSx },
                   formHelperText: { sx: { "&.Mui-error": { color: "error.light" } } },
                 }}
@@ -365,12 +397,12 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
               </Button>
               {/* An email sign-up still says where its privacy terms are: one small link on this line. */}
               <Typography id="welcome-description" sx={{ mt: { xs: 1, md: 1.5 }, textAlign: "center", fontSize: 12, lineHeight: 1.6, color: "brand.onNavyMuted" }}>
-                {book ? ct.template("The PDF costs {v0}, paid securely with Stripe on the page we email you.", { v0: BOOK.price }, { translateValues: false }) : ct("Free to join. Unsubscribe whenever you like.")}{" "}
+                {book ? ct.template("The PDF costs {v0}, paid securely with Stripe. Pay right away or later from your email.",{ v0: BOOK.price }, { translateValues: false }) : ct("Free to join. Unsubscribe whenever you like.")}{" "}
                 <AppLink href="/legal/privacy" target="_blank" rel="noopener" sx={privacyLinkSx}>{footerText("privacy")}</AppLink>
               </Typography>
             </Box>
         </Box>
       </Box>
     </Box>}
-  </Dialog>
+  </Dialog></OwnStyleSheet>
 }

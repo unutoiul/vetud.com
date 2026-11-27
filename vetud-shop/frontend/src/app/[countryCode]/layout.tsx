@@ -2,7 +2,6 @@ import { localizeMetadata } from "@/i18n/metadata"
 import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import type { Metadata, Viewport } from "next"
-import { DM_Mono, Manrope } from "next/font/google"
 import { countryCode } from "next/root-params"
 import { Suspense } from "react"
 import CartDrawer from "@/components/cart/CartDrawer"
@@ -22,20 +21,12 @@ import { getStoreRegion, listCountryCodes, listCountryOptions } from "@/lib/medu
 import { sortProducts } from "@/lib/product"
 import { buildProductMenu, EMPTY_PRODUCT_MENU } from "@/lib/product-menu"
 import { parseStoreSegment } from "@/lib/store-segment"
+import { preloadFonts } from "@/theme/fonts"
 import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
 import { getClientI18n } from "@/i18n/server-config"
 import { pageLocale } from "@/i18n/page-language"
 import { brand } from "@/theme/tokens"
-
-// latin-ext covers Polish, Czech, Baltic, Romanian and Hungarian letters; Greek and Bulgarian need their own scripts.
-const manrope = Manrope({ subsets: ["latin", "latin-ext", "greek", "cyrillic"], variable: "--font-manrope", display: "swap" })
-const dmMono = DM_Mono({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500"],
-  variable: "--font-dm-mono",
-  display: "swap",
-})
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
@@ -79,7 +70,11 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
   ])
 
   return (
-    <html lang={pageLocale(code)} className={`${manrope.variable} ${dmMono.variable}`}>
+    <html lang={pageLocale(code)}>
+      <head>
+        {/* The fonts are declared through MUI (theme/fonts.ts); fetch the first ones before the styles ask. */}
+        {preloadFonts.map((href) => <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />)}
+      </head>
       <body>
         <NextIntlClientProvider {...i18n}>
         <ThemeRegistry>

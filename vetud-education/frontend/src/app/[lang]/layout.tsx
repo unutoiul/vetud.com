@@ -2,7 +2,6 @@ import { localizeMetadata } from "@/i18n/metadata"
 import { getTranslations } from "next-intl/server"
 import Box from "@mui/material/Box"
 import type { Metadata, Viewport } from "next"
-import { DM_Mono, Manrope } from "next/font/google"
 import { lang } from "next/root-params"
 import { Suspense } from "react"
 import AccountProvider from "@/components/account/AccountProvider"
@@ -14,17 +13,10 @@ import WelcomeExperience from "@/components/welcome/WelcomeExperience"
 import { asLanguage, LANGUAGES } from "@/i18n/languages"
 import { getClientI18n } from "@/i18n/server-config"
 import { BASE_URL, SITE } from "@/lib/config"
+import { preloadFonts } from "@/theme/fonts"
 import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
 import { brand } from "@/theme/tokens"
-
-const manrope = Manrope({ subsets: ["latin", "latin-ext"], variable: "--font-manrope", display: "swap" })
-const dmMono = DM_Mono({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500"],
-  variable: "--font-dm-mono",
-  display: "swap",
-})
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
@@ -54,7 +46,11 @@ export default async function LanguageLayout({ children }: LayoutProps<"/[lang]"
   const i18n = await getClientI18n(language)
 
   return (
-    <html lang={i18n.locale} className={`${manrope.variable} ${dmMono.variable}`}>
+    <html lang={i18n.locale}>
+      <head>
+        {/* The fonts are declared through MUI (theme/fonts.ts); fetch the first ones before the styles ask. */}
+        {preloadFonts.map((href) => <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />)}
+      </head>
       <body>
         <NextIntlClientProvider {...i18n}>
           <ThemeRegistry>

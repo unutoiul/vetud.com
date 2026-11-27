@@ -10,10 +10,22 @@ const nextConfig: NextConfig = {
   // Vercel needs nothing extra. For a VPS or Docker host, build with NEXT_OUTPUT=standalone.
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   poweredByHeader: false,
-  // Until launch every page, including the .vercel.app addresses, stays out of search engines.
+  turbopack: {
+    // Drops Next's built-in polyfills for features every supported browser has (see the loader).
+    rules: {
+      "polyfill-module.js": {
+        condition: { path: /next[\\/]dist[\\/](esm[\\/])?build[\\/]polyfills[\\/]polyfill-module\.js$/ },
+        loaders: ["./scripts/no-legacy-polyfills.cjs"],
+        as: "*.js",
+      },
+    },
+  },
   async headers() {
-    if (process.env.INDEXING_ENABLED === "true") return []
-    return [{ source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }]
+    // Font files carry their version in the name (src/theme/fonts.ts), so browsers may keep them a year.
+    const fonts = { source: "/fonts/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] }
+    // Until launch every page, including the .vercel.app addresses, stays out of search engines.
+    if (process.env.INDEXING_ENABLED === "true") return [fonts]
+    return [fonts, { source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }]
   },
   async redirects() {
     return [

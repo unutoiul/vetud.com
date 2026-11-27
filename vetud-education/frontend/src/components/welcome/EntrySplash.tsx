@@ -10,6 +10,7 @@ import { alpha } from "@mui/material/styles"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
+import OwnStyleSheet from "@/theme/OwnStyleSheet"
 import { brand } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
@@ -25,7 +26,8 @@ export default function EntrySplash({ open, onEnter }: { open: boolean; onEnter:
     if (open) heading.current?.focus()
   }, [open, confirmed])
 
-  return <Dialog
+  // Its own style sheet, so opening it on a first visit doesn't re-lay out the whole page (see OwnStyleSheet).
+  return <OwnStyleSheet name="entry"><Dialog
     open={open}
     fullWidth
     maxWidth="md"
@@ -92,5 +94,5 @@ export default function EntrySplash({ open, onEnter }: { open: boolean; onEnter:
         </Box>
       </Box>
     </DialogContent>
-  </Dialog>
+  </Dialog></OwnStyleSheet>
 }

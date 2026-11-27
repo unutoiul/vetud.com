@@ -35,16 +35,27 @@ const educationRedirects = [
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
-  experimental: {
-    // The only stylesheet is next/font's @font-face rules (about 3.5 KB; MUI's styles are already in
-    // the HTML). As a <link> it blocked the first paint for a whole extra request; inlined it doesn't.
-    inlineCss: true,
+  // No stylesheet at all: MUI's styles are in the HTML and the fonts are declared through MUI
+  // (src/theme/fonts.ts), so nothing blocks the first paint (experimental.inlineCss no longer needed).
+  turbopack: {
+    // Drops Next's built-in polyfills for features every supported browser has (see the loader).
+    rules: {
+      "polyfill-module.js": {
+        condition: { path: /next[\\/]dist[\\/](esm[\\/])?build[\\/]polyfills[\\/]polyfill-module\.js$/ },
+        loaders: ["./scripts/no-legacy-polyfills.cjs"],
+        as: "*.js",
+      },
+    },
   },
   // Vercel needs nothing extra. For a VPS or Docker host, build with NEXT_OUTPUT=standalone.
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   poweredByHeader: false,
   async headers() {
-    return [{ source: "/:countryCode/checkout", headers: [{ key: "Content-Security-Policy", value: checkoutCsp }] }]
+    return [
+      // Font files carry their version in the name (src/theme/fonts.ts), so browsers may keep them a year.
+      { source: "/fonts/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
+      { source: "/:countryCode/checkout", headers: [{ key: "Content-Security-Policy", value: checkoutCsp }] },
+    ]
   },
   // The Medusa Admin lives on the backend under /app, at admin.vetudpeptides.com in production
   // (MEDUSA_ADMIN_URL, owner 2026-11-25). This makes vetudpeptides.com/admin a shortcut to it.

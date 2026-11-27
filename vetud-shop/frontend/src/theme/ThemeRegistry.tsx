@@ -1,10 +1,12 @@
 "use client"
 
 import CssBaseline from "@mui/material/CssBaseline"
+import GlobalStyles from "@mui/material/GlobalStyles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter"
 import { useMemo, type ReactNode } from "react"
 import { useTranslations } from "next-intl"
+import { fontFaces } from "./fonts"
 import { pepLabTheme } from "./pep-lab"
 import SingleServerStyles from "./SingleServerStyles"
 
@@ -25,6 +27,7 @@ export default function ThemeRegistry({ children }: { children: ReactNode }) {
       <AppRouterCacheProvider options={{ key: "vetud", enableCssLayer: true }}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <GlobalStyles styles={fontFaces} />
           {children}
         </ThemeProvider>
       </AppRouterCacheProvider>
