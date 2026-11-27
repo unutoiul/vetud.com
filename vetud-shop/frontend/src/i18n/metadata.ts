@@ -3,12 +3,14 @@ import type { Metadata } from "next"
 import { SHARE_IMAGE } from "@/lib/config"
 import { countryCode } from "next/root-params"
 import { parseStoreSegment } from "@/lib/store-segment"
+import { pageLocale } from "./page-language"
 import { getContentTranslator } from "./server-content"
 
 export async function getPageLocalization() {
   const [segment, ct] = await Promise.all([countryCode(), getContentTranslator()])
   const country = parseStoreSegment(segment).country
-  const locale = ct.locale
+  // The language the page text is in (see page-language.ts); ct.locale stays the formatting locale.
+  const locale = pageLocale(country)
   const openGraphLocale = locale.includes("-") ? locale.replaceAll("-", "_") : `${locale}_${country.toUpperCase()}`
   return { country, locale, openGraphLocale, ct }
 }

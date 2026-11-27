@@ -25,6 +25,7 @@ import { parseStoreSegment } from "@/lib/store-segment"
 import ThemeRegistry from "@/theme/ThemeRegistry"
 import { NextIntlClientProvider } from "next-intl"
 import { getClientI18n } from "@/i18n/server-config"
+import { pageLocale } from "@/i18n/page-language"
 import { brand } from "@/theme/tokens"
 
 // latin-ext covers Polish, Czech, Baltic, Romanian and Hungarian letters; Greek and Bulgarian need their own scripts.
@@ -78,7 +79,7 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
   ])
 
   return (
-    <html lang={i18n.locale} className={`${manrope.variable} ${dmMono.variable}`}>
+    <html lang={pageLocale(code)} className={`${manrope.variable} ${dmMono.variable}`}>
       <body>
         <NextIntlClientProvider {...i18n}>
         <ThemeRegistry>

@@ -8,6 +8,7 @@ import HomeCatalog from "@/components/home/HomeCatalog"
 import Section from "@/components/common/Section"
 import SectionHeading from "@/components/common/SectionHeading"
 import { getCollectionResearch } from "@/content/collection-research"
+import { getPageLocalization } from "@/i18n/metadata"
 import { getContentTranslator } from "@/i18n/server-content"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { categoryFacets } from "@/lib/catalog-filters"
@@ -21,9 +22,10 @@ export default async function ShopHome() {
   const ct = await getContentTranslator()
   const act = await getTranslations("Actions")
   const { region } = await getCurrentRegion()
+  const { locale } = await getPageLocalization()
   const [products, categories] = await Promise.all([listCatalogProducts(region.id), listCategories()])
   return <>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localizedWebsiteStructuredData(ct.locale)).replace(/</g, "\\u003c") }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localizedWebsiteStructuredData(locale)).replace(/</g, "\\u003c") }} />
     <Box component="section" aria-label={ct("Research collection")} sx={{ position: "relative", isolation: "isolate", overflow: "clip", bgcolor: brand.mintWash, px: gutter, pt: { xs: 4, md: 6 }, pb: { xs: 4, md: 5 }, borderBottom: "1px solid", borderColor: "divider" }}>
       {/* Static molecular linework echoes the packaging without adding video or motion. */}
       <Box component="svg" viewBox="0 0 1600 850" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false" sx={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: -1, pointerEvents: "none", color: brand.cyan }}>

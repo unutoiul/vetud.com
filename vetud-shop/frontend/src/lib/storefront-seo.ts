@@ -4,14 +4,14 @@ import { BASE_URL, SHARE_IMAGE, SITE, SUPPORTED_COUNTRIES } from "@/lib/config"
 import { getProductImages } from "@/lib/product-images"
 import { isVariantInStock, readProductMeta, variantPrice } from "@/lib/product"
 import { defaultVariant } from "@/lib/product-formats"
-import { getCountryRules } from "@/i18n/config"
+import { pageLocale } from "@/i18n/page-language"
 import { getPageLocalization } from "@/i18n/metadata"
 
 export const storefrontUrl = (country: string, path = "") => `${BASE_URL}/${country}${path}`
 
 export function storefrontLanguages(path: string) {
   return Object.fromEntries([
-    ...SUPPORTED_COUNTRIES.map(country => [getCountryRules(country).locale, storefrontUrl(country, path)]),
+    ...SUPPORTED_COUNTRIES.map(country => [pageLocale(country), storefrontUrl(country, path)]),
     ["x-default", storefrontUrl("us", path)],
   ])
 }

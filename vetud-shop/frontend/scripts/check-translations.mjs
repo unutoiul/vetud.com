@@ -55,6 +55,10 @@ const inventory = await collectInventory()
 const clientKeys = [...inventory].filter(([, entry]) => entry.client).map(([key]) => key).sort()
 writeFileSync(join(CONTENT, "client-keys.json"), `${JSON.stringify(clientKeys)}\n`)
 
+// Languages with a page-text file; src/i18n/page-language.ts tags the rest as English ("en-DE").
+writeFileSync(join(CONTENT, "languages.json"), `${JSON.stringify(contentLanguages().filter((language) => existsSync(join(CONTENT, `${language}.json`))))}
+`)
+
 const isCatalog = (entry) => [...entry.files].every((file) => file.startsWith(CATALOG_FILE))
 for (const language of contentLanguages()) {
   const path = join(CONTENT, `${language}.json`)
