@@ -34,18 +34,20 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         "What you publish: community posts, photos, votes, your display name and any biography. These are public.",
         "Email list: your address, your language, the wording you agreed to, and when you agreed and confirmed.",
         "Contact messages: your name, email address and whatever you write to us.",
+        "Book purchases: your email address (to send you the download link) and the payment record. Stripe takes your card details on its own payment page; we never see or store them.",
         "Technical data needed to run the site, such as server logs.",
       ] },
       { heading: "Why we use it", paragraphs: [
         "To run your account and the community because you asked us to (contract), to keep the community safe and to moderate it (legitimate interests), and to send the email list only if you agreed and confirmed (consent).",
       ] },
-      { heading: "Who handles it for us", paragraphs: ["We use Vercel to host the website, Railway to host our servers and database, Resend to send email, and Microsoft Clarity to see how pages are used. They process data for us under their own security and data protection terms. Some may process it outside your country."] },
+      { heading: "Who handles it for us", paragraphs: ["We use Vercel to host the website, Railway to host our servers and database, Resend to send email, Stripe to sell our book and take payment for it, and Microsoft Clarity to see how pages are used. They process data for us under their own security and data protection terms. Some may process it outside your country."] },
       { heading: "Browser storage", paragraphs: ["We keep your sign-in in your browser's local storage and your language choice in a cookie. We use no advertising cookies.", "We use Microsoft Clarity to see how people use the site (clicks, scrolling and recordings of visits) so we can improve it. Anything you type is hidden, and your account page is hidden in full. If your browser is set to a European time zone, Clarity uses no cookies; elsewhere it sets analytics cookies."] },
       { heading: "Videos and sharing", paragraphs: ["Videos on this site are hosted by YouTube. They load from youtube-nocookie.com only when you press play; YouTube (Google) then receives data under its own privacy policy.", "The share buttons are ordinary links. Nothing is sent to Facebook, X or WhatsApp unless you click one, and then that service's own privacy policy applies. We use no Facebook or Meta tracking."] },
       { heading: "How long we keep it", paragraphs: [
         "Your account and what you publish: until you delete your account or ask us to delete them.",
         "Email list: until you unsubscribe, using the link in any of our emails. We keep the record of your agreement for as long as we may need to show it.",
         "Contact messages: up to 24 months.",
+        "Book purchases: as long as tax and accounting law requires (usually six years).",
         "Microsoft Clarity keeps visit recordings for 30 days and usage summaries for up to 13 months. Server logs are kept for the short periods our hosts set.",
       ] },
       { heading: "Your rights", paragraphs: [`Depending on where you live, you can ask to see, correct, delete or move your data, object to how we use it, or withdraw consent. Write to ${EMAIL}. You can also complain to your data protection authority.`] },
@@ -63,6 +65,11 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       { heading: "What you post", paragraphs: [
         "You keep ownership of what you post. You give us a worldwide, royalty-free licence to host, display and moderate it on this site for as long as it stays here.",
         "Follow the community guidelines. Do not post doses, personal protocols, medical claims, or anything unlawful, abusive or misleading. We may hold, edit, hide or remove posts and suspend accounts.",
+      ] },
+      { heading: "Buying the book", paragraphs: [
+        "Peptides Explained is a PDF book for personal use, sold for US$4.99 including any tax. Stripe sells it to you as our reseller: it takes the payment, handles sales tax or VAT and sends your receipt, under its own terms shown at checkout. As soon as the payment goes through, we email you a link to download the book. The link keeps working, so you can download it again later.",
+        "Because it is digital content supplied straight away, you agree when you pay that we send it at once, and the 14-day right to cancel ends once you download it. If the file is faulty, doesn't download or the email doesn't arrive, write to us and we will fix it or refund you.",
+        "Please don't share or resell the PDF. Like the rest of the site, it is education, not medical advice.",
       ] },
       { heading: "Accuracy", paragraphs: ["We work to keep our guides accurate and sourced, but research changes and we cannot promise that everything is complete or current."] },
       { heading: "Liability and law", paragraphs: [

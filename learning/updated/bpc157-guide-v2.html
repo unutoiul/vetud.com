@@ -1,0 +1,364 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BPC-157 guide</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 22px; background: #f4f5f7; font-family: Inter, system-ui, -apple-system, sans-serif; }
+  .bar { max-width: 700px; margin: 0 auto 14px; }
+  .bar button { background: #0f766e; color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .bar span { font-size: 12px; color: #6b7280; margin-left: 10px; }
+  .page { width: 700px; margin: 0 auto; background: #fff; color: #1f2328; padding: 46px 54px 40px; border: 1px solid #e2e5e9; border-radius: 6px; font-size: 13.5px; line-height: 1.62; box-shadow: 0 2px 14px rgba(0,0,0,0.07); }
+  .cover { border-bottom: 3px solid #0f766e; padding-bottom: 18px; margin-bottom: 26px; }
+  .eyebrow { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #0f766e; font-weight: 600; margin-bottom: 10px; }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.1; margin: 0 0 8px; font-weight: 700; color: #11161c; }
+  .sub { font-size: 14px; color: #4b535c; margin: 0 0 14px; }
+  .meta { font-size: 11px; color: #77808a; }
+  h2 { font-family: Georgia, serif; font-size: 19px; margin: 30px 0 10px; color: #11161c; padding-bottom: 5px; border-bottom: 1px solid #e6e9ec; page-break-after: avoid; }
+  h2.accent { color: #0f766e; border-bottom-color: #cfe4e1; }
+  h3 { font-size: 13px; font-weight: 600; margin: 18px 0 6px; color: #11161c; text-transform: uppercase; letter-spacing: 0.05em; page-break-after: avoid; }
+  h4 { font-size: 13px; margin: 0 0 6px; color: #8a3b2e; font-weight: 700; }
+  p { margin: 0 0 10px; }
+  .lead { color: #4b535c; }
+  .tint { background: #f7fbfa; border: 1px solid #dceae8; border-left: 3px solid #0f766e; border-radius: 4px; padding: 4px 20px 14px; margin: 22px 0; }
+  .tint h2 { margin-top: 16px; border-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; font-size: 12.5px; page-break-inside: avoid; }
+  th, td { border: 1px solid #dfe3e7; padding: 7px 9px; text-align: left; vertical-align: top; }
+  th { background: #eef3f2; font-weight: 600; font-size: 11.5px; color: #14504a; }
+  .grid td:not(:first-child), .grid th:not(:first-child) { text-align: center; font-variant-numeric: tabular-nums; }
+  .grid.left td, .grid.left th { text-align: left; }
+  tr.hl td { background: #fdf6ec; font-weight: 600; }
+  .steps td:first-child { font-weight: 600; width: 110px; }
+  ul, ol { margin: 8px 0 12px; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  ul.dots { list-style: none; padding-left: 0; }
+  ul.dots li { padding-left: 16px; position: relative; }
+  ul.dots li::before { content: "\2022"; position: absolute; left: 0; color: #0f766e; font-weight: 700; }
+  ul.tight li { margin-bottom: 6px; }
+  ul.check { list-style: none; padding-left: 0; columns: 2; column-gap: 24px; }
+  ul.check li { padding-left: 20px; position: relative; break-inside: avoid; margin-bottom: 5px; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; color: #0f766e; font-size: 13px; }
+  ol.num { padding-left: 0; list-style: none; counter-reset: s; }
+  ol.num li { counter-increment: s; position: relative; padding-left: 32px; margin-bottom: 9px; }
+  ol.num li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 21px; height: 21px; border-radius: 50%; background: #0f766e; color: #fff; font-size: 11px; font-weight: 700; text-align: center; line-height: 21px; }
+  .callout { background: #eef3f2; border-left: 3px solid #0f766e; padding: 11px 14px; margin: 14px 0; border-radius: 3px; font-size: 13px; page-break-inside: avoid; }
+  .warn { background: #fdf3f0; border: 1px solid #f2d8d0; border-left: 3px solid #b4482f; padding: 11px 14px 6px; margin: 16px 0; border-radius: 3px; page-break-inside: avoid; }
+  .warn ul.dots li::before { color: #b4482f; }
+  dl { margin: 8px 0 14px; }
+  dt { font-weight: 600; margin-top: 9px; }
+  dd { margin: 2px 0 0; }
+  dl.gloss dt { font-weight: 600; color: #0f766e; }
+  .refs ol { font-size: 12.5px; color: #4b535c; }
+  .refs li { margin-bottom: 3px; }
+  footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid #e6e9ec; font-size: 11.5px; color: #6b7480; line-height: 1.55; }
+  @media print {
+    @page { size: A4; margin: 13mm 14mm; }
+    body { background: #fff; padding: 0; }
+    .bar { display: none; }
+    .page { width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; box-shadow: none; font-size: 10.5pt; line-height: 1.5; }
+    h1 { font-size: 26pt; }
+    h2 { font-size: 13pt; }
+    .tint, .callout, .warn, table, .warn ul { page-break-inside: avoid; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+  <span>Choose Save as PDF, paper A4, background graphics on.</span>
+</div>
+
+<div class="page">
+
+  <div class="cover">
+    <div class="eyebrow">Research peptide guide &middot; plain language</div>
+    <h1>BPC-157</h1>
+    <p class="sub">Dosing, mixing, side effects and what the evidence actually supports</p>
+    <div class="meta">Prepared 27 November 2026 &middot; investigational peptide, not an approved drug</div>
+  </div>
+
+  <h2>What it is</h2>
+  <p>BPC-157 is a short synthetic peptide &mdash; fifteen amino acids, derived from a protein found in stomach juice. It is sold as a research peptide and sits outside the approved-drug space entirely.</p>
+  <p>The research story is about tissue repair: tendon, ligament, muscle, gut lining, bone. Nearly all of that work is in rats. In humans there is one small knee study and one two-person safety study, and nothing resembling a proper trial.</p>
+
+  <div class="callout">
+    <strong>Read this before the dose section.</strong> For retatrutide, doses come from large controlled trials. For BPC-157 they do not. There is no established human dose, no agreed schedule, no agreed cycle length. What follows separates <em>what a published study actually did</em> from <em>what people do in practice</em>. Both are useful; only one is evidence.
+  </div>
+
+  <div class="tint">
+    <h2 class="accent">1. Dosing</h2>
+
+    <h3>The only human dose on record</h3>
+    <p>One published human study exists: twelve people with chronic knee pain, each given <strong>a single 4 mg injection directly into the knee joint</strong> &mdash; 2 mL of a 2000 mcg/mL solution &mdash; and surveyed afterwards. Seven of the twelve reported relief lasting more than six months.</p>
+    <p>That is a real number, and it is the closest thing to a documented human dose that exists. But it is one injection, into one joint, in twelve people, with no control group. It does not tell you what to inject under the skin, how often, or for how long.</p>
+
+    <h3>What people actually do</h3>
+    <p>Community and clinic practice has converged on something much smaller and more frequent than the knee study, because the knee dose is joint-only. The typical shape of it:</p>
+    <table class="steps">
+      <thead><tr><th>Element</th><th>Common practice</th><th>Evidence behind it</th></tr></thead>
+      <tbody>
+        <tr><td>Dose</td><td>250 mcg, once or twice daily</td><td>Community convention; no trial</td></tr>
+        <tr><td>Upper end</td><td>500 mcg twice daily</td><td>Community convention</td></tr>
+        <tr><td>Route</td><td>Subcutaneous, near the injury if accessible</td><td>Community convention</td></tr>
+        <tr><td>Cycle</td><td>4&ndash;6 weeks, some run 8&ndash;12</td><td>Community convention</td></tr>
+        <tr><td>Variants</td><td>5 days on, 2 off; or continuous</td><td>Community convention</td></tr>
+      </tbody>
+    </table>
+    <p><strong>250 mcg twice daily is 500 mcg a day</strong> &mdash; eight times smaller than the knee injection, given far more often. The two figures are not comparable and should not be treated as one protocol.</p>
+
+    <h3>Does body weight matter?</h3>
+    <p>Barely. BPC-157 is flat-dosed, and unlike retatrutide the per-kg spread across weights is small &mdash; roughly a twofold difference between a 60 kg and a 120 kg person on the same dose, not the fourfold swing you get with weight-scaled drugs.</p>
+    <table class="grid">
+      <thead>
+        <tr><th>Dose</th><th>60 kg</th><th>70 kg</th><th>80 kg</th><th>90 kg</th><th>100 kg</th><th>110 kg</th><th>120 kg</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>125 mcg</td><td>2.1</td><td>1.8</td><td>1.6</td><td>1.4</td><td>1.3</td><td>1.1</td><td>1.0</td></tr>
+        <tr class="hl"><td>250 mcg</td><td>4.2</td><td>3.6</td><td>3.1</td><td>2.8</td><td>2.5</td><td>2.3</td><td>2.1</td></tr>
+        <tr><td>500 mcg</td><td>8.3</td><td>7.1</td><td>6.3</td><td>5.6</td><td>5.0</td><td>4.5</td><td>4.2</td></tr>
+        <tr><td>1000 mcg</td><td>16.7</td><td>14.3</td><td>12.5</td><td>11.1</td><td>10.0</td><td>9.1</td><td>8.3</td></tr>
+      </tbody>
+    </table>
+    <p class="lead">Micrograms per kg, for reference only.</p>
+
+    <h3>What I would suggest as a starting shape</h3>
+    <p>Built on the practice above, not on trial data:</p>
+    <ul class="tight">
+      <li><strong>First two weeks:</strong> 250 mcg once daily. Establishes tolerance with the least waste if you react badly.</li>
+      <li><strong>If comfortable and you want more:</strong> 250 mcg twice daily, morning and evening, roughly twelve hours apart.</li>
+      <li><strong>Ceiling:</strong> 500 mcg twice daily. Above that you are guessing, and the cost climbs faster than the rationale.</li>
+      <li><strong>Cycle:</strong> six weeks, then two to four weeks off. Nobody knows whether breaks help; they limit cost and let you see what the drug was actually doing.</li>
+      <li><strong>Stop rule:</strong> no perceptible change after six weeks at a full dose is a reasonable reason to stop rather than escalate.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Worked example.</strong> Sam, 82 kg, elbow tendinopathy. Week 1&ndash;2: 250 mcg daily, injected into the fat over the forearm near the elbow. Week 3&ndash;6: 250 mcg twice daily if the first fortnight was uneventful. Reassess at six weeks. At 500 mcg daily he sits at 6.1 mcg/kg &mdash; mid-range for the practice band above.
+    </div>
+
+    <h3>The units table</h3>
+    <p>Standard mix: <strong>5 mg vial + 2 mL water = 2500 mcg/mL.</strong> At that concentration:</p>
+    <table class="grid">
+      <thead><tr><th>Dose</th><th>Volume</th><th>Units on a U-100 insulin syringe</th></tr></thead>
+      <tbody>
+        <tr><td>125 mcg</td><td>0.05 mL</td><td>5</td></tr>
+        <tr><td>250 mcg</td><td>0.10 mL</td><td>10</td></tr>
+        <tr><td>500 mcg</td><td>0.20 mL</td><td>20</td></tr>
+        <tr><td>750 mcg</td><td>0.30 mL</td><td>30</td></tr>
+        <tr><td>1000 mcg</td><td>0.40 mL</td><td>40</td></tr>
+      </tbody>
+    </table>
+    <p>A 5 mg vial at this mix gives <strong>twenty 250 mcg doses</strong>. Two vials cover a six-week twice-daily cycle.</p>
+    <p><strong>Do not mix it stronger than this.</strong> At 5000 mcg/mL a 250 mcg dose is only 5 units, which is hard to read accurately on a syringe. 2500 mcg/mL keeps every dose in a comfortable part of the scale.</p>
+
+    <h3>Routes, briefly</h3>
+    <ul class="dots">
+      <li><strong>Subcutaneous</strong> &mdash; the default. Into belly or thigh fat, or into fat near the injury if it is reachable.</li>
+      <li><strong>Local / peri-lesional</strong> &mdash; near a tendon or joint, superficially. Popular; unproven that it beats a belly injection.</li>
+      <li><strong>Oral capsules</strong> &mdash; used for gut complaints. Absorbs poorly but the gut is where the peptide was originally found, so the logic is local rather than systemic.</li>
+      <li><strong>Intra-articular</strong> &mdash; into the joint itself, the 4 mg knee route. Needs a clinician.</li>
+    </ul>
+  </div>
+
+  <h2 class="accent">2. Mixing the vial, step by step</h2>
+  <p class="lead">Freeze-dried powder has to be dissolved before use. Slow hands, clean surface, no rushing. Fifteen uninterrupted minutes at a clear table the first time.</p>
+
+  <h3>What you need</h3>
+  <ul class="check">
+    <li>Your vial of powder</li>
+    <li>Bacteriostatic water (not sterile water &mdash; no preservative, so a multi-dose vial will not keep)</li>
+    <li>One mixing syringe, 3 mL, with a 25&ndash;27G needle</li>
+    <li>Alcohol swabs</li>
+    <li>U-100 insulin syringes, 29&ndash;31G, for dosing</li>
+    <li>A sharps container</li>
+    <li>A marker pen</li>
+  </ul>
+
+  <div class="callout">
+    <strong>Fix the concentration before you open anything.</strong> For a 5 mg vial use 2 mL and you get 2500 mcg/mL, where 250 mcg is 10 units. For a 10 mg vial use 4 mL for the same concentration. Write it on the vial.
+  </div>
+
+  <h3>The steps</h3>
+  <ol class="num">
+    <li><strong>Wash your hands</strong> for twenty seconds and dry them on a clean towel. Wipe the table.</li>
+    <li><strong>Lay everything out</strong> and check the vial: compact cake at the bottom, legible label, expiry in date.</li>
+    <li><strong>Swab both stoppers</strong> with separate alcohol swabs, ten seconds each, and <strong>let them dry fully</strong>.</li>
+    <li><strong>Draw the water.</strong> Pull air to your volume, inject it into the water vial, invert, and draw slowly. Clear the bubbles.</li>
+    <li><strong>Change the needle</strong> if you have a spare.</li>
+    <li><strong>Enter at 45 degrees</strong> so the tip rests against the inside wall, then straighten.</li>
+    <li><strong>Run the water down the glass</strong>, not onto the cake. Slow push.</li>
+    <li><strong>Vent the vacuum</strong> by pulling the plunger back to your mark and holding until the pull eases.</li>
+    <li><strong>Withdraw and cap</strong> the needle.</li>
+    <li><strong>Swirl, never shake.</strong> Roll it between your palms until the liquid is clear.</li>
+    <li><strong>Let it stand</strong> five to fifteen minutes, swirling occasionally.</li>
+    <li><strong>Check it.</strong> Clear and colourless is right. Cloudy after half an hour means do not use it.</li>
+    <li><strong>Label it</strong> with date, concentration and dose units.</li>
+    <li><strong>Refrigerate</strong> at 2&ndash;8&deg;C. Never freeze. Keep it dark.</li>
+  </ol>
+
+  <h3>Troubleshooting</h3>
+  <table class="grid left">
+    <thead><tr><th>Problem</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Water sprayed onto the powder</td><td>Swirl longer; discard if solid remains after thirty minutes.</td></tr>
+      <tr><td>Heavy foam</td><td>Let it stand twenty minutes. Foam collapses on its own.</td></tr>
+      <tr><td>Plunger sucked in</td><td>Normal vacuum. Re-pull and hold.</td></tr>
+      <tr><td>Still cloudy after thirty minutes</td><td>Do not inject.</td></tr>
+      <tr><td>Particles or floaters</td><td>Do not inject; draw through a fresh needle or discard.</td></tr>
+      <tr><td>Mixed too strong</td><td>Recalculate from the real concentration and write the corrected units on the vial.</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Storage:</strong> powder keeps cool and dark. Mixed, refrigerate and use within four weeks &mdash; BPC-157 is generally described as less stable in solution than retatrutide, so shorter is safer.</p>
+
+  <h2 class="accent">3. Side effects</h2>
+  <p class="lead">Here is the honest position: <strong>no side-effect rate exists.</strong> Nobody has counted. What follows is reported experience plus the one safety study, not measured frequencies.</p>
+
+  <h3>From the human safety study</h3>
+  <p>Two healthy adults received BPC-157 by intravenous infusion at doses stepping up to <strong>20 mg</strong> &mdash; four to five times the community subcutaneous dose. Both tolerated it with no adverse effects reported. Twenty milligrams in two people is reassuring, not conclusive.</p>
+
+  <h3>Reported in community use</h3>
+  <ul class="dots">
+    <li>Injection-site redness, stinging, itching or a small lump</li>
+    <li>Nausea, usually mild and early</li>
+    <li>Headache</li>
+    <li>Dizziness or light-headedness after injecting</li>
+    <li>Fatigue, or occasionally the opposite &mdash; trouble sleeping</li>
+    <li>Dry mouth</li>
+    <li>Loose stools or mild gut upset</li>
+    <li>Transient aching or a brief flare of pain at the injury site</li>
+    <li>Flushing or a warm feeling shortly after a dose</li>
+  </ul>
+
+  <h3>Theoretical or less certain</h3>
+  <ul class="dots">
+    <li>Mood changes &mdash; scattered reports of flatness or lowered mood, mechanism unclear</li>
+    <li>Blood pressure shifts, in either direction</li>
+    <li>Because the peptide promotes blood vessel growth, questions about whether that matters in anyone with an active cancer history &mdash; unanswered</li>
+    <li>Interaction with other peptides, especially TB-500, is common in practice and unstudied</li>
+    <li>Purity varies between suppliers and nobody is checking your vial</li>
+  </ul>
+
+  <div class="warn">
+    <h4>Serious &mdash; stop and get help</h4>
+    <ul class="dots">
+      <li>Hives, lip or tongue swelling, throat tightness, trouble breathing, collapse</li>
+      <li>Severe pain or swelling at an injection site that keeps growing</li>
+      <li>Fever or spreading redness at a site, suggesting infection</li>
+      <li>Joint pain and swelling after an intra-articular injection</li>
+    </ul>
+  </div>
+
+  <p><strong>Reducing the sting:</strong> let the syringe warm in your hand, inject slowly, and rotate sites. If nausea appears, dosing after food rather than on an empty stomach helps some people.</p>
+
+  <h2>4. Injecting</h2>
+  <ul class="dots">
+    <li>Sites: abdomen two fingers clear of the navel, front or outer thigh, or fat over the target area</li>
+    <li>Swab and let it dry</li>
+    <li>Pinch a fold, push in at 90 degrees, or 45 if you are lean</li>
+    <li>Inject slowly; count to five before withdrawing</li>
+    <li>Do not rub; rotate sites</li>
+    <li>For local use, aim for the fat over the tendon, not into the tendon itself</li>
+  </ul>
+
+  <h2>5. What the evidence actually shows</h2>
+  <p>A 2025 systematic review in the American Journal of Sports Medicine screened 544 papers on BPC-157 in orthopaedics and found <strong>one</strong> clinical study worth including. A 2026 review of the human evidence found three studies totalling <strong>thirty participants</strong> and rated the certainty low.</p>
+  <p>The animal literature is broad and consistently positive &mdash; tendon, ligament, muscle, bone, gut. That consistency is why the peptide has a reputation. It is also why the reputation runs ahead of the human data.</p>
+  <p>The knee study itself: sixteen patients, twelve given BPC-157 alone by intra-articular injection, seven of those twelve reporting improvement beyond six months. Retrospective, uncontrolled, patient-reported, one clinic. Suggestive and nothing more.</p>
+  <p>There is at least one controlled trial now running &mdash; in acute hamstring strain &mdash; so this picture will change.</p>
+
+  <h2>6. Regulatory status</h2>
+  <p>BPC-157 is not an approved drug anywhere. In the United States the FDA spent years treating it as unsuitable for routine pharmacy compounding, then in July 2026 its advisory committee voted 8&ndash;6 to recommend adding it to the list of substances compounding pharmacies may use. The vote was non-binding and against the advice of the agency's own scientists, and a final FDA decision is still outstanding.</p>
+  <p>Practical consequence: what you buy is a compounded or grey-market product, and the label is only as good as the supplier.</p>
+
+  <h2>7. Who should be cautious</h2>
+  <ul class="dots">
+    <li>Pregnancy or breastfeeding &mdash; unstudied</li>
+    <li>Active cancer or a recent cancer history &mdash; theoretical concern about vessel growth</li>
+    <li>Anyone on blood thinners, given injection-site bleeding</li>
+    <li>Autoimmune conditions &mdash; unstudied</li>
+    <li>Diabetes, if injecting near an area you also use for insulin</li>
+    <li>Age under 18</li>
+    <li>Known allergy to the peptide or to a component of the diluent</li>
+  </ul>
+
+  <h2>8. Monitoring</h2>
+  <ul class="dots">
+    <li>The symptom itself &mdash; is the tendon, joint or gut actually better? Score it weekly</li>
+    <li>Injection sites, checking for lumps or spreading redness</li>
+    <li>Resting blood pressure and heart rate, if you react at all</li>
+    <li>Sleep and mood</li>
+    <li>Anything unexpected, dated, so a pattern is visible</li>
+  </ul>
+  <p>Keep it simple and honest: write down a 0&ndash;10 symptom score before you start. Without a baseline you will not know whether six weeks did anything.</p>
+
+  <h2>9. Food and muscle</h2>
+  <p>BPC-157 is not a performance drug and does not build muscle. It is a repair peptide, and repair still needs raw material: adequate protein, enough calories, sleep.</p>
+  <p>The single most useful thing you can pair it with is graded loading of the injured tissue &mdash; the tendon needs controlled stress to remodel, not rest. A physiotherapist's programme will outperform the peptide on its own.</p>
+
+  <h2>10. Missed doses and interruptions</h2>
+  <p>Nothing established. Given a twice-daily schedule, take a missed dose when you remember if it is more than a few hours from the next one, otherwise skip it. Never double up. Stopping abruptly has no described withdrawal.</p>
+
+  <h2>11. Common mistakes</h2>
+  <ul class="dots">
+    <li>Carrying the 4 mg knee-injection dose straight across to a subcutaneous injection</li>
+    <li>Reading the knee study as a controlled trial</li>
+    <li>Mixing at 5000 mcg/mL and trying to measure 5-unit doses</li>
+    <li>Shaking the vial, or spraying water onto the powder</li>
+    <li>Injecting into the tendon rather than the fat over it</li>
+    <li>Running it for months with no break and no symptom score</li>
+    <li>Resting completely instead of loading the tissue</li>
+    <li>Assuming purity because the vial looks professional</li>
+    <li>Stacking with TB-500 from day one, then not knowing which did what</li>
+  </ul>
+
+  <h2>12. FAQ</h2>
+  <dl>
+    <dt>Is BPC-157 proven in people?</dt><dd>No. One small uncontrolled knee study, one two-person safety study, and a review that rated the certainty low.</dd>
+    <dt>What dose do people use?</dt><dd>Typically 250 mcg once or twice daily under the skin for four to six weeks. That is convention, not trial data.</dd>
+    <dt>How does that compare to the knee study?</dt><dd>It does not. That study used a single 4 mg injection into the joint. Different route, different size, different schedule.</dd>
+    <dt>Does my weight change the dose?</dt><dd>Only slightly. The per-kg spread across normal adult weights is about twofold, so flat dosing is reasonable.</dd>
+    <dt>Subcutaneous or near the injury?</dt><dd>Near the injury feels logical and is popular, but nobody has shown it beats a belly injection.</dd>
+    <dt>How long before it works?</dt><dd>Community reports put it at one to three weeks for soft tissue, longer for anything chronic. No trial gives a figure.</dd>
+    <dt>Can I take it orally instead?</dt><dd>For gut symptoms, some do. Absorption is poor, so it is a local effect at best.</dd>
+    <dt>Is it safe long term?</dt><dd>Unknown. Nobody has run it long enough in enough people to say.</dd>
+    <dt>Will it mask a serious injury?</dt><dd>It can make you feel better without fixing the cause, which is why a proper assessment matters.</dd>
+  </dl>
+
+  <h2>13. Plain-English glossary</h2>
+  <dl class="gloss">
+    <dt>Peptide</dt><dd>a short chain of amino acids</dd>
+    <dt>Subcutaneous</dt><dd>into the fat under the skin</dd>
+    <dt>Peri-lesional</dt><dd>around the injured tissue</dd>
+    <dt>Intra-articular</dt><dd>into the joint itself</dd>
+    <dt>Retrospective</dt><dd>looking back at people already treated, rather than planning a comparison</dd>
+    <dt>Control group</dt><dd>a comparison group that did not get the treatment</dd>
+    <dt>Systematic review</dt><dd>a structured search that gathers every study on a question and grades them</dd>
+    <dt>Certainty</dt><dd>how much confidence the evidence justifies &mdash; here, low</dd>
+    <dt>Lyophilised</dt><dd>freeze-dried into powder</dd>
+    <dt>U-100 syringe</dt><dd>an insulin syringe marked 0&ndash;100 units, where 100 units = 1 mL</dd>
+  </dl>
+
+  <div class="refs">
+    <h2>Sources</h2>
+    <ol>
+      <li>Lee &amp; Padgett, intra-articular BPC-157 for knee pain, Alternative Therapies in Health and Medicine, 2021 (PMID 34324435)</li>
+      <li>Safety of intravenous BPC-157 infusion in humans, pilot study, 2025 (PMID 40131143)</li>
+      <li>Emerging use of BPC-157 in orthopaedic sports medicine: systematic review, 2025 (PMC12313605)</li>
+      <li>FDA briefing document, Pharmacy Compounding Advisory Committee, 2026</li>
+      <li>PCAC vote on BPC-157 and five other peptides, July 2026</li>
+      <li>ClinicalTrials.gov NCT07437547, BPC-157 for acute hamstring strain</li>
+      <li>MedlinePlus, allergy overview</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>Every dose outside the 4 mg intra-articular figure is community convention, not trial data. Purity of compounded and grey-market product is unverified. Not medical advice.</p>
+  </footer>
+
+</div>
+</body>
+</html>

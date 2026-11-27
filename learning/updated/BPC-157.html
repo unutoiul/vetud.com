@@ -1,0 +1,199 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BPC-157</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 22px; background: #f4f5f7;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+  }
+  .bar { max-width: 700px; margin: 0 auto 14px; }
+  .bar button {
+    background: #0f766e; color: #fff; border: 0; border-radius: 8px;
+    padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: inherit;
+  }
+  .bar span { font-size: 12px; color: #6b7280; margin-left: 10px; }
+  .page {
+    width: 700px; margin: 0 auto; background: #fff; color: #1f2328;
+    padding: 46px 54px 40px; border: 1px solid #e2e5e9; border-radius: 6px;
+    font-size: 13.5px; line-height: 1.62;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+  }
+  .cover { border-bottom: 3px solid #0f766e; padding-bottom: 18px; margin-bottom: 26px; }
+  .eyebrow {
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #0f766e; font-weight: 600; margin-bottom: 10px;
+  }
+  h1 {
+    font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.1;
+    margin: 0 0 8px; font-weight: 700; color: #11161c;
+  }
+  .sub { font-size: 14px; color: #4b535c; margin: 0 0 14px; }
+  .meta { font-size: 11px; color: #77808a; }
+  h2 {
+    font-family: Georgia, serif; font-size: 19px; margin: 30px 0 10px; color: #11161c;
+    padding-bottom: 5px; border-bottom: 1px solid #e6e9ec; page-break-after: avoid;
+  }
+  h2.accent { color: #0f766e; border-bottom-color: #cfe4e1; }
+  h3 {
+    font-size: 13px; font-weight: 600; margin: 18px 0 6px; color: #11161c;
+    text-transform: uppercase; letter-spacing: 0.05em; page-break-after: avoid;
+  }
+  h4 { font-size: 13px; margin: 0 0 6px; color: #8a3b2e; font-weight: 700; }
+  p { margin: 0 0 10px; }
+  .lead { color: #4b535c; }
+  .tint {
+    background: #f7fbfa; border: 1px solid #dceae8; border-left: 3px solid #0f766e;
+    border-radius: 4px; padding: 4px 20px 14px; margin: 22px 0;
+  }
+  .tint h2 { margin-top: 16px; border-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; font-size: 12.5px; page-break-inside: avoid; }
+  th, td { border: 1px solid #dfe3e7; padding: 7px 9px; text-align: left; vertical-align: top; }
+  th { background: #eef3f2; font-weight: 600; font-size: 11.5px; color: #14504a; }
+  .grid td:not(:first-child), .grid th:not(:first-child) { text-align: center; font-variant-numeric: tabular-nums; }
+  .grid.left td, .grid.left th { text-align: left; }
+  tr.hl td { background: #fdf6ec; font-weight: 600; }
+  .steps td:first-child { font-weight: 600; width: 110px; }
+  ul, ol { margin: 8px 0 12px; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  ul.dots { list-style: none; padding-left: 0; }
+  ul.dots li { padding-left: 16px; position: relative; }
+  ul.dots li::before { content: "\2022"; position: absolute; left: 0; color: #0f766e; font-weight: 700; }
+  ul.tight li { margin-bottom: 6px; }
+  ul.check { list-style: none; padding-left: 0; columns: 2; column-gap: 24px; }
+  ul.check li { padding-left: 20px; position: relative; break-inside: avoid; margin-bottom: 5px; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; color: #0f766e; font-size: 13px; }
+  ol.num { padding-left: 0; list-style: none; counter-reset: s; }
+  ol.num li { counter-increment: s; position: relative; padding-left: 32px; margin-bottom: 9px; }
+  ol.num li::before {
+    content: counter(s); position: absolute; left: 0; top: 1px;
+    width: 21px; height: 21px; border-radius: 50%; background: #0f766e; color: #fff;
+    font-size: 11px; font-weight: 700; text-align: center; line-height: 21px;
+  }
+  .callout {
+    background: #eef3f2; border-left: 3px solid #0f766e; padding: 11px 14px;
+    margin: 14px 0; border-radius: 3px; font-size: 13px; page-break-inside: avoid;
+  }
+  .warn {
+    background: #fdf3f0; border: 1px solid #f2d8d0; border-left: 3px solid #b4482f;
+    padding: 11px 14px 6px; margin: 16px 0; border-radius: 3px; page-break-inside: avoid;
+  }
+  .warn ul.dots li::before { color: #b4482f; }
+  dl { margin: 8px 0 14px; }
+  dt { font-weight: 600; margin-top: 9px; }
+  dd { margin: 2px 0 0; }
+  dl.gloss dt { font-weight: 600; color: #0f766e; }
+  .refs ol { font-size: 12.5px; color: #4b535c; }
+  .refs li { margin-bottom: 3px; }
+  footer {
+    margin-top: 30px; padding-top: 14px; border-top: 1px solid #e6e9ec;
+    font-size: 11.5px; color: #6b7480; line-height: 1.55;
+  }
+  @media print {
+    @page { size: A4; margin: 13mm 14mm; }
+    body { background: #fff; padding: 0; }
+    .bar { display: none; }
+    .page {
+      width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0;
+      box-shadow: none; font-size: 10.5pt; line-height: 1.5;
+    }
+    h1 { font-size: 26pt; }
+    h2 { font-size: 13pt; }
+    .tint, .callout, .warn, table, .warn ul { page-break-inside: avoid; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  .guide-ref { color: #0f766e; }
+  .guide-ref a, .refs a { color: #115f59; text-underline-offset: .15em; }
+  h2, h3, h4 { break-after: avoid; }
+  @media screen and (max-width: 750px) {
+    body { padding: 12px; }
+    .page { width: 100%; padding: clamp(15px, 5vw, 40px); }
+    .bar span { display: block; margin: 5px 0 0; }
+    .tint { padding-left: 12px; padding-right: 12px; }
+    th, td { padding: 5px 6px; overflow-wrap: anywhere; }
+  }
+</style>
+<meta name="venice-body-sha256" content="86d8f21f6e8266f961861fde2e9a0e2d5cbd7ec36d6785a1774fb4a87902405c">
+</head>
+
+<body>
+<div class="bar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+  <span>Choose Save as PDF, paper A4, background graphics on.</span>
+</div>
+<main class="page">
+<div class="cover">
+<div class="eyebrow"><span data-copy="0">Research guide</span></div>
+<h1><span data-copy="1">BPC-157</span></h1>
+<p class="sub"><span data-copy="2">What the animal and human reports actually show, read study by study</span></p>
+<div class="meta"><span data-copy="3">27 November 2026</span></div>
+</div>
+<h2><span data-copy="4">What it is</span></h2>
+<p><span data-copy="5">BPC-157 is a short experimental peptide. It sits in the research space rather than the everyday supplement space, and the published evidence around it is thin and uneven.</span></p><p><span data-copy="6">The two studies behind this guide look at very different things. One is a rat injury model focused on the Achilles tendon where it attaches to bone. The other is a small retrospective report on people with knee pain who had already received BPC-157, some of them alongside thymosin beta-4. Neither establishes a human regimen, an injection site, a recovery time, a side-effect rate or long-term safety.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<div class="tint">
+<h2 class="accent">1. <span data-copy="7">The studies at a glance</span></h2>
+<p><span data-copy="8">The animal work used a rat model of injury at the Achilles tendon attachment to bone and reported healing outcomes in rats. No human treatment result comes out of it.</span></p><p><span data-copy="9">The human report looked back at people who had already received BPC-157 for knee pain. Some also received thymosin beta-4. There was no comparable untreated control group, so the report cannot separate any effect of BPC-157 from other care or from natural change in symptoms. A recovery report is not a controlled trial.</span></p>
+
+<h3><span data-copy="10">The two studies side by side</span></h3><table class="steps"><thead><tr><th><span data-copy="11">Design and population</span></th><th><span data-copy="12">What was found</span></th><th><span data-copy="13">Main limitation</span></th></tr></thead><tbody><tr><td><span data-copy="14">Rat injury model at the Achilles tendon attachment to bone</span></td><td><span data-copy="15">Healing outcomes reported in rats</span></td><td><span data-copy="16">Animal model, so no human treatment result</span></td></tr><tr><td><span data-copy="17">Small retrospective report on people with knee pain, some also given thymosin beta-4</span></td><td><span data-copy="18">Knee pain assessed after treatment had already happened</span></td><td><span data-copy="19">No comparable untreated control group, and a mixed intervention</span></td></tr><tr><td><span data-copy="20">Recovery report rather than a controlled trial</span></td><td><span data-copy="21">Describes outcomes without isolating an effect</span></td><td><span data-copy="22">Cannot separate BPC-157 from other care or natural change in symptoms</span></td></tr></tbody></table>
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+</div>
+<h2 class="accent">2. <span data-copy="23">Forms and handling</span></h2>
+<p><span data-copy="24">The supplied evidence describes BPC-157 as a peptide studied in a rat injury model and in a retrospective human report. It does not describe product forms, storage conditions or handling steps in detail.</span></p><p><span data-copy="25">For anything already in hand, the reliable route is the instructions for the exact product plus a pharmacist or prescriber. The studies do not settle those practical questions.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2 class="accent">3. <span data-copy="26">Side effects</span></h2>
+<p><span data-copy="27">The cited studies do not establish a side-effect rate. Neither the rat model nor the small retrospective knee report gives a figure that can be carried across to people in general.</span></p><p><span data-copy="28">That leaves a real gap. A reader wanting a sense of how often something goes wrong will not find it in these two papers, and long-term safety is likewise not settled by them.</span></p>
+
+<div class="warn">
+<h4><span data-copy="29">When to seek urgent care</span></h4>
+<ul class="dots"><li><span data-copy="30">Tell the clinician what product was used if symptoms appear after use.</span></li></ul>
+</div>
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>4. <span data-copy="31">How it has been studied</span></h2>
+<p><span data-copy="32">The animal study is a focused injury model. Rats with an injury at the Achilles tendon attachment to bone were studied, and healing outcomes were reported. The strength is a defined model and a defined outcome. The limitation is that rats are not people.</span></p><p><span data-copy="33">The human study is a retrospective report. People who had already received BPC-157 for knee pain were assessed after the fact, and some had also received thymosin beta-4. The strength is that it involves real people with knee pain. The limitation is the missing comparable untreated control group and the mixed intervention.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>5. <span data-copy="34">What the evidence actually shows</span></h2>
+<p><span data-copy="35">Taken together, the evidence shows a plausible line of inquiry and not a settled answer. The rat work reported healing in an Achilles attachment model. The knee report described outcomes in people who had already been treated.</span></p><p><span data-copy="36">Keep the results separate by model, population, intervention and outcome. The rat finding belongs to rats. The knee finding belongs to a small uncontrolled human group, some of whom received a second peptide. Neither study establishes a human regimen, an injection site recommendation, a recovery time, a side-effect rate or long-term safety.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>6. <span data-copy="37">Who should be cautious</span></h2>
+<p><span data-copy="38">Caution here is less about named risk groups, which the studies do not define, and more about expectations. Anyone hoping for a proven human protocol will not find one in these papers.</span></p><p><span data-copy="39">Anyone with persistent tendon or joint symptoms deserves a qualified assessment rather than an assumption that a research peptide covers the problem. Someone who has already used a product and has symptoms can simply tell a clinician what it was.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>7. <span data-copy="40">Monitoring</span></h2>
+<p><span data-copy="41">The studies do not set out a monitoring schedule. The animal work tracked healing outcomes in a model. The human report assessed knee pain retrospectively.</span></p><p><span data-copy="42">In practice, the useful anchor is the symptom itself. Persistent tendon or joint symptoms warrant qualified assessment, and a clinician can weigh what was used alongside the clinical picture.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>8. <span data-copy="43">Food and muscle</span></h2>
+<p><span data-copy="44">The supplied evidence says little about food. Neither study describes dietary control, and no food interaction is reported.</span></p><p><span data-copy="45">Muscle and tendon are closer to the subject matter. The rat study concerns the Achilles tendon attachment to bone, and the human report concerns knee pain. Both point at the soft-tissue and joint setting rather than at muscle performance as such.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>9. <span data-copy="46">Timing and interruptions</span></h2>
+<p><span data-copy="47">The studies do not supply a timing framework that can be applied personally. There is no schedule to fall behind on in the evidence, and no interruption rule.</span></p><p><span data-copy="48">What can be said is narrower. The rat model and the retrospective knee report each describe an exposure that happened in the study, and neither translates that into a personal timetable. Readers should treat any timing guidance as belonging to the exact product and confirm it with a pharmacist or prescriber.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>10. <span data-copy="49">Common mistakes</span></h2>
+<p><span data-copy="50">The most common mistake is carrying a rat result straight over to people. The Achilles attachment finding is a rat finding, and the paper reports no human treatment result.</span></p><p><span data-copy="51">The second is reading the knee report as a controlled trial. It was retrospective, had no comparable untreated control group, and some people also received thymosin beta-4, so the effect of BPC-157 cannot be isolated from other care or natural change in symptoms. The third is expecting the studies to settle regimen, injection site, recovery time, side-effect rate or long-term safety. They do not.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>11. <span data-copy="52">FAQ</span></h2><dl><dt><span data-copy="53">Is BPC-157 proven in people?</span></dt><dd><span data-copy="54">Not by these studies. One is a rat model and the other is a small retrospective report without a comparable untreated control group.</span></dd><dt><span data-copy="55">Did the knee report test BPC-157 alone?</span></dt><dd><span data-copy="56">No. Some people in that report also received thymosin beta-4, so the effect of BPC-157 cannot be isolated.</span></dd><dt><span data-copy="57">Do the studies give a recovery time?</span></dt><dd><span data-copy="58">No. Neither paper establishes a recovery time, and neither establishes a human regimen or injection site recommendation.</span></dd><dt><span data-copy="59">Do the studies give a side-effect rate?</span></dt><dd><span data-copy="60">No. A side-effect rate and long-term safety are both left open by the cited evidence.</span></dd></dl>
+<h2>12. <span data-copy="61">Plain-English glossary</span></h2><dl class="gloss"><dt><span data-copy="62">Peptide</span></dt><dd><span data-copy="63">A short chain of building blocks that the body also uses to make proteins.</span></dd><dt><span data-copy="64">Retrospective report</span></dt><dd><span data-copy="65">A look back at people who had already been treated, rather than a planned comparison.</span></dd><dt><span data-copy="66">Control group</span></dt><dd><span data-copy="67">A comparison group that did not receive the treatment, used to judge what would have happened anyway.</span></dd><dt><span data-copy="68">Model</span></dt><dd><span data-copy="69">The setting a study uses, such as an injury created in rats, standing in for the human situation.</span></dd></dl>
+<div class="refs">
+<h2><span data-copy="70">Sources</span></h2>
+<ol>
+<li id="source-1"><a href="https://pubmed.ncbi.nlm.nih.gov/16583442/"><span data-copy="71">Rat Achilles tendon attachment injury model, PubMed</span></a></li>
+<li id="source-2"><a href="https://pubmed.ncbi.nlm.nih.gov/34324435/"><span data-copy="72">Small retrospective report on knee pain, PubMed</span></a></li>
+<li id="source-3"><a href="https://medlineplus.gov/ency/article/000844.htm"><span data-copy="73">MedlinePlus, allergy overview</span></a></li>
+</ol></div>
+<footer>
+<p><span data-copy="74">Educational guide only. For the exact product, follow its instructions and ask a pharmacist or prescriber.</span></p>
+</footer>
+</main></body></html>

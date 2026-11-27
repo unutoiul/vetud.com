@@ -1,0 +1,200 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Semaglutide</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 22px; background: #f4f5f7;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+  }
+  .bar { max-width: 700px; margin: 0 auto 14px; }
+  .bar button {
+    background: #0f766e; color: #fff; border: 0; border-radius: 8px;
+    padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: inherit;
+  }
+  .bar span { font-size: 12px; color: #6b7280; margin-left: 10px; }
+  .page {
+    width: 700px; margin: 0 auto; background: #fff; color: #1f2328;
+    padding: 46px 54px 40px; border: 1px solid #e2e5e9; border-radius: 6px;
+    font-size: 13.5px; line-height: 1.62;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+  }
+  .cover { border-bottom: 3px solid #0f766e; padding-bottom: 18px; margin-bottom: 26px; }
+  .eyebrow {
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #0f766e; font-weight: 600; margin-bottom: 10px;
+  }
+  h1 {
+    font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.1;
+    margin: 0 0 8px; font-weight: 700; color: #11161c;
+  }
+  .sub { font-size: 14px; color: #4b535c; margin: 0 0 14px; }
+  .meta { font-size: 11px; color: #77808a; }
+  h2 {
+    font-family: Georgia, serif; font-size: 19px; margin: 30px 0 10px; color: #11161c;
+    padding-bottom: 5px; border-bottom: 1px solid #e6e9ec; page-break-after: avoid;
+  }
+  h2.accent { color: #0f766e; border-bottom-color: #cfe4e1; }
+  h3 {
+    font-size: 13px; font-weight: 600; margin: 18px 0 6px; color: #11161c;
+    text-transform: uppercase; letter-spacing: 0.05em; page-break-after: avoid;
+  }
+  h4 { font-size: 13px; margin: 0 0 6px; color: #8a3b2e; font-weight: 700; }
+  p { margin: 0 0 10px; }
+  .lead { color: #4b535c; }
+  .tint {
+    background: #f7fbfa; border: 1px solid #dceae8; border-left: 3px solid #0f766e;
+    border-radius: 4px; padding: 4px 20px 14px; margin: 22px 0;
+  }
+  .tint h2 { margin-top: 16px; border-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; font-size: 12.5px; page-break-inside: avoid; }
+  th, td { border: 1px solid #dfe3e7; padding: 7px 9px; text-align: left; vertical-align: top; }
+  th { background: #eef3f2; font-weight: 600; font-size: 11.5px; color: #14504a; }
+  .grid td:not(:first-child), .grid th:not(:first-child) { text-align: center; font-variant-numeric: tabular-nums; }
+  .grid.left td, .grid.left th { text-align: left; }
+  tr.hl td { background: #fdf6ec; font-weight: 600; }
+  .steps td:first-child { font-weight: 600; width: 110px; }
+  ul, ol { margin: 8px 0 12px; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  ul.dots { list-style: none; padding-left: 0; }
+  ul.dots li { padding-left: 16px; position: relative; }
+  ul.dots li::before { content: "\2022"; position: absolute; left: 0; color: #0f766e; font-weight: 700; }
+  ul.tight li { margin-bottom: 6px; }
+  ul.check { list-style: none; padding-left: 0; columns: 2; column-gap: 24px; }
+  ul.check li { padding-left: 20px; position: relative; break-inside: avoid; margin-bottom: 5px; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; color: #0f766e; font-size: 13px; }
+  ol.num { padding-left: 0; list-style: none; counter-reset: s; }
+  ol.num li { counter-increment: s; position: relative; padding-left: 32px; margin-bottom: 9px; }
+  ol.num li::before {
+    content: counter(s); position: absolute; left: 0; top: 1px;
+    width: 21px; height: 21px; border-radius: 50%; background: #0f766e; color: #fff;
+    font-size: 11px; font-weight: 700; text-align: center; line-height: 21px;
+  }
+  .callout {
+    background: #eef3f2; border-left: 3px solid #0f766e; padding: 11px 14px;
+    margin: 14px 0; border-radius: 3px; font-size: 13px; page-break-inside: avoid;
+  }
+  .warn {
+    background: #fdf3f0; border: 1px solid #f2d8d0; border-left: 3px solid #b4482f;
+    padding: 11px 14px 6px; margin: 16px 0; border-radius: 3px; page-break-inside: avoid;
+  }
+  .warn ul.dots li::before { color: #b4482f; }
+  dl { margin: 8px 0 14px; }
+  dt { font-weight: 600; margin-top: 9px; }
+  dd { margin: 2px 0 0; }
+  dl.gloss dt { font-weight: 600; color: #0f766e; }
+  .refs ol { font-size: 12.5px; color: #4b535c; }
+  .refs li { margin-bottom: 3px; }
+  footer {
+    margin-top: 30px; padding-top: 14px; border-top: 1px solid #e6e9ec;
+    font-size: 11.5px; color: #6b7480; line-height: 1.55;
+  }
+  @media print {
+    @page { size: A4; margin: 13mm 14mm; }
+    body { background: #fff; padding: 0; }
+    .bar { display: none; }
+    .page {
+      width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0;
+      box-shadow: none; font-size: 10.5pt; line-height: 1.5;
+    }
+    h1 { font-size: 26pt; }
+    h2 { font-size: 13pt; }
+    .tint, .callout, .warn, table, .warn ul { page-break-inside: avoid; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  .guide-ref { color: #0f766e; }
+  .guide-ref a, .refs a { color: #115f59; text-underline-offset: .15em; }
+  h2, h3, h4 { break-after: avoid; }
+  @media screen and (max-width: 750px) {
+    body { padding: 12px; }
+    .page { width: 100%; padding: clamp(15px, 5vw, 40px); }
+    .bar span { display: block; margin: 5px 0 0; }
+    .tint { padding-left: 12px; padding-right: 12px; }
+    th, td { padding: 5px 6px; overflow-wrap: anywhere; }
+  }
+</style>
+<meta name="venice-body-sha256" content="5cb6e46f750d58604eb2672b6033e8a369a20e9060c2720d21b5eb4dcc4b6515">
+</head>
+
+<body>
+<div class="bar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+  <span>Choose Save as PDF, paper A4, background graphics on.</span>
+</div>
+<main class="page">
+<div class="cover">
+<div class="eyebrow"><span data-copy="0">Research guide</span></div>
+<h1><span data-copy="1">Semaglutide</span></h1>
+<p class="sub"><span data-copy="2">What the trial evidence shows, where it stops, and what to check before you rely on it</span></p>
+<div class="meta"><span data-copy="3">27 November 2026</span></div>
+</div>
+<h2><span data-copy="4">What it is</span></h2>
+<p><span data-copy="5">Semaglutide is a prescription medicine that activates the GLP-1 receptor. That receptor action can increase insulin release when blood glucose is high, affect appetite and slow gastric emptying. It comes as distinct prescription injection and oral tablet products, and the products carry different directions.</span></p><p><span data-copy="6">Because the products differ, the exact product matters more than the name on the box. Confirm which product you have with the prescriber or pharmacist, then follow the instructions supplied with that product. The evidence below describes what was studied, not a personal forecast.</span></p>
+
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a></p>
+<div class="tint">
+<h2 class="accent">1. <span data-copy="7">The studies at a glance</span></h2>
+<p><span data-copy="8">Two large randomised trials anchor the evidence, and they asked different questions. STEP 1 tested weight change in adults with overweight or obesity and no diabetes. SELECT tested cardiovascular outcomes in adults with overweight or obesity and established cardiovascular disease, also without diabetes.</span></p><p><span data-copy="9">Both trials compared semaglutide injection with placebo, and both gave lifestyle intervention to both groups. Neither trial answers questions about the oral tablet, about people with diabetes, or about how a single person will respond.</span></p>
+
+<h3><span data-copy="10">How the two key trials compare</span></h3><table class="steps"><thead><tr><th><span data-copy="11">Study and population</span></th><th><span data-copy="12">Design and follow-up</span></th><th><span data-copy="13">Main finding</span></th></tr></thead><tbody><tr><td><span data-copy="14">STEP 1, 1,961 adults with overweight or obesity and no diabetes</span></td><td><span data-copy="15">Randomised comparison of semaglutide injection with placebo, lifestyle intervention in both groups, 68 weeks</span></td><td><span data-copy="16">Mean weight change of minus 14.9 percent with semaglutide against minus 2.4 percent with placebo</span></td></tr><tr><td><span data-copy="17">SELECT, 17,604 adults with overweight or obesity and established cardiovascular disease, no diabetes</span></td><td><span data-copy="18">Randomised comparison of semaglutide injection with placebo, lifestyle intervention in both groups, mean 39.8 months</span></td><td><span data-copy="19">Cardiovascular composite in 6.5 percent with semaglutide against 8.0 percent with placebo</span></td></tr><tr><td><span data-copy="20">What the findings answer</span></td><td><span data-copy="21">Adults with overweight or obesity, with or without established cardiovascular disease, and no diabetes</span></td><td><span data-copy="22">Average group effects for the studied injection, not individual forecasts and not other formulations</span></td></tr></tbody></table>
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+</div>
+<h2 class="accent">2. <span data-copy="23">Forms and handling</span></h2>
+<p><span data-copy="24">The injection and the tablet are separate prescription products with separate directions. Handling guidance for one does not transfer to the other, so read the instructions for the exact product in hand and ask a pharmacist or prescriber when something is unclear.</span></p><p><span data-copy="25">The supplied evidence does not describe storage, device technique or tablet handling in detail. That is a narrow gap, and the product&#x27;s own instructions fill it better than any general summary can.</span></p>
+
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a></p>
+<h2 class="accent">3. <span data-copy="26">Side effects</span></h2>
+<p><span data-copy="27">Digestive effects are the ones the evidence names, including nausea, diarrhea, vomiting and constipation. These are common enough to plan around, and they often shape how tolerable the medicine feels early on.</span></p><p><span data-copy="28">Some symptoms deserve prompt care rather than patience. Persistent severe abdominal pain, or repeated vomiting that prevents you staying hydrated, should be checked quickly. Trouble breathing, swelling of the throat or tongue, or collapse are emergencies.</span></p>
+
+<div class="warn">
+<h4><span data-copy="29">When to seek urgent care</span></h4>
+<ul class="dots"><li><span data-copy="30">Persistent severe abdominal pain</span></li><li><span data-copy="31">Repeated vomiting that prevents you staying hydrated</span></li><li><span data-copy="32">Trouble breathing</span></li><li><span data-copy="33">Swelling of the throat or tongue</span></li><li><span data-copy="34">Collapse</span></li></ul>
+</div>
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a> <a href="#source-4" aria-label="Source 4">[4]</a></p>
+<h2>4. <span data-copy="35">How it has been studied</span></h2>
+<p><span data-copy="36">STEP 1 enrolled 1,961 adults with overweight or obesity and no diabetes. Everyone received lifestyle intervention, and the trial ran to 68 weeks. Mean weight change was a fall of 14.9 percent with semaglutide injection against 2.4 percent with placebo.</span></p><p><span data-copy="37">SELECT enrolled 17,604 adults with overweight or obesity and established cardiovascular disease, again without diabetes. Over a mean 39.8 months, the composite of death from cardiovascular causes, nonfatal heart attack or nonfatal stroke occurred in 6.5 percent with semaglutide and 8.0 percent with placebo.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>5. <span data-copy="38">What the evidence actually shows</span></h2>
+<p><span data-copy="39">In the studied injection, the evidence shows meaningful average weight loss in adults with overweight or obesity and no diabetes, and fewer cardiovascular composite events in adults who already had cardiovascular disease. Both findings come from randomised comparisons against placebo with lifestyle intervention in both groups.</span></p><p><span data-copy="40">The limits are as important as the findings. Averages describe groups, not individuals, and the results should not be generalised to all patients or to other formulations. Body weight alone also does not describe strength or body composition.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>6. <span data-copy="41">Who should be cautious</span></h2>
+<p><span data-copy="42">The trials studied adults with overweight or obesity, and SELECT specifically required established cardiovascular disease. People with diabetes were not in either trial, so the evidence here says little about them directly.</span></p><p><span data-copy="43">Anyone managing digestive symptoms, diabetes medicines or blood sugar monitoring should discuss tolerance with a care team. The supplied evidence does not list other groups to avoid, which is a narrow gap rather than an all-clear.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a> <a href="#source-3" aria-label="Source 3">[3]</a></p>
+<h2>7. <span data-copy="44">Monitoring</span></h2>
+<p><span data-copy="45">The evidence supports watching digestive tolerance and staying alert to the urgent symptoms above. For people also managing diabetes medicines and blood sugar, the care team is the right place to discuss monitoring.</span></p><p><span data-copy="46">The supplied material does not specify a monitoring schedule or which tests to expect. Follow the instructions for the exact product and raise changes with a prescriber or pharmacist.</span></p>
+
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a> <a href="#source-4" aria-label="Source 4">[4]</a></p>
+<h2>8. <span data-copy="47">Food and muscle</span></h2>
+<p><span data-copy="48">Semaglutide slows gastric emptying, which helps explain why digestive effects feature so prominently. Both trials paired the medicine with lifestyle intervention, so the results reflect that combination rather than the medicine alone.</span></p><p><span data-copy="49">Weight change figures do not tell you how much of any loss was fat or muscle. Judging strength and body composition needs more than a scale, and the supplied evidence does not quantify it.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a> <a href="#source-3" aria-label="Source 3">[3]</a></p>
+<h2>9. <span data-copy="50">Timing and interruptions</span></h2>
+<p><span data-copy="51">Timing rules differ between the injection and the tablet, so there is no single answer that covers both. The exact product&#x27;s instructions are the place to check, and a prescriber is the person to ask about interruptions.</span></p><p><span data-copy="52">The supplied evidence gives no missed-dose windows, starting steps or maximums. Treat any general timing advice as a prompt to read your own product&#x27;s directions rather than a substitute for them.</span></p>
+
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a></p>
+<h2>10. <span data-copy="53">Common mistakes</span></h2>
+<p><span data-copy="54">The most common mistake is treating the injection and the tablet as interchangeable. They are distinct products with different directions, so technique and timing borrowed from the other form can mislead.</span></p><p><span data-copy="55">Two more mistakes stand out. Reading a group average as a personal forecast ignores how wide individual responses are. Waiting too long on severe abdominal pain or repeated vomiting that blocks hydration delays care that the symptom pattern warrants.</span></p>
+
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a> <a href="#source-4" aria-label="Source 4">[4]</a> <a href="#source-1" aria-label="Source 1">[1]</a></p>
+<h2>11. <span data-copy="56">FAQ</span></h2><dl><dt><span data-copy="57">Does this guide tell me my dose?</span></dt><dd><span data-copy="58">No. It describes what was studied. The exact product&#x27;s instructions and a pharmacist or prescriber cover the practical detail.</span></dd><dt><span data-copy="59">Can I apply the trial results to the tablet?</span></dt><dd><span data-copy="60">Only cautiously. Both trials used the injection, so the tablet is outside what these findings directly tested.</span></dd><dt><span data-copy="61">Do the results apply if I have diabetes?</span></dt><dd><span data-copy="62">Not directly. Neither trial enrolled people with diabetes, so the evidence here is silent on that group.</span></dd><dt><span data-copy="63">Is the weight figure a prediction for me?</span></dt><dd><span data-copy="64">No. It is a group average from one trial, and individual responses vary widely around it.</span></dd></dl>
+<h2>12. <span data-copy="65">Plain-English glossary</span></h2><dl class="gloss"><dt><span data-copy="66">Placebo</span></dt><dd><span data-copy="67">A comparison treatment with no active medicine, used so researchers can see what the medicine adds.</span></dd><dt><span data-copy="68">Composite outcome</span></dt><dd><span data-copy="69">A single measure that counts the first of several events, such as death from cardiovascular causes, heart attack or stroke.</span></dd><dt><span data-copy="70">Gastric emptying</span></dt><dd><span data-copy="71">How quickly the stomach passes its contents onward, which semaglutide slows.</span></dd><dt><span data-copy="72">Randomised trial</span></dt><dd><span data-copy="73">A study where participants are assigned by chance to one treatment or another, which makes the groups fairer to compare.</span></dd></dl>
+<div class="refs">
+<h2><span data-copy="74">Sources</span></h2>
+<ol>
+<li id="source-1"><a href="https://pubmed.ncbi.nlm.nih.gov/33567185/"><span data-copy="75">STEP 1 trial, PubMed</span></a></li>
+<li id="source-2"><a href="https://pubmed.ncbi.nlm.nih.gov/37952131/"><span data-copy="76">SELECT trial, PubMed</span></a></li>
+<li id="source-3"><a href="https://medlineplus.gov/druginfo/meds/a618008.html"><span data-copy="77">MedlinePlus medicine information</span></a></li>
+<li id="source-4"><a href="https://www.niddk.nih.gov/health-information/digestive-diseases/pancreatitis/symptoms-causes"><span data-copy="78">NIDDK, pancreatitis symptoms</span></a></li>
+</ol></div>
+<footer>
+<p><span data-copy="79">Educational guide drawn from the supplied evidence. Confirm your exact product with a pharmacist or prescriber.</span></p>
+</footer>
+</main></body></html>

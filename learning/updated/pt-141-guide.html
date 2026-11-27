@@ -1,0 +1,345 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PT-141 guide</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 22px; background: #f4f5f7; font-family: Inter, system-ui, -apple-system, sans-serif; }
+  .bar { max-width: 700px; margin: 0 auto 14px; }
+  .bar button { background: #0f766e; color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .bar span { font-size: 12px; color: #6b7280; margin-left: 10px; }
+  .page { width: 700px; margin: 0 auto; background: #fff; color: #1f2328; padding: 46px 54px 40px; border: 1px solid #e2e5e9; border-radius: 6px; font-size: 13.5px; line-height: 1.62; box-shadow: 0 2px 14px rgba(0,0,0,0.07); }
+  .cover { border-bottom: 3px solid #0f766e; padding-bottom: 18px; margin-bottom: 26px; }
+  .eyebrow { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #0f766e; font-weight: 600; margin-bottom: 10px; }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.1; margin: 0 0 8px; font-weight: 700; color: #11161c; }
+  .sub { font-size: 14px; color: #4b535c; margin: 0 0 14px; }
+  .meta { font-size: 11px; color: #77808a; }
+  h2 { font-family: Georgia, serif; font-size: 19px; margin: 30px 0 10px; color: #11161c; padding-bottom: 5px; border-bottom: 1px solid #e6e9ec; page-break-after: avoid; }
+  h2.accent { color: #0f766e; border-bottom-color: #cfe4e1; }
+  h3 { font-size: 13px; font-weight: 600; margin: 18px 0 6px; color: #11161c; text-transform: uppercase; letter-spacing: 0.05em; page-break-after: avoid; }
+  h4 { font-size: 13px; margin: 0 0 6px; color: #8a3b2e; font-weight: 700; }
+  p { margin: 0 0 10px; }
+  .lead { color: #4b535c; }
+  .tint { background: #f7fbfa; border: 1px solid #dceae8; border-left: 3px solid #0f766e; border-radius: 4px; padding: 4px 20px 14px; margin: 22px 0; }
+  .tint h2 { margin-top: 16px; border-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; font-size: 12.5px; page-break-inside: avoid; }
+  th, td { border: 1px solid #dfe3e7; padding: 7px 9px; text-align: left; vertical-align: top; }
+  th { background: #eef3f2; font-weight: 600; font-size: 11.5px; color: #14504a; }
+  .grid td:not(:first-child), .grid th:not(:first-child) { text-align: center; font-variant-numeric: tabular-nums; }
+  .grid.left td, .grid.left th { text-align: left; }
+  tr.hl td { background: #fdf6ec; font-weight: 600; }
+  .steps td:first-child { font-weight: 600; width: 120px; }
+  ul, ol { margin: 8px 0 12px; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  ul.dots { list-style: none; padding-left: 0; }
+  ul.dots li { padding-left: 16px; position: relative; }
+  ul.dots li::before { content: "\2022"; position: absolute; left: 0; color: #0f766e; font-weight: 700; }
+  ul.tight li { margin-bottom: 6px; }
+  ul.check { list-style: none; padding-left: 0; columns: 2; column-gap: 24px; }
+  ul.check li { padding-left: 20px; position: relative; break-inside: avoid; margin-bottom: 5px; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; color: #0f766e; font-size: 13px; }
+  ol.num { padding-left: 0; list-style: none; counter-reset: s; }
+  ol.num li { counter-increment: s; position: relative; padding-left: 32px; margin-bottom: 9px; }
+  ol.num li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 21px; height: 21px; border-radius: 50%; background: #0f766e; color: #fff; font-size: 11px; font-weight: 700; text-align: center; line-height: 21px; }
+  .callout { background: #eef3f2; border-left: 3px solid #0f766e; padding: 11px 14px; margin: 14px 0; border-radius: 3px; font-size: 13px; page-break-inside: avoid; }
+  .warn { background: #fdf3f0; border: 1px solid #f2d8d0; border-left: 3px solid #b4482f; padding: 11px 14px 6px; margin: 16px 0; border-radius: 3px; page-break-inside: avoid; }
+  .warn ul.dots li::before { color: #b4482f; }
+  dl { margin: 8px 0 14px; }
+  dt { font-weight: 600; margin-top: 9px; }
+  dd { margin: 2px 0 0; }
+  dl.gloss dt { font-weight: 600; color: #0f766e; }
+  .refs ol { font-size: 12.5px; color: #4b535c; }
+  .refs li { margin-bottom: 3px; }
+  footer { margin-top: 30px; padding-top: 14px; border-top: 1px solid #e6e9ec; font-size: 11.5px; color: #6b7480; line-height: 1.55; }
+  @media print {
+    @page { size: A4; margin: 13mm 14mm; }
+    body { background: #fff; padding: 0; }
+    .bar { display: none; }
+    .page { width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0; box-shadow: none; font-size: 10.5pt; line-height: 1.5; }
+    h1 { font-size: 26pt; }
+    h2 { font-size: 13pt; }
+    .tint, .callout, .warn, table, .warn ul { page-break-inside: avoid; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+  <span>Choose Save as PDF, paper A4, background graphics on.</span>
+</div>
+
+<div class="page">
+
+  <div class="cover">
+    <div class="eyebrow">Research peptide guide &middot; plain language</div>
+    <h1>PT-141</h1>
+    <p class="sub">Bremelanotide: dosing, mixing, side effects and the evidence behind it</p>
+    <div class="meta">Prepared 27 November 2026 &middot; FDA-approved as Vyleesi, 2019</div>
+  </div>
+
+  <h2>What it is</h2>
+  <p>PT-141 is bremelanotide, a synthetic peptide and a melanocortin receptor agonist. It acts on the brain's desire circuitry rather than on blood flow, which is why it works differently from Viagra-type drugs and why it is used in people who have desire problems rather than plumbing problems.</p>
+  <p>It is the only peptide in this series with a real drug approval. The FDA approved it as Vyleesi in June 2019 for <strong>acquired, generalised hypoactive sexual desire disorder in premenopausal women</strong>. Everything else — men, postmenopausal women, higher doses, nasal forms, compounded vials — is off-label.</p>
+
+  <div class="callout">
+    <strong>This guide is the opposite shape to the others.</strong> For BPC-157 and GHK-Cu the dosing was convention because no trial existed. Here a label exists, with a defined dose, defined limits and measured event rates. So the label anchors this document and the compounded-vial arithmetic is the derivative. Where the two differ, the label wins.
+  </div>
+
+  <div class="tint">
+    <h2 class="accent">1. Dosing</h2>
+
+    <h3>The approved dose</h3>
+    <p><strong>1.75 mg, subcutaneously, about 45 minutes before sexual activity.</strong> That is the whole protocol. It is a use-it-when-you-want-it drug, not a daily one.</p>
+    <table class="steps">
+      <thead><tr><th>Rule</th><th>Value</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Dose</td><td>1.75 mg</td><td>Label dose, no titration</td></tr>
+        <tr><td>Timing</td><td>~45 minutes before</td><td>Onset window in trials</td></tr>
+        <tr><td>Maximum frequency</td><td>1 dose per 24 hours</td><td>Label limit</td></tr>
+        <tr><td>Maximum monthly</td><td>8 doses</td><td>Limits blood pressure exposure and pigmentation risk</td></tr>
+        <tr><td>Daily use?</td><td>No</td><td>It does not accumulate; unused doses are wasted</td></tr>
+      </tbody>
+    </table>
+    <p>There is no loading phase and no escalation. The second dose often produces less nausea than the first, which is why the label advises persisting through an initial rough one rather than abandoning it.</p>
+
+    <h3>Off-label use in men</h3>
+    <p>Men use the same 1.75 mg, and some go to 2 or 2.5 mg. Trial work in men with erectile dysfunction was modest and mostly done with an intranasal formulation that no longer exists commercially, so the male evidence is weaker than the female evidence despite being widely discussed.</p>
+    <p>A practical adjustment: <strong>men often start at 1 mg</strong> to gauge nausea, then move to 1.75 mg. Nausea is dose-related, and a failed evening is more annoying than a slightly weaker effect.</p>
+
+    <h3>Does body weight matter?</h3>
+    <p>Not much — the label is flat for everyone. The per-kg spread across adult weights is only about twofold.</p>
+    <table class="grid">
+      <thead>
+        <tr><th>Dose</th><th>60 kg</th><th>70 kg</th><th>80 kg</th><th>90 kg</th><th>100 kg</th><th>110 kg</th><th>120 kg</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1 mg</td><td>16.7</td><td>14.3</td><td>12.5</td><td>11.1</td><td>10.0</td><td>9.1</td><td>8.3</td></tr>
+        <tr class="hl"><td>1.75 mg</td><td>29.2</td><td>25.0</td><td>21.9</td><td>19.4</td><td>17.5</td><td>15.9</td><td>14.6</td></tr>
+        <tr><td>2.5 mg</td><td>41.7</td><td>35.7</td><td>31.3</td><td>27.8</td><td>25.0</td><td>22.7</td><td>20.8</td></tr>
+      </tbody>
+    </table>
+    <p class="lead">Micrograms per kg, for reference only. Weight is not a reason to deviate from 1.75 mg.</p>
+
+    <h3>The units table</h3>
+    <p>Standard mix for a 10 mg vial: <strong>2 mL water = 5 mg/mL.</strong> At that concentration:</p>
+    <table class="grid">
+      <thead><tr><th>Dose</th><th>Volume</th><th>Units on a U-100 insulin syringe</th></tr></thead>
+      <tbody>
+        <tr><td>0.5 mg</td><td>0.10 mL</td><td>10</td></tr>
+        <tr><td>1 mg</td><td>0.20 mL</td><td>20</td></tr>
+        <tr class="hl"><td>1.75 mg</td><td>0.35 mL</td><td>35</td></tr>
+        <tr><td>2 mg</td><td>0.40 mL</td><td>40</td></tr>
+        <tr><td>2.5 mg</td><td>0.50 mL</td><td>50</td></tr>
+      </tbody>
+    </table>
+    <p>A 10 mg vial gives five 2 mg doses or roughly five and a half 1.75 mg doses. At eight doses a month that is about one and a half vials monthly.</p>
+    <p><strong>Note the mismatch with the commercial product.</strong> Vyleesi is a 1.75 mg single-use autoinjector — 0.3 mL of a roughly 5.8 mg/mL solution. Your mixed vial will not match that volume, but 35 units delivers the same 1.75 mg. Trust the milligrams, not the millilitres.</p>
+
+    <h3>What I would suggest as a starting shape</h3>
+    <ul class="tight">
+      <li><strong>First ever dose:</strong> at home, on an evening with nothing else planned. Not in a restaurant, not on a first date.</li>
+      <li><strong>Women:</strong> 1.75 mg as labelled. Do not chase a stronger effect by doubling.</li>
+      <li><strong>Men:</strong> 1 mg first, then 1.75 mg if the first was tolerable.</li>
+      <li><strong>If nausea is the limiting factor:</strong> an antiemetic such as ondansetron an hour beforehand is the label's own suggestion, and it works.</li>
+      <li><strong>Ceiling:</strong> 2.5 mg and eight doses a month. Beyond that you are outside both label and evidence.</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Worked example.</strong> Dan, 88 kg. First attempt 1 mg — mild flushing, no nausea, partial effect. Second attempt 1.75 mg with ondansetron an hour before, forty-five minutes ahead of activity. At 1.75 mg he sits at 19.9 mcg/kg, essentially the label exposure. He keeps to eight doses a month and logs each one.
+    </div>
+  </div>
+
+  <h2 class="accent">2. Mixing the vial</h2>
+  <p class="lead">Same mechanics as any lyophilised peptide. The one thing to be careful about here is the small dose volume — 35 units from a 5 mg/mL mix, so measure precisely.</p>
+
+  <h3>What you need</h3>
+  <ul class="check">
+    <li>Your vial of powder</li>
+    <li>Bacteriostatic water</li>
+    <li>One 3 mL mixing syringe, 25&ndash;27G</li>
+    <li>Alcohol swabs</li>
+    <li>U-100 insulin syringes, 29&ndash;31G, ideally 0.3 mL</li>
+    <li>Sharps container and marker pen</li>
+  </ul>
+
+  <h3>The steps</h3>
+  <ol class="num">
+    <li><strong>Wash your hands</strong> for twenty seconds, dry on a clean towel, wipe the table.</li>
+    <li><strong>Check the vial</strong> &mdash; compact cake, legible label, in date.</li>
+    <li><strong>Swab both stoppers</strong> with separate swabs, ten seconds each, and let them dry fully.</li>
+    <li><strong>Draw 2 mL of water</strong> &mdash; air in, invert, draw slowly, clear bubbles.</li>
+    <li><strong>Change the needle</strong> if you have a spare.</li>
+    <li><strong>Enter at 45 degrees</strong> against the inner wall, then straighten.</li>
+    <li><strong>Run the water down the glass</strong>, not onto the powder.</li>
+    <li><strong>Vent the vacuum</strong> by re-pulling to your mark and holding until it eases.</li>
+    <li><strong>Withdraw and cap.</strong></li>
+    <li><strong>Swirl, never shake.</strong> Roll between your palms until clear.</li>
+    <li><strong>Stand five to fifteen minutes</strong>, swirling occasionally.</li>
+    <li><strong>Check it.</strong> Clear and colourless is right. Cloudy after half an hour means discard.</li>
+    <li><strong>Label</strong> with date, 5 mg/mL, and the units for 1 mg and 1.75 mg.</li>
+    <li><strong>Refrigerate</strong> at 2&ndash;8&deg;C, dark, never frozen.</li>
+  </ol>
+
+  <h3>Troubleshooting</h3>
+  <table class="grid left">
+    <thead><tr><th>Problem</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Water sprayed onto the powder</td><td>Swirl longer; discard if solid remains after thirty minutes.</td></tr>
+      <tr><td>Heavy foam</td><td>Stand twenty minutes; it collapses.</td></tr>
+      <tr><td>Still cloudy after thirty minutes</td><td>Do not inject.</td></tr>
+      <tr><td>Particles or floaters</td><td>Do not inject; draw through a fresh needle or discard.</td></tr>
+      <tr><td>Hard to read 35 units</td><td>Use a 0.3 mL syringe; its scale is wider per unit.</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Storage:</strong> powder cool and dark. Mixed, refrigerated, use within four weeks. Never freeze, never leave in a warm car — this matters more than usual here, since a spoiled vial is only discovered on the evening you needed it.</p>
+
+  <h2 class="accent">3. Side effects</h2>
+  <p class="lead">Unlike the other two peptides, these are measured rates from controlled trials, not anecdotes. Nausea is the headline and it is common enough to be the main reason people stop.</p>
+
+  <table class="grid">
+    <thead><tr><th>Reaction</th><th>Rate in trials</th><th>Character</th></tr></thead>
+    <tbody>
+      <tr class="hl"><td>Nausea</td><td>40.0%</td><td>Usually within the hour, lasting about two hours; worst on the first dose</td></tr>
+      <tr><td>Flushing</td><td>20.3%</td><td>Face and upper chest, warm and visible</td></tr>
+      <tr><td>Injection-site reaction</td><td>13.2%</td><td>Redness, stinging, lump</td></tr>
+      <tr><td>Headache</td><td>11.3%</td><td>Often with the flushing</td></tr>
+      <tr><td>Vomiting</td><td>4.8%</td><td>Usually with significant nausea</td></tr>
+      <tr><td>Cough, fatigue, hot flush, tingling, dizziness, nasal congestion</td><td>2&ndash;3% each</td><td>Minor and transient</td></tr>
+    </tbody>
+  </table>
+  <p>Most events are mild to moderate and short. The label notes nausea generally improves by the second dose, and suggests an antiemetic rather than abandonment if it persists.</p>
+
+  <h3>Specific to this drug</h3>
+  <ul class="dots">
+    <li><strong>Transient blood pressure rise</strong> &mdash; systolic up by roughly 6 mmHg at its peak, falling back over about twelve hours. Not dangerous in a normal-pressure person; the reason for the cardiovascular contraindication below.</li>
+    <li><strong>Focal hyperpigmentation</strong> &mdash; reported in about 1% of users at up to eight doses a month, on the face, gums and breasts. Darkening patches that can persist after stopping. The reason for the eight-dose ceiling, and a reason to stop if patches appear.</li>
+    <li><strong>Slowed stomach emptying</strong> &mdash; can delay absorption of oral medication. Worth knowing if you take anything time-critical.</li>
+  </ul>
+
+  <div class="warn">
+    <h4>Do not use, or stop and get help</h4>
+    <ul class="dots">
+      <li><strong>Uncontrolled high blood pressure, or known cardiovascular disease</strong> &mdash; a formal contraindication</li>
+      <li>Chest pain, palpitations or breathlessness after a dose</li>
+      <li>Hives, lip or tongue swelling, throat tightness, trouble breathing, collapse</li>
+      <li>Severe headache with a markedly raised blood pressure reading</li>
+      <li>New dark patches on the face, gums or breasts &mdash; stop and review</li>
+    </ul>
+  </div>
+
+  <p><strong>Managing the nausea:</strong> dose on a light stomach rather than a full one, have the first dose at home, take an antiemetic an hour beforehand, and lie still for the first twenty minutes. If nausea is severe every time, drop to 1 mg.</p>
+
+  <h2>4. Injecting</h2>
+  <ul class="dots">
+    <li>Sites: abdomen two fingers clear of the navel, or front thigh &mdash; the label's two approved sites</li>
+    <li>Swab and let it dry</li>
+    <li>Pinch a fold, 90 degrees, or 45 if lean</li>
+    <li>Inject slowly; count to five</li>
+    <li>Rotate sides so you are not always using the same spot</li>
+    <li>Inject about 45 minutes ahead &mdash; not an hour and a half, not five minutes</li>
+  </ul>
+
+  <h2>5. What the evidence actually shows</h2>
+  <p>Two phase 3 trials, RECONNECT, randomised and placebo-controlled, in premenopausal women with HSDD, running to 24 weeks. Both met their co-primary endpoints: an increase in satisfying sexual events and an improvement in desire score. The gains were real and modest — roughly one extra satisfying event a month over placebo, with a desire score improvement of about 0.3 points.</p>
+  <p>Modest matters. This is not a switch that turns desire on; it is a nudge that some people feel clearly and others barely at all. In extension data, benefit was maintained to 52 weeks in those who continued.</p>
+  <p>The male evidence is weaker: small phase 2 studies, mostly intranasal, showing improvement in erectile function in a subset. Enough to justify off-label use, not enough to call it established.</p>
+  <p>The approval itself was not unanimous. An FDA advisory committee voted against it in 2019 on modest effect size, and the agency approved anyway — a useful reminder that "approved" and "impressive" are different things.</p>
+
+  <h2>6. Regulatory status</h2>
+  <p>Approved in the US as Vyleesi since 2019, prescription only, supplied as a single-use autoinjector. Approved in the EU as well before being withdrawn there commercially.</p>
+  <p>Compounded and grey-market vials sit outside that. They are the same molecule in principle, with unverified purity, and they require you to do the mixing and arithmetic the autoinjector does for you.</p>
+
+  <h2>7. Who should be cautious</h2>
+  <ul class="dots">
+    <li>Uncontrolled hypertension &mdash; contraindicated</li>
+    <li>Any known cardiovascular disease &mdash; contraindicated</li>
+    <li>High risk of cardiovascular disease &mdash; not recommended</li>
+    <li>Blood pressure medication &mdash; the pressor effect can work against it</li>
+    <li>Existing facial or gum pigmentation &mdash; more to lose</li>
+    <li>Pregnancy or breastfeeding &mdash; unstudied</li>
+    <li>Postmenopausal women &mdash; outside the labelled population</li>
+    <li>Age under 18</li>
+    <li>Anyone taking time-critical oral medication</li>
+  </ul>
+
+  <h2>8. Monitoring</h2>
+  <ul class="dots">
+    <li>Blood pressure at baseline, and after a few doses if you can</li>
+    <li>A dose log &mdash; date, dose, nausea score, effect score, any flushing</li>
+    <li>Monthly check for new dark patches: face, gums, breasts, in daylight</li>
+    <li>Resting heart rate if you notice palpitations</li>
+    <li>Doses per month, kept at or under eight</li>
+  </ul>
+  <p>Baseline blood pressure is not optional here the way it is for the other peptides. It is the one number that decides whether you should be using this at all.</p>
+
+  <h2>9. Food and alcohol</h2>
+  <p>An empty stomach worsens nausea; a heavy meal also worsens it. A light meal an hour or two before is the compromise.</p>
+  <p>Alcohol is not contraindicated but does two things at once — it can add to flushing and it can add to the blood pressure drop some people feel after the initial rise. Keep the first few doses to one drink or none.</p>
+
+  <h2>10. Timing and missed doses</h2>
+  <p>Forty-five minutes ahead. Peak effect sits around one to two hours, and many report a longer tail into the next day. If you miss the window, the dose still works, just later than intended.</p>
+  <p>There is no missed-dose problem in the usual sense — you simply do not take one. Nothing accumulates, nothing needs rebuilding, and there is no withdrawal.</p>
+
+  <h2>11. Common mistakes</h2>
+  <ul class="dots">
+    <li>Using it daily and expecting accumulation</li>
+    <li>Doubling the dose after one mediocre result — 3.5 mg is not twice as good, just twice as nauseating</li>
+    <li>First dose somewhere public</li>
+    <li>Injecting five minutes ahead and concluding it failed</li>
+    <li>Exceeding eight doses a month</li>
+    <li>Skipping the blood pressure check</li>
+    <li>Confusing the autoinjector's 0.3 mL with 35 units on your own syringe</li>
+    <li>Ignoring new facial darkening</li>
+    <li>Using it in uncontrolled hypertension because a forum said it was fine</li>
+    <li>Buying it for a partner's problem without checking their blood pressure</li>
+  </ul>
+
+  <h2>12. FAQ</h2>
+  <dl>
+    <dt>What is the dose?</dt><dd>1.75 mg under the skin, 45 minutes before, once per 24 hours, no more than 8 times a month.</dd>
+    <dt>Can I use it every day?</dt><dd>You can, but it does not build up. Eight doses a month is the labelled ceiling and daily use wastes vials.</dd>
+    <dt>How well does it work?</dt><dd>Modestly. About one extra satisfying event a month over placebo in trials. Some feel it strongly, others barely.</dd>
+    <dt>Will it work for men?</dt><dd>Off-label and weaker evidence, but yes for some. Start at 1 mg.</dd>
+    <dt>Why the eight-dose limit?</dt><dd>Mainly pigmentation risk and cumulative blood pressure exposure.</dd>
+    <dt>Can I take it with Viagra or Cialis?</dt><dd>Commonly done, different mechanisms. Blood pressure is the shared concern, so introduce them separately.</dd>
+    <dt>Does it work on arousal or on desire?</dt><dd>Desire, centrally. It will not fix a mechanical problem on its own.</dd>
+    <dt>What if I get nothing from it?</dt><dd>Three or four properly timed attempts at 1.75 mg is a fair trial. After that, it may simply not be your drug.</dd>
+    <dt>Will the nausea ease?</dt><dd>Usually by the second or third dose, and an antiemetic helps in the meantime.</dd>
+  </dl>
+
+  <h2>13. Plain-English glossary</h2>
+  <dl class="gloss">
+    <dt>Melanocortin agonist</dt><dd>a molecule that switches on receptors in the melanocortin family, including the ones controlling desire</dd>
+    <dt>HSDD</dt><dd>hypoactive sexual desire disorder &mdash; persistently low desire causing distress</dd>
+    <dt>PRN</dt><dd>taken as needed rather than on a schedule</dd>
+    <dt>Pressor effect</dt><dd>a rise in blood pressure</dd>
+    <dt>Focal hyperpigmentation</dt><dd>darkened patches on defined areas of skin or gums</dd>
+    <dt>Antiemetic</dt><dd>a drug that suppresses nausea</dd>
+    <dt>Phase 3 trial</dt><dd>the large controlled trials used for approval</dd>
+    <dt>Off-label</dt><dd>used outside the population or dose the approval covers</dd>
+    <dt>Subcutaneous</dt><dd>into the fat under the skin</dd>
+    <dt>Lyophilised</dt><dd>freeze-dried into powder</dd>
+  </dl>
+
+  <div class="refs">
+    <h2>Sources</h2>
+    <ol>
+      <li>Vyleesi full prescribing information, FDA (dosing, limits, contraindications, event rates, hyperpigmentation)</li>
+      <li>RECONNECT phase 3 trials of bremelanotide in premenopausal HSDD</li>
+      <li>Safety profile of bremelanotide across the clinical development programme, 2022 (PMID 35147466)</li>
+      <li>MedlinePlus, allergic reactions</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>PT-141 is an approved drug; the label is the authority and this guide is a plain-language summary of it. Men, postmenopausal women and compounded vials are all off-label. Not medical advice.</p>
+  </footer>
+
+</div>
+</body>
+</html>

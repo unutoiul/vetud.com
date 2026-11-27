@@ -15,6 +15,7 @@ import {
 import { accountRoutes } from "./account-middlewares"
 import { forumRoutes } from "./forum-middlewares"
 import { StoreSignInCodeSchema } from "./store/sign-in-code/validators"
+import { StoreBookCheckoutSchema, StoreBookOrderQuery } from "./store/book/validators"
 
 export default defineMiddlewares({
   routes: [
@@ -30,6 +31,23 @@ export default defineMiddlewares({
       method: ["POST"],
       matcher: "/store/contact",
       middlewares: [validateAndTransformBody(StoreContactSchema)],
+    },
+    {
+      // Stripe's webhook for the book checks its signature against the exact bytes Stripe sent.
+      method: ["POST"],
+      matcher: "/hooks/stripe-book",
+      bodyParser: { preserveRawBody: true },
+    },
+    {
+      // The $4.99 PDF book: start a Stripe Checkout, then check the payment on the way back.
+      method: ["POST"],
+      matcher: "/store/book/checkout",
+      middlewares: [validateAndTransformBody(StoreBookCheckoutSchema)],
+    },
+    {
+      method: ["GET"],
+      matcher: "/store/book/order",
+      middlewares: [validateAndTransformQuery(StoreBookOrderQuery, {})],
     },
     {
       method: ["POST"],

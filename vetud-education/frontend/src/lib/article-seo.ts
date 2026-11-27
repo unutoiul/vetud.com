@@ -13,6 +13,9 @@ export function articleLanguages(path: string) {
   ])
 }
 
+/** The JPEG share copy of a .webp artwork (made by scripts/share-images.mjs): Facebook documents JPEG, PNG and GIF only. */
+export const shareImage = (src: string) => `${BASE_URL}/images/share/${src.split("/").pop()!.replace(/\.webp$/, ".jpg")}`
+
 export function readingMinutes(parts: string[]) {
   return Math.max(1, Math.ceil(plainText(parts.join(" ")).split(/\s+/).filter(Boolean).length / 200))
 }
@@ -28,7 +31,7 @@ export async function articleMetadata({ title, description, path, image }: {
   title = ct(title)
   description = ct(description)
   const url = articleUrl(path, language)
-  const images = image ? [{ url: `${BASE_URL}${image.src}`, alt: ct(image.alt) }] : [SHARE_IMAGE]
+  const images = image ? [{ url: shareImage(image.src), width: 1200, height: 630, alt: ct(image.alt) }] : [SHARE_IMAGE]
   return {
     title: { absolute: `${title} | VETUD Learn` }, description,
     alternates: { canonical: url, languages: articleLanguages(path) },

@@ -298,7 +298,7 @@ export const ARTICLES: Article[] = [
     kind: "Study",
     topic: "Weight management",
     headline: ["In a head-to-head trial, ", "Zepbound beat CagriSema"],
-    dek: "Novo Nordisk’s next-generation combination led to 23% weight loss, but Lilly’s tirzepatide reached about 25%.",
+    dek: "Novo Nordisk’s next-generation combination led to 23% average weight loss, but Lilly’s tirzepatide reached about 25%.",
     art: "duo",
     glance: [
       { label: "CagriSema is", value: "Semaglutide combined with cagrilintide, a copy of the hormone amylin" },

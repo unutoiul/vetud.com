@@ -18,6 +18,8 @@ import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { AppLink } from "../common/links"
 import { subscribeToEmailList } from "../newsletter/subscription"
+import { BOOK, startBookCheckout } from "../book/book"
+import BookCover from "../book/BookCover"
 import { useLanguage } from "../common/language"
 import Button from "@mui/material/Button"
 import HoldButton from "./HoldButton"
@@ -112,6 +114,9 @@ function JoinedMessage({ email, title, text }: { email: string; title: string; t
   </Box>
 }
 
+/** What the window offers: the newsletter, or the $4.99 PDF book (email, Stripe Checkout, link by email). */
+export type WelcomeOffer = "newsletter" | "book"
+
 /**
  * The join button: bright, raised and glowing on the navy window, with an arrow, so it can't be
  * mistaken for the email field above it. It lifts on hover and presses in when tapped.
@@ -179,8 +184,9 @@ const privacyLinkSx: SxProps<Theme> = {
   "&:hover": { color: "brand.onNavy" },
 }
 
-export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
+export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, onSubscribed }: {
   open: boolean
+  offer?: WelcomeOffer
   onDismiss: () => void
   onSubscribed: () => void
 }) {
@@ -197,6 +203,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
   const form = useRef<HTMLFormElement>(null)
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
   const joined = status === "success"
+  const book = offer === "book"
 
   // After joining, the message shows for SUCCESS_MS and the window closes itself. The ref keeps the
   // timer from restarting when the parent re-renders with a new onDismiss.
@@ -223,6 +230,11 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
     submitting.current = true
     setStatus("sending")
     try {
+      if (book) {
+        // On to Stripe's payment page; it sends the buyer back to /book/thank-you.
+        window.location.assign(await startBookCheckout({ email, language, website }))
+        return
+      }
       await subscribeToEmailList({ email, consent: true, language, website })
       setStatus("success")
       onSubscribed()
@@ -240,7 +252,7 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
     maxWidth={false}
     aria-labelledby="welcome-title"
     aria-describedby="welcome-description"
-    slotProps={{ paper: { sx: joined ? { ...screenSx, maxWidth: 520 } : screenSx }, backdrop: { sx: { bgcolor: alpha(brand.navyDeep, .55), backdropFilter: "blur(6px)" } } }}
+    slotProps={{ paper: { sx: joined ? { ...screenSx, maxWidth: 520 } : book ? { ...screenSx, maxWidth: 1040 } : screenSx }, backdrop: { sx: { bgcolor: alpha(brand.navyDeep, .55), backdropFilter: "blur(6px)" } } }}
   >
     <SplashBackdrop primary="/images/learn/spotlights/retatrutide.webp" secondary="/images/learn/spotlights/tirzepatide.webp" />
     {/* The logo and "Skip for now" stay put at the top; only the content below scrolls on short screens. */}
@@ -292,8 +304,13 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
         pb: { xs: 0, md: 1 },
         animation: `${arrival} 500ms ease-out both`,
       }}>
-        {/* Phones get just the headline and the form, so it all fits on small iPhones. */}
-        <NewsletterPreview
+        {/* Phones get just the headline and the form (and a small book cover), so it all fits on small iPhones. */}
+        {book ? <BookCover
+          alt={ct("Peptides Explained: 32 peptides explained in detail")}
+          sizes="(min-width: 900px) 320px, (min-width: 600px) 220px, 120px"
+          priority
+          sx={{ maxWidth: { xs: 120, sm: 220, md: 320 } }}
+        /> : <NewsletterPreview
           sx={{ display: { xs: "none", sm: "grid" } }}
           label={ct("Preview of the VETUD newsletter: recent stories, written in plain language.")}
           subject={ct("The latest from VETUD")}
@@ -303,16 +320,19 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
             return article && image ? [{ kicker: ct(article.kind), title: ct(article.headline.join("")), image: image.src }] : []
           })}
           chips={[ct("Plain language"), ct("Every number sourced"), ct("Unsubscribe anytime")]}
-        />
+        />}
 
         <Box component="section" sx={{ width: "100%", maxWidth: 490, minWidth: 0, mx: "auto" }}>
-          <Typography sx={{ mb: { xs: .75, md: 2.25 }, color: "brand.cyan", fontSize: { xs: 12, md: 13 }, fontWeight: 600 }}>{ct("The VETUD research newsletter")}</Typography>
+          <Typography sx={{ mb: { xs: .75, md: 2.25 }, color: "brand.cyan", fontSize: { xs: 12, md: 13 }, fontWeight: 600 }}>{ct(book ? "PDF book · Peptides Explained" : "The VETUD research newsletter")}</Typography>
           <Typography id="welcome-title" variant="h2" sx={{
             maxWidth: 490,
             fontSize: { xs: "clamp(26px, 7.6vw, 30px)", sm: 42, md: "clamp(40px, 3.6vw, 52px)" },
             lineHeight: 1.08,
             letterSpacing: "-.055em",
-          }}>{ct("Peptide science. Made simple.")}</Typography>
+          }}>{ct(book ? "All you need to know about 32 peptides." : "Peptide science. Made simple.")}</Typography>
+          {book ? <Typography sx={{ mt: { xs: 1, md: 1.75 }, color: "brand.onNavyMuted", fontSize: { xs: 14, sm: 16 }, lineHeight: 1.6 }}>
+            {ct("Peptides Explained covers 32 peptides in detail, in plain language. Enter your email and pay securely; we'll email you the download link straight away.")}
+          </Typography> : null}
 
             <Box component="form" ref={form} onSubmit={handleSubmit} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 2, md: 3.75 } }}>
               <TextField
@@ -335,16 +355,18 @@ export default function WelcomeSplash({ open, onDismiss, onSubscribed }: {
               <Box aria-hidden="true" sx={{ position: "absolute", left: -9999, width: "1px", height: "1px", overflow: "hidden" }}>
                 <label>{ct("Leave this field empty")}<input type="text" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)} /></label>
               </Box>
-              {status === "error" ? <Alert severity="error" sx={{ mt: 2 }}>{ct("We couldn't save your signup. Please try again.")}</Alert> : null}
+              {status === "error" ? <Alert severity="error" sx={{ mt: 2 }}>{ct(book ? "We couldn't open the checkout. Please try again." : "We couldn't save your signup. Please try again.")}</Alert> : null}
               <Button type="submit" variant="contained" fullWidth size="large" disabled={status === "sending"}
                 startIcon={status === "sending" ? <CircularProgress size={18} color="inherit" /> : undefined}
                 endIcon={status === "sending" ? undefined : <Icon name="arrowRight" />}
                 sx={joinButtonSx}>
-                {ct(status === "sending" ? "Joining the newsletter..." : "Join the newsletter")}
+                {ct(book
+                  ? status === "sending" ? "Opening secure checkout..." : `Get the book for ${BOOK.price}`
+                  : status === "sending" ? "Joining the newsletter..." : "Join the newsletter")}
               </Button>
               {/* An email sign-up still says where its privacy terms are: one small link on this line. */}
               <Typography id="welcome-description" sx={{ mt: { xs: 1, md: 1.5 }, textAlign: "center", fontSize: 12, lineHeight: 1.6, color: "brand.onNavyMuted" }}>
-                {ct("Free to join. Unsubscribe whenever you like.")}{" "}
+                {ct(book ? "One-off payment with Stripe. The download link comes by email." : "Free to join. Unsubscribe whenever you like.")}{" "}
                 <AppLink href="/legal/privacy" target="_blank" rel="noopener" sx={privacyLinkSx}>{footerText("privacy")}</AppLink>
               </Typography>
             </Box>

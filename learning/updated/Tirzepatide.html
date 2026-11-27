@@ -1,0 +1,200 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tirzepatide</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 22px; background: #f4f5f7;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+  }
+  .bar { max-width: 700px; margin: 0 auto 14px; }
+  .bar button {
+    background: #0f766e; color: #fff; border: 0; border-radius: 8px;
+    padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: inherit;
+  }
+  .bar span { font-size: 12px; color: #6b7280; margin-left: 10px; }
+  .page {
+    width: 700px; margin: 0 auto; background: #fff; color: #1f2328;
+    padding: 46px 54px 40px; border: 1px solid #e2e5e9; border-radius: 6px;
+    font-size: 13.5px; line-height: 1.62;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+  }
+  .cover { border-bottom: 3px solid #0f766e; padding-bottom: 18px; margin-bottom: 26px; }
+  .eyebrow {
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #0f766e; font-weight: 600; margin-bottom: 10px;
+  }
+  h1 {
+    font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.1;
+    margin: 0 0 8px; font-weight: 700; color: #11161c;
+  }
+  .sub { font-size: 14px; color: #4b535c; margin: 0 0 14px; }
+  .meta { font-size: 11px; color: #77808a; }
+  h2 {
+    font-family: Georgia, serif; font-size: 19px; margin: 30px 0 10px; color: #11161c;
+    padding-bottom: 5px; border-bottom: 1px solid #e6e9ec; page-break-after: avoid;
+  }
+  h2.accent { color: #0f766e; border-bottom-color: #cfe4e1; }
+  h3 {
+    font-size: 13px; font-weight: 600; margin: 18px 0 6px; color: #11161c;
+    text-transform: uppercase; letter-spacing: 0.05em; page-break-after: avoid;
+  }
+  h4 { font-size: 13px; margin: 0 0 6px; color: #8a3b2e; font-weight: 700; }
+  p { margin: 0 0 10px; }
+  .lead { color: #4b535c; }
+  .tint {
+    background: #f7fbfa; border: 1px solid #dceae8; border-left: 3px solid #0f766e;
+    border-radius: 4px; padding: 4px 20px 14px; margin: 22px 0;
+  }
+  .tint h2 { margin-top: 16px; border-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; font-size: 12.5px; page-break-inside: avoid; }
+  th, td { border: 1px solid #dfe3e7; padding: 7px 9px; text-align: left; vertical-align: top; }
+  th { background: #eef3f2; font-weight: 600; font-size: 11.5px; color: #14504a; }
+  .grid td:not(:first-child), .grid th:not(:first-child) { text-align: center; font-variant-numeric: tabular-nums; }
+  .grid.left td, .grid.left th { text-align: left; }
+  tr.hl td { background: #fdf6ec; font-weight: 600; }
+  .steps td:first-child { font-weight: 600; width: 110px; }
+  ul, ol { margin: 8px 0 12px; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  ul.dots { list-style: none; padding-left: 0; }
+  ul.dots li { padding-left: 16px; position: relative; }
+  ul.dots li::before { content: "\2022"; position: absolute; left: 0; color: #0f766e; font-weight: 700; }
+  ul.tight li { margin-bottom: 6px; }
+  ul.check { list-style: none; padding-left: 0; columns: 2; column-gap: 24px; }
+  ul.check li { padding-left: 20px; position: relative; break-inside: avoid; margin-bottom: 5px; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; color: #0f766e; font-size: 13px; }
+  ol.num { padding-left: 0; list-style: none; counter-reset: s; }
+  ol.num li { counter-increment: s; position: relative; padding-left: 32px; margin-bottom: 9px; }
+  ol.num li::before {
+    content: counter(s); position: absolute; left: 0; top: 1px;
+    width: 21px; height: 21px; border-radius: 50%; background: #0f766e; color: #fff;
+    font-size: 11px; font-weight: 700; text-align: center; line-height: 21px;
+  }
+  .callout {
+    background: #eef3f2; border-left: 3px solid #0f766e; padding: 11px 14px;
+    margin: 14px 0; border-radius: 3px; font-size: 13px; page-break-inside: avoid;
+  }
+  .warn {
+    background: #fdf3f0; border: 1px solid #f2d8d0; border-left: 3px solid #b4482f;
+    padding: 11px 14px 6px; margin: 16px 0; border-radius: 3px; page-break-inside: avoid;
+  }
+  .warn ul.dots li::before { color: #b4482f; }
+  dl { margin: 8px 0 14px; }
+  dt { font-weight: 600; margin-top: 9px; }
+  dd { margin: 2px 0 0; }
+  dl.gloss dt { font-weight: 600; color: #0f766e; }
+  .refs ol { font-size: 12.5px; color: #4b535c; }
+  .refs li { margin-bottom: 3px; }
+  footer {
+    margin-top: 30px; padding-top: 14px; border-top: 1px solid #e6e9ec;
+    font-size: 11.5px; color: #6b7480; line-height: 1.55;
+  }
+  @media print {
+    @page { size: A4; margin: 13mm 14mm; }
+    body { background: #fff; padding: 0; }
+    .bar { display: none; }
+    .page {
+      width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0;
+      box-shadow: none; font-size: 10.5pt; line-height: 1.5;
+    }
+    h1 { font-size: 26pt; }
+    h2 { font-size: 13pt; }
+    .tint, .callout, .warn, table, .warn ul { page-break-inside: avoid; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  .guide-ref { color: #0f766e; }
+  .guide-ref a, .refs a { color: #115f59; text-underline-offset: .15em; }
+  h2, h3, h4 { break-after: avoid; }
+  @media screen and (max-width: 750px) {
+    body { padding: 12px; }
+    .page { width: 100%; padding: clamp(15px, 5vw, 40px); }
+    .bar span { display: block; margin: 5px 0 0; }
+    .tint { padding-left: 12px; padding-right: 12px; }
+    th, td { padding: 5px 6px; overflow-wrap: anywhere; }
+  }
+</style>
+<meta name="venice-body-sha256" content="4900cc807aa51e687c3f19eef95c3b92f7e7579e807f937d73c824822a7cfc21">
+</head>
+
+<body>
+<div class="bar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+  <span>Choose Save as PDF, paper A4, background graphics on.</span>
+</div>
+<main class="page">
+<div class="cover">
+<div class="eyebrow"><span data-copy="0">Prescription medicine guide</span></div>
+<h1><span data-copy="1">Tirzepatide</span></h1>
+<p class="sub"><span data-copy="2">What the research shows about a GIP and GLP-1 receptor activator, and where the evidence stops</span></p>
+<div class="meta"><span data-copy="3">27 November 2026</span></div>
+</div>
+<h2><span data-copy="4">What it is</span></h2>
+<p><span data-copy="5">Tirzepatide is a prescription medicine that activates two gut hormone receptors, GIP and GLP-1. It is supplied in different injection presentations, and the prescription and the instructions for the exact device govern what a person should do.</span></p><p><span data-copy="6">A clinic or pharmacist can explain which presentation has been supplied and what to check on its label. This guide stays with the research and leaves the practical steps to those instructions.</span></p>
+
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a></p>
+<div class="tint">
+<h2 class="accent">1. <span data-copy="7">The studies at a glance</span></h2>
+<p><span data-copy="8">The main trial, SURMOUNT-1, randomized 2,539 adults with obesity or overweight plus a weight-related complication, excluding people with diabetes. Over 72 weeks it reported average weight reductions of roughly 15% to 21% across the tirzepatide groups against 3.1% with placebo.</span></p><p><span data-copy="9">A body composition substudy analyzed 160 people who had scans at the start and end of the trial. Fat mass and lean mass both fell in the tirzepatide group. A subset is not the whole trial, and lean mass is not the same thing as muscle strength.</span></p>
+
+<h3><span data-copy="10">What each kind of evidence can and cannot tell you</span></h3><table class="steps"><thead><tr><th><span data-copy="11">Evidence</span></th><th><span data-copy="12">What it can tell you</span></th><th><span data-copy="13">What it cannot tell you</span></th></tr></thead><tbody><tr><td><span data-copy="14">Main randomized trial</span></td><td><span data-copy="15">Average weight change over 72 weeks across groups, compared with placebo</span></td><td><span data-copy="16">An individual&#x27;s result, or anything about people with diabetes</span></td></tr><tr><td><span data-copy="17">Body composition substudy</span></td><td><span data-copy="18">That fat mass and lean mass both fell across a scanned subset</span></td><td><span data-copy="19">Muscle strength, or the whole trial population</span></td></tr><tr><td><span data-copy="20">Personal clinical follow-up</span></td><td><span data-copy="21">How one person is doing under their own prescription</span></td><td><span data-copy="22">What would have happened without the medicine</span></td></tr></tbody></table>
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+</div>
+<h2 class="accent">2. <span data-copy="23">Forms and handling</span></h2>
+<p><span data-copy="24">The medicine comes in more than one injection presentation. The prescription and the specific device instructions set out what to do, and a pharmacist or prescriber can walk through the exact presentation and the label checks that matter.</span></p><p><span data-copy="25">This guide does not cover home mixing, transferring between containers, counting clicks or converting to generic syringe units. Those belong to the instructions for the product in hand.</span></p>
+
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a></p>
+<h2 class="accent">3. <span data-copy="26">Side effects</span></h2>
+<p><span data-copy="27">Nausea, diarrhea, vomiting and constipation are reported. Severe persistent abdominal pain, or being unable to keep fluids down, warrants prompt care. Breathing difficulty, swelling of the throat or tongue, or collapse require emergency help.</span></p><p><span data-copy="28">People using insulin or sulfonylureas, and people using oral hormonal contraceptives, should raise this with a clinician, because product directions include interactions or precautions.</span></p>
+
+<div class="warn">
+<h4><span data-copy="29">When to get help quickly</span></h4>
+<ul class="dots"><li><span data-copy="30">Severe persistent abdominal pain, or being unable to keep fluids down, warrants prompt care.</span></li><li><span data-copy="31">Breathing difficulty, swelling of the throat or tongue, or collapse require emergency help.</span></li></ul>
+</div>
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a> <a href="#source-4" aria-label="Source 4">[4]</a></p>
+<h2>4. <span data-copy="32">How it has been studied</span></h2>
+<p><span data-copy="33">SURMOUNT-1 was a randomized trial in adults with obesity or overweight and a weight-related complication, with diabetes excluded. It ran for 72 weeks and compared tirzepatide groups with placebo on average weight change.</span></p><p><span data-copy="34">The body composition substudy sat inside that trial and looked at scans in 160 people. It describes what happened to fat and lean mass across the group, not what will happen to one person.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>5. <span data-copy="35">What the evidence actually shows</span></h2>
+<p><span data-copy="36">The trial shows that, on average, the tirzepatide groups lost considerably more weight than the placebo group over 72 weeks. The substudy shows that the loss included both fat and lean mass.</span></p><p><span data-copy="37">The evidence does not promise an individual result. It also does not show that lean mass changes equal muscle strength changes. Nutrition and activity remain conversations with a care team.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>6. <span data-copy="38">Who should be cautious</span></h2>
+<p><span data-copy="39">The trial population was adults with obesity or overweight plus a weight-related complication, and people with diabetes were excluded, so the trial results do not directly describe that group. People using insulin, sulfonylureas or oral hormonal contraceptives have product directions to check with a clinician.</span></p><p><span data-copy="40">Anyone with severe persistent abdominal pain or inability to keep fluids down should seek prompt care, and breathing difficulty, throat or tongue swelling or collapse mean emergency help.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-3" aria-label="Source 3">[3]</a> <a href="#source-4" aria-label="Source 4">[4]</a></p>
+<h2>7. <span data-copy="41">Monitoring</span></h2>
+<p><span data-copy="42">The studies monitored weight and, in the substudy, body composition by scan. They do not set out a personal monitoring plan.</span></p><p><span data-copy="43">In practice, what gets checked and how often is agreed with the prescriber, guided by the exact prescription and the product instructions.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a> <a href="#source-3" aria-label="Source 3">[3]</a></p>
+<h2>8. <span data-copy="44">Food and muscle</span></h2>
+<p><span data-copy="45">The body composition substudy found that lean mass fell alongside fat mass in the tirzepatide group. Lean mass is not identical to muscle strength, so the scans alone cannot say how strong someone is.</span></p><p><span data-copy="46">How food and activity fit around the medicine is a care-team discussion. The supplied evidence does not prescribe a particular eating or exercise plan.</span></p>
+
+<p class="guide-ref"><a href="#source-2" aria-label="Source 2">[2]</a></p>
+<h2>9. <span data-copy="47">Timing and interruptions</span></h2>
+<p><span data-copy="48">The timing of doses follows the exact prescription instructions. When something is uncertain, such as an interruption or a departure from the usual routine, the prescriber is the person to ask.</span></p><p><span data-copy="49">This guide deliberately avoids intervals and schedules, because they belong to the prescription and the device instructions rather than to a general guide.</span></p>
+
+<p class="guide-ref"><a href="#source-3" aria-label="Source 3">[3]</a></p>
+<h2>10. <span data-copy="50">Common mistakes</span></h2>
+<p><span data-copy="51">A common mistake is treating the average trial result as a personal forecast. Another is reading the body composition substudy as if it covered the whole trial or proved a change in muscle strength.</span></p><p><span data-copy="52">A third is leaning on general guidance for handling and timing instead of the instructions for the exact product and the prescriber&#x27;s advice. A fourth is forgetting to mention insulin, sulfonylureas or oral hormonal contraceptives to a clinician.</span></p>
+
+<p class="guide-ref"><a href="#source-1" aria-label="Source 1">[1]</a> <a href="#source-2" aria-label="Source 2">[2]</a> <a href="#source-3" aria-label="Source 3">[3]</a></p>
+<h2>11. <span data-copy="53">FAQ</span></h2><dl><dt><span data-copy="54">Does the trial guarantee I will lose the same amount?</span></dt><dd><span data-copy="55">No. The trial reports averages across groups over 72 weeks, and an individual result can sit above or below those averages.</span></dd><dt><span data-copy="56">Did the substudy show muscle loss?</span></dt><dd><span data-copy="57">It showed lean mass fell along with fat mass in the tirzepatide group. Lean mass is not the same as muscle strength, so the scans do not settle that question.</span></dd><dt><span data-copy="58">Were people with diabetes included?</span></dt><dd><span data-copy="59">No. SURMOUNT-1 excluded people with diabetes, so its results do not directly describe that group.</span></dd><dt><span data-copy="60">Where do I find the practical steps?</span></dt><dd><span data-copy="61">In the instructions for the exact product and from a pharmacist or prescriber, since presentations differ.</span></dd></dl>
+<h2>12. <span data-copy="62">Plain-English glossary</span></h2><dl class="gloss"><dt><span data-copy="63">Randomized trial</span></dt><dd><span data-copy="64">A study where people are assigned by chance to different groups, so the groups can be compared fairly.</span></dd><dt><span data-copy="65">Placebo</span></dt><dd><span data-copy="66">A comparison treatment with no active medicine, used to show what happens without it.</span></dd><dt><span data-copy="67">Substudy</span></dt><dd><span data-copy="68">A smaller piece of research nested inside a larger trial, looking at a narrower question in fewer people.</span></dd><dt><span data-copy="69">Lean mass</span></dt><dd><span data-copy="70">The part of body weight that is not fat. It is not the same as muscle strength.</span></dd></dl>
+<div class="refs">
+<h2><span data-copy="71">Sources</span></h2>
+<ol>
+<li id="source-1"><a href="https://pubmed.ncbi.nlm.nih.gov/35658024/"><span data-copy="72">SURMOUNT-1 randomized trial, PubMed</span></a></li>
+<li id="source-2"><a href="https://pubmed.ncbi.nlm.nih.gov/39996356/"><span data-copy="73">Body composition substudy, PubMed</span></a></li>
+<li id="source-3"><a href="https://medlineplus.gov/druginfo/meds/a622044.html"><span data-copy="74">MedlinePlus medicine information</span></a></li>
+<li id="source-4"><a href="https://www.niddk.nih.gov/health-information/digestive-diseases/pancreatitis/symptoms-causes"><span data-copy="75">NIDDK, pancreatitis symptoms</span></a></li>
+</ol></div>
+<footer>
+<p><span data-copy="76">Educational guide only. For the exact product, follow its instructions and ask a pharmacist or prescriber.</span></p>
+</footer>
+</main></body></html>

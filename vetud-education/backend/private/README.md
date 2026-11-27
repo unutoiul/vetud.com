@@ -1,0 +1,1 @@
+Optional: put `peptides-explained.pdf` here to send the book from this server. This folder is not served publicly: GET /book/download (the link in the buyer's email) sends it only for a paid Stripe Checkout Session. Or set BOOK_DOWNLOAD_URL to where the PDF is hosted. See src/lib/book.ts.

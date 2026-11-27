@@ -3,13 +3,21 @@
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { subscribedInBrowser } from "../newsletter/subscription"
-import WelcomeSplash from "./WelcomeSplash"
+import { bookBoughtInBrowser } from "../book/book"
+import WelcomeSplash, { type WelcomeOffer } from "./WelcomeSplash"
 import EntrySplash from "./EntrySplash"
 import { entryVisitor, rememberEntryVisitor, type EntryVisitor } from "./entry-session"
 import { closeWelcomeForVisit, dismissWelcomeForSession, startWelcomeForSession, welcomeClosedForVisit } from "./session"
 
-// Pages opened from an email link, where a full-screen sign-up would get in the way.
-const QUIET_PATHS = /^\/[^/]+\/(newsletter)(\/|$)/
+// Pages opened from an email link or a payment, where a full-screen sign-up would get in the way.
+const QUIET_PATHS = /^\/[^/]+\/(newsletter|book)(\/|$)/
+
+/**
+ * What the pop-up offers. The newsletter is hidden for now (owner, 2026-11-27): the window offers the
+ * $4.99 PDF book instead (email, then Stripe Checkout). Set back to "newsletter" to bring the newsletter back.
+ */
+const OFFER: WelcomeOffer = "book"
+const alreadyDone = () => OFFER === "book" ? bookBoughtInBrowser() : subscribedInBrowser()
 
 /**
  * Offer the email list once per visit, thirty seconds after entry (owner, 2026-11-27: it used to
@@ -28,7 +36,7 @@ export default function WelcomeExperience() {
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
       setCooldownUntil(value => Math.max(value, startWelcomeForSession()))
-      setSubscribed(subscribedInBrowser())
+      setSubscribed(alreadyDone())
       setClosed(welcomeClosedForVisit())
       setVisitor(entryVisitor())
     })
@@ -38,7 +46,7 @@ export default function WelcomeExperience() {
   useEffect(() => {
     const refresh = () => {
       // Check again before reopening, including signups completed in another tab.
-      setSubscribed(value => value === null ? null : value || subscribedInBrowser())
+      setSubscribed(value => value === null ? null : value || alreadyDone())
       setCooldownUntil(value => value > Date.now() ? value : 0)
     }
     const timer = cooldownUntil ? window.setTimeout(refresh, Math.max(0, cooldownUntil - Date.now())) : undefined
@@ -67,6 +75,7 @@ export default function WelcomeExperience() {
     }} />
     <WelcomeSplash
       open={open}
+      offer={OFFER}
       onDismiss={() => {
         closeWelcomeForVisit()
         setClosed(true)
