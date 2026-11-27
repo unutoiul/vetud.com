@@ -1,11 +1,10 @@
+import Box from "@mui/material/Box"
 import Skeleton from "@mui/material/Skeleton"
 import type { Metadata } from "next"
 import { Suspense } from "react"
-import BookOffer from "@/components/book/BookOffer"
-import PageHeader from "@/components/common/PageHeader"
-import Section from "@/components/common/Section"
+import BookBuyBox from "@/components/book/BookBuyBox"
+import BookLanding from "@/components/book/BookLanding"
 import { localizeMetadata } from "@/i18n/metadata"
-import { getContentTranslator } from "@/i18n/server-content"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
@@ -15,18 +14,14 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-/** The book's page: the link in the first email lands here, and the visitor pays with Stripe. */
-export default async function BookPage() {
-  const ct = await getContentTranslator()
-  return (
-    <>
-      <PageHeader eyebrow={ct("Book")} title={ct("Get your copy")} />
-      <Section tone="white" tight data-clarity-mask="True">
-        {/* The ?t= token from the email link carries the visitor's address. */}
-        <Suspense fallback={<Skeleton variant="rounded" height={480} sx={{ maxWidth: 880 }} />}>
-          <BookOffer />
-        </Suspense>
-      </Section>
-    </>
-  )
+/**
+ * The book's page. The link in the first email lands here (?t=…), and the pay box opens Stripe.
+ * Only the pay box reads the address, so it alone waits behind Suspense.
+ */
+export default function BookPage() {
+  return <BookLanding buyBox={
+    <Suspense fallback={<Skeleton variant="rounded" height={360} sx={{ borderRadius: "22px" }} />}>
+      <Box data-clarity-mask="True"><BookBuyBox /></Box>
+    </Suspense>
+  } />
 }
