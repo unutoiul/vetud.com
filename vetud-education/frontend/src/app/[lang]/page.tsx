@@ -11,7 +11,7 @@ import SectionHeading from "@/components/common/SectionHeading"
 import LearnHero from "@/components/home/LearnHero"
 import GuideCategories from "@/components/home/GuideCategories"
 import PeptideStories from "@/components/home/PeptideStories"
-import EvidenceChallenge from "@/components/home/EvidenceChallenge"
+import BookFeature from "@/components/home/BookFeature"
 import ArticleCard from "@/components/learn/ArticleCard"
 import VideoGallery from "@/components/learn/VideoGallery"
 import WeightLossChart from "@/components/learn/WeightLossChart"
@@ -40,7 +40,7 @@ export default async function HomePage() {
     <LearnHero />
     <GuideCategories />
     <PeptideStories />
-    <EvidenceChallenge />
+    <BookFeature />
 
     <Section tone="white" sx={{ py: { xs: 6, md: 9 } }}>
       <SectionHeading eyebrow={ct("Results")} title={ct("What the weight-loss trials found.")} description={ct("Average weight lost in the main published trials of today’s leading medicines, each compared with a placebo.")} action={<ButtonLink href="/learn#weight" variant="outlined" endIcon={<Icon name="arrowRight" />}>{act("weightGuides")}</ButtonLink>} />
