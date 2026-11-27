@@ -1,0 +1,410 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Retatrutide guide</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 22px; background: #f4f5f7;
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+  }
+  .bar { max-width: 700px; margin: 0 auto 14px; }
+  .bar button {
+    background: #0f766e; color: #fff; border: 0; border-radius: 8px;
+    padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: inherit;
+  }
+  .bar span { font-size: 12px; color: #6b7280; margin-left: 10px; }
+  .page {
+    width: 700px; margin: 0 auto; background: #fff; color: #1f2328;
+    padding: 46px 54px 40px; border: 1px solid #e2e5e9; border-radius: 6px;
+    font-size: 13.5px; line-height: 1.62;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+  }
+  .cover { border-bottom: 3px solid #0f766e; padding-bottom: 18px; margin-bottom: 26px; }
+  .eyebrow {
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #0f766e; font-weight: 600; margin-bottom: 10px;
+  }
+  h1 {
+    font-family: Georgia, "Times New Roman", serif; font-size: 34px; line-height: 1.1;
+    margin: 0 0 8px; font-weight: 700; color: #11161c;
+  }
+  .sub { font-size: 14px; color: #4b535c; margin: 0 0 14px; }
+  .meta { font-size: 11px; color: #77808a; }
+  h2 {
+    font-family: Georgia, serif; font-size: 19px; margin: 30px 0 10px; color: #11161c;
+    padding-bottom: 5px; border-bottom: 1px solid #e6e9ec; page-break-after: avoid;
+  }
+  h2.accent { color: #0f766e; border-bottom-color: #cfe4e1; }
+  h3 {
+    font-size: 13px; font-weight: 600; margin: 18px 0 6px; color: #11161c;
+    text-transform: uppercase; letter-spacing: 0.05em; page-break-after: avoid;
+  }
+  h4 { font-size: 13px; margin: 0 0 6px; color: #8a3b2e; font-weight: 700; }
+  p { margin: 0 0 10px; }
+  .lead { color: #4b535c; }
+  .tint {
+    background: #f7fbfa; border: 1px solid #dceae8; border-left: 3px solid #0f766e;
+    border-radius: 4px; padding: 4px 20px 14px; margin: 22px 0;
+  }
+  .tint h2 { margin-top: 16px; border-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; font-size: 12.5px; page-break-inside: avoid; }
+  th, td { border: 1px solid #dfe3e7; padding: 7px 9px; text-align: left; vertical-align: top; }
+  th { background: #eef3f2; font-weight: 600; font-size: 11.5px; color: #14504a; }
+  .grid td:not(:first-child), .grid th:not(:first-child) { text-align: center; font-variant-numeric: tabular-nums; }
+  .grid.left td, .grid.left th { text-align: left; }
+  tr.hl td { background: #fdf6ec; font-weight: 600; }
+  .steps td:first-child { font-weight: 600; width: 110px; }
+  ul, ol { margin: 8px 0 12px; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  ul.dots { list-style: none; padding-left: 0; }
+  ul.dots li { padding-left: 16px; position: relative; }
+  ul.dots li::before { content: "\2022"; position: absolute; left: 0; color: #0f766e; font-weight: 700; }
+  ul.tight li { margin-bottom: 6px; }
+  ul.check { list-style: none; padding-left: 0; columns: 2; column-gap: 24px; }
+  ul.check li { padding-left: 20px; position: relative; break-inside: avoid; margin-bottom: 5px; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; color: #0f766e; font-size: 13px; }
+  ol.num { padding-left: 0; list-style: none; counter-reset: s; }
+  ol.num li { counter-increment: s; position: relative; padding-left: 32px; margin-bottom: 9px; }
+  ol.num li::before {
+    content: counter(s); position: absolute; left: 0; top: 1px;
+    width: 21px; height: 21px; border-radius: 50%; background: #0f766e; color: #fff;
+    font-size: 11px; font-weight: 700; text-align: center; line-height: 21px;
+  }
+  .callout {
+    background: #eef3f2; border-left: 3px solid #0f766e; padding: 11px 14px;
+    margin: 14px 0; border-radius: 3px; font-size: 13px; page-break-inside: avoid;
+  }
+  .warn {
+    background: #fdf3f0; border: 1px solid #f2d8d0; border-left: 3px solid #b4482f;
+    padding: 11px 14px 6px; margin: 16px 0; border-radius: 3px; page-break-inside: avoid;
+  }
+  .warn ul.dots li::before { color: #b4482f; }
+  dl { margin: 8px 0 14px; }
+  dt { font-weight: 600; margin-top: 9px; }
+  dd { margin: 2px 0 0; }
+  dl.gloss dt { font-weight: 600; color: #0f766e; }
+  .refs ol { font-size: 12.5px; color: #4b535c; }
+  .refs li { margin-bottom: 3px; }
+  footer {
+    margin-top: 30px; padding-top: 14px; border-top: 1px solid #e6e9ec;
+    font-size: 11.5px; color: #6b7480; line-height: 1.55;
+  }
+  @media print {
+    @page { size: A4; margin: 13mm 14mm; }
+    body { background: #fff; padding: 0; }
+    .bar { display: none; }
+    .page {
+      width: 100%; margin: 0; padding: 0; border: 0; border-radius: 0;
+      box-shadow: none; font-size: 10.5pt; line-height: 1.5;
+    }
+    h1 { font-size: 26pt; }
+    h2 { font-size: 13pt; }
+    .tint, .callout, .warn, table, .warn ul { page-break-inside: avoid; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <button onclick="window.print()">Print / Save as PDF</button>
+  <span>Choose Save as PDF, paper A4, background graphics on.</span>
+</div>
+
+<div class="page">
+
+  <div class="cover">
+    <div class="eyebrow">Research peptide guide &middot; plain language</div>
+    <h1>Retatrutide (Reta)</h1>
+    <p class="sub">Dosing, mixing, side effects and practical use &mdash; explained for anyone</p>
+    <div class="meta">Prepared 27 November 2026 &middot; investigational compound, not FDA-approved</div>
+  </div>
+
+  <h2>What it is</h2>
+  <p>Retatrutide is an experimental, lab-made peptide being tested for obesity and type 2 diabetes. It is not approved by any regulator, there is no official patient label, and <strong>every number in this document comes from research trials rather than from a regulator.</strong></p>
+  <p>It works by switching on three hormone receptors at once &mdash; GIP, GLP-1 and glucagon. The first two are gut signals that curb appetite and slow digestion; the third makes the body burn more energy. That triple action is why weight change is the headline result in trials.</p>
+
+  <div class="tint">
+    <h2 class="accent">1. Dosing</h2>
+    <h3>The honest starting point</h3>
+    <p>Retatrutide is <strong>not officially dosed by body weight.</strong> Every trial used fixed weekly doses for everyone regardless of size. So "mg per kg" is a way of <em>understanding</em> your exposure, not an official prescribing rule. Use it as a sanity check, not a formula.</p>
+
+    <h3>What the trials actually used</h3>
+    <p>TRIUMPH-1 escalated everyone the same way, then held them at one of three maintenance doses:</p>
+    <table class="steps">
+      <thead><tr><th>Phase</th><th>Dose</th><th>Duration</th></tr></thead>
+      <tbody>
+        <tr><td>Step 1</td><td>2 mg weekly</td><td>Weeks 1&ndash;4</td></tr>
+        <tr><td>Step 2</td><td>4 mg weekly</td><td>Weeks 5&ndash;8</td></tr>
+        <tr><td>Step 3</td><td>8 mg weekly</td><td>Weeks 9&ndash;12</td></tr>
+        <tr><td>Maintenance</td><td>4 mg <strong>or</strong> 9 mg <strong>or</strong> 12 mg weekly</td><td>Ongoing</td></tr>
+      </tbody>
+    </table>
+    <p>Average participant weight in TRIUMPH-1 was roughly <strong>105 kg</strong>. So the 12 mg maintenance dose worked out to about <strong>0.11 mg per kg</strong> in that population.</p>
+
+    <h3>Why this matters if you are not 105 kg</h3>
+    <p>A fixed dose hits a small person much harder than a large one. Here is the same dose expressed per kilogram across common body weights, in micrograms per kg per week:</p>
+    <table class="grid">
+      <thead>
+        <tr><th>Weekly dose</th><th>60 kg</th><th>70 kg</th><th>80 kg</th><th>90 kg</th><th>100 kg</th><th>110 kg</th><th>120 kg</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2 mg</td><td>33</td><td>29</td><td>25</td><td>22</td><td>20</td><td>18</td><td>17</td></tr>
+        <tr><td>4 mg</td><td>67</td><td>57</td><td>50</td><td>44</td><td>40</td><td>36</td><td>33</td></tr>
+        <tr><td>9 mg</td><td>150</td><td>129</td><td>113</td><td>100</td><td>90</td><td>82</td><td>75</td></tr>
+        <tr class="hl"><td>12 mg</td><td>200</td><td>171</td><td>150</td><td>133</td><td>120</td><td>109</td><td>100</td></tr>
+      </tbody>
+    </table>
+    <p>Read the bottom row. A 60 kg person on 12 mg gets <strong>200 mcg/kg</strong> &mdash; nearly twice the per-kg exposure of a 105 kg trial participant on the same dose. That is why small people often get flattened by doses that large people call mild.</p>
+
+    <h3>Recommended ceiling by body weight</h3>
+    <p>These are judgment calls built on the table above, aiming to keep you near the ~100&ndash;150 mcg/kg range the trials actually studied:</p>
+    <table class="grid">
+      <thead><tr><th>Your weight</th><th>Sensible maintenance ceiling</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Under 65 kg</td><td>4&ndash;6 mg</td><td>12 mg is a big jump; many never need past 6 mg</td></tr>
+        <tr><td>65&ndash;80 kg</td><td>6&ndash;9 mg</td><td>9 mg is a realistic top end</td></tr>
+        <tr><td>80&ndash;100 kg</td><td>9&ndash;12 mg</td><td>You are in the studied range at 12 mg</td></tr>
+        <tr><td>Over 100 kg</td><td>12 mg</td><td>Matches trial exposure closely</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Start at 1&ndash;2 mg regardless of weight.</strong> The trial's 2 mg opener assumed a 105 kg average; a 60 kg person may want 1 mg for the first two weeks. Never increase more than once every four weeks, and only if the current dose is genuinely comfortable &mdash; not merely tolerable.
+    </div>
+
+    <h3>Worked examples</h3>
+    <ul class="tight">
+      <li><strong>Anna, 62 kg, week 1.</strong> Start 1 mg. Weeks 3&ndash;6: 2 mg. Weeks 7&ndash;10: 3 mg. Weeks 11&ndash;14: 4 mg. Hold at 4&ndash;6 mg unless loss stalls for a month. Her per-kg exposure at 6 mg is 97 mcg/kg &mdash; right in the studied band.</li>
+      <li><strong>Ben, 95 kg, week 1.</strong> Start 2 mg. Weeks 5&ndash;8: 4 mg. Weeks 9&ndash;12: 8 mg. Weeks 13+: 9 or 12 mg depending on tolerance. At 12 mg he sits at 126 mcg/kg, essentially trial-level.</li>
+      <li><strong>Carlos, 130 kg, week 1.</strong> Start 2 mg and escalate on the standard four-week steps to 12 mg. Even at 12 mg he is at 92 mcg/kg, <em>below</em> trial average &mdash; he may need patience rather than a higher dose, since 12 mg is the tested maximum.</li>
+    </ul>
+
+    <h3>The units table</h3>
+    <p>Standard mix: <strong>10 mg vial + 1 mL water = 10 mg/mL.</strong> At that concentration the doses you will actually use look like this:</p>
+    <table class="grid">
+      <thead><tr><th>Dose</th><th>Volume</th><th>Units on a U-100 insulin syringe</th></tr></thead>
+      <tbody>
+        <tr><td>1 mg</td><td>0.1 mL</td><td>10</td></tr>
+        <tr><td>2 mg</td><td>0.2 mL</td><td>20</td></tr>
+        <tr><td>4 mg</td><td>0.4 mL</td><td>40</td></tr>
+        <tr><td>6 mg</td><td>0.6 mL</td><td>60</td></tr>
+        <tr><td>8 mg</td><td>0.8 mL</td><td>80</td></tr>
+        <tr><td>9 mg</td><td>0.9 mL</td><td>90</td></tr>
+        <tr><td>12 mg</td><td>1.2 mL</td><td>120 &mdash; needs a 3 mL syringe, or mix at 20 mg/mL (20 mg vial + 1 mL)</td></tr>
+      </tbody>
+    </table>
+    <p><strong>The single most common mistake</strong> is confusing milligrams with units. At 10 mg/mL, 1 mg = 10 units. Write the conversion on the vial with a marker before your first injection.</p>
+  </div>
+
+  <h2 class="accent">2. Mixing the vial, step by step</h2>
+  <p class="lead">A vial of freeze-dried powder has to be dissolved before use. This is the part people get wrong, and it is entirely mechanical &mdash; slow hands, clean surfaces, no rushing. Do it at a clear table, not over a sink, and give yourself fifteen uninterrupted minutes the first time.</p>
+
+  <h3>What you need</h3>
+  <ul class="check">
+    <li>Your vial of powder</li>
+    <li>Bacteriostatic water (not sterile water &mdash; plain sterile water has no preservative and a multi-dose vial will not keep)</li>
+    <li>One mixing syringe, 1 mL for a 10 mg vial or 3 mL for larger vials, with a 25&ndash;27G needle</li>
+    <li>Alcohol swabs</li>
+    <li>Your U-100 insulin syringes for dosing (separate from the mixing syringe)</li>
+    <li>A sharps container</li>
+    <li>A marker pen</li>
+  </ul>
+
+  <div class="callout">
+    <strong>Decide your concentration before you open anything.</strong> Write it down. For a 10 mg vial, 1 mL of water gives 10 mg/mL and every dose in the table above is correct. For a 20 mg vial, 1 mL gives 20 mg/mL &mdash; which halves every volume, so 1 mg becomes 5 units instead of 10. Pick one scheme and stick to it for that vial.
+  </div>
+
+  <h3>The steps</h3>
+  <ol class="num">
+    <li><strong>Wash your hands</strong> with soap for twenty seconds and dry them on a clean towel. Wipe the table surface.</li>
+    <li><strong>Lay everything out</strong> and check the vial: powder should be a compact cake or plug at the bottom, the label legible, the expiry in date. A cracked vial or discoloured clumped powder goes back.</li>
+    <li><strong>Swab the tops.</strong> Scrub the rubber stopper of the water vial and the powder vial with separate alcohol swabs for ten seconds each. <strong>Let them dry fully</strong> &mdash; thirty seconds or so. Alcohol left wet kills nothing and gets carried into the vial.</li>
+    <li><strong>Draw the water.</strong> Pull the plunger back to your chosen volume of air, stab the water vial, inject the air, then invert the vial and draw the water slowly. Tap the barrel to float bubbles up and push them back out. You want the exact volume, no air.</li>
+    <li><strong>Change the needle if you have a spare.</strong> The needle that went through the water stopper is slightly blunted; a fresh one goes into the powder cleanly.</li>
+    <li><strong>Insert at an angle.</strong> Put the powder vial on the table, stab the stopper at roughly 45 degrees so the needle tip sits against the inside wall, then straighten it upright.</li>
+    <li><strong>Run the water down the wall, not onto the powder.</strong> Push the plunger slowly and let the stream slide down the glass. A direct jet onto the cake blasts it apart and leaves clumps.</li>
+    <li><strong>Vent the pressure.</strong> A lyophilised vial is often under vacuum and will suck the plunger in; after the water is in, pull the plunger back to your volume mark again and hold it until the pull eases. Never let the vacuum drag the plunger out of your grip.</li>
+    <li><strong>Withdraw the needle</strong> and cap it. Do not squirt the last drop back in.</li>
+    <li><strong>Swirl, do not shake.</strong> Roll the vial between your palms or swirl it in a slow circle. Shaking whips the peptide into foam and can damage it. Keep going until the liquid is clear.</li>
+    <li><strong>Let it sit.</strong> Five to fifteen minutes, swirling occasionally. Dissolving is not instant and impatience is what produces clumps.</li>
+    <li><strong>Check it.</strong> Hold it to the light. Clear and colourless to faintly yellow is right. Cloudy, milky, or with visible chunks means it is not ready &mdash; keep swirling, and if it is still cloudy after half an hour, do not use it.</li>
+    <li><strong>Label it.</strong> Write the date mixed, the concentration, and the units for each dose on the vial body. Future you will not remember.</li>
+    <li><strong>Refrigerate</strong> at 2&ndash;8&deg;C immediately. Never freeze. Keep it out of light &mdash; a drawer or a box, not the fridge door.</li>
+  </ol>
+
+  <h3>Drawing a dose</h3>
+  <ol class="num">
+    <li>Swab the stopper and let it dry.</li>
+    <li>Pull air back to your dose in units, inject it into the vial, then invert and draw the dose, keeping the tip under the surface.</li>
+    <li>Push out any bubbles and confirm the plunger sits exactly on your mark.</li>
+    <li>Wipe the needle once against the inside of the vial to shed the hanging drop.</li>
+    <li>Invert the vial and pull the needle out, then cap it.</li>
+    <li>Let the syringe warm in your hand for two to three minutes. Cold peptide stings.</li>
+  </ol>
+
+  <h3>Troubleshooting</h3>
+  <table class="grid left">
+    <thead><tr><th>Problem</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr><td>Water sprayed onto the powder</td><td>Swirl longer. Clumps usually break up; if any solid remains after half an hour, discard.</td></tr>
+      <tr><td>Heavy foam</td><td>Stop swirling and let it stand twenty minutes. Foam collapses on its own.</td></tr>
+      <tr><td>Plunger sucked in by vacuum</td><td>Normal. Re-pull to your mark and hold until it settles.</td></tr>
+      <tr><td>Liquid cloudy after thirty minutes</td><td>Do not inject. Either it is not dissolved or it has degraded.</td></tr>
+      <tr><td>Particles or floaters</td><td>Do not inject. Draw through a fresh needle to filter, or discard.</td></tr>
+      <tr><td>Mixed too strong by accident</td><td>Recalculate from the actual concentration before dosing. Write the corrected units on the vial.</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Storage and shelf life:</strong> powder keeps cool and dark, away from heat. Once mixed, refrigerate at 2&ndash;8&deg;C and use within four to eight weeks. Never freeze a mixed vial, and never leave it in a hot car.</p>
+
+  <h2 class="accent">3. Side effects</h2>
+  <p class="lead">TRIUMPH-1 reported the following. Digestive complaints were a leading reason people quit.</p>
+
+  <h3>Common</h3>
+  <ul class="dots">
+    <li>Nausea &mdash; worst in the first days after a dose and after each increase</li>
+    <li>Vomiting</li>
+    <li>Diarrhoea</li>
+    <li>Constipation</li>
+    <li>Reduced appetite to the point of struggling to eat enough</li>
+    <li>Injection-site reactions: redness, itching, small lumps, bruising</li>
+    <li>Headache</li>
+    <li>Fatigue</li>
+    <li>Dizziness and low blood pressure &mdash; notably in people already on blood pressure medication</li>
+    <li>Altered skin sensation: tingling, unusual sensitivity or odd touch perception (called dysesthesia)</li>
+  </ul>
+
+  <h3>Less common or less certain</h3>
+  <ul class="dots">
+    <li>Heartburn and reflux</li>
+    <li>Belching</li>
+    <li>Gallbladder trouble &mdash; pain under the right ribs, especially with rapid weight loss</li>
+    <li>Raised resting heart rate</li>
+    <li>Hair shedding, usually from fast weight loss rather than the drug itself</li>
+    <li>Constipation severe enough to need treatment</li>
+    <li>Muscle loss alongside fat loss if protein and resistance training are neglected</li>
+    <li>Low blood sugar if combined with insulin or a sulfonylurea</li>
+  </ul>
+
+  <div class="warn">
+    <h4>Serious &mdash; stop and get help</h4>
+    <ul class="dots">
+      <li>Vomiting you cannot keep fluids down with for more than a day (dehydration builds quietly)</li>
+      <li>Severe or persistent abdominal pain, particularly upper-right or radiating to the back</li>
+      <li>Signs of an allergic reaction: hives, lip or tongue swelling, throat tightness, trouble breathing, collapse</li>
+      <li>Yellowing of the eyes or skin</li>
+    </ul>
+  </div>
+
+  <p><strong>Managing the digestive phase:</strong> eat smaller portions, stop before full, keep fat and fried food low on dose day and the day after, prioritise protein and fluids, and consider dosing in the evening so the worst hours pass while you sleep. If nausea is still limiting eating a week after an increase, you went up too fast.</p>
+
+  <h2>4. Injecting</h2>
+  <ul class="dots">
+    <li>Sites: abdomen at least two fingers clear of the navel, front or outer thigh, or the back of the upper arm</li>
+    <li>Swab the site and let it dry</li>
+    <li>Pinch a fold of skin, push in at 90 degrees, or 45 degrees if you are lean</li>
+    <li>Inject slowly &mdash; a slow push stings far less than a fast one</li>
+    <li>Count to five before withdrawing so nothing leaks back out</li>
+    <li>Do not rub the site; rotate sites so you are not reusing one spot</li>
+  </ul>
+
+  <h2>5. What the evidence actually shows</h2>
+  <p>TRIUMPH-1 randomly assigned adults without diabetes to retatrutide or placebo for 80 weeks. Randomisation is what makes the comparison trustworthy &mdash; chance, not preference, decided who got what. The retatrutide group lost substantially more weight on average.</p>
+  <p>Two caveats worth holding onto. Averages hide spread: your result can land well above or below the mean with identical dosing. And 80 weeks is about eighteen months &mdash; long enough to see recurring digestive problems, too short to reveal rare harms or effects that take years.</p>
+  <p>A separate trial, TRIUMPH-2, studied people who had both obesity and type 2 diabetes. Those patients lost less than people without diabetes, which is a normal pattern with this drug class.</p>
+
+  <h2>6. Who should be cautious</h2>
+  <p>Trial exclusion criteria are not a screening checklist for self-use, but these are the situations worth a doctor's input:</p>
+  <ul class="dots">
+    <li>Pregnancy, breastfeeding, or trying to conceive</li>
+    <li>Personal or family history of medullary thyroid cancer or MEN2</li>
+    <li>History of pancreatitis</li>
+    <li>Gallstones or gallbladder disease</li>
+    <li>Significant gastroparesis or slow digestion</li>
+    <li>Kidney impairment</li>
+    <li>Diabetic retinopathy</li>
+    <li>Already on blood pressure medication, insulin or a sulfonylurea</li>
+    <li>Age under 18 &mdash; essentially unstudied</li>
+  </ul>
+
+  <h2>7. Monitoring</h2>
+  <ul class="dots">
+    <li>Weight: same time, same conditions, once or twice weekly &mdash; not daily</li>
+    <li>Blood pressure and resting heart rate: weekly</li>
+    <li>Blood glucose if diabetic</li>
+    <li>Hydration and bowel habit</li>
+    <li>Injection sites, looking for lumps or spreading redness</li>
+    <li>Waist measurement monthly; weight alone misses body composition</li>
+  </ul>
+  <p>Baseline bloodwork before starting &mdash; metabolic panel, liver enzymes, lipids, HbA1c &mdash; gives you something to compare against later.</p>
+
+  <h2>8. Food and muscle</h2>
+  <p>Protein is the lever that decides whether you lose fat or lose everything. Aim for roughly 1.6&ndash;2 g per kg of goal body weight daily, spread across meals, and treat it as a target you hit rather than a hope. Resistance training two to three times a week preserves lean mass. Both matter more as the dose climbs and appetite falls.</p>
+  <p>Fibre and fluids prevent the constipation that catches people around week three.</p>
+
+  <h2>9. Missed doses</h2>
+  <p>There is no official rule. Sensible practice: if you remember within three days of your scheduled day, take it; if later, skip it and resume on schedule. Never double up. After a gap of more than two weeks, drop back one step and rebuild.</p>
+
+  <h2>10. Common mistakes</h2>
+  <ul class="dots">
+    <li>Reading milligrams as units on the syringe</li>
+    <li>Under- or over-diluting the vial and losing track of concentration</li>
+    <li>Using plain sterile water in a multi-dose vial instead of bacteriostatic water</li>
+    <li>Spraying water straight onto the powder instead of down the wall</li>
+    <li>Shaking the vial</li>
+    <li>Injecting straight from the fridge</li>
+    <li>Escalating every week because "faster is better"</li>
+    <li>Reusing the same injection site until it lumps</li>
+    <li>Buying unverified vials and assuming the label is accurate</li>
+    <li>Not eating enough protein and losing muscle</li>
+  </ul>
+
+  <h2>11. FAQ</h2>
+  <dl>
+    <dt>How fast does it work?</dt><dd>Appetite usually shifts in the first week or two. Visible scale movement typically follows within three to four weeks. Early loss is often water.</dd>
+    <dt>Do I need to fast?</dt><dd>No.</dd>
+    <dt>Can I drink alcohol?</dt><dd>Yes, but it worsens nausea and dehydration and blunts fat loss. Keep it light, especially around dose day.</dd>
+    <dt>What if loss stalls?</dt><dd>Check protein, sleep and training before raising the dose. A four-week plateau at a comfortable dose is a reason to hold, not to jump.</dd>
+    <dt>Can I stack it with semaglutide or tirzepatide?</dt><dd>People do, but there is little controlled evidence for the combinations. Simplest approach is one drug, dosed properly.</dd>
+    <dt>Will I regain if I stop?</dt><dd>Very likely, as with all GLP-1 class drugs. Plan a maintenance dose rather than a hard stop.</dd>
+    <dt>Is 12 mg the maximum?</dt><dd>It is the highest dose tested. Nothing above it has solid data.</dd>
+    <dt>Can I reuse a mixing syringe?</dt><dd>Only within the same mixing session, and only if you recap carefully. Dosing syringes are single use.</dd>
+  </dl>
+
+  <h2>12. Plain-English glossary</h2>
+  <dl class="gloss">
+    <dt>Agonist</dt><dd>a molecule that switches a receptor on</dd>
+    <dt>Subcutaneous</dt><dd>under the skin, the injection route used in trials</dd>
+    <dt>Titration</dt><dd>stepping the dose up gradually</dd>
+    <dt>Lyophilised</dt><dd>freeze-dried into powder for stability</dd>
+    <dt>Bacteriostatic water</dt><dd>water with a preservative, for multi-dose vials</dd>
+    <dt>Dysesthesia</dt><dd>distorted or unpleasant skin sensation</dd>
+    <dt>U-100 syringe</dt><dd>an insulin syringe marked 0&ndash;100 units, where 100 units = 1 mL</dd>
+    <dt>Venting</dt><dd>relieving vacuum in a vial by holding the plunger back</dd>
+  </dl>
+
+  <div class="refs">
+    <h2>Sources</h2>
+    <ol>
+      <li>TRIUMPH-1 &mdash; 80-week obesity trial</li>
+      <li>Lilly &mdash; TRIUMPH-1 safety findings</li>
+      <li>FDA &mdash; unapproved GLP-1 products</li>
+      <li>MedlinePlus &mdash; signs of anaphylaxis</li>
+      <li>TRIUMPH-2 &mdash; obesity with type 2 diabetes trial</li>
+      <li>Lilly &mdash; investigational status and product safety</li>
+      <li>NIH &mdash; understanding clinical trials</li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>The per-kg table and weight-based ceilings are a synthesis, not something a trial published &mdash; the trials only published flat doses. Because nothing is approved, a vial you buy is not guaranteed to be the compound that produced these numbers. Not medical advice.</p>
+  </footer>
+
+</div>
+</body>
+</html>

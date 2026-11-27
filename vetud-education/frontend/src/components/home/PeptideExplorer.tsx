@@ -1,6 +1,6 @@
 "use client"
 
-import { useId, useRef, useState, type KeyboardEvent } from "react"
+import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react"
 import Image from "next/image"
 import { useFormatter, useTranslations } from "next-intl"
 import { LazyMotion, domAnimation, useReducedMotion } from "motion/react"
@@ -32,6 +32,62 @@ const MUTED = brand.slate225
 const ACCENT = brand.teal225
 const focusRing = { outline: `2px solid ${brand.white}`, outlineOffset: "3px" }
 
+type HeroFilm = { poster: string; large: string; small: string }
+
+/**
+ * Guides whose picture is a silent looping film (owner, 2026-11-27: "Slow Orbit" for Tirzepatide,
+ * the guide shown first). The poster is the film's first frame, so the switch from picture to film
+ * can't be seen. Source: assets/VETUD Ribbon Loop/Slow Orbit, compressed to 1200 and 720 px wide.
+ */
+const HERO_FILMS: Partial<Record<string, HeroFilm>> = {
+  tirzepatide: {
+    poster: "/images/learn/spotlights/tirzepatide-orbit.webp",
+    large: "/media/hero/tirzepatide-orbit-1200.mp4",
+    small: "/media/hero/tirzepatide-orbit-720.mp4",
+  },
+}
+
+/**
+ * The film over its poster. It loads only after the page has finished loading (so the poster stays
+ * the first thing painted), fades in once it plays, pauses while off screen, and is skipped for
+ * reduced motion (by the caller) and for data saver.
+ */
+function HeroFilmPlayer({ film }: { film: HeroFilm }) {
+  const [src, setSrc] = useState<string | null>(null)
+  const [playing, setPlaying] = useState(false)
+  const video = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) return
+    let timer: number | undefined
+    const start = () => { timer = window.setTimeout(() => setSrc(window.matchMedia("(min-width: 600px)").matches ? film.large : film.small), 200) }
+    if (document.readyState === "complete") start()
+    else window.addEventListener("load", start, { once: true })
+    return () => {
+      window.removeEventListener("load", start)
+      window.clearTimeout(timer)
+    }
+  }, [film])
+
+  useEffect(() => {
+    const element = video.current
+    if (!src || !element) return
+    // Muted must be set on the element itself for phones to allow autoplay.
+    element.muted = true
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) void element.play().catch(() => undefined)
+      else element.pause()
+    })
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [src])
+
+  if (!src) return null
+  return <Box component="video" ref={video} src={src} muted loop playsInline preload="auto" disablePictureInPicture aria-hidden tabIndex={-1}
+    onPlaying={() => setPlaying(true)}
+    sx={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain", opacity: playing ? 1 : 0, transition: "opacity .6s ease" }} />
+}
+
 /**
  * The featured guides: one large at a time, and every guide visible below it as a tab, so there's
  * nothing to scroll sideways (owner request 2026-11-18). Phones can also swipe the picture.
@@ -47,6 +103,7 @@ export default function PeptideExplorer({ guides }: { guides: FeaturedGuide[] })
   const picker = useRef<HTMLDivElement>(null)
   const touchStart = useRef<{ id: number; x: number; y: number } | null>(null)
   const guide = guides[index]
+  const film = HERO_FILMS[guide.peptide]
   const percent = (value: number) => format.number(value / 100, {
     style: "percent", signDisplay: "always", minimumFractionDigits: 1, maximumFractionDigits: 1,
   }).replace("-", "−")
@@ -124,9 +181,10 @@ export default function PeptideExplorer({ guides }: { guides: FeaturedGuide[] })
               initial={animateSelection ? { scale: 1.07, rotate: -2, opacity: 0.45 } : reduceMotion || hasSwitched ? false : { y: 10, scale: 0.94, rotate: -3 }}
               animate={{ y: 0, scale: 1, rotate: 0, opacity: 1 }}
               transition={{ duration: hasSwitched ? 0.8 : 1.6, ease: hasSwitched ? [0.22, 1, 0.36, 1] : [0.2, 0.75, 0.22, 1] }}>
-              <Image src={`/images/learn/spotlights/${guide.peptide}.webp`} alt="" fill
+              <Image src={film?.poster ?? `/images/learn/spotlights/${guide.peptide}.webp`} alt="" fill
                 sizes="(min-width: 1480px) 810px, (min-width: 900px) 56vw, 100vw"
                 preload={!hasSwitched} loading={hasSwitched ? "eager" : undefined} style={{ objectFit: "contain" }} />
+              {film && !reduceMotion ? <HeroFilmPlayer film={film} /> : null}
             </m.div>
           </Box>
 
