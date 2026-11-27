@@ -34,7 +34,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         "What you publish: community posts, photos, votes, your display name and any biography. These are public.",
         "Email list: your address, your language, the wording you agreed to, and when you agreed and confirmed.",
         "Contact messages: your name, email address and whatever you write to us.",
-        "Book purchases: your email address (to send you the download link) and the payment record. Stripe takes your card details on its own payment page; we never see or store them.",
+        "Book requests and purchases: your email address (to send you the link to the book's page and, after payment, the download link) and the payment record. Stripe takes your card details on its own payment page; we never see or store them.",
         "Technical data needed to run the site, such as server logs.",
       ] },
       { heading: "Why we use it", paragraphs: [
@@ -67,7 +67,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
         "Follow the community guidelines. Do not post doses, personal protocols, medical claims, or anything unlawful, abusive or misleading. We may hold, edit, hide or remove posts and suspend accounts.",
       ] },
       { heading: "Buying the book", paragraphs: [
-        "Peptides Explained is a PDF book for personal use, sold for US$4.99 including any tax. Stripe sells it to you as our reseller: it takes the payment, handles sales tax or VAT and sends your receipt, under its own terms shown at checkout. As soon as the payment goes through, we email you a link to download the book. The link keeps working, so you can download it again later.",
+        "Peptides Explained is a PDF book for personal use, sold for US$4.99 including any tax. Stripe sells it to you as our reseller: it takes the payment, handles sales tax or VAT and sends your receipt, under its own terms shown at checkout. You ask for it with your email address, we email you a link to its page on this site, and you pay there. As soon as the payment goes through, we email you a link to download the book. That link keeps working, so you can download it again later.",
         "Because it is digital content supplied straight away, you agree when you pay that we send it at once, and the 14-day right to cancel ends once you download it. If the file is faulty, doesn't download or the email doesn't arrive, write to us and we will fix it or refund you.",
         "Please don't share or resell the PDF. Like the rest of the site, it is education, not medical advice.",
       ] },

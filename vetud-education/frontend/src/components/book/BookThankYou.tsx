@@ -3,16 +3,15 @@
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import CircularProgress from "@mui/material/CircularProgress"
-import { alpha } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { SITE } from "@/lib/config"
-import { brand } from "@/theme/tokens"
 import { AppLink } from "../common/links"
-import { BOOK, bookOrder, rememberBookBought } from "./book"
+import { BOOK, bookOrder } from "./book"
 import BookCover from "./BookCover"
+import { bookPanelSx } from "./panel"
 
 type State = { status: "checking" } | { status: "paid"; email: string | null } | { status: "unpaid" } | { status: "error" }
 
@@ -34,26 +33,13 @@ export default function BookThankYou() {
     bookOrder(sessionId)
       .then(order => {
         if (!live) return
-        if (order.paid) rememberBookBought()
         setState(order.paid ? { status: "paid", email: order.email } : { status: "unpaid" })
       })
       .catch(() => { if (live) setState({ status: "error" }) })
     return () => { live = false }
   }, [sessionId])
 
-  return <Box sx={{
-    display: "grid",
-    gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "190px minmax(0, 1fr)", md: "240px minmax(0, 1fr)" },
-    alignItems: "center",
-    gap: { xs: 2.5, sm: 5 },
-    maxWidth: 880,
-    p: { xs: "28px 20px", sm: "36px 44px" },
-    borderRadius: { xs: "20px", md: "28px" },
-    color: "brand.onNavy",
-    bgcolor: "brand.navyDeep",
-    backgroundImage: `radial-gradient(ellipse at 18% 50%, ${alpha(brand.blue, .42)}, transparent 65%)`,
-    border: `1px solid ${alpha(brand.cyan, .22)}`,
-  }}>
+  return <Box sx={bookPanelSx}>
     <BookCover alt={ct("Peptides Explained: 32 peptides explained in detail")} sizes="(min-width: 900px) 240px, 190px" priority sx={{ maxWidth: { xs: 150, sm: "none" } }} />
     <Box role="status" aria-live="polite" sx={{ minWidth: 0 }}>
       <Typography sx={{ color: "brand.cyan", fontSize: 13, fontWeight: 600 }}>{BOOK.title}</Typography>
@@ -63,11 +49,11 @@ export default function BookThankYou() {
       </Box> : state.status === "paid" ? <>
         <Typography variant="h2" sx={{ mt: 1, fontSize: { xs: 30, sm: 38 }, lineHeight: 1.08, letterSpacing: "-.05em" }}>{ct("Thank you. Check your email.")}</Typography>
         <Typography sx={{ mt: 1.5, color: "brand.onNavyMuted", fontSize: 16, lineHeight: 1.6 }}>
-          {ct("We're sending you an email with how to download your book")}
+          {ct("We're emailing you the link to download your book")}
           {state.email ? <>{" "}{ct("to")} <Box component="strong" sx={{ color: "brand.onNavy", overflowWrap: "anywhere" }}>{state.email}</Box></> : null}.
         </Typography>
         <Box component="ol" sx={{ listStyle: "none", p: 0, m: "20px 0 0", display: "grid", gap: 1 }}>
-          <Box component="li" sx={stepSx}><Box component="span" sx={numberSx}>1</Box>{ct("Open the email \"Your copy of Peptides Explained\". It usually arrives within a minute.")}</Box>
+          <Box component="li" sx={stepSx}><Box component="span" sx={numberSx}>1</Box>{ct("Open the email \"Your book is ready: Peptides Explained\". It usually arrives within a minute.")}</Box>
           <Box component="li" sx={stepSx}><Box component="span" sx={numberSx}>2</Box>{ct("Press \"Open your book\": it opens the book's Google Drive folder, where you can download the PDF.")}</Box>
           <Box component="li" sx={stepSx}><Box component="span" sx={numberSx}>3</Box>{ct("Keep the email: the link works again whenever you need it.")}</Box>
         </Box>

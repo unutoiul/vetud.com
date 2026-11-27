@@ -46,6 +46,15 @@ function isToken(value: unknown): value is string {
   return typeof value === "string" && value.length > 0
 }
 
+function hasStoredToken() {
+  try {
+    return isToken(window.localStorage.getItem(CUSTOMER_TOKEN_KEY))
+  } catch {
+    // Storage blocked: ask the server, as before.
+    return true
+  }
+}
+
 /** A sign-in token names the member once the account exists; a first sign-in's token doesn't. */
 function tokenHasCustomer(token: string) {
   try {
@@ -65,6 +74,11 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
 
   const refreshCustomer = useCallback(async () => {
     const version = authVersion.current
+    // Signed-out visitors have no token: asking the server anyway only logs a 401 in the console.
+    if (!hasStoredToken()) {
+      setCustomer(null)
+      return null
+    }
     try {
       const response = await sdk.store.customer.retrieve({ fields: CUSTOMER_FIELDS })
       if (version !== authVersion.current) return null

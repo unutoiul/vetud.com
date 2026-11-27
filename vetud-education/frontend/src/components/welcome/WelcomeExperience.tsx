@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { subscribedInBrowser } from "../newsletter/subscription"
-import { bookBoughtInBrowser } from "../book/book"
+import { bookHandledInBrowser } from "../book/book"
 import WelcomeSplash, { type WelcomeOffer } from "./WelcomeSplash"
 import EntrySplash from "./EntrySplash"
 import { entryVisitor, rememberEntryVisitor, type EntryVisitor } from "./entry-session"
@@ -14,10 +14,10 @@ const QUIET_PATHS = /^\/[^/]+\/(newsletter|book)(\/|$)/
 
 /**
  * What the pop-up offers. The newsletter is hidden for now (owner, 2026-11-27): the window offers the
- * $4.99 PDF book instead (email, then Stripe Checkout). Set back to "newsletter" to bring the newsletter back.
+ * $4.99 PDF book instead: email first, then payment on the page that email links to. Set back to "newsletter" to bring the newsletter back.
  */
 const OFFER: WelcomeOffer = "book"
-const alreadyDone = () => OFFER === "book" ? bookBoughtInBrowser() : subscribedInBrowser()
+const alreadyDone = () => OFFER === "book" ? bookHandledInBrowser() : subscribedInBrowser()
 
 /**
  * Offer the email list once per visit, thirty seconds after entry (owner, 2026-11-27: it used to

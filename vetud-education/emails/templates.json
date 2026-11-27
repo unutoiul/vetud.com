@@ -106,11 +106,21 @@
   "book-purchase": {
     "name": "VETUD Edu · Book purchase (Peptides Explained)",
     "alias": "vetud-edu-book-purchase",
-    "subject": "Your copy of Peptides Explained",
+    "subject": "Your book is ready: Peptides Explained",
     "preheader": "Thank you for your order. Here's how to download your book.",
     "variables": [
       "DOWNLOAD_URL"
     ],
     "id": "5f20a685-51b5-488c-b559-2b5a6a78c59a"
+  },
+  "book-offer": {
+    "name": "VETUD Edu · Book link (Peptides Explained)",
+    "alias": "vetud-edu-book-offer",
+    "subject": "Your link to Peptides Explained",
+    "preheader": "Open the book's page to get the PDF for $4.99.",
+    "variables": [
+      "BUY_URL"
+    ],
+    "id": "b741e045-a43b-448f-94c7-c6361b6339b4"
   }
 }

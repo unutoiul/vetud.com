@@ -1,0 +1,11 @@
+Here's your link to the book
+
+Thanks for asking for Peptides Explained: 32 peptides explained in detail, in plain language.
+
+To download the PDF, open the book's page on vetud.com and pay US$4.99 securely with Stripe. Straight after paying, we email you the link to download the book.
+
+Get the book for $4.99: {{{BUY_URL}}}
+
+The link works for 30 days.
+
+If you didn't ask for this, you can ignore this email. We won't send you anything else.

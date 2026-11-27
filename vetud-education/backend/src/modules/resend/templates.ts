@@ -18,6 +18,8 @@ export const EmailTemplates = {
   /** Confirms a new sign-in email: sent to the new address. */
   EMAIL_CHANGE_CODE: "email-change-code",
   EMAIL_LIST_SIGNUP_ADMIN: "email-list-signup-admin",
+  /** Sent when someone asks for the book in the pop-up: a link to its page, where they can pay. */
+  BOOK_OFFER: "book-offer",
   /** Sent after a paid Stripe Checkout for the book: how to download it. */
   BOOK_PURCHASE: "book-purchase",
 } as const
@@ -39,6 +41,7 @@ type Data = {
   code: string
   minutes: number
   download_url: string
+  buy_url: string
 }
 
 /** Variables go into the template HTML as-is, so everything is escaped (member input included). */
@@ -92,6 +95,7 @@ const builders: Record<string, (data: Data) => Built> = {
     template: data.locale === "fr" ? EmailTemplates.EMAIL_LIST_CONFIRM_FR : EmailTemplates.EMAIL_LIST_CONFIRM,
     variables: { CONFIRM_URL: String(data.confirm_url) },
   }),
+  [EmailTemplates.BOOK_OFFER]: (data) => ({ variables: { BUY_URL: String(data.buy_url) } }),
   [EmailTemplates.BOOK_PURCHASE]: (data) => ({ variables: { DOWNLOAD_URL: String(data.download_url) } }),
   [EmailTemplates.EMAIL_LIST_SIGNUP_ADMIN]: (data) => emailListSignupAlert(data as unknown as EmailListSignupAlertData),
 }

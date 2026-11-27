@@ -18,7 +18,7 @@ import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { AppLink } from "../common/links"
 import { subscribeToEmailList } from "../newsletter/subscription"
-import { BOOK, startBookCheckout } from "../book/book"
+import { BOOK, requestBook } from "../book/book"
 import BookCover from "../book/BookCover"
 import { useLanguage } from "../common/language"
 import Button from "@mui/material/Button"
@@ -114,7 +114,7 @@ function JoinedMessage({ email, title, text }: { email: string; title: string; t
   </Box>
 }
 
-/** What the window offers: the newsletter, or the $4.99 PDF book (email, Stripe Checkout, link by email). */
+/** What the window offers: the newsletter, or the $4.99 PDF book (email first; payment is on the page the email links to). */
 export type WelcomeOffer = "newsletter" | "book"
 
 /**
@@ -205,15 +205,16 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
   const joined = status === "success"
   const book = offer === "book"
 
-  // After joining, the message shows for SUCCESS_MS and the window closes itself. The ref keeps the
-  // timer from restarting when the parent re-renders with a new onDismiss.
+  // After joining the newsletter, the message shows for SUCCESS_MS and the window closes itself. The
+  // book's "check your email" message stays until it is closed. The ref keeps the timer from
+  // restarting when the parent re-renders with a new onDismiss.
   const dismiss = useRef(onDismiss)
   useEffect(() => { dismiss.current = onDismiss })
   useEffect(() => {
-    if (!joined) return
+    if (!joined || book) return
     const timer = window.setTimeout(() => dismiss.current(), SUCCESS_MS)
     return () => window.clearTimeout(timer)
-  }, [joined])
+  }, [joined, book])
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -230,12 +231,9 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
     submitting.current = true
     setStatus("sending")
     try {
-      if (book) {
-        // On to Stripe's payment page; it sends the buyer back to /book/thank-you.
-        window.location.assign(await startBookCheckout({ email, language, website }))
-        return
-      }
-      await subscribeToEmailList({ email, consent: true, language, website })
+      // The book: we email a link to its page, where they pay. The newsletter: a sign-up to confirm.
+      if (book) await requestBook({ email, language, website })
+      else await subscribeToEmailList({ email, consent: true, language, website })
       setStatus("success")
       onSubscribed()
     } catch {
@@ -280,7 +278,8 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
         "&:hover": { color: "brand.onNavy", bgcolor: "brand.navy" },
       }}>{ct("Skip for now")}</HoldButton>}
     </Box>
-    {joined ? <>
+    {joined && book ? <JoinedMessage email={email.trim()} title={ct("Check your email.")} text={ct("We sent you the link to download Peptides Explained. Open the email to get your PDF:")} />
+    : joined ? <>
       <JoinedMessage email={email.trim()} title={ct("You're in. Check your inbox.")} text={ct("Tap the link we just sent to confirm your email:")} />
       {/* Time left before the window closes itself. */}
       <Box aria-hidden sx={{ position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 2, height: 3, bgcolor: "brand.cyan", transformOrigin: "left", animation: `${countdown} ${SUCCESS_MS}ms linear both` }} />
@@ -331,7 +330,7 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
             letterSpacing: "-.055em",
           }}>{ct(book ? "All you need to know about 32 peptides." : "Peptide science. Made simple.")}</Typography>
           {book ? <Typography sx={{ mt: { xs: 1, md: 1.75 }, color: "brand.onNavyMuted", fontSize: { xs: 14, sm: 16 }, lineHeight: 1.6 }}>
-            {ct("Peptides Explained covers 32 peptides in detail, in plain language. Enter your email and pay securely; we'll email you the download link straight away.")}
+            {ct("Peptides Explained covers 32 peptides in detail, in plain language. Enter your email and we'll send you the link to download the PDF.")}
           </Typography> : null}
 
             <Box component="form" ref={form} onSubmit={handleSubmit} noValidate aria-busy={status === "sending"} sx={{ position: "relative", mt: { xs: 2, md: 3.75 } }}>
@@ -355,18 +354,18 @@ export default function WelcomeSplash({ open, offer = "newsletter", onDismiss, o
               <Box aria-hidden="true" sx={{ position: "absolute", left: -9999, width: "1px", height: "1px", overflow: "hidden" }}>
                 <label>{ct("Leave this field empty")}<input type="text" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)} /></label>
               </Box>
-              {status === "error" ? <Alert severity="error" sx={{ mt: 2 }}>{ct(book ? "We couldn't open the checkout. Please try again." : "We couldn't save your signup. Please try again.")}</Alert> : null}
+              {status === "error" ? <Alert severity="error" sx={{ mt: 2 }}>{ct(book ? "We couldn't send your link. Please try again." : "We couldn't save your signup. Please try again.")}</Alert> : null}
               <Button type="submit" variant="contained" fullWidth size="large" disabled={status === "sending"}
                 startIcon={status === "sending" ? <CircularProgress size={18} color="inherit" /> : undefined}
                 endIcon={status === "sending" ? undefined : <Icon name="arrowRight" />}
                 sx={joinButtonSx}>
                 {ct(book
-                  ? status === "sending" ? "Opening secure checkout..." : `Get the book for ${BOOK.price}`
+                  ? status === "sending" ? "Sending your link..." : `Download PDF for ${BOOK.price}`
                   : status === "sending" ? "Joining the newsletter..." : "Join the newsletter")}
               </Button>
               {/* An email sign-up still says where its privacy terms are: one small link on this line. */}
               <Typography id="welcome-description" sx={{ mt: { xs: 1, md: 1.5 }, textAlign: "center", fontSize: 12, lineHeight: 1.6, color: "brand.onNavyMuted" }}>
-                {ct(book ? "One-off payment with Stripe. The download link comes by email." : "Free to join. Unsubscribe whenever you like.")}{" "}
+                {book ? ct.template("The PDF costs {v0}, paid securely with Stripe on the page we email you.", { v0: BOOK.price }, { translateValues: false }) : ct("Free to join. Unsubscribe whenever you like.")}{" "}
                 <AppLink href="/legal/privacy" target="_blank" rel="noopener" sx={privacyLinkSx}>{footerText("privacy")}</AppLink>
               </Typography>
             </Box>

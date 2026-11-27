@@ -15,7 +15,7 @@ import {
 import { accountRoutes } from "./account-middlewares"
 import { forumRoutes } from "./forum-middlewares"
 import { StoreSignInCodeSchema } from "./store/sign-in-code/validators"
-import { StoreBookCheckoutSchema, StoreBookOrderQuery } from "./store/book/validators"
+import { StoreBookCheckoutSchema, StoreBookOfferQuery, StoreBookOrderQuery, StoreBookRequestSchema } from "./store/book/validators"
 
 export default defineMiddlewares({
   routes: [
@@ -39,7 +39,18 @@ export default defineMiddlewares({
       bodyParser: { preserveRawBody: true },
     },
     {
-      // The $4.99 PDF book: start a Stripe Checkout, then check the payment on the way back.
+      // The $4.99 PDF book (src/lib/book.ts): the pop-up's email, the book page's link check,
+      // the Stripe Checkout, then the payment check on the thank-you page.
+      method: ["POST"],
+      matcher: "/store/book/request",
+      middlewares: [validateAndTransformBody(StoreBookRequestSchema)],
+    },
+    {
+      method: ["GET"],
+      matcher: "/store/book/offer",
+      middlewares: [validateAndTransformQuery(StoreBookOfferQuery, {})],
+    },
+    {
       method: ["POST"],
       matcher: "/store/book/checkout",
       middlewares: [validateAndTransformBody(StoreBookCheckoutSchema)],
