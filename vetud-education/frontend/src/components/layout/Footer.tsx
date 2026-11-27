@@ -10,7 +10,7 @@ import { brand, gutter } from "@/theme/tokens"
 import Icon from "../brand/Icon"
 import Logo from "../brand/Logo"
 import { AppLink, ButtonLink } from "../common/links"
-import { FOOTER_LEGAL_LINKS, NAV_LABEL_KEYS, NAV_LINKS } from "./nav"
+import { FOOTER_LEGAL_LINKS, NAV_LINKS } from "./nav"
 
 async function CopyrightYear() {
   "use cache"
@@ -51,7 +51,7 @@ export default async function Footer() {
           </Grid>
           <Grid size={{ xs: 6, md: 3 }}>
             <LinkColumn title={t("explore")}>
-              {NAV_LINKS.map((link) => <AppLink key={link.href} href={link.href} underline="hover" sx={linkSx}>{common(NAV_LABEL_KEYS[link.href])}</AppLink>)}
+              {NAV_LINKS.map((link) => <AppLink key={link.href} href={link.href} underline="hover" sx={linkSx}>{common(link.label)}</AppLink>)}
               <AppLink href="/contact" underline="hover" sx={linkSx}>{t("contact")}</AppLink>
             </LinkColumn>
           </Grid>

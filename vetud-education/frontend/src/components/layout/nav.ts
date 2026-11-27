@@ -1,20 +1,18 @@
-/** Message keys (Common namespace) for every navigation link, shared by the header and footer. */
-export const NAV_LABEL_KEYS = {
-  "/learn": "learn",
-  "/news": "news",
-  "/videos": "videos",
-  "/community": "community",
-  "/contact": "contact",
-} as const
+/** Primary destinations, in the same order in the header, drawer and footer. */
+export const NAV_LINKS = [
+  { href: "/learn", label: "learn", icon: "molecule" },
+  { href: "/book", label: "book", icon: "document" },
+  { href: "/news", label: "news", icon: "news" },
+  { href: "/videos", label: "videos", icon: "play" },
+  { href: "/community", label: "community", icon: "chat" },
+] as const
 
-export type NavHref = keyof typeof NAV_LABEL_KEYS
-
-export const NAV_LINKS: { href: NavHref }[] = [
-  { href: "/learn" },
-  { href: "/news" },
-  { href: "/videos" },
-  { href: "/community" },
-]
+export function currentNavLocation(segments: string[], href: string) {
+  if (href === "/" && !segments.length) return "page"
+  if (segments.length && href === `/${segments[0]}`) {
+    return segments.length === 1 ? "page" : "location"
+  }
+}
 
 export const FOOTER_LEGAL_LINKS = [
   { label: "Privacy policy", href: "/legal/privacy" },

@@ -183,7 +183,9 @@ export default function PeptideExplorer({ guides }: { guides: FeaturedGuide[] })
               transition={{ duration: hasSwitched ? 0.8 : 1.6, ease: hasSwitched ? [0.22, 1, 0.36, 1] : [0.2, 0.75, 0.22, 1] }}>
               <Image src={film?.poster ?? `/images/learn/spotlights/${guide.peptide}.webp`} alt="" fill
                 sizes="(min-width: 1480px) 810px, (min-width: 900px) 56vw, 100vw"
-                preload={!hasSwitched} loading={hasSwitched ? "eager" : undefined} style={{ objectFit: "contain" }} />
+                // The first guide's picture is the page's largest paint (LCP): preloaded, fetched first
+                // and never lazy-loaded. Pictures of guides picked later load at once too.
+                preload={!hasSwitched} loading="eager" fetchPriority={hasSwitched ? undefined : "high"} style={{ objectFit: "contain" }} />
               {film && !reduceMotion ? <HeroFilmPlayer film={film} /> : null}
             </m.div>
           </Box>

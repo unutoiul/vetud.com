@@ -10,6 +10,8 @@ const paths = {
   account: "M20 21a8 8 0 0 0-16 0M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z",
   bag: "M5 7h14l1 14H4L5 7ZM8 8V6a4 4 0 0 1 8 0v2",
   menu: "M4 7h16M4 12h16M4 17h16",
+  home: "m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9",
+  chat: "M4 4h16v12H9l-5 4V4ZM8 8h8M8 12h5",
   close: "m6 6 12 12M6 18 18 6",
   plus: "M5 12h14M12 5v14",
   minus: "M5 12h14",
