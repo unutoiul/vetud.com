@@ -10,16 +10,16 @@
       "SENDER_EMAIL",
       "ORDER_REF",
       "MESSAGE"
-    ]
+    ],
+    "audience": "owner"
   },
   "customer-welcome": {
     "id": "dd50a68b-070b-4cab-9398-f4d383ee63c3",
     "name": "VETUD · Welcome (new account)",
     "subject": "Welcome to VETUD",
-    "preheader": "Your account is ready. Discover featured VETUD peptides at pep.company.",
+    "preheader": "Your VETUD account is ready.",
     "variables": [
-      "NAME_SUFFIX",
-      "STOREFRONT_URL"
+      "NAME_SUFFIX"
     ]
   },
   "newsletter-offer": {
@@ -33,18 +33,16 @@
       "CODE",
       "VALIDITY",
       "DESCRIPTION",
-      "SHOP_URL",
-      "UNSUBSCRIBE_LINK"
+      "SHOP_URL"
     ]
   },
   "newsletter-welcome": {
     "id": "1b6ff6c2-51b1-454c-8407-022265637c59",
     "name": "VETUD · Newsletter sign-up",
     "subject": "You're subscribed to VETUD offers and news",
-    "preheader": "Thanks for signing up.",
+    "preheader": "Thanks for signing up for VETUD offers and news.",
     "variables": [
-      "SHOP_URL",
-      "UNSUBSCRIBE_LINK"
+      "SHOP_URL"
     ]
   },
   "order-canceled": {
@@ -68,7 +66,7 @@
     "id": "35f8ba56-903f-4b9e-b9d8-272accf2b11c",
     "name": "VETUD · Order delivered",
     "subject": "Order {{{ORDER_NUMBER}}} has been delivered",
-    "preheader": "Your Vetud order {{{ORDER_NUMBER}}} has arrived.",
+    "preheader": "Your VETUD order {{{ORDER_NUMBER}}} has arrived.",
     "variables": [
       "ORDER_NUMBER",
       "ITEMS",
@@ -96,13 +94,14 @@
       "CUSTOMER_EMAIL",
       "ADMIN_ACTION",
       "ADMIN_ORDER_URL"
-    ]
+    ],
+    "audience": "owner"
   },
   "order-placed": {
     "id": "24982617-509f-438b-bd91-6a55b930efa2",
     "name": "VETUD · Order received",
     "subject": "Order {{{ORDER_NUMBER}}} received",
-    "preheader": "We've received order {{{ORDER_NUMBER}}}. View your order and payment details.",
+    "preheader": "We have your order {{{ORDER_NUMBER}}}. Here is how to pay.",
     "variables": [
       "ORDER_NUMBER",
       "ITEMS",
@@ -130,7 +129,7 @@
     "id": "ec704fb1-ee51-40c9-8d80-2aa261df1648",
     "name": "VETUD · Payment received",
     "subject": "Payment received for order {{{ORDER_NUMBER}}}",
-    "preheader": "We've received your payment for order {{{ORDER_NUMBER}}}. It's being prepared for dispatch.",
+    "preheader": "Payment received for order {{{ORDER_NUMBER}}}. We are packing it now.",
     "variables": [
       "ORDER_NUMBER",
       "ITEMS",
@@ -160,7 +159,7 @@
     "id": "32c50679-52eb-40d2-a4ad-622631b454ff",
     "name": "VETUD · Return received",
     "subject": "We've received your return for order {{{ORDER_NUMBER}}}",
-    "preheader": "Your return for order {{{ORDER_NUMBER}}} has arrived at our facility.",
+    "preheader": "We have received your return for order {{{ORDER_NUMBER}}}.",
     "variables": [
       "ORDER_NUMBER",
       "RETURN_ITEMS",
@@ -172,7 +171,7 @@
     "id": "2767d25d-7489-42be-80e3-d29b55d67c27",
     "name": "VETUD · Order shipped",
     "subject": "Order {{{ORDER_NUMBER}}} has shipped",
-    "preheader": "Your Vetud order {{{ORDER_NUMBER}}} is on its way.",
+    "preheader": "Your VETUD order {{{ORDER_NUMBER}}} is on its way. Tracking inside.",
     "variables": [
       "ORDER_NUMBER",
       "ITEMS",
@@ -194,7 +193,8 @@
     "variables": [
       "INVITE_URL",
       "EXPIRY_NOTE"
-    ]
+    ],
+    "audience": "owner"
   },
   "guest-checkout-admin": {
     "id": "8fde5935-7a21-457f-a444-2d7bcf2d0d18",
@@ -210,7 +210,8 @@
       "ACCOUNT",
       "STARTED",
       "UNFINISHED_URL"
-    ]
+    ],
+    "audience": "owner"
   },
   "newsletter-signup-admin": {
     "id": "cff24042-a7db-4d81-8c58-02e4558486eb",
@@ -225,7 +226,8 @@
       "OFFER_CODE",
       "SIGNED_UP",
       "CUSTOMER_URL"
-    ]
+    ],
+    "audience": "owner"
   },
   "sign-in-code": {
     "id": "4dbda1bf-6021-49b4-bab6-e6f3bc2f29c7",

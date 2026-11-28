@@ -1,30 +1,18 @@
-Your Vetud order {{{ORDER_NUMBER}}} has arrived.
+Your order {{{ORDER_NUMBER}}} has arrived
 
-Order {{{ORDER_NUMBER}}}
+Please check that everything is there and undamaged. Store each item as its label says.
 
+Something wrong? Contact us within 7 days with your order number, the lot number and a photo.
 
-YOUR ORDER HAS BEEN DELIVERED.
-
-Check the package against the summary below, and store each item as its label
-describes. If anything is damaged or incorrect, contact us within 7 days of
-delivery with your order number, the lot number and photos.
-
-Order summary
-
+Your order
 {{{ITEMS}}}
 
 {{{TOTALS_LABELS}}}
-
 {{{TOTALS_VALUES}}}
+Total: {{{ORDER_TOTAL}}}
 
-Total
-
-{{{ORDER_TOTAL}}}
-
-Shipping to
-
+Delivery address
 {{{SHIP_TO}}}
-
 {{{SHIPPING_METHOD}}}
 
-Look up lot documentation {{{STOREFRONT_URL}}}/documentation
+Need the lab documents? Look up a lot number: {{{STOREFRONT_URL}}}/documentation

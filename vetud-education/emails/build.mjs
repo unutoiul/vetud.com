@@ -15,12 +15,36 @@ const NOTICE = {
   en: "VETUD explains peptide research for education. It isn't medical advice.",
   fr: "VETUD explique la recherche sur les peptides à des fins éducatives. Ce n'est pas un avis médical.",
 }
+const UNSUBSCRIBE = {
+  en: { html: "Don&#39;t want these emails?", text: "Don't want these emails? Unsubscribe:", link: "Unsubscribe" },
+  fr: {
+    html: "Vous ne voulez plus de ces e-mails ?",
+    text: "Vous ne voulez plus de ces e-mails ? Se désinscrire :",
+    link: "Se désinscrire",
+  },
+}
+/**
+ * Every reader's email ends with an unsubscribe link (owner request 2026-11-28); the backend fills in
+ * UNSUBSCRIBE_URL with a signed link for the recipient. Until it does (or for an email sent some other
+ * way), the link opens an email to us instead. Emails to the owner (audience "owner") have no link.
+ */
+export const VARIABLE_FALLBACKS = { UNSUBSCRIBE_URL: "mailto:contact@vetud.com?subject=Unsubscribe" }
 /** Gmail clips messages above 102 KB. */
 const MAX_BYTES = 100 * 1024
 
 export const manifest = JSON.parse(readFileSync(path.join(ROOT, "templates.json"), "utf8"))
 
-function layout({ lang, preheader, rows }) {
+const forReaders = (meta) => meta.audience !== "owner"
+
+/** The variables a template declares in Resend: its own, plus UNSUBSCRIBE_URL for readers' emails. */
+export const variablesOf = (meta) => [...meta.variables, ...(forReaders(meta) ? ["UNSUBSCRIBE_URL"] : [])]
+
+function unsubscribeHtml(lang) {
+  const words = UNSUBSCRIBE[lang]
+  return `\n      <p style="margin:8px 0 0;font-family:${FONT};font-size:13px;line-height:20px;color:#67758b;">${words.html} <a href="{{{UNSUBSCRIBE_URL}}}" style="font-family:${FONT};color:#3268aa;text-decoration:underline;">${words.link}</a></p>`
+}
+
+function layout({ lang, preheader, rows, unsubscribe }) {
   return `<!DOCTYPE html>
 <html lang="${lang}">
 <head>
@@ -44,7 +68,7 @@ ${rows.trim()}
   <tr><td style="padding:0 32px 28px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:1px solid #e2e8f0;padding-top:20px;">
       <p style="margin:0 0 8px;font-family:${FONT};font-size:13px;line-height:20px;color:#67758b;">${NOTICE[lang]}</p>
-      <p style="margin:0;font-family:${FONT};font-size:13px;line-height:20px;color:#67758b;">VETUD &middot; <a href="${SITE_URL}" style="font-family:${FONT};color:#3268aa;text-decoration:underline;">vetud.com</a></p>
+      <p style="margin:0;font-family:${FONT};font-size:13px;line-height:20px;color:#67758b;">VETUD &middot; <a href="${SITE_URL}" style="font-family:${FONT};color:#3268aa;text-decoration:underline;">vetud.com</a></p>${unsubscribe ? unsubscribeHtml(lang) : ""}
     </td></tr></table>
   </td></tr>
 </table>
@@ -55,8 +79,9 @@ ${rows.trim()}
 `
 }
 
-function plainText(body, lang) {
-  return `${body.trim()}\n\n${"-".repeat(40)}\n\n${NOTICE[lang]}\n\nVETUD · ${SITE_URL}\n`
+function plainText(body, lang, unsubscribe) {
+  const footer = unsubscribe ? `\n\n${UNSUBSCRIBE[lang].text} {{{UNSUBSCRIBE_URL}}}` : ""
+  return `${body.trim()}\n\n${"-".repeat(40)}\n\n${NOTICE[lang]}\n\nVETUD · ${SITE_URL}${footer}\n`
 }
 
 /** Every template, built and checked: { name, id, subject, html, text }. */
@@ -64,15 +89,18 @@ export function buildAll() {
   return Object.entries(manifest).map(([name, meta]) => {
     const lang = meta.lang ?? "en"
     const rows = readFileSync(path.join(ROOT, "templates", `${name}.html`), "utf8")
-    const html = layout({ lang, preheader: meta.preheader, rows })
-    const text = plainText(readFileSync(path.join(ROOT, "templates", `${name}.txt`), "utf8"), lang)
+    const unsubscribe = forReaders(meta)
+    const html = layout({ lang, preheader: meta.preheader, rows, unsubscribe })
+    const text = plainText(readFileSync(path.join(ROOT, "templates", `${name}.txt`), "utf8"), lang, unsubscribe)
+    const variables = variablesOf(meta)
     const problems = []
     const used = new Set(
       [...`${html}${text}${meta.subject}`.matchAll(/\{\{\{\s*([A-Z0-9_]+)\s*\}\}\}/g)].map((m) => m[1]),
     )
     for (const variable of used)
-      if (!meta.variables.includes(variable))
-        problems.push(`uses {{{${variable}}}}, which the template doesn't declare`)
+      if (!variables.includes(variable)) problems.push(`uses {{{${variable}}}}, which the template doesn't declare`)
+    for (const variable of variables) if (!used.has(variable)) problems.push(`declares ${variable} but never uses it`)
+    if (meta.name.length > 50) problems.push("Resend template names are 50 characters at most")
     // The education site never links to the shop; only the logo image comes from pep.company.
     for (const [, href] of html.matchAll(/href="([^"]+)"/g))
       if (/pep\.company/i.test(href)) problems.push(`links to the shop: ${href}`)
@@ -82,7 +110,7 @@ export function buildAll() {
     if (Buffer.byteLength(html) > MAX_BYTES)
       problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
     if (problems.length) throw new Error(`${name}: ${problems.join("; ")}`)
-    return { name, id: meta.id, subject: meta.subject, html, text }
+    return { name, id: meta.id, subject: meta.subject, html, text, variables }
   })
 }
 

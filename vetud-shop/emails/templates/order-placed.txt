@@ -1,32 +1,19 @@
-We've received order {{{ORDER_NUMBER}}}. View your order and payment details.
-
-Order {{{ORDER_NUMBER}}}
-
-
-THANK YOU{{{NAME_SUFFIX}}}. YOUR ORDER IS RESERVED.
+Thank you{{{NAME_SUFFIX}}}. We've got your order {{{ORDER_NUMBER}}}.
 
 {{{PAYMENT_SUMMARY}}}
 
 How to pay
-
 {{{PAYMENT_DETAILS}}}
 
-Order summary
-
+Your order
 {{{ITEMS}}}
 
 {{{TOTALS_LABELS}}}
-
 {{{TOTALS_VALUES}}}
+Total: {{{ORDER_TOTAL}}}
 
-Total
-
-{{{ORDER_TOTAL}}}
-
-Shipping to
-
+Delivery address
 {{{SHIP_TO}}}
-
 {{{SHIPPING_METHOD}}}
 
-Questions? Contact us {{{STOREFRONT_URL}}}/contact
+Questions? Reply to this email or contact us: {{{STOREFRONT_URL}}}/contact

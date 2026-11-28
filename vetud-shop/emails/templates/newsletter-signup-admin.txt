@@ -1,15 +1,13 @@
 New newsletter sign-up
 
-Someone signed up in the shop's pop-up and agreed to receive VETUD offers and news by email.
+{{{CUSTOMER_EMAIL}}} signed up for offers in the shop pop-up.
 
-Email:           {{{CUSTOMER_EMAIL}}}
-Country:         {{{COUNTRY}}}
-Shop account:    {{{ACCOUNT}}}
-Offer code sent: {{{OFFER_CODE}}}
-Signed up:       {{{SIGNED_UP}}}
+Email:          {{{CUSTOMER_EMAIL}}}
+Country:        {{{COUNTRY}}}
+Has an account: {{{ACCOUNT}}}
+Code sent:      {{{OFFER_CODE}}}
+Signed up:      {{{SIGNED_UP}}}
 
-Open the customer in Medusa Admin: {{{CUSTOMER_URL}}}
+Open in Medusa Admin: {{{CUSTOMER_URL}}}
 
-They're in the Newsletter customer group in Medusa Admin, with the wording they agreed to saved on their profile.
-
-Sent to the shop owner's address (STORE_OWNER_EMAIL). Customers don't receive this email.
+They're also in Resend, in the segment "VETUD Shop + BeSlimNow subscribers".

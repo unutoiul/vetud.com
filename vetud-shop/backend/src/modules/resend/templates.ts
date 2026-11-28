@@ -1,4 +1,6 @@
 import { formatCurrency } from "../../lib/currencies"
+import { unsubscribeToken } from "../../lib/newsletter"
+import { emailSettings } from "../../lib/notifications"
 import {
   guestCheckoutAlert,
   newsletterSignupAlert,
@@ -235,7 +237,8 @@ const builders: Record<string, Builder> = {
   }),
   [EmailTemplates.PASSWORD_RESET]: (data) => ({ variables: { RESET_URL: data.reset_url } }),
   [EmailTemplates.NEWSLETTER_OFFER]: (data) => {
-    const links = { SHOP_URL: data.shop_url, UNSUBSCRIBE_LINK: data.unsubscribe_url }
+    // The unsubscribe link (data.unsubscribe_url, in the visitor's country) is added by buildEmail.
+    const links = { SHOP_URL: data.shop_url }
     if (!data.offer) return { template: EmailTemplates.NEWSLETTER_WELCOME, variables: links }
     return {
       variables: {
@@ -253,7 +256,7 @@ const builders: Record<string, Builder> = {
   }),
   [EmailTemplates.SIGN_IN_CODE]: (data) => ({
     variables: {
-      CODE: String(data.code).replace(/D/g, "").slice(0, 6),
+      CODE: String(data.code).replace(/\D/g, "").slice(0, 6),
       MINUTES: String(Number(data.minutes) || 10),
       GREETING: data.first_name ? `Hi ${data.first_name},` : "Hi,",
     },
@@ -310,12 +313,40 @@ const builders: Record<string, Builder> = {
   },
 }
 
-/** The Resend template to use and its escaped variables, or null for an unknown template. */
-export function buildEmail(template: string, data: Record<string, unknown>) {
+/** Emails to the owner and the admin team ("audience": "owner" in templates.json): no unsubscribe link. */
+const OWNER_TEMPLATES = new Set<string>([
+  EmailTemplates.ORDER_PLACED_ADMIN,
+  EmailTemplates.CONTACT_MESSAGE,
+  EmailTemplates.USER_INVITE,
+  EmailTemplates.NEWSLETTER_SIGNUP_ADMIN,
+  EmailTemplates.GUEST_CHECKOUT_ADMIN,
+])
+
+/**
+ * The signed link behind "Unsubscribe" at the bottom of every customer email (owner request
+ * 2026-11-28). The storefront sends an address without a country to the visitor's own country.
+ */
+export function unsubscribeUrl(to: string) {
+  const email = to.trim().toLowerCase()
+  const query = new URLSearchParams({ email, token: unsubscribeToken(email) })
+  return `${emailSettings().storefrontUrl}/newsletter/unsubscribe?${query}`
+}
+
+/**
+ * The Resend template to use and its escaped variables, or null for an unknown template. With the
+ * recipient's address, customer emails also get UNSUBSCRIBE_URL.
+ */
+export function buildEmail(template: string, data: Record<string, unknown>, to?: string) {
   const builder = builders[template]
   if (!builder) return null
-  const { template: resolved = template as EmailTemplate, variables, subject } = builder(data as Data)
+  const { template: resolved = template as EmailTemplate, variables: own, subject } = builder(data as Data)
   const contact = template === EmailTemplates.CONTACT_MESSAGE
+  const given = typeof data.unsubscribe_url === "string" ? data.unsubscribe_url : undefined
+  // Without JWT_SECRET there is no signed link; the template then falls back to "email us to unsubscribe".
+  const link = OWNER_TEMPLATES.has(template)
+    ? undefined
+    : (given ?? (to && process.env.JWT_SECRET ? unsubscribeUrl(to) : undefined))
+  const variables = link ? { ...own, UNSUBSCRIBE_URL: link } : own
   return {
     template: resolved,
     variables: Object.fromEntries(Object.entries(variables).map(([key, value]) => [key, escape(value)])),

@@ -1,16 +1,8 @@
-We've refunded {{{REFUND_AMOUNT}}} for order {{{ORDER_NUMBER}}}.
+Your refund for order {{{ORDER_NUMBER}}} is on its way
 
-Order {{{ORDER_NUMBER}}}
+We've refunded {{{REFUND_AMOUNT}}} to your original payment method. Your bank may take a few business days to show it.
 
-
-YOUR REFUND IS ON ITS WAY.
-
-We've issued a refund to your original payment method. Your bank or card issuer
-may take several business days to show it on your statement.
-
-Refund
-
-Amount refunded: {{{REFUND_AMOUNT}}}
+Refunded: {{{REFUND_AMOUNT}}}
 Order total: {{{ORDER_TOTAL}}}
 
-View your orders {{{STOREFRONT_URL}}}/account
+View your orders: {{{STOREFRONT_URL}}}/account

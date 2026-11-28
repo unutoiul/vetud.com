@@ -1,7 +1,7 @@
 Confirm your email
 
-Press the button below to start receiving new VETUD guides and answered community questions.
+Open this link to get new VETUD guides and answered community questions by email:
 
-Confirm my sign-up: {{{CONFIRM_URL}}}
+{{{CONFIRM_URL}}}
 
-If you didn't ask for this, you can ignore this email and you won't hear from us again.
+The link works for 7 days. Didn't ask for this? Ignore this email and you won't hear from us.

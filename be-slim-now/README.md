@@ -89,6 +89,8 @@ npm run emails:publish   # creates/updates and publishes them in Resend, then wr
 
 `publish` needs `RESEND_API_KEY` (from the environment, `.env.local`, or `vetud-shop/backend/.env`). Commit the updated `emails/templates.json` and `src/lib/email/template-ids.ts`, then redeploy. The sender address in `RESEND_FROM_EMAIL` must be on a domain verified in Resend.
 
+Customer emails end with an unsubscribe link to `/unsubscribe`, signed with `BESLIMNOW_API_SECRET` (`src/lib/email/unsubscribe.ts`); the button there marks the contact as unsubscribed in Resend. Without the secret, the link falls back to an email to contact@vetud.com. Owner emails (`"audience": "owner"`) have none. Subscribers are saved in the Resend segment "VETUD Shop + BeSlimNow subscribers" (shared with the shop; the plan allows three segments) with `source` = "BeSlimNow pen page" and `country`.
+
 ### Campaigns (Resend Broadcasts)
 
 Marketing emails live in `emails/campaigns/`: `<name>.html` + `<name>.txt`, with subject, preview text, sender and Resend segment in `campaigns.json`. Prices in a campaign are written in by hand, so check them against `src/config/site.ts` when the offer changes.

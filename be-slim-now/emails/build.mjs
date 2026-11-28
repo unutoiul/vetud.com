@@ -13,12 +13,25 @@ const ROOT = path.dirname(fileURLToPath(import.meta.url))
  */
 export const LOGO_URL = "https://www.beslimnow.com/brand/email/beslimnow-logo.png"
 const FONT = "Manrope,'Helvetica Neue',Arial,Helvetica,sans-serif"
+/**
+ * Every customer email ends with an unsubscribe link (owner request 2026-11-28); the site fills in
+ * UNSUBSCRIBE_URL with a signed link to /unsubscribe (src/lib/email/unsubscribe.ts). Until it does
+ * (or for an email sent another way), the link opens an email to us. Owner emails have no link.
+ */
+export const VARIABLE_FALLBACKS = { UNSUBSCRIBE_URL: "mailto:contact@vetud.com?subject=Unsubscribe" }
 /** Gmail clips messages above 102 KB. */
 const MAX_BYTES = 100 * 1024
 
 export const manifest = JSON.parse(readFileSync(path.join(ROOT, "templates.json"), "utf8"))
 
-function layout({ preheader, rows }) {
+const forCustomers = (meta) => meta.audience !== "owner"
+
+/** The variables a template declares in Resend: its own, plus UNSUBSCRIBE_URL for customer emails. */
+export const variablesOf = (meta) => [...meta.variables, ...(forCustomers(meta) ? ["UNSUBSCRIBE_URL"] : [])]
+
+const UNSUBSCRIBE_HTML = `\n      <p style="margin:8px 0 0;font-family:${FONT};font-size:13px;line-height:20px;color:#67758b;">Don&#39;t want these emails? <a href="{{{UNSUBSCRIBE_URL}}}" style="font-family:${FONT};color:#3268aa;text-decoration:underline;">Unsubscribe</a></p>`
+
+function layout({ preheader, rows, unsubscribe }) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +54,7 @@ function layout({ preheader, rows }) {
 ${rows.trim()}
   <tr><td style="padding:0 32px 28px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:1px solid #e2e8f0;padding-top:20px;">
-      <p style="margin:0;font-family:${FONT};font-size:13px;line-height:20px;color:#67758b;">VETUD Peptide Series &middot; <a href="{{{SITE_URL}}}" style="font-family:${FONT};color:#3268aa;text-decoration:underline;">{{{SITE_URL}}}</a></p>
+      <p style="margin:0;font-family:${FONT};font-size:13px;line-height:20px;color:#67758b;">VETUD Peptide Series &middot; <a href="{{{SITE_URL}}}" style="font-family:${FONT};color:#3268aa;text-decoration:underline;">{{{SITE_URL}}}</a></p>${unsubscribe ? UNSUBSCRIBE_HTML : ""}
     </td></tr></table>
   </td></tr>
 </table>
@@ -52,31 +65,33 @@ ${rows.trim()}
 `
 }
 
-function plainText(body) {
-  return `${body.trim()}\n\n${"-".repeat(40)}\n\nVETUD Peptide Series · {{{SITE_URL}}}\n`
+function plainText(body, unsubscribe) {
+  const footer = unsubscribe ? "\n\nDon't want these emails? Unsubscribe: {{{UNSUBSCRIBE_URL}}}" : ""
+  return `${body.trim()}\n\n${"-".repeat(40)}\n\nVETUD Peptide Series · {{{SITE_URL}}}${footer}\n`
 }
 
 /** Every template, built and checked: { name, id, subject, html, text }. */
 export function buildAll() {
   return Object.entries(manifest).map(([name, meta]) => {
     const rows = readFileSync(path.join(ROOT, "templates", `${name}.html`), "utf8")
-    const html = layout({ preheader: meta.preheader, rows })
-    const text = plainText(readFileSync(path.join(ROOT, "templates", `${name}.txt`), "utf8"))
+    const unsubscribe = forCustomers(meta)
+    const html = layout({ preheader: meta.preheader, rows, unsubscribe })
+    const text = plainText(readFileSync(path.join(ROOT, "templates", `${name}.txt`), "utf8"), unsubscribe)
+    const variables = variablesOf(meta)
     const problems = []
     const used = new Set(
       [...`${html}${text}${meta.subject}`.matchAll(/\{\{\{\s*([A-Z0-9_]+)\s*\}\}\}/g)].map((m) => m[1]),
     )
     for (const variable of used)
-      if (!meta.variables.includes(variable))
+      if (!variables.includes(variable))
         problems.push(`uses {{{${variable}}}}, which the Resend template doesn't declare`)
-    for (const variable of meta.variables)
-      if (!used.has(variable)) problems.push(`declares ${variable} but never uses it`)
-    if (meta.variables.includes("EMAIL")) problems.push("EMAIL is a reserved Resend variable name")
+    for (const variable of variables) if (!used.has(variable)) problems.push(`declares ${variable} but never uses it`)
+    if (variables.includes("EMAIL")) problems.push("EMAIL is a reserved Resend variable name")
     if (meta.name.length > 50) problems.push("Resend template names are 50 characters at most")
     if (Buffer.byteLength(html) > MAX_BYTES)
       problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
     if (problems.length) throw new Error(`${name}: ${problems.join("; ")}`)
-    return { name, id: meta.id, subject: meta.subject, html, text }
+    return { name, id: meta.id, subject: meta.subject, html, text, variables }
   })
 }
 

@@ -1,35 +1,18 @@
-We've received your payment for order {{{ORDER_NUMBER}}}. It's being prepared
-for dispatch.
+Payment received for order {{{ORDER_NUMBER}}}
 
-Order {{{ORDER_NUMBER}}}
-
-
-PAYMENT RECEIVED. YOUR ORDER IS BEING PREPARED.
-
-{{{PAYMENT_LINE}}} We'll email you the tracking details as soon as your package
-ships.
-
-Payment
+{{{PAYMENT_LINE}}} We're packing your order and will email you the tracking details when it ships.
 
 Amount received: {{{AMOUNT}}}
-Reference: {{{ORDER_NUMBER}}}
 
-Order summary
-
+Your order
 {{{ITEMS}}}
 
 {{{TOTALS_LABELS}}}
-
 {{{TOTALS_VALUES}}}
+Total: {{{ORDER_TOTAL}}}
 
-Total
-
-{{{ORDER_TOTAL}}}
-
-Shipping to
-
+Delivery address
 {{{SHIP_TO}}}
-
 {{{SHIPPING_METHOD}}}
 
-View your orders {{{STOREFRONT_URL}}}/account
+View your orders: {{{STOREFRONT_URL}}}/account

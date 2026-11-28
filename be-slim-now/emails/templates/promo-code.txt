@@ -1,11 +1,9 @@
-Your subscriber code
+Here's your extra {{{PERCENT}}} off
 
-Here's your extra {{{PERCENT}}} off.
-
-Thanks for subscribing. Type this code in the order form and the extra {{{PERCENT}}} comes off your total. {{{OFFER_LINE}}}
+Type this code in the order form. {{{OFFER_LINE}}}
 
     {{{CODE}}}
 
 Choose your pen: {{{SITE_URL}}}/#products
 
-You'll hear from us about new offers. Reply to this email any time to stop.
+Thanks for subscribing. We'll email you about new offers.

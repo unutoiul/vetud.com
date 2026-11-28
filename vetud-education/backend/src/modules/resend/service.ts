@@ -44,7 +44,7 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
   }
 
   async send(notification: ProviderSendNotificationDTO): Promise<ProviderSendNotificationResultsDTO> {
-    const email = buildEmail(notification.template, notification.data ?? {})
+    const email = buildEmail(notification.template, notification.data ?? {}, notification.to)
 
     if (!email) {
       throw new MedusaError(MedusaError.Types.INVALID_DATA, `Unknown email template "${notification.template}".`)

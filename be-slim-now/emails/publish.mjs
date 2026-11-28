@@ -6,7 +6,7 @@
 import { readFileSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { LOGO_URL, buildAll, manifest } from "./build.mjs"
+import { LOGO_URL, VARIABLE_FALLBACKS, buildAll, manifest } from "./build.mjs"
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url))
 const MANIFEST = path.join(ROOT, "templates.json")
@@ -65,7 +65,11 @@ const resend = async (method, url, body) => {
 for (const email of emails) {
   const meta = manifest[email.name]
   // The declared variables go with every update too, so a new or removed variable reaches Resend.
-  const variables = meta.variables.map((variable) => ({ key: variable, type: "string", fallback_value: "" }))
+  const variables = email.variables.map((variable) => ({
+    key: variable,
+    type: "string",
+    fallback_value: VARIABLE_FALLBACKS[variable] ?? "",
+  }))
   const content = { subject: email.subject, html: email.html, text: email.text, variables }
   if (!meta.id) {
     const created = await resend("POST", "/templates", { name: meta.name, alias: meta.alias, ...content })
@@ -76,7 +80,10 @@ for (const email of emails) {
   }
   await resend("POST", `/templates/${meta.id}/publish`)
   const live = await resend("GET", `/templates/${meta.id}`)
-  const ok = live.status === "published" && live.html === email.html && live.text === email.text
+  const declared = new Set((live.variables ?? []).map((variable) => variable.key))
+  const missing = email.variables.filter((variable) => !declared.has(variable))
+  if (missing.length) console.log(`  ${email.name}: Resend is missing ${missing.join(", ")}`)
+  const ok = live.status === "published" && live.html === email.html && live.text === email.text && !missing.length
   console.log(`${ok ? "published" : "MISMATCH "}  ${email.name}  ${meta.id}`)
   if (!ok) process.exitCode = 1
 }

@@ -1,11 +1,9 @@
 Here's your link to the book
 
-Thanks for asking for Peptides Explained: 32 peptides explained in detail, in plain language.
+Peptides Explained covers 32 peptides in plain language: what each one is, what studies found, and what's still unknown.
 
-To download the PDF, open the book's page on vetud.com and pay US$4.99 securely with Stripe. Straight after paying, we email you the link to download the book.
+Open the book's page and pay US$4.99 with Stripe. We email you the PDF straight away.
 
 Get the book for $4.99: {{{BUY_URL}}}
 
-The link works for 30 days.
-
-If you didn't ask for this, you can ignore this email. We won't send you anything else.
+The link works for 30 days. Didn't ask for this? You can ignore this email.

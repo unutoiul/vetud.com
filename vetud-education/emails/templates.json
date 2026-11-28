@@ -3,7 +3,7 @@
     "id": "5c3d9995-6af7-4062-a759-9aa95925e834",
     "name": "VETUD Edu · Email-list subscriber (owner)",
     "alias": "vetud-edu-email-list-alert",
-    "subject": "New email-list subscriber: {{{SUBSCRIBER_EMAIL}}}",
+    "subject": "New subscriber on vetud.com: {{{SUBSCRIBER_EMAIL}}}",
     "preheader": "{{{SUBSCRIBER_EMAIL}}} confirmed their sign-up on vetud.com.",
     "variables": [
       "SUBSCRIBER_EMAIL",
@@ -12,7 +12,8 @@
       "SIGNED_UP",
       "CONFIRMED",
       "COUNT"
-    ]
+    ],
+    "audience": "owner"
   },
   "contact-message": {
     "id": "3ee86151-46d4-4dae-af51-d1fcad8c1539",
@@ -25,14 +26,15 @@
       "NAME",
       "SENDER_EMAIL",
       "MESSAGE"
-    ]
+    ],
+    "audience": "owner"
   },
   "password-reset": {
     "id": "608766ea-43f2-4686-8ef4-4392d9aecdb9",
     "name": "VETUD Edu · Password reset",
     "alias": "vetud-edu-password-reset",
     "subject": "Reset your VETUD password",
-    "preheader": "Use this link to choose a new password. It expires in 15 minutes.",
+    "preheader": "Choose a new password. The link works for 15 minutes.",
     "variables": [
       "RESET_URL"
     ]
@@ -42,7 +44,7 @@
     "name": "VETUD Edu · Welcome (new account)",
     "alias": "vetud-edu-welcome",
     "subject": "Welcome to VETUD",
-    "preheader": "Your account is ready. Start with the peptide guides and the community.",
+    "preheader": "Your account is ready. Start with the guides or the community.",
     "variables": [
       "NAME_SUFFIX",
       "SITE_URL"
@@ -57,7 +59,8 @@
     "variables": [
       "INVITE_URL",
       "EXPIRY_NOTE"
-    ]
+    ],
+    "audience": "owner"
   },
   "sign-in-code": {
     "id": "5c0f2bfd-5ade-406c-9b0f-029cfd491115",
@@ -75,8 +78,8 @@
     "id": "0c0cae3b-6391-48b0-a099-964cd04eb3f8",
     "name": "VETUD Edu · Email-list confirmation (English)",
     "alias": "vetud-edu-email-list-confirm",
-    "subject": "Please confirm your VETUD email sign-up",
-    "preheader": "Press the button below to start receiving new VETUD guides and answered community questions.",
+    "subject": "Please confirm your email",
+    "preheader": "One click to get new VETUD guides by email.",
     "variables": [
       "CONFIRM_URL"
     ]
@@ -86,8 +89,8 @@
     "name": "VETUD Edu · Email-list confirmation (French)",
     "alias": "vetud-edu-email-list-confirm-fr",
     "lang": "fr",
-    "subject": "Veuillez confirmer votre inscription aux e-mails VETUD",
-    "preheader": "Cliquez sur le bouton ci-dessous pour recevoir les nouveaux guides VETUD et les questions de la communauté ayant reçu une réponse.",
+    "subject": "Confirmez votre adresse e-mail",
+    "preheader": "Un clic pour recevoir les nouveaux guides VETUD par e-mail.",
     "variables": [
       "CONFIRM_URL"
     ]
@@ -107,7 +110,7 @@
     "name": "VETUD Edu · Book purchase (Peptides Explained)",
     "alias": "vetud-edu-book-purchase",
     "subject": "Your book is ready: Peptides Explained",
-    "preheader": "Thank you for your order. Here's how to download your book.",
+    "preheader": "Your payment went through. Download your book here.",
     "variables": [
       "DOWNLOAD_URL"
     ],
@@ -117,7 +120,7 @@
     "name": "VETUD Edu · Book link (Peptides Explained)",
     "alias": "vetud-edu-book-offer",
     "subject": "Your link to Peptides Explained",
-    "preheader": "Open the book's page to get the PDF for $4.99.",
+    "preheader": "Get the PDF for US$4.99. The link works for 30 days.",
     "variables": [
       "BUY_URL"
     ],
@@ -127,7 +130,7 @@
     "name": "VETUD Edu · Book checkout started",
     "alias": "vetud-edu-book-checkout-started",
     "subject": "Your copy of Peptides Explained is waiting",
-    "preheader": "Already paid? Your download link is on its way. Not yet? Finish your order any time in the next 30 days.",
+    "preheader": "Already paid? Your link is on its way. Not yet? Finish any time in the next 30 days.",
     "variables": [
       "BUY_URL"
     ],
@@ -148,6 +151,7 @@
       "WHEN",
       "STRIPE_SESSION"
     ],
-    "id": "1a86d303-5096-41c0-9c8c-a394b08c1f6a"
+    "id": "1a86d303-5096-41c0-9c8c-a394b08c1f6a",
+    "audience": "owner"
   }
 }

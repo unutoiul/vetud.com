@@ -1,16 +1,12 @@
 A guest started checkout
 
-Someone entered their email at checkout without signing in. If they place the order, you'll also get the usual new-order email.
+{{{CUSTOMER_EMAIL}}} entered their email at checkout. If they order, you'll get the usual new-order email too.
 
-Email:        {{{CUSTOMER_EMAIL}}}
-Cart:         {{{CART}}}
-Cart value:   {{{CART_VALUE}}} before shipping and discounts
-Region:       {{{REGION}}}
-Shop account: {{{ACCOUNT}}}
-Started:      {{{STARTED}}}
+Email:          {{{CUSTOMER_EMAIL}}}
+Cart:           {{{CART}}}
+Cart value:     {{{CART_VALUE}}} (before shipping and discounts)
+Region:         {{{REGION}}}
+Has an account: {{{ACCOUNT}}}
+Started:        {{{STARTED}}}
 
 See unfinished checkouts: {{{UNFINISHED_URL}}}
-
-If they don't finish, the cart stays under Unfinished checkouts in Medusa Admin, with the step they reached. You get this email once per cart and email address.
-
-Sent to the shop owner's address (STORE_OWNER_EMAIL). Customers don't receive this email.

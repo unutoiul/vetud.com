@@ -1,3 +1,5 @@
+import { LIST_LOCALES, type ListLocale, normalizeEmail, unsubscribeToken } from "../../lib/email-list"
+import { emailSettings } from "../../lib/notifications"
 import {
   bookOwnerAlert,
   emailListSignupAlert,
@@ -34,6 +36,14 @@ export const EmailTemplates = {
 } as const
 
 export type EmailTemplate = (typeof EmailTemplates)[keyof typeof EmailTemplates]
+
+/** Emails to the owner and the admin team ("audience": "owner" in templates.json): no unsubscribe link. */
+const OWNER_TEMPLATES = new Set<string>([
+  EmailTemplates.CONTACT_MESSAGE,
+  EmailTemplates.USER_INVITE,
+  EmailTemplates.EMAIL_LIST_SIGNUP_ADMIN,
+  EmailTemplates.BOOK_OWNER_ALERT,
+])
 
 type Data = {
   subject?: string
@@ -121,14 +131,32 @@ const builders: Record<string, (data: Data) => Built> = {
   [EmailTemplates.EMAIL_LIST_SIGNUP_ADMIN]: (data) => emailListSignupAlert(data as unknown as EmailListSignupAlertData),
 }
 
-/** The Resend template to send and its escaped variables, or null for an unknown template. */
-export function buildEmail(template: string, data: Record<string, unknown>) {
+/**
+ * The signed link behind "Unsubscribe" at the bottom of every reader's email (owner request
+ * 2026-11-28), in the reader's language when it's known. Owner emails don't show it.
+ */
+export function unsubscribeUrl(to: string, locale?: unknown) {
+  const lang = LIST_LOCALES.includes(locale as ListLocale) ? (locale as ListLocale) : "en"
+  const query = new URLSearchParams({ email: normalizeEmail(to), token: unsubscribeToken(to) })
+  return `${emailSettings().storefrontUrl}/${lang}/newsletter/unsubscribe?${query}`
+}
+
+/**
+ * The Resend template to send and its escaped variables, or null for an unknown template. With the
+ * recipient's address, UNSUBSCRIBE_URL is filled in too (templates without the link ignore it).
+ */
+export function buildEmail(template: string, data: Record<string, unknown>, to?: string) {
   const builder = builders[template]
   if (!builder) return null
   const built = builder(data as Data)
+  // Without JWT_SECRET there is no signed link; the template then falls back to "email us to unsubscribe".
+  const variables =
+    to && process.env.JWT_SECRET && !OWNER_TEMPLATES.has(template)
+      ? { ...built.variables, UNSUBSCRIBE_URL: unsubscribeUrl(to, data.locale) }
+      : built.variables
   return {
     template: built.template ?? (template as EmailTemplate),
-    variables: Object.fromEntries(Object.entries(built.variables).map(([key, value]) => [key, escape(value)])),
+    variables: Object.fromEntries(Object.entries(variables).map(([key, value]) => [key, escape(value)])),
     subject: built.subject,
     replyTo: built.replyTo,
   }

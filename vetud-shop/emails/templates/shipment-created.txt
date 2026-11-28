@@ -1,34 +1,20 @@
-Your Vetud order {{{ORDER_NUMBER}}} is on its way.
+Your order {{{ORDER_NUMBER}}} is on its way
 
-Order {{{ORDER_NUMBER}}}
-
-
-YOUR ORDER IS ON ITS WAY.
-
-Your package has left our facility. Each item ships with its lot documentation.
+Your package has left our warehouse. Each item comes with its lot documentation.
 
 Tracking
-
 {{{TRACKING}}}
+Track your package: {{{TRACK_URL}}}
 
-Track package {{{TRACK_URL}}}
-
-Order summary
-
+Your order
 {{{ITEMS}}}
 
 {{{TOTALS_LABELS}}}
-
 {{{TOTALS_VALUES}}}
+Total: {{{ORDER_TOTAL}}}
 
-Total
-
-{{{ORDER_TOTAL}}}
-
-Shipping to
-
+Delivery address
 {{{SHIP_TO}}}
-
 {{{SHIPPING_METHOD}}}
 
-Look up lot documentation {{{STOREFRONT_URL}}}/documentation
+Need the lab documents? Look up a lot number: {{{STOREFRONT_URL}}}/documentation

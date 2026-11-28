@@ -1,5 +1,5 @@
-New subscriber · {{{SUBSCRIBED_AT}}}
+New subscriber: {{{SUBSCRIBER_EMAIL}}}
 
-{{{SUBSCRIBER_EMAIL}}}
+Signed up for the discount code on the pen page on {{{SUBSCRIBED_AT}}}.
 
-Signed up for the extra-discount code on the pen page. They were sent the code and added to your Resend contacts.
+They got the code by email and are in Resend, in the segment "VETUD Shop + BeSlimNow subscribers".

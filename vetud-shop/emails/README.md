@@ -20,3 +20,7 @@ To add an email: write `templates/<name>.html` and `.txt`, add an entry to `temp
 `build.mjs` refuses a variable the template doesn't declare, any link to vetud.com, images from outside pep.company, and HTML over Gmail's 102 KB clipping limit. `publish.mjs` needs `RESEND_API_KEY` (in the environment or `backend/.env`) and refuses to run until the logo is live on the storefront. An edited template goes live as soon as it's published. A new template, or a new variable, also needs a backend deploy.
 
 The education site has its own templates, built from `vetud-education/emails/`.
+
+Customer emails end with "Don't want these emails? Unsubscribe" (owner, 2026-11-28). The backend fills `UNSUBSCRIBE_URL` with a signed link to the storefront's unsubscribe page; when it's missing, Resend uses the fallback, an email to contact@vetud.com. Templates marked `"audience": "owner"` in `templates.json` go to the owner or the admin team and have no link.
+
+Newsletter subscribers are also Resend contacts (`backend/src/lib/resend-contacts.ts`), in the segment "VETUD Shop + BeSlimNow subscribers", with a `source` property ("VETUD shop pop-up" or "BeSlimNow pen page") and `country`. Sign-ups are added at once, unsubscribes are taken out, and `backend/src/jobs/sync-newsletter-to-resend.ts` catches up every hour (everything on its first run after a deploy).

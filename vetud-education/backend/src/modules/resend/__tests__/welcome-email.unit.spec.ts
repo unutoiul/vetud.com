@@ -77,7 +77,11 @@ describe("account welcome email", () => {
         to: [customer.email],
         template: {
           id: RESEND_TEMPLATE_IDS[EmailTemplates.CUSTOMER_WELCOME],
-          variables: { NAME_SUFFIX: ", Sam", SITE_URL: "https://education.example" },
+          variables: {
+            NAME_SUFFIX: ", Sam",
+            SITE_URL: "https://education.example",
+            UNSUBSCRIBE_URL: expect.stringContaining("/en/newsletter/unsubscribe?email=reader%40example.com"),
+          },
         },
       }),
       { idempotencyKey: "customer-welcome:cus_reader" },
@@ -109,7 +113,10 @@ describe("account welcome email", () => {
       expect.objectContaining({
         template: {
           id: RESEND_TEMPLATE_IDS[EmailTemplates.PASSWORD_RESET],
-          variables: { RESET_URL: "https://education.example/en/account/reset-password?token=test" },
+          variables: {
+            RESET_URL: "https://education.example/en/account/reset-password?token=test",
+            UNSUBSCRIBE_URL: expect.any(String),
+          },
         },
       }),
       undefined,

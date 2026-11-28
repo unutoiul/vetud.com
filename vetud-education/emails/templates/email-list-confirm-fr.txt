@@ -1,7 +1,7 @@
 Confirmez votre adresse e-mail
 
-Cliquez sur le bouton ci-dessous pour recevoir les nouveaux guides VETUD et les questions de la communauté ayant reçu une réponse.
+Ouvrez ce lien pour recevoir par e-mail les nouveaux guides VETUD et les réponses aux questions de la communauté :
 
-Confirmer mon inscription: {{{CONFIRM_URL}}}
+{{{CONFIRM_URL}}}
 
-Si vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail et vous ne recevrez plus rien de notre part.
+Le lien reste valable 7 jours. Vous n'avez rien demandé ? Ignorez cet e-mail : vous ne recevrez rien d'autre.

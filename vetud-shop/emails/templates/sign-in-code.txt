@@ -1,6 +1,7 @@
-{{{GREETING}}}
+Your sign-in code
 
-Your VETUD sign-in code is {{{CODE}}}.
-Enter it on the sign-in page to finish signing in. It works once and expires in {{{MINUTES}}} minutes.
+{{{GREETING}}} enter this code to finish signing in to VETUD:
 
-If you didn't ask for this code, you can ignore this email. Nobody can sign in without it.
+{{{CODE}}}
+
+It works once and expires in {{{MINUTES}}} minutes. Didn't ask for it? Ignore this email. Nobody can sign in without it.

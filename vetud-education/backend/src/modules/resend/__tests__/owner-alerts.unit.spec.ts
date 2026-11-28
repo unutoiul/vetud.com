@@ -1,5 +1,6 @@
 import type { Logger } from "@medusajs/framework/types"
 import { Resend } from "resend"
+import { isValidUnsubscribeToken } from "../../../lib/email-list"
 import ResendNotificationProviderService from "../service"
 import { RESEND_TEMPLATE_IDS } from "../template-ids"
 import { buildEmail, EmailTemplates } from "../templates"
@@ -101,6 +102,26 @@ describe("email-list emails", () => {
       currency: "usd",
     })
     expect(email?.variables).toMatchObject({ HEADLINE: "Book sold", PAID: "Yes, 4.99 USD", LANGUAGE: "Not known" })
+  })
+
+  it("adds a signed unsubscribe link for the recipient, in their language", () => {
+    const previous = process.env.JWT_SECRET
+    process.env.JWT_SECRET = "test-secret"
+    try {
+      const email = buildEmail(EmailTemplates.BOOK_OFFER, { buy_url: "https://x", locale: "fr" }, "A@Example.com")
+      const link = (email?.variables.UNSUBSCRIBE_URL ?? "").replace(/&#38;/g, "&")
+      const url = new URL(link)
+      expect(url.pathname).toBe("/fr/newsletter/unsubscribe")
+      expect(url.searchParams.get("email")).toBe("a@example.com")
+      expect(isValidUnsubscribeToken("a@example.com", url.searchParams.get("token") ?? "")).toBe(true)
+      expect(
+        buildEmail(EmailTemplates.BOOK_OFFER, { buy_url: "https://x", locale: "xx" }, "a@example.com")?.variables
+          .UNSUBSCRIBE_URL,
+      ).toContain("/en/newsletter/unsubscribe")
+    } finally {
+      if (previous === undefined) delete process.env.JWT_SECRET
+      else process.env.JWT_SECRET = previous
+    }
   })
 
   it("fills the sign-in code template with the code only, never anything else typed", () => {

@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
   const owner = process.env.STORE_OWNER_EMAIL || CONTACTS.email
   const results = await Promise.allSettled([
     saveSubscriberRow(email, country),
-    saveSubscriber(email),
+    saveSubscriber(email, country),
     sendTemplate({ template: "promo-code", to: email, variables: promoCodeVariables(code), replyTo: CONTACTS.email }),
     sendTemplate({
       template: "subscribe-admin",

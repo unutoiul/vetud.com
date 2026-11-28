@@ -1,14 +1,9 @@
-Welcome{{{NAME_SUFFIX}}}.
+Welcome to VETUD{{{NAME_SUFFIX}}}
 
-Your VETUD account is ready. You can now ask questions and reply in the community, comment on guides and news, and choose which emails you get.
+Your account is ready. You can now ask questions in the community and comment on guides and news.
 
-Peptide guides: {{{SITE_URL}}}/en/learn
-What each peptide is, what studies found and what's still unknown, in plain language.
-
+Guides: {{{SITE_URL}}}/en/learn
 Community: {{{SITE_URL}}}/en/community
-Questions and experiences from other members.
-
 News: {{{SITE_URL}}}/en/news
-New studies and regulatory changes, explained.
 
-You received this email because a VETUD account was created with this address. If this wasn't you, reply to this email and we'll help.
+Didn't create this account? Reply to this email and we'll help.

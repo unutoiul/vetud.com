@@ -42,7 +42,8 @@
       "PHONE",
       "NOTE",
       "PLACED_AT"
-    ]
+    ],
+    "audience": "owner"
   },
   "promo-code": {
     "id": "741e9210-bf59-45e9-96dd-d463c6c34fca",
@@ -67,14 +68,15 @@
       "SITE_URL",
       "SUBSCRIBER_EMAIL",
       "SUBSCRIBED_AT"
-    ]
+    ],
+    "audience": "owner"
   },
   "new-client": {
     "id": "2d5d18af-96c2-46a5-8b57-0d7fb22536b8",
     "name": "VETUD Peptide Series · New client welcome",
     "alias": "vetud-peptide-new-client",
-    "subject": "Welcome to VETUD, {{{NAME}}} — your Tirzepatide & Retatrutide pens",
-    "preheader": "Your new-client guide: the two pens, how to order, and where to ask questions.",
+    "subject": "Welcome to VETUD, {{{NAME}}}",
+    "preheader": "The two pens, how to order, and where to ask questions.",
     "variables": [
       "SITE_URL",
       "NAME",

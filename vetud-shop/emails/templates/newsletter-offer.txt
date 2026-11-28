@@ -1,11 +1,4 @@
-Your code {{{CODE}}} is inside.
-
-{{{HEADLINE}}}
-
-
-HERE'S YOUR {{{DISCOUNT}}} CODE.
-
-Your code
+Here's your {{{DISCOUNT}}} code
 
 {{{CODE}}}
 
@@ -13,7 +6,6 @@ Enter it in your cart. {{{VALIDITY}}}
 
 {{{DESCRIPTION}}}
 
-Visit the shop {{{SHOP_URL}}}
+Shop now: {{{SHOP_URL}}}
 
-You're receiving this because you asked for VETUD offers and news. Unsubscribe
-{{{UNSUBSCRIBE_LINK}}}
+You're getting this because you signed up for VETUD offers and news.

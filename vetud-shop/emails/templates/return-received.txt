@@ -1,14 +1,8 @@
-Your return for order {{{ORDER_NUMBER}}} has arrived at our facility.
+We've received your return for order {{{ORDER_NUMBER}}}
 
-Order {{{ORDER_NUMBER}}}
-
-
-YOUR RETURN HAS ARRIVED.
-
-We've received the items below and checked them in. {{{REFUND_LINE}}}
+{{{REFUND_LINE}}}
 
 Returned items
-
 {{{RETURN_ITEMS}}}
 
-View your orders {{{STOREFRONT_URL}}}/account
+View your orders: {{{STOREFRONT_URL}}}/account

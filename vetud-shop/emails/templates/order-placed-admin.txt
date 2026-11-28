@@ -1,28 +1,16 @@
-New order {{{ORDER_NUMBER}}} from {{{CUSTOMER_EMAIL}}}
-
-New order
-
-
-{{{ORDER_NUMBER}}} · {{{ORDER_TOTAL}}}
+New order {{{ORDER_NUMBER}}} · {{{ORDER_TOTAL}}}
 
 {{{CUSTOMER_EMAIL}}} placed an order. {{{ADMIN_ACTION}}}
 
-Order summary
-
+Your order
 {{{ITEMS}}}
 
 {{{TOTALS_LABELS}}}
-
 {{{TOTALS_VALUES}}}
+Total: {{{ORDER_TOTAL}}}
 
-Total
-
-{{{ORDER_TOTAL}}}
-
-Shipping to
-
+Delivery address
 {{{SHIP_TO}}}
-
 {{{SHIPPING_METHOD}}}
 
-Open in Medusa Admin {{{ADMIN_ORDER_URL}}}
+Open in Medusa Admin: {{{ADMIN_ORDER_URL}}}

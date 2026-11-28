@@ -1,13 +1,9 @@
-Your book is one step away
+Your book is waiting
 
-You started buying Peptides Explained on vetud.com: 32 peptides explained in detail, in plain language.
+Already paid? You don't need to do anything. Your download link is on its way in a separate email.
 
-Already paid? Then there's nothing else to do. Your download link arrives in a separate email within a few minutes, and Stripe sends your receipt.
+Not paid yet? Finish your order whenever you like. It's US$4.99, paid once with Stripe.
 
-Didn't finish? No problem. Use the link below whenever you're ready. You pay US$4.99 once, securely with Stripe, and we email you the PDF straight after.
+Finish my order: {{{BUY_URL}}}
 
-Finish my order for $4.99: {{{BUY_URL}}}
-
-The link works for 30 days.
-
-If this wasn't you, you can ignore this email. We won't send you anything else.
+The link works for 30 days. If you didn't start this order, you can ignore this email.

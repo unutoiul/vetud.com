@@ -1,27 +1,15 @@
-New order · {{{PLACED_AT}}}
+New order {{{ORDER_NUMBER}}} · {{{ORDER_TOTAL}}} · {{{PLACED_AT}}}
 
-{{{ORDER_NUMBER}}} · {{{ORDER_TOTAL}}}
+{{{NAME}}} ordered on the pen page. Their confirmation with payment details has been sent. Reply to this email to answer them.
 
-{{{NAME}}} placed an order on the pen page. Their confirmation email with payment details has gone out. Reply to this email to answer them directly.
+Item:      {{{ITEM}}}, {{{QUANTITY}}} × {{{UNIT_PRICE}}} regular price
+Discounts: {{{SAVINGS}}}
+Total:     {{{ORDER_TOTAL}}}
 
-ORDER
+Customer:  {{{NAME}}}, {{{CUSTOMER_EMAIL}}}, {{{PHONE}}}
+Prefers:   {{{CONTACT_PREF}}}
 
-{{{ITEM}}}
-{{{QUANTITY}}} × {{{UNIT_PRICE}}} regular price
-{{{SAVINGS}}}
-Total: {{{ORDER_TOTAL}}}
-
-CUSTOMER
-
-{{{NAME}}}
-{{{CUSTOMER_EMAIL}}}
-{{{PHONE}}}
-Prefers: {{{CONTACT_PREF}}}
-
-SHIP TO
-
+Ship to:
 {{{SHIP_TO}}}
 
-NOTE FROM THE CUSTOMER
-
-{{{NOTE}}}
+Note: {{{NOTE}}}

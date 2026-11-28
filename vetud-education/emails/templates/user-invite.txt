@@ -1,7 +1,7 @@
-You've been invited to the admin
+You're invited to the VETUD admin
 
-Accept the invitation to set your password and help run vetud.com in Medusa Admin: moderate the community and comments, and see the email list.
+Accept the invitation to set your password. In the admin you can moderate the community and comments, and see the email list.
 
-Accept invitation: {{{INVITE_URL}}}
+{{{INVITE_URL}}}
 
-{{{EXPIRY_NOTE}}} If you weren't expecting this, you can ignore this email.
+{{{EXPIRY_NOTE}}} Not expecting this? You can ignore this email.
