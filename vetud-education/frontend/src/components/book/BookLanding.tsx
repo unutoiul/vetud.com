@@ -1,7 +1,6 @@
 import type { ReactNode } from "react"
 import Box from "@mui/material/Box"
 import GlobalStyles from "@mui/material/GlobalStyles"
-import { alpha } from "@mui/material/styles"
 import { BOOK_PEPTIDE_COUNT, BOOK_TOPICS, bookPeptideStatus } from "@/content/book"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 import { brand } from "@/theme/tokens"
@@ -9,7 +8,7 @@ import Icon from "../brand/Icon"
 import { AppLink } from "../common/links"
 import StatusBadge from "../learn/StatusBadge"
 import { BOOK } from "./book"
-import BookCover from "./BookCover"
+import BookScene from "./BookScene"
 
 /** Layout breakpoints of this page (phones, then very narrow phones). */
 const PHONE = "@media (max-width:759px)"
@@ -43,15 +42,6 @@ const textLink = {
   textDecorationColor: brand.cyan,
   "&:hover": { textDecorationColor: "currentColor" },
   "& svg": { fontSize: 18 },
-} as const
-const rings = {
-  position: "absolute",
-  content: '""',
-  pointerEvents: "none",
-  zIndex: -1,
-  aspectRatio: "1",
-  borderRadius: "50%",
-  background: `repeating-radial-gradient(closest-side, transparent 0 16px, ${alpha(brand.teal, 0.17)} 16.5px 17.5px)`,
 } as const
 
 export default function BookLanding({ buyBox }: { buyBox: ReactNode }) {
@@ -127,9 +117,32 @@ export default function BookLanding({ buyBox }: { buyBox: ReactNode }) {
               "A plain-language guide to 32 peptides, from semaglutide to GHK-Cu. Learn what each one does and how far the research has come.",
             )}
           </Box>
-          <Box component="a" href="#contents" sx={{ ...textLink, mt: "4px" }}>
-            {ct("Explore the contents")}
-            <Icon name="chevronDown" />
+          <Box sx={{ mt: "4px", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "2px 12px", [PHONE]: { mt: "12px" } }}>
+            <Box
+              component="a"
+              href="#buy"
+              sx={{
+                display: "none",
+                [PHONE]: { display: "inline-flex" },
+                alignItems: "center",
+                minHeight: 44,
+                px: "14px",
+                borderRadius: "8px",
+                bgcolor: "brand.navy",
+                color: "brand.white",
+                fontSize: 14,
+                fontWeight: 700,
+                textDecoration: "none",
+                "&:hover": { bgcolor: "brand.navyDeep" },
+                "&:focus-visible": { outline: `3px solid ${brand.teal725}`, outlineOffset: 3 },
+              }}
+            >
+              {ct.template("Get the PDF for {v0}", { v0: BOOK.price }, { translateValues: false })}
+            </Box>
+            <Box component="a" href="#contents" sx={textLink}>
+              {ct("Inside the book")}
+              <Icon name="chevronDown" />
+            </Box>
           </Box>
         </Box>
 
@@ -139,7 +152,7 @@ export default function BookLanding({ buyBox }: { buyBox: ReactNode }) {
             gridArea: "art",
             m: 0,
             display: "grid",
-            gridTemplateRows: "minmax(0, 1fr) auto",
+            alignSelf: "center",
             minWidth: 0,
             overflow: "hidden",
             isolation: "isolate",
@@ -147,35 +160,9 @@ export default function BookLanding({ buyBox }: { buyBox: ReactNode }) {
             border: "1px solid",
             borderColor: "brand.slate125",
             bgcolor: "brand.slate50",
-            [PHONE]: { gridTemplate: "1fr / minmax(0, 1fr) minmax(92px, 27%)" },
           }}
         >
-          <Box
-            sx={{
-              display: "grid",
-              placeItems: "center",
-              position: "relative",
-              isolation: "isolate",
-              p: "30px 10px",
-              overflow: "hidden",
-              background: `radial-gradient(ellipse at 35% 22%, ${brand.green25}, transparent 60%), linear-gradient(145deg, ${brand.slate125}, ${brand.blue150} 62%, ${brand.slate225})`,
-              "&::before": { ...rings, width: "123%", top: "-79%", right: "-65%" },
-              "&::after": { ...rings, width: "107%", bottom: "-72%", left: "-48%" },
-              [PHONE]: { p: "12px 8px" },
-            }}
-          >
-            <BookCover
-              alt={ct("Cover of Peptides Explained")}
-              sizes="(min-width: 760px) 266px, 160px"
-              priority
-              controlMotion
-              sx={{
-                width: { xs: "clamp(110px, 27vw, 156px)", sm: 156, md: 266 },
-                "@media (min-width:760px) and (max-width:899px)": { width: 205 },
-                transform: "rotate(-6deg)",
-              }}
-            />
-          </Box>
+          <BookScene href="#buy" alt={ct("Get the PDF edition of Peptides: The Complete Guide")} priority />
           <Box
             component="figcaption"
             aria-label={ct("The book at a glance")}
@@ -198,14 +185,9 @@ export default function BookLanding({ buyBox }: { buyBox: ReactNode }) {
               "& > span + span": { borderLeft: "1px solid", borderColor: "brand.slate225" },
               "& strong": { color: "brand.ink", fontFamily: SERIF, fontWeight: 400, fontSize: 26, lineHeight: 1 },
               [PHONE]: {
-                gridTemplate: "repeat(3, 1fr) / 1fr",
-                p: "5px 12px",
-                borderTop: 0,
-                borderLeft: "1px solid",
-                borderLeftColor: "brand.slate125",
-                "& > span": { py: "6px", gap: "1px", fontSize: 12 },
-                "& > span + span": { borderLeft: 0, borderTop: "1px solid", borderTopColor: "brand.slate125" },
-                "& strong": { fontSize: 21 },
+                p: "9px 4px",
+                "& > span": { gap: "1px", fontSize: 12 },
+                "& strong": { fontSize: 20 },
               },
             }}
           >

@@ -1,9 +1,10 @@
-Here's your link to the book
+Peptides: The Complete Guide
 
-Peptides Explained covers 32 peptides in plain language: what each one is, what studies found, and what's still unknown.
+Here’s your book link
 
-Open the book's page and pay US$4.99 with Stripe. We email you the PDF straight away.
+Explore the research behind 32 peptides in plain language. The PDF costs US$4.99, paid once with Stripe. After payment, we’ll email your download link.
 
-Get the book for $4.99: {{{BUY_URL}}}
+Get the book for US$4.99
+{{{BUY_URL}}}
 
-The link works for 30 days. Didn't ask for this? You can ignore this email.
+This purchase link works for 30 days. If you didn’t request it, you can ignore this email.

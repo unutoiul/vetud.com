@@ -1,11 +1,12 @@
-Thanks for buying Peptides Explained
+Peptides: The Complete Guide
 
-Your payment went through. Here's your book:
+Your PDF is ready
 
+Your payment went through. Use your personal download link to open the book and save a copy.
+
+Download your book
 {{{DOWNLOAD_URL}}}
 
-The link opens a Google Drive folder. Tap the PDF, then the download arrow. You don't need a Google account.
+If the link opens a Google Drive folder, select the PDF and choose Download. Keep this email so you can download it again later. Please keep the link private.
 
-Keep this email: the link keeps working, so you can download the book again later. Please don't share it.
-
-Stripe sends your receipt separately. Questions? Just reply to this email.
+Stripe sends your receipt separately. If you need help with the download, reply to this email.

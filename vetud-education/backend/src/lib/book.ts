@@ -5,7 +5,7 @@ import { MedusaError } from "@medusajs/framework/utils"
 import Stripe from "stripe"
 
 /**
- * "Peptides Explained", a PDF book sold on vetud.com for $4.99 (owner, 2026-11-27). The steps:
+ * The VETUD PDF book, sold on vetud.com for $4.99. The steps:
  * 1. The pop-up takes an email address (POST /store/book/request).
  * 2. We email a link to the book's page on vetud.com (template book-offer, signed token in the link).
  * 3. On that page they pay $4.99 with Stripe Checkout (POST /store/book/checkout).
@@ -29,8 +29,8 @@ import Stripe from "stripe"
  */
 export const BOOK = {
   id: "peptides-explained",
-  title: "Peptides Explained",
-  name: "Peptides Explained (PDF book)",
+  title: "Peptides: The Complete Guide",
+  name: "Peptides: The Complete Guide (PDF book)",
   description: "32 peptides explained in detail. The download link is emailed after payment.",
   currency: "usd",
   amount: 499,
@@ -40,7 +40,7 @@ export const BOOK = {
   /** The book's product in the Stripe Dashboard (owner, 2026-11-27): its name and image show at checkout. */
   stripeProduct: "prod_VhoMwg8RhndAWF",
   file: "peptides-explained.pdf",
-  downloadName: "Peptides Explained - VETUD.pdf",
+  downloadName: "Peptides - The Complete Guide - VETUD.pdf",
 } as const
 
 /** How long the link in the first email (to the payment page) keeps working. */

@@ -122,7 +122,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       {
         heading: "Buying the book",
         paragraphs: [
-          "Peptides Explained is a PDF book for personal use, sold for US$4.99 including any tax. Stripe sells it to you as our reseller: it takes the payment, handles sales tax or VAT and sends your receipt, under its own terms shown at checkout. You ask for it with your email address, we email you a link to its page on this site, and you pay there. As soon as the payment goes through, we email you a link to download the book. That link keeps working, so you can download it again later.",
+          "Peptides: The Complete Guide is a PDF book for personal use, sold for US$4.99 including any tax. Stripe sells it to you as our reseller: it takes the payment, handles sales tax or VAT and sends your receipt, under its own terms shown at checkout. You ask for it with your email address, we email you a link to its page on this site, and you pay there. As soon as the payment goes through, we email you a link to download the book. That link keeps working, so you can download it again later.",
           "Because it is digital content supplied straight away, you agree when you pay that we send it at once, and the 14-day right to cancel ends once you download it. If the file is faulty, doesn't download or the email doesn't arrive, write to us and we will fix it or refund you.",
           "Please don't share or resell the PDF. Like the rest of the site, it is education, not medical advice.",
         ],

@@ -54,7 +54,7 @@ export default function BookThankYou() {
   return (
     <Box sx={bookPanelSx}>
       <BookCover
-        alt={ct("Peptides Explained: 32 peptides explained in detail")}
+        alt={BOOK.title}
         sizes="(min-width: 900px) 240px, 190px"
         priority
         sx={{ maxWidth: { xs: 150, sm: "none" } }}
@@ -92,15 +92,13 @@ export default function BookThankYou() {
                 <Box component="span" sx={numberSx}>
                   1
                 </Box>
-                {ct('Open the email "Your book is ready: Peptides Explained". It usually arrives within a minute.')}
+                {ct("Open your book delivery email from VETUD. It usually arrives within a minute.")}
               </Box>
               <Box component="li" sx={stepSx}>
                 <Box component="span" sx={numberSx}>
                   2
                 </Box>
-                {ct(
-                  'Press "Open your book": it opens the book\'s Google Drive folder, where you can download the PDF.',
-                )}
+                {ct("Select “Download your book” in the email and save the PDF to your device.")}
               </Box>
               <Box component="li" sx={stepSx}>
                 <Box component="span" sx={numberSx}>

@@ -72,7 +72,7 @@ const BOOK_STEPS: Record<BookAlertStep, { headline: string; summary: string; ste
   checkout: {
     headline: "Checkout opened, not paid yet",
     summary:
-      "Someone opened Stripe's payment page for Peptides Explained. They haven't paid yet; you'll get another email if they do.",
+      "Someone opened Stripe’s checkout for the book. Payment is pending. We’ll email you when it goes through.",
     step: "2 of 3: checkout opened",
   },
   paid: {

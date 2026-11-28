@@ -1,18 +1,18 @@
 import { sdk } from "@/lib/medusa/sdk"
 
 /**
- * "Peptides Explained", a $4.99 PDF book (owner, 2026-11-27). The steps:
+ * The $4.99 PDF book. The steps:
  * 1. The pop-up takes an email address and says to check the inbox.
  * 2. That email links to the book's page, /book?t=…, where the visitor pays with Stripe Checkout.
  * 3. Stripe brings them back to /book/thank-you, and our server emails the download link.
  * The site has no download button. The price itself is set in the backend (src/lib/book.ts).
  */
 export const BOOK = {
-  title: "Peptides Explained",
+  title: "Peptides: The Complete Guide",
   price: "$4.99",
-  /** The book on a transparent background, and the same book with its ribbons moving. */
-  cover: "/images/book/peptides-explained.webp",
-  film: "/media/book/peptides-explained-640.webm",
+  cover: "/images/book/peptides-the-complete-guide.jpg",
+  width: 1086,
+  height: 1448,
 }
 
 /** Set once this browser has asked for (or bought) the book, so the pop-up doesn't offer it again. */

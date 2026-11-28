@@ -168,7 +168,7 @@ function Menu({ segments }: { segments: string[] }) {
                       sx={{ width: 34, display: "grid", placeItems: "center", flexShrink: 0, color: "brand.teal" }}
                     >
                       {book ? (
-                        <Image src={BOOK.cover} alt="" width={30} height={45} />
+                        <Image src={BOOK.cover} alt="" width={33} height={44} />
                       ) : (
                         <Icon name={link.icon} sx={{ fontSize: 22 }} />
                       )}

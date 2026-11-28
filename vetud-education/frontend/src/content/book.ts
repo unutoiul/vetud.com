@@ -3,7 +3,7 @@ import { getPeptide } from "./learn/peptides"
 import type { StatusId } from "./learn/categories"
 
 /**
- * The 32 peptides in "Peptides Explained", the $4.99 PDF book (owner, 2026-11-27), as listed on its
+ * The 32 peptides in "Peptides: The Complete Guide", the $4.99 PDF book (owner, 2026-11-27), as listed on its
  * page (/book). Keep this list the same as the PDF in Google Drive. Each line is a plain, one-breath
  * description for readers with no science background: no doses, no promises, no personal use.
  * Approval status comes from the matching guide (content/learn), so the two never disagree.

@@ -2,7 +2,7 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { alpha } from "@mui/material/styles"
 import { BOOK } from "@/components/book/book"
-import BookCover from "@/components/book/BookCover"
+import BookScene from "@/components/book/BookScene"
 import Icon, { type IconName } from "@/components/brand/Icon"
 import { AppLink, ButtonLink } from "@/components/common/links"
 import Section from "@/components/common/Section"
@@ -11,8 +11,7 @@ import { getContentTranslator } from "@/i18n/server-content"
 import { brand } from "@/theme/tokens"
 
 /**
- * The home page's advert for "Peptides Explained", the $4.99 PDF (owner, 2026-11-27): a navy band with
- * the moving cover, what the reader gets, the price and the topics inside. Selling the book is fine on
+ * The home page's advert for the $4.99 PDF: a navy band with the cover, price and topics. Selling the book is fine on
  * vetud.com; it never links to the shop, and it promises knowledge, not results (no doses, no outcomes).
  */
 export default async function BookFeature() {
@@ -65,7 +64,7 @@ export default async function BookFeature() {
             }}
           >
             <Icon name="document" sx={{ fontSize: 17 }} />
-            {ct("New from VETUD: the PDF book")}
+            {ct("VETUD digital book")}
           </Typography>
           <Typography
             component="h2"
@@ -151,7 +150,7 @@ export default async function BookFeature() {
                 "&:focus-visible": { outline: `3px solid ${brand.onNavy}`, outlineOffset: 3 },
               }}
             >
-              {ct(`Download PDF for ${BOOK.price}`)}
+              {ct.template("Get the PDF for {v0}", { v0: BOOK.price }, { translateValues: false })}
             </ButtonLink>
             <AppLink
               href="/book#contents"
@@ -190,66 +189,13 @@ export default async function BookFeature() {
           sx={{
             gridArea: "cover",
             justifySelf: "center",
-            position: "relative",
-            isolation: "isolate",
-            width: { xs: 190, sm: 230, md: 300 },
+            width: "100%",
+            maxWidth: 560,
+            borderRadius: "18px",
+            overflow: "hidden",
           }}
         >
-          <Box
-            aria-hidden="true"
-            sx={{
-              position: "absolute",
-              zIndex: -1,
-              top: "50%",
-              left: "50%",
-              width: "170%",
-              aspectRatio: "1",
-              borderRadius: "50%",
-              transform: "translate(-50%, -50%)",
-              background: `repeating-radial-gradient(closest-side, transparent 0 17px, ${alpha(brand.cyan, 0.16)} 17.5px 18.5px)`,
-            }}
-          />
-          <BookCover
-            alt={ct("Cover of Peptides Explained")}
-            sizes="(min-width: 900px) 300px, (min-width: 600px) 230px, 190px"
-          />
-          <Box
-            aria-hidden="true"
-            sx={{
-              position: "absolute",
-              top: { xs: "4%", md: "6%" },
-              right: { xs: -26, md: -34 },
-              width: { xs: 78, md: 96 },
-              aspectRatio: "1",
-              display: "grid",
-              placeContent: "center",
-              textAlign: "center",
-              borderRadius: "50%",
-              transform: "rotate(10deg)",
-              bgcolor: brand.onNavy,
-              color: brand.navy,
-              boxShadow: `0 12px 26px ${alpha(brand.navyDeep, 0.45)}`,
-            }}
-          >
-            <Box
-              component="span"
-              sx={{ fontSize: { xs: 21, md: 26 }, fontWeight: 800, letterSpacing: "-.04em", lineHeight: 1 }}
-            >
-              {BOOK.price}
-            </Box>
-            <Box
-              component="span"
-              sx={{
-                mt: 0.5,
-                fontSize: { xs: 10, md: 11 },
-                fontWeight: 700,
-                letterSpacing: ".08em",
-                textTransform: "uppercase",
-              }}
-            >
-              {ct("PDF")}
-            </Box>
-          </Box>
+          <BookScene href="/book" alt={ct("View Peptides: The Complete Guide")} />
         </Box>
 
         <Box sx={{ gridArea: "topics", pt: { xs: 3, md: 4 }, borderTop: `1px solid ${alpha(brand.onNavy, 0.14)}` }}>

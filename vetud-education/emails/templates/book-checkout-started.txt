@@ -1,9 +1,12 @@
-Your book is waiting
+Peptides: The Complete Guide
 
-Already paid? You don't need to do anything. Your download link is on its way in a separate email.
+Your book order
 
-Not paid yet? Finish your order whenever you like. It's US$4.99, paid once with Stripe.
+If you’ve already paid, your download link will arrive in a separate email. Stripe sends your receipt separately.
 
-Finish my order: {{{BUY_URL}}}
+If you still want to complete your purchase, use the link below. The PDF costs US$4.99.
 
-The link works for 30 days. If you didn't start this order, you can ignore this email.
+Return to my order
+{{{BUY_URL}}}
+
+Your purchase link works for 30 days. If you didn’t start this order, you can ignore this email.

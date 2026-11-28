@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-/** Where Stripe Checkout sends a buyer of Peptides Explained after paying. */
+/** Where Stripe Checkout sends a book buyer after paying. */
 export default async function BookThankYouPage() {
   const ct = await getContentTranslator()
   return (

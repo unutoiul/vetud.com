@@ -107,9 +107,10 @@
     ]
   },
   "book-purchase": {
-    "name": "VETUD Edu · Book purchase (Peptides Explained)",
+    "name": "VETUD Edu · Complete Guide purchase",
     "alias": "vetud-edu-book-purchase",
-    "subject": "Your book is ready: Peptides Explained",
+    "subject": "Your PDF is ready — Peptides: The Complete Guide",
+    "bookLink": { "href": "{{{DOWNLOAD_URL}}}", "label": "Open your copy of Peptides: The Complete Guide" },
     "preheader": "Your payment went through. Download your book here.",
     "variables": [
       "DOWNLOAD_URL"
@@ -117,9 +118,10 @@
     "id": "5f20a685-51b5-488c-b559-2b5a6a78c59a"
   },
   "book-offer": {
-    "name": "VETUD Edu · Book link (Peptides Explained)",
+    "name": "VETUD Edu · Complete Guide offer",
     "alias": "vetud-edu-book-offer",
-    "subject": "Your link to Peptides Explained",
+    "subject": "Your link to Peptides: The Complete Guide",
+    "bookLink": { "href": "{{{BUY_URL}}}", "label": "View Peptides: The Complete Guide for US$4.99" },
     "preheader": "Get the PDF for US$4.99. The link works for 30 days.",
     "variables": [
       "BUY_URL"
@@ -129,7 +131,8 @@
   "book-checkout-started": {
     "name": "VETUD Edu · Book checkout started",
     "alias": "vetud-edu-book-checkout-started",
-    "subject": "Your copy of Peptides Explained is waiting",
+    "subject": "Your order for Peptides: The Complete Guide",
+    "bookLink": { "href": "{{{BUY_URL}}}", "label": "Return to your book order" },
     "preheader": "Already paid? Your link is on its way. Not yet? Finish any time in the next 30 days.",
     "variables": [
       "BUY_URL"
@@ -138,6 +141,7 @@
   },
   "book-owner-alert": {
     "name": "VETUD Edu · Book alert (owner)",
+    "bookLink": { "href": "https://www.vetud.com/en/book", "label": "View the book on VETUD" },
     "alias": "vetud-edu-book-owner-alert",
     "subject": "Book: {{{HEADLINE}}} ({{{BUYER_EMAIL}}})",
     "preheader": "{{{SUMMARY}}}",

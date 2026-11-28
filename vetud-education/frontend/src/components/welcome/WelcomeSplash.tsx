@@ -293,7 +293,7 @@ export default function WelcomeSplash({
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
   const [payStatus, setPayStatus] = useState<"idle" | "opening" | "error">("idle")
   const submitting = useRef(false)
-  const form = useRef<HTMLFormElement>(null)
+  const emailInput = useRef<HTMLInputElement>(null)
   const emailInvalid = !EMAIL_PATTERN.test(email.trim()) || email.trim().length > 254
   const joined = status === "success"
   const book = offer === "book"
@@ -323,7 +323,7 @@ export default function WelcomeSplash({
     if (submitting.current) return
     setShowErrors(true)
     if (emailInvalid) {
-      form.current?.querySelector<HTMLInputElement>('input[type="email"]')?.focus()
+      emailInput.current?.focus()
       return
     }
     submitting.current = true
@@ -424,9 +424,7 @@ export default function WelcomeSplash({
           <JoinedMessage
             email={email.trim()}
             title={ct("Check your email.")}
-            text={ct(
-              "We emailed you a link to get Peptides Explained, so you can pay later. Or pay now, and the PDF link goes straight to:",
-            )}
+            text={ct("We emailed you a link so you can pay later. If you pay now, we’ll send your PDF to:")}
           >
             <Box sx={{ width: "100%", maxWidth: 380, mt: 3 }}>
               {payStatus === "error" ? (
@@ -504,12 +502,24 @@ export default function WelcomeSplash({
             >
               {/* Phones get just the headline and the form (and a small book cover), so it all fits on small iPhones. */}
               {book ? (
-                <BookCover
-                  alt={ct("Peptides Explained: 32 peptides explained in detail")}
-                  sizes="(min-width: 900px) 320px, (min-width: 600px) 220px, 120px"
-                  priority
-                  sx={{ maxWidth: { xs: 120, sm: 220, md: 320 } }}
-                />
+                <Box
+                  component="button"
+                  type="button"
+                  onClick={() => emailInput.current?.focus()}
+                  aria-label={ct("Enter your email to get the book link")}
+                  sx={{
+                    width: "100%",
+                    maxWidth: { xs: 120, sm: 220, md: 320 },
+                    mx: "auto",
+                    p: 0,
+                    border: 0,
+                    borderRadius: "6px",
+                    bgcolor: "transparent",
+                    cursor: "pointer",
+                  }}
+                >
+                  <BookCover alt="" sizes="(min-width: 900px) 320px, (min-width: 600px) 220px, 120px" priority />
+                </Box>
               ) : (
                 <NewsletterPreview
                   sx={{ display: { xs: "none", sm: "grid" } }}
@@ -535,7 +545,7 @@ export default function WelcomeSplash({
                     fontWeight: 600,
                   }}
                 >
-                  {ct(book ? "PDF book · Peptides Explained" : "The VETUD research newsletter")}
+                  {ct(book ? "PDF edition" : "The VETUD research newsletter")}
                 </Typography>
                 <Typography
                   id="welcome-title"
@@ -547,7 +557,7 @@ export default function WelcomeSplash({
                     letterSpacing: "-.055em",
                   }}
                 >
-                  {ct(book ? "All you need to know about 32 peptides." : "Peptide science. Made simple.")}
+                  {book ? BOOK.title : ct("Peptide science. Made simple.")}
                 </Typography>
                 {book ? (
                   <Typography
@@ -558,21 +568,19 @@ export default function WelcomeSplash({
                       lineHeight: 1.6,
                     }}
                   >
-                    {ct(
-                      "Peptides Explained covers 32 peptides in detail, in plain language. Enter your email and we'll send you the link to download the PDF.",
-                    )}
+                    {ct("Explore the research behind 32 peptides. Enter your email for a link to buy the PDF.")}
                   </Typography>
                 ) : null}
 
                 <Box
                   component="form"
-                  ref={form}
                   onSubmit={handleSubmit}
                   noValidate
                   aria-busy={status === "sending"}
                   sx={{ position: "relative", mt: { xs: 2, md: 3.75 } }}
                 >
                   <TextField
+                    inputRef={emailInput}
                     label={offerText("email")}
                     type="email"
                     name="email"
@@ -635,7 +643,7 @@ export default function WelcomeSplash({
                       book
                         ? status === "sending"
                           ? "Sending your link..."
-                          : `Download PDF for ${BOOK.price}`
+                          : "Email me the book link"
                         : status === "sending"
                           ? "Joining the newsletter..."
                           : "Join the newsletter",

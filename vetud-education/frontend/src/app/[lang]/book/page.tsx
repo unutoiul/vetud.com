@@ -4,13 +4,19 @@ import type { Metadata } from "next"
 import { Suspense } from "react"
 import BookBuyBox from "@/components/book/BookBuyBox"
 import BookLanding from "@/components/book/BookLanding"
+import { BOOK } from "@/components/book/book"
 import { localizeMetadata } from "@/i18n/metadata"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-    title: "Peptides Explained: the book",
+    title: BOOK.title,
     description: "32 peptides explained in detail, in plain language. A PDF book for $4.99.",
     robots: { index: false, follow: false },
+    openGraph: {
+      title: BOOK.title,
+      images: [{ url: BOOK.cover, width: BOOK.width, height: BOOK.height, alt: BOOK.title }],
+    },
+    twitter: { card: "summary_large_image", title: BOOK.title, images: [{ url: BOOK.cover, alt: BOOK.title }] },
   })
 }
 
