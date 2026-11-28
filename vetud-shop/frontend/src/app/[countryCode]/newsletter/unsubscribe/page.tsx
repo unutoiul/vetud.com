@@ -10,9 +10,9 @@ import UnsubscribeForm from "@/components/newsletter/UnsubscribeForm"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  title: "Unsubscribe",
-  robots: { index: false, follow: false },
-})
+    title: "Unsubscribe",
+    robots: { index: false, follow: false },
+  })
 }
 
 export default async function UnsubscribePage() {

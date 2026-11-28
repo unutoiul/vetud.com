@@ -1,0 +1,14 @@
+# Prettier formats code only: TypeScript and JavaScript. Generated folders, translations, JSON,
+# Markdown, CSS and the email HTML (hand-built for mail clients) are left as they are.
+**/node_modules/
+**/.next/
+**/.medusa/
+**/dist/
+**/build/
+**/coverage/
+**/public/
+**/next-env.d.ts
+**/*.json
+**/*.md
+**/*.css
+**/*.html

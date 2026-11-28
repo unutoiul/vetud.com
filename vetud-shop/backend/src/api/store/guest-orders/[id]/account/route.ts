@@ -22,15 +22,25 @@ export async function POST(req: AuthenticatedMedusaRequest<StoreGuestOrderAccoun
     // A first sign-in: the code login must be for this order's email.
     authIdentityId = req.auth_context?.auth_identity_id || undefined
     if (!authIdentityId || customerId) {
-      throw new MedusaError(MedusaError.Types.UNAUTHORIZED, "Sign in with the code we email you to keep this order in an account.")
+      throw new MedusaError(
+        MedusaError.Types.UNAUTHORIZED,
+        "Sign in with the code we email you to keep this order in an account.",
+      )
     }
-    const [login] = await req.scope.resolve(Modules.AUTH).listProviderIdentities({ auth_identity_id: authIdentityId, provider: SIGN_IN_PROVIDER })
+    const [login] = await req.scope
+      .resolve(Modules.AUTH)
+      .listProviderIdentities({ auth_identity_id: authIdentityId, provider: SIGN_IN_PROVIDER })
     if (!login || login.entity_id !== normalizeEmail(order.email)) {
-      throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "Sign in with the email used for this order to keep it in an account.")
+      throw new MedusaError(
+        MedusaError.Types.NOT_ALLOWED,
+        "Sign in with the email used for this order to keep it in an account.",
+      )
     }
   }
 
-  const { result } = await attachGuestOrderWorkflow(req.scope).run({ input: { ...input, auth_identity_id: authIdentityId } })
+  const { result } = await attachGuestOrderWorkflow(req.scope).run({
+    input: { ...input, auth_identity_id: authIdentityId },
+  })
   res.json(result)
 }
 
@@ -47,7 +57,8 @@ export async function GET(req: AuthenticatedMedusaRequest, res: MedusaResponse) 
     fields: ["id", "cart.id", "customer.has_account"],
     filters: { id: req.params.id },
   })
-  const order = data[0] as { cart?: { id: string } | null; customer?: { has_account?: boolean | null } | null } | undefined
+  const order = data[0] as
+    { cart?: { id: string } | null; customer?: { has_account?: boolean | null } | null } | undefined
   if (!order?.cart?.id || order.cart.id !== parsed.data.cart_id) {
     throw new MedusaError(MedusaError.Types.NOT_FOUND, "We couldn't find this order from this browser.")
   }

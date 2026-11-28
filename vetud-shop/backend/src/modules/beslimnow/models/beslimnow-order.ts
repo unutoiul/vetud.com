@@ -40,7 +40,7 @@ const BeslimnowOrder = model
       research_use_confirmed: model.boolean(),
       // Whether the buyer's confirmation email went out (false = follow up by hand).
       confirmation_sent: model.boolean().default(false),
-    }
+    },
   )
   .indexes([{ on: ["placed_at"] }, { on: ["email"] }, { on: ["status"] }])
 

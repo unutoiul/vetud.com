@@ -25,8 +25,12 @@ describe("isGuestCheckout", () => {
   })
 
   it("keys one alert per cart and address, whatever the casing", () => {
-    expect(guestCheckoutAlertKey("cart_1", " Ana@Example.com ")).toBe(guestCheckoutAlertKey("cart_1", "ana@example.com"))
-    expect(guestCheckoutAlertKey("cart_1", "ana@example.com")).not.toBe(guestCheckoutAlertKey("cart_1", "bob@example.com"))
+    expect(guestCheckoutAlertKey("cart_1", " Ana@Example.com ")).toBe(
+      guestCheckoutAlertKey("cart_1", "ana@example.com"),
+    )
+    expect(guestCheckoutAlertKey("cart_1", "ana@example.com")).not.toBe(
+      guestCheckoutAlertKey("cart_1", "bob@example.com"),
+    )
   })
 })
 
@@ -74,16 +78,26 @@ describe("owner alert emails", () => {
       customer_url: "https://admin.example/app/customers/cus_1",
     })
     expect(alert.subject).toBe("New newsletter sign-up: ana@example.com")
-    expect(alert.variables).toMatchObject({ COUNTRY: "Germany (DE)", OFFER_CODE: "WINTER10", CUSTOMER_URL: "https://admin.example/app/customers/cus_1" })
+    expect(alert.variables).toMatchObject({
+      COUNTRY: "Germany (DE)",
+      OFFER_CODE: "WINTER10",
+      CUSTOMER_URL: "https://admin.example/app/customers/cus_1",
+    })
   })
 
   it("says when no offer was running", () => {
-    expect(buildEmail(EmailTemplates.NEWSLETTER_SIGNUP_ADMIN, {
-      email: "ana@example.com", has_account: true, subscribed_at: "2026-11-18T10:00:00.000Z", customer_url: "https://admin.example/app/customers/cus_1",
-    })?.variables.OFFER_CODE).toBe("None (no pop-up offer is running)")
+    expect(
+      buildEmail(EmailTemplates.NEWSLETTER_SIGNUP_ADMIN, {
+        email: "ana@example.com",
+        has_account: true,
+        subscribed_at: "2026-11-18T10:00:00.000Z",
+        customer_url: "https://admin.example/app/customers/cus_1",
+      })?.variables.OFFER_CODE,
+    ).toBe("None (no pop-up offer is running)")
   })
 
   it("has a published Resend template for every shop email", () => {
-    for (const template of Object.values(EmailTemplates)) expect(RESEND_TEMPLATE_IDS[template]).toMatch(/^[0-9a-f-]{36}$/)
+    for (const template of Object.values(EmailTemplates))
+      expect(RESEND_TEMPLATE_IDS[template]).toMatch(/^[0-9a-f-]{36}$/)
   })
 })

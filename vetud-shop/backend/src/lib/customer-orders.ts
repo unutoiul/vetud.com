@@ -12,18 +12,44 @@ export type CustomerOrdersInput = {
 // other customers through the order graph. Labels are not exposed by the native
 // Store order field allowlist in our Medusa version.
 const CUSTOMER_ORDER_FIELDS = [
-  "id", "display_id", "custom_display_id", "created_at", "status", "email",
-  "currency_code", "total", "item_total", "item_subtotal", "shipping_total", "shipping_subtotal",
-  "tax_total", "discount_total",
-  "items.id", "items.title", "items.product_title", "items.variant_title",
-  "items.quantity", "items.unit_price", "items.total",
-  "shipping_address.first_name", "shipping_address.last_name", "shipping_address.company",
-  "shipping_address.address_1", "shipping_address.address_2", "shipping_address.city",
-  "shipping_address.province", "shipping_address.postal_code", "shipping_address.country_code",
+  "id",
+  "display_id",
+  "custom_display_id",
+  "created_at",
+  "status",
+  "email",
+  "currency_code",
+  "total",
+  "item_total",
+  "item_subtotal",
+  "shipping_total",
+  "shipping_subtotal",
+  "tax_total",
+  "discount_total",
+  "items.id",
+  "items.title",
+  "items.product_title",
+  "items.variant_title",
+  "items.quantity",
+  "items.unit_price",
+  "items.total",
+  "shipping_address.first_name",
+  "shipping_address.last_name",
+  "shipping_address.company",
+  "shipping_address.address_1",
+  "shipping_address.address_2",
+  "shipping_address.city",
+  "shipping_address.province",
+  "shipping_address.postal_code",
+  "shipping_address.country_code",
   "shipping_methods.name",
-  "fulfillments.id", "fulfillments.packed_at", "fulfillments.shipped_at",
-  "fulfillments.delivered_at", "fulfillments.canceled_at",
-  "fulfillments.labels.tracking_number", "fulfillments.labels.tracking_url",
+  "fulfillments.id",
+  "fulfillments.packed_at",
+  "fulfillments.shipped_at",
+  "fulfillments.delivered_at",
+  "fulfillments.canceled_at",
+  "fulfillments.labels.tracking_number",
+  "fulfillments.labels.tracking_url",
 ]
 
 export function customerOrderQuery(input: CustomerOrdersInput) {
@@ -31,17 +57,32 @@ export function customerOrderQuery(input: CustomerOrdersInput) {
   if (!input.customer_id?.trim()) {
     throw new MedusaError(MedusaError.Types.UNAUTHORIZED, "Sign in to view your orders.")
   }
-  if (!Number.isInteger(input.offset) || input.offset < 0 ||
-      !Number.isInteger(input.limit) || input.limit < 1 || input.limit > 20) {
+  if (
+    !Number.isInteger(input.offset) ||
+    input.offset < 0 ||
+    !Number.isInteger(input.limit) ||
+    input.limit < 1 ||
+    input.limit > 20
+  ) {
     throw new MedusaError(MedusaError.Types.INVALID_DATA, "Invalid order pagination.")
   }
 
   return {
     // Only payment IDs/provider IDs enter the order graph. A workflow step
     // reads fresh settlement metadata separately and emits a safe display hint.
-    fields: [...CUSTOMER_ORDER_FIELDS, "payment_collections.payments.id", "payment_collections.payments.provider_id", "payment_collections.payment_sessions.id", "payment_collections.payment_sessions.provider_id"],
+    fields: [
+      ...CUSTOMER_ORDER_FIELDS,
+      "payment_collections.payments.id",
+      "payment_collections.payments.provider_id",
+      "payment_collections.payment_sessions.id",
+      "payment_collections.payment_sessions.provider_id",
+    ],
     variables: {
-      filters: { customer_id: input.customer_id, is_draft_order: false, ...(input.order_id ? { id: input.order_id } : {}) },
+      filters: {
+        customer_id: input.customer_id,
+        is_draft_order: false,
+        ...(input.order_id ? { id: input.order_id } : {}),
+      },
       skip: input.offset,
       take: input.limit,
       order: { created_at: "DESC", id: "DESC" },

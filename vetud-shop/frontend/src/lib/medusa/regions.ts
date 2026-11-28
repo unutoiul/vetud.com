@@ -20,19 +20,17 @@ export async function listRegions(): Promise<HttpTypes.StoreRegion[]> {
   return regions
     .map((region) => ({
       ...region,
-      countries: (region.countries ?? []).filter((country) => SUPPORTED_COUNTRIES.includes((country.iso_2 ?? "").toLowerCase())),
+      countries: (region.countries ?? []).filter((country) =>
+        SUPPORTED_COUNTRIES.includes((country.iso_2 ?? "").toLowerCase()),
+      ),
     }))
     .filter((region) => region.countries.length > 0)
 }
 
-export async function getRegionForCountry(
-  countryCode: string
-): Promise<HttpTypes.StoreRegion | null> {
+export async function getRegionForCountry(countryCode: string): Promise<HttpTypes.StoreRegion | null> {
   const regions = await listRegions()
   return (
-    regions.find((region) =>
-      region.countries?.some((country) => country.iso_2 === countryCode.toLowerCase())
-    ) ?? null
+    regions.find((region) => region.countries?.some((country) => country.iso_2 === countryCode.toLowerCase())) ?? null
   )
 }
 
@@ -44,7 +42,12 @@ export async function getRegionForCurrency(currency: string): Promise<HttpTypes.
 
 /** The region for a page: the shopper's chosen currency, else the country's own. */
 export async function getStoreRegion(country: string, currency: string | null) {
-  return (currency ? await getRegionForCurrency(currency) : null) ?? (await getRegionForCountry(country)) ?? (await listRegions())[0] ?? null
+  return (
+    (currency ? await getRegionForCurrency(currency) : null) ??
+    (await getRegionForCountry(country)) ??
+    (await listRegions())[0] ??
+    null
+  )
 }
 
 /** Every country the store sells to, for the country selector and checkout. */
@@ -57,7 +60,7 @@ export async function listCountryOptions(): Promise<CountryOption[]> {
         name: country.display_name ?? country.name ?? (country.iso_2 ?? "").toUpperCase(),
         currencyCode: region.currency_code,
         regionId: region.id,
-      }))
+      })),
     )
     .filter((country) => country.code)
     .sort((a, b) => a.name.localeCompare(b.name))

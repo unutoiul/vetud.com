@@ -8,7 +8,5 @@ export default async function refreshProductQuality({ container }: ExecArgs) {
   })
   container
     .resolve(ContainerRegistrationKeys.LOGGER)
-    .info(
-      `Product quality copy refreshed: ${result.updated.join(", ") || "already current"}`,
-    )
+    .info(`Product quality copy refreshed: ${result.updated.join(", ") || "already current"}`)
 }

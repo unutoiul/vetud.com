@@ -6,12 +6,37 @@ import type { Article } from "./articles"
  * materials and always say so; doses are never given.
  */
 const pubmed = (id: number) => `https://pubmed.ncbi.nlm.nih.gov/${id}/`
-const FDA_ADVISERS_2026 = { label: "July 23–24, 2026: Meeting of the Pharmacy Compounding Advisory Committee", detail: "US Food and Drug Administration", url: "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026" }
-const BPC_157_REVIEW = { label: "Emerging Use of BPC-157 in Orthopaedic Sports Medicine: A Systematic Review", detail: "Vasireddi et al. · HSS Journal · 2025", url: pubmed(40756949) }
-const BPC_157_KNEE = { label: "Intra-Articular Injection of BPC 157 for Multiple Types of Knee Pain", detail: "Lee & Padgett · Alternative Therapies in Health and Medicine · 2021", url: pubmed(34324435) }
-const PEPTIDE_PRIMER_2026 = { label: "Injectable Peptide Therapy: A Primer for Orthopaedic and Sports Medicine Physicians", detail: "Mayfield et al. · American Journal of Sports Medicine · 2026", url: pubmed(41476424) }
-const GH_AXIS_REVIEW_2026 = { label: "The emerging landscape of performance-enhancing peptides modulating GH-IGF1 axis", detail: "Dominikowski et al. · Frontiers in Endocrinology · 2026", url: pubmed(42395176) }
-const MOTS_C_DISCOVERY = { label: "The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance", detail: "Lee et al. · Cell Metabolism · 2015", url: pubmed(25738459) }
+const FDA_ADVISERS_2026 = {
+  label: "July 23–24, 2026: Meeting of the Pharmacy Compounding Advisory Committee",
+  detail: "US Food and Drug Administration",
+  url: "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+}
+const BPC_157_REVIEW = {
+  label: "Emerging Use of BPC-157 in Orthopaedic Sports Medicine: A Systematic Review",
+  detail: "Vasireddi et al. · HSS Journal · 2025",
+  url: pubmed(40756949),
+}
+const BPC_157_KNEE = {
+  label: "Intra-Articular Injection of BPC 157 for Multiple Types of Knee Pain",
+  detail: "Lee & Padgett · Alternative Therapies in Health and Medicine · 2021",
+  url: pubmed(34324435),
+}
+const PEPTIDE_PRIMER_2026 = {
+  label: "Injectable Peptide Therapy: A Primer for Orthopaedic and Sports Medicine Physicians",
+  detail: "Mayfield et al. · American Journal of Sports Medicine · 2026",
+  url: pubmed(41476424),
+}
+const GH_AXIS_REVIEW_2026 = {
+  label: "The emerging landscape of performance-enhancing peptides modulating GH-IGF1 axis",
+  detail: "Dominikowski et al. · Frontiers in Endocrinology · 2026",
+  url: pubmed(42395176),
+}
+const MOTS_C_DISCOVERY = {
+  label:
+    "The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance",
+  detail: "Lee et al. · Cell Metabolism · 2015",
+  url: pubmed(25738459),
+}
 
 export const PEPTIDE_ARTICLES: Article[] = [
   {
@@ -24,8 +49,14 @@ export const PEPTIDE_ARTICLES: Article[] = [
     art: "vials",
     glance: [
       { label: "Systematic review", value: "36 studies included: 35 preclinical, 1 clinical (HSS Journal, 2025)" },
-      { label: "Largest human report", value: "A look back at the records of 16 people given knee injections, with no comparison group" },
-      { label: "Safety study", value: "Two adults given infusions over two days (2025); tested blood markers did not change" },
+      {
+        label: "Largest human report",
+        value: "A look back at the records of 16 people given knee injections, with no comparison group",
+      },
+      {
+        label: "Safety study",
+        value: "Two adults given infusions over two days (2025); tested blood markers did not change",
+      },
       { label: "Clinical safety data", value: "None found by the 2025 review" },
       { label: "Status", value: "Not approved anywhere; banned in sport by WADA" },
     ],
@@ -37,13 +68,19 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "A 2026 primer for orthopaedic surgeons reached a similar view: the benefits are “largely unvalidated in human trials”, and the knee report has “significant methodological flaws and a lack of controls”.",
       "BPC-157 is also on the FDA’s agenda. Advisers discussed it in July 2026 as a possible compounding ingredient for ulcerative colitis ([read our report](/news/fda-advisers-review-bpc-157-and-six-peptides)).",
     ],
-    means: "The animal research gives scientists good reasons to run proper trials. Until randomized human trials report, claims about healing in people rest on very thin evidence.",
-    unknowns: "Whether BPC-157 helps people heal, which side effects it causes and what long-term use does are unanswered. The 2025 review adds that harm is possible from unregulated manufacturing and contamination.",
+    means:
+      "The animal research gives scientists good reasons to run proper trials. Until randomized human trials report, claims about healing in people rest on very thin evidence.",
+    unknowns:
+      "Whether BPC-157 helps people heal, which side effects it causes and what long-term use does are unanswered. The 2025 review adds that harm is possible from unregulated manufacturing and contamination.",
     peptides: ["bpc-157", "tb-500"],
     sources: [
       BPC_157_REVIEW,
       BPC_157_KNEE,
-      { label: "Safety of Intravenous Infusion of BPC157 in Humans: A Pilot Study", detail: "Lee et al. · Alternative Therapies in Health and Medicine · 2025", url: pubmed(40131143) },
+      {
+        label: "Safety of Intravenous Infusion of BPC157 in Humans: A Pilot Study",
+        detail: "Lee et al. · Alternative Therapies in Health and Medicine · 2025",
+        url: pubmed(40131143),
+      },
       PEPTIDE_PRIMER_2026,
       FDA_ADVISERS_2026,
     ],
@@ -59,8 +96,16 @@ export const PEPTIDE_ARTICLES: Article[] = [
     glance: [
       { label: "Usual ingredients", value: "BPC-157, TB-500 and GHK-Cu, sometimes with KPV" },
       { label: "Trials of the mixtures", value: "None found" },
-      { label: "Closest human data", value: "4 people in a 2021 clinic chart review got BPC-157 with thymosin beta-4 knee injections; 3 reported relief" },
-      { label: "Ingredient evidence", value: "Mostly cell and animal studies, plus small human trials of thymosin beta-4 eye drops and GHK skin products" },
+      {
+        label: "Closest human data",
+        value:
+          "4 people in a 2021 clinic chart review got BPC-157 with thymosin beta-4 knee injections; 3 reported relief",
+      },
+      {
+        label: "Ingredient evidence",
+        value:
+          "Mostly cell and animal studies, plus small human trials of thymosin beta-4 eye drops and GHK skin products",
+      },
       { label: "Approved?", value: "None of the injected ingredients is an approved medicine" },
     ],
     body: [
@@ -71,16 +116,35 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Mixing raises questions that single-ingredient research doesn’t answer: whether the peptides stay stable together, how the amount of each is checked, and whether side effects add up. A 2026 sports-medicine review warned that for these gray-market peptides “rigorous human safety data are scarce, and there is potential for serious harm”.",
       "Read each ingredient’s profile before reading a blend label.",
     ],
-    means: "A blend is no better proven than its least-studied ingredient. For these mixtures, the human evidence is close to zero.",
+    means:
+      "A blend is no better proven than its least-studied ingredient. For these mixtures, the human evidence is close to zero.",
     unknowns: "Whether the combinations work, interact or carry added risks has not been studied in controlled trials.",
     peptides: ["bpc-157", "tb-500", "ghk-cu", "kpv"],
     sources: [
       BPC_157_REVIEW,
-      { label: "Thymosin beta 4 ophthalmic solution for dry eye: a randomized, placebo-controlled, Phase II clinical trial", detail: "Sosne & Ousler · Clinical Ophthalmology · 2015", url: pubmed(26056426) },
+      {
+        label:
+          "Thymosin beta 4 ophthalmic solution for dry eye: a randomized, placebo-controlled, Phase II clinical trial",
+        detail: "Sosne & Ousler · Clinical Ophthalmology · 2015",
+        url: pubmed(26056426),
+      },
       BPC_157_KNEE,
-      { label: "PepT1-mediated tripeptide KPV uptake reduces intestinal inflammation", detail: "Dalmasso et al. · Gastroenterology · 2008", url: pubmed(18061177) },
-      { label: "Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data", detail: "Pickart & Margolina · International Journal of Molecular Sciences · 2018", url: pubmed(29986520) },
-      { label: "Safety and Efficacy of Approved and Unapproved Peptide Therapies for Musculoskeletal Injuries and Athletic Performance", detail: "Mendias & Awan · Sports Medicine · 2026", url: pubmed(41966639) },
+      {
+        label: "PepT1-mediated tripeptide KPV uptake reduces intestinal inflammation",
+        detail: "Dalmasso et al. · Gastroenterology · 2008",
+        url: pubmed(18061177),
+      },
+      {
+        label: "Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data",
+        detail: "Pickart & Margolina · International Journal of Molecular Sciences · 2018",
+        url: pubmed(29986520),
+      },
+      {
+        label:
+          "Safety and Efficacy of Approved and Unapproved Peptide Therapies for Musculoskeletal Injuries and Athletic Performance",
+        detail: "Mendias & Awan · Sports Medicine · 2026",
+        url: pubmed(41966639),
+      },
     ],
   },
   {
@@ -95,7 +159,10 @@ export const PEPTIDE_ARTICLES: Article[] = [
       { label: "Who took part", value: "412 adults with HIV and excess abdominal fat (86% men)" },
       { label: "How it was tested", value: "Daily injection or placebo for 26 weeks; fat measured on CT scans" },
       { label: "Result", value: "Visceral fat −15.2% on tesamorelin vs +5.0% on placebo" },
-      { label: "Liver-fat trial", value: "61 people with HIV and fatty liver: 35% vs 4% reached normal liver fat after 12 months" },
+      {
+        label: "Liver-fat trial",
+        value: "61 people with HIV and fatty liver: 35% vs 4% reached normal liver fat after 12 months",
+      },
       { label: "Status", value: "Approved in the US (Egrifta) for a specific HIV-related use" },
     ],
     body: [
@@ -106,13 +173,28 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "These results come from people with HIV, and the approval covers that narrow use. They don’t show that tesamorelin is a general weight-loss or body-building treatment.",
       "See how it compares with other growth-hormone signals in our [guide to CJC-1295, ipamorelin and sermorelin](/news/growth-hormone-releasers-what-human-studies-tested).",
     ],
-    means: "Tesamorelin is one of the few peptides in its family with large placebo-controlled trials, and its effect on deep belly fat is well documented in people with HIV.",
-    unknowns: "How the results apply outside HIV, and the long-term effects on liver health and heart outcomes, need further study. The liver trial’s authors called for longer studies of liver tissue.",
+    means:
+      "Tesamorelin is one of the few peptides in its family with large placebo-controlled trials, and its effect on deep belly fat is well documented in people with HIV.",
+    unknowns:
+      "How the results apply outside HIV, and the long-term effects on liver health and heart outcomes, need further study. The liver trial’s authors called for longer studies of liver tissue.",
     peptides: ["tesamorelin", "cjc-1295", "sermorelin"],
     sources: [
-      { label: "Metabolic effects of a growth hormone-releasing factor in patients with HIV", detail: "Falutz et al. · New England Journal of Medicine · 2007", url: pubmed(18057338) },
-      { label: "Effects of tesamorelin on non-alcoholic fatty liver disease in HIV: a randomised, double-blind, multicentre trial", detail: "Stanley et al. · Lancet HIV · 2019", url: pubmed(31611038) },
-      { label: "Egrifta SV prescribing information", detail: "FDA-approved labeling · DailyMed", url: "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3d783378-b02d-4f19-99dd-0fc91a042224" },
+      {
+        label: "Metabolic effects of a growth hormone-releasing factor in patients with HIV",
+        detail: "Falutz et al. · New England Journal of Medicine · 2007",
+        url: pubmed(18057338),
+      },
+      {
+        label:
+          "Effects of tesamorelin on non-alcoholic fatty liver disease in HIV: a randomised, double-blind, multicentre trial",
+        detail: "Stanley et al. · Lancet HIV · 2019",
+        url: pubmed(31611038),
+      },
+      {
+        label: "Egrifta SV prescribing information",
+        detail: "FDA-approved labeling · DailyMed",
+        url: "https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=3d783378-b02d-4f19-99dd-0fc91a042224",
+      },
     ],
   },
   {
@@ -124,9 +206,15 @@ export const PEPTIDE_ARTICLES: Article[] = [
     dek: "These peptides prompt the body to release its own growth hormone. The human research is short and small, and sometimes concerns a different version from the one sold online.",
     art: "documents",
     glance: [
-      { label: "CJC-1295 (2006)", value: "Healthy adults: growth hormone rose 2 to 10 times for 6 days or more after one injection" },
+      {
+        label: "CJC-1295 (2006)",
+        value: "Healthy adults: growth hormone rose 2 to 10 times for 6 days or more after one injection",
+      },
       { label: "Ipamorelin (2014)", value: "114 patients after bowel surgery: no significant benefit over placebo" },
-      { label: "Sermorelin", value: "Once approved for children with growth hormone deficiency; no longer sold as an approved US medicine" },
+      {
+        label: "Sermorelin",
+        value: "Once approved for children with growth hormone deficiency; no longer sold as an approved US medicine",
+      },
       { label: "CJC-1295 + ipamorelin", value: "The pairing has been studied in mice, not in published human trials" },
       { label: "In sport", value: "Banned by WADA" },
     ],
@@ -138,13 +226,30 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "The popular pairing of CJC-1295 with ipamorelin improved muscle measures in mice with steroid-induced muscle loss; a 2026 primer for orthopaedic surgeons notes those findings “are limited to animal studies”. A 2026 review of growth-hormone-axis peptides lists side effects reported across these compounds, including raised prolactin and cortisol, appetite changes, blood-sugar problems, fluid retention, and muscle and joint aches.",
       "Approved options exist for diagnosed problems: [growth hormone](/learn/hgh) for proven deficiency and [tesamorelin](/news/tesamorelin-visceral-and-liver-fat) for one HIV-related use.",
     ],
-    means: "The human evidence shows these peptides can raise hormone levels for a while. It does not show benefits for muscle, fat loss, recovery or aging.",
-    unknowns: "The long-term effects of repeatedly raising growth hormone this way, the effects of combinations, and the safety of products sold outside regulated supply are unknown.",
+    means:
+      "The human evidence shows these peptides can raise hormone levels for a while. It does not show benefits for muscle, fat loss, recovery or aging.",
+    unknowns:
+      "The long-term effects of repeatedly raising growth hormone this way, the effects of combinations, and the safety of products sold outside regulated supply are unknown.",
     peptides: ["cjc-1295", "ipamorelin", "sermorelin", "tesamorelin", "hgh"],
     sources: [
-      { label: "Prolonged stimulation of growth hormone (GH) and insulin-like growth factor I secretion by CJC-1295, a long-acting analog of GH-releasing hormone, in healthy adults", detail: "Teichman et al. · Journal of Clinical Endocrinology & Metabolism · 2006", url: pubmed(16352683) },
-      { label: "Prospective, randomized, controlled, proof-of-concept study of the ghrelin mimetic ipamorelin for the management of postoperative ileus in bowel resection patients", detail: "Beck et al. · International Journal of Colorectal Disease · 2014", url: pubmed(25331030) },
-      { label: "Sermorelin: a review of its use in the diagnosis and treatment of children with idiopathic growth hormone deficiency", detail: "Prakash & Goa · BioDrugs · 1999", url: pubmed(18031173) },
+      {
+        label:
+          "Prolonged stimulation of growth hormone (GH) and insulin-like growth factor I secretion by CJC-1295, a long-acting analog of GH-releasing hormone, in healthy adults",
+        detail: "Teichman et al. · Journal of Clinical Endocrinology & Metabolism · 2006",
+        url: pubmed(16352683),
+      },
+      {
+        label:
+          "Prospective, randomized, controlled, proof-of-concept study of the ghrelin mimetic ipamorelin for the management of postoperative ileus in bowel resection patients",
+        detail: "Beck et al. · International Journal of Colorectal Disease · 2014",
+        url: pubmed(25331030),
+      },
+      {
+        label:
+          "Sermorelin: a review of its use in the diagnosis and treatment of children with idiopathic growth hormone deficiency",
+        detail: "Prakash & Goa · BioDrugs · 1999",
+        url: pubmed(18031173),
+      },
       PEPTIDE_PRIMER_2026,
       GH_AXIS_REVIEW_2026,
     ],
@@ -159,7 +264,10 @@ export const PEPTIDE_ARTICLES: Article[] = [
     art: "bars",
     glance: [
       { label: "Review", value: "31 articles describing 18 study groups (Annals of Internal Medicine, 2007)" },
-      { label: "Who took part", value: "220 healthy older adults on growth hormone; average age 69; treatment lasted 27 weeks on average" },
+      {
+        label: "Who took part",
+        value: "220 healthy older adults on growth hormone; average age 69; treatment lasted 27 weeks on average",
+      },
       { label: "Body composition", value: "Fat mass −2.1 kg, lean mass +2.1 kg" },
       { label: "Weight", value: "No significant change (+0.1 kg)" },
       { label: "Side effects", value: "More swelling, joint pain, carpal tunnel syndrome and male breast growth" },
@@ -171,12 +279,23 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "People on growth hormone were significantly more likely to have soft-tissue swelling, joint pain, carpal tunnel syndrome and gynecomastia (breast-tissue growth in men), and somewhat more likely to develop diabetes or raised fasting blood sugar.",
       "Growth hormone works largely through IGF-1. [IGF-1 LR3](/learn/igf-1-lr3), a long-lasting lab version made for growing cells, has not been tested for safety in people at all. Peptides that raise the body’s own growth hormone are covered in our [guide to growth-hormone releasers](/news/growth-hormone-releasers-what-human-studies-tested).",
     ],
-    means: "In healthy older adults, growth hormone traded a little fat for a little lean mass, with no change in weight and a clear rise in side effects. The authors concluded it “cannot be recommended as an antiaging therapy”.",
-    unknowns: "Most included studies were small, and some important outcomes were measured too rarely to combine. Long-term effects, including on cancer risk, were not established by these trials.",
+    means:
+      "In healthy older adults, growth hormone traded a little fat for a little lean mass, with no change in weight and a clear rise in side effects. The authors concluded it “cannot be recommended as an antiaging therapy”.",
+    unknowns:
+      "Most included studies were small, and some important outcomes were measured too rarely to combine. Long-term effects, including on cancer risk, were not established by these trials.",
     peptides: ["hgh", "igf-1-lr3", "cjc-1295"],
     sources: [
-      { label: "Systematic review: the safety and efficacy of growth hormone in the healthy elderly", detail: "Liu et al. · Annals of Internal Medicine · 2007", url: pubmed(17227934) },
-      { label: "Evaluation and treatment of adult growth hormone deficiency: an Endocrine Society clinical practice guideline", detail: "Molitch et al. · Journal of Clinical Endocrinology & Metabolism · 2011", url: pubmed(21602453) },
+      {
+        label: "Systematic review: the safety and efficacy of growth hormone in the healthy elderly",
+        detail: "Liu et al. · Annals of Internal Medicine · 2007",
+        url: pubmed(17227934),
+      },
+      {
+        label:
+          "Evaluation and treatment of adult growth hormone deficiency: an Endocrine Society clinical practice guideline",
+        detail: "Molitch et al. · Journal of Clinical Endocrinology & Metabolism · 2011",
+        url: pubmed(21602453),
+      },
     ],
   },
   {
@@ -188,10 +307,24 @@ export const PEPTIDE_ARTICLES: Article[] = [
     dek: "It cut weight gain in obese rodents and looked as well tolerated as placebo in human trials. We could not find a full peer-reviewed report of human weight loss.",
     art: "cells",
     glance: [
-      { label: "What it is", value: "A modified piece of growth hormone, around building blocks 177 to 191; sold alongside “fragment 176-191”" },
-      { label: "Animals", value: "Obese rats gained less than half as much weight as untreated rats over 19 days (2000)" },
-      { label: "Human safety", value: "Six placebo-controlled trials: tolerability “indistinguishable from placebo”, no change in IGF-1 (2013)" },
-      { label: "Human weight loss", value: "No full peer-reviewed report found among 23 PubMed records (November 2026)" },
+      {
+        label: "What it is",
+        value:
+          "A modified piece of growth hormone, around building blocks 177 to 191; sold alongside “fragment 176-191”",
+      },
+      {
+        label: "Animals",
+        value: "Obese rats gained less than half as much weight as untreated rats over 19 days (2000)",
+      },
+      {
+        label: "Human safety",
+        value:
+          "Six placebo-controlled trials: tolerability “indistinguishable from placebo”, no change in IGF-1 (2013)",
+      },
+      {
+        label: "Human weight loss",
+        value: "No full peer-reviewed report found among 23 PubMed records (November 2026)",
+      },
       { label: "Status", value: "Never approved as a medicine" },
     ],
     body: [
@@ -202,16 +335,39 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Online, it is often sold next to “HGH fragment 176-191”; a 2026 endocrinology review groups the two names together. A 2014 report from Belgium described seized preparations of unknown content that turned out to contain AOD-9604, a reminder that labels outside regulated supply can’t be taken for granted.",
       "Approved weight-loss medicines with large trials are in our [weight management library](/learn#weight).",
     ],
-    means: "AOD-9604 looked safe in short trials and promising in rodents, but evidence that it causes meaningful weight loss in people is not in the peer-reviewed record.",
+    means:
+      "AOD-9604 looked safe in short trials and promising in rodents, but evidence that it causes meaningful weight loss in people is not in the peer-reviewed record.",
     unknowns: "Whether it helps people lose fat, and its long-term safety, are unknown.",
     peptides: ["aod-9604", "hgh"],
     sources: [
-      { label: "Metabolic studies of a synthetic lipolytic domain (AOD9604) of human growth hormone", detail: "Ng et al. · Hormone Research · 2000", url: pubmed(11146367) },
-      { label: "Increase of fat oxidation and weight loss in obese mice caused by chronic treatment with human growth hormone or a modified C-terminal fragment", detail: "Heffernan et al. · International Journal of Obesity · 2001", url: pubmed(11673763) },
-      { label: "AOD-9604 (Metabolic)", detail: "Wilding · Current Opinion in Investigational Drugs · 2004", url: pubmed(15134286) },
-      { label: "Safety and Tolerability of the Hexadecapeptide AOD9604 in Humans", detail: "Stier, Vos & Kenley · Journal of Endocrinology and Metabolism · 2013", url: "https://jofem.org/index.php/jofem/article/view/157" },
+      {
+        label: "Metabolic studies of a synthetic lipolytic domain (AOD9604) of human growth hormone",
+        detail: "Ng et al. · Hormone Research · 2000",
+        url: pubmed(11146367),
+      },
+      {
+        label:
+          "Increase of fat oxidation and weight loss in obese mice caused by chronic treatment with human growth hormone or a modified C-terminal fragment",
+        detail: "Heffernan et al. · International Journal of Obesity · 2001",
+        url: pubmed(11673763),
+      },
+      {
+        label: "AOD-9604 (Metabolic)",
+        detail: "Wilding · Current Opinion in Investigational Drugs · 2004",
+        url: pubmed(15134286),
+      },
+      {
+        label: "Safety and Tolerability of the Hexadecapeptide AOD9604 in Humans",
+        detail: "Stier, Vos & Kenley · Journal of Endocrinology and Metabolism · 2013",
+        url: "https://jofem.org/index.php/jofem/article/view/157",
+      },
       GH_AXIS_REVIEW_2026,
-      { label: "Identification and characterization of peptide drugs in unknown pharmaceutical preparations seized by the Belgian authorities: case report on AOD9604", detail: "Vanhee et al. · Drug Testing and Analysis · 2014", url: pubmed(24976118) },
+      {
+        label:
+          "Identification and characterization of peptide drugs in unknown pharmaceutical preparations seized by the Belgian authorities: case report on AOD9604",
+        detail: "Vanhee et al. · Drug Testing and Analysis · 2014",
+        url: pubmed(24976118),
+      },
     ],
   },
   {
@@ -223,10 +379,19 @@ export const PEPTIDE_ARTICLES: Article[] = [
     dek: "Both nasal-spray peptides are registered in Russia, for stroke recovery and anxiety. The studies behind them are small, and few have been repeated elsewhere.",
     art: "duo",
     glance: [
-      { label: "Semax", value: "A fragment of the pituitary hormone ACTH; registered in Russia for stroke and some brain conditions" },
+      {
+        label: "Semax",
+        value: "A fragment of the pituitary hormone ACTH; registered in Russia for stroke and some brain conditions",
+      },
       { label: "Selank", value: "Based on the immune peptide tuftsin; registered in Russia for anxiety" },
-      { label: "Semax study", value: "110 people after stroke: Semax raised blood BDNF and was linked to better recovery scores (2018)" },
-      { label: "Selank study", value: "70 people with anxiety disorders: phenazepam alone vs phenazepam plus Selank (2015)" },
+      {
+        label: "Semax study",
+        value: "110 people after stroke: Semax raised blood BDNF and was linked to better recovery scores (2018)",
+      },
+      {
+        label: "Selank study",
+        value: "70 people with anxiety disorders: phenazepam alone vs phenazepam plus Selank (2015)",
+      },
       { label: "Adamax", value: "No studies found in PubMed (November 2026)" },
     ],
     body: [
@@ -236,13 +401,28 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Both studies are small, published in Russian, and lack the large placebo-controlled design regulators elsewhere expect. Much of the supporting work is in animals, such as a 2017 study in stressed rats in which Selank strengthened the anti-anxiety effect of diazepam. FDA advisers discussed Semax in July 2026 as a possible compounding ingredient, which is not an approval.",
       "Some shops sell “Adamax”, presented as a stronger variant of Semax. We found no studies of it indexed in PubMed, so published research says nothing about its effects or safety.",
     ],
-    means: "Semax and Selank have more human data than many peptides, but it comes from small studies in one country. That is not enough to know how well they work or how safe they are.",
-    unknowns: "Independent placebo-controlled trials outside Russia, long-term safety data, and any evidence in healthy people seeking better focus or calm are all missing.",
+    means:
+      "Semax and Selank have more human data than many peptides, but it comes from small studies in one country. That is not enough to know how well they work or how safe they are.",
+    unknowns:
+      "Independent placebo-controlled trials outside Russia, long-term safety data, and any evidence in healthy people seeking better focus or calm are all missing.",
     peptides: ["semax", "selank"],
     sources: [
-      { label: "The efficacy of semax in the treatment of patients at different stages of ischemic stroke (in Russian)", detail: "Gusev et al. · Zhurnal Nevrologii i Psikhiatrii · 2018", url: pubmed(29798983) },
-      { label: "Optimization of the treatment of anxiety disorders with selank (in Russian)", detail: "Medvedev et al. · Zhurnal Nevrologii i Psikhiatrii · 2015", url: pubmed(26356395) },
-      { label: "Peptide Selank Enhances the Effect of Diazepam in Reducing Anxiety in Unpredictable Chronic Mild Stress Conditions in Rats", detail: "Kasian et al. · Behavioural Neurology · 2017", url: pubmed(28280289) },
+      {
+        label: "The efficacy of semax in the treatment of patients at different stages of ischemic stroke (in Russian)",
+        detail: "Gusev et al. · Zhurnal Nevrologii i Psikhiatrii · 2018",
+        url: pubmed(29798983),
+      },
+      {
+        label: "Optimization of the treatment of anxiety disorders with selank (in Russian)",
+        detail: "Medvedev et al. · Zhurnal Nevrologii i Psikhiatrii · 2015",
+        url: pubmed(26356395),
+      },
+      {
+        label:
+          "Peptide Selank Enhances the Effect of Diazepam in Reducing Anxiety in Unpredictable Chronic Mild Stress Conditions in Rats",
+        detail: "Kasian et al. · Behavioural Neurology · 2017",
+        url: pubmed(28280289),
+      },
       FDA_ADVISERS_2026,
     ],
   },
@@ -255,7 +435,10 @@ export const PEPTIDE_ARTICLES: Article[] = [
     dek: "A 2025 study found the peptide, promoted for anti-aging, extended the protective caps on chromosomes in normal and breast cancer cell lines, by two different routes.",
     art: "cells",
     glance: [
-      { label: "What was tested", value: "Normal human epithelial cells and fibroblasts, plus two breast cancer cell lines" },
+      {
+        label: "What was tested",
+        value: "Normal human epithelial cells and fibroblasts, plus two breast cancer cell lines",
+      },
       { label: "Normal cells", value: "Telomeres lengthened with dose, through the enzyme telomerase" },
       { label: "Cancer cells", value: "Telomeres also lengthened, through a different route called ALT" },
       { label: "In people", value: "Not tested here; good human trials are lacking" },
@@ -268,12 +451,22 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "In the cancer cells, telomeres also lengthened significantly, but through ALT (alternative lengthening of telomeres), a backup route some cancers use to keep dividing. In normal cells, ALT activity rose only slightly.",
       "A 2025 review of about 25 years of Epitalon research describes many effects in cells, animals and computer models, and says its mechanisms of action remain uncertain. Good human trials are still missing. FDA advisers discussed Epitalon in July 2026 as a possible compounding ingredient for insomnia.",
     ],
-    means: "Epitalon can lengthen telomeres in cells in a dish. That is not evidence of a longer or healthier life in people, and the cancer-cell result is a reason for caution.",
-    unknowns: "Whether Epitalon changes telomeres in the human body, and whether that would be beneficial given that cancer cells also rely on telomere lengthening, has not been studied.",
+    means:
+      "Epitalon can lengthen telomeres in cells in a dish. That is not evidence of a longer or healthier life in people, and the cancer-cell result is a reason for caution.",
+    unknowns:
+      "Whether Epitalon changes telomeres in the human body, and whether that would be beneficial given that cancer cells also rely on telomere lengthening, has not been studied.",
     peptides: ["epitalon"],
     sources: [
-      { label: "Epitalon increases telomere length in human cell lines through telomerase upregulation or ALT activity", detail: "Al-Dulaimi et al. · Biogerontology · 2025", url: pubmed(40908429) },
-      { label: "Overview of Epitalon, a highly bioactive pineal tetrapeptide with promising properties", detail: "Araj et al. · International Journal of Molecular Sciences · 2025", url: pubmed(40141333) },
+      {
+        label: "Epitalon increases telomere length in human cell lines through telomerase upregulation or ALT activity",
+        detail: "Al-Dulaimi et al. · Biogerontology · 2025",
+        url: pubmed(40908429),
+      },
+      {
+        label: "Overview of Epitalon, a highly bioactive pineal tetrapeptide with promising properties",
+        detail: "Araj et al. · International Journal of Molecular Sciences · 2025",
+        url: pubmed(40141333),
+      },
       FDA_ADVISERS_2026,
     ],
   },
@@ -286,7 +479,11 @@ export const PEPTIDE_ARTICLES: Article[] = [
     dek: "Afamelanotide (Melanotan I) is approved for a rare light-sensitivity disease. Melanotan II was only tested in tiny early studies, and case reports link it to melanoma and kidney damage.",
     art: "skin",
     glance: [
-      { label: "Melanotan I", value: "Afamelanotide (Scenesse): in a US trial of 94 patients, 69.4 h pain-free in daylight vs 40.8 h on placebo" },
+      {
+        label: "Melanotan I",
+        value:
+          "Afamelanotide (Scenesse): in a US trial of 94 patients, 69.4 h pain-free in daylight vs 40.8 h on placebo",
+      },
       { label: "Melanotan II", value: "First human study: 3 healthy men, 2 weeks (1996)" },
       { label: "Reported effects", value: "Nausea, sleepiness and spontaneous erections lasting 1 to 5 hours" },
       { label: "Case reports", value: "Melanoma in a 20-year-old woman; a kidney infarction" },
@@ -300,15 +497,38 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "A 2026 review of unregulated “biohacking” drugs lists Melanotan II among unapproved peptides that “lack established human safety profiles”, with risks including contamination and inaccurate dosing.",
       "Its relative [PT-141](/news/bremelanotide-desire-trials) took the opposite path and became an approved medicine.",
     ],
-    means: "Melanotan I shows this hormone family can become a real medicine for a narrow use after proper trials. Melanotan II never had those trials.",
-    unknowns: "How often Melanotan II causes serious harm, including whether it raises skin-cancer risk, has never been measured in a controlled study.",
+    means:
+      "Melanotan I shows this hormone family can become a real medicine for a narrow use after proper trials. Melanotan II never had those trials.",
+    unknowns:
+      "How often Melanotan II causes serious harm, including whether it raises skin-cancer risk, has never been measured in a controlled study.",
     peptides: ["melanotan", "pt-141"],
     sources: [
-      { label: "Afamelanotide for Erythropoietic Protoporphyria", detail: "Langendonk et al. · New England Journal of Medicine · 2015", url: pubmed(26132941) },
-      { label: "Evaluation of melanotan-II, a superpotent cyclic melanotropic peptide in a pilot phase-I clinical study", detail: "Dorr et al. · Life Sciences · 1996", url: pubmed(8637402) },
-      { label: "Melanoma associated with the use of melanotan-II", detail: "Hjuler & Lorentzen · Dermatology · 2014", url: pubmed(24355990) },
-      { label: "Melanotan II: a possible cause of renal infarction", detail: "Peters et al. · CEN Case Reports · 2020", url: pubmed(31953620) },
-      { label: "Dangers of Injectable Peptides and Other Unregulated “Biohacking” Drugs", detail: "Moiz et al. · Missouri Medicine · 2026", url: pubmed(42757290) },
+      {
+        label: "Afamelanotide for Erythropoietic Protoporphyria",
+        detail: "Langendonk et al. · New England Journal of Medicine · 2015",
+        url: pubmed(26132941),
+      },
+      {
+        label:
+          "Evaluation of melanotan-II, a superpotent cyclic melanotropic peptide in a pilot phase-I clinical study",
+        detail: "Dorr et al. · Life Sciences · 1996",
+        url: pubmed(8637402),
+      },
+      {
+        label: "Melanoma associated with the use of melanotan-II",
+        detail: "Hjuler & Lorentzen · Dermatology · 2014",
+        url: pubmed(24355990),
+      },
+      {
+        label: "Melanotan II: a possible cause of renal infarction",
+        detail: "Peters et al. · CEN Case Reports · 2020",
+        url: pubmed(31953620),
+      },
+      {
+        label: "Dangers of Injectable Peptides and Other Unregulated “Biohacking” Drugs",
+        detail: "Moiz et al. · Missouri Medicine · 2026",
+        url: pubmed(42757290),
+      },
     ],
   },
   {
@@ -321,7 +541,10 @@ export const PEPTIDE_ARTICLES: Article[] = [
     art: "duo",
     glance: [
       { label: "Who took part", value: "1,267 premenopausal women with hypoactive sexual desire disorder" },
-      { label: "How it was tested", value: "Two identical trials (RECONNECT): injection under the skin as needed, or placebo, for 24 weeks" },
+      {
+        label: "How it was tested",
+        value: "Two identical trials (RECONNECT): injection under the skin as needed, or placebo, for 24 weeks",
+      },
       { label: "Desire", value: "+0.30 and +0.42 points more than placebo, on a scale from 1.2 to 6" },
       { label: "Distress", value: "−0.37 and −0.29 points more than placebo, on a scale from 0 to 4" },
       { label: "Side effects", value: "Nausea, flushing and headache, each in 10% or more of women" },
@@ -334,11 +557,17 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "The trials were funded by the drug’s developers. Most participants were white (85.6%) and almost all were at US sites (96.6%). The FDA approved bremelanotide as Vyleesi in 2019.",
       "Compare it with its unapproved relative in our [guide to the Melanotan peptides](/news/melanotan-tanning-injections-risks).",
     ],
-    means: "Bremelanotide works on average, but the gain on these scales is small and nausea is common. For some women that trade-off is worthwhile; for others it isn’t.",
-    unknowns: "The trials lasted 24 weeks in premenopausal women. Longer use, and effects in postmenopausal women or in men, were not tested here.",
+    means:
+      "Bremelanotide works on average, but the gain on these scales is small and nausea is common. For some women that trade-off is worthwhile; for others it isn’t.",
+    unknowns:
+      "The trials lasted 24 weeks in premenopausal women. Longer use, and effects in postmenopausal women or in men, were not tested here.",
     peptides: ["pt-141", "melanotan"],
     sources: [
-      { label: "Bremelanotide for the Treatment of Hypoactive Sexual Desire Disorder: Two Randomized Phase 3 Trials", detail: "Kingsberg et al. · Obstetrics & Gynecology · 2019", url: pubmed(31599840) },
+      {
+        label: "Bremelanotide for the Treatment of Hypoactive Sexual Desire Disorder: Two Randomized Phase 3 Trials",
+        detail: "Kingsberg et al. · Obstetrics & Gynecology · 2019",
+        url: pubmed(31599840),
+      },
     ],
   },
   {
@@ -351,7 +580,10 @@ export const PEPTIDE_ARTICLES: Article[] = [
     art: "cells",
     glance: [
       { label: "Who took part", value: "60 women at high risk of OHSS having IVF in London, 2013–2014" },
-      { label: "How it was tested", value: "One kisspeptin-54 injection at one of four dose levels; open-label, no hCG comparison" },
+      {
+        label: "How it was tested",
+        value: "One kisspeptin-54 injection at one of four dose levels; open-label, no hCG comparison",
+      },
       { label: "Egg maturation", value: "In 95% of women" },
       { label: "Per embryo transfer (51)", value: "53% clinical pregnancy, 45% live birth" },
       { label: "Safety", value: "No moderate, severe or critical OHSS" },
@@ -363,12 +595,23 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Eggs matured in 95% of women. Of the 51 women who had an embryo transfer, 53% had a clinical pregnancy and 45% had a live birth. No woman developed moderate, severe or critical OHSS.",
       "The study was open-label and had no hCG comparison group, so it shows that kisspeptin can work in a high-risk group rather than proving it is better than standard triggers.",
     ],
-    means: "Kisspeptin could become a gentler trigger for the women most at risk of OHSS. It is still experimental and not approved for this use.",
-    unknowns: "Larger trials comparing kisspeptin directly with standard triggers are needed to confirm pregnancy rates and safety.",
+    means:
+      "Kisspeptin could become a gentler trigger for the women most at risk of OHSS. It is still experimental and not approved for this use.",
+    unknowns:
+      "Larger trials comparing kisspeptin directly with standard triggers are needed to confirm pregnancy rates and safety.",
     peptides: ["kisspeptin", "hcg", "fsh"],
     sources: [
-      { label: "Efficacy of Kisspeptin-54 to Trigger Oocyte Maturation in Women at High Risk of Ovarian Hyperstimulation Syndrome (OHSS) During In Vitro Fertilization (IVF) Therapy", detail: "Abbara et al. · Journal of Clinical Endocrinology & Metabolism · 2015", url: pubmed(26192876) },
-      { label: "Kisspeptin-54 triggers egg maturation in women undergoing in vitro fertilization", detail: "Jayasena et al. · Journal of Clinical Investigation · 2014", url: pubmed(25036713) },
+      {
+        label:
+          "Efficacy of Kisspeptin-54 to Trigger Oocyte Maturation in Women at High Risk of Ovarian Hyperstimulation Syndrome (OHSS) During In Vitro Fertilization (IVF) Therapy",
+        detail: "Abbara et al. · Journal of Clinical Endocrinology & Metabolism · 2015",
+        url: pubmed(26192876),
+      },
+      {
+        label: "Kisspeptin-54 triggers egg maturation in women undergoing in vitro fertilization",
+        detail: "Jayasena et al. · Journal of Clinical Investigation · 2014",
+        url: pubmed(25036713),
+      },
     ],
   },
   {
@@ -381,7 +624,10 @@ export const PEPTIDE_ARTICLES: Article[] = [
     art: "documents",
     glance: [
       { label: "Who took part", value: "1,106 adults with sepsis at 22 hospitals in China, 2016–2020" },
-      { label: "How it was tested", value: "Thymosin alpha-1 or placebo injections every 12 hours for seven days; double-blind" },
+      {
+        label: "How it was tested",
+        value: "Thymosin alpha-1 or placebo injections every 12 hours for seven days; double-blind",
+      },
       { label: "Main result", value: "Deaths at 28 days: 23.4% vs 24.1%, no significant difference" },
       { label: "Safety", value: "No safety outcome differed significantly between groups" },
       { label: "Published in", value: "BMJ, January 2025" },
@@ -393,12 +639,23 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Pre-planned subgroup analyses hinted that the effect might differ by age and by whether people had diabetes. Findings like these are clues for future trials, not proof.",
       "The authors concluded there was no clear evidence that thymosin alpha-1 lowers deaths from any cause in adults with sepsis. Large trials like this one matter because smaller studies can point in a different direction.",
     ],
-    means: "In the most rigorous sepsis test so far, thymosin alpha-1 did not change survival. Its approved uses in other countries are for different conditions.",
-    unknowns: "Whether some groups, such as people with diabetes, could benefit would need a trial designed to test that question.",
+    means:
+      "In the most rigorous sepsis test so far, thymosin alpha-1 did not change survival. Its approved uses in other countries are for different conditions.",
+    unknowns:
+      "Whether some groups, such as people with diabetes, could benefit would need a trial designed to test that question.",
     peptides: ["thymosin-alpha-1"],
     sources: [
-      { label: "The efficacy and safety of thymosin α1 for sepsis (TESTS): multicentre, double blinded, randomised, placebo controlled, phase 3 trial", detail: "Wu et al. · BMJ · 2025", url: pubmed(39814420) },
-      { label: "Thymosin alpha 1: a comprehensive review of the literature", detail: "Dominari et al. · World Journal of Virology · 2020", url: pubmed(33362999) },
+      {
+        label:
+          "The efficacy and safety of thymosin α1 for sepsis (TESTS): multicentre, double blinded, randomised, placebo controlled, phase 3 trial",
+        detail: "Wu et al. · BMJ · 2025",
+        url: pubmed(39814420),
+      },
+      {
+        label: "Thymosin alpha 1: a comprehensive review of the literature",
+        detail: "Dominari et al. · World Journal of Virology · 2020",
+        url: pubmed(33362999),
+      },
     ],
   },
   {
@@ -423,12 +680,23 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Longer-term data come from the TAZPOWER study. After a 28-week placebo-controlled phase, 10 patients continued on elamipretide in an open-label extension, and 8 reached week 168. Their 6-minute walking distance improved by a cumulative 96.1 meters, and fatigue scores stayed better than at the start. Without a comparison group, some of that change could have other causes.",
       "Other “mitochondrial” compounds are at a much earlier stage. [MOTS-c](/learn/mots-c), a peptide encoded in mitochondrial DNA, has mainly been studied in mice. [NAD+](/learn/nad) is a coenzyme, not a peptide, and human studies of NAD+ boosters are mostly small. Our article on [mouse-only “exercise pills”](/news/exercise-pills-slu-pp-332-5-amino-1mq-mice) covers two more.",
     ],
-    means: "Elamipretide shows that targeting mitochondria can produce an approved medicine, for one rare disease, on condition that a confirmatory trial follows.",
-    unknowns: "The confirmatory trial result, and any benefit in other conditions, are still to come. Several authors of the long-term study work for the developer, Stealth BioTherapeutics.",
+    means:
+      "Elamipretide shows that targeting mitochondria can produce an approved medicine, for one rare disease, on condition that a confirmatory trial follows.",
+    unknowns:
+      "The confirmatory trial result, and any benefit in other conditions, are still to come. Several authors of the long-term study work for the developer, Stealth BioTherapeutics.",
     peptides: ["ss-31", "mots-c", "nad"],
     sources: [
-      { label: "FDA grants accelerated approval for first treatment for Barth syndrome", detail: "US Food and Drug Administration · September 2025", url: "https://www.fda.gov/news-events/press-announcements/fda-grants-accelerated-approval-first-treatment-barth-syndrome" },
-      { label: "Long-term efficacy and safety of elamipretide in patients with Barth syndrome: 168-week open-label extension results of TAZPOWER", detail: "Thompson et al. · Genetics in Medicine · 2024", url: pubmed(38602181) },
+      {
+        label: "FDA grants accelerated approval for first treatment for Barth syndrome",
+        detail: "US Food and Drug Administration · September 2025",
+        url: "https://www.fda.gov/news-events/press-announcements/fda-grants-accelerated-approval-first-treatment-barth-syndrome",
+      },
+      {
+        label:
+          "Long-term efficacy and safety of elamipretide in patients with Barth syndrome: 168-week open-label extension results of TAZPOWER",
+        detail: "Thompson et al. · Genetics in Medicine · 2024",
+        url: pubmed(38602181),
+      },
       MOTS_C_DISCOVERY,
     ],
   },
@@ -441,9 +709,17 @@ export const PEPTIDE_ARTICLES: Article[] = [
     dek: "SLU-PP-332 and 5-Amino-1MQ reduced fat in obese mice. Neither is a peptide, and neither has been tested in people.",
     art: "cells",
     glance: [
-      { label: "SLU-PP-332", value: "Switches on ERR receptors behind part of the exercise response; tested in two kinds of obese mice (2024)" },
+      {
+        label: "SLU-PP-332",
+        value:
+          "Switches on ERR receptors behind part of the exercise response; tested in two kinds of obese mice (2024)",
+      },
       { label: "Its results", value: "More energy use and fat burning, less fat gain, better insulin sensitivity" },
-      { label: "5-Amino-1MQ", value: "Blocks NNMT, an enzyme active in fat; 11-day study in diet-induced obese mice, 9 treated and 9 controls (2018)" },
+      {
+        label: "5-Amino-1MQ",
+        value:
+          "Blocks NNMT, an enzyme active in fat; 11-day study in diet-induced obese mice, 9 treated and 9 controls (2018)",
+      },
       { label: "Its results", value: "About 5% weight loss vs a 1.4% gain in controls; about 35% less white fat" },
       { label: "In people", value: "No published human trials for either" },
     ],
@@ -454,12 +730,22 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Mouse results often fail to carry over to people. Neither compound has published human trials, so nothing is known about their effects, side effects or long-term safety in people. Exercise also affects the heart, brain, bones and mood; these studies measured fat and insulin.",
       "The peptide [MOTS-c](/learn/mots-c) has a similar story: in its 2015 discovery study it protected mice on a high-fat diet from weight gain and insulin resistance, and human trials are lacking.",
     ],
-    means: "These are interesting early leads in metabolic research. They are not evidence of fat loss or fitness benefits in people.",
+    means:
+      "These are interesting early leads in metabolic research. They are not evidence of fat loss or fitness benefits in people.",
     unknowns: "Effectiveness and safety in people are entirely unknown for both compounds.",
     peptides: ["slu-pp-332", "5-amino-1mq", "mots-c"],
     sources: [
-      { label: "A Synthetic ERR Agonist Alleviates Metabolic Syndrome", detail: "Billon et al. · Journal of Pharmacology and Experimental Therapeutics · 2024", url: pubmed(37739806) },
-      { label: "Selective and membrane-permeable small molecule inhibitors of nicotinamide N-methyltransferase reverse high fat diet-induced obesity in mice", detail: "Neelakantan et al. · Biochemical Pharmacology · 2018", url: pubmed(29155147) },
+      {
+        label: "A Synthetic ERR Agonist Alleviates Metabolic Syndrome",
+        detail: "Billon et al. · Journal of Pharmacology and Experimental Therapeutics · 2024",
+        url: pubmed(37739806),
+      },
+      {
+        label:
+          "Selective and membrane-permeable small molecule inhibitors of nicotinamide N-methyltransferase reverse high fat diet-induced obesity in mice",
+        detail: "Neelakantan et al. · Biochemical Pharmacology · 2018",
+        url: pubmed(29155147),
+      },
       MOTS_C_DISCOVERY,
     ],
   },
@@ -474,7 +760,10 @@ export const PEPTIDE_ARTICLES: Article[] = [
     glance: [
       { label: "Lab study (2007)", value: "AHK-Cu lengthened human hair follicles kept alive outside the body" },
       { label: "Small trial (2016)", value: "45 men with male pattern hair loss, 6 months" },
-      { label: "What it tested", value: "A complex of the GHK peptide with 5-aminolevulinic acid, not AHK-Cu or GHK-Cu alone" },
+      {
+        label: "What it tested",
+        value: "A complex of the GHK peptide with 5-aminolevulinic acid, not AHK-Cu or GHK-Cu alone",
+      },
       { label: "Hair count", value: "+52.6 and +71.5 hairs on two strengths vs +9.6 on placebo" },
       { label: "Length and thickness", value: "No significant difference between groups" },
     ],
@@ -485,13 +774,26 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Hair counts rose by 52.6 and 71.5 hairs on the two strengths, compared with 9.6 on placebo. Hair length and thickness did not differ between the groups, and no side effects were reported. With about 15 men per group and a combination product, the trial can’t show what GHK contributes on its own.",
       "Established hair-loss treatments have far larger trials behind them. For copper peptides, the step from a dish to a scalp hasn’t been properly tested.",
     ],
-    means: "Copper peptides show hair-related activity in the lab. Whether they regrow hair on people’s heads hasn’t been tested in a proper trial.",
+    means:
+      "Copper peptides show hair-related activity in the lab. Whether they regrow hair on people’s heads hasn’t been tested in a proper trial.",
     unknowns: "Controlled trials of AHK-Cu or GHK-Cu on human scalps, and their long-term effects, are missing.",
     peptides: ["ahk-cu", "ghk-cu"],
     sources: [
-      { label: "The effect of tripeptide-copper complex on human hair growth in vitro", detail: "Pyo et al. · Archives of Pharmacal Research · 2007", url: pubmed(17703734) },
-      { label: "Efficacy of a Complex of 5-Aminolevulinic Acid and Glycyl-Histidyl-Lysine Peptide on Hair Growth", detail: "Lee et al. · Annals of Dermatology · 2016", url: pubmed(27489425) },
-      { label: "Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data", detail: "Pickart & Margolina · International Journal of Molecular Sciences · 2018", url: pubmed(29986520) },
+      {
+        label: "The effect of tripeptide-copper complex on human hair growth in vitro",
+        detail: "Pyo et al. · Archives of Pharmacal Research · 2007",
+        url: pubmed(17703734),
+      },
+      {
+        label: "Efficacy of a Complex of 5-Aminolevulinic Acid and Glycyl-Histidyl-Lysine Peptide on Hair Growth",
+        detail: "Lee et al. · Annals of Dermatology · 2016",
+        url: pubmed(27489425),
+      },
+      {
+        label: "Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data",
+        detail: "Pickart & Margolina · International Journal of Molecular Sciences · 2018",
+        url: pubmed(29986520),
+      },
     ],
   },
   {
@@ -504,7 +806,10 @@ export const PEPTIDE_ARTICLES: Article[] = [
     art: "cells",
     glance: [
       { label: "Who took part", value: "64 people with sarcoidosis, small nerve fiber loss and nerve pain" },
-      { label: "How it was tested", value: "Cibinetide at one of three doses or placebo for 28 days; randomized phase 2b" },
+      {
+        label: "How it was tested",
+        value: "Cibinetide at one of three doses or placebo for 28 days; randomized phase 2b",
+      },
       { label: "Main measure", value: "Corneal nerve fiber area, seen with a special eye microscope" },
       { label: "Result", value: "Significant only in the middle-dose group: +697 µm² vs placebo" },
       { label: "Pain", value: "Improved in all groups" },
@@ -516,12 +821,23 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "Pain improved in all groups. People with moderate to severe pain on the middle dose reported a clinically meaningful drop compared with placebo, but that difference was not statistically significant.",
       "Changes in corneal nerve fibers tracked changes in a 6-minute walk test. Researchers see corneal nerve counts as a possible early marker of whether a nerve treatment is working; it is not yet proof that people feel or function better.",
     ],
-    means: "Cibinetide may help damaged small nerves recover, based on a short trial with an early-marker outcome. Larger, longer trials are needed.",
-    unknowns: "Why only the middle dose reached significance, whether the effect lasts, and whether it helps other kinds of nerve damage are unknown.",
+    means:
+      "Cibinetide may help damaged small nerves recover, based on a short trial with an early-marker outcome. Larger, longer trials are needed.",
+    unknowns:
+      "Why only the middle dose reached significance, whether the effect lasts, and whether it helps other kinds of nerve damage are unknown.",
     peptides: ["ara-290"],
     sources: [
-      { label: "Cibinetide Improves Corneal Nerve Fiber Abundance in Patients With Sarcoidosis-Associated Small Nerve Fiber Loss and Neuropathic Pain", detail: "Culver et al. · Investigative Ophthalmology & Visual Science · 2017", url: pubmed(28475703) },
-      { label: "ARA 290 for treatment of small fiber neuropathy in sarcoidosis", detail: "van Velzen et al. · Expert Opinion on Investigational Drugs · 2014", url: pubmed(24555851) },
+      {
+        label:
+          "Cibinetide Improves Corneal Nerve Fiber Abundance in Patients With Sarcoidosis-Associated Small Nerve Fiber Loss and Neuropathic Pain",
+        detail: "Culver et al. · Investigative Ophthalmology & Visual Science · 2017",
+        url: pubmed(28475703),
+      },
+      {
+        label: "ARA 290 for treatment of small fiber neuropathy in sarcoidosis",
+        detail: "van Velzen et al. · Expert Opinion on Investigational Drugs · 2014",
+        url: pubmed(24555851),
+      },
     ],
   },
   {
@@ -535,7 +851,10 @@ export const PEPTIDE_ARTICLES: Article[] = [
     glance: [
       { label: "Discovered", value: "1977, in blood from the brains of rabbits, by a group in Basel" },
       { label: "Gene or receptor", value: "Never isolated" },
-      { label: "Sleep effect", value: "Some lab-made relatives, but not DSIP itself, promoted deep sleep in rabbits and rats" },
+      {
+        label: "Sleep effect",
+        value: "Some lab-made relatives, but not DSIP itself, promoted deep sleep in rabbits and rats",
+      },
       { label: "2006 review", value: "Called the sleep-factor idea “extremely poorly documented and still weak”" },
       { label: "Regulation", value: "Discussed by FDA advisers in July 2026 as a possible compounding ingredient" },
     ],
@@ -546,10 +865,15 @@ export const PEPTIDE_ARTICLES: Article[] = [
       "In July 2026, FDA advisers discussed DSIP (also called emideltide) as a possible compounding ingredient for opioid withdrawal, insomnia and narcolepsy. That discussion is not an approval ([read our report](/news/fda-advisers-review-bpc-157-and-six-peptides)).",
     ],
     means: "DSIP is an unsolved puzzle from sleep research rather than a proven sleep aid.",
-    unknowns: "What DSIP does in the body, whether it affects sleep in people, and how safe it is remain open questions.",
+    unknowns:
+      "What DSIP does in the body, whether it affects sleep in people, and how safe it is remain open questions.",
     peptides: ["dsip"],
     sources: [
-      { label: "Delta sleep-inducing peptide (DSIP): a still unresolved riddle", detail: "Kovalzon & Strekalova · Journal of Neurochemistry · 2006", url: pubmed(16539679) },
+      {
+        label: "Delta sleep-inducing peptide (DSIP): a still unresolved riddle",
+        detail: "Kovalzon & Strekalova · Journal of Neurochemistry · 2006",
+        url: pubmed(16539679),
+      },
       FDA_ADVISERS_2026,
     ],
   },

@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { useTranslations } from "next-intl"
 
 import { PlusIcon as AddIcon, MinusIcon as RemoveIcon } from "@/components/brand/Icon"
@@ -57,7 +56,13 @@ export default function QuantityStepper({
       <Box
         component="output"
         aria-live="polite"
-        sx={{ minWidth: small ? 24 : 32, textAlign: "center", fontWeight: 600, fontSize: small ? 14 : 15, fontVariantNumeric: "tabular-nums" }}
+        sx={{
+          minWidth: small ? 24 : 32,
+          textAlign: "center",
+          fontWeight: 600,
+          fontSize: small ? 14 : 15,
+          fontVariantNumeric: "tabular-nums",
+        }}
       >
         {ct(value)}
       </Box>

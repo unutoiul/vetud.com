@@ -24,18 +24,24 @@ const prepareArticleCommentStep = createStep(
     const comments: ArticleCommentModuleService = container.resolve(ARTICLE_COMMENT_MODULE)
     const [latest] = await comments.listArticleComments(
       { customer_id: input.customer_id },
-      { take: 1, order: { created_at: "DESC" }, withDeleted: true }
+      { take: 1, order: { created_at: "DESC" }, withDeleted: true },
     )
     if (latest && Date.now() - new Date(latest.created_at).getTime() < COMMENT_INTERVAL_MS) {
-      throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "You're commenting too quickly. Please wait a moment and try again.")
+      throw new MedusaError(
+        MedusaError.Types.NOT_ALLOWED,
+        "You're commenting too quickly. Please wait a moment and try again.",
+      )
     }
     return new StepResponse({
       ...input,
       author_name: publicAuthorName(customer.first_name, customer.last_name),
       // Keep paragraphs, but no more than one blank line between them.
-      body: input.body.trim().replace(/\r\n?/g, "\n").replace(/\n{3,}/g, "\n\n"),
+      body: input.body
+        .trim()
+        .replace(/\r\n?/g, "\n")
+        .replace(/\n{3,}/g, "\n\n"),
     })
-  }
+  },
 )
 
 const createArticleCommentStep = createStep(
@@ -49,7 +55,7 @@ const createArticleCommentStep = createStep(
     if (!id) return
     const comments: ArticleCommentModuleService = container.resolve(ARTICLE_COMMENT_MODULE)
     await comments.deleteArticleComments(id)
-  }
+  },
 )
 
 /** Posts a comment as the signed-in customer, under their first name and last initial. */
@@ -59,7 +65,7 @@ export const createArticleCommentWorkflow = createWorkflow(
     const prepared = prepareArticleCommentStep(input)
     const comment = createArticleCommentStep(prepared)
     return new WorkflowResponse(comment)
-  }
+  },
 )
 
 /** Soft-deletes a comment. With `customer_id`, only that customer's own comment can be removed. */
@@ -79,7 +85,7 @@ const removeArticleCommentStep = createStep(
     if (!id) return
     const comments: ArticleCommentModuleService = container.resolve(ARTICLE_COMMENT_MODULE)
     await comments.restoreArticleComments(id)
-  }
+  },
 )
 
 export const deleteArticleCommentWorkflow = createWorkflow(
@@ -87,5 +93,5 @@ export const deleteArticleCommentWorkflow = createWorkflow(
   (input: DeleteArticleCommentInput) => {
     const removed = removeArticleCommentStep(input)
     return new WorkflowResponse(removed)
-  }
+  },
 )

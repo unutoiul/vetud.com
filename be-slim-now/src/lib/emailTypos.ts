@@ -6,11 +6,52 @@
 
 /** Provider names (the part before the last dot), as people type them. */
 const PROVIDERS = [
-  "gmail", "googlemail", "yahoo", "ymail", "hotmail", "outlook", "live", "msn", "icloud", "aol",
-  "protonmail", "proton", "gmx", "mail", "email", "web", "t-online", "freenet", "orange", "wanadoo",
-  "laposte", "free", "sfr", "libero", "virgilio", "alice", "tiscali", "btinternet", "seznam", "centrum",
-  "wp", "onet", "interia", "o2", "abv", "yandex", "ziggo", "kpnmail", "telenet", "skynet", "bluewin",
-  "inbox", "rambler", "ukr", "telia", "online",
+  "gmail",
+  "googlemail",
+  "yahoo",
+  "ymail",
+  "hotmail",
+  "outlook",
+  "live",
+  "msn",
+  "icloud",
+  "aol",
+  "protonmail",
+  "proton",
+  "gmx",
+  "mail",
+  "email",
+  "web",
+  "t-online",
+  "freenet",
+  "orange",
+  "wanadoo",
+  "laposte",
+  "free",
+  "sfr",
+  "libero",
+  "virgilio",
+  "alice",
+  "tiscali",
+  "btinternet",
+  "seznam",
+  "centrum",
+  "wp",
+  "onet",
+  "interia",
+  "o2",
+  "abv",
+  "yandex",
+  "ziggo",
+  "kpnmail",
+  "telenet",
+  "skynet",
+  "bluewin",
+  "inbox",
+  "rambler",
+  "ukr",
+  "telia",
+  "online",
 ]
 /** Providers that only exist under .com, so "gmail.co" or "icloud.de" is a slip too. */
 const COM_ONLY = new Set(["gmail", "googlemail", "ymail", "icloud", "aol", "protonmail", "msn"])
@@ -27,7 +68,8 @@ function distance(a: string, b: string): number {
     for (let j = 1; j <= b.length; j++) {
       const cost = a[i - 1] === b[j - 1] ? 0 : 1
       d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost)
-      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1)
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1])
+        d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1)
     }
   }
   return d[a.length][b.length]

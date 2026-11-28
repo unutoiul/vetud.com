@@ -1,6 +1,12 @@
 import type { CreateNotificationDTO, MedusaContainer } from "@medusajs/framework/types"
 import { MedusaError, Modules } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import {
   checkSignInCode,
   issueSignInCode,
@@ -33,21 +39,33 @@ async function customerEmail(container: MedusaContainer, customerId: string) {
 /** The member's code login, made (and tied to them) if they don't have one yet. */
 async function memberLogin(container: MedusaContainer, customerId: string, email: string) {
   const auth = container.resolve(Modules.AUTH)
-  const [login] = await auth.listProviderIdentities({ provider: SIGN_IN_PROVIDER, entity_id: email }, { relations: ["auth_identity"] })
+  const [login] = await auth.listProviderIdentities(
+    { provider: SIGN_IN_PROVIDER, entity_id: email },
+    { relations: ["auth_identity"] },
+  )
   if (login) {
     const owner = login.auth_identity?.app_metadata?.customer_id
-    if (owner && owner !== customerId) throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "We couldn't find your sign-in details.")
+    if (owner && owner !== customerId)
+      throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "We couldn't find your sign-in details.")
     return login
   }
-  const created = await auth.createAuthIdentities({ provider_identities: [{ provider: SIGN_IN_PROVIDER, entity_id: email }], app_metadata: { customer_id: customerId } })
+  const created = await auth.createAuthIdentities({
+    provider_identities: [{ provider: SIGN_IN_PROVIDER, entity_id: email }],
+    app_metadata: { customer_id: customerId },
+  })
   return created.provider_identities!.find((provider) => provider.provider === SIGN_IN_PROVIDER)!
 }
 
 /** The new address must not belong to another account. A code login nobody finished is cleared. */
 async function assertEmailFree(container: MedusaContainer, email: string) {
   const auth = container.resolve(Modules.AUTH)
-  const [registered] = await container.resolve(Modules.CUSTOMER).listCustomers({ email, has_account: true }, { take: 1 })
-  const [login] = await auth.listProviderIdentities({ provider: SIGN_IN_PROVIDER, entity_id: email }, { relations: ["auth_identity"] })
+  const [registered] = await container
+    .resolve(Modules.CUSTOMER)
+    .listCustomers({ email, has_account: true }, { take: 1 })
+  const [login] = await auth.listProviderIdentities(
+    { provider: SIGN_IN_PROVIDER, entity_id: email },
+    { relations: ["auth_identity"] },
+  )
   if (registered || login?.auth_identity?.app_metadata?.customer_id) {
     throw new MedusaError(MedusaError.Types.DUPLICATE_ERROR, "Another account already uses that email address.")
   }
@@ -70,7 +88,9 @@ const prepareEmailChangeCodeStep = createStep(
 
     // The code is bound to the new address, so it can't confirm a different one.
     const { code, state: pending } = issueSignInCode(`${login.id}:${email}`)
-    await container.resolve(Modules.AUTH).updateProviderIdentities({ id: login.id, provider_metadata: { ...state, pending_email: email, pending } })
+    await container
+      .resolve(Modules.AUTH)
+      .updateProviderIdentities({ id: login.id, provider_metadata: { ...state, pending_email: email, pending } })
     const notification: CreateNotificationDTO = {
       to: email,
       channel: "email",
@@ -79,7 +99,7 @@ const prepareEmailChangeCodeStep = createStep(
       trigger_type: "account.email_change_code",
     }
     return new StepResponse({ notification, resend_after: SIGN_IN_CODE_RESEND_SECONDS })
-  }
+  },
 )
 
 /** Emails a code to the member's new address. */
@@ -100,12 +120,16 @@ const changeEmailStep = createStep(
     const email = normalizeEmail(input.email)
     const login = await memberLogin(container, input.customer_id, previous)
     const state = (login.provider_metadata ?? {}) as LoginState
-    if (state.pending_email !== email) throw new MedusaError(MedusaError.Types.INVALID_DATA, SIGN_IN_CODE_ERRORS.expired)
+    if (state.pending_email !== email)
+      throw new MedusaError(MedusaError.Types.INVALID_DATA, SIGN_IN_CODE_ERRORS.expired)
 
     const result = checkSignInCode(state.pending, `${login.id}:${email}`, input.code)
     if (result !== "ok") {
       if (result === "wrong") {
-        await auth.updateProviderIdentities({ id: login.id, provider_metadata: { ...state, pending: { ...state.pending, attempts: (state.pending?.attempts ?? 0) + 1 } } })
+        await auth.updateProviderIdentities({
+          id: login.id,
+          provider_metadata: { ...state, pending: { ...state.pending, attempts: (state.pending?.attempts ?? 0) + 1 } },
+        })
       }
       throw new MedusaError(MedusaError.Types.INVALID_DATA, SIGN_IN_CODE_ERRORS[result])
     }
@@ -115,21 +139,29 @@ const changeEmailStep = createStep(
     if (unfinished) await auth.deleteAuthIdentities([unfinished.auth_identity_id!])
 
     // The sign-in address and the customer's email change together.
-    await auth.updateProviderIdentities({ id: login.id, entity_id: email, provider_metadata: { ...state, pending_email: null, pending: null } })
+    await auth.updateProviderIdentities({
+      id: login.id,
+      entity_id: email,
+      provider_metadata: { ...state, pending_email: null, pending: null },
+    })
     await container.resolve(Modules.CUSTOMER).updateCustomers(input.customer_id, { email })
-    return new StepResponse({ email }, { customer_id: input.customer_id, login_id: login.id, previous, state } satisfies EmailUndo)
+    return new StepResponse({ email }, {
+      customer_id: input.customer_id,
+      login_id: login.id,
+      previous,
+      state,
+    } satisfies EmailUndo)
   },
   async (undo: EmailUndo | undefined, { container }) => {
     if (!undo) return
-    await container.resolve(Modules.AUTH).updateProviderIdentities({ id: undo.login_id, entity_id: undo.previous, provider_metadata: undo.state })
+    await container
+      .resolve(Modules.AUTH)
+      .updateProviderIdentities({ id: undo.login_id, entity_id: undo.previous, provider_metadata: undo.state })
     await container.resolve(Modules.CUSTOMER).updateCustomers(undo.customer_id, { email: undo.previous })
-  }
+  },
 )
 
 /** Changes the signed-in member's email (their sign-in address too) with the code sent to it. */
-export const changeCustomerEmailWorkflow = createWorkflow(
-  "change-customer-email",
-  function (input: ChangeEmailInput) {
-    return new WorkflowResponse(changeEmailStep(input))
-  }
-)
+export const changeCustomerEmailWorkflow = createWorkflow("change-customer-email", function (input: ChangeEmailInput) {
+  return new WorkflowResponse(changeEmailStep(input))
+})

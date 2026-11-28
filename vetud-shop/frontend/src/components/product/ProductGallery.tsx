@@ -4,7 +4,6 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
-
 import Box from "@mui/material/Box"
 import ButtonBase from "@mui/material/ButtonBase"
 import Stack from "@mui/material/Stack"
@@ -24,12 +23,17 @@ export default function ProductGallery({ title, images, aspectRatio }: ProductGa
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const { format } = useProductSelection()
-  const [selected, setSelected] = useState(() => Math.max(0, images.findIndex(image => image.format && image.format === format)))
+  const [selected, setSelected] = useState(() =>
+    Math.max(
+      0,
+      images.findIndex((image) => image.format && image.format === format),
+    ),
+  )
   // Choosing a format in the purchase panel brings up that format's photo.
   const [shownFormat, setShownFormat] = useState(format)
   if (format !== shownFormat) {
     setShownFormat(format)
-    const index = images.findIndex(image => image.format && image.format === format)
+    const index = images.findIndex((image) => image.format && image.format === format)
     if (index >= 0) setSelected(index)
   }
   const touchStart = useRef<{ x: number; y: number } | null>(null)
@@ -37,29 +41,57 @@ export default function ProductGallery({ title, images, aspectRatio }: ProductGa
   if (!active) return null
 
   const photoLabel = (image: ProductGalleryProps["images"][number], index: number) =>
-    image.alt ?? (/[_-]closed/.test(image.url) ? `${title} closed packaging` : /[_-]open/.test(image.url) ? `${title} open packaging` : `${title} product photo ${index + 1}`)
+    image.alt ??
+    (/[_-]closed/.test(image.url)
+      ? `${title} closed packaging`
+      : /[_-]open/.test(image.url)
+        ? `${title} open packaging`
+        : `${title} product photo ${index + 1}`)
   const viewLabel = ({ url, label }: ProductGalleryProps["images"][number], index: number) =>
-    label ?? (/[_-]closed/.test(url) ? "Closed box" : /[_-]open/.test(url) ? "Open kit" : index === 0 ? "Front view" : "Alternate view")
-  const advance = (direction: number) => setSelected(value => (value + direction + images.length) % images.length)
+    label ??
+    (/[_-]closed/.test(url)
+      ? "Closed box"
+      : /[_-]open/.test(url)
+        ? "Open kit"
+        : index === 0
+          ? "Front view"
+          : "Alternate view")
+  const advance = (direction: number) => setSelected((value) => (value + direction + images.length) % images.length)
 
   return (
-    <Box role="group" aria-label={act("productGallery", { product: title })} onKeyDown={event => {
-      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-        event.preventDefault()
-        advance(event.key === "ArrowRight" ? 1 : -1)
-      }
-    }}>
+    <Box
+      role="group"
+      aria-label={act("productGallery", { product: title })}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+          event.preventDefault()
+          advance(event.key === "ArrowRight" ? 1 : -1)
+        }
+      }}
+    >
       <Box
-        onTouchStart={event => { const touch = event.touches[0]; touchStart.current = { x: touch.clientX, y: touch.clientY } }}
-        onTouchCancel={() => { touchStart.current = null }}
-        onTouchEnd={event => {
+        onTouchStart={(event) => {
+          const touch = event.touches[0]
+          touchStart.current = { x: touch.clientX, y: touch.clientY }
+        }}
+        onTouchCancel={() => {
+          touchStart.current = null
+        }}
+        onTouchEnd={(event) => {
           if (!touchStart.current) return
           const dx = event.changedTouches[0].clientX - touchStart.current.x
           const dy = event.changedTouches[0].clientY - touchStart.current.y
           touchStart.current = null
           if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) advance(dx < 0 ? 1 : -1)
         }}
-        sx={{ position: "relative", aspectRatio, maxHeight: { sm: 600 }, bgcolor: brand.white, overflow: "hidden", touchAction: "pan-y" }}
+        sx={{
+          position: "relative",
+          aspectRatio,
+          maxHeight: { sm: 600 },
+          bgcolor: brand.white,
+          overflow: "hidden",
+          touchAction: "pan-y",
+        }}
       >
         <Box sx={{ position: "absolute", inset: { xs: "4%", sm: "5%" } }}>
           <Image
@@ -73,24 +105,66 @@ export default function ProductGallery({ title, images, aspectRatio }: ProductGa
           />
         </Box>
         {images.length > 1 ? (
-          <Typography aria-live="polite" sx={{ position: "absolute", right: 12, bottom: 12, px: 1.2, py: 0.4, borderRadius: 10, bgcolor: brand.whiteA87, color: "text.secondary", fontSize: 11 }}>
+          <Typography
+            aria-live="polite"
+            sx={{
+              position: "absolute",
+              right: 12,
+              bottom: 12,
+              px: 1.2,
+              py: 0.4,
+              borderRadius: 10,
+              bgcolor: brand.whiteA87,
+              color: "text.secondary",
+              fontSize: 11,
+            }}
+          >
             {ct(selected + 1)} / {ct(images.length)}
           </Typography>
         ) : null}
       </Box>
 
       {images.length > 1 ? (
-        <Stack direction="row" spacing={1.25} sx={{ p: 1.5, bgcolor: brand.white, borderTop: "1px solid", borderColor: "divider", overflowX: "auto" }}>
+        <Stack
+          direction="row"
+          spacing={1.25}
+          sx={{ p: 1.5, bgcolor: brand.white, borderTop: "1px solid", borderColor: "divider", overflowX: "auto" }}
+        >
           {images.map((image, index) => (
             <ButtonBase
               key={image.url}
               onClick={() => setSelected(index)}
               aria-label={act("photoView", { photo: translateAction(act, viewLabel(image, index)) })}
               aria-pressed={index === selected}
-              sx={{ width: { xs: 88, sm: 104 }, p: .75, display: "flex", flexDirection: "column", gap: .5, flexShrink: 0, borderRadius: 1.5, border: "2px solid", borderColor: index === selected ? "primary.main" : "divider", bgcolor: brand.white, "&:focus-visible": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: 3 } }}
+              sx={{
+                width: { xs: 88, sm: 104 },
+                p: 0.75,
+                display: "flex",
+                flexDirection: "column",
+                gap: 0.5,
+                flexShrink: 0,
+                borderRadius: 1.5,
+                border: "2px solid",
+                borderColor: index === selected ? "primary.main" : "divider",
+                bgcolor: brand.white,
+                "&:focus-visible": { outline: "2px solid", outlineColor: "primary.main", outlineOffset: 3 },
+              }}
             >
-              <Box sx={{ position: "relative", width: "100%", aspectRatio: "4 / 3" }}><Image src={image.url} alt="" fill loading="lazy" sizes="100px" style={{ objectFit: "contain" }} /></Box>
-              <Typography component="span" sx={{ maxWidth: "100%", overflowWrap: "anywhere", fontSize: 10, color: index === selected ? "primary.main" : "text.secondary", lineHeight: 1.5 }}>{translateAction(act, viewLabel(image, index))}</Typography>
+              <Box sx={{ position: "relative", width: "100%", aspectRatio: "4 / 3" }}>
+                <Image src={image.url} alt="" fill loading="lazy" sizes="100px" style={{ objectFit: "contain" }} />
+              </Box>
+              <Typography
+                component="span"
+                sx={{
+                  maxWidth: "100%",
+                  overflowWrap: "anywhere",
+                  fontSize: 10,
+                  color: index === selected ? "primary.main" : "text.secondary",
+                  lineHeight: 1.5,
+                }}
+              >
+                {translateAction(act, viewLabel(image, index))}
+              </Typography>
             </ButtonBase>
           ))}
         </Stack>

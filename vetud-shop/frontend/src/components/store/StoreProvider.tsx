@@ -1,16 +1,7 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react"
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { sdk } from "@/lib/medusa/sdk"
 import type { CountryOption } from "@/lib/medusa/regions"
 
@@ -104,7 +95,13 @@ type StoreProviderProps = {
   children: ReactNode
 }
 
-export default function StoreProvider({ countryCode, region, countries, deliveryCountries, children }: StoreProviderProps) {
+export default function StoreProvider({
+  countryCode,
+  region,
+  countries,
+  deliveryCountries,
+  children,
+}: StoreProviderProps) {
   const [cart, setCartState] = useState<HttpTypes.StoreCart | null>(null)
   const [cartReady, setCartReady] = useState(false)
   const [pending, setPending] = useState(false)
@@ -150,7 +147,7 @@ export default function StoreProvider({ countryCode, region, countries, delivery
           const { cart: moved } = await sdk.store.cart.update(
             saved.id,
             { region_id: region.id },
-            { fields: CART_FIELDS }
+            { fields: CART_FIELDS },
           )
           saved = moved
         }
@@ -185,10 +182,7 @@ export default function StoreProvider({ countryCode, region, countries, delivery
       return cartRef.current
     }
     const version = cartVersion.current
-    const { cart: created } = await sdk.store.cart.create(
-      { region_id: region.id },
-      { fields: CART_FIELDS }
-    )
+    const { cart: created } = await sdk.store.cart.create({ region_id: region.id }, { fields: CART_FIELDS })
     if (version !== cartVersion.current) throw new Error("Your session changed. Please try again.")
     setCart(created)
     return created
@@ -201,7 +195,7 @@ export default function StoreProvider({ countryCode, region, countries, delivery
         const { cart: updated } = await sdk.store.cart.createLineItem(
           current.id,
           { variant_id: variantId, quantity },
-          { fields: CART_FIELDS }
+          { fields: CART_FIELDS },
         )
         if (cartRef.current?.id !== current.id) return false
         setCart(updated)
@@ -210,7 +204,7 @@ export default function StoreProvider({ countryCode, region, countries, delivery
       })
       return result === true
     },
-    [ensureCart, run, setCart]
+    [ensureCart, run, setCart],
   )
 
   const updateItem = useCallback(
@@ -222,12 +216,12 @@ export default function StoreProvider({ countryCode, region, countries, delivery
           current.id,
           lineId,
           { quantity },
-          { fields: CART_FIELDS }
+          { fields: CART_FIELDS },
         )
         if (cartRef.current?.id === current.id) setCart(updated)
       })
     },
-    [run, setCart]
+    [run, setCart],
   )
 
   const removeItem = useCallback(
@@ -240,7 +234,7 @@ export default function StoreProvider({ countryCode, region, countries, delivery
         if (cartRef.current?.id === current.id) setCart(fresh)
       })
     },
-    [retrieve, run, setCart]
+    [retrieve, run, setCart],
   )
 
   const refreshCart = useCallback(async () => {
@@ -268,12 +262,17 @@ export default function StoreProvider({ countryCode, region, countries, delivery
   const restartCart = useCallback(async () => {
     const current = cartRef.current
     if (!current) throw new Error("Your cart is no longer available. Please refresh checkout.")
-    const items = (current.items ?? []).flatMap((item) => item.variant_id ? [{ variant_id: item.variant_id, quantity: Number(item.quantity) }] : [])
-    const codes = (current.promotions ?? []).flatMap((promotion) => promotion.code && !(promotion as { is_automatic?: boolean }).is_automatic ? [promotion.code] : [])
-    const create = (promo_codes: string[]) => sdk.store.cart.create(
-      { region_id: current.region_id ?? region.id, items, ...(promo_codes.length ? { promo_codes } : {}) },
-      { fields: CART_FIELDS }
+    const items = (current.items ?? []).flatMap((item) =>
+      item.variant_id ? [{ variant_id: item.variant_id, quantity: Number(item.quantity) }] : [],
     )
+    const codes = (current.promotions ?? []).flatMap((promotion) =>
+      promotion.code && !(promotion as { is_automatic?: boolean }).is_automatic ? [promotion.code] : [],
+    )
+    const create = (promo_codes: string[]) =>
+      sdk.store.cart.create(
+        { region_id: current.region_id ?? region.id, items, ...(promo_codes.length ? { promo_codes } : {}) },
+        { fields: CART_FIELDS },
+      )
     // A code that no longer applies doesn't stop the new cart.
     const { cart: created } = await create(codes).catch((error) => (codes.length ? create([]) : Promise.reject(error)))
     if (cartRef.current?.id !== current.id) throw new Error("Your session changed. Please return to checkout.")
@@ -308,7 +307,26 @@ export default function StoreProvider({ countryCode, region, countries, delivery
       clearCart,
       clearError: () => setError(null),
     }),
-    [countryCode, region, countries, deliveryCountries, cart, cartReady, pending, error, drawerOpen, addItem, updateItem, removeItem, refreshCart, linkCustomerCart, restartCart, isCurrentCart, setCart, clearCart]
+    [
+      countryCode,
+      region,
+      countries,
+      deliveryCountries,
+      cart,
+      cartReady,
+      pending,
+      error,
+      drawerOpen,
+      addItem,
+      updateItem,
+      removeItem,
+      refreshCart,
+      linkCustomerCart,
+      restartCart,
+      isCurrentCart,
+      setCart,
+      clearCart,
+    ],
   )
 
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>

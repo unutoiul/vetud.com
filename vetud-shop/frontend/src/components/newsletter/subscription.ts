@@ -11,7 +11,12 @@ export function subscribedInBrowser() {
   }
 }
 
-export async function subscribeToNewsletter(input: { email: string; consent: true; countryCode: string; website?: string }) {
+export async function subscribeToNewsletter(input: {
+  email: string
+  consent: true
+  countryCode: string
+  website?: string
+}) {
   const result = await sdk.client.fetch<{ success: boolean }>("/store/newsletter", {
     method: "POST",
     body: {

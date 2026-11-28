@@ -1,6 +1,16 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
-import { activeShipments, deliveryLabel, normalizeTrackingNumber, orderNumber, orderPaymentLabel, orderPaymentNotice, paymentLabel, shipmentLabel, trackingLink } from "../src/lib/orders.ts"
+import {
+  activeShipments,
+  deliveryLabel,
+  normalizeTrackingNumber,
+  orderNumber,
+  orderPaymentLabel,
+  orderPaymentNotice,
+  paymentLabel,
+  shipmentLabel,
+  trackingLink,
+} from "../src/lib/orders.ts"
 import { parseOrderReceipt, receiptCartId, serializeOrderReceipt } from "../src/lib/order-receipt.ts"
 
 test("order numbering preserves custom references and zero display IDs", () => {
@@ -18,30 +28,58 @@ test("partial fulfillment and cancellation are not presented as fully shipped", 
 
 test("all active shipments are retained, canceled labels are omitted", () => {
   const shipments = [{ id: "old", canceled_at: "2026-01-01" }, { id: "one" }, { id: "two", shipped_at: "2026-01-02" }]
-  assert.deepEqual(activeShipments({ fulfillments: shipments }).map(({ id }) => id), ["one", "two"])
+  assert.deepEqual(
+    activeShipments({ fulfillments: shipments }).map(({ id }) => id),
+    ["one", "two"],
+  )
   assert.equal(shipmentLabel(shipments[1]), "Preparing shipment")
   assert.equal(shipmentLabel(shipments[2]), "Shipped")
   assert.equal(shipmentLabel({ id: "done", delivered_at: "2026-01-03" }), "Delivered")
 })
 
 test("number-only labels link to prefilled tracking without sending data to a carrier", () => {
-  assert.deepEqual(trackingLink({ tracking_number: "AB 123456789 GB" }), { href: "/tracking?number=AB123456789GB", external: false })
+  assert.deepEqual(trackingLink({ tracking_number: "AB 123456789 GB" }), {
+    href: "/tracking?number=AB123456789GB",
+    external: false,
+  })
   assert.equal(normalizeTrackingNumber("<script>"), "")
   assert.equal(normalizeTrackingNumber("A".repeat(51)), "")
   assert.equal(trackingLink({}), null)
 })
 
 test("untrusted carrier links cannot execute scripts or include credentials", () => {
-  for (const tracking_url of ["javascript:alert(1)", "data:text/html,test", "//evil.example/test", "https://user:password@example.com", "/tracking", "not a URL"]) {
+  for (const tracking_url of [
+    "javascript:alert(1)",
+    "data:text/html,test",
+    "//evil.example/test",
+    "https://user:password@example.com",
+    "/tracking",
+    "not a URL",
+  ]) {
     assert.equal(trackingLink({ tracking_url }), null)
-    assert.deepEqual(trackingLink({ tracking_url, tracking_number: "AB12345" }), { href: "/tracking?number=AB12345", external: false })
+    assert.deepEqual(trackingLink({ tracking_url, tracking_number: "AB12345" }), {
+      href: "/tracking?number=AB12345",
+      external: false,
+    })
   }
-  assert.deepEqual(trackingLink({ tracking_url: "https://carrier.example/track?id=AB12345" }), { href: "https://carrier.example/track?id=AB12345", external: true })
+  assert.deepEqual(trackingLink({ tracking_url: "https://carrier.example/track?id=AB12345" }), {
+    href: "https://carrier.example/track?id=AB12345",
+    external: true,
+  })
 })
 
 test("pending, returned and unverified payments override the old captured label without hiding tracking", () => {
-  for (const [review, label] of [["pending_settlement", "Bank payment processing"], ["returned", "Bank payment returned"], ["requires_review", "Payment needs review"], ["canceled", "Payment canceled"]]) {
-    const order = { payment_status: "captured", payment_summary: { method: "nmi_ach", review }, fulfillments: [{ id: "shipment_one", shipped_at: "2026-01-01", labels: [{ tracking_number: "AB12345" }] }] }
+  for (const [review, label] of [
+    ["pending_settlement", "Bank payment processing"],
+    ["returned", "Bank payment returned"],
+    ["requires_review", "Payment needs review"],
+    ["canceled", "Payment canceled"],
+  ]) {
+    const order = {
+      payment_status: "captured",
+      payment_summary: { method: "nmi_ach", review },
+      fulfillments: [{ id: "shipment_one", shipped_at: "2026-01-01", labels: [{ tracking_number: "AB12345" }] }],
+    }
     assert.equal(orderPaymentLabel(order), label)
     assert.ok(orderPaymentNotice(order))
     assert.equal(activeShipments(order).length, 1)
@@ -51,12 +89,28 @@ test("pending, returned and unverified payments override the old captured label 
 })
 
 test("offline receipts omit gateway data and cannot cross customer or order boundaries", () => {
-  const raw = serializeOrderReceipt({ id: "order_one", email: "test@example.test", currency_code: "usd", payment_status: "captured",
-    metadata: { secret: "private" }, payment_collections: [{ payments: [{ data: { token: "private" } }] }],
-    items: [{ id: "item_one", title: "Sample", product_handle: "sample", thumbnail: "/images/sample.webp", metadata: { private: true } }],
-    shipping_address: { company: "Example laboratory", address_1: "Test street", metadata: { private: true } },
-    shipping_methods: [{ name: "Courier", data: { private: true } }],
-  }, "cus_A")
+  const raw = serializeOrderReceipt(
+    {
+      id: "order_one",
+      email: "test@example.test",
+      currency_code: "usd",
+      payment_status: "captured",
+      metadata: { secret: "private" },
+      payment_collections: [{ payments: [{ data: { token: "private" } }] }],
+      items: [
+        {
+          id: "item_one",
+          title: "Sample",
+          product_handle: "sample",
+          thumbnail: "/images/sample.webp",
+          metadata: { private: true },
+        },
+      ],
+      shipping_address: { company: "Example laboratory", address_1: "Test street", metadata: { private: true } },
+      shipping_methods: [{ name: "Courier", data: { private: true } }],
+    },
+    "cus_A",
+  )
   const order = parseOrderReceipt(raw, "order_one", "cus_A")
   assert.equal(order.id, "order_one")
   assert.equal(order.payment_status, undefined)

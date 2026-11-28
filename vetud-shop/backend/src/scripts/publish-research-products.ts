@@ -10,6 +10,6 @@ export default async function publishResearchProducts({ container }: ExecArgs) {
   container
     .resolve(ContainerRegistrationKeys.LOGGER)
     .info(
-      `Research products published: ${JSON.stringify(result.map((product) => ({ handle: product.handle, status: product.status })))}`
+      `Research products published: ${JSON.stringify(result.map((product) => ({ handle: product.handle, status: product.status })))}`,
     )
 }

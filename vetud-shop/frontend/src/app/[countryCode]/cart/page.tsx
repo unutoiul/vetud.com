@@ -7,16 +7,20 @@ import Section from "@/components/common/Section"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  title: "Cart",
-  robots: { index: false },
-})
+    title: "Cart",
+    robots: { index: false },
+  })
 }
 
 export default function CartPage() {
   const ct = useContentTranslator()
   return (
     <>
-      <PageHeader eyebrow={ct("Your cart")} title={ct("Review your selection.")} description={ct("Your research materials, quantities and regional pricing in one place.")} />
+      <PageHeader
+        eyebrow={ct("Your cart")}
+        title={ct("Review your selection.")}
+        description={ct("Your research materials, quantities and regional pricing in one place.")}
+      />
       <Section tone="white" tight>
         <CartView />
       </Section>

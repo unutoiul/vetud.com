@@ -22,7 +22,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     // Font files carry their version in the name (src/theme/fonts.ts), so browsers may keep them a year.
-    const fonts = { source: "/fonts/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] }
+    const fonts = {
+      source: "/fonts/:file*",
+      headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+    }
     // Until launch every page, including the .vercel.app addresses, stays out of search engines.
     if (process.env.INDEXING_ENABLED === "true") return [fonts]
     return [fonts, { source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }]

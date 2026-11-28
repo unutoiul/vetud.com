@@ -25,7 +25,7 @@ export default function WelcomeExperience() {
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      setCooldownUntil(value => Math.max(value, welcomeCooldownUntil()))
+      setCooldownUntil((value) => Math.max(value, welcomeCooldownUntil()))
       setSubscribed(subscribedInBrowser())
     })
     return () => window.cancelAnimationFrame(frame)
@@ -34,8 +34,8 @@ export default function WelcomeExperience() {
   useEffect(() => {
     const refresh = () => {
       // Check again before reopening, including signups completed in another tab.
-      setSubscribed(value => value === null ? null : value || subscribedInBrowser())
-      setCooldownUntil(value => value > Date.now() ? value : 0)
+      setSubscribed((value) => (value === null ? null : value || subscribedInBrowser()))
+      setCooldownUntil((value) => (value > Date.now() ? value : 0))
     }
     const timer = cooldownUntil ? window.setTimeout(refresh, Math.max(0, cooldownUntil - Date.now())) : undefined
     window.addEventListener("focus", refresh)
@@ -53,14 +53,16 @@ export default function WelcomeExperience() {
   // Signing up closes the splash straight away (no thank-you screen, owner 2026-11-19), and it doesn't return.
   const open = cooldownUntil === 0 && asking
 
-  return <WelcomeSplash
-    open={open}
-    onDismiss={() => {
-      setCooldownUntil(dismissWelcomeForSession())
-    }}
-    onSubscribed={() => {
-      dismissWelcomeForSession()
-      setSubscribed(true)
-    }}
-  />
+  return (
+    <WelcomeSplash
+      open={open}
+      onDismiss={() => {
+        setCooldownUntil(dismissWelcomeForSession())
+      }}
+      onSubscribed={() => {
+        dismissWelcomeForSession()
+        setSubscribed(true)
+      }}
+    />
+  )
 }

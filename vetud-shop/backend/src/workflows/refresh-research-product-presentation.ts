@@ -1,14 +1,5 @@
-import {
-  ContainerRegistrationKeys,
-  MedusaError,
-  ProductStatus,
-} from "@medusajs/framework/utils"
-import {
-  createStep,
-  createWorkflow,
-  StepResponse,
-  WorkflowResponse,
-} from "@medusajs/framework/workflows-sdk"
+import { ContainerRegistrationKeys, MedusaError, ProductStatus } from "@medusajs/framework/utils"
+import { createStep, createWorkflow, StepResponse, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { updateProductsWorkflow } from "@medusajs/medusa/core-flows"
 import { RESEARCH_PEN_KITS } from "../seed/research-pen-kits"
 import { NASAL_SPRAYS } from "../seed/research-nasal-sprays"
@@ -17,52 +8,31 @@ import { PRODUCT_TESTING_LABEL, penDescription } from "../seed/product-care"
 
 const PLACEHOLDER_HANDLES = [
   "peptide-series-01",
-  ...PRODUCTS.filter((product) => product.handle !== "retatrutide").map(
-    (product) => product.handle,
-  ),
+  ...PRODUCTS.filter((product) => product.handle !== "retatrutide").map((product) => product.handle),
 ]
 
 const prepareResearchPresentationStep = createStep(
   "prepare-research-presentation",
   async (_input: Record<string, never>, { container }) => {
     const catalog = [...RESEARCH_PEN_KITS, ...NASAL_SPRAYS]
-    const { data } = await container
-      .resolve(ContainerRegistrationKeys.QUERY)
-      .graph({
-        entity: "product",
-        fields: ["id", "handle", "metadata", "images.id", "images.url"],
-        filters: {
-          handle: [
-            ...catalog.map((product) => product.handle),
-            ...PLACEHOLDER_HANDLES,
-          ],
-        },
-      })
+    const { data } = await container.resolve(ContainerRegistrationKeys.QUERY).graph({
+      entity: "product",
+      fields: ["id", "handle", "metadata", "images.id", "images.url"],
+      filters: {
+        handle: [...catalog.map((product) => product.handle), ...PLACEHOLDER_HANDLES],
+      },
+    })
     const products = catalog.map((product) => {
       const current = data.find((item) => item.handle === product.handle)
-      if (!current)
-        throw new MedusaError(
-          MedusaError.Types.NOT_FOUND,
-          `Missing product: ${product.handle}`,
-        )
+      if (!current) throw new MedusaError(MedusaError.Types.NOT_FOUND, `Missing product: ${product.handle}`)
       // Keep the original uploaded photos, prices and inventory. Verify both expected photos exist.
       const images = product.images.map((filename) => {
-        const image = current.images?.find((image) =>
-          image.url.endsWith(filename),
-        )
-        if (!image)
-          throw new MedusaError(
-            MedusaError.Types.NOT_FOUND,
-            `Missing ${product.handle} photo: ${filename}`,
-          )
+        const image = current.images?.find((image) => image.url.endsWith(filename))
+        if (!image) throw new MedusaError(MedusaError.Types.NOT_FOUND, `Missing ${product.handle} photo: ${filename}`)
         return { id: image.id, url: image.url }
       })
-      const isPen = RESEARCH_PEN_KITS.some(
-        (kit) => kit.handle === product.handle,
-      )
-      const description = isPen
-        ? penDescription(product.title)
-        : product.description
+      const isPen = RESEARCH_PEN_KITS.some((kit) => kit.handle === product.handle)
+      const description = isPen ? penDescription(product.title) : product.description
       return {
         id: current.id,
         status: ProductStatus.PUBLISHED,

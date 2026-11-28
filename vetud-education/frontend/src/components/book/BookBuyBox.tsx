@@ -43,8 +43,16 @@ function BookCheckoutForm({ token }: { token: string }) {
   useEffect(() => {
     if (!token) return
     let live = true
-    bookOfferEmail(token).then(found => { if (live) setLinkEmail(found) }).catch(() => { if (live) setLinkEmail(null) })
-    return () => { live = false }
+    bookOfferEmail(token)
+      .then((found) => {
+        if (live) setLinkEmail(found)
+      })
+      .catch(() => {
+        if (live) setLinkEmail(null)
+      })
+    return () => {
+      live = false
+    }
   }, [token])
 
   const pay = async (event: FormEvent<HTMLFormElement>) => {
@@ -63,46 +71,109 @@ function BookCheckoutForm({ token }: { token: string }) {
     }
   }
 
-  return <Box component="form" aria-label={ct("Buy the PDF")} onSubmit={pay} noValidate aria-busy={status === "sending"}>
-    {linkEmail === undefined ? <Box role="status" sx={{ display: "flex", alignItems: "center", gap: 1.25, mt: 2.5, color: "text.secondary" }}>
-      <CircularProgress size={16} color="inherit" /><Typography sx={{ fontSize: 14 }}>{ct("Checking your link...")}</Typography>
-    </Box> : typed ? <Box sx={{ mt: 2.5 }}>
-      {token ? <Alert severity="info" sx={{ mb: 2 }}>{ct("This link has expired. Enter your email address to continue.")}</Alert> : null}
-      <TextField
-        id="book-email"
-        inputRef={emailInput}
-        label={offerText("email")}
-        type="email"
-        name="email"
-        required
+  return (
+    <Box component="form" aria-label={ct("Buy the PDF")} onSubmit={pay} noValidate aria-busy={status === "sending"}>
+      {linkEmail === undefined ? (
+        <Box role="status" sx={{ display: "flex", alignItems: "center", gap: 1.25, mt: 2.5, color: "text.secondary" }}>
+          <CircularProgress size={16} color="inherit" />
+          <Typography sx={{ fontSize: 14 }}>{ct("Checking your link...")}</Typography>
+        </Box>
+      ) : typed ? (
+        <Box sx={{ mt: 2.5 }}>
+          {token ? (
+            <Alert severity="info" sx={{ mb: 2 }}>
+              {ct("This link has expired. Enter your email address to continue.")}
+            </Alert>
+          ) : null}
+          <TextField
+            id="book-email"
+            inputRef={emailInput}
+            label={offerText("email")}
+            type="email"
+            name="email"
+            required
+            fullWidth
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            disabled={status === "sending"}
+            error={showErrors && emailInvalid}
+            helperText={
+              showErrors && emailInvalid
+                ? offerText("invalidEmail")
+                : ct("We’ll send your PDF link to this address after payment.")
+            }
+            slotProps={{
+              formHelperText: { "aria-live": "polite" },
+              htmlInput: {
+                autoComplete: "email",
+                inputMode: "email",
+                spellCheck: false,
+                maxLength: 254,
+                autoCapitalize: "none",
+                placeholder: "name@example.com",
+              },
+            }}
+          />
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            mt: 2.5,
+            p: 1.5,
+            borderRadius: "12px",
+            bgcolor: "brand.mintWash",
+            display: "flex",
+            gap: 1.25,
+            alignItems: "center",
+          }}
+        >
+          <Icon name="mail" sx={{ fontSize: 20, color: "brand.teal" }} />
+          <Typography sx={{ fontSize: 14, lineHeight: 1.5, minWidth: 0 }}>
+            {ct("Your download link goes to")}{" "}
+            <Box component="strong" sx={{ overflowWrap: "anywhere" }}>
+              {linkEmail}
+            </Box>
+          </Typography>
+        </Box>
+      )}
+
+      {status === "error" ? (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          {ct("We couldn't open the checkout. Please try again.")}
+        </Alert>
+      ) : null}
+      <Button
+        type="submit"
+        variant="contained"
         fullWidth
-        value={email}
-        onChange={event => setEmail(event.target.value)}
-        disabled={status === "sending"}
-        error={showErrors && emailInvalid}
-        helperText={showErrors && emailInvalid ? offerText("invalidEmail") : ct("We’ll send your PDF link to this address after payment.")}
-        slotProps={{ formHelperText: { "aria-live": "polite" }, htmlInput: { autoComplete: "email", inputMode: "email", spellCheck: false, maxLength: 254, autoCapitalize: "none", placeholder: "name@example.com" } }}
-      />
-    </Box> : <Box sx={{ mt: 2.5, p: 1.5, borderRadius: "12px", bgcolor: "brand.mintWash", display: "flex", gap: 1.25, alignItems: "center" }}>
-      <Icon name="mail" sx={{ fontSize: 20, color: "brand.teal" }} />
-      <Typography sx={{ fontSize: 14, lineHeight: 1.5, minWidth: 0 }}>
-        {ct("Your download link goes to")} <Box component="strong" sx={{ overflowWrap: "anywhere" }}>{linkEmail}</Box>
+        size="large"
+        disabled={linkEmail === undefined || status === "sending"}
+        startIcon={status === "sending" ? <CircularProgress size={18} color="inherit" /> : <Icon name="lock" />}
+        endIcon={status === "sending" ? undefined : <Icon name="arrowRight" />}
+        sx={{ mt: 2, minHeight: 52, borderRadius: "8px", fontSize: 16, fontWeight: 700 }}
+      >
+        {status === "sending" ? ct("Opening secure checkout...") : ct("Continue to Stripe checkout")}
+      </Button>
+
+      <Typography
+        component="div"
+        sx={{
+          pt: 1.5,
+          color: "brand.slate625",
+          fontSize: 13,
+          lineHeight: 1.7,
+          "& a": { textDecoration: "underline", textUnderlineOffset: "2px" },
+        }}
+      >
+        {ct("Stripe sells the book for us and sends your receipt.")}{" "}
+        <AppLink href="/legal/terms-of-use" target="_blank" rel="noopener">
+          {ct("Terms")}
+        </AppLink>
+        {" · "}
+        <AppLink href="/legal/privacy" target="_blank" rel="noopener">
+          {footerText("privacy")}
+        </AppLink>
       </Typography>
-    </Box>}
-
-    {status === "error" ? <Alert severity="error" sx={{ mt: 2 }}>{ct("We couldn't open the checkout. Please try again.")}</Alert> : null}
-    <Button type="submit" variant="contained" fullWidth size="large" disabled={linkEmail === undefined || status === "sending"}
-      startIcon={status === "sending" ? <CircularProgress size={18} color="inherit" /> : <Icon name="lock" />}
-      endIcon={status === "sending" ? undefined : <Icon name="arrowRight" />}
-      sx={{ mt: 2, minHeight: 52, borderRadius: "8px", fontSize: 16, fontWeight: 700 }}>
-      {status === "sending" ? ct("Opening secure checkout...") : ct("Continue to Stripe checkout")}
-    </Button>
-
-    <Typography component="div" sx={{ pt: 1.5, color: "brand.slate625", fontSize: 13, lineHeight: 1.7, "& a": { textDecoration: "underline", textUnderlineOffset: "2px" } }}>
-      {ct("Stripe sells the book for us and sends your receipt.")}{" "}
-      <AppLink href="/legal/terms-of-use" target="_blank" rel="noopener">{ct("Terms")}</AppLink>
-      {" · "}
-      <AppLink href="/legal/privacy" target="_blank" rel="noopener">{footerText("privacy")}</AppLink>
-    </Typography>
-  </Box>
+    </Box>
+  )
 }

@@ -16,6 +16,10 @@ describe("checkout email", () => {
   it("looks only at member accounts, not Medusa's guest records", async () => {
     const graph = jest.fn().mockResolvedValue({ data: [{ id: "cus_1" }] })
     await expect(memberIdsForEmail({ graph }, "Ana@Example.com")).resolves.toEqual(["cus_1"])
-    expect(graph).toHaveBeenCalledWith({ entity: "customer", fields: ["id"], filters: { email: { $ilike: "Ana@Example.com" }, has_account: true } })
+    expect(graph).toHaveBeenCalledWith({
+      entity: "customer",
+      fields: ["id"],
+      filters: { email: { $ilike: "Ana@Example.com" }, has_account: true },
+    })
   })
 })

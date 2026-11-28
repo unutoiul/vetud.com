@@ -1,7 +1,11 @@
 import { localizeMetadata } from "@/i18n/metadata"
 import { storefrontAlternates } from "@/lib/storefront-seo"
 import { getContentTranslator } from "@/i18n/server-content"
-import { ClockIcon as AccessTimeOutlinedIcon, DocumentIcon as DescriptionOutlinedIcon, MailIcon as MailOutlineIcon } from "@/components/brand/Icon"
+import {
+  ClockIcon as AccessTimeOutlinedIcon,
+  DocumentIcon as DescriptionOutlinedIcon,
+  MailIcon as MailOutlineIcon,
+} from "@/components/brand/Icon"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
 import Skeleton from "@mui/material/Skeleton"
@@ -19,10 +23,10 @@ import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  alternates: await storefrontAlternates("/contact"),
-  title: "Contact",
-  description: "Questions about a product, a lot or an order? Write to the Vetud team.",
-})
+    alternates: await storefrontAlternates("/contact"),
+    title: "Contact",
+    description: "Questions about a product, a lot or an order? Write to the Vetud team.",
+  })
 }
 
 export default async function ContactPage() {
@@ -37,7 +41,8 @@ export default async function ContactPage() {
       title: "Looking for a COA?",
       body: (
         <>
-          {ct("Try the")} <AppLink href="/documentation">{act("lotLookup")}</AppLink> {ct("first. Most records are available instantly.")}
+          {ct("Try the")} <AppLink href="/documentation">{act("lotLookup")}</AppLink>{" "}
+          {ct("first. Most records are available instantly.")}
         </>
       ),
     },
@@ -48,12 +53,16 @@ export default async function ContactPage() {
       <PageHeader
         eyebrow={ct("Contact")}
         title={ct("People behind the science.")}
-        description={ct("Questions about a product, a lot or an order reach a real person. Include your order or lot number for the fastest answer.")}
+        description={ct(
+          "Questions about a product, a lot or an order reach a real person. Include your order or lot number for the fastest answer.",
+        )}
       />
       <Section tone="white">
         <Grid container spacing={{ xs: 5, md: 8 }}>
           <Grid size={{ xs: 12, md: 7.5 }}>
-            <Typography variant="h4" component="h2" sx={{ mb: 1 }}>{t("write")}</Typography>
+            <Typography variant="h4" component="h2" sx={{ mb: 1 }}>
+              {t("write")}
+            </Typography>
             <Typography sx={{ color: "text.secondary", mb: 3 }}>{t("writeHelp")}</Typography>
             <Suspense fallback={<Skeleton variant="rounded" height={420} />}>
               <ContactForm />
@@ -62,7 +71,11 @@ export default async function ContactPage() {
           <Grid size={{ xs: 12, md: 4.5 }}>
             <Stack spacing={2}>
               {details.map(({ icon: Icon, title, body }) => (
-                <Paper key={title} variant="outlined" sx={{ p: 3, display: "flex", gap: 2, bgcolor: brand.slate25, borderRadius: 3 }}>
+                <Paper
+                  key={title}
+                  variant="outlined"
+                  sx={{ p: 3, display: "flex", gap: 2, bgcolor: brand.slate25, borderRadius: 3 }}
+                >
                   <Icon sx={{ color: "secondary.main", mt: "2px", flexShrink: 0 }} />
                   <div style={{ minWidth: 0, overflowWrap: "anywhere" }}>
                     <Typography sx={{ fontWeight: 700 }}>{ct(title)}</Typography>

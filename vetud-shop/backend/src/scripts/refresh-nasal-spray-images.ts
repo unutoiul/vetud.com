@@ -8,7 +8,5 @@ export default async function refreshNasalSprayImages({ container }: ExecArgs) {
   })
   container
     .resolve(ContainerRegistrationKeys.LOGGER)
-    .info(
-      `Spray studio images updated: ${result.updated.join(", ") || "already current"}`,
-    )
+    .info(`Spray studio images updated: ${result.updated.join(", ") || "already current"}`)
 }

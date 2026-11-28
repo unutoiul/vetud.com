@@ -7,7 +7,5 @@ export default async function importResearchPenKits({ container }: ExecArgs) {
   const { result } = await importResearchPenKitsWorkflow(container).run({
     input: {},
   })
-  container
-    .resolve(ContainerRegistrationKeys.LOGGER)
-    .info(`Research pen kits: ${JSON.stringify(result)}`)
+  container.resolve(ContainerRegistrationKeys.LOGGER).info(`Research pen kits: ${JSON.stringify(result)}`)
 }

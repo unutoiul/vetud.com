@@ -1,9 +1,5 @@
 import type { CreateNotificationDTO } from "@medusajs/framework/types"
-import {
-  createWorkflow,
-  transform,
-  WorkflowResponse,
-} from "@medusajs/framework/workflows-sdk"
+import { createWorkflow, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { useQueryGraphStep } from "@medusajs/medusa/core-flows"
 import { emailSettings } from "../lib/notifications"
 import { EmailTemplates } from "../modules/resend/templates"
@@ -16,35 +12,34 @@ type CustomerRow = { id: string; email?: string | null; first_name?: string | nu
 export function customerWelcomeNotifications(customer: CustomerRow | undefined): CreateNotificationDTO[] {
   if (!customer?.email || !customer.has_account) return []
 
-  return [{
-    to: customer.email,
-    channel: "email",
-    template: EmailTemplates.CUSTOMER_WELCOME,
-    data: { first_name: customer.first_name, storefront_url: emailSettings().storefrontUrl },
-    trigger_type: "customer.created",
-    resource_id: customer.id,
-    resource_type: "customer",
-    idempotency_key: `customer-welcome:${customer.id}`,
-    provider_data: { idempotency_key: `customer-welcome:${customer.id}` },
-  }]
+  return [
+    {
+      to: customer.email,
+      channel: "email",
+      template: EmailTemplates.CUSTOMER_WELCOME,
+      data: { first_name: customer.first_name, storefront_url: emailSettings().storefrontUrl },
+      trigger_type: "customer.created",
+      resource_id: customer.id,
+      resource_type: "customer",
+      idempotency_key: `customer-welcome:${customer.id}`,
+      provider_data: { idempotency_key: `customer-welcome:${customer.id}` },
+    },
+  ]
 }
 
 /** Welcomes a customer who registered an account (not customers created by an admin). */
-export const sendCustomerWelcomeWorkflow = createWorkflow(
-  "send-customer-welcome",
-  function ({ id }: WorkflowInput) {
-    const { data: customers } = useQueryGraphStep({
-      entity: "customer",
-      fields: ["id", "email", "first_name", "has_account"],
-      filters: { id },
-    })
+export const sendCustomerWelcomeWorkflow = createWorkflow("send-customer-welcome", function ({ id }: WorkflowInput) {
+  const { data: customers } = useQueryGraphStep({
+    entity: "customer",
+    fields: ["id", "email", "first_name", "has_account"],
+    filters: { id },
+  })
 
-    const notifications = transform({ customers }, ({ customers }) =>
-      customerWelcomeNotifications(customers[0] as CustomerRow | undefined)
-    )
+  const notifications = transform({ customers }, ({ customers }) =>
+    customerWelcomeNotifications(customers[0] as CustomerRow | undefined),
+  )
 
-    const sent = sendNotificationStep(notifications)
+  const sent = sendNotificationStep(notifications)
 
-    return new WorkflowResponse(sent)
-  }
-)
+  return new WorkflowResponse(sent)
+})

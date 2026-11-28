@@ -3,7 +3,8 @@ import type { MedusaNextFunction, MedusaRequest, MedusaResponse, MiddlewareRoute
 /** Checkout stores a delivery address only. Ignore legacy clients' separate billing data. */
 export function stripCartBilling(req: MedusaRequest, _res: MedusaResponse, next: MedusaNextFunction) {
   for (const value of [req.body, req.validatedBody]) {
-    if (value && typeof value === "object" && !Array.isArray(value)) delete (value as Record<string, unknown>).billing_address
+    if (value && typeof value === "object" && !Array.isArray(value))
+      delete (value as Record<string, unknown>).billing_address
   }
   next()
 }

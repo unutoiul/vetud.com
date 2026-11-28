@@ -1,11 +1,5 @@
-import type {
-  CreatePricesDTO,
-  UpdateProductVariantWorkflowInputDTO,
-} from "@medusajs/framework/types"
-import {
-  ContainerRegistrationKeys,
-  MedusaError,
-} from "@medusajs/framework/utils"
+import type { CreatePricesDTO, UpdateProductVariantWorkflowInputDTO } from "@medusajs/framework/types"
+import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import {
   createStep,
   createWorkflow,
@@ -14,16 +8,9 @@ import {
   when,
   WorkflowResponse,
 } from "@medusajs/framework/workflows-sdk"
-import {
-  updateProductsWorkflow,
-  updateProductVariantsWorkflow,
-} from "@medusajs/medusa/core-flows"
+import { updateProductsWorkflow, updateProductVariantsWorkflow } from "@medusajs/medusa/core-flows"
 import { BASE_CURRENCY } from "../lib/currencies"
-import {
-  PREMIUM_PRICE_HANDLES,
-  PREMIUM_PRICE_MULTIPLIER,
-  PREMIUM_PRICE_REVISION,
-} from "../seed/premium-product-prices"
+import { PREMIUM_PRICE_HANDLES, PREMIUM_PRICE_MULTIPLIER, PREMIUM_PRICE_REVISION } from "../seed/premium-product-prices"
 
 type PriceRow = {
   id: string
@@ -74,21 +61,10 @@ const preparePremiumPricesStep = createStep(
       usd: number
     }[] = []
     for (const handle of PREMIUM_PRICE_HANDLES) {
-      const product = (data as unknown as ProductRow[]).find(
-        (item) => item.handle === handle,
-      )
-      if (!product)
-        throw new MedusaError(
-          MedusaError.Types.NOT_FOUND,
-          `Missing product: ${handle}`,
-        )
-      if (product.metadata?.retail_pricing_revision === PREMIUM_PRICE_REVISION)
-        continue
-      if (!product.variants.length)
-        throw new MedusaError(
-          MedusaError.Types.INVALID_DATA,
-          `${handle} has no variants.`,
-        )
+      const product = (data as unknown as ProductRow[]).find((item) => item.handle === handle)
+      if (!product) throw new MedusaError(MedusaError.Types.NOT_FOUND, `Missing product: ${handle}`)
+      if (product.metadata?.retail_pricing_revision === PREMIUM_PRICE_REVISION) continue
+      if (!product.variants.length) throw new MedusaError(MedusaError.Types.INVALID_DATA, `${handle} has no variants.`)
       for (const variant of product.variants) {
         const oldPrices = variant.price_set?.prices ?? []
         const basePrices = oldPrices.filter(isBasePrice)
@@ -122,8 +98,7 @@ const preparePremiumPricesStep = createStep(
             return {
               id: price.id,
               currency_code: price.currency_code,
-              amount:
-                price.id === usd[0].id ? doubled : price.amount,
+              amount: price.id === usd[0].id ? doubled : price.amount,
               min_quantity: price.min_quantity,
               max_quantity: price.max_quantity,
               ...(Object.keys(rules).length ? { rules } : {}),
@@ -147,30 +122,23 @@ const preparePremiumPricesStep = createStep(
 )
 
 /** Doubles the USD retail prices once, without altering stock. */
-export const pricePremiumProductsWorkflow = createWorkflow(
-  "price-premium-products",
-  (input: Record<string, never>) => {
-    const prepared = preparePremiumPricesStep(input)
-    when(
-      "has-premium-price-updates",
-      prepared,
-      (data) => data.variants.length > 0,
-    ).then(() => {
-      const updated = updateProductVariantsWorkflow.runAsStep({
-        input: transform(prepared, (data) => ({
-          product_variants: data.variants,
-        })),
-      })
-      updateProductsWorkflow.runAsStep({
-        input: transform({ prepared, updated }, ({ prepared: data }) => ({
-          products: data.products,
-        })),
-      })
-    })
-    return new WorkflowResponse(
-      transform(prepared, (data) => ({
-        updated: data.summary,
+export const pricePremiumProductsWorkflow = createWorkflow("price-premium-products", (input: Record<string, never>) => {
+  const prepared = preparePremiumPricesStep(input)
+  when("has-premium-price-updates", prepared, (data) => data.variants.length > 0).then(() => {
+    const updated = updateProductVariantsWorkflow.runAsStep({
+      input: transform(prepared, (data) => ({
+        product_variants: data.variants,
       })),
-    )
-  },
-)
+    })
+    updateProductsWorkflow.runAsStep({
+      input: transform({ prepared, updated }, ({ prepared: data }) => ({
+        products: data.products,
+      })),
+    })
+  })
+  return new WorkflowResponse(
+    transform(prepared, (data) => ({
+      updated: data.summary,
+    })),
+  )
+})

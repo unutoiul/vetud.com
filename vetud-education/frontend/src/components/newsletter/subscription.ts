@@ -12,7 +12,12 @@ export function subscribedInBrowser() {
 }
 
 /** Starts a sign-up. Nothing is sent to the address until the person confirms from our email. */
-export async function subscribeToEmailList(input: { email: string; consent: true; language: string; website?: string }) {
+export async function subscribeToEmailList(input: {
+  email: string
+  consent: true
+  language: string
+  website?: string
+}) {
   const result = await sdk.client.fetch<{ success: boolean }>("/store/email-list", {
     method: "POST",
     body: {

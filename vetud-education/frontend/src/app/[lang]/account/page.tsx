@@ -17,7 +17,11 @@ export default function AccountRoute() {
   const ct = useContentTranslator()
   return (
     <>
-      <PageHeader eyebrow={ct("Account")} title={ct("Your VETUD account.")} description={ct("Your community profile, reputation and achievements, and your sign-in details, in one place.")} />
+      <PageHeader
+        eyebrow={ct("Account")}
+        title={ct("Your VETUD account.")}
+        description={ct("Your community profile, reputation and achievements, and your sign-in details, in one place.")}
+      />
       <Section tone="white" tight data-clarity-mask="True">
         <AccountPage />
       </Section>

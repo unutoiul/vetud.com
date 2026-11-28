@@ -19,30 +19,46 @@ export async function GET(req: AuthenticatedMedusaRequest<unknown, AdminForumQue
     filters: { status: "open" },
   })
   const reports = reportData as ReportRecord[]
-  const reported = [...new Set(reports.map(report => report.post_id))]
+  const reported = [...new Set(reports.map((report) => report.post_id))]
   const { data, metadata } = await query.graph({
     entity: "forum_post",
     fields: POST_FIELDS,
-    filters: { $or: [{ status: "pending" }, { status: "hidden", hold_reason: "reports" }, ...(reported.length ? [{ id: reported }] : [])] },
+    filters: {
+      $or: [
+        { status: "pending" },
+        { status: "hidden", hold_reason: "reports" },
+        ...(reported.length ? [{ id: reported }] : []),
+      ],
+    },
     pagination: { skip: offset, take: limit, order: { created_at: "ASC" } },
   })
   const posts = data as PostRecord[]
-  const threadIds = [...new Set(posts.map(post => post.thread_id))]
+  const threadIds = [...new Set(posts.map((post) => post.thread_id))]
   const [{ data: threads }, authors, images] = await Promise.all([
     threadIds.length
-      ? query.graph({ entity: "forum_thread", fields: ["id", "title", "slug", "kind", "status"], filters: { id: threadIds } })
+      ? query.graph({
+          entity: "forum_thread",
+          fields: ["id", "title", "slug", "kind", "status"],
+          filters: { id: threadIds },
+        })
       : Promise.resolve({ data: [] }),
-    loadProfiles(req.scope, posts.map(post => post.author_id)),
-    loadImages(req.scope, posts.map(post => post.id)),
+    loadProfiles(
+      req.scope,
+      posts.map((post) => post.author_id),
+    ),
+    loadImages(
+      req.scope,
+      posts.map((post) => post.id),
+    ),
   ])
-  const threadById = new Map((threads as { id: string }[]).map(thread => [thread.id, thread]))
+  const threadById = new Map((threads as { id: string }[]).map((thread) => [thread.id, thread]))
 
   res.json({
-    items: posts.map(post => ({
+    items: posts.map((post) => ({
       post,
       thread: threadById.get(post.thread_id) ?? null,
       author: authors.get(post.author_id) ?? null,
-      reports: reports.filter(report => report.post_id === post.id),
+      reports: reports.filter((report) => report.post_id === post.id),
       images: images.get(post.id) ?? [],
     })),
     count: metadata?.count ?? posts.length,

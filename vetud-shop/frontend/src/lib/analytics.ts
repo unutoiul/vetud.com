@@ -12,14 +12,48 @@ export const CLARITY_HOSTS = ["www.vetudpeptides.com", "vetudpeptides.com"]
 
 /** Where analytics cookies need a yes first: the EEA, the UK and Switzerland. */
 const CONSENT_COUNTRIES = new Set([
-  "at", "be", "bg", "hr", "cy", "cz", "dk", "ee", "fi", "fr", "de", "gr", "hu", "ie", "it", "lv", "lt",
-  "lu", "mt", "nl", "pl", "pt", "ro", "sk", "si", "es", "se", "is", "li", "no", "gb", "ch",
+  "at",
+  "be",
+  "bg",
+  "hr",
+  "cy",
+  "cz",
+  "dk",
+  "ee",
+  "fi",
+  "fr",
+  "de",
+  "gr",
+  "hu",
+  "ie",
+  "it",
+  "lv",
+  "lt",
+  "lu",
+  "mt",
+  "nl",
+  "pl",
+  "pt",
+  "ro",
+  "sk",
+  "si",
+  "es",
+  "se",
+  "is",
+  "li",
+  "no",
+  "gb",
+  "ch",
 ])
 
 function europeanTimeZone() {
   try {
     const zone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? ""
-    return /^Europe\//.test(zone) || /^Atlantic\/(Reykjavik|Faroe|Canary|Madeira|Azores)$/.test(zone) || /^Asia\/(Nicosia|Famagusta)$/.test(zone)
+    return (
+      /^Europe\//.test(zone) ||
+      /^Atlantic\/(Reykjavik|Faroe|Canary|Madeira|Azores)$/.test(zone) ||
+      /^Asia\/(Nicosia|Famagusta)$/.test(zone)
+    )
   } catch {
     return false
   }

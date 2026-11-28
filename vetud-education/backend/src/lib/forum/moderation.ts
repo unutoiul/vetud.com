@@ -7,7 +7,8 @@ export const REPORTS_TO_HIDE = 3
 
 // A number followed by a dose unit: "250 mcg", "2.4mg", "10 IU", "0,5 ml", "20 units", "4 clicks".
 // Body weight (kg, lb) and waist (cm, in) never match, so members can still mention them.
-const DOSE_PATTERN = /(?<![\p{L}\p{N}])\d+(?:[.,]\d+)?\s*(?:mg|mgs|mcg|µg|μg|ug|iu|i\.u\.|units?|ml|cc|clicks?)(?![\p{L}\p{N}])/iu
+const DOSE_PATTERN =
+  /(?<![\p{L}\p{N}])\d+(?:[.,]\d+)?\s*(?:mg|mgs|mcg|µg|μg|ug|iu|i\.u\.|units?|ml|cc|clicks?)(?![\p{L}\p{N}])/iu
 const LINK_PATTERN = /\bhttps?:\/\/|\bwww\.[a-z0-9-]/i
 
 export function containsDose(text: string) {

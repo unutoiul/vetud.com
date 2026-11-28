@@ -55,5 +55,5 @@ export function handleFor(displayName: string, random: () => string = () => Math
 
 /** Names that could pass for staff are kept for the team. */
 export function isReservedHandle(handle: string) {
-  return handle.split("-").some(part => RESERVED.includes(part))
+  return handle.split("-").some((part) => RESERVED.includes(part))
 }

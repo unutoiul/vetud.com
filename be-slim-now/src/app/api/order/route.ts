@@ -23,17 +23,24 @@ function orderNumber(date: Date) {
 
 export async function POST(request: NextRequest) {
   if (limited(request, "order", 5, 10 * 60 * 1000)) {
-    return NextResponse.json({ error: "Too many orders from this connection. Please message us instead." }, { status: 429 })
+    return NextResponse.json(
+      { error: "Too many orders from this connection. Please message us instead." },
+      { status: 429 },
+    )
   }
 
   const body = await request.json().catch(() => null)
   const parsed = parseOrder(body)
-  if (!parsed.ok) return NextResponse.json({ error: "Please check the highlighted fields.", fields: parsed.errors }, { status: 400 })
+  if (!parsed.ok)
+    return NextResponse.json({ error: "Please check the highlighted fields.", fields: parsed.errors }, { status: 400 })
   const { order } = parsed
 
   const withCode = isPromoCode(order.promoCode)
   if (order.promoCode && !withCode) {
-    return NextResponse.json({ error: "That discount code isn't valid.", fields: { promoCode: "This code isn't valid." } }, { status: 400 })
+    return NextResponse.json(
+      { error: "That discount code isn't valid.", fields: { promoCode: "This code isn't valid." } },
+      { status: 400 },
+    )
   }
 
   const placedAt = new Date()
@@ -49,8 +56,18 @@ export async function POST(request: NextRequest) {
 
   const owner = process.env.STORE_OWNER_EMAIL || CONTACTS.email
   const [buyer, admin] = await Promise.allSettled([
-    sendTemplate({ template: "order-confirmation", to: order.email, variables: confirmationVariables(order, number, withCode), replyTo: CONTACTS.email }),
-    sendTemplate({ template: "order-admin", to: owner, variables: adminVariables(order, number, placedAt, withCode), replyTo: order.email }),
+    sendTemplate({
+      template: "order-confirmation",
+      to: order.email,
+      variables: confirmationVariables(order, number, withCode),
+      replyTo: CONTACTS.email,
+    }),
+    sendTemplate({
+      template: "order-admin",
+      to: owner,
+      variables: adminVariables(order, number, placedAt, withCode),
+      replyTo: order.email,
+    }),
   ])
   if (admin.status === "rejected") console.error(`[order ${number}] owner alert failed`, admin.reason)
 
@@ -91,11 +108,16 @@ export async function POST(request: NextRequest) {
   if (buyer.status === "rejected") {
     console.error(`[order ${number}] buyer confirmation failed`, buyer.reason)
     return NextResponse.json(
-      { error: "We couldn't send your confirmation email. Please check the address, or message us to finish your order." },
+      {
+        error:
+          "We couldn't send your confirmation email. Please check the address, or message us to finish your order.",
+      },
       { status: 502 },
     )
   }
 
-  console.info(`[order ${number}] ${order.quantity} × ${order.product} ${order.strength} to ${order.country}${withCode ? " +code" : ""} = ${total} ${currency}`)
+  console.info(
+    `[order ${number}] ${order.quantity} × ${order.product} ${order.strength} to ${order.country}${withCode ? " +code" : ""} = ${total} ${currency}`,
+  )
   return NextResponse.json({ orderNumber: number, total, currency })
 }

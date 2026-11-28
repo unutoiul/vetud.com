@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import Icon from "@/components/brand/Icon"
 import { useLocale, useTranslations } from "next-intl"
 import Button from "@mui/material/Button"
@@ -36,10 +35,17 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
   const homeCurrency = (code: string) => countries.find((item) => item.code === code)?.currencyCode.toLowerCase()
 
   // The currencies of the store's regions, named by Intl in the page's language.
-  const currencies = [...new Set(countries.map((item) => item.currencyCode.toLowerCase()))].sort((a, b) => ["usd", "eur", "gbp"].indexOf(a) - ["usd", "eur", "gbp"].indexOf(b))
+  const currencies = [...new Set(countries.map((item) => item.currencyCode.toLowerCase()))].sort(
+    (a, b) => ["usd", "eur", "gbp"].indexOf(a) - ["usd", "eur", "gbp"].indexOf(b),
+  )
   const currencyName = new Intl.DisplayNames([locale], { type: "currency" })
   const countryName = new Intl.DisplayNames([locale], { type: "region" })
-  const sortedCountries = [...countries].sort((a, b) => (countryName.of(a.code.toUpperCase()) ?? a.name).localeCompare(countryName.of(b.code.toUpperCase()) ?? b.name, locale))
+  const sortedCountries = [...countries].sort((a, b) =>
+    (countryName.of(a.code.toUpperCase()) ?? a.name).localeCompare(
+      countryName.of(b.code.toUpperCase()) ?? b.name,
+      locale,
+    ),
+  )
   const changed = country !== countryCode || currency !== region.currencyCode
 
   const open = (target: HTMLElement) => {
@@ -82,7 +88,10 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
         aria-haspopup="dialog"
         aria-expanded={Boolean(anchor)}
         aria-controls={anchor ? "currency-country-panel" : undefined}
-        aria-label={act("currencySelector", { currency: region.currencyCode.toUpperCase(), country: countryCode.toUpperCase() })}
+        aria-label={act("currencySelector", {
+          currency: region.currencyCode.toUpperCase(),
+          country: countryCode.toUpperCase(),
+        })}
         fullWidth={fullWidth}
         sx={{
           minHeight: 44,
@@ -101,21 +110,42 @@ export default function CountrySelect({ fullWidth }: { fullWidth?: boolean }) {
         onClose={() => setAnchor(null)}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
-        slotProps={{ paper: { role: "dialog", "aria-label": "Country and currency", sx: { width: 320, maxWidth: "calc(100vw - 32px)", borderRadius: 2.5, p: 2.5 } } }}
+        slotProps={{
+          paper: {
+            role: "dialog",
+            "aria-label": "Country and currency",
+            sx: { width: 320, maxWidth: "calc(100vw - 32px)", borderRadius: 2.5, p: 2.5 },
+          },
+        }}
       >
         <Stack spacing={2}>
           <Typography variant="eyebrow" sx={{ color: "text.secondary" }}>
             {t("country")} · {t("currency")}
           </Typography>
-          <TextField select size="small" label={t("country")} value={country} onChange={(event) => changeCountry(event.target.value)}
-            slotProps={{ select: { MenuProps: { slotProps: { paper: { sx: { maxHeight: 360 } } } } } }}>
+          <TextField
+            select
+            size="small"
+            label={t("country")}
+            value={country}
+            onChange={(event) => changeCountry(event.target.value)}
+            slotProps={{ select: { MenuProps: { slotProps: { paper: { sx: { maxHeight: 360 } } } } } }}
+          >
             {sortedCountries.map((item) => (
               <MenuItem key={item.code} value={item.code}>
                 {ct(countryName.of(item.code.toUpperCase()) ?? item.name)}
               </MenuItem>
             ))}
           </TextField>
-          <TextField select size="small" label={t("currency")} value={currency} onChange={(event) => { setCurrency(event.target.value); setCurrencyPicked(true) }}>
+          <TextField
+            select
+            size="small"
+            label={t("currency")}
+            value={currency}
+            onChange={(event) => {
+              setCurrency(event.target.value)
+              setCurrencyPicked(true)
+            }}
+          >
             {currencies.map((code) => (
               <MenuItem key={code} value={code}>
                 {ct(code.toUpperCase())} · {ct(currencyName.of(code.toUpperCase()))}

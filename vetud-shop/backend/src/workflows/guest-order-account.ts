@@ -22,13 +22,23 @@ type AttachInput = FindGuestOrderInput & {
 export const attachGuestOrderWorkflow = createWorkflow("attach-guest-order", function (input: AttachInput) {
   const order = findGuestOrderStep(input)
 
-  const created = when("create-account-for-guest-order", { order, input }, ({ order, input }) => !order.target_customer_id && Boolean(input.auth_identity_id))
-    .then(() => createCustomerAccountWorkflow.runAsStep({
+  const created = when(
+    "create-account-for-guest-order",
+    { order, input },
+    ({ order, input }) => !order.target_customer_id && Boolean(input.auth_identity_id),
+  ).then(() =>
+    createCustomerAccountWorkflow.runAsStep({
       input: transform({ order, input }, ({ order, input }) => ({
         authIdentityId: input.auth_identity_id!,
-        customerData: { email: order.email, first_name: order.first_name ?? undefined, last_name: order.last_name ?? undefined, phone: order.phone ?? undefined },
+        customerData: {
+          email: order.email,
+          first_name: order.first_name ?? undefined,
+          last_name: order.last_name ?? undefined,
+          phone: order.phone ?? undefined,
+        },
       })),
-    }))
+    }),
+  )
 
   const move = transform({ order, created }, ({ order, created }) => ({
     order_id: order.order_id,
@@ -37,8 +47,10 @@ export const attachGuestOrderWorkflow = createWorkflow("attach-guest-order", fun
   }))
   moveOrderToCustomerStep(move)
 
-  return new WorkflowResponse(transform({ order, created }, ({ order, created }) => ({
-    email: order.email,
-    account_created: Boolean(created),
-  })))
+  return new WorkflowResponse(
+    transform({ order, created }, ({ order, created }) => ({
+      email: order.email,
+      account_created: Boolean(created),
+    })),
+  )
 })

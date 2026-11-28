@@ -18,12 +18,23 @@ async function CopyrightYear() {
   return <>{new Date().getFullYear()}</>
 }
 
-const linkSx = { color: "brand.onNavyMuted", fontWeight: 400, fontSize: 13.5, width: "fit-content", transition: "color .2s", "&:hover": { color: brand.white } }
+const linkSx = {
+  color: "brand.onNavyMuted",
+  fontWeight: 400,
+  fontSize: 13.5,
+  width: "fit-content",
+  transition: "color .2s",
+  "&:hover": { color: brand.white },
+}
 
 async function LinkColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <Box>
-      <Typography variant="eyebrow" component="h2" sx={{ color: "brand.onNavy", mb: 2.5, fontWeight: 650, letterSpacing: ".03em" }}>
+      <Typography
+        variant="eyebrow"
+        component="h2"
+        sx={{ color: "brand.onNavy", mb: 2.5, fontWeight: 650, letterSpacing: ".03em" }}
+      >
         {title}
       </Typography>
       <Stack spacing={1.75}>{children}</Stack>
@@ -36,11 +47,59 @@ export default async function Footer() {
   const t = await getTranslations("Footer")
   const common = await getTranslations("Common")
   return (
-    <Box component="footer" sx={{ bgcolor: "brand.navyDeep", color: "brand.onNavy", borderTop: "1px solid", borderColor: brand.whiteA13, px: gutter, pt: { xs: 6, md: 8 }, pb: 4 }}>
+    <Box
+      component="footer"
+      sx={{
+        bgcolor: "brand.navyDeep",
+        color: "brand.onNavy",
+        borderTop: "1px solid",
+        borderColor: brand.whiteA13,
+        px: gutter,
+        pt: { xs: 6, md: 8 },
+        pb: 4,
+      }}
+    >
       <Box sx={{ maxWidth: 1360, mx: "auto" }}>
-        <Stack data-footer-invitation direction={{ xs: "column", md: "row" }} sx={{ justifyContent: "space-between", alignItems: { md: "center" }, gap: 3, pb: { xs: 5, md: 7 }, mb: { xs: 5, md: 7 }, borderBottom: `1px solid ${brand.whiteA13}` }}>
-          <Box><Typography variant="mono" component="p" sx={{ fontSize: 10, letterSpacing: ".16em", color: "brand.onNavyMuted", mb: 2 }}>{t("tagline")}</Typography><Typography component="h2" sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 400, letterSpacing: "-.045em", lineHeight: 1.2 }}>{t("title")}</Typography></Box>
-          <ButtonLink href="/contact" variant="outlined" endIcon={<Icon name="arrowUpRight" />} sx={{ alignSelf: { xs: "flex-start", md: "center" }, borderColor: brand.whiteA33, color: brand.white, "&:hover": { bgcolor: brand.whiteA07, borderColor: brand.white } }}>{t("talk")}</ButtonLink>
+        <Stack
+          data-footer-invitation
+          direction={{ xs: "column", md: "row" }}
+          sx={{
+            justifyContent: "space-between",
+            alignItems: { md: "center" },
+            gap: 3,
+            pb: { xs: 5, md: 7 },
+            mb: { xs: 5, md: 7 },
+            borderBottom: `1px solid ${brand.whiteA13}`,
+          }}
+        >
+          <Box>
+            <Typography
+              variant="mono"
+              component="p"
+              sx={{ fontSize: 10, letterSpacing: ".16em", color: "brand.onNavyMuted", mb: 2 }}
+            >
+              {t("tagline")}
+            </Typography>
+            <Typography
+              component="h2"
+              sx={{ fontSize: { xs: 30, md: 42 }, fontWeight: 400, letterSpacing: "-.045em", lineHeight: 1.2 }}
+            >
+              {t("title")}
+            </Typography>
+          </Box>
+          <ButtonLink
+            href="/contact"
+            variant="outlined"
+            endIcon={<Icon name="arrowUpRight" />}
+            sx={{
+              alignSelf: { xs: "flex-start", md: "center" },
+              borderColor: brand.whiteA33,
+              color: brand.white,
+              "&:hover": { bgcolor: brand.whiteA07, borderColor: brand.white },
+            }}
+          >
+            {t("talk")}
+          </ButtonLink>
         </Stack>
         <Grid container spacing={{ xs: 5, md: 5 }} sx={{ pb: { xs: 6, md: 7 } }}>
           <Grid size={{ xs: 12, md: 6 }}>
@@ -51,20 +110,37 @@ export default async function Footer() {
           </Grid>
           <Grid size={{ xs: 6, md: 3 }}>
             <LinkColumn title={t("explore")}>
-              {NAV_LINKS.map((link) => <AppLink key={link.href} href={link.href} underline="hover" sx={linkSx}>{common(link.label)}</AppLink>)}
-              <AppLink href="/contact" underline="hover" sx={linkSx}>{t("contact")}</AppLink>
+              {NAV_LINKS.map((link) => (
+                <AppLink key={link.href} href={link.href} underline="hover" sx={linkSx}>
+                  {common(link.label)}
+                </AppLink>
+              ))}
+              <AppLink href="/contact" underline="hover" sx={linkSx}>
+                {t("contact")}
+              </AppLink>
             </LinkColumn>
           </Grid>
           <Grid size={{ xs: 6, md: 3 }}>
             <LinkColumn title={t("legal")}>
-              {FOOTER_LEGAL_LINKS.map((link) => <AppLink key={link.href} href={link.href} underline="hover" sx={linkSx}>{ct(link.label)}</AppLink>)}
+              {FOOTER_LEGAL_LINKS.map((link) => (
+                <AppLink key={link.href} href={link.href} underline="hover" sx={linkSx}>
+                  {ct(link.label)}
+                </AppLink>
+              ))}
             </LinkColumn>
           </Grid>
         </Grid>
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={2}
-          sx={{ borderTop: "1px solid", borderColor: brand.whiteA13, pt: 3, justifyContent: "space-between", color: "brand.onNavyMuted", fontSize: 11.5 }}
+          sx={{
+            borderTop: "1px solid",
+            borderColor: brand.whiteA13,
+            pt: 3,
+            justifyContent: "space-between",
+            color: "brand.onNavyMuted",
+            fontSize: 11.5,
+          }}
         >
           <Typography sx={{ maxWidth: 760, fontSize: "inherit", lineHeight: 1.7 }}>{ct(SITE.siteNotice)}</Typography>
           <Typography sx={{ fontSize: "inherit", lineHeight: 1.7 }}>

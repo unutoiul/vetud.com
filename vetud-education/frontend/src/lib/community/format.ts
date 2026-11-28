@@ -2,7 +2,8 @@ import type { ForumThread, ThreadKind } from "./types"
 
 // Same pattern the backend holds posts for (vetud-education/backend/src/lib/forum/moderation.ts), so the
 // composer can warn before a post is sent for review.
-const DOSE_PATTERN = /(?<![\p{L}\p{N}])\d+(?:[.,]\d+)?\s*(?:mg|mgs|mcg|µg|μg|ug|iu|i\.u\.|units?|ml|cc|clicks?)(?![\p{L}\p{N}])/iu
+const DOSE_PATTERN =
+  /(?<![\p{L}\p{N}])\d+(?:[.,]\d+)?\s*(?:mg|mgs|mcg|µg|μg|ug|iu|i\.u\.|units?|ml|cc|clicks?)(?![\p{L}\p{N}])/iu
 
 /** The first dose-like phrase in the text ("250 mcg"), if any. */
 export function findDose(text: string) {
@@ -25,7 +26,8 @@ export const KIND_PLURALS: Record<ThreadKind, string> = {
 export const HOLD_MESSAGES: Record<string, string> = {
   dose: "It mentions a dose amount, so a moderator will review it before it appears. The community doesn't share doses; you can edit the post to remove it.",
   link: "New members' links are checked by a moderator first. Links are published straight away once you reach the Contributor level.",
-  image: "New members' photos are checked by a moderator first. Photos are published straight away once you reach the Contributor level.",
+  image:
+    "New members' photos are checked by a moderator first. Photos are published straight away once you reach the Contributor level.",
   reports: "Several members reported it, so it's hidden until a moderator reviews it.",
   staff: "A moderator has hidden it.",
 }
@@ -58,14 +60,20 @@ export function threadIdFromSegment(segment: string) {
 }
 
 export function formatForumDate(date: string, locale = "en-US") {
-  return new Intl.DateTimeFormat(locale, { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(new Date(date))
+  return new Intl.DateTimeFormat(locale, { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" }).format(
+    new Date(date),
+  )
 }
 
 /** "3 minutes ago", "2 days ago", or a date after a month. */
 export function formatRelative(date: string, now = Date.now()) {
   const seconds = Math.round((now - new Date(date).getTime()) / 1000)
   if (seconds < 60) return "just now"
-  const units: [number, Intl.RelativeTimeFormatUnit][] = [[60, "minute"], [24, "hour"], [30, "day"]]
+  const units: [number, Intl.RelativeTimeFormatUnit][] = [
+    [60, "minute"],
+    [24, "hour"],
+    [30, "day"],
+  ]
   let value = seconds / 60
   for (const [size, unit] of units) {
     if (value < size) return new Intl.RelativeTimeFormat("en-US", { numeric: "auto" }).format(-Math.floor(value), unit)
@@ -74,4 +82,5 @@ export function formatRelative(date: string, now = Date.now()) {
   return formatForumDate(date)
 }
 
-export const plural = (count: number, word: string, many = `${word}s`) => `${count.toLocaleString("en-US")} ${count === 1 ? word : many}`
+export const plural = (count: number, word: string, many = `${word}s`) =>
+  `${count.toLocaleString("en-US")} ${count === 1 ? word : many}`

@@ -9,9 +9,9 @@ import Section from "@/components/common/Section"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  title: "Order confirmed",
-  robots: { index: false },
-})
+    title: "Order confirmed",
+    robots: { index: false },
+  })
 }
 
 export default function OrderConfirmedPage() {

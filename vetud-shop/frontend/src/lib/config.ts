@@ -1,7 +1,6 @@
 import countryRules from "../i18n/countries.json"
 
-export const MEDUSA_BACKEND_URL =
-  process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
+export const MEDUSA_BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
 
 export const MEDUSA_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || ""
 
@@ -13,7 +12,13 @@ export const EDUCATION_URL = (process.env.NEXT_PUBLIC_EDUCATION_URL || "https://
 
 /** The shop's public address (www.pep.company from 2026-11-11, www.vetudpeptides.com since 2026-11-24). */
 const SHOP_URL = "https://www.vetudpeptides.com"
-const hostOf = (url: string) => { try { return new URL(url).host.replace(/^www\./, "") } catch { return "" } }
+const hostOf = (url: string) => {
+  try {
+    return new URL(url).host.replace(/^www\./, "")
+  } catch {
+    return ""
+  }
+}
 const configuredBaseUrl = (process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000").replace(/\/$/, "")
 
 /**

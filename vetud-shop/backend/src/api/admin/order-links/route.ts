@@ -15,17 +15,46 @@ type LinkCart = CartProgress & {
   currency_code?: string | null
   total?: unknown
   metadata?: Record<string, unknown> | null
-  shipping_address?: { address_1?: string | null; first_name?: string | null; last_name?: string | null; city?: string | null; country_code?: string | null } | null
-  items?: { product_title?: string | null; title?: string | null; variant_title?: string | null; quantity?: number | null }[] | null
+  shipping_address?: {
+    address_1?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    city?: string | null
+    country_code?: string | null
+  } | null
+  items?:
+    | {
+        product_title?: string | null
+        title?: string | null
+        variant_title?: string | null
+        quantity?: number | null
+      }[]
+    | null
   order?: { id?: string | null; display_id?: number | null } | null
 }
 
 const LINK_FIELDS = [
-  "id", "email", "created_at", "updated_at", "completed_at", "currency_code", "total", "metadata",
-  "shipping_address.address_1", "shipping_address.first_name", "shipping_address.last_name", "shipping_address.city", "shipping_address.country_code",
-  "shipping_methods.id", "payment_collection.payment_sessions.id",
-  "items.product_title", "items.title", "items.variant_title", "items.quantity",
-  "order.id", "order.display_id",
+  "id",
+  "email",
+  "created_at",
+  "updated_at",
+  "completed_at",
+  "currency_code",
+  "total",
+  "metadata",
+  "shipping_address.address_1",
+  "shipping_address.first_name",
+  "shipping_address.last_name",
+  "shipping_address.city",
+  "shipping_address.country_code",
+  "shipping_methods.id",
+  "payment_collection.payment_sessions.id",
+  "items.product_title",
+  "items.title",
+  "items.variant_title",
+  "items.quantity",
+  "order.id",
+  "order.display_id",
 ]
 
 const text = (value: unknown) => (typeof value === "string" && value.trim() ? value.trim() : null)
@@ -52,7 +81,13 @@ function toLink(cart: LinkCart) {
     payment_provider: text(meta.order_link_payment),
     step: furthestCheckoutStep(cart),
     ship_to: address?.address_1
-      ? [[address.first_name, address.last_name].filter(Boolean).join(" "), address.city, address.country_code?.toUpperCase()].filter(Boolean).join(", ")
+      ? [
+          [address.first_name, address.last_name].filter(Boolean).join(" "),
+          address.city,
+          address.country_code?.toUpperCase(),
+        ]
+          .filter(Boolean)
+          .join(", ")
       : null,
     currency_code: cart.currency_code ?? null,
     total: Number(cart.total ?? 0),
@@ -84,18 +119,26 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     }),
   ])
 
-  const productOptions = (products.data as { id: string; title: string; variants?: { id: string; title?: string | null; sku?: string | null }[] | null }[])
+  const productOptions = (
+    products.data as {
+      id: string
+      title: string
+      variants?: { id: string; title?: string | null; sku?: string | null }[] | null
+    }[]
+  )
     .flatMap((product) =>
       (product.variants ?? []).map((variant) => ({
         variant_id: variant.id,
         title: [product.title, variant.title].filter((part) => part && part !== "Default variant").join(" · "),
         sku: variant.sku ?? null,
-      }))
+      })),
     )
     .sort((a, b) => a.title.localeCompare(b.title))
 
   // Every country the shop delivers to; outside the regions in US dollars (lib/order-link-countries.ts).
-  const countries = (await listOrderLinkCountries(req.scope)).map(({ code, name, currency_code, payment_providers }) => ({ code, name, currency_code, payment_providers }))
+  const countries = (await listOrderLinkCountries(req.scope)).map(
+    ({ code, name, currency_code, payment_providers }) => ({ code, name, currency_code, payment_providers }),
+  )
 
   res.setHeader("Cache-Control", "private, no-store")
   res.json({

@@ -16,7 +16,10 @@ function apiKey() {
   if (process.env.RESEND_API_KEY) return process.env.RESEND_API_KEY
   try {
     const env = readFileSync(path.join(ROOT, "..", "backend", ".env"), "utf8")
-    return /^RESEND_API_KEY=(.*)$/m.exec(env)?.[1]?.trim().replace(/^["']|["']$/g, "")
+    return /^RESEND_API_KEY=(.*)$/m
+      .exec(env)?.[1]
+      ?.trim()
+      .replace(/^["']|["']$/g, "")
   } catch {
     return undefined
   }
@@ -26,7 +29,9 @@ if (!key) throw new Error("Set RESEND_API_KEY, or add it to vetud-education/back
 
 const logo = await fetch(LOGO_URL)
 if (!logo.ok || !logo.headers.get("content-type")?.startsWith("image/png")) {
-  throw new Error(`The logo isn't live at ${LOGO_URL} (${logo.status}). It is the shop's email logo; deploy the shop storefront first.`)
+  throw new Error(
+    `The logo isn't live at ${LOGO_URL} (${logo.status}). It is the shop's email logo; deploy the shop storefront first.`,
+  )
 }
 
 const only = process.argv.slice(2)
@@ -62,8 +67,12 @@ for (const email of emails) {
   if (!ok) process.exitCode = 1
 }
 
-const ids = Object.entries(manifest).filter(([, meta]) => meta.id).map(([name, meta]) => `  "${name}": "${meta.id}",`)
-writeFileSync(TEMPLATE_IDS, `import type { EmailTemplate } from "./templates"
+const ids = Object.entries(manifest)
+  .filter(([, meta]) => meta.id)
+  .map(([name, meta]) => `  "${name}": "${meta.id}",`)
+writeFileSync(
+  TEMPLATE_IDS,
+  `import type { EmailTemplate } from "./templates"
 
 /**
  * IDs of the published VETUD education templates in Resend. Written by vetud-education/emails/publish.mjs from
@@ -72,4 +81,5 @@ writeFileSync(TEMPLATE_IDS, `import type { EmailTemplate } from "./templates"
 export const RESEND_TEMPLATE_IDS: Partial<Record<EmailTemplate, string>> = {
 ${ids.join("\n")}
 }
-`)
+`,
+)

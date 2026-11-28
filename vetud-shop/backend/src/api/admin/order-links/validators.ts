@@ -42,7 +42,11 @@ export const AdminCreateOrderLink = z.object({
    * The payment method already chosen when the customer opens the checkout. They can still pick
    * another one, e.g. after a declined card (owner, 2026-11-25).
    */
-  payment_provider: z.string().trim().regex(/^pp_[A-Za-z0-9_-]{1,100}$/, "Choose a payment method from the list.").optional(),
+  payment_provider: z
+    .string()
+    .trim()
+    .regex(/^pp_[A-Za-z0-9_-]{1,100}$/, "Choose a payment method from the list.")
+    .optional(),
   note: optionalText(500),
 })
 

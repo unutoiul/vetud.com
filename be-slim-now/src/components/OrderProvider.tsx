@@ -16,7 +16,12 @@ type OrderContextValue = {
   savePromoCode: (code: string) => void
 }
 
-const OrderContext = createContext<OrderContextValue>({ openOrder: () => {}, openPromo: () => {}, promoCode: null, savePromoCode: () => {} })
+const OrderContext = createContext<OrderContextValue>({
+  openOrder: () => {},
+  openPromo: () => {},
+  promoCode: null,
+  savePromoCode: () => {},
+})
 
 const CODE_KEY = "vetud-pens:promo-code"
 const SEEN_KEY = "vetud-pens:promo-seen"
@@ -98,7 +103,10 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
     return cleanup
   }, [openPromo])
 
-  const value = useMemo(() => ({ openOrder, openPromo, promoCode, savePromoCode }), [openOrder, openPromo, promoCode, savePromoCode])
+  const value = useMemo(
+    () => ({ openOrder, openPromo, promoCode, savePromoCode }),
+    [openOrder, openPromo, promoCode, savePromoCode],
+  )
 
   return (
     <OrderContext.Provider value={value}>

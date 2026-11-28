@@ -1,7 +1,26 @@
-import { isSaleExcluded, planSalePrices, readSaleSettings, saleAmount, saleState, SALE_METADATA_KEY, type VariantPrices } from "../storewide-sale"
+import {
+  isSaleExcluded,
+  planSalePrices,
+  readSaleSettings,
+  saleAmount,
+  saleState,
+  SALE_METADATA_KEY,
+  type VariantPrices,
+} from "../storewide-sale"
 
-const regular = (id: string, currency: string, amount: number) => ({ id, currency_code: currency, amount, price_list_id: null, min_quantity: null, max_quantity: null, rules_count: 0 })
-const listed = (id: string, currency: string, amount: number, list = "plist_sale") => ({ ...regular(id, currency, amount), price_list_id: list })
+const regular = (id: string, currency: string, amount: number) => ({
+  id,
+  currency_code: currency,
+  amount,
+  price_list_id: null,
+  min_quantity: null,
+  max_quantity: null,
+  rules_count: 0,
+})
+const listed = (id: string, currency: string, amount: number, list = "plist_sale") => ({
+  ...regular(id, currency, amount),
+  price_list_id: list,
+})
 
 describe("storewide sale", () => {
   it("takes the percentage off, to the cent or to the unit like the regular prices", () => {
@@ -19,7 +38,11 @@ describe("storewide sale", () => {
     expect(isSaleExcluded({ sale_excluded: "no" })).toBe(false)
     expect(isSaleExcluded(null)).toBe(false)
     const variants: VariantPrices[] = [
-      { id: "variant_serum", excluded: true, price_set: { prices: [regular("p1", "usd", 25), listed("s1", "usd", 17.5)] } },
+      {
+        id: "variant_serum",
+        excluded: true,
+        price_set: { prices: [regular("p1", "usd", 25), listed("s1", "usd", 17.5)] },
+      },
       { id: "variant_peptide", price_set: { prices: [regular("p2", "usd", 100)] } },
     ]
     expect(planSalePrices(variants, "plist_sale", 30)).toEqual({
@@ -46,30 +69,40 @@ describe("storewide sale", () => {
   })
 
   it("ignores other price lists and prices with region or quantity rules", () => {
-    const variants: VariantPrices[] = [{
-      id: "variant_a",
-      price_set: { prices: [
-        { ...regular("p1", "usd", 500), rules_count: 1 },
-        { ...regular("p2", "usd", 400), min_quantity: 10 },
-        listed("p3", "usd", 50, "plist_other"),
-        regular("p4", "usd", 100),
-      ] },
-    }]
-    expect(planSalePrices(variants, "plist_sale", 30).create).toEqual([{ variant_id: "variant_a", currency_code: "usd", amount: 70 }])
+    const variants: VariantPrices[] = [
+      {
+        id: "variant_a",
+        price_set: {
+          prices: [
+            { ...regular("p1", "usd", 500), rules_count: 1 },
+            { ...regular("p2", "usd", 400), min_quantity: 10 },
+            listed("p3", "usd", 50, "plist_other"),
+            regular("p4", "usd", 100),
+          ],
+        },
+      },
+    ]
+    expect(planSalePrices(variants, "plist_sale", 30).create).toEqual([
+      { variant_id: "variant_a", currency_code: "usd", amount: 70 },
+    ])
   })
 
   it("updates changed prices, keeps correct ones and removes duplicates and dropped currencies", () => {
-    const variants: VariantPrices[] = [{
-      id: "variant_a",
-      price_set: { prices: [
-        regular("p1", "usd", 100),
-        regular("p2", "eur", 90),
-        listed("s1", "usd", 80),
-        listed("s2", "eur", 63),
-        listed("s3", "eur", 63),
-        listed("s4", "gbp", 50),
-      ] },
-    }]
+    const variants: VariantPrices[] = [
+      {
+        id: "variant_a",
+        price_set: {
+          prices: [
+            regular("p1", "usd", 100),
+            regular("p2", "eur", 90),
+            listed("s1", "usd", 80),
+            listed("s2", "eur", 63),
+            listed("s3", "eur", 63),
+            listed("s4", "gbp", 50),
+          ],
+        },
+      },
+    ]
     expect(planSalePrices(variants, "plist_sale", 30)).toEqual({
       create: [],
       update: [{ id: "s1", variant_id: "variant_a", currency_code: "usd", amount: 70 }],

@@ -34,13 +34,19 @@ const FREE_LENGTH = new Set(["hero.headlineLineOne", "hero.headlineLineTwo"])
 
 /** The source's shape with the target's text wherever the target has a value of the same kind. */
 function merge(source, target, at = "") {
-  if (FREE_LENGTH.has(at) && Array.isArray(target) && target.length && target.every((word) => typeof word === "string")) return target
+  if (FREE_LENGTH.has(at) && Array.isArray(target) && target.length && target.every((word) => typeof word === "string"))
+    return target
   if (Array.isArray(source)) {
     return source.map((item, index) => merge(item, Array.isArray(target) ? target[index] : undefined, `${at}.${index}`))
   }
   if (source && typeof source === "object") {
     const out = {}
-    for (const key of Object.keys(source)) out[key] = merge(source[key], target && typeof target === "object" ? target[key] : undefined, at ? `${at}.${key}` : key)
+    for (const key of Object.keys(source))
+      out[key] = merge(
+        source[key],
+        target && typeof target === "object" ? target[key] : undefined,
+        at ? `${at}.${key}` : key,
+      )
     return out
   }
   return typeof target === typeof source ? target : source
@@ -94,7 +100,8 @@ function check() {
     const target = flatten(read(code))
     for (const [key, text] of source) {
       if (!target.has(key)) report(`${code}.json: missing ${key}`)
-      else if (tokens(text) !== tokens(target.get(key))) report(`${code}.json: ${key} should use ${tokens(text) || "no placeholders"}`)
+      else if (tokens(text) !== tokens(target.get(key)))
+        report(`${code}.json: ${key} should use ${tokens(text) || "no placeholders"}`)
     }
     for (const key of target.keys()) if (!source.has(key)) report(`${code}.json: ${key} is not in ${SOURCE}.json`)
   }

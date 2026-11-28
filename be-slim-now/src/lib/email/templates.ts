@@ -29,7 +29,9 @@ function shared(order: OrderInput, orderNumber: string, withCode: boolean) {
       ? "email"
       : `${CONTACT_APP_LABELS[order.contactApp]}${order.contactHandle ? ` (${order.contactHandle})` : ` (${order.phone})`}`
   const savings = [
-    OFFER.salePercent ? `${OFFER.saleLabel} −${OFFER.salePercent}%: −${money(amounts.regularTotal - amounts.subtotal)}` : "",
+    OFFER.salePercent
+      ? `${OFFER.saleLabel} −${OFFER.salePercent}%: −${money(amounts.regularTotal - amounts.subtotal)}`
+      : "",
     withCode ? `Subscriber code ${order.promoCode} −${OFFER.subscriberPercent}%: −${money(amounts.codeDiscount)}` : "",
   ]
     .filter(Boolean)
@@ -64,8 +66,11 @@ export function confirmationVariables(order: OrderInput, orderNumber: string, wi
       PAYMENT_INSTRUCTIONS:
         process.env.PAYMENT_INSTRUCTIONS?.trim() ||
         "Pay using the details below and put your order number in the payment reference. We ship as soon as the payment arrives.",
-      PAYMENT_DETAILS: payment || "We'll send your payment details within a few hours, by email and on the app you chose.",
-      CONTACT_LINKS_TEXT: links.map((link) => `${link.label}: ${link.key === "email" ? link.value : link.href}`).join("\n"),
+      PAYMENT_DETAILS:
+        payment || "We'll send your payment details within a few hours, by email and on the app you chose.",
+      CONTACT_LINKS_TEXT: links
+        .map((link) => `${link.label}: ${link.key === "email" ? link.value : link.href}`)
+        .join("\n"),
     }),
     // Clickable links for the HTML part, built here from our own contact settings (escaped piece by piece).
     CONTACT_LINKS: links

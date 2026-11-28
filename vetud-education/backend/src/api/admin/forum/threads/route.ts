@@ -10,7 +10,7 @@ export async function GET(req: AuthenticatedMedusaRequest<unknown, AdminForumThr
   const filters: Record<string, unknown> = {}
   if (status) filters.status = status
   if (kind) filters.kind = kind
-  if (q) filters.title = { $ilike: `%${q.replace(/[\\%_]/g, character => `\\${character}`)}%` }
+  if (q) filters.title = { $ilike: `%${q.replace(/[\\%_]/g, (character) => `\\${character}`)}%` }
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const { data, metadata } = await query.graph({
@@ -20,9 +20,12 @@ export async function GET(req: AuthenticatedMedusaRequest<unknown, AdminForumThr
     pagination: { skip: offset, take: limit, order: { last_activity_at: "DESC" } },
   })
   const threads = data as ThreadRecord[]
-  const authors = await loadProfiles(req.scope, threads.map(thread => thread.author_id))
+  const authors = await loadProfiles(
+    req.scope,
+    threads.map((thread) => thread.author_id),
+  )
   res.json({
-    threads: threads.map(thread => ({ ...thread, author: authors.get(thread.author_id) ?? null })),
+    threads: threads.map((thread) => ({ ...thread, author: authors.get(thread.author_id) ?? null })),
     count: metadata?.count ?? threads.length,
     offset,
     limit,

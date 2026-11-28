@@ -34,7 +34,11 @@ type SearchBoxProps = {
 
 /** The results of the inline search, in the page flow. */
 function InlineResults({ open, children, className, role }: PopperProps) {
-  return open ? <Box className={className} role={role} sx={{ width: "100%", mt: 1.5 }}>{children as ReactNode}</Box> : null
+  return open ? (
+    <Box className={className} role={role} sx={{ width: "100%", mt: 1.5 }}>
+      {children as ReactNode}
+    </Box>
+  ) : null
 }
 
 /** Searches the peptide guides and the news, in the browser, grouped by kind. */
@@ -66,11 +70,41 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
     timer.current = window.setTimeout(async () => {
       const index = await loadSearchIndex().catch(() => ({ guides: [], articles: [] }))
       if (requestId !== latest.current) return
-      const guides = rank(index.guides, query, (guide) => [ct(guide.name), [guide.aka ?? "", guide.slug], [ct(guide.category), ct(guide.line), ct(guide.about), guide.name, guide.line]], 6)
-      const articles = rank(index.articles, query, (article) => [ct(article.title), [ct(article.kind), ...article.peptides], [ct(article.dek), article.title, article.dek]], 6)
+      const guides = rank(
+        index.guides,
+        query,
+        (guide) => [
+          ct(guide.name),
+          [guide.aka ?? "", guide.slug],
+          [ct(guide.category), ct(guide.line), ct(guide.about), guide.name, guide.line],
+        ],
+        6,
+      )
+      const articles = rank(
+        index.articles,
+        query,
+        (article) => [
+          ct(article.title),
+          [ct(article.kind), ...article.peptides],
+          [ct(article.dek), article.title, article.dek],
+        ],
+        6,
+      )
       setOptions([
-        ...guides.map((guide): Result => ({ group: "Peptide guides", key: `g-${guide.slug}`, label: guide.name, href: `/learn/${guide.slug}`, guide })),
-        ...articles.map((article): Result => ({ group: "News & articles", key: `a-${article.slug}`, label: article.title, href: `/news/${article.slug}`, article })),
+        ...guides.map((guide): Result => ({
+          group: "Peptide guides",
+          key: `g-${guide.slug}`,
+          label: guide.name,
+          href: `/learn/${guide.slug}`,
+          guide,
+        })),
+        ...articles.map((article): Result => ({
+          group: "News & articles",
+          key: `a-${article.slug}`,
+          label: article.title,
+          href: `/news/${article.slug}`,
+          article,
+        })),
       ])
       setLoading(false)
     }, 220)
@@ -101,21 +135,62 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
       slots={inline ? { popper: InlineResults } : undefined}
       slotProps={{
         listbox: { sx: { maxHeight: inline ? "min(56vh, 520px)" : "min(60vh, 520px)", py: inline ? 0 : 1 } },
-        paper: inline ? { elevation: 0, sx: { boxShadow: "none", border: "1px solid", borderColor: "divider", borderRadius: "10px" } } : undefined,
+        paper: inline
+          ? {
+              elevation: 0,
+              sx: { boxShadow: "none", border: "1px solid", borderColor: "divider", borderRadius: "10px" },
+            }
+          : undefined,
       }}
       renderGroup={(params) => (
         <Box component="li" key={params.key} sx={{ listStyle: "none" }}>
-          <Typography component="div" sx={{ position: "sticky", top: inline ? 0 : -8, zIndex: 1, px: 2, py: 1, bgcolor: brand.white, fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "brand.blue", borderTop: "1px solid", borderColor: "divider" }}>{translateAction(act, params.group)}</Typography>
-          <Box component="ul" sx={{ p: 0 }}>{params.children}</Box>
+          <Typography
+            component="div"
+            sx={{
+              position: "sticky",
+              top: inline ? 0 : -8,
+              zIndex: 1,
+              px: 2,
+              py: 1,
+              bgcolor: brand.white,
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: ".08em",
+              textTransform: "uppercase",
+              color: "brand.blue",
+              borderTop: "1px solid",
+              borderColor: "divider",
+            }}
+          >
+            {translateAction(act, params.group)}
+          </Typography>
+          <Box component="ul" sx={{ p: 0 }}>
+            {params.children}
+          </Box>
         </Box>
       )}
       renderOption={(props, option) => {
         const { key, ...rest } = props as typeof props & { key: string }
         return (
-          <Box component="li" key={key} {...rest} sx={{ gap: 1.5, alignItems: "center !important", py: "8px !important", minHeight: 60 }}>
-            {option.group === "Peptide guides"
-              ? <ContentRow icon="molecule" title={ct(option.guide.name)} detail={option.guide.aka ? `${option.guide.aka} · ${ct(option.guide.line)}` : ct(option.guide.line)} />
-              : <ContentRow icon="news" title={ct(option.article.title)} detail={`${ct(option.article.kind)} · ${formatArticleDate(option.article.date, ct.locale)}`} />}
+          <Box
+            component="li"
+            key={key}
+            {...rest}
+            sx={{ gap: 1.5, alignItems: "center !important", py: "8px !important", minHeight: 60 }}
+          >
+            {option.group === "Peptide guides" ? (
+              <ContentRow
+                icon="molecule"
+                title={ct(option.guide.name)}
+                detail={option.guide.aka ? `${option.guide.aka} · ${ct(option.guide.line)}` : ct(option.guide.line)}
+              />
+            ) : (
+              <ContentRow
+                icon="news"
+                title={ct(option.article.title)}
+                detail={`${ct(option.article.kind)} · ${formatArticleDate(option.article.date, ct.locale)}`}
+              />
+            )}
           </Box>
         )
       }}
@@ -160,13 +235,39 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
 }
 
 function ContentRow({ icon, title, detail }: { icon: "molecule" | "news"; title: string; detail: string }) {
-  return <>
-    <Box aria-hidden sx={{ width: 48, height: 48, flexShrink: 0, borderRadius: "8px", display: "grid", placeItems: "center", bgcolor: "brand.mintWash", color: "brand.blue" }}>
-      <Icon name={icon} sx={{ fontSize: 22 }} />
-    </Box>
-    <Box sx={{ flex: 1, minWidth: 0 }}>
-      <Typography sx={{ fontWeight: 600, fontSize: 14, lineHeight: 1.4 }}>{title}</Typography>
-      <Typography sx={{ color: "text.secondary", fontSize: 12, lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{detail}</Typography>
-    </Box>
-  </>
+  return (
+    <>
+      <Box
+        aria-hidden
+        sx={{
+          width: 48,
+          height: 48,
+          flexShrink: 0,
+          borderRadius: "8px",
+          display: "grid",
+          placeItems: "center",
+          bgcolor: "brand.mintWash",
+          color: "brand.blue",
+        }}
+      >
+        <Icon name={icon} sx={{ fontSize: 22 }} />
+      </Box>
+      <Box sx={{ flex: 1, minWidth: 0 }}>
+        <Typography sx={{ fontWeight: 600, fontSize: 14, lineHeight: 1.4 }}>{title}</Typography>
+        <Typography
+          sx={{
+            color: "text.secondary",
+            fontSize: 12,
+            lineHeight: 1.5,
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {detail}
+        </Typography>
+      </Box>
+    </>
+  )
 }

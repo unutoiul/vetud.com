@@ -48,7 +48,11 @@ export type PriceRow = {
   rules_count?: number | null
 }
 
-export type VariantPrices = { id: string; price_set?: { prices?: (PriceRow | null)[] | null } | null; excluded?: boolean }
+export type VariantPrices = {
+  id: string
+  price_set?: { prices?: (PriceRow | null)[] | null } | null
+  excluded?: boolean
+}
 
 export type SalePricePlan = {
   create: CreatePriceListPriceWorkflowDTO[]
@@ -58,21 +62,29 @@ export type SalePricePlan = {
 
 /** The regular price: not from a price list, no region or quantity rules. */
 const isRegularPrice = (price: PriceRow) =>
-  !price.price_list_id && !price.rules_count && (price.min_quantity == null || Number(price.min_quantity) <= 1) && price.max_quantity == null
+  !price.price_list_id &&
+  !price.rules_count &&
+  (price.min_quantity == null || Number(price.min_quantity) <= 1) &&
+  price.max_quantity == null
 
 /**
  * Brings a sale price list in line with the catalog: one price per variant and currency, the
  * regular price less the percentage. Existing prices are updated in place, missing ones created,
  * and prices for currencies a variant no longer has (or duplicates) removed. A new sale passes null.
  */
-export function planSalePrices(variants: VariantPrices[], priceListId: string | null, percentOff: number): SalePricePlan {
+export function planSalePrices(
+  variants: VariantPrices[],
+  priceListId: string | null,
+  percentOff: number,
+): SalePricePlan {
   const plan: SalePricePlan = { create: [], update: [], delete: [] }
   for (const variant of variants) {
     const prices = (variant.price_set?.prices ?? []).filter((price): price is PriceRow => !!price)
     const regular = new Map<string, number>()
     for (const price of prices) {
       const currency = price.currency_code.toLowerCase()
-      if (!variant.excluded && isRegularPrice(price) && !regular.has(currency)) regular.set(currency, Number(price.amount))
+      if (!variant.excluded && isRegularPrice(price) && !regular.has(currency))
+        regular.set(currency, Number(price.amount))
     }
     const current = new Map<string, PriceRow>()
     for (const price of priceListId ? prices.filter((item) => item.price_list_id === priceListId) : []) {
@@ -87,7 +99,8 @@ export function planSalePrices(variants: VariantPrices[], priceListId: string | 
       if (!existing) plan.create.push({ variant_id: variant.id, currency_code: currency, amount: target })
       // The currency is required: Medusa matches price list updates by price set and currency, so
       // without it every update for a variant collapses into one.
-      else if (Math.abs(Number(existing.amount) - target) > 0.000001) plan.update.push({ id: existing.id, variant_id: variant.id, currency_code: currency, amount: target })
+      else if (Math.abs(Number(existing.amount) - target) > 0.000001)
+        plan.update.push({ id: existing.id, variant_id: variant.id, currency_code: currency, amount: target })
     }
   }
   return plan
@@ -96,7 +109,10 @@ export function planSalePrices(variants: VariantPrices[], priceListId: string | 
 export type SaleState = "live" | "scheduled" | "ended" | "off"
 
 /** What a shopper sees right now: Medusa applies an active price list only between its dates. */
-export function saleState(sale: { status?: string | null; starts_at?: string | Date | null; ends_at?: string | Date | null }, now = new Date()): SaleState {
+export function saleState(
+  sale: { status?: string | null; starts_at?: string | Date | null; ends_at?: string | Date | null },
+  now = new Date(),
+): SaleState {
   if (sale.status !== "active") return "off"
   if (sale.ends_at && new Date(sale.ends_at) <= now) return "ended"
   if (sale.starts_at && new Date(sale.starts_at) > now) return "scheduled"

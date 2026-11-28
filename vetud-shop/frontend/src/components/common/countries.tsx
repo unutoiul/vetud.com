@@ -34,7 +34,11 @@ const ALIASES: Record<string, string> = {
   kr: "South Korea",
 }
 
-const normalize = (text: string) => text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase()
+const normalize = (text: string) =>
+  text
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .toLowerCase()
 
 /** Countries with names in the visitor's language, sorted for that language. */
 export function useCountryChoices(countries: { code: string; dial?: string; main?: boolean }[]): CountryChoice[] {
@@ -42,7 +46,12 @@ export function useCountryChoices(countries: { code: string; dial?: string; main
   return useMemo(() => {
     const names = new Intl.DisplayNames([locale], { type: "region" })
     return countries
-      .map(({ code, dial, main }) => ({ code: code.toLowerCase(), label: names.of(code.toUpperCase()) ?? code.toUpperCase(), dial, main }))
+      .map(({ code, dial, main }) => ({
+        code: code.toLowerCase(),
+        label: names.of(code.toUpperCase()) ?? code.toUpperCase(),
+        dial,
+        main,
+      }))
       .sort((a, b) => a.label.localeCompare(b.label, locale))
   }, [countries, locale])
 }
@@ -67,22 +76,39 @@ export function filterCountryChoices(options: CountryChoice[], { inputValue }: {
     return label.split(/[\s-]+/).some((word) => word.startsWith(query)) ? 2 : 3
   }
   return options
-    .filter((option) => `${normalize(option.label)} ${option.code} ${normalize(ALIASES[option.code] ?? "")}`.includes(query))
+    .filter((option) =>
+      `${normalize(option.label)} ${option.code} ${normalize(ALIASES[option.code] ?? "")}`.includes(query),
+    )
     .sort((a, b) => rank(a) - rank(b))
 }
 
 /** One row in a country list: flag, name, and the calling code when there is one. */
 export function CountryChoiceRow({ choice }: { choice: CountryChoice }) {
-  return <>
-    <CountryFlag code={choice.code} />
-    <Box component="span" sx={{ flex: 1, minWidth: 0 }}>{choice.label}</Box>
-    {choice.dial ? <Box component="span" sx={{ color: "text.secondary", fontVariantNumeric: "tabular-nums", pl: 1.5 }}>+{choice.dial}</Box> : null}
-  </>
+  return (
+    <>
+      <CountryFlag code={choice.code} />
+      <Box component="span" sx={{ flex: 1, minWidth: 0 }}>
+        {choice.label}
+      </Box>
+      {choice.dial ? (
+        <Box component="span" sx={{ color: "text.secondary", fontVariantNumeric: "tabular-nums", pl: 1.5 }}>
+          +{choice.dial}
+        </Box>
+      ) : null}
+    </>
+  )
 }
 
 /** `renderOption` for an Autocomplete of countries. */
-export function renderCountryOption({ key, ...props }: HTMLAttributes<HTMLLIElement> & { key: Key }, choice: CountryChoice) {
-  return <Box component="li" key={key} {...props} sx={{ gap: 1.25, minHeight: 44 }}><CountryChoiceRow choice={choice} /></Box>
+export function renderCountryOption(
+  { key, ...props }: HTMLAttributes<HTMLLIElement> & { key: Key },
+  choice: CountryChoice,
+) {
+  return (
+    <Box component="li" key={key} {...props} sx={{ gap: 1.25, minHeight: 44 }}>
+      <CountryChoiceRow choice={choice} />
+    </Box>
+  )
 }
 
 /**
@@ -92,5 +118,9 @@ export function renderCountryOption({ key, ...props }: HTMLAttributes<HTMLLIElem
 export function InlineCountryList(allProps: PopperProps & { ownerState?: unknown }) {
   const { open, style, children, className, role, id } = allProps
   if (!open) return null
-  return <div className={className} role={role} id={id} style={{ ...style, position: "relative", width: "100%" }}>{children as ReactNode}</div>
+  return (
+    <div className={className} role={role} id={id} style={{ ...style, position: "relative", width: "100%" }}>
+      {children as ReactNode}
+    </div>
+  )
 }

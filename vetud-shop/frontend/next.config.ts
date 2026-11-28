@@ -22,9 +22,21 @@ const checkoutCsp = [
 // Temporary redirects until the move has settled.
 const educationUrl = (process.env.NEXT_PUBLIC_EDUCATION_URL || "https://www.vetud.com").replace(/\/$/, "")
 const educationRedirects = [
-  { source: "/:country(fr|lu)/:section(learn|news|videos|community)/:path*", destination: `${educationUrl}/fr/:section/:path*`, permanent: false },
-  { source: "/:country([a-z]{2})/:section(learn|news|videos|community)/:path*", destination: `${educationUrl}/en/:section/:path*`, permanent: false },
-  { source: "/:section(learn|news|community)/:path*", destination: `${educationUrl}/en/:section/:path*`, permanent: false },
+  {
+    source: "/:country(fr|lu)/:section(learn|news|videos|community)/:path*",
+    destination: `${educationUrl}/fr/:section/:path*`,
+    permanent: false,
+  },
+  {
+    source: "/:country([a-z]{2})/:section(learn|news|videos|community)/:path*",
+    destination: `${educationUrl}/en/:section/:path*`,
+    permanent: false,
+  },
+  {
+    source: "/:section(learn|news|community)/:path*",
+    destination: `${educationUrl}/en/:section/:path*`,
+    permanent: false,
+  },
   // /videos/<file> is this site's own product video, so only the page itself moves.
   { source: "/videos", destination: `${educationUrl}/en/videos`, permanent: false },
   // The old single Learn page, before it grew into the learning hub.
@@ -60,7 +72,10 @@ const nextConfig: NextConfig = {
   // The Medusa Admin lives on the backend under /app, at admin.vetudpeptides.com in production
   // (MEDUSA_ADMIN_URL, owner 2026-11-25). This makes vetudpeptides.com/admin a shortcut to it.
   async redirects() {
-    const adminUrl = (process.env.MEDUSA_ADMIN_URL || `${(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")}/app`).replace(/\/$/, "")
+    const adminUrl = (
+      process.env.MEDUSA_ADMIN_URL ||
+      `${(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000").replace(/\/$/, "")}/app`
+    ).replace(/\/$/, "")
     return [
       ...educationRedirects,
       { source: "/:countryCode/legal/shipping-returns", destination: "/:countryCode/legal/shipping", permanent: true },
@@ -68,7 +83,11 @@ const nextConfig: NextConfig = {
       { source: "/:countryCode/discover", destination: "/:countryCode/shop", permanent: true },
       { source: "/discover", destination: "/shop", permanent: true },
       // The unspecified Melanotan kit was replaced by Melanotan I and II (2026-11-04).
-      { source: "/:countryCode/products/melanotan", destination: "/:countryCode/shop?category=beauty", permanent: false },
+      {
+        source: "/:countryCode/products/melanotan",
+        destination: "/:countryCode/shop?category=beauty",
+        permanent: false,
+      },
       { source: "/admin", destination: adminUrl, permanent: false },
       { source: "/admin/:path*", destination: adminUrl, permanent: false },
     ]

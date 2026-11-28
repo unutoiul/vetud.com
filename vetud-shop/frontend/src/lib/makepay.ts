@@ -16,12 +16,17 @@ export const MAKEPAY_STORAGE = {
 /** Reads and validates the hosted-checkout redirect that MakePay put on the payment session. */
 export function readMakePayRedirect(cart: HttpTypes.StoreCart) {
   const session = cart.payment_collection?.payment_sessions?.find(
-    (candidate) => candidate.provider_id === MAKEPAY_PROVIDER_ID
+    (candidate) => candidate.provider_id === MAKEPAY_PROVIDER_ID,
   )
   const nextAction = session?.data?.next_action as { type?: unknown; url?: unknown } | undefined
   const returnState = session?.data?.return_state
 
-  if (nextAction?.type !== "redirect" || typeof nextAction.url !== "string" || typeof returnState !== "string" || !returnState) {
+  if (
+    nextAction?.type !== "redirect" ||
+    typeof nextAction.url !== "string" ||
+    typeof returnState !== "string" ||
+    !returnState
+  ) {
     throw new Error("The crypto payment could not be prepared. Please try again or choose another payment method.")
   }
   const url = new URL(nextAction.url)

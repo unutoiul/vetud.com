@@ -12,14 +12,21 @@ const PAYPAL_PROVIDER_ID = "pp_paypal_paypal"
 export default async function retirePaypal({ container }: ExecArgs) {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
-  const { data: regions } = await query.graph({ entity: "region", fields: ["id", "name", "payment_providers.id"], pagination: { take: 1000 } })
+  const { data: regions } = await query.graph({
+    entity: "region",
+    fields: ["id", "name", "payment_providers.id"],
+    pagination: { take: 1000 },
+  })
 
   let changed = 0
   for (const region of regions) {
     const providers = (region.payment_providers ?? []).flatMap((provider) => (provider?.id ? [provider.id] : []))
     if (!providers.includes(PAYPAL_PROVIDER_ID)) continue
     await updateRegionsWorkflow(container).run({
-      input: { selector: { id: region.id }, update: { payment_providers: providers.filter((id) => id !== PAYPAL_PROVIDER_ID) } },
+      input: {
+        selector: { id: region.id },
+        update: { payment_providers: providers.filter((id) => id !== PAYPAL_PROVIDER_ID) },
+      },
     })
     changed++
   }

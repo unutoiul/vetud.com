@@ -7,7 +7,11 @@ import { formatCurrency } from "../../lib/currencies"
  */
 
 function dateTime(value: string | Date) {
-  return new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(new Date(value)) + " UTC"
+  return (
+    new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(
+      new Date(value),
+    ) + " UTC"
+  )
 }
 
 function countryName(code?: string | null) {
@@ -62,7 +66,12 @@ export function guestCheckoutAlert(data: GuestCheckoutAlertData) {
     subject: `Guest checkout started: ${data.email} (${total})`,
     variables: {
       CUSTOMER_EMAIL: data.email,
-      CART: data.items.map((item) => `${item.title} × ${item.quantity} · ${formatCurrency(item.unit_price * item.quantity, data.currency_code)}`).join("\n"),
+      CART: data.items
+        .map(
+          (item) =>
+            `${item.title} × ${item.quantity} · ${formatCurrency(item.unit_price * item.quantity, data.currency_code)}`,
+        )
+        .join("\n"),
       CART_VALUE: total,
       REGION: data.region || "Not set",
       ACCOUNT: data.account_exists ? "This email has an account, but they aren't signed in" : "No account",

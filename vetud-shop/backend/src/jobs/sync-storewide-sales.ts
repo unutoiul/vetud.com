@@ -20,7 +20,9 @@ export default async function syncStorewideSales(container: MedusaContainer) {
     try {
       const { result } = await syncStorewideSaleWorkflow(container).run({ input: { id: sale.id } })
       if (result.created + result.updated + result.deleted) {
-        logger.info(`Sale ${sale.id}: ${result.created} prices added, ${result.updated} updated, ${result.deleted} removed`)
+        logger.info(
+          `Sale ${sale.id}: ${result.created} prices added, ${result.updated} updated, ${result.deleted} removed`,
+        )
       }
     } catch (error) {
       logger.error(`Couldn't recalculate sale ${sale.id}: ${error instanceof Error ? error.message : String(error)}`)

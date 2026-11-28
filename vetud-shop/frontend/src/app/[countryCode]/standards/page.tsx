@@ -1,7 +1,13 @@
 import { localizeMetadata } from "@/i18n/metadata"
 import { storefrontAlternates } from "@/lib/storefront-seo"
 import { useContentTranslator } from "@/i18n/use-content-translator"
-import { CheckIcon, DocumentIcon as DescriptionOutlinedIcon, PackageIcon as Inventory2OutlinedIcon, SupportIcon as SupportAgentOutlinedIcon, SlidersIcon as TuneOutlinedIcon } from "@/components/brand/Icon"
+import {
+  CheckIcon,
+  DocumentIcon as DescriptionOutlinedIcon,
+  PackageIcon as Inventory2OutlinedIcon,
+  SupportIcon as SupportAgentOutlinedIcon,
+  SlidersIcon as TuneOutlinedIcon,
+} from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
 import Paper from "@mui/material/Paper"
@@ -17,10 +23,10 @@ import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  alternates: await storefrontAlternates("/standards"),
-  title: "Our standards",
-  description: "How Vetud documents, describes, packs and supports every research material it sells.",
-})
+    alternates: await storefrontAlternates("/standards"),
+    title: "Our standards",
+    description: "How Vetud documents, describes, packs and supports every research material it sells.",
+  })
 }
 
 const PRINCIPLES = [
@@ -97,16 +103,33 @@ export default function StandardsPage() {
       <PageHeader
         eyebrow={ct("Our standards")}
         title={ct("Precision is a practice.")}
-        description={ct("Clear information is part of the material. These are the commitments behind every product we list.")}
+        description={ct(
+          "Clear information is part of the material. These are the commitments behind every product we list.",
+        )}
       />
 
       <Section tone="white">
         <Grid container spacing={2}>
           {PRINCIPLES.map(({ icon: Icon, title, text }, index) => (
             <Grid key={title} size={{ xs: 12, sm: 6, md: 3 }}>
-              <Paper variant="outlined" sx={{ p: { xs: 3, md: 3.5 }, height: "100%", bgcolor: brand.slate25, borderRadius: 3 }}>
+              <Paper
+                variant="outlined"
+                sx={{ p: { xs: 3, md: 3.5 }, height: "100%", bgcolor: brand.slate25, borderRadius: 3 }}
+              >
                 <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                  <Box sx={{ width: 48, height: 48, bgcolor: brand.white, border: "1px solid", borderColor: "divider", borderRadius: 2.5, display: "grid", placeItems: "center", color: "secondary.main" }}>
+                  <Box
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      bgcolor: brand.white,
+                      border: "1px solid",
+                      borderColor: "divider",
+                      borderRadius: 2.5,
+                      display: "grid",
+                      placeItems: "center",
+                      color: "secondary.main",
+                    }}
+                  >
                     <Icon fontSize="small" />
                   </Box>
                   <Typography variant="mono" sx={{ color: "text.secondary" }}>

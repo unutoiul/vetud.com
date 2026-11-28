@@ -29,7 +29,10 @@ export type Article = {
 
 export const LEARNING_GUIDES: Article[] = [
   {
-    slug: "from-cells-to-human-trials", date: "2026-11-02", kind: "Guide", topic: "Reading the evidence",
+    slug: "from-cells-to-human-trials",
+    date: "2026-11-02",
+    kind: "Guide",
+    topic: "Reading the evidence",
     headline: ["From cells to people: ", "understand the research stages"],
     dek: "A promising mechanism, an animal experiment and a human trial answer different questions. Here is how to tell which kind of evidence you are reading.",
     art: "documents",
@@ -47,25 +50,48 @@ export const LEARNING_GUIDES: Article[] = [
       "A conference abstract or company announcement may report early findings with limited detail. Look for a full study report and its methods before treating a headline as a complete account. A video can explain the story, but the original source lets you check the actual experiment.",
       "Finally, keep uncertainty visible. The absence of a reported serious event in a small study does not settle uncommon or long-term risks. The study’s formulation and patient group also matter when interpreting what its result applies to.",
     ],
-    means: "Read the model, comparison, outcome and follow-up before the headline. Use the videos below to build the vocabulary, then return to the original research linked on each profile.",
-    unknowns: "No single study answers every question. Findings may change with a different population, formulation, exposure or duration, and later research may revise an early conclusion.",
+    means:
+      "Read the model, comparison, outcome and follow-up before the headline. Use the videos below to build the vocabulary, then return to the original research linked on each profile.",
+    unknowns:
+      "No single study answers every question. Findings may change with a different population, formulation, exposure or duration, and later research may revise an early conclusion.",
     peptides: ["ptt-a", "bpc-157", "retatrutide"],
     sources: [
-      { label: "Step 2: Preclinical Research", detail: "US Food and Drug Administration · drug-development education", url: "https://www.fda.gov/patients/drug-development-process/step-2-preclinical-research" },
-      { label: "Step 3: Clinical Research", detail: "US Food and Drug Administration · human trials and research phases", url: "https://www.fda.gov/patients/drug-development-process/step-3-clinical-research" },
-      { label: "Clinical Trials: Information for Participants", detail: "National Institute of Mental Health · NIH videos and explanations", url: "https://www.nimh.nih.gov/health/trials" },
+      {
+        label: "Step 2: Preclinical Research",
+        detail: "US Food and Drug Administration · drug-development education",
+        url: "https://www.fda.gov/patients/drug-development-process/step-2-preclinical-research",
+      },
+      {
+        label: "Step 3: Clinical Research",
+        detail: "US Food and Drug Administration · human trials and research phases",
+        url: "https://www.fda.gov/patients/drug-development-process/step-3-clinical-research",
+      },
+      {
+        label: "Clinical Trials: Information for Participants",
+        detail: "National Institute of Mental Health · NIH videos and explanations",
+        url: "https://www.nimh.nih.gov/health/trials",
+      },
     ],
   },
   {
-    slug: "body-weight-fat-and-muscle-results", date: "2026-11-02", kind: "Guide", topic: "Reading the evidence",
+    slug: "body-weight-fat-and-muscle-results",
+    date: "2026-11-02",
+    kind: "Guide",
+    topic: "Reading the evidence",
     headline: ["Body weight, fat and muscle: ", "read the right result"],
     dek: "A percentage means little without its denominator. Learn why changes in body weight, a fat deposit and a measurement in rats belong in different comparisons.",
     art: "bars",
     glance: [
       { label: "Body weight", value: "The change in total weight, usually relative to starting weight" },
-      { label: "Fat volume", value: "A measured fat compartment, reported in units such as mL or as its own percentage change" },
+      {
+        label: "Fat volume",
+        value: "A measured fat compartment, reported in units such as mL or as its own percentage change",
+      },
       { label: "Muscle outcomes", value: "Check whether the study measured mass, size, strength or function" },
-      { label: "Control comparison", value: "A difference versus a control group is not automatically the change from baseline" },
+      {
+        label: "Control comparison",
+        value: "A difference versus a control group is not automatically the change from baseline",
+      },
     ],
     body: [
       "Start by naming the outcome. Total body weight, visceral-fat volume and muscle strength are different measurements. Giving each a percentage sign does not make them interchangeable.",
@@ -75,11 +101,17 @@ export const LEARNING_GUIDES: Article[] = [
       "The examples in our library make this distinction concrete. Retatrutide trials report average human body-weight change. The cited CBL-514 work examines fat deposits, while the PTT-A findings discussed here come from animal experiments. Their numbers answer different questions.",
       "Even human weight-loss trials can differ in participants, treatment duration, accompanying care and analysis. Use the chart to explore reported results, then open each source before deciding how closely two studies can be compared.",
     ],
-    means: "Ask: percentage of what, compared with what, in which population and over how long? Those four questions prevent many misleading comparisons.",
-    unknowns: "A single percentage cannot establish long-term benefit, tissue-specific change or safety. An average also does not predict the result for an individual.",
+    means:
+      "Ask: percentage of what, compared with what, in which population and over how long? Those four questions prevent many misleading comparisons.",
+    unknowns:
+      "A single percentage cannot establish long-term benefit, tissue-specific change or safety. An average also does not predict the result for an individual.",
     peptides: ["retatrutide", "cbl-514", "ptt-a", "tesamorelin"],
     sources: [
-      { label: "Retatrutide phase 2 obesity trial", detail: "Jastreboff et al. · New England Journal of Medicine · human body-weight outcome", url: "https://pubmed.ncbi.nlm.nih.gov/37366315/" },
+      {
+        label: "Retatrutide phase 2 obesity trial",
+        detail: "Jastreboff et al. · New England Journal of Medicine · human body-weight outcome",
+        url: "https://pubmed.ncbi.nlm.nih.gov/37366315/",
+      },
       ...CBL_514_SOURCES.map(({ title, ...source }) => ({ label: title, ...source })),
       ...PTT_A_SOURCES.slice(0, 1).map(({ title, ...source }) => ({ label: title, ...source })),
     ],
@@ -98,8 +130,14 @@ export const ARTICLES: Article[] = [
     art: "triple",
     glance: [
       { label: "Compound", value: "PTT-A, an experimental peptide tetra-agonist from Pep2Tango" },
-      { label: "Evidence reviewed", value: "ADA 2024 and 2025 conference abstracts, plus the developer’s launch announcement" },
-      { label: "Study model", value: "Cells and rodents; the 2025 comparison used diet-induced obese rats for 21 days" },
+      {
+        label: "Evidence reviewed",
+        value: "ADA 2024 and 2025 conference abstracts, plus the developer’s launch announcement",
+      },
+      {
+        label: "Study model",
+        value: "Cells and rodents; the 2025 comparison used diet-induced obese rats for 21 days",
+      },
       { label: "Human weight loss", value: "Not established in the cited research" },
       { label: "Versus retatrutide", value: "No human head-to-head result in these sources" },
     ],
@@ -109,8 +147,10 @@ export const ARTICLES: Article[] = [
       "The weight result is expressed relative to the vehicle-control animals. It should not be read as the percentage of starting weight lost by a person. Our comparison shows this animal result separately from the human trials.",
       "Receptor counts also cannot rank medicines: four targets do not automatically outperform three. A claim that PTT-A beats retatrutide in people would require suitable human evidence that these sources do not provide.",
     ],
-    means: "PTT-A is an early research approach worth following. It does not yet have a comparable human average weight-loss percentage in the sources reviewed here.",
-    unknowns: "Human effectiveness, muscle preservation, tolerability and long-term safety remain unresolved by these preclinical sources. Conference abstracts provide less detail than full study reports.",
+    means:
+      "PTT-A is an early research approach worth following. It does not yet have a comparable human average weight-loss percentage in the sources reviewed here.",
+    unknowns:
+      "Human effectiveness, muscle preservation, tolerability and long-term safety remain unresolved by these preclinical sources. Conference abstracts provide less detail than full study reports.",
     peptides: ["ptt-a", "retatrutide", "tirzepatide"],
     sources: PTT_A_SOURCES.map(({ title, ...source }) => ({ label: title, ...source })),
   },
@@ -124,8 +164,14 @@ export const ARTICLES: Article[] = [
     dek: "In a controlled trial, a serum containing RLX-201 improved firmness, elasticity and sagging compared with the same cream without it.",
     art: "skin",
     glance: [
-      { label: "Who took part", value: "47 women with moderate to severe sun-damaged facial skin; 31 received RLX-201 and 16 received vehicle" },
-      { label: "How it was tested", value: "Applied twice a day for 12 weeks; randomized and double-blind, against the same cream without RLX-201" },
+      {
+        label: "Who took part",
+        value: "47 women with moderate to severe sun-damaged facial skin; 31 received RLX-201 and 16 received vehicle",
+      },
+      {
+        label: "How it was tested",
+        value: "Applied twice a day for 12 weeks; randomized and double-blind, against the same cream without RLX-201",
+      },
       { label: "What improved", value: "Firmness, elasticity, sagging and overall skin quality, starting from week 2" },
       { label: "What people said", value: "More than 85% reported better radiance, texture and hydration" },
       { label: "Published in", value: "Journal of Cosmetic Dermatology, October 2026" },
@@ -137,11 +183,18 @@ export const ARTICLES: Article[] = [
       "The RLX-201 group had significantly firmer, more elastic and less saggy skin than the comparison group, and the difference showed up as early as week 2. Measurements with a device that tests how skin stretches and springs back agreed. More than 85% of the women using it said their skin looked more radiant, smoother and more hydrated.",
       "In lab-grown human skin, the formula cut a marker of TORC1 activity by about 91%, a sign it was doing what it was designed to do.",
     ],
-    means: "It’s an early sign that skin care aimed at the biology of aging, not just moisture or collagen, can make a visible difference.",
-    unknowns: "This is a single-center, 12-week trial with 47 participants. Some authors are affiliated with the developer. Longer, independent studies are needed. RLX-201 is not a peptide, and this trial did not test GHK-Cu.",
+    means:
+      "It’s an early sign that skin care aimed at the biology of aging, not just moisture or collagen, can make a visible difference.",
+    unknowns:
+      "This is a single-center, 12-week trial with 47 participants. Some authors are affiliated with the developer. Longer, independent studies are needed. RLX-201 is not a peptide, and this trial did not test GHK-Cu.",
     peptides: ["ghk-cu"],
     sources: [
-      { label: "A novel TORC1 inhibitor, RLX-201, improves skin health, biomechanics, and extracellular matrix integrity in a double-blind clinical study", detail: "Draelos et al. · Journal of Cosmetic Dermatology · 2026", url: "https://doi.org/10.1111/jocd.71219" },
+      {
+        label:
+          "A novel TORC1 inhibitor, RLX-201, improves skin health, biomechanics, and extracellular matrix integrity in a double-blind clinical study",
+        detail: "Draelos et al. · Journal of Cosmetic Dermatology · 2026",
+        url: "https://doi.org/10.1111/jocd.71219",
+      },
     ],
   },
   {
@@ -153,11 +206,21 @@ export const ARTICLES: Article[] = [
     dek: "A small MRI analysis found a 12% reduction in visceral-fat volume, not body weight. A possible effect on weight regain after GLP-1 medicines is still an animal finding.",
     art: "cells",
     glance: [
-      { label: "Who took part", value: "MRI subgroup from two phase 2 trials; 41 at baseline, 40 with later follow-up data; BMI 22 to 30" },
-      { label: "How it was tested", value: "Injections into the lower belly every 3 weeks for up to 12 weeks, against a placebo" },
+      {
+        label: "Who took part",
+        value: "MRI subgroup from two phase 2 trials; 41 at baseline, 40 with later follow-up data; BMI 22 to 30",
+      },
+      {
+        label: "How it was tested",
+        value: "Injections into the lower belly every 3 weeks for up to 12 weeks, against a placebo",
+      },
       { label: "What was measured", value: "Visceral-fat volume on MRI, not average whole-body weight loss" },
       { label: "Result", value: "−12.01% on CBL-514 vs +5.68% on placebo, 4 weeks after the last injection" },
-      { label: "Status", value: "The visceral-fat analysis is a preliminary EASD 2026 report; a separate subcutaneous-fat trial is published" },
+      {
+        label: "Status",
+        value:
+          "The visceral-fat analysis is a preliminary EASD 2026 report; a separate subcutaneous-fat trial is published",
+      },
     ],
     body: [
       "Most weight-loss medicines shrink fat cells. An experimental drug called CBL-514 does something different: it makes fat cells self-destruct.",
@@ -168,8 +231,10 @@ export const ARTICLES: Article[] = [
       "Animal tests added an interesting twist. Rats given CBL-514 together with the GLP-1 medicine tirzepatide lost more weight than rats on tirzepatide alone, and regained less when tirzepatide was stopped. The idea: with fewer fat cells left, there’s less room for fat to come back.",
       "Side effects were mostly mild, short-lived reactions where the injections were given, such as pain, swelling and redness. No serious side effects were reported.",
     ],
-    means: "The studies address local fat deposits and an early hypothesis about weight regain. The fat-volume result cannot be ranked alongside average human body-weight loss with semaglutide, tirzepatide or retatrutide.",
-    unknowns: "The MRI subgroup was small and the visceral-fat report is preliminary. Reduced weight regain after stopping a GLP-1 medicine has not been established in people. Long-term safety and whole-body weight outcomes need further study.",
+    means:
+      "The studies address local fat deposits and an early hypothesis about weight regain. The fat-volume result cannot be ranked alongside average human body-weight loss with semaglutide, tirzepatide or retatrutide.",
+    unknowns:
+      "The MRI subgroup was small and the visceral-fat report is preliminary. Reduced weight regain after stopping a GLP-1 medicine has not been established in people. Long-term safety and whole-body weight outcomes need further study.",
     peptides: ["cbl-514", "tirzepatide", "semaglutide"],
     sources: CBL_514_SOURCES.map(({ title, ...source }) => ({ label: title, ...source })),
   },
@@ -195,12 +260,22 @@ export const ARTICLES: Article[] = [
       "Advisory committee recommendations are non-binding. Inclusion on the compounding list and approval of a finished medicine are separate regulatory decisions.",
       "For what is actually known about these peptides in people, read [BPC-157’s human evidence](/news/bpc-157-human-evidence), [Semax and Selank](/news/semax-selank-russian-nasal-peptides), [Epitalon](/news/epitalon-telomeres-cell-study) and [DSIP](/news/dsip-sleep-peptide-riddle).",
     ],
-    means: "If the FDA follows the panel, licensed pharmacies could one day prepare BPC-157 for individual patients with a prescription. That would bring some quality control to a peptide that is mostly sold online today without any oversight.",
-    unknowns: "Permission to compound is not the same as approval as a medicine. Even then, there would still be no large human trials showing that BPC-157 works or is safe.",
+    means:
+      "If the FDA follows the panel, licensed pharmacies could one day prepare BPC-157 for individual patients with a prescription. That would bring some quality control to a peptide that is mostly sold online today without any oversight.",
+    unknowns:
+      "Permission to compound is not the same as approval as a medicine. Even then, there would still be no large human trials showing that BPC-157 works or is safe.",
     peptides: ["bpc-157", "kpv", "tb-500", "mots-c", "dsip", "semax", "epitalon"],
     sources: [
-      { label: "July 23–24, 2026: Meeting of the Pharmacy Compounding Advisory Committee", detail: "US Food and Drug Administration", url: "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026" },
-      { label: "Bulk drug substances nominated for compounding under Section 503A", detail: "US Food and Drug Administration · updated May 14, 2026 (PDF)", url: "https://www.fda.gov/media/94155/download" },
+      {
+        label: "July 23–24, 2026: Meeting of the Pharmacy Compounding Advisory Committee",
+        detail: "US Food and Drug Administration",
+        url: "https://www.fda.gov/advisory-committees/advisory-committee-calendar/july-23-24-2026-meeting-pharmacy-compounding-advisory-committee-07232026",
+      },
+      {
+        label: "Bulk drug substances nominated for compounding under Section 503A",
+        detail: "US Food and Drug Administration · updated May 14, 2026 (PDF)",
+        url: "https://www.fda.gov/media/94155/download",
+      },
     ],
   },
   {
@@ -226,11 +301,17 @@ export const ARTICLES: Article[] = [
       "With these results, Lilly says it has the data it needs to apply for approval around the world.",
       "The [retatrutide profile](/learn/retatrutide) covers the earlier trials.",
     ],
-    means: "If approved, retatrutide would give doctors a third generation of hormone-based weight-loss medicines, with results that may suit people who don’t lose enough weight on today’s options.",
-    unknowns: "These are company-reported results that haven’t yet been published in full. Long-term safety, and how much weight comes back after stopping, are still unknown.",
+    means:
+      "If approved, retatrutide would give doctors a third generation of hormone-based weight-loss medicines, with results that may suit people who don’t lose enough weight on today’s options.",
+    unknowns:
+      "These are company-reported results that haven’t yet been published in full. Long-term safety, and how much weight comes back after stopping, are still unknown.",
     peptides: ["retatrutide", "tirzepatide", "semaglutide"],
     sources: [
-      { label: "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results", detail: "Eli Lilly and Company · original sponsor announcement · July 23, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional" },
+      {
+        label: "TRIUMPH-2 and TRIUMPH-3: phase 3 retatrutide topline results",
+        detail: "Eli Lilly and Company · original sponsor announcement · July 23, 2026",
+        url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-successful-two-additional",
+      },
     ],
   },
   {
@@ -242,7 +323,10 @@ export const ARTICLES: Article[] = [
     dek: "Eli Lilly’s “triple” hormone medicine is experimental and not approved. In this supervised 80-week trial, people on the top dose lost more than a quarter of their body weight on average.",
     art: "triple",
     glance: [
-      { label: "Who took part", value: "2,339 adults with obesity, or overweight plus a related health problem, without diabetes" },
+      {
+        label: "Who took part",
+        value: "2,339 adults with obesity, or overweight plus a related health problem, without diabetes",
+      },
       { label: "How long", value: "80 weeks of once-weekly injections" },
       { label: "Result", value: "19.0%, 25.9% and 28.3% average weight loss on 4, 9 and 12 mg" },
       { label: "Longest follow-up", value: "30.3% at 104 weeks on 12 mg, in people with a BMI of 35 or more" },
@@ -255,11 +339,17 @@ export const ARTICLES: Article[] = [
       "Side effects were mostly stomach-related and rose with the dose. On 12 mg, 42% of people had nausea (15% on placebo) and a quarter had vomiting (5% on placebo). 11.3% stopped the top dose because of side effects, compared with 4.9% on placebo.",
       "Two more phase 3 trials followed in July ([read our report](/news/retatrutide-triumph-2-and-3)).",
     ],
-    means: "If these numbers hold up in the full publication, retatrutide could set a new benchmark for weight-loss medicines.",
-    unknowns: "These are company-reported topline results, not yet peer-reviewed. Long-term safety, and how much weight comes back after stopping, are still open questions. Retatrutide is not approved anywhere.",
+    means:
+      "If these numbers hold up in the full publication, retatrutide could set a new benchmark for weight-loss medicines.",
+    unknowns:
+      "These are company-reported topline results, not yet peer-reviewed. Long-term safety, and how much weight comes back after stopping, are still open questions. Retatrutide is not approved anywhere.",
     peptides: ["retatrutide", "tirzepatide", "semaglutide"],
     sources: [
-      { label: "TRIUMPH-1: phase 3 retatrutide topline results", detail: "Eli Lilly and Company · original sponsor announcement · May 21, 2026", url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss" },
+      {
+        label: "TRIUMPH-1: phase 3 retatrutide topline results",
+        detail: "Eli Lilly and Company · original sponsor announcement · May 21, 2026",
+        url: "https://investor.lilly.com/news-releases/news-release-details/lillys-triple-agonist-retatrutide-delivered-powerful-weight-loss",
+      },
     ],
   },
   {
@@ -272,7 +362,11 @@ export const ARTICLES: Article[] = [
     art: "documents",
     glance: [
       { label: "Official record", value: "FDA list updated April 22, 2026" },
-      { label: "Peptides", value: "BPC-157, LL-37, Dihexa, DSIP, Epitalon, injectable GHK-Cu, KPV, PEG-MGF, Melanotan II, MOTS-c, Semax and TB-500" },
+      {
+        label: "Peptides",
+        value:
+          "BPC-157, LL-37, Dihexa, DSIP, Epitalon, injectable GHK-Cu, KPV, PEG-MGF, Melanotan II, MOTS-c, Semax and TB-500",
+      },
       { label: "Why", value: "The people who nominated them withdrew their nominations" },
       { label: "Approved now?", value: "No. A change to an interim list is not drug approval" },
       { label: "Next", value: "Expert reviews in July 2026, and for the rest by February 2027" },
@@ -284,12 +378,22 @@ export const ARTICLES: Article[] = [
       "The FDA scheduled expert reviews for seven of them in July 2026, and for the other five before the end of February 2027.",
       "A later FDA update, dated May 14, distinguishes non-injectable GHK-Cu: that nomination was restored to Category 1 after the nominator clarified that only the injectable nomination was being withdrawn. Route of administration matters.",
     ],
-    means: "The change opened the door to a formal review of these peptides, which is how they could eventually be made by licensed pharmacies.",
-    unknowns: "None of these peptides has been approved as a medicine, and most have very little human research. Whether any will end up on the allowed list is still undecided.",
+    means:
+      "The change opened the door to a formal review of these peptides, which is how they could eventually be made by licensed pharmacies.",
+    unknowns:
+      "None of these peptides has been approved as a medicine, and most have very little human research. Whether any will end up on the allowed list is still undecided.",
     peptides: ["bpc-157", "tb-500", "ghk-cu", "melanotan", "mots-c", "semax", "epitalon", "kpv"],
     sources: [
-      { label: "Bulk drug substances nominated for compounding under Section 503A", detail: "US Food and Drug Administration · updated May 14, 2026 (PDF)", url: "https://www.fda.gov/media/94155/download" },
-      { label: "Safety risks and withdrawn compounding nominations", detail: "US Food and Drug Administration · primary safety information", url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks" },
+      {
+        label: "Bulk drug substances nominated for compounding under Section 503A",
+        detail: "US Food and Drug Administration · updated May 14, 2026 (PDF)",
+        url: "https://www.fda.gov/media/94155/download",
+      },
+      {
+        label: "Safety risks and withdrawn compounding nominations",
+        detail: "US Food and Drug Administration · primary safety information",
+        url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      },
     ],
   },
   {
@@ -313,11 +417,16 @@ export const ARTICLES: Article[] = [
       "Novo had already applied for FDA approval before the result came out. A decision is expected in late 2026.",
       "Read the profiles of [tirzepatide](/learn/tirzepatide), [semaglutide](/learn/semaglutide) and [cagrilintide](/learn/cagrilintide).",
     ],
-    means: "Both medicines produced large weight losses. The trial shows how fast the field is moving, and how high the bar has become for new medicines.",
+    means:
+      "Both medicines produced large weight losses. The trial shows how fast the field is moving, and how high the bar has become for new medicines.",
     unknowns: "Full trial details, side-effect comparisons and the FDA’s decision are still to come.",
     peptides: ["semaglutide", "tirzepatide", "cagrilintide"],
     sources: [
-      { label: "REDEFINE 4: CagriSema and tirzepatide head-to-head results", detail: "Novo Nordisk · original sponsor announcement · February 23, 2026", url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501" },
+      {
+        label: "REDEFINE 4: CagriSema and tirzepatide head-to-head results",
+        detail: "Novo Nordisk · original sponsor announcement · February 23, 2026",
+        url: "https://www.novonordisk.com/content/nncorp/global/en/news-and-media/news-and-ir-materials/news-details.html?id=916501",
+      },
     ],
   },
   {
@@ -330,7 +439,11 @@ export const ARTICLES: Article[] = [
     art: "pill",
     glance: [
       { label: "Medicine", value: "Semaglutide 25 mg tablet, once a day" },
-      { label: "Approved for", value: "Weight management in adults with obesity, or overweight plus a weight-related health problem. It also lowers the risk of heart attack and stroke in people with heart disease" },
+      {
+        label: "Approved for",
+        value:
+          "Weight management in adults with obesity, or overweight plus a weight-related health problem. It also lowers the risk of heart attack and stroke in people with heart disease",
+      },
       { label: "Main trial", value: "OASIS 4: 307 adults over 64 weeks" },
       { label: "Result", value: "13.6% average weight loss vs 2.2% on placebo" },
       { label: "Where", value: "US (at the time of approval)" },
@@ -345,8 +458,16 @@ export const ARTICLES: Article[] = [
     unknowns: "How results hold up over years, and when the pill will be available outside the US, remain to be seen.",
     peptides: ["semaglutide"],
     sources: [
-      { label: "FDA approves Novo Nordisk’s Wegovy pill, the first and only oral GLP-1 for weight loss in adults", detail: "Novo Nordisk press release · December 22, 2025", url: "https://www.prnewswire.com/news-releases/fda-approves-novo-nordisks-wegovy-pill-the-first-and-only-oral-glp-1-for-weight-loss-in-adults-302648344.html" },
-      { label: "Oral Semaglutide at a Dose of 25 mg in Adults with Overweight or Obesity (OASIS 4)", detail: "Wharton et al. · New England Journal of Medicine · 2025", url: "https://pubmed.ncbi.nlm.nih.gov/40934115/" },
+      {
+        label: "FDA approves Novo Nordisk’s Wegovy pill, the first and only oral GLP-1 for weight loss in adults",
+        detail: "Novo Nordisk press release · December 22, 2025",
+        url: "https://www.prnewswire.com/news-releases/fda-approves-novo-nordisks-wegovy-pill-the-first-and-only-oral-glp-1-for-weight-loss-in-adults-302648344.html",
+      },
+      {
+        label: "Oral Semaglutide at a Dose of 25 mg in Adults with Overweight or Obesity (OASIS 4)",
+        detail: "Wharton et al. · New England Journal of Medicine · 2025",
+        url: "https://pubmed.ncbi.nlm.nih.gov/40934115/",
+      },
     ],
   },
 ]
@@ -358,6 +479,10 @@ export function getArticle(slug: string) {
 /** "October 2026" or "July 24, 2026". */
 export function formatArticleDate(date: string, locale = "en-US") {
   const [year, month, day] = date.split("-").map(Number)
-  return new Intl.DateTimeFormat(locale, day ? { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" } : { month: "long", year: "numeric", timeZone: "UTC" })
-    .format(new Date(Date.UTC(year, month - 1, day || 1)))
+  return new Intl.DateTimeFormat(
+    locale,
+    day
+      ? { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }
+      : { month: "long", year: "numeric", timeZone: "UTC" },
+  ).format(new Date(Date.UTC(year, month - 1, day || 1)))
 }

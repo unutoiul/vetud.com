@@ -29,6 +29,6 @@ function cacheFor(name: string) {
  * layout as it opens, so every first visit paid for a full-page layout inside the opening script
  * (Lighthouse's "forced reflow"). A sheet that is new in that frame only touches what uses it.
  */
-export default function OwnStyleSheet({ name, children }: { name: string, children: ReactNode }) {
+export default function OwnStyleSheet({ name, children }: { name: string; children: ReactNode }) {
   return <CacheProvider value={cacheFor(name)}>{children}</CacheProvider>
 }

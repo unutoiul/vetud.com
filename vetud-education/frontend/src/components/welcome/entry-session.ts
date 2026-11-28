@@ -12,7 +12,7 @@ export type EntryVisitor = { adult: true }
 const ADULT: EntryVisitor = { adult: true }
 
 function hasAdultCookie() {
-  return document.cookie.split(";").some(part => part.trim() === `${ADULT_COOKIE}=1`)
+  return document.cookie.split(";").some((part) => part.trim() === `${ADULT_COOKIE}=1`)
 }
 
 /** Whether this browser has already confirmed the visitor is 18 or older. */
@@ -20,7 +20,7 @@ export function entryVisitor(): EntryVisitor | null {
   try {
     if (hasAdultCookie()) return ADULT
     // A confirmation from before the cookie, kept for this tab only: move it to the cookie.
-    const saved = SESSION_KEYS.map(key => window.sessionStorage.getItem(key)).find(Boolean)
+    const saved = SESSION_KEYS.map((key) => window.sessionStorage.getItem(key)).find(Boolean)
     const stored: unknown = JSON.parse(saved ?? "null")
     if (!stored || typeof stored !== "object" || !("adult" in stored) || stored.adult !== true) return null
     return rememberEntryVisitor(true)

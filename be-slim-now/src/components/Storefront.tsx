@@ -41,7 +41,14 @@ export async function storefrontMetadata(country: CountryCode): Promise<Metadata
       url: pageUrl(country),
       locale: MARKETS[country].locale.replaceAll("-", "_"),
       type: "website",
-      images: [{ url: "/images/retatrutide-closed.webp", width: 1400, height: 1050, alt: m.products.retatrutide.gallery[0].alt }],
+      images: [
+        {
+          url: "/images/retatrutide-closed.webp",
+          width: 1400,
+          height: 1050,
+          alt: m.products.retatrutide.gallery[0].alt,
+        },
+      ],
     },
   }
 }
@@ -52,27 +59,27 @@ export default async function Storefront({ country }: { country: CountryCode }) 
   return (
     <CountryProvider country={country}>
       <LangScope>
-      <MessagesProvider country={country} messages={messages}>
-      <OrderProvider>
-        <PromoBar />
-        <Header />
-        <main>
-          <Hero />
-          <Products />
-  
-          <TrialChart />
-          <WhyDualChamber />
-          <Compare />
-          <HowToOrder />
-          <Quality />
-          <Facility />
-          <Faq />
-        </main>
-        <Footer />
-        <ContactFloat />
-        <CookieConsent />
-      </OrderProvider>
-      </MessagesProvider>
+        <MessagesProvider country={country} messages={messages}>
+          <OrderProvider>
+            <PromoBar />
+            <Header />
+            <main>
+              <Hero />
+              <Products />
+
+              <TrialChart />
+              <WhyDualChamber />
+              <Compare />
+              <HowToOrder />
+              <Quality />
+              <Facility />
+              <Faq />
+            </main>
+            <Footer />
+            <ContactFloat />
+            <CookieConsent />
+          </OrderProvider>
+        </MessagesProvider>
       </LangScope>
     </CountryProvider>
   )

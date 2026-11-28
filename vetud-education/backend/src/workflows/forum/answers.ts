@@ -1,5 +1,11 @@
 import { MedusaError } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import { activeProfile, findPost, findThread, forumService, recountForumReputationStep } from "./shared"
 
 type AcceptAnswerInput = { customer_id: string; thread_id: string; post_id: string | null }
@@ -30,25 +36,26 @@ const acceptForumAnswerStep = createStep(
     }
 
     const previousId = thread.accepted_post_id ?? null
-    const [previous] = previousId ? await service.listForumPosts({ id: previousId }, { take: 1, withDeleted: true }) : []
+    const [previous] = previousId
+      ? await service.listForumPosts({ id: previousId }, { take: 1, withDeleted: true })
+      : []
     await service.updateForumThreads({ id: thread.id, accepted_post_id: input.post_id })
     return new StepResponse(
       { thread_id: thread.id, accepted_post_id: input.post_id, author_ids: [authorId, previous?.author_id ?? null] },
-      { thread_id: thread.id, previous: previousId }
+      { thread_id: thread.id, previous: previousId },
     )
   },
   async (undo, { container }) => {
     if (!undo) return
     await forumService(container).updateForumThreads({ id: undo.thread_id, accepted_post_id: undo.previous })
-  }
+  },
 )
 
 /** Marks (or, with `post_id: null`, clears) a question's best answer. The answer's author earns reputation. */
-export const acceptForumAnswerWorkflow = createWorkflow(
-  "accept-forum-answer",
-  function (input: AcceptAnswerInput) {
-    const result = acceptForumAnswerStep(input)
-    recountForumReputationStep({ profile_ids: transform({ result }, ({ result }) => result.author_ids) })
-    return new WorkflowResponse(transform({ result }, ({ result }) => ({ thread_id: result.thread_id, accepted_post_id: result.accepted_post_id })))
-  }
-)
+export const acceptForumAnswerWorkflow = createWorkflow("accept-forum-answer", function (input: AcceptAnswerInput) {
+  const result = acceptForumAnswerStep(input)
+  recountForumReputationStep({ profile_ids: transform({ result }, ({ result }) => result.author_ids) })
+  return new WorkflowResponse(
+    transform({ result }, ({ result }) => ({ thread_id: result.thread_id, accepted_post_id: result.accepted_post_id })),
+  )
+})

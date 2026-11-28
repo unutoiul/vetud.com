@@ -37,13 +37,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const pages: { path: string; lastModified?: string }[] = [
     ...STATIC_PATHS.map((path) => ({ path })),
-    ...LEGAL_DOCUMENTS.map((document) => ({ path: `/legal/${document.slug}`, lastModified: isoDate(document.updated) })),
+    ...LEGAL_DOCUMENTS.map((document) => ({
+      path: `/legal/${document.slug}`,
+      lastModified: isoDate(document.updated),
+    })),
     ...products.map((product) => ({ path: `/products/${product.handle}`, lastModified: product.updatedAt })),
   ]
 
   // Delivery pages exist only in their own countries (content/local-delivery.ts) and point at each other.
   const deliveryLanguages = Object.fromEntries([
-    ...LOCAL_DELIVERY_COUNTRIES.map((country) => [getLocalDelivery(country)!.locale, `${BASE_URL}/${country}/delivery`]),
+    ...LOCAL_DELIVERY_COUNTRIES.map((country) => [
+      getLocalDelivery(country)!.locale,
+      `${BASE_URL}/${country}/delivery`,
+    ]),
     ["x-default", `${BASE_URL}/gb/delivery`],
   ])
   const deliveryPages = LOCAL_DELIVERY_COUNTRIES.filter((country) => countries.includes(country)).map((country) => ({
@@ -53,14 +59,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     alternates: { languages: deliveryLanguages },
   }))
 
-  return [...countries.flatMap((country) =>
-    pages.map(({ path, lastModified }) => ({
-      url: country === "us" && path === "" ? BASE_URL : `${BASE_URL}/${country}${path}`,
-      ...(lastModified ? { lastModified } : {}),
-      changeFrequency: path.startsWith("/products") ? ("daily" as const) : ("weekly" as const),
-      priority: path === "" ? 1 : path.startsWith("/products") ? 0.8 : 0.5,
-      ...(path === "" ? { alternates: { languages: { ...storefrontLanguages(""), "en-US": BASE_URL, "x-default": BASE_URL } } }
-        : path.startsWith("/products") || path === "/shop" ? { alternates: { languages: storefrontLanguages(path) } } : {}),
-    }))
-  ), ...deliveryPages]
+  return [
+    ...countries.flatMap((country) =>
+      pages.map(({ path, lastModified }) => ({
+        url: country === "us" && path === "" ? BASE_URL : `${BASE_URL}/${country}${path}`,
+        ...(lastModified ? { lastModified } : {}),
+        changeFrequency: path.startsWith("/products") ? ("daily" as const) : ("weekly" as const),
+        priority: path === "" ? 1 : path.startsWith("/products") ? 0.8 : 0.5,
+        ...(path === ""
+          ? { alternates: { languages: { ...storefrontLanguages(""), "en-US": BASE_URL, "x-default": BASE_URL } } }
+          : path.startsWith("/products") || path === "/shop"
+            ? { alternates: { languages: storefrontLanguages(path) } }
+            : {}),
+      })),
+    ),
+    ...deliveryPages,
+  ]
 }

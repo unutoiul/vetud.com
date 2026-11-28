@@ -4,7 +4,6 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
-
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import Drawer from "@mui/material/Drawer"
@@ -23,7 +22,13 @@ type Props = { categories: CategoryFacet[]; selected?: string; total: number; qu
 const NOTE = "Themes make browsing easier; the products remain intended for laboratory research."
 
 /** One-pick category list: "View all" plus each theme that has products, with counts. */
-export function CategoryList({ categories, selected, total, onPick, disabled }: Omit<Props, "query" | "sort"> & { onPick: (handle?: string) => void; disabled: boolean }) {
+export function CategoryList({
+  categories,
+  selected,
+  total,
+  onPick,
+  disabled,
+}: Omit<Props, "query" | "sort"> & { onPick: (handle?: string) => void; disabled: boolean }) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const options = [
@@ -31,14 +36,56 @@ export function CategoryList({ categories, selected, total, onPick, disabled }: 
     ...categories.filter((category) => category.group === "theme" && category.count > 0),
   ]
   return (
-    <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gap: .5 }}>
+    <Box component="ul" sx={{ listStyle: "none", m: 0, p: 0, display: "grid", gap: 0.5 }}>
       {options.map((option) => {
         const active = option.handle === selected
         return (
           <Box component="li" key={option.handle ?? "all"}>
-            <Box component="button" type="button" onClick={() => onPick(option.handle)} disabled={disabled} aria-pressed={active} sx={{ width: "100%", minHeight: 46, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, px: 1.75, border: 0, borderRadius: "10px", font: "inherit", fontSize: 15, fontWeight: 600, textAlign: "left", cursor: disabled ? "wait" : "pointer", bgcolor: active ? "brand.navy" : "transparent", color: active ? brand.white : "text.primary", transition: "background-color .15s ease", "&:hover": { bgcolor: active ? "brand.navy" : brand.navyA06 }, "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 } }}>
+            <Box
+              component="button"
+              type="button"
+              onClick={() => onPick(option.handle)}
+              disabled={disabled}
+              aria-pressed={active}
+              sx={{
+                width: "100%",
+                minHeight: 46,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 2,
+                px: 1.75,
+                border: 0,
+                borderRadius: "10px",
+                font: "inherit",
+                fontSize: 15,
+                fontWeight: 600,
+                textAlign: "left",
+                cursor: disabled ? "wait" : "pointer",
+                bgcolor: active ? "brand.navy" : "transparent",
+                color: active ? brand.white : "text.primary",
+                transition: "background-color .15s ease",
+                "&:hover": { bgcolor: active ? "brand.navy" : brand.navyA06 },
+                "&:focus-visible": { outline: "2px solid", outlineColor: "brand.blue", outlineOffset: 2 },
+              }}
+            >
               {translateAction(act, option.name)}
-              <Box component="span" sx={{ minWidth: 30, px: .75, py: .25, borderRadius: "6px", textAlign: "center", fontSize: 13, fontVariantNumeric: "tabular-nums", bgcolor: active ? brand.whiteA16 : brand.white, color: active ? brand.white : "text.secondary" }}>{ct(option.count)}</Box>
+              <Box
+                component="span"
+                sx={{
+                  minWidth: 30,
+                  px: 0.75,
+                  py: 0.25,
+                  borderRadius: "6px",
+                  textAlign: "center",
+                  fontSize: 13,
+                  fontVariantNumeric: "tabular-nums",
+                  bgcolor: active ? brand.whiteA16 : brand.white,
+                  color: active ? brand.white : "text.secondary",
+                }}
+              >
+                {ct(option.count)}
+              </Box>
             </Box>
           </Box>
         )
@@ -60,30 +107,125 @@ export default function CategoryFilters({ categories, selected, total, query, so
     setOpen(false)
     startTransition(() => router.push(params ? `${pathname}?${params}` : pathname, { scroll: false }))
   }
-  const reset = selected ? <Box component="button" type="button" onClick={() => pick()} sx={{ mt: 1.5, ml: 1, p: 0, border: 0, bgcolor: "transparent", font: "inherit", fontSize: 14, fontWeight: 600, color: "brand.blue", textDecoration: "underline", cursor: "pointer", minHeight: 32 }}>{act("clearFilters")}</Box> : null
-
-  return <>
-    <Box component="aside" aria-label={act("productCategories")} aria-busy={pending} sx={{ display: { xs: "none", lg: "block" }, position: "sticky", top: 112, alignSelf: "start", bgcolor: "brand.mintWash", border: "1px solid", borderColor: "divider", borderRadius: "16px", p: 2.5 }}>
-      <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "baseline", px: 1, mb: 1.5 }}>
-        <Typography component="h2" sx={{ fontSize: 19, fontWeight: 700, letterSpacing: "-.02em" }}>{act("category")}</Typography>
-        <Typography sx={{ fontSize: 13.5, color: "text.secondary" }}>{ct(total)} {ct(total === 1 ? "product" : "products")}</Typography>
-      </Stack>
-      <CategoryList categories={categories} selected={selected} total={total} onPick={pick} disabled={pending} />
-      <Typography sx={{ mt: 2, pt: 2, borderTop: "1px solid", borderColor: "divider", px: 1, fontSize: 13, color: "text.secondary", lineHeight: 1.6 }}>{ct(NOTE)}</Typography>
-      {ct(reset)}
+  const reset = selected ? (
+    <Box
+      component="button"
+      type="button"
+      onClick={() => pick()}
+      sx={{
+        mt: 1.5,
+        ml: 1,
+        p: 0,
+        border: 0,
+        bgcolor: "transparent",
+        font: "inherit",
+        fontSize: 14,
+        fontWeight: 600,
+        color: "brand.blue",
+        textDecoration: "underline",
+        cursor: "pointer",
+        minHeight: 32,
+      }}
+    >
+      {act("clearFilters")}
     </Box>
+  ) : null
 
-    <Button variant="outlined" disabled={pending} startIcon={<Icon name="sliders" />} onClick={() => setOpen(true)} sx={{ display: { xs: "inline-flex", lg: "none" }, justifySelf: "start", minHeight: 44 }}>
-      {ct(current ? act("categoryFilter", { name: translateAction(act, current.name) }) : act("category"))}
-    </Button>
-    <Drawer anchor="left" open={open} onClose={() => setOpen(false)} slotProps={{ paper: { "aria-labelledby": "category-filter-title", sx: { width: "min(92vw, 380px)", p: 2.5, pt: "max(20px, env(safe-area-inset-top))", pb: "max(24px, env(safe-area-inset-bottom))", bgcolor: "brand.mintWash" } } }}>
-      <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", px: 1, mb: 1.5 }}>
-        <Typography id="category-filter-title" component="h2" sx={{ fontSize: 22, fontWeight: 700 }}>{act("category")}</Typography>
-        <IconButton aria-label={act("closeCategories")} onClick={() => setOpen(false)}><Icon name="close" /></IconButton>
-      </Stack>
-      <CategoryList categories={categories} selected={selected} total={total} onPick={pick} disabled={pending} />
-      <Typography sx={{ mt: 2, pt: 2, borderTop: "1px solid", borderColor: "divider", px: 1, fontSize: 13, color: "text.secondary", lineHeight: 1.6 }}>{ct(NOTE)}</Typography>
-      {ct(reset)}
-    </Drawer>
-  </>
+  return (
+    <>
+      <Box
+        component="aside"
+        aria-label={act("productCategories")}
+        aria-busy={pending}
+        sx={{
+          display: { xs: "none", lg: "block" },
+          position: "sticky",
+          top: 112,
+          alignSelf: "start",
+          bgcolor: "brand.mintWash",
+          border: "1px solid",
+          borderColor: "divider",
+          borderRadius: "16px",
+          p: 2.5,
+        }}
+      >
+        <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "baseline", px: 1, mb: 1.5 }}>
+          <Typography component="h2" sx={{ fontSize: 19, fontWeight: 700, letterSpacing: "-.02em" }}>
+            {act("category")}
+          </Typography>
+          <Typography sx={{ fontSize: 13.5, color: "text.secondary" }}>
+            {ct(total)} {ct(total === 1 ? "product" : "products")}
+          </Typography>
+        </Stack>
+        <CategoryList categories={categories} selected={selected} total={total} onPick={pick} disabled={pending} />
+        <Typography
+          sx={{
+            mt: 2,
+            pt: 2,
+            borderTop: "1px solid",
+            borderColor: "divider",
+            px: 1,
+            fontSize: 13,
+            color: "text.secondary",
+            lineHeight: 1.6,
+          }}
+        >
+          {ct(NOTE)}
+        </Typography>
+        {ct(reset)}
+      </Box>
+
+      <Button
+        variant="outlined"
+        disabled={pending}
+        startIcon={<Icon name="sliders" />}
+        onClick={() => setOpen(true)}
+        sx={{ display: { xs: "inline-flex", lg: "none" }, justifySelf: "start", minHeight: 44 }}
+      >
+        {ct(current ? act("categoryFilter", { name: translateAction(act, current.name) }) : act("category"))}
+      </Button>
+      <Drawer
+        anchor="left"
+        open={open}
+        onClose={() => setOpen(false)}
+        slotProps={{
+          paper: {
+            "aria-labelledby": "category-filter-title",
+            sx: {
+              width: "min(92vw, 380px)",
+              p: 2.5,
+              pt: "max(20px, env(safe-area-inset-top))",
+              pb: "max(24px, env(safe-area-inset-bottom))",
+              bgcolor: "brand.mintWash",
+            },
+          },
+        }}
+      >
+        <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", px: 1, mb: 1.5 }}>
+          <Typography id="category-filter-title" component="h2" sx={{ fontSize: 22, fontWeight: 700 }}>
+            {act("category")}
+          </Typography>
+          <IconButton aria-label={act("closeCategories")} onClick={() => setOpen(false)}>
+            <Icon name="close" />
+          </IconButton>
+        </Stack>
+        <CategoryList categories={categories} selected={selected} total={total} onPick={pick} disabled={pending} />
+        <Typography
+          sx={{
+            mt: 2,
+            pt: 2,
+            borderTop: "1px solid",
+            borderColor: "divider",
+            px: 1,
+            fontSize: 13,
+            color: "text.secondary",
+            lineHeight: 1.6,
+          }}
+        >
+          {ct(NOTE)}
+        </Typography>
+        {ct(reset)}
+      </Drawer>
+    </>
+  )
 }

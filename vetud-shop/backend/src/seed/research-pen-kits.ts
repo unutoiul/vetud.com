@@ -34,10 +34,7 @@ export const RESEARCH_PEN_KITS = [
   ...product,
   subtitle: "Freeze-dried peptide · dual-chamber pen · 10 mg / 20 mg / 40 mg",
   description: penDescription(product.title),
-  images: [
-    `vetud_${product.handle}_40mg_closed_lab.png`,
-    `vetud_${product.handle}_40mg_open_lab.png`,
-  ],
+  images: [`vetud_${product.handle}_40mg_closed_lab.png`, `vetud_${product.handle}_40mg_open_lab.png`],
   metadata: {
     code: product.code,
     accent: product.accent,

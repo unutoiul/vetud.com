@@ -53,7 +53,11 @@ export default function Header() {
               sizes="228px"
               priority
               // On narrow phones the logo gives up a little width so the country picker fits beside it.
-              style={{ width: screens.md ? 228 : "clamp(140px, calc(100vw - 172px), 184px)", height: "auto", display: "block" }}
+              style={{
+                width: screens.md ? 228 : "clamp(140px, calc(100vw - 172px), 184px)",
+                height: "auto",
+                display: "block",
+              }}
             />
           </a>
           {screens.lg && (
@@ -63,7 +67,13 @@ export default function Header() {
                   <a
                     key={item.href}
                     href={item.href}
-                    style={{ color: colors.navyInk, textDecoration: "none", fontSize: 14, fontWeight: 500, fontFamily: fonts.body }}
+                    style={{
+                      color: colors.navyInk,
+                      textDecoration: "none",
+                      fontSize: 14,
+                      fontWeight: 500,
+                      fontFamily: fonts.body,
+                    }}
                   >
                     {m.header.nav[item.key]}
                   </a>

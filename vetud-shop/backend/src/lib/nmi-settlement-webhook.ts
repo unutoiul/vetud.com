@@ -24,9 +24,7 @@ export type VerifiedNmiEvent = {
 }
 
 function record(value: unknown): Record<string, unknown> {
-  return value !== null && typeof value === "object" && !Array.isArray(value)
-    ? value as Record<string, unknown>
-    : {}
+  return value !== null && typeof value === "object" && !Array.isArray(value) ? (value as Record<string, unknown>) : {}
 }
 
 function rawBody(value: unknown): string {
@@ -37,8 +35,12 @@ function rawBody(value: unknown): string {
   }
   // Redis event serialization uses Node's Buffer JSON representation.
   const serialized = record(value)
-  if (serialized.type === "Buffer" && Array.isArray(serialized.data) && serialized.data.length &&
-    serialized.data.every((byte) => Number.isInteger(byte) && byte >= 0 && byte <= 255)) {
+  if (
+    serialized.type === "Buffer" &&
+    Array.isArray(serialized.data) &&
+    serialized.data.length &&
+    serialized.data.every((byte) => Number.isInteger(byte) && byte >= 0 && byte <= 255)
+  ) {
     return rawBody(Buffer.from(serialized.data))
   }
   throw new MedusaError(MedusaError.Types.INVALID_DATA, "NMI webhook requires the original raw request body.")
@@ -48,19 +50,23 @@ function rawBody(value: unknown): string {
 export function verifyNmiWebhook(
   input: NmiWebhookInput,
   secret = process.env.NMI_WEBHOOK_SECRET,
-  accountCurrency = process.env.NMI_ACCOUNT_CURRENCY
+  accountCurrency = process.env.NMI_ACCOUNT_CURRENCY,
 ): VerifiedNmiEvent | null {
   if (input.provider !== NMI_WEBHOOK_PROVIDER) return null
   if (!secret) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, "NMI webhook signing is not configured.")
   const raw = rawBody(input.payload?.rawData)
-  const headers = Object.entries(input.payload?.headers ?? {}).filter(([key]) => key.toLowerCase() === "webhook-signature")
+  const headers = Object.entries(input.payload?.headers ?? {}).filter(
+    ([key]) => key.toLowerCase() === "webhook-signature",
+  )
   const header = headers.length === 1 && typeof headers[0][1] === "string" ? headers[0][1] : undefined
   const parsed = parseSignatureHeader(header)
   if (!parsed || !/^[a-f0-9]{64}$/.test(parsed.signature) || !verifySignature(secret, raw, header)) {
     throw new MedusaError(MedusaError.Types.UNAUTHORIZED, "NMI webhook signature verification failed.")
   }
   let payload: Record<string, unknown>
-  try { payload = record(JSON.parse(raw)) } catch {
+  try {
+    payload = record(JSON.parse(raw))
+  } catch {
     throw new MedusaError(MedusaError.Types.INVALID_DATA, "NMI webhook body is invalid.")
   }
   if (typeof payload.event_type !== "string") nmiError("NMI webhook event type is missing.")
@@ -70,10 +76,17 @@ export function verifyNmiWebhook(
   const body = record(payload.event_body)
   const action = record(body.action)
   const sessionId = extractSessionId(body)
-  const references = [body.order_id, record(body.order).order_id, body.merchant_defined_field_1, record(body.merchant_defined_fields)["1"]]
-    .filter((reference) => reference !== undefined && reference !== null)
-  if (typeof sessionId !== "string" || !/^payses_[a-zA-Z0-9_-]+$/.test(sessionId) ||
-    references.some((reference) => reference !== sessionId)) {
+  const references = [
+    body.order_id,
+    record(body.order).order_id,
+    body.merchant_defined_field_1,
+    record(body.merchant_defined_fields)["1"],
+  ].filter((reference) => reference !== undefined && reference !== null)
+  if (
+    typeof sessionId !== "string" ||
+    !/^payses_[a-zA-Z0-9_-]+$/.test(sessionId) ||
+    references.some((reference) => reference !== sessionId)
+  ) {
     nmiError("NMI webhook session references are missing or inconsistent.")
   }
   if (typeof body.transaction_id !== "string" || !/^[a-zA-Z0-9_-]{1,128}$/.test(body.transaction_id)) {

@@ -12,7 +12,11 @@ export function exactIlike(value: string) {
 }
 
 type Query = {
-  graph: (config: { entity: string; fields: string[]; filters: Record<string, unknown> }) => Promise<{ data: unknown[] }>
+  graph: (config: {
+    entity: string
+    fields: string[]
+    filters: Record<string, unknown>
+  }) => Promise<{ data: unknown[] }>
 }
 
 /** The ids of member accounts (not Medusa's guest records) registered with this email, in any letter case. */

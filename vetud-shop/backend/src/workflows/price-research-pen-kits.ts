@@ -1,9 +1,5 @@
 import type { UpdateProductVariantWorkflowInputDTO } from "@medusajs/framework/types"
-import {
-  ContainerRegistrationKeys,
-  MedusaError,
-  Modules,
-} from "@medusajs/framework/utils"
+import { ContainerRegistrationKeys, MedusaError, Modules } from "@medusajs/framework/utils"
 import {
   createStep,
   createWorkflow,
@@ -12,10 +8,7 @@ import {
   when,
   WorkflowResponse,
 } from "@medusajs/framework/workflows-sdk"
-import {
-  createProductVariantsDefaultInventoryStep,
-  updateProductsWorkflow,
-} from "@medusajs/medusa/core-flows"
+import { createProductVariantsDefaultInventoryStep, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
 import {
   PEN_KIT_AMOUNTS,
   US_PEN_KIT_PRICES,
@@ -52,31 +45,24 @@ type ProductRow = {
 const preparePenKitPricesStep = createStep(
   "prepare-pen-kit-prices",
   async (_input: Record<string, never>, { container }) => {
-    const { data } = await container
-      .resolve(ContainerRegistrationKeys.QUERY)
-      .graph({
-        entity: "product",
-        fields: [
-          "id",
-          "title",
-          "handle",
-          "metadata",
-          "options.id",
-          "options.title",
-          "options.values.id",
-          "options.values.value",
-          "variants.id",
-          "variants.title",
-          "variants.price_set.prices.*",
-        ],
-        filters: { handle: US_PEN_KIT_PRICES.map((kit) => kit.handle) },
-      })
-    const existing = new Map(
-      (data as unknown as ProductRow[]).map((product) => [
-        product.handle,
-        product,
-      ]),
-    )
+    const { data } = await container.resolve(ContainerRegistrationKeys.QUERY).graph({
+      entity: "product",
+      fields: [
+        "id",
+        "title",
+        "handle",
+        "metadata",
+        "options.id",
+        "options.title",
+        "options.values.id",
+        "options.values.value",
+        "variants.id",
+        "variants.title",
+        "variants.price_set.prices.*",
+      ],
+      filters: { handle: US_PEN_KIT_PRICES.map((kit) => kit.handle) },
+    })
+    const existing = new Map((data as unknown as ProductRow[]).map((product) => [product.handle, product]))
     const products: {
       id: string
       subtitle: string
@@ -99,14 +85,9 @@ const preparePenKitPricesStep = createStep(
           MedusaError.Types.NOT_FOUND,
           `Import ${kit.handle} before setting its variants and prices.`,
         )
-      if (product.metadata?.us_pricing_revision === US_PEN_KIT_PRICING_REVISION)
-        continue
+      if (product.metadata?.us_pricing_revision === US_PEN_KIT_PRICING_REVISION) continue
       const option = product.options.find((option) => option.title === "Amount")
-      if (!option)
-        throw new MedusaError(
-          MedusaError.Types.INVALID_DATA,
-          `${kit.handle} has no Amount option.`,
-        )
+      if (!option) throw new MedusaError(MedusaError.Types.INVALID_DATA, `${kit.handle} has no Amount option.`)
       const missing = PEN_KIT_AMOUNTS.map((amount) => `${amount} mg`).filter(
         (value) => !option.values.some((existing) => existing.value === value),
       )
@@ -118,13 +99,11 @@ const preparePenKitPricesStep = createStep(
           add: missing.map((value) => ({ value })),
         })
 
-      const variants: UpdateProductVariantWorkflowInputDTO[] =
-        product.variants.map((variant) => ({ id: variant.id }))
+      const variants: UpdateProductVariantWorkflowInputDTO[] = product.variants.map((variant) => ({ id: variant.id }))
       for (const amount of PEN_KIT_AMOUNTS) {
         const title = `${amount} mg`
         const variant = product.variants.find(
-          (variant) =>
-            variant.title.replace(/\s+/g, "").toLowerCase() === `${amount}mg`,
+          (variant) => variant.title.replace(/\s+/g, "").toLowerCase() === `${amount}mg`,
         )
         if (variant) {
           const oldPrices = variant.price_set?.prices ?? []
@@ -135,22 +114,15 @@ const preparePenKitPricesStep = createStep(
             amount: price.amount,
           }))
           const baseUsd = oldPrices.filter(
-            (price) =>
-              price.currency_code === "usd" &&
-              !price.price_list_id &&
-              !price.rules_count,
+            (price) => price.currency_code === "usd" && !price.price_list_id && !price.rules_count,
           )
           if (baseUsd.length > 1)
             throw new MedusaError(
               MedusaError.Types.INVALID_DATA,
               `${kit.handle} ${title} has multiple base USD prices.`,
             )
-          if (baseUsd[0])
-            prices.find((price) => price.id === baseUsd[0].id)!.amount =
-              kit.prices[amount]
-          const newPrices = baseUsd.length
-            ? prices
-            : [...prices, { currency_code: "usd", amount: kit.prices[amount] }]
+          if (baseUsd[0]) prices.find((price) => price.id === baseUsd[0].id)!.amount = kit.prices[amount]
+          const newPrices = baseUsd.length ? prices : [...prices, { currency_code: "usd", amount: kit.prices[amount] }]
           const update = variants.find((update) => update.id === variant.id)!
           Object.assign(update, { title, prices: newPrices })
         } else {
@@ -175,8 +147,7 @@ const preparePenKitPricesStep = createStep(
         metadata: {
           ...product.metadata,
           form: "Pen kit",
-          contents:
-            "1 pen in the selected amount; 12 disposable needles; 1 instruction booklet",
+          contents: "1 pen in the selected amount; 12 disposable needles; 1 instruction booklet",
           available_amounts: "10 mg; 20 mg; 40 mg",
           image_packaging_amount: "40 mg",
           us_pricing_revision: US_PEN_KIT_PRICING_REVISION,
@@ -225,9 +196,7 @@ const expandPenKitAmountsStep = createStep(
       const product = await productModule.retrieveProduct(update.product_id, {
         relations: ["options", "options.values"],
       })
-      const option = product.options?.find(
-        (option) => option.id === update.product_option_id,
-      )
+      const option = product.options?.find((option) => option.id === update.product_option_id)
       rollback.push({
         product_id: update.product_id,
         product_option_id: update.product_option_id,
@@ -239,58 +208,36 @@ const expandPenKitAmountsStep = createStep(
     return new StepResponse({ ready: true }, rollback)
   },
   async (rollback: OptionRollback[] | undefined, { container }) => {
-    if (rollback?.length)
-      await container
-        .resolve(Modules.PRODUCT)
-        .updateProductOptionValuesOnProduct(rollback)
+    if (rollback?.length) await container.resolve(Modules.PRODUCT).updateProductOptionValuesOnProduct(rollback)
   },
 )
 
-const getPenKitVariantIdsStep = createStep(
-  "get-pen-kit-variant-ids",
-  async (productIds: string[], { container }) => {
-    const { data } = await container
-      .resolve(ContainerRegistrationKeys.QUERY)
-      .graph({
-        entity: "product_variant",
-        fields: ["id", "manage_inventory"],
-        filters: { product_id: productIds },
-      })
-    return new StepResponse(
-      data
-        .filter((variant) => variant.manage_inventory)
-        .map((variant) => variant.id),
-    )
-  },
-)
+const getPenKitVariantIdsStep = createStep("get-pen-kit-variant-ids", async (productIds: string[], { container }) => {
+  const { data } = await container.resolve(ContainerRegistrationKeys.QUERY).graph({
+    entity: "product_variant",
+    fields: ["id", "manage_inventory"],
+    filters: { product_id: productIds },
+  })
+  return new StepResponse(data.filter((variant) => variant.manage_inventory).map((variant) => variant.id))
+})
 
 /** Adds amounts and US prices once, preserving image URLs, stock, publication status and non-USD prices. */
 export const priceResearchPenKitsWorkflow = createWorkflow(
   "price-research-pen-kits",
   (input: Record<string, never>) => {
     const prepared = preparePenKitPricesStep(input)
-    const expanded = expandPenKitAmountsStep(
-      transform(prepared, (data) => data.optionUpdates),
-    )
-    const updated = when(
-      "has-pen-kit-pricing-changes",
-      prepared,
-      (data) => data.products.length > 0,
-    ).then(() => {
+    const expanded = expandPenKitAmountsStep(transform(prepared, (data) => data.optionUpdates))
+    const updated = when("has-pen-kit-pricing-changes", prepared, (data) => data.products.length > 0).then(() => {
       return updateProductsWorkflow.runAsStep({
         input: transform({ prepared, expanded }, ({ prepared }) => ({
           products: prepared.products,
         })),
       })
     })
-    const variantIds = getPenKitVariantIdsStep(
-      transform({ prepared, updated }, ({ prepared }) => prepared.productIds),
-    )
+    const variantIds = getPenKitVariantIdsStep(transform({ prepared, updated }, ({ prepared }) => prepared.productIds))
     // Product updates don't create inventory for newly generated variant IDs. Ensure those links
     // after the update; the core step skips existing links and never assigns stock quantities.
     createProductVariantsDefaultInventoryStep({ variantIds })
-    return new WorkflowResponse(
-      transform(prepared, (data) => ({ updated: data.summary })),
-    )
+    return new WorkflowResponse(transform(prepared, (data) => ({ updated: data.summary })))
   },
 )

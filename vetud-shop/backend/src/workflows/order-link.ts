@@ -1,6 +1,13 @@
 import { MedusaError } from "@medusajs/framework/utils"
 import { listOrderLinkCountries } from "../lib/order-link-countries"
-import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  when,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import { createCartWorkflow } from "@medusajs/medusa/core-flows"
 import { setCartDeliveryAddressWorkflow, type CartAddressInput } from "./set-cart-delivery-address"
 import { setCheckoutEmailWorkflow } from "./set-checkout-email"
@@ -41,13 +48,19 @@ const findOrderLinkRegionStep = createStep(
   async (input: { country_code: string; payment_provider?: string }, { container }) => {
     const country = (await listOrderLinkCountries(container)).find((candidate) => candidate.code === input.country_code)
     if (!country) {
-      throw new MedusaError(MedusaError.Types.INVALID_DATA, `The shop doesn't deliver to ${input.country_code.toUpperCase()}.`)
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        `The shop doesn't deliver to ${input.country_code.toUpperCase()}.`,
+      )
     }
     if (input.payment_provider && !country.payment_providers.includes(input.payment_provider)) {
-      throw new MedusaError(MedusaError.Types.INVALID_DATA, `That payment method isn't available for ${input.country_code.toUpperCase()}. Choose another one.`)
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        `That payment method isn't available for ${input.country_code.toUpperCase()}. Choose another one.`,
+      )
     }
     return new StepResponse({ id: country.region_id, store_country: country.store_country })
-  }
+  },
 )
 
 export const createOrderLinkWorkflow = createWorkflow("create-order-link", function (input: CreateOrderLinkInput) {

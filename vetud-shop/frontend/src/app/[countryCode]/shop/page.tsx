@@ -18,12 +18,7 @@ import ShopToolbar from "@/components/shop/ShopToolbar"
 import CategoryFilters from "@/components/shop/CategoryFilters"
 import { categoryFacets, filterByCategories } from "@/lib/catalog-filters"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
-import {
-  listCategories,
-  listCatalogProducts,
-  searchProducts,
-  type ProductSort,
-} from "@/lib/medusa/products"
+import { listCategories, listCatalogProducts, searchProducts, type ProductSort } from "@/lib/medusa/products"
 import { sortProducts } from "@/lib/product"
 import { parseStoreSegment } from "@/lib/store-segment"
 import { storefrontMetadata } from "@/lib/storefront-seo"
@@ -33,8 +28,11 @@ export async function generateMetadata({ params, searchParams }: PageProps<"/[co
   const countryCode = parseStoreSegment(segment.countryCode).country
   return storefrontMetadata({
     title: `Research Peptides & Laboratory Materials | VETUD ${countryCode === "gb" ? "UK" : countryCode.toUpperCase()}`,
-    description: "Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare amounts, regional prices, stock and lot documentation. Laboratory use only.",
-    country: countryCode, path: "/shop", noindex: Boolean(first(search.q) || first(search.category) || first(search.sort)),
+    description:
+      "Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare amounts, regional prices, stock and lot documentation. Laboratory use only.",
+    country: countryCode,
+    path: "/shop",
+    noindex: Boolean(first(search.q) || first(search.category) || first(search.sort)),
   })
 }
 
@@ -68,48 +66,65 @@ async function ShopResults({ searchParams }: { searchParams: PageProps<"/[countr
   const sorted = matches && sort === "relevance" ? filtered : sortProducts(filtered, sort)
 
   return (
-    <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "300px minmax(0, 1fr)" }, alignItems: "start", gap: { xs: 2.5, lg: 5 } }}>
-      <CategoryFilters categories={facets} selected={selectedCategory} total={catalog.length} query={query} sort={sort} />
-      <Box sx={{ minWidth: 0 }}>
-      <ShopToolbar
-        key={query ?? ""}
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "300px minmax(0, 1fr)" },
+        alignItems: "start",
+        gap: { xs: 2.5, lg: 5 },
+      }}
+    >
+      <CategoryFilters
         categories={facets}
-        selectedCategories={selectedCategories}
-        sort={sort}
+        selected={selectedCategory}
+        total={catalog.length}
         query={query}
-        count={sorted.length}
+        sort={sort}
       />
-      {sorted.length ? (
-        <ProductGrid products={sorted} />
-      ) : (
-        <Stack spacing={2} sx={{ py: 8, alignItems: "center", textAlign: "center" }}>
-          {query || selectedCategories.length ? (
-            <>
-              <Typography variant="h4" component="p">
-                {ct(query ? `No products match “${query}”.` : "No products in these categories yet.")}
-              </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {ct(query ? "Try another search or remove a category filter." : "Choose another research area or browse the full collection.")}
-              </Typography>
-              <ButtonLink href="/shop" variant="outlined">
-                {act("clearFilters")}
-              </ButtonLink>
-            </>
-          ) : (
-            <>
-              <Typography variant="h4" component="p">
-                {ct("Our catalog is being updated.")}
-              </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
-                {ct("Contact us for availability of research materials.")}
-              </Typography>
-              <ButtonLink href="/contact" variant="outlined">
-                {act("contact")}
-              </ButtonLink>
-            </>
-          )}
-        </Stack>
-      )}
+      <Box sx={{ minWidth: 0 }}>
+        <ShopToolbar
+          key={query ?? ""}
+          categories={facets}
+          selectedCategories={selectedCategories}
+          sort={sort}
+          query={query}
+          count={sorted.length}
+        />
+        {sorted.length ? (
+          <ProductGrid products={sorted} />
+        ) : (
+          <Stack spacing={2} sx={{ py: 8, alignItems: "center", textAlign: "center" }}>
+            {query || selectedCategories.length ? (
+              <>
+                <Typography variant="h4" component="p">
+                  {ct(query ? `No products match “${query}”.` : "No products in these categories yet.")}
+                </Typography>
+                <Typography sx={{ color: "text.secondary" }}>
+                  {ct(
+                    query
+                      ? "Try another search or remove a category filter."
+                      : "Choose another research area or browse the full collection.",
+                  )}
+                </Typography>
+                <ButtonLink href="/shop" variant="outlined">
+                  {act("clearFilters")}
+                </ButtonLink>
+              </>
+            ) : (
+              <>
+                <Typography variant="h4" component="p">
+                  {ct("Our catalog is being updated.")}
+                </Typography>
+                <Typography sx={{ color: "text.secondary" }}>
+                  {ct("Contact us for availability of research materials.")}
+                </Typography>
+                <ButtonLink href="/contact" variant="outlined">
+                  {act("contact")}
+                </ButtonLink>
+              </>
+            )}
+          </Stack>
+        )}
       </Box>
     </Box>
   )
@@ -135,8 +150,20 @@ export default function ShopPage({ searchParams }: PageProps<"/[countryCode]/sho
   const act = useTranslations("Actions")
   return (
     <>
-      <VideoHero video={SHOP_HERO_VIDEO} eyebrow={ct("The collection")} title={ct("Research peptides & laboratory materials.")} description={ct("Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.")}>
-        <AppLink href="/dual-chamber-pen" sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}>{act("compareFormats")}</AppLink>
+      <VideoHero
+        video={SHOP_HERO_VIDEO}
+        eyebrow={ct("The collection")}
+        title={ct("Research peptides & laboratory materials.")}
+        description={ct(
+          "Explore Retatrutide, Tirzepatide, Semaglutide and other research materials. Compare available amounts, regional prices, stock and lot documentation. For laboratory research use only.",
+        )}
+      >
+        <AppLink
+          href="/dual-chamber-pen"
+          sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15, fontWeight: 600 }}
+        >
+          {act("compareFormats")}
+        </AppLink>
       </VideoHero>
       <Section tone="white" tight sx={{ pt: { xs: 3, md: 5 } }}>
         <Suspense fallback={<ResultsSkeleton />}>

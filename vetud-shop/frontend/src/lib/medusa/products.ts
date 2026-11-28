@@ -54,10 +54,7 @@ export async function listProducts({
   return products.map(reviewedProductFormats)
 }
 
-export async function getProductByHandle(
-  handle: string,
-  regionId: string
-): Promise<HttpTypes.StoreProduct | null> {
+export async function getProductByHandle(handle: string, regionId: string): Promise<HttpTypes.StoreProduct | null> {
   "use cache"
   cacheLife("minutes")
   cacheTag("products", `product:${handle}`)
@@ -79,7 +76,13 @@ export async function listCatalogProducts(regionId: string): Promise<HttpTypes.S
   const products: HttpTypes.StoreProduct[] = []
   let count = 0
   do {
-    const page = await sdk.store.product.list({ region_id: regionId, fields: PRODUCT_FIELDS, limit: 100, offset: products.length, order: "created_at" })
+    const page = await sdk.store.product.list({
+      region_id: regionId,
+      fields: PRODUCT_FIELDS,
+      limit: 100,
+      offset: products.length,
+      order: "created_at",
+    })
     products.push(...page.products.map(reviewedProductFormats))
     count = page.count
     if (!page.products.length) break
@@ -103,28 +106,30 @@ export async function listProductSitemapEntries(): Promise<{ handle: string; upd
   cacheTag("products")
 
   const { products } = await sdk.store.product.list({ fields: "handle,updated_at", limit: 500 })
-  return products.flatMap((product) => product.handle
-    ? [{ handle: product.handle, updatedAt: product.updated_at ? new Date(product.updated_at).toISOString() : undefined }]
-    : [])
+  return products.flatMap((product) =>
+    product.handle
+      ? [
+          {
+            handle: product.handle,
+            updatedAt: product.updated_at ? new Date(product.updated_at).toISOString() : undefined,
+          },
+        ]
+      : [],
+  )
 }
 
 /**
  * Full-text search through Meilisearch. The plugin's hydrated route returns regular store
  * products (with region prices and inventory) in relevance order.
  */
-export async function searchProducts(
-  query: string,
-  regionId: string,
-  limit = 24
-): Promise<HttpTypes.StoreProduct[]> {
+export async function searchProducts(query: string, regionId: string, limit = 24): Promise<HttpTypes.StoreProduct[]> {
   "use cache"
   cacheLife("minutes")
   cacheTag("products", "search")
 
-  const { products } = await sdk.client.fetch<{ products: HttpTypes.StoreProduct[] }>(
-    "/store/meilisearch/products",
-    { query: { query, region_id: regionId, fields: PRODUCT_FIELDS, limit } }
-  )
+  const { products } = await sdk.client.fetch<{ products: HttpTypes.StoreProduct[] }>("/store/meilisearch/products", {
+    query: { query, region_id: regionId, fields: PRODUCT_FIELDS, limit },
+  })
   return products.map(reviewedProductFormats)
 }
 
@@ -141,9 +146,7 @@ export async function listCategories(): Promise<HttpTypes.StoreProductCategory[]
   return product_categories
 }
 
-export async function getCollectionByHandle(
-  handle: string
-): Promise<HttpTypes.StoreCollection | null> {
+export async function getCollectionByHandle(handle: string): Promise<HttpTypes.StoreCollection | null> {
   "use cache"
   cacheLife("hours")
   cacheTag("collections")

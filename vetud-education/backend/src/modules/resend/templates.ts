@@ -1,4 +1,9 @@
-import { bookOwnerAlert, emailListSignupAlert, type BookOwnerAlertData, type EmailListSignupAlertData } from "./owner-alerts"
+import {
+  bookOwnerAlert,
+  emailListSignupAlert,
+  type BookOwnerAlertData,
+  type EmailListSignupAlertData,
+} from "./owner-alerts"
 
 /**
  * Every education email is a published Resend template, with the VETUD logo, vetud.com links and no
@@ -54,7 +59,11 @@ function escape(value: string) {
 }
 
 function dateTime(value: string) {
-  return new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(new Date(value)) + " UTC"
+  return (
+    new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(
+      new Date(value),
+    ) + " UTC"
+  )
 }
 
 type Built = {
@@ -77,10 +86,16 @@ const builders: Record<string, (data: Data) => Built> = {
   },
   [EmailTemplates.PASSWORD_RESET]: (data) => ({ variables: { RESET_URL: data.reset_url } }),
   [EmailTemplates.CUSTOMER_WELCOME]: (data) => ({
-    variables: { NAME_SUFFIX: data.first_name ? `, ${data.first_name}` : "", SITE_URL: data.storefront_url.replace(/\/+$/, "") },
+    variables: {
+      NAME_SUFFIX: data.first_name ? `, ${data.first_name}` : "",
+      SITE_URL: data.storefront_url.replace(/\/+$/, ""),
+    },
   }),
   [EmailTemplates.USER_INVITE]: (data) => ({
-    variables: { INVITE_URL: data.invite_url, EXPIRY_NOTE: data.expires_at ? `The link expires on ${dateTime(data.expires_at)}.` : "" },
+    variables: {
+      INVITE_URL: data.invite_url,
+      EXPIRY_NOTE: data.expires_at ? `The link expires on ${dateTime(data.expires_at)}.` : "",
+    },
   }),
   [EmailTemplates.EMAIL_CHANGE_CODE]: (data) => ({
     variables: {

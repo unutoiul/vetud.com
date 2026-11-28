@@ -8,7 +8,12 @@ import { useOrder } from "./OrderProvider"
 import { Section, SectionHeading } from "./ui"
 
 /** One icon per step, in the order of howToOrder.steps in the messages. */
-const STEP_ICONS = [<ShoppingOutlined key="choose" />, <FormOutlined key="form" />, <MailOutlined key="email" />, <CarOutlined key="ship" />]
+const STEP_ICONS = [
+  <ShoppingOutlined key="choose" />,
+  <FormOutlined key="form" />,
+  <MailOutlined key="email" />,
+  <CarOutlined key="ship" />,
+]
 
 export default function HowToOrder() {
   const { openOrder } = useOrder()
@@ -33,7 +38,16 @@ export default function HowToOrder() {
             >
               <span
                 aria-hidden
-                style={{ position: "absolute", top: 18, right: 22, fontFamily: fonts.display, fontSize: 44, fontWeight: 300, color: colors.aqua, lineHeight: 1 }}
+                style={{
+                  position: "absolute",
+                  top: 18,
+                  right: 22,
+                  fontFamily: fonts.display,
+                  fontSize: 44,
+                  fontWeight: 300,
+                  color: colors.aqua,
+                  lineHeight: 1,
+                }}
               >
                 {index + 1}
               </span>
@@ -52,16 +66,33 @@ export default function HowToOrder() {
               >
                 {STEP_ICONS[index]}
               </span>
-              <Typography.Title level={4} style={{ fontFamily: fonts.display, fontWeight: 500, fontSize: 21, color: colors.navy, margin: "20px 0 8px" }}>
+              <Typography.Title
+                level={4}
+                style={{
+                  fontFamily: fonts.display,
+                  fontWeight: 500,
+                  fontSize: 21,
+                  color: colors.navy,
+                  margin: "20px 0 8px",
+                }}
+              >
                 {step.title}
               </Typography.Title>
-              <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.6, margin: 0 }}>{step.text}</Typography.Paragraph>
+              <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.6, margin: 0 }}>
+                {step.text}
+              </Typography.Paragraph>
             </div>
           </Col>
         ))}
       </Row>
       <Flex justify="center" style={{ marginTop: 48 }}>
-        <Button type="primary" size="large" icon={<ShoppingOutlined />} onClick={() => openOrder()} style={{ height: 56, padding: "0 40px", fontSize: 17 }}>
+        <Button
+          type="primary"
+          size="large"
+          icon={<ShoppingOutlined />}
+          onClick={() => openOrder()}
+          style={{ height: 56, padding: "0 40px", fontSize: 17 }}
+        >
           {t.cta}
         </Button>
       </Flex>

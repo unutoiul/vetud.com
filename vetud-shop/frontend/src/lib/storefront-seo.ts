@@ -11,7 +11,7 @@ export const storefrontUrl = (country: string, path = "") => `${BASE_URL}/${coun
 
 export function storefrontLanguages(path: string) {
   return Object.fromEntries([
-    ...SUPPORTED_COUNTRIES.map(country => [pageLocale(country), storefrontUrl(country, path)]),
+    ...SUPPORTED_COUNTRIES.map((country) => [pageLocale(country), storefrontUrl(country, path)]),
     ["x-default", storefrontUrl("us", path)],
   ])
 }
@@ -22,37 +22,64 @@ export async function storefrontAlternates(path: string): Promise<NonNullable<Me
   return { canonical: storefrontUrl(country, path), languages: storefrontLanguages(path) }
 }
 
-export async function storefrontMetadata({ title, description, country, path, images = [], noindex = false }: {
-  title: string; description: string; country: string; path: string;
-  images?: { url: string; alt?: string }[]; noindex?: boolean
+export async function storefrontMetadata({
+  title,
+  description,
+  country,
+  path,
+  images = [],
+  noindex = false,
+}: {
+  title: string
+  description: string
+  country: string
+  path: string
+  images?: { url: string; alt?: string }[]
+  noindex?: boolean
 }): Promise<Metadata> {
   const { ct, openGraphLocale } = await getPageLocalization()
   title = ct(title)
   description = ct(description)
-  images = images.length ? images.map(image => ({ ...image, alt: ct(image.alt) })) : [SHARE_IMAGE]
+  images = images.length ? images.map((image) => ({ ...image, alt: ct(image.alt) })) : [SHARE_IMAGE]
   const url = storefrontUrl(country, path)
   return {
-    title: { absolute: title }, description,
+    title: { absolute: title },
+    description,
     alternates: { canonical: url, ...(!noindex ? { languages: storefrontLanguages(path) } : {}) },
-    openGraph: { type: "website", siteName: "VETUD", title, description, url,
-      locale: openGraphLocale, images },
-    twitter: { card: "summary_large_image", title, description, images: images.map(image => image.url) },
-    robots: { index: !noindex, follow: true, googleBot: { index: !noindex, follow: true, "max-image-preview": "large" } },
+    openGraph: { type: "website", siteName: "VETUD", title, description, url, locale: openGraphLocale, images },
+    twitter: { card: "summary_large_image", title, description, images: images.map((image) => image.url) },
+    robots: {
+      index: !noindex,
+      follow: true,
+      googleBot: { index: !noindex, follow: true, "max-image-preview": "large" },
+    },
   }
 }
 
 export async function productMetadata(product: HttpTypes.StoreProduct, country: string): Promise<Metadata> {
   const { ct } = await getPageLocalization()
   const meta = readProductMeta(product)
-  const form = meta.form && !product.title.toLowerCase().includes(meta.form.replace(/ solution$/i, "").toLowerCase()) ? ` ${ct(meta.form)}` : ""
+  const form =
+    meta.form && !product.title.toLowerCase().includes(meta.form.replace(/ solution$/i, "").toLowerCase())
+      ? ` ${ct(meta.form)}`
+      : ""
   // A single format reads well in the title ("BPC-157 Nasal spray"); a list of formats stays in the description.
   const titleForm = meta.form && /,| or /i.test(meta.form) ? "" : form
   const market = country === "gb" ? "UK" : country.toUpperCase()
   return storefrontMetadata({
-    title: ct.template("{v0}{v1} for Research | VETUD {v2}", { v0: ct(product.title), v1: titleForm, v2: market }, { translateValues: false }),
-    description: ct.template("{v0}{v1}. Available amounts, regional prices, stock and lot documentation. Laboratory research only; not for human use.", { v0: ct(product.title), v1: form }, { translateValues: false }),
-    country, path: `/products/${product.handle}`,
-    images: getProductImages(product).map(image => ({ ...image, url: new URL(image.url, BASE_URL).href })),
+    title: ct.template(
+      "{v0}{v1} for Research | VETUD {v2}",
+      { v0: ct(product.title), v1: titleForm, v2: market },
+      { translateValues: false },
+    ),
+    description: ct.template(
+      "{v0}{v1}. Available amounts, regional prices, stock and lot documentation. Laboratory research only; not for human use.",
+      { v0: ct(product.title), v1: form },
+      { translateValues: false },
+    ),
+    country,
+    path: `/products/${product.handle}`,
+    images: getProductImages(product).map((image) => ({ ...image, url: new URL(image.url, BASE_URL).href })),
   })
 }
 
@@ -67,28 +94,52 @@ export async function productStructuredData(product: HttpTypes.StoreProduct, cou
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Product", "@id": `${url}#product`, url, name: ct(product.title), inLanguage: locale,
+        "@type": "Product",
+        "@id": `${url}#product`,
+        url,
+        name: ct(product.title),
+        inLanguage: locale,
         sku: variant?.sku ?? undefined,
         description: ct(product.description ?? `${product.title}. Laboratory research use only.`),
         brand: { "@type": "Brand", name: "VETUD" },
-        image: getProductImages(product).map(image => new URL(image.url, BASE_URL).href),
-        ...(meta.form ? { additionalProperty: [{ "@type": "PropertyValue", name: ct("Form"), value: ct(meta.form) }] } : {}),
-        ...(price && Number.isFinite(price.amount) && price.amount >= 0 ? {
-          offers: {
-            "@type": "Offer", url, name: ct(variant.title), sku: variant.sku ?? undefined,
-            price: price.amount, priceCurrency: price.currencyCode.toUpperCase(),
-            availability: !isVariantInStock(variant) ? "https://schema.org/OutOfStock"
-              : variant.manage_inventory && (variant.inventory_quantity ?? 0) <= 0 && variant.allow_backorder
-                ? "https://schema.org/BackOrder" : "https://schema.org/InStock",
-            seller: { "@type": "Organization", name: "VETUD", url: BASE_URL },
-          },
-        } : {}),
+        image: getProductImages(product).map((image) => new URL(image.url, BASE_URL).href),
+        ...(meta.form
+          ? { additionalProperty: [{ "@type": "PropertyValue", name: ct("Form"), value: ct(meta.form) }] }
+          : {}),
+        ...(price && Number.isFinite(price.amount) && price.amount >= 0
+          ? {
+              offers: {
+                "@type": "Offer",
+                url,
+                name: ct(variant.title),
+                sku: variant.sku ?? undefined,
+                price: price.amount,
+                priceCurrency: price.currencyCode.toUpperCase(),
+                availability: !isVariantInStock(variant)
+                  ? "https://schema.org/OutOfStock"
+                  : variant.manage_inventory && (variant.inventory_quantity ?? 0) <= 0 && variant.allow_backorder
+                    ? "https://schema.org/BackOrder"
+                    : "https://schema.org/InStock",
+                seller: { "@type": "Organization", name: "VETUD", url: BASE_URL },
+              },
+            }
+          : {}),
       },
       {
-        "@type": "BreadcrumbList", "@id": `${url}#breadcrumbs`,
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumbs`,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: ct("Shop"), item: storefrontUrl(country, "/shop") },
-          ...(product.categories?.[0] ? [{ "@type": "ListItem", position: 2, name: ct(product.categories[0].name), item: `${storefrontUrl(country, "/shop")}?category=${encodeURIComponent(product.categories[0].handle)}` }] : []),
+          ...(product.categories?.[0]
+            ? [
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: ct(product.categories[0].name),
+                  item: `${storefrontUrl(country, "/shop")}?category=${encodeURIComponent(product.categories[0].handle)}`,
+                },
+              ]
+            : []),
           { "@type": "ListItem", position: product.categories?.[0] ? 3 : 2, name: ct(product.title), item: url },
         ],
       },
@@ -99,11 +150,30 @@ export async function productStructuredData(product: HttpTypes.StoreProduct, cou
 export const websiteStructuredData = {
   "@context": "https://schema.org",
   "@graph": [
-    { "@type": "WebSite", "@id": `${BASE_URL}/#website`, url: BASE_URL, name: "VETUD", inLanguage: "en", publisher: { "@id": `${BASE_URL}/#organization` } },
-    { "@type": "Organization", "@id": `${BASE_URL}/#organization`, name: "VETUD", url: BASE_URL, email: SITE.email, logo: { "@type": "ImageObject", url: `${BASE_URL}/brand/vetud-mark-square.png`, width: 512, height: 512 } },
+    {
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      url: BASE_URL,
+      name: "VETUD",
+      inLanguage: "en",
+      publisher: { "@id": `${BASE_URL}/#organization` },
+    },
+    {
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      name: "VETUD",
+      url: BASE_URL,
+      email: SITE.email,
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/brand/vetud-mark-square.png`, width: 512, height: 512 },
+    },
   ],
 }
 
 export function localizedWebsiteStructuredData(locale: string) {
-  return { ...websiteStructuredData, "@graph": websiteStructuredData["@graph"].map(item => item["@type"] === "WebSite" ? { ...item, inLanguage: locale } : item) }
+  return {
+    ...websiteStructuredData,
+    "@graph": websiteStructuredData["@graph"].map((item) =>
+      item["@type"] === "WebSite" ? { ...item, inLanguage: locale } : item,
+    ),
+  }
 }

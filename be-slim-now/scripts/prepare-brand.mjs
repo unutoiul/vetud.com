@@ -60,12 +60,19 @@ for (let y = 0; y < H; y++) {
 const raw = (buffer) => sharp(buffer, { raw: info })
 
 // Logo for light backgrounds.
-await raw(data).resize({ width: LOGO_WIDTH }).png({ compressionLevel: 9 }).toFile(path.join(BRAND, "beslimnow-logo.png"))
+await raw(data)
+  .resize({ width: LOGO_WIDTH })
+  .png({ compressionLevel: 9 })
+  .toFile(path.join(BRAND, "beslimnow-logo.png"))
 
 // Logo for emails: on white (mail apps in dark mode can't recolour navy text on a see-through logo),
 // twice its 220 px display width. emails/build.mjs links it from the live site.
 mkdirSync(path.join(BRAND, "email"), { recursive: true })
-await raw(data).resize({ width: 440 }).flatten({ background: WHITE }).png({ compressionLevel: 9 }).toFile(path.join(BRAND, "email", "beslimnow-logo.png"))
+await raw(data)
+  .resize({ width: 440 })
+  .flatten({ background: WHITE })
+  .png({ compressionLevel: 9 })
+  .toFile(path.join(BRAND, "email", "beslimnow-logo.png"))
 
 // Logo for the navy footer: the navy "Be" and "Now" turn white; the teal "Slim" and the B stay.
 // Navy is told apart from teal by hue (more blue than green), so teal's soft edges don't turn white.
@@ -80,7 +87,10 @@ for (let y = 0; y < H; y++) {
     }
   }
 }
-await raw(white).resize({ width: LOGO_WIDTH }).png({ compressionLevel: 9 }).toFile(path.join(BRAND, "beslimnow-logo-white.png"))
+await raw(white)
+  .resize({ width: LOGO_WIDTH })
+  .png({ compressionLevel: 9 })
+  .toFile(path.join(BRAND, "beslimnow-logo-white.png"))
 
 // The B on its own, trimmed tight.
 const mark = await raw(data).extract({ left: markLeft, top: 0, width: markWidth, height: H }).png().toBuffer()
@@ -92,7 +102,13 @@ const square = async (size, fill, background) => {
   const pad = size - inner
   const fitted = await sharp(markTrimmed).resize(inner, inner, { fit: "contain", background: CLEAR }).png().toBuffer()
   const placed = await sharp(fitted)
-    .extend({ top: Math.floor(pad / 2), bottom: Math.ceil(pad / 2), left: Math.floor(pad / 2), right: Math.ceil(pad / 2), background: CLEAR })
+    .extend({
+      top: Math.floor(pad / 2),
+      bottom: Math.ceil(pad / 2),
+      left: Math.floor(pad / 2),
+      right: Math.ceil(pad / 2),
+      background: CLEAR,
+    })
     .png()
     .toBuffer()
   return (background ? sharp(placed).flatten({ background }) : sharp(placed)).png({ compressionLevel: 9 }).toBuffer()

@@ -26,7 +26,15 @@ export function CountryFlag({ code, width = 20 }: { code: string; width?: number
       width={width}
       height={height}
       unoptimized
-      style={{ display: "block", flex: "none", width, height, objectFit: "cover", borderRadius: 2, boxShadow: `0 0 0 1px ${colors.lineStrong}` }}
+      style={{
+        display: "block",
+        flex: "none",
+        width,
+        height,
+        objectFit: "cover",
+        borderRadius: 2,
+        boxShadow: `0 0 0 1px ${colors.lineStrong}`,
+      }}
     />
   )
 }
@@ -76,7 +84,9 @@ function buildGroups(withOtherCountries: boolean, names: GroupNames): CountryGro
   const currencyNames = new Intl.DisplayNames(["en"], { type: "currency" })
   const toOption = (code: string): CountryOption => {
     const label = english.of(code) ?? code
-    const own = isMarket(code) ? (new Intl.DisplayNames([MARKETS[code].locale], { type: "region" }).of(code) ?? label) : label
+    const own = isMarket(code)
+      ? (new Intl.DisplayNames([MARKETS[code].locale], { type: "region" }).of(code) ?? label)
+      : label
     const currency = currencyOf(pricingCountry(code))
     return {
       value: code,
@@ -89,10 +99,18 @@ function buildGroups(withOtherCountries: boolean, names: GroupNames): CountryGro
   const byName = (a: CountryOption, b: CountryOption) => a.label.localeCompare(b.label, "en")
   const groups: CountryGroup[] = [
     { label: names.us, title: names.us, options: [toOption(DEFAULT_COUNTRY)] },
-    { label: names.europe, title: names.europe, options: MARKET_CODES.filter((code) => code !== DEFAULT_COUNTRY).map(toOption).sort(byName) },
+    {
+      label: names.europe,
+      title: names.europe,
+      options: MARKET_CODES.filter((code) => code !== DEFAULT_COUNTRY)
+        .map(toOption)
+        .sort(byName),
+    },
   ]
   if (withOtherCountries) {
-    const others = COUNTRY_CODES.filter((code) => !isMarket(code)).map(toOption).sort(byName)
+    const others = COUNTRY_CODES.filter((code) => !isMarket(code))
+      .map(toOption)
+      .sort(byName)
     groups.push({ label: names.other, title: names.otherTitle, options: others })
   }
   return groups
@@ -102,7 +120,13 @@ function buildGroups(withOtherCountries: boolean, names: GroupNames): CountryGro
 export function useCountryGroups(withOtherCountries = false) {
   const t = useMessages().countryPicker
   return useMemo(
-    () => buildGroups(withOtherCountries, { us: t.groupUs, europe: t.groupEurope, other: t.groupOther, otherTitle: t.groupOtherTitle }),
+    () =>
+      buildGroups(withOtherCountries, {
+        us: t.groupUs,
+        europe: t.groupEurope,
+        other: t.groupOther,
+        otherTitle: t.groupOtherTitle,
+      }),
     [withOtherCountries, t.groupUs, t.groupEurope, t.groupOther, t.groupOtherTitle],
   )
 }
@@ -134,7 +158,13 @@ export function renderCountryOption(option: { data: unknown }): ReactNode {
  * flag, its own name and the currency its prices are in. Choosing one changes every price on the
  * page at once and is remembered for the next visit.
  */
-export default function CountrySelect({ compact = false, size = "middle" }: { compact?: boolean; size?: "middle" | "large" }) {
+export default function CountrySelect({
+  compact = false,
+  size = "middle",
+}: {
+  compact?: boolean
+  size?: "middle" | "large"
+}) {
   const { country, currency, setCountry } = useCountry()
   const t = useMessages().countryPicker
   const groups = useCountryGroups()
@@ -156,7 +186,19 @@ export default function CountrySelect({ compact = false, size = "middle" }: { co
       labelRender={() => (
         <span style={{ display: "inline-flex", alignItems: "center", gap: 8, verticalAlign: "middle" }}>
           <CountryFlag code={country} />
-          {!compact && <span style={{ fontFamily: fonts.mono, fontSize: 13, fontWeight: 500, letterSpacing: "0.06em", color: colors.navyInk }}>{currency}</span>}
+          {!compact && (
+            <span
+              style={{
+                fontFamily: fonts.mono,
+                fontSize: 13,
+                fontWeight: 500,
+                letterSpacing: "0.06em",
+                color: colors.navyInk,
+              }}
+            >
+              {currency}
+            </span>
+          )}
         </span>
       )}
       optionRender={renderCountryOption}

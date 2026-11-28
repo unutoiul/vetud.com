@@ -14,13 +14,24 @@ import { syncCurrencyPrices } from "../workflows/sync-currency-prices"
 export default async function usdBaseCurrency({ container }: { container: MedusaContainer }) {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
-  const { data: stores } = await query.graph({ entity: "store", fields: ["id", "supported_currencies.currency_code", "supported_currencies.is_default"] })
+  const { data: stores } = await query.graph({
+    entity: "store",
+    fields: ["id", "supported_currencies.currency_code", "supported_currencies.is_default"],
+  })
   const store = stores[0]
   const supported = (store?.supported_currencies ?? []).flatMap((currency) => (currency ? [currency] : []))
   if (store && !supported.some((currency) => currency.currency_code === BASE_CURRENCY && currency.is_default)) {
     const codes = [...new Set([BASE_CURRENCY, ...supported.map((currency) => currency.currency_code)])]
     await updateStoresWorkflow(container).run({
-      input: { selector: { id: store.id }, update: { supported_currencies: codes.map((currency_code) => ({ currency_code, is_default: currency_code === BASE_CURRENCY })) } },
+      input: {
+        selector: { id: store.id },
+        update: {
+          supported_currencies: codes.map((currency_code) => ({
+            currency_code,
+            is_default: currency_code === BASE_CURRENCY,
+          })),
+        },
+      },
     })
     logger.info("Currency prices: USD is now the store's default currency.")
   }

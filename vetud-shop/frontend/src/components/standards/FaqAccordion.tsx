@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { ChevronDownIcon as ExpandMoreIcon } from "@/components/brand/Icon"
 import Accordion from "@mui/material/Accordion"
 import AccordionDetails from "@mui/material/AccordionDetails"
@@ -19,7 +18,11 @@ export default function FaqAccordion({ items }: { items: FaqItem[] }) {
     <Box sx={{ borderTop: "1px solid", borderColor: "brand.lineStrong" }}>
       {items.map((item, index) => (
         <Accordion key={item.question}>
-          <AccordionSummary id={`${id}-${index}-header`} aria-controls={`${id}-${index}-content`} expandIcon={<ExpandMoreIcon />}>
+          <AccordionSummary
+            id={`${id}-${index}-header`}
+            aria-controls={`${id}-${index}-content`}
+            expandIcon={<ExpandMoreIcon />}
+          >
             <Typography variant="h6" component="h3">
               {ct(item.question)}
             </Typography>

@@ -1,8 +1,22 @@
 import type { CreateNotificationDTO } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import { memberIdsForEmail } from "../lib/checkout-email"
-import { issueSignInCode, normalizeEmail, secondsUntilResend, SIGN_IN_CODE_RESEND_SECONDS, SIGN_IN_CODE_TTL_MINUTES, SIGN_IN_PROVIDER, type SignInCodeState } from "../lib/sign-in-code"
+import {
+  issueSignInCode,
+  normalizeEmail,
+  secondsUntilResend,
+  SIGN_IN_CODE_RESEND_SECONDS,
+  SIGN_IN_CODE_TTL_MINUTES,
+  SIGN_IN_PROVIDER,
+  type SignInCodeState,
+} from "../lib/sign-in-code"
 import { EmailTemplates } from "../modules/resend/templates"
 import { sendNotificationStep } from "./steps/send-notification"
 
@@ -26,7 +40,10 @@ export const prepareSignInCodeStep = createStep(
       firstName = (data[0] as { first_name?: string | null } | undefined)?.first_name ?? null
     }
 
-    let [login] = await auth.listProviderIdentities({ provider: SIGN_IN_PROVIDER, entity_id: email }, { relations: ["auth_identity"] })
+    let [login] = await auth.listProviderIdentities(
+      { provider: SIGN_IN_PROVIDER, entity_id: email },
+      { relations: ["auth_identity"] },
+    )
     if (!login) {
       const created = await auth.createAuthIdentities({
         provider_identities: [{ provider: SIGN_IN_PROVIDER, entity_id: email }],
@@ -35,7 +52,10 @@ export const prepareSignInCodeStep = createStep(
       login = created.provider_identities!.find((provider) => provider.provider === SIGN_IN_PROVIDER)!
     } else if (memberId && !login.auth_identity?.app_metadata?.customer_id) {
       // The account was made after this login (with a password, or at checkout): tie them together.
-      await auth.updateAuthIdentities({ id: login.auth_identity_id!, app_metadata: { ...(login.auth_identity?.app_metadata ?? {}), customer_id: memberId } })
+      await auth.updateAuthIdentities({
+        id: login.auth_identity_id!,
+        app_metadata: { ...(login.auth_identity?.app_metadata ?? {}), customer_id: memberId },
+      })
     }
 
     const wait = secondsUntilResend(login.provider_metadata as SignInCodeState | null)
@@ -53,7 +73,7 @@ export const prepareSignInCodeStep = createStep(
       },
       resend_after: SIGN_IN_CODE_RESEND_SECONDS,
     })
-  }
+  },
 )
 
 /** Emails a sign-in code. The answer never says whether the address has an account. */
@@ -62,5 +82,7 @@ export const requestSignInCodeWorkflow = createWorkflow("request-sign-in-code", 
   const notifications = transform(prepared, (result) => (result.notification ? [result.notification] : []))
   sendNotificationStep(notifications)
   // `sent` is false while the 30-second limit holds: that says nothing about whether the address has an account.
-  return new WorkflowResponse(transform(prepared, (result) => ({ sent: Boolean(result.notification), resend_after: result.resend_after })))
+  return new WorkflowResponse(
+    transform(prepared, (result) => ({ sent: Boolean(result.notification), resend_after: result.resend_after })),
+  )
 })

@@ -16,7 +16,10 @@ export default async function rewriteProductImageHost({ container }: ExecArgs) {
   const from = (process.env.IMAGE_HOST_FROM || "https://www.vetud.com").replace(/\/$/, "")
   const to = (process.env.IMAGE_HOST_TO || "").replace(/\/$/, "")
   if (!/^https?:\/\/[^/]+$/.test(to)) {
-    throw new MedusaError(MedusaError.Types.INVALID_DATA, "Set IMAGE_HOST_TO to the new origin, e.g. https://shop.example.com")
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      "Set IMAGE_HOST_TO to the new origin, e.g. https://shop.example.com",
+    )
   }
   const swap = (url: string) => (url === from || url.startsWith(`${from}/`) ? `${to}${url.slice(from.length)}` : url)
 

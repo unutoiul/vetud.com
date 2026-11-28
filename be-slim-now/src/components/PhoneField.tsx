@@ -49,7 +49,8 @@ export default function PhoneField({
 
   const prefix = (code: string) => `+${DIAL_CODES[code]} `
   const number = value.startsWith(prefix(dialCountry)) ? value.slice(prefix(dialCountry).length) : value
-  const compose = (code: string, typed: string) => (!typed ? "" : /^\s*(\+|00)/.test(typed) ? typed : `${prefix(code)}${typed}`)
+  const compose = (code: string, typed: string) =>
+    !typed ? "" : /^\s*(\+|00)/.test(typed) ? typed : `${prefix(code)}${typed}`
 
   const switchTo = (code: string) => {
     setDialCountry(code)
@@ -66,7 +67,12 @@ export default function PhoneField({
     () =>
       COUNTRY_CODES.map((code) => {
         const label = countryName(code)
-        return { value: code, label, dial: DIAL_CODES[code], search: fold(`${label} ${code} ${DIAL_CODES[code]}${code === "GB" ? " uk" : code === "US" ? " usa" : ""}`) }
+        return {
+          value: code,
+          label,
+          dial: DIAL_CODES[code],
+          search: fold(`${label} ${code} ${DIAL_CODES[code]}${code === "GB" ? " uk" : code === "US" ? " usa" : ""}`),
+        }
       }).sort((a, b) => a.label.localeCompare(b.label, "en")),
     [],
   )
@@ -88,7 +94,9 @@ export default function PhoneField({
         labelRender={() => (
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6, verticalAlign: "middle" }}>
             <CountryFlag code={dialCountry} width={18} />
-            <span style={{ fontFamily: fonts.mono, fontSize: 13, color: colors.navyInk }}>+{DIAL_CODES[dialCountry]}</span>
+            <span style={{ fontFamily: fonts.mono, fontSize: 13, color: colors.navyInk }}>
+              +{DIAL_CODES[dialCountry]}
+            </span>
           </span>
         )}
         optionRender={(option) => {

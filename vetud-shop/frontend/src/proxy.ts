@@ -26,9 +26,15 @@ async function sellableCountries(): Promise<{ codes: string[]; home: Record<stri
     const { regions } = (await response.json()) as {
       regions: { currency_code: string; countries?: { iso_2?: string }[] }[]
     }
-    const home = Object.fromEntries(regions.flatMap((region) =>
-      (region.countries ?? []).flatMap((country) => country.iso_2 && SUPPORTED_COUNTRIES.includes(country.iso_2.toLowerCase()) ? [[country.iso_2.toLowerCase(), region.currency_code.toLowerCase()]] : [])
-    ))
+    const home = Object.fromEntries(
+      regions.flatMap((region) =>
+        (region.countries ?? []).flatMap((country) =>
+          country.iso_2 && SUPPORTED_COUNTRIES.includes(country.iso_2.toLowerCase())
+            ? [[country.iso_2.toLowerCase(), region.currency_code.toLowerCase()]]
+            : [],
+        ),
+      ),
+    )
     const codes = Object.keys(home)
     countryCache = codes.length ? { codes, home, fetchedAt: Date.now() } : { ...fallback, fetchedAt: Date.now() }
   } catch {
@@ -67,9 +73,34 @@ function languageCountry(request: NextRequest) {
 
 /** The country a bare language most likely means (Accept-Language "sv" → Sweden). */
 const LANGUAGE_COUNTRY: Record<string, string> = {
-  en: "us", de: "de", fr: "fr", nl: "nl", es: "es", it: "it", pt: "pt", pl: "pl", cs: "cz", sk: "sk",
-  hu: "hu", ro: "ro", bg: "bg", hr: "hr", sl: "si", el: "gr", sv: "se", da: "dk", nb: "no", nn: "no",
-  no: "no", fi: "fi", et: "ee", lv: "lv", lt: "lt", is: "is", mt: "mt", ga: "ie",
+  en: "us",
+  de: "de",
+  fr: "fr",
+  nl: "nl",
+  es: "es",
+  it: "it",
+  pt: "pt",
+  pl: "pl",
+  cs: "cz",
+  sk: "sk",
+  hu: "hu",
+  ro: "ro",
+  bg: "bg",
+  hr: "hr",
+  sl: "si",
+  el: "gr",
+  sv: "se",
+  da: "dk",
+  nb: "no",
+  nn: "no",
+  no: "no",
+  fi: "fi",
+  et: "ee",
+  lv: "lv",
+  lt: "lt",
+  is: "is",
+  mt: "mt",
+  ga: "ie",
 }
 
 /**
@@ -96,7 +127,13 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone()
     url.pathname = `/${hidden[1]}${segments.length > 2 ? `/${segments.slice(2).join("/")}` : ""}`
     const response = NextResponse.redirect(url, 307)
-    response.cookies.set(CURRENCY_COOKIE, hidden[2], { maxAge: 60 * 60 * 24 * 365, httpOnly: false, sameSite: "lax", secure: request.nextUrl.protocol === "https:", path: "/" })
+    response.cookies.set(CURRENCY_COOKIE, hidden[2], {
+      maxAge: 60 * 60 * 24 * 365,
+      httpOnly: false,
+      sameSite: "lax",
+      secure: request.nextUrl.protocol === "https:",
+      path: "/",
+    })
     return response
   }
 
@@ -115,11 +152,7 @@ export async function proxy(request: NextRequest) {
   }
 
   const saved = request.cookies.get(COUNTRY_COOKIE)?.value?.toLowerCase() ?? ""
-  const geo = (
-    request.headers.get("x-vercel-ip-country") ??
-    request.headers.get("cf-ipcountry") ??
-    ""
-  ).toLowerCase()
+  const geo = (request.headers.get("x-vercel-ip-country") ?? request.headers.get("cf-ipcountry") ?? "").toLowerCase()
   const language = languageCountry(request)
   const target = countries.includes(saved)
     ? saved

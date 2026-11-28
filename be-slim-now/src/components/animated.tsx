@@ -1,6 +1,14 @@
 "use client"
 
-import { animate, AnimatePresence, motion, useInView, useMotionValue, useReducedMotion, useTransform } from "motion/react"
+import {
+  animate,
+  AnimatePresence,
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "motion/react"
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { gradients } from "@/theme/tokens"
 
@@ -60,7 +68,12 @@ type Entrance = "rise" | "up" | "drop" | "pop" | "spin" | "glide" | "bloom" | "s
  */
 export function enter(
   name: Entrance,
-  { delay = 0, duration = 0.9, easing = EASE_OUT_CSS, vars }: { delay?: number; duration?: number; easing?: string; vars?: Record<`--enter-${string}`, string> } = {},
+  {
+    delay = 0,
+    duration = 0.9,
+    easing = EASE_OUT_CSS,
+    vars,
+  }: { delay?: number; duration?: number; easing?: string; vars?: Record<`--enter-${string}`, string> } = {},
 ): CSSProperties {
   return { animation: `vetud-${name} ${duration}s ${easing} ${delay}s backwards`, ...vars }
 }
@@ -79,8 +92,22 @@ export const srOnly: CSSProperties = {
 }
 
 /** Rises a few pixels while fading in. */
-export function FadeUp({ children, delay = 0, y = 18, style }: { children: ReactNode; delay?: number; y?: number; style?: CSSProperties }) {
-  return <div style={{ ...enter("up", { delay, duration: 0.8, vars: { "--enter-y": `${y}px` } }), ...style }}>{children}</div>
+export function FadeUp({
+  children,
+  delay = 0,
+  y = 18,
+  style,
+}: {
+  children: ReactNode
+  delay?: number
+  y?: number
+  style?: CSSProperties
+}) {
+  return (
+    <div style={{ ...enter("up", { delay, duration: 0.8, vars: { "--enter-y": `${y}px` } }), ...style }}>
+      {children}
+    </div>
+  )
 }
 
 /**
@@ -89,8 +116,18 @@ export function FadeUp({ children, delay = 0, y = 18, style }: { children: React
  */
 export function RisingWord({ children, delay }: { children: ReactNode; delay: number }) {
   return (
-    <span style={{ display: "inline-block", overflow: "clip", padding: "0.06em 0 0.16em", margin: "-0.06em 0 -0.16em", verticalAlign: "baseline" }}>
-      <span style={{ display: "inline-block", transformOrigin: "0% 100%", ...enter("rise", { delay }) }}>{children}</span>
+    <span
+      style={{
+        display: "inline-block",
+        overflow: "clip",
+        padding: "0.06em 0 0.16em",
+        margin: "-0.06em 0 -0.16em",
+        verticalAlign: "baseline",
+      }}
+    >
+      <span style={{ display: "inline-block", transformOrigin: "0% 100%", ...enter("rise", { delay }) }}>
+        {children}
+      </span>
     </span>
   )
 }
@@ -136,7 +173,15 @@ export function Shine({ delay = 2, every = 4, width = "45%" }: { delay?: number;
   return (
     <motion.span
       aria-hidden
-      style={{ position: "absolute", top: 0, bottom: 0, left: 0, width, background: gradients.shine, pointerEvents: "none" }}
+      style={{
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        width,
+        background: gradients.shine,
+        pointerEvents: "none",
+      }}
       initial={{ x: "-110%" }}
       animate={{ x: "330%" }}
       transition={{ duration: 1.1, ease: "easeInOut", repeat: Infinity, repeatDelay: every, delay }}
@@ -149,7 +194,15 @@ export function Shine({ delay = 2, every = 4, width = "45%" }: { delay?: number;
  * place. Pauses while off screen or under the mouse, and stays on the first phrase for visitors who
  * reduce motion. The parent should give screen readers the full list once.
  */
-export function Rotator({ items, interval = 2600, style }: { items: readonly string[]; interval?: number; style?: CSSProperties }) {
+export function Rotator({
+  items,
+  interval = 2600,
+  style,
+}: {
+  items: readonly string[]
+  interval?: number
+  style?: CSSProperties
+}) {
   const [index, setIndex] = useState(0)
   const [hovered, setHovered] = useState(false)
   const ref = useRef<HTMLSpanElement>(null)
@@ -168,7 +221,14 @@ export function Rotator({ items, interval = 2600, style }: { items: readonly str
       aria-hidden
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
-      style={{ position: "relative", display: "inline-block", overflow: "clip", verticalAlign: "baseline", padding: "0 0 0.12em", margin: "0 0 -0.12em" }}
+      style={{
+        position: "relative",
+        display: "inline-block",
+        overflow: "clip",
+        verticalAlign: "baseline",
+        padding: "0 0 0.12em",
+        margin: "0 0 -0.12em",
+      }}
     >
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span

@@ -23,7 +23,15 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 type Status = { kind: "success" | "error"; text: string } | null
 
 /** A titled settings card with its own form, save button and result message. */
-function SettingsCard({ title, description, children, onSubmit, saving, status, submitLabel }: {
+function SettingsCard({
+  title,
+  description,
+  children,
+  onSubmit,
+  saving,
+  status,
+  submitLabel,
+}: {
   title: string
   description: string
   children: ReactNode
@@ -39,12 +47,28 @@ function SettingsCard({ title, description, children, onSubmit, saving, status, 
   }
   return (
     <Paper variant="outlined" sx={{ p: { xs: 2.5, md: 3.5 }, borderRadius: 3 }}>
-      <Typography component="h3" sx={{ fontSize: 18, fontWeight: 700, letterSpacing: "-.02em" }}>{ct(title)}</Typography>
-      <Typography sx={{ mt: .5, mb: 2.5, fontSize: 14, color: "text.secondary", maxWidth: 560 }}>{ct(description)}</Typography>
+      <Typography component="h3" sx={{ fontSize: 18, fontWeight: 700, letterSpacing: "-.02em" }}>
+        {ct(title)}
+      </Typography>
+      <Typography sx={{ mt: 0.5, mb: 2.5, fontSize: 14, color: "text.secondary", maxWidth: 560 }}>
+        {ct(description)}
+      </Typography>
       <Box component="form" noValidate onSubmit={submit}>
         {children}
-        {status ? <Alert severity={status.kind} role={status.kind === "success" ? "status" : "alert"} sx={{ mt: 2 }}>{ct(status.text)}</Alert> : null}
-        <Button type="submit" variant="contained" disabled={saving} startIcon={saving ? <CircularProgress size={16} color="inherit" /> : <Icon name="check" sx={{ fontSize: 17 }} />} sx={{ mt: 2.5 }}>
+        {status ? (
+          <Alert severity={status.kind} role={status.kind === "success" ? "status" : "alert"} sx={{ mt: 2 }}>
+            {ct(status.text)}
+          </Alert>
+        ) : null}
+        <Button
+          type="submit"
+          variant="contained"
+          disabled={saving}
+          startIcon={
+            saving ? <CircularProgress size={16} color="inherit" /> : <Icon name="check" sx={{ fontSize: 17 }} />
+          }
+          sx={{ mt: 2.5 }}
+        >
           {ct(submitLabel)}
         </Button>
       </Box>
@@ -53,7 +77,13 @@ function SettingsCard({ title, description, children, onSubmit, saving, status, 
 }
 
 /** Community name and bio, shown on every post and the public member page. */
-export function CommunityProfileForm({ profile, onSaved }: { profile: OwnForumProfile; onSaved: (profile: OwnForumProfile) => void }) {
+export function CommunityProfileForm({
+  profile,
+  onSaved,
+}: {
+  profile: OwnForumProfile
+  onSaved: (profile: OwnForumProfile) => void
+}) {
   const ct = useContentTranslator()
   const [name, setName] = useState(profile.display_name)
   const [bio, setBio] = useState(profile.bio ?? "")
@@ -83,10 +113,35 @@ export function CommunityProfileForm({ profile, onSaved }: { profile: OwnForumPr
   }
 
   return (
-    <SettingsCard title="Community profile" description="Your community name and bio are public. They appear on your posts and your member page. Your real name and email are never shown." onSubmit={save} saving={saving} status={status} submitLabel="Save profile">
+    <SettingsCard
+      title="Community profile"
+      description="Your community name and bio are public. They appear on your posts and your member page. Your real name and email are never shown."
+      onSubmit={save}
+      saving={saving}
+      status={status}
+      submitLabel="Save profile"
+    >
       <Stack spacing={2}>
-        <TextField label={ct("Community name")} value={name} onChange={(event) => setName(event.target.value)} required helperText={ct("3 to 32 characters. Changing it also changes your member page address.")} slotProps={{ htmlInput: { maxLength: 32, autoComplete: "nickname" } }} />
-        <TextField label={ct("Bio")} value={bio} onChange={(event) => setBio(event.target.value)} multiline minRows={3} helperText={ct.template("{v0}/500. What you research or want to learn about. No doses or personal medical details.", { v0: bio.length })} slotProps={{ htmlInput: { maxLength: 500 } }} />
+        <TextField
+          label={ct("Community name")}
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          required
+          helperText={ct("3 to 32 characters. Changing it also changes your member page address.")}
+          slotProps={{ htmlInput: { maxLength: 32, autoComplete: "nickname" } }}
+        />
+        <TextField
+          label={ct("Bio")}
+          value={bio}
+          onChange={(event) => setBio(event.target.value)}
+          multiline
+          minRows={3}
+          helperText={ct.template(
+            "{v0}/500. What you research or want to learn about. No doses or personal medical details.",
+            { v0: bio.length },
+          )}
+          slotProps={{ htmlInput: { maxLength: 500 } }}
+        />
       </Stack>
     </SettingsCard>
   )
@@ -120,10 +175,33 @@ export function PersonalDetailsForm() {
   }
 
   return (
-    <SettingsCard title="Personal details" description="Your real name is private. We use it only in emails to you." onSubmit={save} saving={saving} status={status} submitLabel="Save name">
+    <SettingsCard
+      title="Personal details"
+      description="Your real name is private. We use it only in emails to you."
+      onSubmit={save}
+      saving={saving}
+      status={status}
+      submitLabel="Save name"
+    >
       <Grid container spacing={2}>
-        <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("firstName")} value={firstName} onChange={(event) => setFirstName(event.target.value)} required slotProps={{ htmlInput: { autoComplete: "given-name" } }} /></Grid>
-        <Grid size={{ xs: 12, sm: 6 }}><TextField label={ta("lastName")} value={lastName} onChange={(event) => setLastName(event.target.value)} required slotProps={{ htmlInput: { autoComplete: "family-name" } }} /></Grid>
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={ta("firstName")}
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
+            required
+            slotProps={{ htmlInput: { autoComplete: "given-name" } }}
+          />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6 }}>
+          <TextField
+            label={ta("lastName")}
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
+            required
+            slotProps={{ htmlInput: { autoComplete: "family-name" } }}
+          />
+        </Grid>
       </Grid>
     </SettingsCard>
   )
@@ -170,12 +248,18 @@ export function EmailForm() {
     }
     setSaving(true)
     try {
-      await sdk.client.fetch<{ email: string }>("/store/account/email", { method: "POST", body: { email: sentTo, code: code.replace(/\D/g, "") } })
+      await sdk.client.fetch<{ email: string }>("/store/account/email", {
+        method: "POST",
+        body: { email: sentTo, code: code.replace(/\D/g, "") },
+      })
       await refreshCustomer()
       setEmail("")
       setSentTo(null)
       setCode("")
-      setStatus({ kind: "success", text: ct.template("Done. Sign in with {v0} from now on.", { v0: sentTo }, { translateValues: false }) })
+      setStatus({
+        kind: "success",
+        text: ct.template("Done. Sign in with {v0} from now on.", { v0: sentTo }, { translateValues: false }),
+      })
     } catch (error) {
       setStatus({ kind: "error", text: forumError(error, "We couldn't change your email. Please try again.") })
     } finally {
@@ -192,7 +276,11 @@ export function EmailForm() {
   return (
     <SettingsCard
       title="Sign-in email"
-      description={ct.template("You sign in with {v0}. It's private and never shown to other members.", { v0: customer?.email ?? "" }, { translateValues: false })}
+      description={ct.template(
+        "You sign in with {v0}. It's private and never shown to other members.",
+        { v0: customer?.email ?? "" },
+        { translateValues: false },
+      )}
       onSubmit={sentTo ? confirm : sendCode}
       saving={saving}
       status={status}
@@ -201,7 +289,11 @@ export function EmailForm() {
       {sentTo ? (
         <Stack spacing={2}>
           <Alert severity="info" role="status">
-            {ct("We sent a 6-digit code to")} <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>{sentTo}</Box>. {ct("Enter it to confirm the new address.")}
+            {ct("We sent a 6-digit code to")}{" "}
+            <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>
+              {sentTo}
+            </Box>
+            . {ct("Enter it to confirm the new address.")}
           </Alert>
           <TextField
             label={ct("Code from the email")}
@@ -209,9 +301,20 @@ export function EmailForm() {
             autoFocus
             value={code}
             onChange={(event) => setCode(event.target.value.replace(/[^\d ]/g, "").slice(0, 7))}
-            slotProps={{ htmlInput: { autoComplete: "one-time-code", inputMode: "numeric", maxLength: 7, sx: { letterSpacing: "0.3em", fontVariantNumeric: "tabular-nums", fontSize: 20 } } }}
+            slotProps={{
+              htmlInput: {
+                autoComplete: "one-time-code",
+                inputMode: "numeric",
+                maxLength: 7,
+                sx: { letterSpacing: "0.3em", fontVariantNumeric: "tabular-nums", fontSize: 20 },
+              },
+            }}
           />
-          <Box><Button type="button" onClick={startOver} sx={{ minHeight: 44 }}>{ct("Use a different email")}</Button></Box>
+          <Box>
+            <Button type="button" onClick={startOver} sx={{ minHeight: 44 }}>
+              {ct("Use a different email")}
+            </Button>
+          </Box>
         </Stack>
       ) : (
         <TextField

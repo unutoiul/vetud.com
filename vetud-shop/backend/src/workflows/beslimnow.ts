@@ -50,12 +50,15 @@ const createBeslimnowOrderStep = createStep(
   async (id, { container }) => {
     if (!id) return
     await container.resolve<BeslimnowModuleService>(BESLIMNOW_MODULE).deleteBeslimnowOrders(id)
-  }
+  },
 )
 
-export const saveBeslimnowOrderWorkflow = createWorkflow("save-beslimnow-order", function (input: SaveBeslimnowOrderInput) {
-  return new WorkflowResponse(createBeslimnowOrderStep(input))
-})
+export const saveBeslimnowOrderWorkflow = createWorkflow(
+  "save-beslimnow-order",
+  function (input: SaveBeslimnowOrderInput) {
+    return new WorkflowResponse(createBeslimnowOrderStep(input))
+  },
+)
 
 export type SaveBeslimnowSubscriberInput = { email: string; country?: string | null; signup_form?: string }
 
@@ -83,7 +86,11 @@ const upsertBeslimnowSubscriberStep = createStep(
       })
       const undo: SubscriberUndo = {
         id: existing.id,
-        previous: { last_seen_at: existing.last_seen_at, times_subscribed: existing.times_subscribed, country: existing.country },
+        previous: {
+          last_seen_at: existing.last_seen_at,
+          times_subscribed: existing.times_subscribed,
+          country: existing.country,
+        },
       }
       return new StepResponse({ id: existing.id, is_new: false }, undo)
     }
@@ -105,12 +112,12 @@ const upsertBeslimnowSubscriberStep = createStep(
     const service = container.resolve<BeslimnowModuleService>(BESLIMNOW_MODULE)
     if (undo.previous) await service.updateBeslimnowSubscribers({ id: undo.id, ...undo.previous })
     else await service.deleteBeslimnowSubscribers(undo.id)
-  }
+  },
 )
 
 export const saveBeslimnowSubscriberWorkflow = createWorkflow(
   "save-beslimnow-subscriber",
   function (input: SaveBeslimnowSubscriberInput) {
     return new WorkflowResponse(upsertBeslimnowSubscriberStep(input))
-  }
+  },
 )

@@ -24,7 +24,11 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/legal/[slu
   const document = getLegalDocument(slug)
   const path = `/legal/${slug}`
   return document
-    ? { title: ct(document.title), description: ct(document.summary), alternates: { canonical: articleUrl(path, language), languages: articleLanguages(path) } }
+    ? {
+        title: ct(document.title),
+        description: ct(document.summary),
+        alternates: { canonical: articleUrl(path, language), languages: articleLanguages(path) },
+      }
     : { title: ct("Not found") }
 }
 
@@ -44,11 +48,28 @@ async function LegalContent({ params }: Pick<PageProps<"/[lang]/legal/[slug]">, 
 
   return (
     <>
-      <PageHeader eyebrow={ct.template("Legal · Last updated {v0}", { v0: document.updated })} title={ct(document.title)} description={ct(document.summary)} />
+      <PageHeader
+        eyebrow={ct.template("Legal · Last updated {v0}", { v0: document.updated })}
+        title={ct(document.title)}
+        description={ct(document.summary)}
+      />
       <Section tone="white">
         <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 3 }}>
-            <Stack component="nav" aria-label={ct("Legal documents")} spacing={0.5} sx={{ bgcolor: brand.slate25, border: "1px solid", borderColor: "divider", borderRadius: 3, p: 2.5, position: { md: "sticky" }, top: { md: 110 } }}>
+            <Stack
+              component="nav"
+              aria-label={ct("Legal documents")}
+              spacing={0.5}
+              sx={{
+                bgcolor: brand.slate25,
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: 3,
+                p: 2.5,
+                position: { md: "sticky" },
+                top: { md: 110 },
+              }}
+            >
               {LEGAL_DOCUMENTS.map((item) => (
                 <AppLink
                   key={item.slug}

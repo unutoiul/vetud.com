@@ -19,9 +19,15 @@ export async function generateMetadata(): Promise<Metadata> {
  * Only the pay box reads the address, so it alone waits behind Suspense.
  */
 export default function BookPage() {
-  return <BookLanding buyBox={
-    <Suspense fallback={<Skeleton variant="rounded" height={188} sx={{ mt: 2.5, borderRadius: "8px" }} />}>
-      <Box data-clarity-mask="True"><BookBuyBox /></Box>
-    </Suspense>
-  } />
+  return (
+    <BookLanding
+      buyBox={
+        <Suspense fallback={<Skeleton variant="rounded" height={188} sx={{ mt: 2.5, borderRadius: "8px" }} />}>
+          <Box data-clarity-mask="True">
+            <BookBuyBox />
+          </Box>
+        </Suspense>
+      }
+    />
+  )
 }

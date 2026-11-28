@@ -41,9 +41,7 @@ export async function ensureEuropeanMarkets(container: MedusaContainer) {
     return
   }
 
-  const assigned = new Set(
-    regions.flatMap((region) => (region.countries ?? []).map((country) => country.iso_2 ?? ""))
-  )
+  const assigned = new Set(regions.flatMap((region) => (region.countries ?? []).map((country) => country.iso_2 ?? "")))
   const addedCountries: string[] = []
 
   // 1. Every eurozone country pays in EUR.
@@ -67,7 +65,10 @@ export async function ensureEuropeanMarkets(container: MedusaContainer) {
   if (store) {
     const supported = store.supported_currencies ?? []
     const codes = Array.from(
-      new Set([...supported.map((currency) => currency.currency_code), ...CONVERTED_MARKETS.map((market) => market.currency)])
+      new Set([
+        ...supported.map((currency) => currency.currency_code),
+        ...CONVERTED_MARKETS.map((market) => market.currency),
+      ]),
     )
     const defaultCode = supported.find((currency) => currency.is_default)?.currency_code
     if (codes.length !== supported.length || defaultCode !== BASE_CURRENCY) {
@@ -121,13 +122,15 @@ export async function ensureEuropeanMarkets(container: MedusaContainer) {
     const europeZone = await findEuropeZone(container, euroRegion)
     const { data: zoneData } = await query.graph({ entity: "service_zone", fields: ["id", "geo_zones.country_code"] })
     const zoned = new Set(
-      (zoneData as ZoneRow[]).flatMap((zone) => (zone.geo_zones ?? []).map((geo) => geo.country_code))
+      (zoneData as ZoneRow[]).flatMap((zone) => (zone.geo_zones ?? []).map((geo) => geo.country_code)),
     )
     const unzoned = addedCountries.filter((code) => !zoned.has(code))
     if (europeZone && unzoned.length) {
-      await container.resolve(Modules.FULFILLMENT).createGeoZones(
-        unzoned.map((country_code) => ({ service_zone_id: europeZone.id, type: "country" as const, country_code }))
-      )
+      await container
+        .resolve(Modules.FULFILLMENT)
+        .createGeoZones(
+          unzoned.map((country_code) => ({ service_zone_id: europeZone.id, type: "country" as const, country_code })),
+        )
       logger.info(`European markets: shipping zone now covers ${unzoned.join(", ")}.`)
     }
   }
@@ -144,7 +147,5 @@ async function findEuropeZone(container: MedusaContainer, euroRegion: RegionRow)
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
   const { data } = await query.graph({ entity: "service_zone", fields: ["id", "geo_zones.country_code"] })
   const euroCountries = new Set((euroRegion.countries ?? []).map((country) => country.iso_2))
-  return (data as ZoneRow[]).find((zone) =>
-    (zone.geo_zones ?? []).some((geo) => euroCountries.has(geo.country_code))
-  )
+  return (data as ZoneRow[]).find((zone) => (zone.geo_zones ?? []).some((geo) => euroCountries.has(geo.country_code)))
 }

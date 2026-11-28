@@ -16,7 +16,11 @@ export async function POST(request: NextRequest) {
   if (limited(request, "subscribe", 5, 10 * 60 * 1000)) {
     return NextResponse.json({ error: "Too many tries. Please wait a few minutes." }, { status: 429 })
   }
-  const body = (await request.json().catch(() => null)) as { email?: unknown; country?: unknown; website?: unknown } | null
+  const body = (await request.json().catch(() => null)) as {
+    email?: unknown
+    country?: unknown
+    website?: unknown
+  } | null
   const email = typeof body?.email === "string" ? body.email.trim().toLowerCase().slice(0, LIMITS.email) : ""
   if (!EMAIL_PATTERN.test(email)) return NextResponse.json({ error: "Enter a valid email." }, { status: 400 })
 
@@ -31,7 +35,12 @@ export async function POST(request: NextRequest) {
     saveSubscriberRow(email, country),
     saveSubscriber(email),
     sendTemplate({ template: "promo-code", to: email, variables: promoCodeVariables(code), replyTo: CONTACTS.email }),
-    sendTemplate({ template: "subscribe-admin", to: owner, variables: subscribeAdminVariables(email, new Date()), replyTo: email }),
+    sendTemplate({
+      template: "subscribe-admin",
+      to: owner,
+      variables: subscribeAdminVariables(email, new Date()),
+      replyTo: email,
+    }),
   ])
   results.forEach((result, index) => {
     if (result.status === "rejected") console.error(`[subscribe ${email}] step ${index} failed`, result.reason)

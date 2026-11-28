@@ -1,6 +1,12 @@
 import type { MedusaContainer, OrderDTO } from "@medusajs/framework/types"
 import { Modules } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import { getOrdersListWorkflow } from "@medusajs/medusa/core-flows"
 import { customerOrderQuery, publicCustomerOrder, type CustomerOrdersInput } from "../lib/customer-orders"
 import { customerPaymentSummary, type CustomerPaymentReference } from "../lib/customer-payment-summary"
@@ -8,41 +14,83 @@ import { NMI_PROVIDER_ID } from "../lib/nmi-settlement"
 import { getPaygateConfig, isPaygate } from "../lib/paygate-config"
 import { readPaygate } from "../lib/paygate-state"
 
-type CustomerOrderRecord = OrderDTO & { payment_collections?: { payments?: CustomerPaymentReference[]; payment_sessions?: CustomerPaymentReference[] }[] }
+type CustomerOrderRecord = OrderDTO & {
+  payment_collections?: { payments?: CustomerPaymentReference[]; payment_sessions?: CustomerPaymentReference[] }[]
+}
 
 /** Only called with the result of the customer-scoped, non-draft order query. */
 export async function projectCustomerOrders(orders: CustomerOrderRecord[], container: MedusaContainer) {
   const references = (order: CustomerOrderRecord): CustomerPaymentReference[] =>
-    order.payment_collections?.flatMap((collection) => [...(collection.payments ?? []), ...(collection.payment_sessions ?? []).filter(session => isPaygate(session.provider_id))]).map(({ id, provider_id }) => ({ id, provider_id })) ?? []
-  const ids = [...new Set(orders.flatMap(references).filter((payment) => payment.provider_id === NMI_PROVIDER_ID).map(({ id }) => id))]
-  const payments = ids.length ? await container.resolve(Modules.PAYMENT).listPayments(
-    { id: ids }, { relations: ["payment_session"], take: ids.length }
-  ) : []
-  return Promise.all(orders.map(async order => {
-    const summary = customerPaymentSummary(references(order), payments)
-    const sessions = order.payment_collections?.flatMap(collection => collection.payment_sessions ?? []).filter(session => isPaygate(session.provider_id)) ?? []
-    for (const reference of sessions) {
-      try {
-        const session = await container.resolve(Modules.PAYMENT).retrievePaymentSession(reference.id)
-        const state = readPaygate(session.data, getPaygateConfig().secret)
-        if (state.review) summary.review = "requires_review"
-        if (state.canceled) summary.review = "canceled"
-        if (getPaygateConfig().enabled && state.session_id === session.id && !state.settled && !state.canceled && !state.review && order.status !== "canceled") {
-          const url = new URL(`/paygate/checkout/${encodeURIComponent(session.id)}`, process.env.MEDUSA_BACKEND_URL || "http://localhost:9000")
-          url.searchParams.set("token", state.redirect_token)
-          summary.checkout_url = url.href
+    order.payment_collections
+      ?.flatMap((collection) => [
+        ...(collection.payments ?? []),
+        ...(collection.payment_sessions ?? []).filter((session) => isPaygate(session.provider_id)),
+      ])
+      .map(({ id, provider_id }) => ({ id, provider_id })) ?? []
+  const ids = [
+    ...new Set(
+      orders
+        .flatMap(references)
+        .filter((payment) => payment.provider_id === NMI_PROVIDER_ID)
+        .map(({ id }) => id),
+    ),
+  ]
+  const payments = ids.length
+    ? await container
+        .resolve(Modules.PAYMENT)
+        .listPayments({ id: ids }, { relations: ["payment_session"], take: ids.length })
+    : []
+  return Promise.all(
+    orders.map(async (order) => {
+      const summary = customerPaymentSummary(references(order), payments)
+      const sessions =
+        order.payment_collections
+          ?.flatMap((collection) => collection.payment_sessions ?? [])
+          .filter((session) => isPaygate(session.provider_id)) ?? []
+      for (const reference of sessions) {
+        try {
+          const session = await container.resolve(Modules.PAYMENT).retrievePaymentSession(reference.id)
+          const state = readPaygate(session.data, getPaygateConfig().secret)
+          if (state.review) summary.review = "requires_review"
+          if (state.canceled) summary.review = "canceled"
+          if (
+            getPaygateConfig().enabled &&
+            state.session_id === session.id &&
+            !state.settled &&
+            !state.canceled &&
+            !state.review &&
+            order.status !== "canceled"
+          ) {
+            const url = new URL(
+              `/paygate/checkout/${encodeURIComponent(session.id)}`,
+              process.env.MEDUSA_BACKEND_URL || "http://localhost:9000",
+            )
+            url.searchParams.set("token", state.redirect_token)
+            summary.checkout_url = url.href
+          }
+        } catch {
+          summary.review = "requires_review"
         }
-      } catch { summary.review = "requires_review" }
-    }
-    return { ...publicCustomerOrder(order), payment_summary: summary }
-  }))
+      }
+      return { ...publicCustomerOrder(order), payment_summary: summary }
+    }),
+  )
 }
 
-const projectCustomerOrdersStep = createStep("project-customer-orders", async (input: {
-  orders: OrderDTO[]; count: number; offset: number; limit: number
-}, { container }) => {
-  return new StepResponse({ ...input, orders: await projectCustomerOrders(input.orders, container) })
-})
+const projectCustomerOrdersStep = createStep(
+  "project-customer-orders",
+  async (
+    input: {
+      orders: OrderDTO[]
+      count: number
+      offset: number
+      limit: number
+    },
+    { container },
+  ) => {
+    return new StepResponse({ ...input, orders: await projectCustomerOrders(input.orders, container) })
+  },
+)
 
 const customerOrderQueryStep = createStep("customer-order-query", async (input: CustomerOrdersInput) => {
   return new StepResponse(customerOrderQuery(input))

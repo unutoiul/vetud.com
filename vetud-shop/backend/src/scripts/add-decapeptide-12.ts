@@ -12,7 +12,11 @@ const HANDLE = "decapeptide-12"
 type VerifiedProduct = {
   status: string
   metadata?: Record<string, unknown> | null
-  variants?: { title: string; sku?: string | null; price_set?: { prices?: { currency_code: string; amount: number; price_list_id?: string | null }[] } }[]
+  variants?: {
+    title: string
+    sku?: string | null
+    price_set?: { prices?: { currency_code: string; amount: number; price_list_id?: string | null }[] }
+  }[]
 }
 
 /**
@@ -35,9 +39,22 @@ export default async function addDecapeptide12({ container }: ExecArgs, { syncPr
   }
 
   // Only Decapeptide-12 may be created here; anything else pending would be a different change.
-  const { data: rows } = await query.graph({ entity: "product", fields: ["handle", "metadata"], filters: { handle: DUAL_CHAMBER_PRODUCTS.map((product) => product.handle) } })
-  const pending = DUAL_CHAMBER_PRODUCTS.filter((product) => product.handle !== HANDLE && (rows as { handle: string; metadata?: Record<string, unknown> | null }[]).find((row) => row.handle === product.handle)?.metadata?.catalog_revision !== DUAL_CHAMBER_REVISION)
-  if (pending.length) return fail(`not at ${DUAL_CHAMBER_REVISION}: ${pending.map((product) => product.handle).join(", ")}. Nothing was changed.`)
+  const { data: rows } = await query.graph({
+    entity: "product",
+    fields: ["handle", "metadata"],
+    filters: { handle: DUAL_CHAMBER_PRODUCTS.map((product) => product.handle) },
+  })
+  const pending = DUAL_CHAMBER_PRODUCTS.filter(
+    (product) =>
+      product.handle !== HANDLE &&
+      (rows as { handle: string; metadata?: Record<string, unknown> | null }[]).find(
+        (row) => row.handle === product.handle,
+      )?.metadata?.catalog_revision !== DUAL_CHAMBER_REVISION,
+  )
+  if (pending.length)
+    return fail(
+      `not at ${DUAL_CHAMBER_REVISION}: ${pending.map((product) => product.handle).join(", ")}. Nothing was changed.`,
+    )
 
   const { result: catalog } = await importDualChamberCatalogWorkflow(container).run({ input: {} })
   const { result: boxes } = await addPenKitBoxesWorkflow(container).run({ input: {} })
@@ -48,18 +65,35 @@ export default async function addDecapeptide12({ container }: ExecArgs, { syncPr
 
   const { data } = await query.graph({
     entity: "product",
-    fields: ["status", "metadata", "variants.title", "variants.sku", "variants.price_set.prices.currency_code", "variants.price_set.prices.amount", "variants.price_set.prices.price_list_id"],
+    fields: [
+      "status",
+      "metadata",
+      "variants.title",
+      "variants.sku",
+      "variants.price_set.prices.currency_code",
+      "variants.price_set.prices.amount",
+      "variants.price_set.prices.price_list_id",
+    ],
     filters: { handle: HANDLE },
   })
   const product = (data as unknown as VerifiedProduct[])[0]
-  if (!product || product.status !== "published" || product.metadata?.catalog_revision !== DUAL_CHAMBER_REVISION || product.metadata?.format_review_revision !== PRODUCT_FORMAT_REVIEW) {
+  if (
+    !product ||
+    product.status !== "published" ||
+    product.metadata?.catalog_revision !== DUAL_CHAMBER_REVISION ||
+    product.metadata?.format_review_revision !== PRODUCT_FORMAT_REVIEW
+  ) {
     return fail(`${HANDLE} was not published in full.`)
   }
   const box = boxFormat(HANDLE).title
   const wanted = [
-    ...(catalogFormatAllowed(HANDLE, "Dual-chamber vial") ? expected.pen.map((offer) => ({ title: `Dual-chamber vial · ${offer.amount}`, usd: offer.usd })) : []),
+    ...(catalogFormatAllowed(HANDLE, "Dual-chamber vial")
+      ? expected.pen.map((offer) => ({ title: `Dual-chamber vial · ${offer.amount}`, usd: offer.usd }))
+      : []),
     ...expected.vial.map((offer) => ({ title: `Vial · ${offer.amount}`, usd: offer.usd })),
-    ...(catalogFormatAllowed(HANDLE, box) ? expected.pen.map((offer) => ({ title: `${box} · ${offer.amount}`, usd: offer.usd + PEN_KIT_BOX.premium })) : []),
+    ...(catalogFormatAllowed(HANDLE, box)
+      ? expected.pen.map((offer) => ({ title: `${box} · ${offer.amount}`, usd: offer.usd + PEN_KIT_BOX.premium }))
+      : []),
   ]
   const variants = product.variants ?? []
   if (variants.length !== wanted.length) fail(`${HANDLE} has ${variants.length} variants, expected ${wanted.length}.`)

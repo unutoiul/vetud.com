@@ -70,7 +70,10 @@ export function AuthPanel() {
   useEffect(() => {
     const saved = readPendingEmail()
     if (!saved) return
-    const timer = window.setTimeout(() => { setSentTo(saved); setEmail(saved) }, 0)
+    const timer = window.setTimeout(() => {
+      setSentTo(saved)
+      setEmail(saved)
+    }, 0)
     return () => window.clearTimeout(timer)
   }, [])
 
@@ -131,19 +134,27 @@ export function AuthPanel() {
   return (
     <Grid container spacing={{ xs: 3, md: 6 }}>
       <Grid size={{ xs: 12, md: 5 }}>
-        <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>{t("welcome")}</Typography>
+        <Typography variant="eyebrow" sx={{ color: "secondary.main" }}>
+          {t("welcome")}
+        </Typography>
         <Typography variant="h3" component="h2" sx={{ mt: 1.5, mb: 2 }}>
           {sentTo ? ct("Check your email.") : ct("Sign in to join the conversation.")}
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          {ct("An account lets you ask questions in the community, answer other members and comment on articles. No password needed: we email you a code.")}
+          {ct(
+            "An account lets you ask questions in the community, answer other members and comment on articles. No password needed: we email you a code.",
+          )}
         </Typography>
       </Grid>
       <Grid size={{ xs: 12, md: 7 }}>
         <Paper variant="outlined" sx={{ p: { xs: 2.5, sm: 4 }, borderRadius: 3 }}>
           {sentTo === null ? (
             <Box component="form" onSubmit={send} noValidate>
-              {message ? <Alert severity="error" sx={{ mb: 2 }}>{ct(message)}</Alert> : null}
+              {message ? (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                  {ct(message)}
+                </Alert>
+              ) : null}
               <TextField
                 label={act("email")}
                 type="email"
@@ -153,32 +164,72 @@ export function AuthPanel() {
                 helperText={ct("We'll email you a 6-digit code. If you're new, it creates your account.")}
                 slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false, inputMode: "email" } }}
               />
-              <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" sx={{ fontSize: 17 }} />} sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                disabled={pending}
+                startIcon={
+                  pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" sx={{ fontSize: 17 }} />
+                }
+                sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}
+              >
                 {ct("Email me a sign-in code")}
               </Button>
             </Box>
           ) : (
             <Box component="form" onSubmit={verify} noValidate>
               <Alert severity="info" role="status" sx={{ mb: 2 }}>
-                {ct(fresh ? "We sent a 6-digit code to" : "We sent a code a moment ago to")} <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>{sentTo}</Box>. {ct(fresh ? "It works for 10 minutes. Check your spam folder if you can't see it." : "Use that one, or ask for a new code when the timer ends.")}
+                {ct(fresh ? "We sent a 6-digit code to" : "We sent a code a moment ago to")}{" "}
+                <Box component="strong" sx={{ fontWeight: 650, overflowWrap: "anywhere" }}>
+                  {sentTo}
+                </Box>
+                .{" "}
+                {ct(
+                  fresh
+                    ? "It works for 10 minutes. Check your spam folder if you can't see it."
+                    : "Use that one, or ask for a new code when the timer ends.",
+                )}
               </Alert>
-              {message ? <Alert severity="error" sx={{ mb: 2 }}>{ct(message)}</Alert> : null}
+              {message ? (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                  {ct(message)}
+                </Alert>
+              ) : null}
               <TextField
                 label={ct("Sign-in code")}
                 required
                 autoFocus
                 value={code}
                 onChange={(event) => setCode(event.target.value.replace(/[^\d ]/g, "").slice(0, 7))}
-                slotProps={{ htmlInput: { autoComplete: "one-time-code", inputMode: "numeric", maxLength: 7, sx: { letterSpacing: "0.3em", fontVariantNumeric: "tabular-nums", fontSize: 20 } } }}
+                slotProps={{
+                  htmlInput: {
+                    autoComplete: "one-time-code",
+                    inputMode: "numeric",
+                    maxLength: 7,
+                    sx: { letterSpacing: "0.3em", fontVariantNumeric: "tabular-nums", fontSize: 20 },
+                  },
+                }}
               />
-              <Button type="submit" variant="contained" size="large" disabled={pending} startIcon={pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />} sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                disabled={pending}
+                startIcon={
+                  pending ? <CircularProgress size={16} color="inherit" /> : <Icon name="lock" sx={{ fontSize: 17 }} />
+                }
+                sx={{ mt: 3, width: { xs: "100%", sm: "auto" } }}
+              >
                 {t("signin")}
               </Button>
               <Stack direction="row" useFlexGap spacing={1} sx={{ mt: 1.5, flexWrap: "wrap" }}>
                 <Button type="button" disabled={pending || wait > 0} onClick={() => void send()} sx={{ minHeight: 44 }}>
                   {wait > 0 ? ct.template("Send a new code in {v0} s", { v0: wait }) : ct("Send a new code")}
                 </Button>
-                <Button type="button" onClick={changeEmail} sx={{ minHeight: 44 }}>{ct("Use a different email")}</Button>
+                <Button type="button" onClick={changeEmail} sx={{ minHeight: 44 }}>
+                  {ct("Use a different email")}
+                </Button>
               </Stack>
             </Box>
           )}

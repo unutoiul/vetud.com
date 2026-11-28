@@ -10,9 +10,10 @@ import { collectionMetadata } from "@/lib/article-seo"
 
 export async function generateMetadata() {
   return collectionMetadata({
-  path: "/news", title: "Peptide Research Articles & Evidence Guides",
-  description: "Peptide research, regulation and learning guides, with connected videos and original sources.",
-})
+    path: "/news",
+    title: "Peptide Research Articles & Evidence Guides",
+    description: "Peptide research, regulation and learning guides, with connected videos and original sources.",
+  })
 }
 
 export default function NewsPage() {
@@ -20,13 +21,44 @@ export default function NewsPage() {
   const [latest, ...rest] = ARTICLES
   return (
     <>
-      <PageHeader eyebrow={ct("News")} title={ct("News & articles.")} description={ct("Research, regulation and learning guides, explained in plain language. Every article has connected videos and source links.")} />
+      <PageHeader
+        eyebrow={ct("News")}
+        title={ct("News & articles.")}
+        description={ct(
+          "Research, regulation and learning guides, explained in plain language. Every article has connected videos and source links.",
+        )}
+      />
       <Section tone="white" sx={{ py: { xs: 5, md: 8 } }}>
         {latest ? <ArticleCard article={latest} featured /> : null}
-        <Box sx={{ mt: { xs: 6, md: 8 }, pt: { xs: 5, md: 7 }, borderTop: "1px solid", borderColor: "divider", display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "repeat(3, 1fr)" }, columnGap: 3.5, rowGap: { xs: 5, md: 6 } }}>
-          {rest.map((article) => <ArticleCard key={article.slug} article={article} />)}
+        <Box
+          sx={{
+            mt: { xs: 6, md: 8 },
+            pt: { xs: 5, md: 7 },
+            borderTop: "1px solid",
+            borderColor: "divider",
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", lg: "repeat(3, 1fr)" },
+            columnGap: 3.5,
+            rowGap: { xs: 5, md: 6 },
+          }}
+        >
+          {rest.map((article) => (
+            <ArticleCard key={article.slug} article={article} />
+          ))}
         </Box>
-        <Typography sx={{ mt: { xs: 6, md: 8 }, pt: 3, borderTop: "1px solid", borderColor: "divider", fontSize: 13, color: "text.secondary", maxWidth: 820 }}>{ct(LEARN_DISCLAIMER)}</Typography>
+        <Typography
+          sx={{
+            mt: { xs: 6, md: 8 },
+            pt: 3,
+            borderTop: "1px solid",
+            borderColor: "divider",
+            fontSize: 13,
+            color: "text.secondary",
+            maxWidth: 820,
+          }}
+        >
+          {ct(LEARN_DISCLAIMER)}
+        </Typography>
       </Section>
     </>
   )

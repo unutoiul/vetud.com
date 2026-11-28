@@ -18,12 +18,13 @@ export function useLocalizedHref() {
 type LocalizedNextLinkProps = React.ComponentProps<typeof NextLink> & { href: string }
 
 /** next/link with the language prefix applied. Use it as `component` for MUI components. */
-export const LocalizedNextLink = forwardRef<HTMLAnchorElement, LocalizedNextLinkProps>(
-  function LocalizedNextLink({ href, ...props }, ref) {
-    const localize = useLocalizedHref()
-    return <NextLink ref={ref} href={localize(href)} {...props} />
-  }
-)
+export const LocalizedNextLink = forwardRef<HTMLAnchorElement, LocalizedNextLinkProps>(function LocalizedNextLink(
+  { href, ...props },
+  ref,
+) {
+  const localize = useLocalizedHref()
+  return <NextLink ref={ref} href={localize(href)} {...props} />
+})
 
 export function ButtonLink({ href, ...props }: ButtonProps & { href: string }) {
   return <Button component={LocalizedNextLink} href={href} {...props} />

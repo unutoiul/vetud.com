@@ -17,17 +17,27 @@ export function loadPaymentMethods(regionId: string, currency: string): Promise<
     sdk.store.payment.listPaymentProviders({ region_id: regionId }),
     sdk.client.fetch<NmiConfig>("/store/nmi/config", { method: "GET", cache: "no-store" }).catch(() => null),
     sdk.client.fetch<PaygateConfig>("/store/paygate/config", { method: "GET", cache: "no-store" }).catch(() => null),
-  ]).then(([{ payment_providers }, nmi, paygate]) => {
-    const providers = new Set(payment_providers.map(provider => provider.id))
-    const methods: PaymentMethod[] = []
-    if ((providers.has(NMI_PROVIDER_ID) && nmiAvailable(nmi, currency)) || (providers.has(PAYGATE_CARD) && paygateAvailable(paygate, PAYGATE_CARD))) methods.push("visa", "mastercard")
-    if (providers.has("pp_system_default")) methods.push("bank")
-    if (providers.has(MAKEPAY_PROVIDER_ID) || (providers.has(PAYGATE_CRYPTO) && paygateAvailable(paygate, PAYGATE_CRYPTO))) methods.push("crypto")
-    return methods
-  }).catch(error => {
-    cache.delete(key)
-    throw error
-  })
+  ])
+    .then(([{ payment_providers }, nmi, paygate]) => {
+      const providers = new Set(payment_providers.map((provider) => provider.id))
+      const methods: PaymentMethod[] = []
+      if (
+        (providers.has(NMI_PROVIDER_ID) && nmiAvailable(nmi, currency)) ||
+        (providers.has(PAYGATE_CARD) && paygateAvailable(paygate, PAYGATE_CARD))
+      )
+        methods.push("visa", "mastercard")
+      if (providers.has("pp_system_default")) methods.push("bank")
+      if (
+        providers.has(MAKEPAY_PROVIDER_ID) ||
+        (providers.has(PAYGATE_CRYPTO) && paygateAvailable(paygate, PAYGATE_CRYPTO))
+      )
+        methods.push("crypto")
+      return methods
+    })
+    .catch((error) => {
+      cache.delete(key)
+      throw error
+    })
   if (cache.size >= 64) cache.delete(cache.keys().next().value!)
   cache.set(key, { expiresAt: Date.now() + 60_000, promise })
   return promise

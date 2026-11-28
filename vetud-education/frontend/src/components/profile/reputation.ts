@@ -60,15 +60,70 @@ export function achievements(profile: OwnForumProfile, stats: Partial<OwnForumSt
   const replies = stats?.replies ?? 0
   const level = profile.level_id
   const list: Achievement[] = [
-    { id: "joined", icon: "check", title: "Joined the community", description: "Chose a community name and accepted the guidelines.", earned: true },
-    { id: "first-thread", icon: "news", title: "First discussion", description: "Started a discussion or asked a question.", earned: threads >= 1 },
-    { id: "first-reply", icon: "send", title: "First reply", description: "Replied to another member.", earned: replies >= 1 },
-    { id: "helpful", icon: "heart", title: "Helpful", description: "Another member marked a post of yours as helpful.", earned: (stats?.helpful_received ?? 0) >= 1 },
-    { id: "solver", icon: "checkCircle", title: "Problem solver", description: "One of your replies was chosen as the best answer.", earned: (stats?.best_answers ?? 0) >= 1 },
-    { id: "regular", icon: "clock", title: "Regular", description: "Ten published posts.", earned: threads + replies >= 10 },
-    { id: "trusted", icon: "shield", title: "Trusted voice", description: "Reached the Trusted member level.", earned: level === "trusted" || level === "senior" || level === "lead" },
-    { id: "founding", icon: "mountain", title: "Founding member", description: "Joined in the community's first months.", earned: new Date(profile.joined_at) < new Date("2027-01-01") },
+    {
+      id: "joined",
+      icon: "check",
+      title: "Joined the community",
+      description: "Chose a community name and accepted the guidelines.",
+      earned: true,
+    },
+    {
+      id: "first-thread",
+      icon: "news",
+      title: "First discussion",
+      description: "Started a discussion or asked a question.",
+      earned: threads >= 1,
+    },
+    {
+      id: "first-reply",
+      icon: "send",
+      title: "First reply",
+      description: "Replied to another member.",
+      earned: replies >= 1,
+    },
+    {
+      id: "helpful",
+      icon: "heart",
+      title: "Helpful",
+      description: "Another member marked a post of yours as helpful.",
+      earned: (stats?.helpful_received ?? 0) >= 1,
+    },
+    {
+      id: "solver",
+      icon: "checkCircle",
+      title: "Problem solver",
+      description: "One of your replies was chosen as the best answer.",
+      earned: (stats?.best_answers ?? 0) >= 1,
+    },
+    {
+      id: "regular",
+      icon: "clock",
+      title: "Regular",
+      description: "Ten published posts.",
+      earned: threads + replies >= 10,
+    },
+    {
+      id: "trusted",
+      icon: "shield",
+      title: "Trusted voice",
+      description: "Reached the Trusted member level.",
+      earned: level === "trusted" || level === "senior" || level === "lead",
+    },
+    {
+      id: "founding",
+      icon: "mountain",
+      title: "Founding member",
+      description: "Joined in the community's first months.",
+      earned: new Date(profile.joined_at) < new Date("2027-01-01"),
+    },
   ]
-  if (profile.role === "expert") list.unshift({ id: "expert", icon: "flask", title: "Verified expert", description: "Credentials checked by the VETUD team.", earned: true })
+  if (profile.role === "expert")
+    list.unshift({
+      id: "expert",
+      icon: "flask",
+      title: "Verified expert",
+      description: "Credentials checked by the VETUD team.",
+      earned: true,
+    })
   return list
 }

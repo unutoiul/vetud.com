@@ -53,7 +53,12 @@ function sameHash(a: string, b: string) {
 }
 
 /** Checks a typed code against the stored state. Spaces and dashes in what was typed are ignored. */
-export function checkSignInCode(state: SignInCodeState | null | undefined, loginId: string, code: string, now = new Date()): SignInCodeCheck {
+export function checkSignInCode(
+  state: SignInCodeState | null | undefined,
+  loginId: string,
+  code: string,
+  now = new Date(),
+): SignInCodeCheck {
   if (!state?.code_hash || !state.expires_at || new Date(state.expires_at).getTime() <= now.getTime()) return "expired"
   if ((state.attempts ?? 0) >= SIGN_IN_CODE_MAX_ATTEMPTS) return "locked"
   const typed = String(code).replace(/[\s-]/g, "")

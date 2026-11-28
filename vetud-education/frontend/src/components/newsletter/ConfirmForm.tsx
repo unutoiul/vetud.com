@@ -20,7 +20,9 @@ export default function ConfirmForm() {
   const email = params.get("email") ?? ""
   const expires = params.get("expires") ?? ""
   const token = params.get("token") ?? ""
-  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">(email && expires && token ? "idle" : "error")
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">(
+    email && expires && token ? "idle" : "error",
+  )
 
   const confirm = async () => {
     setStatus("sending")
@@ -34,12 +36,33 @@ export default function ConfirmForm() {
 
   return (
     <Box sx={{ maxWidth: 560 }}>
-      {status === "done" ? <Alert severity="success" role="status">{ct("You're on the list. We'll email you when there are new guides and answered questions.")}</Alert>
-        : status === "error" ? <Alert severity="warning">{ct("This confirmation link isn't valid any more. Please sign up again.")}</Alert>
-        : <>
-          <Typography sx={{ color: "text.secondary", fontSize: 17, lineHeight: 1.7, overflowWrap: "anywhere" }}>{ct.template("Press the button to confirm {v0} for VETUD emails.", { v0: email }, { translateValues: false })}</Typography>
-          <Button variant="contained" size="large" onClick={() => void confirm()} disabled={status === "sending"} startIcon={status === "sending" ? <CircularProgress size={16} color="inherit" /> : undefined} sx={{ mt: 3 }}>{ct("Confirm my sign-up")}</Button>
-        </>}
+      {status === "done" ? (
+        <Alert severity="success" role="status">
+          {ct("You're on the list. We'll email you when there are new guides and answered questions.")}
+        </Alert>
+      ) : status === "error" ? (
+        <Alert severity="warning">{ct("This confirmation link isn't valid any more. Please sign up again.")}</Alert>
+      ) : (
+        <>
+          <Typography sx={{ color: "text.secondary", fontSize: 17, lineHeight: 1.7, overflowWrap: "anywhere" }}>
+            {ct.template(
+              "Press the button to confirm {v0} for VETUD emails.",
+              { v0: email },
+              { translateValues: false },
+            )}
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => void confirm()}
+            disabled={status === "sending"}
+            startIcon={status === "sending" ? <CircularProgress size={16} color="inherit" /> : undefined}
+            sx={{ mt: 3 }}
+          >
+            {ct("Confirm my sign-up")}
+          </Button>
+        </>
+      )}
     </Box>
   )
 }

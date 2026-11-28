@@ -30,7 +30,17 @@ import { getMoney } from "@/lib/money-server"
 import { getCurrentRegion } from "@/lib/medusa/current-region"
 import { getProductByHandle, listProductHandles, listProducts } from "@/lib/medusa/products"
 import { isVariantInStock, readProductMeta, sortedVariants, sortProducts, variantPrice } from "@/lib/product"
-import { availabilitySummary, boxedFormat, defaultVariant, FORMAT_OPTION, formatContents, formatOf, readOptions, SPRAY_FORMAT, variantsWith } from "@/lib/product-formats"
+import {
+  availabilitySummary,
+  boxedFormat,
+  defaultVariant,
+  FORMAT_OPTION,
+  formatContents,
+  formatOf,
+  readOptions,
+  SPRAY_FORMAT,
+  variantsWith,
+} from "@/lib/product-formats"
 import { getFormatPhotos, getProductImages, getProductPhotography } from "@/lib/product-images"
 import { brand } from "@/theme/tokens"
 
@@ -39,12 +49,27 @@ const PLACEHOLDER = "__placeholder__"
 /** Supplies offered next to the vial format; they aren't offered on their own pages. */
 const ADD_ON_HANDLES = ["bacteriostatic-water", "u-100-syringes"]
 
-function addOn(product: HttpTypes.StoreProduct | null, variantTitle: string | undefined, title: string, detail: string, unit: string): PurchaseAddOn | null {
+function addOn(
+  product: HttpTypes.StoreProduct | null,
+  variantTitle: string | undefined,
+  title: string,
+  detail: string,
+  unit: string,
+): PurchaseAddOn | null {
   const variants = product ? sortedVariants(product) : []
   const variant = variants.find((item) => item.title === variantTitle) ?? (variantTitle ? undefined : variants[0])
   const price = variantPrice(variant)
   if (!product || !variant || !price || !isVariantInStock(variant)) return null
-  return { variantId: variant.id, title, detail, unit, image: getProductImages(product).find((image) => image.url.includes("vial") || image.url.includes("box"))?.url ?? getProductImages(product)[0]?.url, price: { amount: price.amount, currencyCode: price.currencyCode } }
+  return {
+    variantId: variant.id,
+    title,
+    detail,
+    unit,
+    image:
+      getProductImages(product).find((image) => image.url.includes("vial") || image.url.includes("box"))?.url ??
+      getProductImages(product)[0]?.url,
+    price: { amount: price.amount, currencyCode: price.currencyCode },
+  }
 }
 
 export async function generateStaticParams() {
@@ -113,49 +138,69 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
     offersLabAccessories ? getProductByHandle("bacteriostatic-water", region.id) : null,
     offersLabAccessories ? getProductByHandle("u-100-syringes", region.id) : null,
   ])
-  const addOns = meta.artKind !== "supply" && offersLabAccessories
-    ? [addOn(water, "Vial · 10 ml", "Bacteriostatic water", "10 ml multi-use vial", "vial"), addOn(syringes, undefined, "U-100 insulin syringes", "Box of 10, single use", "box")].filter((item): item is PurchaseAddOn => item !== null)
-    : []
+  const addOns =
+    meta.artKind !== "supply" && offersLabAccessories
+      ? [
+          addOn(water, "Vial · 10 ml", "Bacteriostatic water", "10 ml multi-use vial", "vial"),
+          addOn(syringes, undefined, "U-100 insulin syringes", "Box of 10, single use", "box"),
+        ].filter((item): item is PurchaseAddOn => item !== null)
+      : []
   const related = sortProducts(catalog, "featured")
     .filter((item) => item.id !== product.id)
     .slice(0, 3)
 
-  const skus = sortedVariants(product).map(variant => variant.sku).filter(Boolean).join(", ")
-  const formats = readOptions(product).find(option => option.title === FORMAT_OPTION)?.values ?? []
-  const included = formats.flatMap(format => {
+  const skus = sortedVariants(product)
+    .map((variant) => variant.sku)
+    .filter(Boolean)
+    .join(", ")
+  const formats = readOptions(product).find((option) => option.title === FORMAT_OPTION)?.values ?? []
+  const included = formats.flatMap((format) => {
     const contents = formatContents(product, format)
     return contents ? [{ format, contents }] : []
   })
-  const specs = formats.length ? [
-    { label: "Product code", value: meta.code },
-    { label: "Category", value: category?.name ?? "Research material" },
-    ...formats.map(format => ({ label: format, value: variantsWith(product, FORMAT_OPTION, format).map(variant => variant.options?.find(option => option.option?.title === "Amount")?.value ?? variant.title).join(", ") })),
-    ...(meta.purity ? [{ label: "Purity", value: meta.purity }] : []),
-    ...(meta.testing ? [{ label: "Purity testing", value: meta.testing }] : []),
-    { label: "Intended use", value: "Laboratory research only" },
-  ] : [
-    { label: "Product code", value: meta.code },
-    { label: "Category", value: category?.name ?? "Research material" },
-    { label: "Form", value: meta.form ?? "—" },
-    ...(typeof product.metadata?.contents === "string" ? [{ label: "Kit contents", value: product.metadata.contents }] : []),
-    ...included.map(({ format, contents }) => ({ label: `${format}: what's included`, value: contents })),
-    ...(meta.volume ? [{ label: "Bottle volume", value: meta.volume }] : []),
-    ...(meta.concentration ? [{ label: "Peptide strength", value: meta.concentration }] : []),
-    ...(meta.ingredients ? [{ label: "Ingredient information", value: meta.ingredients }] : []),
-    { label: "Purity", value: meta.purity ?? "—" },
-    ...(meta.testing ? [{ label: "Purity testing", value: meta.testing }] : []),
-    { label: "Storage", value: meta.storage ?? "—" },
-    ...(meta.stability ? [{ label: "Stability", value: meta.stability }] : []),
-    ...(meta.handling ? [{ label: "Handling", value: meta.handling }] : []),
-    { label: "Available amounts", value: availabilitySummary(product) },
-    ...(skus ? [{ label: "SKU", value: skus }] : []),
-    { label: "Intended use", value: "Laboratory research only" },
-  ]
+  const specs = formats.length
+    ? [
+        { label: "Product code", value: meta.code },
+        { label: "Category", value: category?.name ?? "Research material" },
+        ...formats.map((format) => ({
+          label: format,
+          value: variantsWith(product, FORMAT_OPTION, format)
+            .map(
+              (variant) => variant.options?.find((option) => option.option?.title === "Amount")?.value ?? variant.title,
+            )
+            .join(", "),
+        })),
+        ...(meta.purity ? [{ label: "Purity", value: meta.purity }] : []),
+        ...(meta.testing ? [{ label: "Purity testing", value: meta.testing }] : []),
+        { label: "Intended use", value: "Laboratory research only" },
+      ]
+    : [
+        { label: "Product code", value: meta.code },
+        { label: "Category", value: category?.name ?? "Research material" },
+        { label: "Form", value: meta.form ?? "—" },
+        ...(typeof product.metadata?.contents === "string"
+          ? [{ label: "Kit contents", value: product.metadata.contents }]
+          : []),
+        ...included.map(({ format, contents }) => ({ label: `${format}: what's included`, value: contents })),
+        ...(meta.volume ? [{ label: "Bottle volume", value: meta.volume }] : []),
+        ...(meta.concentration ? [{ label: "Peptide strength", value: meta.concentration }] : []),
+        ...(meta.ingredients ? [{ label: "Ingredient information", value: meta.ingredients }] : []),
+        { label: "Purity", value: meta.purity ?? "—" },
+        ...(meta.testing ? [{ label: "Purity testing", value: meta.testing }] : []),
+        { label: "Storage", value: meta.storage ?? "—" },
+        ...(meta.stability ? [{ label: "Stability", value: meta.stability }] : []),
+        ...(meta.handling ? [{ label: "Handling", value: meta.handling }] : []),
+        { label: "Available amounts", value: availabilitySummary(product) },
+        ...(skus ? [{ label: "SKU", value: skus }] : []),
+        { label: "Intended use", value: "Laboratory research only" },
+      ]
   const overview = getProductOverview(product)
   const boxed = boxedFormat(product)
-  const hasPenFormats = formats.some(format => /dual[ -]chamber|pen kit/i.test(format))
+  const hasPenFormats = formats.some((format) => /dual[ -]chamber|pen kit/i.test(format))
   const fromPrice = (format: string) => {
-    const amounts = variantsWith(product, FORMAT_OPTION, format).flatMap(variant => variantPrice(variant)?.amount ?? [])
+    const amounts = variantsWith(product, FORMAT_OPTION, format).flatMap(
+      (variant) => variantPrice(variant)?.amount ?? [],
+    )
     return amounts.length ? money(Math.min(...amounts), region.currency_code) : undefined
   }
 
@@ -184,49 +229,107 @@ async function ProductContent({ params }: Pick<PageProps<"/[countryCode]/product
         </Breadcrumbs>
 
         <ProductSelectionProvider initialFormat={formatOf(defaultVariant(product))}>
-        <Grid container spacing={{ xs: 4, md: 8 }}>
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Box sx={{ position: { md: "sticky" }, top: { md: 110 }, border: "1px solid", borderColor: "divider", borderRadius: "5px", overflow: "hidden" }}>
-              {images.length ? (
-                <ProductGallery title={ct(product.title)} images={images} aspectRatio={getProductPhotography(product.handle)?.aspectRatio ?? meta.imageAspectRatio ?? "4 / 3"} />
-              ) : (
-                <ArtStage height={{ xs: 320, sm: 420, md: 520 }}>
-                  <Box sx={{ width: "90%", maxWidth: 500, position: "relative", zIndex: 1 }}>
-                    <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} title={ct.template("{v0} product image", { v0: product.title })} />
-                  </Box>
-                </ArtStage>
-              )}
-              <Stack direction="row" spacing={1} useFlexGap sx={{ p: 2, flexWrap: "wrap", borderTop: "1px solid", borderColor: "divider", bgcolor: brand.white }}>
-                {[meta.purity?.endsWith("%") ? `${meta.purity} purity` : meta.purity, meta.testing, ...meta.features, meta.lots.length ? `${meta.lots.length} documented lot${meta.lots.length > 1 ? "s" : ""}` : null]
-                  .filter(Boolean)
-                  .map((label) => (
-                    <Chip key={label} label={ct(label)} size="small" variant="outlined" />
-                  ))}
-              </Stack>
-            </Box>
-          </Grid>
+          <Grid container spacing={{ xs: 4, md: 8 }}>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Box
+                sx={{
+                  position: { md: "sticky" },
+                  top: { md: 110 },
+                  border: "1px solid",
+                  borderColor: "divider",
+                  borderRadius: "5px",
+                  overflow: "hidden",
+                }}
+              >
+                {images.length ? (
+                  <ProductGallery
+                    title={ct(product.title)}
+                    images={images}
+                    aspectRatio={getProductPhotography(product.handle)?.aspectRatio ?? meta.imageAspectRatio ?? "4 / 3"}
+                  />
+                ) : (
+                  <ArtStage height={{ xs: 320, sm: 420, md: 520 }}>
+                    <Box sx={{ width: "90%", maxWidth: 500, position: "relative", zIndex: 1 }}>
+                      <ProductArt
+                        code={meta.code}
+                        accent={meta.accent}
+                        kind={meta.artKind}
+                        title={ct.template("{v0} product image", { v0: product.title })}
+                      />
+                    </Box>
+                  </ArtStage>
+                )}
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  useFlexGap
+                  sx={{ p: 2, flexWrap: "wrap", borderTop: "1px solid", borderColor: "divider", bgcolor: brand.white }}
+                >
+                  {[
+                    meta.purity?.endsWith("%") ? `${meta.purity} purity` : meta.purity,
+                    meta.testing,
+                    ...meta.features,
+                    meta.lots.length ? `${meta.lots.length} documented lot${meta.lots.length > 1 ? "s" : ""}` : null,
+                  ]
+                    .filter(Boolean)
+                    .map((label) => (
+                      <Chip key={label} label={ct(label)} size="small" variant="outlined" />
+                    ))}
+                </Stack>
+              </Box>
+            </Grid>
 
-          <Grid size={{ xs: 12, md: 6 }}>
-            <ProductBadges metadata={product.metadata} />
-            <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".1em" }}>
-              {ct(meta.code)}
-              {category ? ` · ${ct(category.name)}` : ""}
-            </Typography>
-            <Typography variant="h2" component="h1" sx={{ mt: 1.75, mb: 1.5, fontWeight: 400, fontSize: { xs: 40, md: 52 } }}>
-              {ct(product.title)}
-            </Typography>
-            {product.subtitle ? (
-              <Typography variant="lead" sx={{ color: "text.secondary", mb: 3 }}>
-                {ct(product.subtitle)}
+            <Grid size={{ xs: 12, md: 6 }}>
+              <ProductBadges metadata={product.metadata} />
+              <Typography
+                variant="mono"
+                component="p"
+                sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".1em" }}
+              >
+                {ct(meta.code)}
+                {category ? ` · ${ct(category.name)}` : ""}
               </Typography>
-            ) : null}
-            <PurchasePanel product={product} addOns={addOns} />
+              <Typography
+                variant="h2"
+                component="h1"
+                sx={{ mt: 1.75, mb: 1.5, fontWeight: 400, fontSize: { xs: 40, md: 52 } }}
+              >
+                {ct(product.title)}
+              </Typography>
+              {product.subtitle ? (
+                <Typography variant="lead" sx={{ color: "text.secondary", mb: 3 }}>
+                  {ct(product.subtitle)}
+                </Typography>
+              ) : null}
+              <PurchasePanel product={product} addOns={addOns} />
+            </Grid>
           </Grid>
-        </Grid>
         </ProductSelectionProvider>
 
         <Box>
-          <ProductDossier overview={overview} description={ct(product.description)} specs={specs} skus={formats.length ? skus : undefined} meta={meta} title={ct(product.title)} formats={hasPenFormats ? <DualChamberExplainer prices={{ pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"), box: boxed ? fromPrice(boxed) : undefined, vial: fromPrice("Vial") }} photos={getFormatPhotos(product.handle)} supply={meta.artKind === "supply"} spray={boxed === SPRAY_FORMAT} /> : undefined} formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined} />
+          <ProductDossier
+            overview={overview}
+            description={ct(product.description)}
+            specs={specs}
+            skus={formats.length ? skus : undefined}
+            meta={meta}
+            title={ct(product.title)}
+            formats={
+              hasPenFormats ? (
+                <DualChamberExplainer
+                  prices={{
+                    pen: fromPrice("Dual-chamber vial") ?? fromPrice("Dual-chamber pen"),
+                    box: boxed ? fromPrice(boxed) : undefined,
+                    vial: fromPrice("Vial"),
+                  }}
+                  photos={getFormatPhotos(product.handle)}
+                  supply={meta.artKind === "supply"}
+                  spray={boxed === SPRAY_FORMAT}
+                />
+              ) : undefined
+            }
+            formatsLabel={boxed === SPRAY_FORMAT ? "Vial, dual-chamber or nasal spray" : undefined}
+          />
         </Box>
       </Section>
 

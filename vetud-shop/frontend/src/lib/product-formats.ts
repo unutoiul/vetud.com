@@ -11,9 +11,15 @@ type Variant = HttpTypes.StoreProductVariant
  * (metadata `contents_box`).
  */
 export const FORMAT_INFO: Record<string, { line: string; key: "pen" | "box" | "vial" }> = {
-  "Pen kit box": { line: "The reusable pen with a dual-chamber vial, 12 needles and a booklet, in the VETUD box", key: "box" },
+  "Pen kit box": {
+    line: "The reusable pen with a dual-chamber vial, 12 needles and a booklet, in the VETUD box",
+    key: "box",
+  },
   "Nasal spray": { line: "A 10 ml nasal spray bottle in the VETUD box", key: "box" },
-  "Dual-chamber vial": { line: "Powder and BAC water in one two-chamber cartridge. Refills the reusable pen", key: "pen" },
+  "Dual-chamber vial": {
+    line: "Powder and BAC water in one two-chamber cartridge. Refills the reusable pen",
+    key: "pen",
+  },
   // The cartridge's name until 2026-11-04, kept so older carts and the catalog in between still read well.
   "Dual-chamber pen": { line: "Powder and BAC water in one two-chamber cartridge", key: "pen" },
   Vial: { line: "Sealed research vial; no diluent or administration supplies included", key: "vial" },
@@ -34,7 +40,11 @@ const optionValue = (variant: Variant, title: string) =>
 export function readOptions(product: HttpTypes.StoreProduct): ProductOption[] {
   const options: ProductOption[] = []
   for (const variant of sortedVariants(product)) {
-    if (product.handle === "decapeptide-12" && isUnsupportedInjectionFormat(optionValue(variant, FORMAT_OPTION) ?? variant.title ?? "")) continue
+    if (
+      product.handle === "decapeptide-12" &&
+      isUnsupportedInjectionFormat(optionValue(variant, FORMAT_OPTION) ?? variant.title ?? "")
+    )
+      continue
     for (const option of variant.options ?? []) {
       const title = option.option?.title
       if (!title || !option.value) continue
@@ -57,11 +67,17 @@ export function defaultVariant(product: HttpTypes.StoreProduct) {
 }
 
 export function selectionOf(variant: Variant | undefined): Record<string, string> {
-  return Object.fromEntries((variant?.options ?? []).flatMap((option) => option.option?.title && option.value ? [[option.option.title, option.value]] : []))
+  return Object.fromEntries(
+    (variant?.options ?? []).flatMap((option) =>
+      option.option?.title && option.value ? [[option.option.title, option.value]] : [],
+    ),
+  )
 }
 
 export function findVariant(product: HttpTypes.StoreProduct, selection: Record<string, string>) {
-  return sortedVariants(product).find((variant) => Object.entries(selection).every(([title, value]) => optionValue(variant, title) === value))
+  return sortedVariants(product).find((variant) =>
+    Object.entries(selection).every(([title, value]) => optionValue(variant, title) === value),
+  )
 }
 
 /** Variants that match a partial selection, e.g. every amount of the vial. */
@@ -80,8 +96,18 @@ export function hasFormats(product: HttpTypes.StoreProduct) {
 /** "Pen kit box: 5 mg, 10 mg · Dual-chamber vial: 5 mg, 10 mg · Vial: 5 mg, 10 mg", or the plain variant titles. */
 export function availabilitySummary(product: HttpTypes.StoreProduct, separator = " · ") {
   const formats = readOptions(product).find((option) => option.title === FORMAT_OPTION)
-  if (!formats) return sortedVariants(product).map((variant) => variant.title).join(", ")
-  return formats.values.map((format) => `${format}: ${variantsWith(product, FORMAT_OPTION, format).map((variant) => optionValue(variant, "Amount") ?? variant.title).join(", ")}`).join(separator)
+  if (!formats)
+    return sortedVariants(product)
+      .map((variant) => variant.title)
+      .join(", ")
+  return formats.values
+    .map(
+      (format) =>
+        `${format}: ${variantsWith(product, FORMAT_OPTION, format)
+          .map((variant) => optionValue(variant, "Amount") ?? variant.title)
+          .join(", ")}`,
+    )
+    .join(separator)
 }
 
 function formatMetadata(product: HttpTypes.StoreProduct, prefix: string, format: string) {
@@ -102,13 +128,21 @@ export function formatLine(product: HttpTypes.StoreProduct, format: string) {
 
 /** The product's boxed format, "Pen kit box" or "Nasal spray", if it has one. */
 export function boxedFormat(product: HttpTypes.StoreProduct) {
-  return readOptions(product).find((option) => option.title === FORMAT_OPTION)?.values.find((value) => FORMAT_INFO[value]?.key === "box")
+  return readOptions(product)
+    .find((option) => option.title === FORMAT_OPTION)
+    ?.values.find((value) => FORMAT_INFO[value]?.key === "box")
 }
 
 /** One short line for cards: "Pen kit, dual-chamber vial or vial · 5 mg / 10 mg", or the variant titles. */
-export function shortAvailability(product: HttpTypes.StoreProduct, translate: (text: string) => string = text => text) {
+export function shortAvailability(
+  product: HttpTypes.StoreProduct,
+  translate: (text: string) => string = (text) => text,
+) {
   const options = readOptions(product)
-  if (!options.some((option) => option.title === FORMAT_OPTION)) return sortedVariants(product).map((variant) => translate(variant.title ?? "")).join(" / ")
+  if (!options.some((option) => option.title === FORMAT_OPTION))
+    return sortedVariants(product)
+      .map((variant) => translate(variant.title ?? ""))
+      .join(" / ")
   const formats = options.find((option) => option.title === FORMAT_OPTION)?.values ?? []
   const amounts = options.find((option) => option.title !== FORMAT_OPTION)?.values ?? []
   const label = formats.map(translate).join(" / ")

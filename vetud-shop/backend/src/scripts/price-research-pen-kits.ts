@@ -7,7 +7,5 @@ export default async function priceResearchPenKits({ container }: ExecArgs) {
   const { result } = await priceResearchPenKitsWorkflow(container).run({
     input: {},
   })
-  container
-    .resolve(ContainerRegistrationKeys.LOGGER)
-    .info(`Research pen kit US prices: ${JSON.stringify(result)}`)
+  container.resolve(ContainerRegistrationKeys.LOGGER).info(`Research pen kit US prices: ${JSON.stringify(result)}`)
 }

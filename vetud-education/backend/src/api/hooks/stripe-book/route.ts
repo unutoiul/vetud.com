@@ -47,14 +47,19 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
         idempotency_key: key,
         provider_data: { idempotency_key: key },
       })
-      await sendQuietly(req.scope, [bookOwnerAlert({
-        step: "paid",
-        email: to,
-        locale: session.metadata?.locale,
-        session_id: session.id,
-        amount: session.amount_total,
-        currency: session.currency,
-      }, session.id)])
+      await sendQuietly(req.scope, [
+        bookOwnerAlert(
+          {
+            step: "paid",
+            email: to,
+            locale: session.metadata?.locale,
+            session_id: session.id,
+            amount: session.amount_total,
+            currency: session.currency,
+          },
+          session.id,
+        ),
+      ])
     }
   }
   res.json({ received: true })

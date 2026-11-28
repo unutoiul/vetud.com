@@ -12,10 +12,26 @@ const item = (title: string, path: string, note?: string) =>
 
 const SECTIONS = [
   { title: "Home", path: "", note: "the latest guides, trial results, news and videos" },
-  { title: "Peptide library", path: "/learn", note: "every peptide guide, grouped by topic, with how strong the evidence is" },
-  { title: "News and articles", path: "/news", note: "new studies and regulatory decisions, explained, with every source linked" },
-  { title: "Videos", path: "/videos", note: "hand-picked videos, mostly from doctors and researchers, including skeptical ones" },
-  { title: "Community", path: "/community", note: "a public forum where people ask about the research and share what they noticed, including side effects, without doses" },
+  {
+    title: "Peptide library",
+    path: "/learn",
+    note: "every peptide guide, grouped by topic, with how strong the evidence is",
+  },
+  {
+    title: "News and articles",
+    path: "/news",
+    note: "new studies and regulatory decisions, explained, with every source linked",
+  },
+  {
+    title: "Videos",
+    path: "/videos",
+    note: "hand-picked videos, mostly from doctors and researchers, including skeptical ones",
+  },
+  {
+    title: "Community",
+    path: "/community",
+    note: "a public forum where people ask about the research and share what they noticed, including side effects, without doses",
+  },
   { title: "Community guidelines", path: "/community/guidelines" },
   { title: "Contact", path: "/contact" },
 ]
@@ -46,7 +62,9 @@ function llmsText() {
     "",
     "## News and studies",
     "",
-    ...news.map((article) => item(article.headline.join(""), `/news/${article.slug}`, `${article.date}. ${article.dek}`)),
+    ...news.map((article) =>
+      item(article.headline.join(""), `/news/${article.slug}`, `${article.date}. ${article.dek}`),
+    ),
     "",
     "## Site sections",
     "",

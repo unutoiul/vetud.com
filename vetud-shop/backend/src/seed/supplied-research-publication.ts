@@ -18,7 +18,14 @@ type PublishedKit = {
 }
 
 const KITS: PublishedKit[] = [
-  { handle: "nad-plus", name: "NAD+", amount: "1000 mg", peptide: false, note: "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme, not a peptide.", learn: ["nad"] },
+  {
+    handle: "nad-plus",
+    name: "NAD+",
+    amount: "1000 mg",
+    peptide: false,
+    note: "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme, not a peptide.",
+    learn: ["nad"],
+  },
   { handle: "melanotan", name: "Melanotan", amount: "10 mg", peptide: true },
   { handle: "ipamorelin", name: "Ipamorelin", amount: "5 mg", peptide: true },
   { handle: "tesamorelin", name: "Tesamorelin", amount: "20 mg", peptide: true },
@@ -26,7 +33,8 @@ const KITS: PublishedKit[] = [
 
 const STORAGE = "Follow the manufacturer's batch-specific storage temperature and conditions."
 const HANDLING = "Keep in original packaging, away from direct sunlight and excess heat."
-const STABILITY = "Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life."
+const STABILITY =
+  "Freeze-dried powder and BAC water remain in separate chambers until preparation. See the batch expiry date for shelf life."
 
 export const SUPPLIED_PUBLICATIONS = KITS.map((kit) => {
   const powder = kit.peptide ? "peptide powder" : "powder"
@@ -49,7 +57,11 @@ export const SUPPLIED_PUBLICATIONS = KITS.map((kit) => {
       handling: HANDLING,
       stability: STABILITY,
       ingredients,
-      features: [kit.peptide ? "Freeze-dried peptide" : "Freeze-dried powder", "Dual-chamber pen", "Separate BAC water"],
+      features: [
+        kit.peptide ? "Freeze-dried peptide" : "Freeze-dried powder",
+        "Dual-chamber pen",
+        "Separate BAC water",
+      ],
       contents: `1 pen (${kit.amount}); 12 disposable needles; 1 instruction booklet`,
       available_amounts: kit.amount,
       pricing_status: "approved",
@@ -60,4 +72,3 @@ export const SUPPLIED_PUBLICATIONS = KITS.map((kit) => {
     },
   }
 })
-

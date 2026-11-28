@@ -18,5 +18,7 @@ export async function listOfferedPaymentProviders(regionId: string, currency: st
     sdk.client.fetch<NmiConfig>("/store/nmi/config", { method: "GET" }).catch(() => null),
     sdk.client.fetch<PaygateConfig>("/store/paygate/config", { method: "GET" }).catch(() => null),
   ])
-  return payment_providers.map((provider) => provider.id).filter((id) => isOfferedPaymentProvider(id, { nmi, paygate, currency }))
+  return payment_providers
+    .map((provider) => provider.id)
+    .filter((id) => isOfferedPaymentProvider(id, { nmi, paygate, currency }))
 }

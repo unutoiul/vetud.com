@@ -4,12 +4,15 @@ import { test } from "node:test"
 test("newsletter waits thirty seconds after entry and each dismissal across navigation and refreshes", async () => {
   const values = new Map()
   const originalWindow = Object.getOwnPropertyDescriptor(globalThis, "window")
-  Object.defineProperty(globalThis, "window", { configurable: true, value: {
-    sessionStorage: {
-      getItem: key => values.get(key) ?? null,
-      setItem: (key, value) => values.set(key, value),
+  Object.defineProperty(globalThis, "window", {
+    configurable: true,
+    value: {
+      sessionStorage: {
+        getItem: (key) => values.get(key) ?? null,
+        setItem: (key, value) => values.set(key, value),
+      },
     },
-  } })
+  })
 
   try {
     const firstPage = await import("../src/components/welcome/session.ts?first-page")
@@ -48,7 +51,11 @@ test("newsletter waits thirty seconds after entry and each dismissal across navi
       assert.equal(destination.welcomeCooldownUntil(now), 0)
     }
 
-    Object.defineProperty(window, "sessionStorage", { get() { throw new Error("Storage blocked") } })
+    Object.defineProperty(window, "sessionStorage", {
+      get() {
+        throw new Error("Storage blocked")
+      },
+    })
     assert.equal(destination.welcomeCooldownUntil(now), 0)
     // React can still keep the cooldown in memory when storage is blocked.
     assert.equal(destination.startWelcomeForSession(now), now + thirtySeconds)

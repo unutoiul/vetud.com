@@ -11,7 +11,10 @@ function publicComment({ id, customer_id, author_name, body, created_at }: Comme
 }
 
 /** Newest first. Works signed out; signed in, the viewer's own comments are flagged so they can delete them. */
-export async function GET(req: AuthenticatedMedusaRequest<unknown, StoreArticleCommentsQueryType>, res: MedusaResponse) {
+export async function GET(
+  req: AuthenticatedMedusaRequest<unknown, StoreArticleCommentsQueryType>,
+  res: MedusaResponse,
+) {
   const { article, offset, limit } = req.validatedQuery
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const { data, metadata } = await query.graph({
@@ -23,7 +26,7 @@ export async function GET(req: AuthenticatedMedusaRequest<unknown, StoreArticleC
 
   res.setHeader("Cache-Control", "private, no-store")
   res.json({
-    comments: (data as CommentRecord[]).map(comment => publicComment(comment, req.auth_context?.actor_id)),
+    comments: (data as CommentRecord[]).map((comment) => publicComment(comment, req.auth_context?.actor_id)),
     count: metadata?.count ?? data.length,
     offset,
     limit,

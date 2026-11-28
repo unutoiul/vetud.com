@@ -20,7 +20,11 @@ export const BeslimnowOrderSchema = z.object({
   promo_code: optionalText(40),
   name: text(200),
   // As loose as the page's own check, so an order it accepted is never refused here.
-  email: z.string().trim().max(254).regex(/^[^\s@]+@[^\s@]+$/),
+  email: z
+    .string()
+    .trim()
+    .max(254)
+    .regex(/^[^\s@]+@[^\s@]+$/),
   phone: text(40),
   contact_app: text(40),
   contact_handle: optionalText(120),

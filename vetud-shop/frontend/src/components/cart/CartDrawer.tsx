@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { useTranslations } from "next-intl"
 
 import { CloseIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
@@ -26,7 +25,7 @@ export default function CartDrawer() {
   const money = useMoney()
   const { cart, drawerOpen, closeDrawer, itemCount, error, clearError, region } = useStore()
   const items = [...(cart?.items ?? [])].sort((a, b) =>
-    String(a.created_at ?? "").localeCompare(String(b.created_at ?? ""))
+    String(a.created_at ?? "").localeCompare(String(b.created_at ?? "")),
   )
   const currency = cart?.currency_code ?? region.currencyCode
   const itemTotal = Number(cart?.item_total ?? 0)
@@ -38,15 +37,31 @@ export default function CartDrawer() {
       anchor="right"
       open={drawerOpen}
       onClose={closeDrawer}
-      slotProps={{ paper: { role: "dialog", "aria-modal": true, "aria-labelledby": "cart-drawer-title", sx: { width: { xs: "100%", sm: 460 }, bgcolor: brand.slate25, overscrollBehavior: "contain" } } }}
+      slotProps={{
+        paper: {
+          role: "dialog",
+          "aria-modal": true,
+          "aria-labelledby": "cart-drawer-title",
+          sx: { width: { xs: "100%", sm: 460 }, bgcolor: brand.slate25, overscrollBehavior: "contain" },
+        },
+      }}
     >
       <CartAnnouncer />
       <Stack sx={{ height: "100%" }}>
         <Stack
           direction="row"
-          sx={{ alignItems: "center", justifyContent: "space-between", px: 3, py: 2, borderBottom: "1px solid", borderColor: "divider" }}
+          sx={{
+            alignItems: "center",
+            justifyContent: "space-between",
+            px: 3,
+            py: 2,
+            borderBottom: "1px solid",
+            borderColor: "divider",
+          }}
         >
-          <Typography variant="h5" component="h2" id="cart-drawer-title">{ct.rich("Your cart{v0}", { v0: ct(itemCount ? ` (${itemCount})` : "") }, {  })}</Typography>
+          <Typography variant="h5" component="h2" id="cart-drawer-title">
+            {ct.rich("Your cart{v0}", { v0: ct(itemCount ? ` (${itemCount})` : "") }, {})}
+          </Typography>
           <IconButton aria-label={act("closeCart")} onClick={closeDrawer}>
             <CloseIcon />
           </IconButton>
@@ -83,7 +98,17 @@ export default function CartDrawer() {
         </Box>
 
         {items.length ? (
-          <Box sx={{ flexShrink: 0, px: 3, pt: 2.5, pb: "max(20px, env(safe-area-inset-bottom))", borderTop: "1px solid", borderColor: "divider", bgcolor: brand.white }}>
+          <Box
+            sx={{
+              flexShrink: 0,
+              px: 3,
+              pt: 2.5,
+              pb: "max(20px, env(safe-area-inset-bottom))",
+              borderTop: "1px solid",
+              borderColor: "divider",
+              bgcolor: brand.white,
+            }}
+          >
             <Stack direction="row" sx={{ justifyContent: "space-between", mb: 0.5 }}>
               <Typography sx={{ fontWeight: 600 }}>{ct("Subtotal")}</Typography>
               <Typography sx={{ fontWeight: 700 }}>{ct(money(subtotal, currency))}</Typography>
@@ -105,7 +130,14 @@ export default function CartDrawer() {
                 {act("checkout")}
               </ButtonLink>
             </Stack>
-            <Box sx={{ mt: 1.75, minHeight: 24 }}><AcceptedPaymentMethods enabled={drawerOpen} regionId={cart?.region_id || region.id} currency={currency} caption={ct(false)} /></Box>
+            <Box sx={{ mt: 1.75, minHeight: 24 }}>
+              <AcceptedPaymentMethods
+                enabled={drawerOpen}
+                regionId={cart?.region_id || region.id}
+                currency={currency}
+                caption={ct(false)}
+              />
+            </Box>
           </Box>
         ) : null}
       </Stack>

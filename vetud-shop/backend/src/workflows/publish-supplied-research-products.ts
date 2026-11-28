@@ -1,6 +1,13 @@
 import type { CreatePricesDTO, MedusaContainer, UpsertProductDTO } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, MedusaError, Modules, ProductStatus } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  when,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import { createInventoryLevelsWorkflow, updateProductsWorkflow } from "@medusajs/medusa/core-flows"
 import { BASE_CURRENCY, getExchangeRates, roundMoney } from "../lib/currencies"
 import { SUPPLIED_PUBLICATIONS } from "../seed/supplied-research-publication"
@@ -43,9 +50,17 @@ export async function planSuppliedPublication(container: MedusaContainer) {
   const { data } = await query.graph({
     entity: "product",
     fields: [
-      "id", "handle", "status", "metadata", "sales_channels.id",
-      "variants.id", "variants.title", "variants.price_set.id", "variants.price_set.prices.*",
-      "variants.inventory_items.inventory_item_id", "variants.inventory_items.inventory.location_levels.location_id",
+      "id",
+      "handle",
+      "status",
+      "metadata",
+      "sales_channels.id",
+      "variants.id",
+      "variants.title",
+      "variants.price_set.id",
+      "variants.price_set.prices.*",
+      "variants.inventory_items.inventory_item_id",
+      "variants.inventory_items.inventory.location_levels.location_id",
     ],
     filters: { handle: handles },
   })
@@ -62,10 +77,18 @@ export async function planSuppliedPublication(container: MedusaContainer) {
   for (const publication of SUPPLIED_PUBLICATIONS) {
     const product = products.find((row) => row.handle === publication.handle)
     if (!product) throw new MedusaError(MedusaError.Types.NOT_FOUND, `Missing product: ${publication.handle}`)
-    if (product.variants.length !== 1) throw new MedusaError(MedusaError.Types.INVALID_DATA, `${publication.handle} should have one variant.`)
+    if (product.variants.length !== 1)
+      throw new MedusaError(MedusaError.Types.INVALID_DATA, `${publication.handle} should have one variant.`)
     const variant = product.variants[0]
     const prices = variant.price_set?.prices ?? []
-    const base = prices.filter((price) => price.currency_code === BASE_CURRENCY && !price.price_list_id && !price.rules_count && price.min_quantity == null && price.max_quantity == null)
+    const base = prices.filter(
+      (price) =>
+        price.currency_code === BASE_CURRENCY &&
+        !price.price_list_id &&
+        !price.rules_count &&
+        price.min_quantity == null &&
+        price.max_quantity == null,
+    )
     if (!variant.price_set || base.length !== 1 || !(Number(base[0].amount) > 0)) {
       throw new MedusaError(MedusaError.Types.INVALID_DATA, `${publication.handle} needs one positive base USD price.`)
     }
@@ -76,23 +99,45 @@ export async function planSuppliedPublication(container: MedusaContainer) {
       rates ??= await getExchangeRates()
       added = missing.map((currency) => {
         const rate = rates?.[currency]
-        if (!rate || !Number.isFinite(rate) || rate <= 0) throw new MedusaError(MedusaError.Types.INVALID_DATA, `Missing exchange rate for ${currency.toUpperCase()}.`)
+        if (!rate || !Number.isFinite(rate) || rate <= 0)
+          throw new MedusaError(MedusaError.Types.INVALID_DATA, `Missing exchange rate for ${currency.toUpperCase()}.`)
         return { currency_code: currency, amount: roundMoney(Number(base[0].amount) * rate, currency) }
       })
-      priceAdditions.push({ priceSetId: variant.price_set.id, existingPriceIds: prices.map((price) => price.id), prices: added })
+      priceAdditions.push({
+        priceSetId: variant.price_set.id,
+        existingPriceIds: prices.map((price) => price.id),
+        prices: added,
+      })
     }
 
     // Give each kit a zero stock level wherever its sales channel ships from, so stock can be typed in Admin.
     const channelIds = (product.sales_channels ?? []).map((channel) => channel.id)
     const { data: channels } = channelIds.length
-      ? await query.graph({ entity: "sales_channel", fields: ["id", "stock_locations.id"], filters: { id: channelIds } })
+      ? await query.graph({
+          entity: "sales_channel",
+          fields: ["id", "stock_locations.id"],
+          filters: { id: channelIds },
+        })
       : { data: [] }
-    const locationIds = [...new Set(channels.flatMap((channel) => (channel.stock_locations ?? []).flatMap((location) => (location ? [location.id] : []))))]
-    if (!locationIds.length) throw new MedusaError(MedusaError.Types.INVALID_DATA, `${publication.handle} has no stock location through its sales channel.`)
+    const locationIds = [
+      ...new Set(
+        channels.flatMap((channel) =>
+          (channel.stock_locations ?? []).flatMap((location) => (location ? [location.id] : [])),
+        ),
+      ),
+    ]
+    if (!locationIds.length)
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        `${publication.handle} has no stock location through its sales channel.`,
+      )
     const items = variant.inventory_items ?? []
-    if (items.length !== 1) throw new MedusaError(MedusaError.Types.INVALID_DATA, `${publication.handle} should have one inventory item.`)
+    if (items.length !== 1)
+      throw new MedusaError(MedusaError.Types.INVALID_DATA, `${publication.handle} should have one inventory item.`)
     const stocked = new Set((items[0].inventory?.location_levels ?? []).map((level) => level.location_id))
-    const newLevels = locationIds.filter((id) => !stocked.has(id)).map((location_id) => ({ inventory_item_id: items[0].inventory_item_id, location_id, stocked_quantity: 0 }))
+    const newLevels = locationIds
+      .filter((id) => !stocked.has(id))
+      .map((location_id) => ({ inventory_item_id: items[0].inventory_item_id, location_id, stocked_quantity: 0 }))
     levels.push(...newLevels)
 
     updates.push({
@@ -114,7 +159,7 @@ export async function planSuppliedPublication(container: MedusaContainer) {
 
 const planSuppliedPublicationStep = createStep(
   "plan-supplied-publication",
-  async (_input: Record<string, never>, { container }) => new StepResponse(await planSuppliedPublication(container))
+  async (_input: Record<string, never>, { container }) => new StepResponse(await planSuppliedPublication(container)),
 )
 
 const addSuppliedPricesStep = createStep(
@@ -131,7 +176,7 @@ const addSuppliedPricesStep = createStep(
   },
   async (created, { container }) => {
     if (created?.length) await container.resolve(Modules.PRICING).removePrices(created)
-  }
+  },
 )
 
 /** Prices and stock levels first, publication last, so a failure never leaves a half-ready product visible. */
@@ -141,9 +186,11 @@ export const publishSuppliedResearchProductsWorkflow = createWorkflow(
     const plan = planSuppliedPublicationStep(input)
     addSuppliedPricesStep(transform(plan, (data) => data.priceAdditions))
     when("has-zero-stock-levels", plan, (data) => data.levels.length > 0).then(() =>
-      createInventoryLevelsWorkflow.runAsStep({ input: transform(plan, (data) => ({ inventory_levels: data.levels })) })
+      createInventoryLevelsWorkflow.runAsStep({
+        input: transform(plan, (data) => ({ inventory_levels: data.levels })),
+      }),
     )
     updateProductsWorkflow.runAsStep({ input: transform(plan, (data) => ({ products: data.updates })) })
     return new WorkflowResponse(transform(plan, (data) => data.summary))
-  }
+  },
 )

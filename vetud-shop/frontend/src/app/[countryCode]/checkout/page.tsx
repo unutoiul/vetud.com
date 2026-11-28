@@ -12,9 +12,9 @@ import { gutter } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  title: "Checkout",
-  robots: { index: false },
-})
+    title: "Checkout",
+    robots: { index: false },
+  })
 }
 
 export default async function CheckoutPage() {
@@ -23,15 +23,46 @@ export default async function CheckoutPage() {
   return (
     <>
       {/* A slim header keeps the order form above the fold. */}
-      <Box component="header" sx={{ bgcolor: "brand.paper", borderBottom: "1px solid", borderColor: "divider", px: gutter, py: { xs: 3, md: 4 } }}>
-        <Stack direction="row" sx={{ maxWidth: 1360, mx: "auto", alignItems: "flex-end", justifyContent: "space-between", gap: 2 }}>
+      <Box
+        component="header"
+        sx={{
+          bgcolor: "brand.paper",
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          px: gutter,
+          py: { xs: 3, md: 4 },
+        }}
+      >
+        <Stack
+          direction="row"
+          sx={{ maxWidth: 1360, mx: "auto", alignItems: "flex-end", justifyContent: "space-between", gap: 2 }}
+        >
           <Box>
-            <Typography variant="mono" component="p" sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase" }}>{ct.rich("VETUD / {v0}", { v0: t("secureCheckout") }, {  })}</Typography>
-            <Typography variant="h1" sx={{ mt: 1.25, fontSize: { xs: 30, md: 38 }, fontWeight: 400, lineHeight: 1.15, letterSpacing: "-.04em" }}>
+            <Typography
+              variant="mono"
+              component="p"
+              sx={{ color: "brand.blue", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase" }}
+            >
+              {ct.rich("VETUD / {v0}", { v0: t("secureCheckout") }, {})}
+            </Typography>
+            <Typography
+              variant="h1"
+              sx={{
+                mt: 1.25,
+                fontSize: { xs: 30, md: 38 },
+                fontWeight: 400,
+                lineHeight: 1.15,
+                letterSpacing: "-.04em",
+              }}
+            >
               {t("title")}
             </Typography>
           </Box>
-          <Stack direction="row" spacing={0.75} sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center", color: "text.secondary", pb: 0.5 }}>
+          <Stack
+            direction="row"
+            spacing={0.75}
+            sx={{ display: { xs: "none", sm: "flex" }, alignItems: "center", color: "text.secondary", pb: 0.5 }}
+          >
             <LockIcon sx={{ fontSize: 16 }} />
             <Typography variant="body2">{t("secure")}</Typography>
           </Stack>

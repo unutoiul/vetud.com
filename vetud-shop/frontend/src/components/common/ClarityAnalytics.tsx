@@ -15,7 +15,10 @@ export default function ClarityAnalytics({ country }: { country: string }) {
         Clarity.init(CLARITY_ID)
         started = true
       }
-      Clarity.consentV2({ ad_Storage: "denied", analytics_Storage: cookielessAnalytics(country) ? "denied" : "granted" })
+      Clarity.consentV2({
+        ad_Storage: "denied",
+        analytics_Storage: cookielessAnalytics(country) ? "denied" : "granted",
+      })
       Clarity.setTag("country", country)
     }
     if ("requestIdleCallback" in window) {

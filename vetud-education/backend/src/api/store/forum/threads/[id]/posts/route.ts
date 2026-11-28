@@ -6,8 +6,21 @@ import type { StoreCreateForumPostBody } from "../../../validators"
 
 export async function POST(req: AuthenticatedMedusaRequest<StoreCreateForumPostBody>, res: MedusaResponse) {
   const { result } = await createForumPostWorkflow(req.scope).run({
-    input: { customer_id: req.auth_context.actor_id, thread_id: req.params.id, body: req.validatedBody.body, images: req.validatedBody.images },
+    input: {
+      customer_id: req.auth_context.actor_id,
+      thread_id: req.params.id,
+      body: req.validatedBody.body,
+      images: req.validatedBody.images,
+    },
   })
   const viewer = await viewerProfile(req.scope, req.auth_context.actor_id)
-  res.status(201).json({ post: publicPost(result, { authors: await loadProfiles(req.scope, [result.author_id]), viewer, images: await loadImages(req.scope, [result.id]) }) })
+  res
+    .status(201)
+    .json({
+      post: publicPost(result, {
+        authors: await loadProfiles(req.scope, [result.author_id]),
+        viewer,
+        images: await loadImages(req.scope, [result.id]),
+      }),
+    })
 }

@@ -16,7 +16,7 @@ const BeslimnowSubscriber = model.define(
     // Updated each time the same address asks for the code again.
     last_seen_at: model.dateTime(),
     times_subscribed: model.number().default(1),
-  }
+  },
 )
 
 export default BeslimnowSubscriber

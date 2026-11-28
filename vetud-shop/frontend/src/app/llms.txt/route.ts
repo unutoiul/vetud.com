@@ -6,12 +6,13 @@ import { listCatalogProducts } from "@/lib/medusa/products"
 import { getRegionForCountry, listRegions } from "@/lib/medusa/regions"
 
 /** One line of plain text: Markdown links, HTML tags and line breaks removed. */
-const line = (text: string) => text
-  .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-  .replace(/<[^>]+>/g, " ")
-  .replace(/[*_#>`]/g, "")
-  .replace(/\s+/g, " ")
-  .trim()
+const line = (text: string) =>
+  text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/[*_#>`]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
 
 /** The first sentence, cut at a word near 200 characters. */
 const summary = (text: string) => {
@@ -24,10 +25,26 @@ const item = (title: string, url: string, note?: string) =>
   `- [${line(title).replace(/[[\]]/g, "")}](${url})${note ? `: ${note}` : ""}`
 
 const PAGES = [
-  { title: "Shop", path: "/shop", note: "every research material, with available amounts, regional prices, stock and lot documentation" },
-  { title: "The dual-chamber pen, explained", path: "/dual-chamber-pen", note: "how the pen kit box, dual-chamber vials and vials differ" },
-  { title: "Lot documentation", path: "/documentation", note: "look up a lot number for its batch date, purity result and certificate of analysis" },
-  { title: "Our standards", path: "/standards", note: "how Vetud documents, describes, packs and supports what it sells" },
+  {
+    title: "Shop",
+    path: "/shop",
+    note: "every research material, with available amounts, regional prices, stock and lot documentation",
+  },
+  {
+    title: "The dual-chamber pen, explained",
+    path: "/dual-chamber-pen",
+    note: "how the pen kit box, dual-chamber vials and vials differ",
+  },
+  {
+    title: "Lot documentation",
+    path: "/documentation",
+    note: "look up a lot number for its batch date, purity result and certificate of analysis",
+  },
+  {
+    title: "Our standards",
+    path: "/standards",
+    note: "how Vetud documents, describes, packs and supports what it sells",
+  },
   { title: "Tracking", path: "/tracking", note: "follow a parcel with the tracking number from the shipping email" },
   { title: "Contact", path: "/contact" },
 ]
@@ -78,7 +95,11 @@ async function llmsText() {
     "## Optional",
     "",
     ...LEGAL_DOCUMENTS.map((document) => item(document.title, page(`/legal/${document.slug}`))),
-    item("VETUD Learn", educationHref(), `plain-language guides to peptide research on a separate site, ${EDUCATION_URL.replace(/^https?:\/\//, "")}`),
+    item(
+      "VETUD Learn",
+      educationHref(),
+      `plain-language guides to peptide research on a separate site, ${EDUCATION_URL.replace(/^https?:\/\//, "")}`,
+    ),
     `- [Sitemap](${BASE_URL}/sitemap.xml): every page in every country`,
     "",
   ].join("\n")

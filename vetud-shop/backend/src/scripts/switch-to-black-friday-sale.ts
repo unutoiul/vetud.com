@@ -12,7 +12,14 @@ import { createStorewideSaleWorkflow, updateStorewideSaleWorkflow } from "../wor
  */
 export const BLACK_FRIDAY_SALE = { title: "Black Friday", percent_off: 30, ends_at: "2026-12-01T23:59:00.000Z" }
 
-type SaleRow = { id: string; title: string; status?: string | null; starts_at?: string | null; ends_at?: string | null; metadata?: Record<string, unknown> | null }
+type SaleRow = {
+  id: string
+  title: string
+  status?: string | null
+  starts_at?: string | null
+  ends_at?: string | null
+  metadata?: Record<string, unknown> | null
+}
 
 /**
  * 1. The running store-wide sale (the 20% "Winter offer") becomes the 30% Black Friday sale; its
@@ -26,28 +33,62 @@ export default async function switchToBlackFridaySale({ container }: ExecArgs) {
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
   const sale = BLACK_FRIDAY_SALE
 
-  const { data } = await query.graph({ entity: "price_list", fields: ["id", "title", "status", "starts_at", "ends_at", "metadata"], filters: { type: "sale" } })
+  const { data } = await query.graph({
+    entity: "price_list",
+    fields: ["id", "title", "status", "starts_at", "ends_at", "metadata"],
+    filters: { type: "sale" },
+  })
   const sales = (data as unknown as SaleRow[]).filter((list) => readSaleSettings(list.metadata))
-  const current = sales.find((list) => list.title === sale.title) ?? sales.find((list) => ["live", "scheduled"].includes(saleState(list)))
+  const current =
+    sales.find((list) => list.title === sale.title) ??
+    sales.find((list) => ["live", "scheduled"].includes(saleState(list)))
   if (current && current.title === sale.title && readSaleSettings(current.metadata)?.percent_off === sale.percent_off) {
     logger.info(`Black Friday: the ${sale.percent_off}% sale is already set up.`)
   } else if (current) {
     const { result } = await updateStorewideSaleWorkflow(container).run({
-      input: { id: current.id, title: sale.title, percent_off: sale.percent_off, starts_at: null, ends_at: sale.ends_at, status: "active" },
+      input: {
+        id: current.id,
+        title: sale.title,
+        percent_off: sale.percent_off,
+        starts_at: null,
+        ends_at: sale.ends_at,
+        status: "active",
+      },
     })
-    logger.info(`Black Friday: "${current.title}" is now the ${sale.percent_off}% Black Friday sale (${result.updated} prices updated, ${result.created} added).`)
+    logger.info(
+      `Black Friday: "${current.title}" is now the ${sale.percent_off}% Black Friday sale (${result.updated} prices updated, ${result.created} added).`,
+    )
   } else {
     const { result } = await createStorewideSaleWorkflow(container).run({
-      input: { title: sale.title, percent_off: sale.percent_off, starts_at: null, ends_at: sale.ends_at, status: "active" },
+      input: {
+        title: sale.title,
+        percent_off: sale.percent_off,
+        starts_at: null,
+        ends_at: sale.ends_at,
+        status: "active",
+      },
     })
     logger.info(`Black Friday: ${sale.percent_off}% sale started with ${result.prices} prices.`)
   }
 
-  const { data: promotions } = await query.graph({ entity: "promotion", fields: ["id", "code", "campaign.campaign_identifier"], filters: { status: "active" } })
-  const popupCodes = (promotions as unknown as { id: string; code?: string | null; campaign?: { campaign_identifier?: string | null } | null }[])
-    .filter((promotion) => promotion.campaign?.campaign_identifier?.startsWith(POPUP_CAMPAIGN_PREFIX))
+  const { data: promotions } = await query.graph({
+    entity: "promotion",
+    fields: ["id", "code", "campaign.campaign_identifier"],
+    filters: { status: "active" },
+  })
+  const popupCodes = (
+    promotions as unknown as {
+      id: string
+      code?: string | null
+      campaign?: { campaign_identifier?: string | null } | null
+    }[]
+  ).filter((promotion) => promotion.campaign?.campaign_identifier?.startsWith(POPUP_CAMPAIGN_PREFIX))
   if (popupCodes.length) {
-    await updatePromotionsWorkflow(container).run({ input: { promotionsData: popupCodes.map((promotion) => ({ id: promotion.id, status: "inactive" as const })) } })
-    logger.info(`Black Friday: sign-up codes switched off: ${popupCodes.map((promotion) => promotion.code).join(", ")}.`)
+    await updatePromotionsWorkflow(container).run({
+      input: { promotionsData: popupCodes.map((promotion) => ({ id: promotion.id, status: "inactive" as const })) },
+    })
+    logger.info(
+      `Black Friday: sign-up codes switched off: ${popupCodes.map((promotion) => promotion.code).join(", ")}.`,
+    )
   }
 }

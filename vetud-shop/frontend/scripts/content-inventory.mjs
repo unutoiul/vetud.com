@@ -24,7 +24,8 @@ export function contentKey(value) {
   return `s${(a >>> 0).toString(16).padStart(8, "0")}${(b >>> 0).toString(16).padStart(8, "0")}`
 }
 
-const isProse = (text) => /[A-Za-z]/.test(text) && (/\s/.test(text.trim()) || /^[A-Z]/.test(text)) && !/^(https?:|\/|#|mailto:)/.test(text)
+const isProse = (text) =>
+  /[A-Za-z]/.test(text) && (/\s/.test(text.trim()) || /^[A-Z]/.test(text)) && !/^(https?:|\/|#|mailto:)/.test(text)
 
 /**
  * Which top-level fields client components may show. Everything else in these modules is rendered on
@@ -36,12 +37,43 @@ const CLIENT_FIELDS = {
   "content/legal.ts": new Set(),
 }
 /** Styles, URLs and errors written as template strings. */
-const NOT_SENTENCES = /solid|rgba|calc\(|translate|rotate|ease|scale\(|gradient|transition|transform|\bpx\b|SameSite|sitemap|store\/|images\/|Search index|failed|\\n/
+const NOT_SENTENCES =
+  /solid|rgba|calc\(|translate|rotate|ease|scale\(|gradient|transition|transform|\bpx\b|SameSite|sitemap|store\/|images\/|Search index|failed|\\n/
 /** Settings that are addresses and keys, not page text. */
-const ADDRESS_EXPORTS = new Set(["MEDUSA_BACKEND_URL", "MEDUSA_PUBLISHABLE_KEY", "EDUCATION_URL", "SHOP_URL", "BASE_URL", "DEFAULT_COUNTRY", "SUPPORTED_COUNTRIES", "PRERENDERED_COUNTRIES", "FALLBACK_COUNTRIES", "PAYMENT_BANK_DETAILS"])
-const SKIPPED_FIELDS = new Set(["slug", "id", "url", "src", "href", "date", "art", "icon", "category", "status", "pubchem", "tone", "videos", "handle"])
+const ADDRESS_EXPORTS = new Set([
+  "MEDUSA_BACKEND_URL",
+  "MEDUSA_PUBLISHABLE_KEY",
+  "EDUCATION_URL",
+  "SHOP_URL",
+  "BASE_URL",
+  "DEFAULT_COUNTRY",
+  "SUPPORTED_COUNTRIES",
+  "PRERENDERED_COUNTRIES",
+  "FALLBACK_COUNTRIES",
+  "PAYMENT_BANK_DETAILS",
+])
+const SKIPPED_FIELDS = new Set([
+  "slug",
+  "id",
+  "url",
+  "src",
+  "href",
+  "date",
+  "art",
+  "icon",
+  "category",
+  "status",
+  "pubchem",
+  "tone",
+  "videos",
+  "handle",
+])
 const MODULES = [
-  "content/research/peptides.ts", "content/research/categories.ts", "content/research/emerging-weight-research.ts", "content/legal.ts", "lib/config.ts",
+  "content/research/peptides.ts",
+  "content/research/categories.ts",
+  "content/research/emerging-weight-research.ts",
+  "content/legal.ts",
+  "lib/config.ts",
 ]
 
 function sourceFiles(folder) {
@@ -76,10 +108,14 @@ const unescape = (text) => text.replace(/\\(["'`\\])/g, "$1").replace(/\\n/g, "\
 /** A .env-style file as an object (only to find the Store API address and its public key). */
 function readEnv(path) {
   if (!existsSync(path)) return {}
-  return Object.fromEntries(readFileSync(path, "utf8").split(/\r?\n/).flatMap((line) => {
-    const match = /^([A-Z0-9_]+)=(.*)$/.exec(line.trim())
-    return match ? [[match[1], match[2].replace(/^["']|["']$/g, "")]] : []
-  }))
+  return Object.fromEntries(
+    readFileSync(path, "utf8")
+      .split(/\r?\n/)
+      .flatMap((line) => {
+        const match = /^([A-Z0-9_]+)=(.*)$/.exec(line.trim())
+        return match ? [[match[1], match[2].replace(/^["']|["']$/g, "")]] : []
+      }),
+  )
 }
 
 /**
@@ -92,7 +128,10 @@ export async function catalogTexts() {
   const key = env.CATALOG_PUBLISHABLE_KEY || env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
   if (!base || !key) return null
   const get = async (path) => {
-    const response = await fetch(`${base}${path}`, { headers: { "x-publishable-api-key": key }, signal: AbortSignal.timeout(20_000) })
+    const response = await fetch(`${base}${path}`, {
+      headers: { "x-publishable-api-key": key },
+      signal: AbortSignal.timeout(20_000),
+    })
     if (!response.ok) throw new Error(`${path}: ${response.status}`)
     return response.json()
   }
@@ -111,14 +150,18 @@ export async function catalogTexts() {
       all("/store/collections?fields=title", "collections"),
     ])
     const texts = []
-    const push = (where, ...values) => { for (const text of values) if (typeof text === "string" && text.trim()) texts.push({ where, text }) }
+    const push = (where, ...values) => {
+      for (const text of values) if (typeof text === "string" && text.trim()) texts.push({ where, text })
+    }
     for (const product of products) {
       push(`${CATALOG_FILE}: product name`, product.title)
       push(`${CATALOG_FILE}: product subtitle`, product.subtitle)
       // Blend pages show the description's first paragraph on its own.
-      if (product.description) push(`${CATALOG_FILE}: product description`, product.description, ...product.description.split("\n\n"))
+      if (product.description)
+        push(`${CATALOG_FILE}: product description`, product.description, ...product.description.split("\n\n"))
       push(`${CATALOG_FILE}: variant name`, ...(product.variants ?? []).map((variant) => variant.title))
-      for (const option of product.options ?? []) push(`${CATALOG_FILE}: product option`, option.title, ...(option.values ?? []).map((value) => value.value))
+      for (const option of product.options ?? [])
+        push(`${CATALOG_FILE}: product option`, option.title, ...(option.values ?? []).map((value) => value.value))
     }
     for (const category of categories) push(`${CATALOG_FILE}: category`, category.name, category.description)
     push(`${CATALOG_FILE}: collection`, ...collections.map((collection) => collection.title))
@@ -172,23 +215,34 @@ export async function collectInventory({ catalog = true } = {}) {
         let index = 0
         const pattern = match[1].replace(/\$\{[^}]*\}/g, () => `{v${index++}}`)
         const words = pattern.replace(/\{v\d+\}/g, " ").trim()
-        if (/^[A-Z{]/.test(pattern) && /[a-z]{2,}[ ,:][ a-z]*[a-z]{2,}/.test(words) && !NOT_SENTENCES.test(words)) add(pattern, file, true)
+        if (/^[A-Z{]/.test(pattern) && /[a-z]{2,}[ ,:][ a-z]*[a-z]{2,}/.test(words) && !NOT_SENTENCES.test(words))
+          add(pattern, file, true)
       }
     }
     if (MODULES.includes(file) || file === "i18n/content.ts" || file.startsWith("i18n/")) continue
     for (const match of code.matchAll(/\bct(?:\.(template|rich|icu|count))?\(/g)) {
       const literals = literalsInCall(code, match.index + match[0].length - 1)
       if (match[1] === "count") {
-        const pairs = literals.length === 4 ? [[literals[0], literals[2]], [literals[1], literals[3]]] : [[literals[0], literals[1] ?? `${literals[0]}s`]]
-        for (const [singular, plural] of pairs) if (singular) add(`{count, plural, one {# ${singular}} other {# ${plural}}}`, file, true)
+        const pairs =
+          literals.length === 4
+            ? [
+                [literals[0], literals[2]],
+                [literals[1], literals[3]],
+              ]
+            : [[literals[0], literals[1] ?? `${literals[0]}s`]]
+        for (const [singular, plural] of pairs)
+          if (singular) add(`{count, plural, one {# ${singular}} other {# ${plural}}}`, file, true)
       } else {
         for (const literal of literals) add(literal, file, true)
       }
     }
-    for (const match of code.matchAll(/\b(?:label|title|name|description|summary|heading|eyebrow|blurb|explain|focus|headline|study|evidence|text|question|answer|alt):\s*"((?:[^"\\]|\\.)*)"/g)) {
+    for (const match of code.matchAll(
+      /\b(?:label|title|name|description|summary|heading|eyebrow|blurb|explain|focus|headline|study|evidence|text|question|answer|alt):\s*"((?:[^"\\]|\\.)*)"/g,
+    )) {
       if (/^[A-Z]/.test(match[1])) add(unescape(match[1]), file, true)
     }
-    for (const match of code.matchAll(/\bexport const [A-Z_]+ = "((?:[^"\\]|\\.)*)"/g)) add(unescape(match[1]), file, true)
+    for (const match of code.matchAll(/\bexport const [A-Z_]+ = "((?:[^"\\]|\\.)*)"/g))
+      add(unescape(match[1]), file, true)
     // Sentences kept in local lists and passed to ct() later, such as the FAQ and product overviews.
     if (!file.startsWith("theme/")) {
       for (const match of code.matchAll(/"((?:\d+\.\s+)?[A-Z][^"\\\n{}]*\s[^"\\\n{}]*)"/g)) {

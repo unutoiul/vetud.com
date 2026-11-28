@@ -8,10 +8,7 @@ type PasswordResetEvent = {
   metadata?: Record<string, unknown>
 }
 
-export default async function passwordResetHandler({
-  event: { data },
-  container,
-}: SubscriberArgs<PasswordResetEvent>) {
+export default async function passwordResetHandler({ event: { data }, container }: SubscriberArgs<PasswordResetEvent>) {
   // Only admin users have passwords: customers sign in with an emailed code (owner, 2026-11-19).
   if (data.actor_type !== "user") {
     return

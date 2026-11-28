@@ -32,9 +32,7 @@ it("limits publication to the fixed snapshot, including the nine older drafts", 
 })
 
 it("uses the core update workflow to change only publication status", () => {
-  const compose = (createWorkflow as jest.Mock).mock.calls.find(
-    ([name]) => name === "publish-catalog-products"
-  )?.[1]
+  const compose = (createWorkflow as jest.Mock).mock.calls.find(([name]) => name === "publish-catalog-products")?.[1]
   expect(compose).toEqual(expect.any(Function))
   compose()
 

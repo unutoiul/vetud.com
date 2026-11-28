@@ -18,9 +18,17 @@ export default function RichText({ text: source }: { text: string }) {
     const [whole, label, target] = match
     parts.push(text.slice(last, match.index))
     if (target.startsWith("http")) {
-      parts.push(<Link key={match.index} href={target} target="_blank" rel="noopener noreferrer">{label}</Link>)
+      parts.push(
+        <Link key={match.index} href={target} target="_blank" rel="noopener noreferrer">
+          {label}
+        </Link>,
+      )
     } else {
-      parts.push(<AppLink key={match.index} href={target}>{label}</AppLink>)
+      parts.push(
+        <AppLink key={match.index} href={target}>
+          {label}
+        </AppLink>,
+      )
     }
     last = match.index + whole.length
   }

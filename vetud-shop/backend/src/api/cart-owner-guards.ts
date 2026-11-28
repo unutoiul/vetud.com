@@ -1,10 +1,19 @@
-import type { AuthenticatedMedusaRequest, MedusaNextFunction, MedusaResponse, MiddlewareRoute } from "@medusajs/framework/http"
+import type {
+  AuthenticatedMedusaRequest,
+  MedusaNextFunction,
+  MedusaResponse,
+  MiddlewareRoute,
+} from "@medusajs/framework/http"
 import { authenticate } from "@medusajs/framework/http"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { validateCartOwner, type CartForOwnerCheck } from "../lib/cart-owner"
 
 /** Runs before a cart becomes an order: a guest's own cart, or a member's cart by that signed-in member. */
-export async function requireCartOwner(req: AuthenticatedMedusaRequest, _res: MedusaResponse, next: MedusaNextFunction) {
+export async function requireCartOwner(
+  req: AuthenticatedMedusaRequest,
+  _res: MedusaResponse,
+  next: MedusaNextFunction,
+) {
   try {
     const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
     const { data } = await query.graph({

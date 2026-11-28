@@ -124,8 +124,8 @@ export const productBadgeColors = {
 } as const
 
 export const fonts = {
-  sans: "\"Manrope\", \"Manrope Fallback\", sans-serif",
-  mono: "\"DM Mono\", \"DM Mono Fallback\", monospace",
+  sans: '"Manrope", "Manrope Fallback", sans-serif',
+  mono: '"DM Mono", "DM Mono Fallback", monospace',
 } as const
 
 /** Page gutters shared by every section. */

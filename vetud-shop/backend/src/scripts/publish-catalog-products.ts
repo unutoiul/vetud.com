@@ -13,7 +13,7 @@ export default async function publishCatalogProducts({ container }: ExecArgs) {
   if (pending.some((file) => resolve(file) !== target)) {
     throw new MedusaError(
       MedusaError.Types.NOT_ALLOWED,
-      "Other application migrations are pending. Review them before publishing the catalog."
+      "Other application migrations are pending. Review them before publishing the catalog.",
     )
   }
 

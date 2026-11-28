@@ -1,12 +1,5 @@
-import {
-  AbstractNotificationProviderService,
-  MedusaError,
-} from "@medusajs/framework/utils"
-import type {
-  Logger,
-  ProviderSendNotificationDTO,
-  ProviderSendNotificationResultsDTO,
-} from "@medusajs/framework/types"
+import { AbstractNotificationProviderService, MedusaError } from "@medusajs/framework/utils"
+import type { Logger, ProviderSendNotificationDTO, ProviderSendNotificationResultsDTO } from "@medusajs/framework/types"
 import { Resend } from "resend"
 import { RESEND_TEMPLATE_IDS } from "./template-ids"
 import { buildEmail } from "./templates"
@@ -39,27 +32,22 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
     if (!options.api_key) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
-        "Option `api_key` is required in the Resend provider's options."
+        "Option `api_key` is required in the Resend provider's options.",
       )
     }
     if (!options.from) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
-        "Option `from` is required in the Resend provider's options."
+        "Option `from` is required in the Resend provider's options.",
       )
     }
   }
 
-  async send(
-    notification: ProviderSendNotificationDTO
-  ): Promise<ProviderSendNotificationResultsDTO> {
+  async send(notification: ProviderSendNotificationDTO): Promise<ProviderSendNotificationResultsDTO> {
     const email = buildEmail(notification.template, notification.data ?? {})
 
     if (!email) {
-      throw new MedusaError(
-        MedusaError.Types.INVALID_DATA,
-        `Unknown email template "${notification.template}".`
-      )
+      throw new MedusaError(MedusaError.Types.INVALID_DATA, `Unknown email template "${notification.template}".`)
     }
 
     // Every education email is a published Resend template (vetud-education/emails).
@@ -67,33 +55,34 @@ class ResendNotificationProviderService extends AbstractNotificationProviderServ
     if (!templateId) {
       throw new MedusaError(
         MedusaError.Types.INVALID_DATA,
-        `No Resend template ID for "${email.template}". Publish it with vetud-education/emails/publish.mjs.`
+        `No Resend template ID for "${email.template}". Publish it with vetud-education/emails/publish.mjs.`,
       )
     }
 
     const idempotencyKey = notification.provider_data?.idempotency_key
-    const { data, error } = await this.client.emails.send({
-      from: notification.from || this.options.from,
-      to: [notification.to],
-      template: { id: templateId, variables: email.variables },
-      ...(email.subject ? { subject: email.subject } : {}),
-      replyTo: email.replyTo ?? this.options.reply_to,
-      attachments: notification.attachments?.map((attachment) => ({
-        content: attachment.content,
-        filename: attachment.filename,
-        contentType: attachment.content_type,
-      })),
-    }, typeof idempotencyKey === "string" ? { idempotencyKey } : undefined)
+    const { data, error } = await this.client.emails.send(
+      {
+        from: notification.from || this.options.from,
+        to: [notification.to],
+        template: { id: templateId, variables: email.variables },
+        ...(email.subject ? { subject: email.subject } : {}),
+        replyTo: email.replyTo ?? this.options.reply_to,
+        attachments: notification.attachments?.map((attachment) => ({
+          content: attachment.content,
+          filename: attachment.filename,
+          contentType: attachment.content_type,
+        })),
+      },
+      typeof idempotencyKey === "string" ? { idempotencyKey } : undefined,
+    )
 
     if (error || !data) {
       this.logger.error(
-        `Resend failed to send "${notification.template}" to ${notification.to}: ${
-          error?.message ?? "no response"
-        }`
+        `Resend failed to send "${notification.template}" to ${notification.to}: ${error?.message ?? "no response"}`,
       )
       throw new MedusaError(
         MedusaError.Types.UNEXPECTED_STATE,
-        `Failed to send email: ${error?.message ?? "no response"}`
+        `Failed to send email: ${error?.message ?? "no response"}`,
       )
     }
 

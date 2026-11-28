@@ -19,9 +19,13 @@ export class SingleAttemptNmiClient extends NmiClient {
       response = await fetch(this.gatewayUrl, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: buildChargeParams({ ...input, securityKey: this.gatewayKey,
+        body: buildChargeParams({
+          ...input,
+          securityKey: this.gatewayKey,
           // Online consumer debits are WEB; business-account debits are CCD.
-          ach: input.ach ? { ...input.ach, secCode: input.ach.accountHolderType === "business" ? "CCD" : "WEB" } : undefined,
+          ach: input.ach
+            ? { ...input.ach, secCode: input.ach.accountHolderType === "business" ? "CCD" : "WEB" }
+            : undefined,
         }).toString(),
         signal: AbortSignal.timeout(30000),
       })
@@ -33,13 +37,19 @@ export class SingleAttemptNmiClient extends NmiClient {
     const result = parseTransactResponse(body)
     if (result.response === "2") {
       // Do not expose gateway raw responses, account information, or tokens.
-      throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "The payment was declined. Check your details or contact your payment provider.")
+      throw new MedusaError(
+        MedusaError.Types.NOT_ALLOWED,
+        "The payment was declined. Check your details or contact your payment provider.",
+      )
     }
     if (result.response !== "1" || !result.transactionid) throw this.uncertainResult()
     return result
   }
 
   private uncertainResult() {
-    return new MedusaError(MedusaError.Types.UNEXPECTED_STATE, "The gateway result could not be confirmed. Do not submit another payment or refund; contact support to check the transaction first.")
+    return new MedusaError(
+      MedusaError.Types.UNEXPECTED_STATE,
+      "The gateway result could not be confirmed. Do not submit another payment or refund; contact support to check the transaction first.",
+    )
   }
 }

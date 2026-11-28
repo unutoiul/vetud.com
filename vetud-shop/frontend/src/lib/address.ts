@@ -17,8 +17,16 @@ export type AddressValues = {
 }
 
 export const EMPTY_ADDRESS: AddressValues = {
-  first_name: "", last_name: "", company: "", address_1: "", address_2: "",
-  city: "", province: "", postal_code: "", country_code: "", phone: "",
+  first_name: "",
+  last_name: "",
+  company: "",
+  address_1: "",
+  address_2: "",
+  city: "",
+  province: "",
+  postal_code: "",
+  country_code: "",
+  phone: "",
 }
 
 /** States, provinces and territories (code → name) for the countries whose addresses need one. */
@@ -33,7 +41,8 @@ export function normalizePostal(value: string, country: string) {
   if (country === "gb" && compact.length >= 5) return `${compact.slice(0, -3)} ${compact.slice(-3)}`
   if (country === "nl" && compact.length === 6) return `${compact.slice(0, 4)} ${compact.slice(4)}`
   // Canadian postal codes (K1A 0B1) and Irish Eircodes (D02 X285) break after the first three characters.
-  if ((country === "ca" && compact.length === 6) || (country === "ie" && compact.length === 7)) return `${compact.slice(0, 3)} ${compact.slice(3)}`
+  if ((country === "ca" && compact.length === 6) || (country === "ie" && compact.length === 7))
+    return `${compact.slice(0, 3)} ${compact.slice(3)}`
   if (country === "pl" && /^\d{5}$/.test(compact)) return `${compact.slice(0, 2)}-${compact.slice(2)}`
   if (country === "pt" && /^\d{7}$/.test(compact)) return `${compact.slice(0, 4)}-${compact.slice(4)}`
   return value.trim().toUpperCase()
@@ -41,12 +50,20 @@ export function normalizePostal(value: string, country: string) {
 
 export function normalizePhone(value: string, country: string) {
   if (!value.trim()) return ""
-  return parsePhoneNumberFromString(value, { defaultCountry: country.toUpperCase() as CountryCode, extract: false })?.number ?? value.trim()
+  return (
+    parsePhoneNumberFromString(value, { defaultCountry: country.toUpperCase() as CountryCode, extract: false })
+      ?.number ?? value.trim()
+  )
 }
 
 export function isValidPhone(value: string, country: string) {
   if (!value.trim()) return true
-  return Boolean(parsePhoneNumberFromString(value, { defaultCountry: country.toUpperCase() as CountryCode, extract: false })?.isValid())
+  return Boolean(
+    parsePhoneNumberFromString(value, {
+      defaultCountry: country.toUpperCase() as CountryCode,
+      extract: false,
+    })?.isValid(),
+  )
 }
 
 export function normalizeAddress(values: AddressValues): AddressValues {
@@ -54,13 +71,35 @@ export function normalizeAddress(values: AddressValues): AddressValues {
   const country = cleaned.country_code
   const rules = getCountryRules(country)
   // A state from the list (US, Canada, Australia) is a code; elsewhere it's free text, when given.
-  const province = rules.provinceRequired ? cleaned.province.toUpperCase() : rules.provinceOptional ? cleaned.province : ""
-  return { ...cleaned, country_code: country, postal_code: normalizePostal(cleaned.postal_code, country), phone: normalizePhone(cleaned.phone, country), province }
+  const province = rules.provinceRequired
+    ? cleaned.province.toUpperCase()
+    : rules.provinceOptional
+      ? cleaned.province
+      : ""
+  return {
+    ...cleaned,
+    country_code: country,
+    postal_code: normalizePostal(cleaned.postal_code, country),
+    phone: normalizePhone(cleaned.phone, country),
+    province,
+  }
 }
 
-type Translate = (key: "required" | "unsupportedCountry" | "invalidState" | "invalidPhone" | "invalidPostal", values?: { label: string; example: string }) => string
+type Translate = (
+  key: "required" | "unsupportedCountry" | "invalidState" | "invalidPhone" | "invalidPostal",
+  values?: { label: string; example: string },
+) => string
 export function validateAddress(values: AddressValues, translate?: Translate, postalLabel?: string) {
-  const t: Translate = translate ?? ((key) => ({ required: "Required", unsupportedCountry: "Select a supported delivery country", invalidState: "Select a valid state", invalidPhone: "Enter a valid phone number", invalidPostal: "Enter a valid postal code" })[key])
+  const t: Translate =
+    translate ??
+    ((key) =>
+      ({
+        required: "Required",
+        unsupportedCountry: "Select a supported delivery country",
+        invalidState: "Select a valid state",
+        invalidPhone: "Enter a valid phone number",
+        invalidPostal: "Enter a valid postal code",
+      })[key])
   const errors: Partial<Record<keyof AddressValues, string>> = {}
   const country = values.country_code.toLowerCase()
   // Any country code: the form only offers countries we deliver to, and the backend checks again.
@@ -69,11 +108,22 @@ export function validateAddress(values: AddressValues, translate?: Translate, po
     return errors
   }
   const rules = getCountryRules(country)
-  for (const field of ["first_name", "last_name", "address_1", "city", ...(rules.postalOptional ? [] : ["postal_code" as const])] as const) {
+  for (const field of [
+    "first_name",
+    "last_name",
+    "address_1",
+    "city",
+    ...(rules.postalOptional ? [] : ["postal_code" as const]),
+  ] as const) {
     if (!values[field].trim()) errors[field] = t("required")
   }
-  if (values.postal_code.trim() && !new RegExp(rules.postalPattern, "i").test(normalizePostal(values.postal_code, country))) errors.postal_code = t("invalidPostal", { label: postalLabel ?? "postal code", example: rules.postalExample })
-  if (rules.provinceRequired && !provincesOf(country)[values.province.trim().toUpperCase()]) errors.province = values.province.trim() ? t("invalidState") : t("required")
+  if (
+    values.postal_code.trim() &&
+    !new RegExp(rules.postalPattern, "i").test(normalizePostal(values.postal_code, country))
+  )
+    errors.postal_code = t("invalidPostal", { label: postalLabel ?? "postal code", example: rules.postalExample })
+  if (rules.provinceRequired && !provincesOf(country)[values.province.trim().toUpperCase()])
+    errors.province = values.province.trim() ? t("invalidState") : t("required")
   // A delivery address needs a phone number for the courier (owner request 2026-11-18).
   if (!values.phone.trim()) errors.phone = t("required")
   else if (!isValidPhone(values.phone, country)) errors.phone = t("invalidPhone")
@@ -81,7 +131,9 @@ export function validateAddress(values: AddressValues, translate?: Translate, po
 }
 
 export function toAddressValues(address?: Partial<Record<keyof AddressValues, string | null>> | null): AddressValues {
-  const values = Object.fromEntries(Object.keys(EMPTY_ADDRESS).map(key => [key, (address?.[key as keyof AddressValues] ?? "").trim()])) as AddressValues
+  const values = Object.fromEntries(
+    Object.keys(EMPTY_ADDRESS).map((key) => [key, (address?.[key as keyof AddressValues] ?? "").trim()]),
+  ) as AddressValues
   values.country_code = values.country_code.toLowerCase()
   // Older browser autofill entries sometimes saved the select's placeholder as a state.
   if (/^\[?select (?:a )?(?:state|province|region)\]?$/i.test(values.province)) values.province = ""
@@ -106,7 +158,7 @@ export function inferAddressCountry(values: AddressValues, deliverable: readonly
   const postal = values.postal_code.trim()
   const current = values.country_code.toLowerCase()
   if (!postal || (deliverable.includes(current) && postalFits(postal, current))) return ""
-  const candidates = deliverable.filter(code => Object.hasOwn(COUNTRY_RULES, code) && postalFits(postal, code))
+  const candidates = deliverable.filter((code) => Object.hasOwn(COUNTRY_RULES, code) && postalFits(postal, code))
   if (candidates.length <= 1) return candidates[0] ?? ""
   // Saved phone numbers are international (+44 …), so they carry their country.
   const phoneCountry = parsePhoneNumberFromString(values.phone)?.country?.toLowerCase() ?? ""
@@ -121,7 +173,7 @@ export function changeAddressCountry(values: AddressValues, country: string): Ad
 
 /** Only the fields needing attention, plus country because it controls address rules. */
 export function addressRepairFields(errors: Partial<Record<keyof AddressValues, string>>): (keyof AddressValues)[] {
-  const fields = new Set<keyof AddressValues>(["country_code", ...Object.keys(errors) as (keyof AddressValues)[]])
+  const fields = new Set<keyof AddressValues>(["country_code", ...(Object.keys(errors) as (keyof AddressValues)[])])
   if (errors.country_code || errors.postal_code || errors.province) {
     fields.add("postal_code")
     fields.add("province")
@@ -129,11 +181,16 @@ export function addressRepairFields(errors: Partial<Record<keyof AddressValues, 
   return [...fields]
 }
 
-export function sameAddress(a?: Partial<Record<keyof AddressValues, string | null>> | null, b?: Partial<Record<keyof AddressValues, string | null>> | null) {
+export function sameAddress(
+  a?: Partial<Record<keyof AddressValues, string | null>> | null,
+  b?: Partial<Record<keyof AddressValues, string | null>> | null,
+) {
   if (!a || !b) return false
   const first = normalizeAddress(toAddressValues(a))
   const second = normalizeAddress(toAddressValues(b))
-  return (Object.keys(EMPTY_ADDRESS) as (keyof AddressValues)[]).every(key => first[key].toLowerCase() === second[key].toLowerCase())
+  return (Object.keys(EMPTY_ADDRESS) as (keyof AddressValues)[]).every(
+    (key) => first[key].toLowerCase() === second[key].toLowerCase(),
+  )
 }
 
 export function formatAddressLines(input: Partial<Record<keyof AddressValues, string | null>>) {
@@ -144,5 +201,12 @@ export function formatAddressLines(input: Partial<Record<keyof AddressValues, st
     : getCountryRules(country).provinceRequired
       ? [address.city, [address.province, address.postal_code].filter(Boolean).join(" ")].filter(Boolean).join(", ")
       : [address.city, address.postal_code].filter(Boolean).join(" ")
-  return [[address.first_name, address.last_name].filter(Boolean).join(" "), address.company, address.address_1, address.address_2, location, country.toUpperCase()].filter(Boolean) as string[]
+  return [
+    [address.first_name, address.last_name].filter(Boolean).join(" "),
+    address.company,
+    address.address_1,
+    address.address_2,
+    location,
+    country.toUpperCase(),
+  ].filter(Boolean) as string[]
 }

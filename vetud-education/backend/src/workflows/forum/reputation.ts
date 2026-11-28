@@ -7,5 +7,5 @@ export const recountForumReputationWorkflow = createWorkflow(
   function (input: { profile_ids: string[] }) {
     recountForumReputationStep({ profile_ids: input.profile_ids })
     return new WorkflowResponse(input.profile_ids)
-  }
+  },
 )

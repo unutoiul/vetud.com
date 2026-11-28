@@ -2,16 +2,42 @@
 import { brand, fonts, motion } from "./tokens"
 
 declare module "@mui/material/styles" {
-  interface Palette { brand: typeof brand; mint: Palette["primary"] }
-  interface PaletteOptions { brand?: typeof brand; mint?: PaletteOptions["primary"] }
-  interface TypographyVariants { eyebrow: CSSObject; mono: CSSObject; lead: CSSObject }
-  interface TypographyVariantsOptions { eyebrow?: CSSObject; mono?: CSSObject; lead?: CSSObject }
+  interface Palette {
+    brand: typeof brand
+    mint: Palette["primary"]
+  }
+  interface PaletteOptions {
+    brand?: typeof brand
+    mint?: PaletteOptions["primary"]
+  }
+  interface TypographyVariants {
+    eyebrow: CSSObject
+    mono: CSSObject
+    lead: CSSObject
+  }
+  interface TypographyVariantsOptions {
+    eyebrow?: CSSObject
+    mono?: CSSObject
+    lead?: CSSObject
+  }
 }
 declare module "@mui/material/Typography" {
-  interface TypographyPropsVariantOverrides { eyebrow: true; mono: true; lead: true }
+  interface TypographyPropsVariantOverrides {
+    eyebrow: true
+    mono: true
+    lead: true
+  }
 }
-declare module "@mui/material/Button" { interface ButtonPropsColorOverrides { mint: true } }
-declare module "@mui/material/Chip" { interface ChipPropsColorOverrides { mint: true } }
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    mint: true
+  }
+}
+declare module "@mui/material/Chip" {
+  interface ChipPropsColorOverrides {
+    mint: true
+  }
+}
 
 const focusRing = { outline: `2px solid ${brand.blue}`, outlineOffset: 4 }
 
@@ -61,32 +87,116 @@ export const pepLabTheme = createTheme({
     mono: { fontFamily: fonts.mono, fontSize: ".76rem", letterSpacing: ".015em" },
   },
   components: {
-    MuiCssBaseline: { styleOverrides: {
-      html: { scrollBehavior: "smooth", scrollPaddingTop: 120, colorScheme: "light" },
-      body: { WebkitFontSmoothing: "antialiased" },
-      "::selection": { background: brand.mint, color: brand.ink },
-      a: { color: "inherit" },
-      "a, button": { touchAction: "manipulation", WebkitTapHighlightColor: brand.blue550A12 },
-      ":focus-visible": focusRing,
-      "h1, h2, h3": { textWrap: "balance", scrollMarginTop: 120 },
-      "@keyframes vetud-enter": { from: { opacity: 0, transform: "translateY(18px)" }, to: { opacity: 1, transform: "translateY(0)" } },
-      "@media (prefers-reduced-motion: reduce)": { "*, *::before, *::after": { animation: "none !important", transitionDuration: "0.01ms !important", scrollBehavior: "auto !important" } },
-    } },
+    MuiCssBaseline: {
+      styleOverrides: {
+        html: { scrollBehavior: "smooth", scrollPaddingTop: 120, colorScheme: "light" },
+        body: { WebkitFontSmoothing: "antialiased" },
+        "::selection": { background: brand.mint, color: brand.ink },
+        a: { color: "inherit" },
+        "a, button": { touchAction: "manipulation", WebkitTapHighlightColor: brand.blue550A12 },
+        ":focus-visible": focusRing,
+        "h1, h2, h3": { textWrap: "balance", scrollMarginTop: 120 },
+        "@keyframes vetud-enter": {
+          from: { opacity: 0, transform: "translateY(18px)" },
+          to: { opacity: 1, transform: "translateY(0)" },
+        },
+        "@media (prefers-reduced-motion: reduce)": {
+          "*, *::before, *::after": {
+            animation: "none !important",
+            transitionDuration: "0.01ms !important",
+            scrollBehavior: "auto !important",
+          },
+        },
+      },
+    },
     MuiTypography: { defaultProps: { variantMapping: { eyebrow: "p", mono: "span", lead: "p" } } },
-    MuiButtonBase: { defaultProps: { disableRipple: true }, styleOverrides: { root: { "&.Mui-focusVisible": focusRing } } },
-    MuiButton: { defaultProps: { disableElevation: true }, styleOverrides: {
-      root: { borderRadius: 5, fontSize: ".88rem", padding: "13px 24px", textTransform: "none", transition: `background-color .3s ${motion}, transform .3s ${motion}, border-color .3s ${motion}`, "&:hover": { transform: "translateY(-2px)" }, "&:active": { transform: "scale(.98)" } },
-      endIcon: { marginLeft: 16, width: 20, height: 24, borderRadius: 0, backgroundColor: "transparent", display: "grid", placeItems: "center", transition: `transform .35s ${motion}`, "& svg": { fontSize: "18px !important" }, ".MuiButton-root:hover &": { transform: "translate(2px,-1px)" } },
-      sizeSmall: { padding: "9px 17px", fontSize: ".8rem" },
-      sizeLarge: { padding: "13px 22px", fontSize: ".92rem" },
-      outlined: { borderColor: brand.lineStrong, "&:hover": { borderColor: brand.blue, backgroundColor: brand.blue50_2 } },
-    } },
-    MuiIconButton: { styleOverrides: { root: { borderRadius: "50%", minWidth: 44, minHeight: 44, transition: `background-color .3s ${motion}, transform .3s ${motion}`, "&:hover": { backgroundColor: brand.blue75 }, "&:active": { transform: "scale(.96)" } } } },
-    MuiCard: { defaultProps: { elevation: 0 }, styleOverrides: { root: { border: `1px solid ${brand.blue800A06}`, backgroundColor: brand.white, borderRadius: 6, transition: `transform .45s ${motion}, box-shadow .45s ${motion}` } } },
-    MuiPaper: { styleOverrides: { outlined: { borderColor: brand.blue800A08, borderRadius: 6 }, elevation1: { boxShadow: `0 12px 50px ${brand.blue825A06}` } } },
-    MuiChip: { styleOverrides: { root: { borderRadius: 999, fontWeight: 550, fontSize: ".75rem" }, label: { paddingInline: 12 } } },
-    MuiAccordion: { defaultProps: { disableGutters: true, elevation: 0, square: true }, styleOverrides: { root: { backgroundColor: "transparent", borderBottom: `1px solid ${brand.line}`, "&::before": { display: "none" } } } },
-    MuiAccordionSummary: { styleOverrides: { root: { paddingInline: 0, minHeight: 80 }, content: { margin: "22px 0", gap: 20, alignItems: "center" } } },
+    MuiButtonBase: {
+      defaultProps: { disableRipple: true },
+      styleOverrides: { root: { "&.Mui-focusVisible": focusRing } },
+    },
+    MuiButton: {
+      defaultProps: { disableElevation: true },
+      styleOverrides: {
+        root: {
+          borderRadius: 5,
+          fontSize: ".88rem",
+          padding: "13px 24px",
+          textTransform: "none",
+          transition: `background-color .3s ${motion}, transform .3s ${motion}, border-color .3s ${motion}`,
+          "&:hover": { transform: "translateY(-2px)" },
+          "&:active": { transform: "scale(.98)" },
+        },
+        endIcon: {
+          marginLeft: 16,
+          width: 20,
+          height: 24,
+          borderRadius: 0,
+          backgroundColor: "transparent",
+          display: "grid",
+          placeItems: "center",
+          transition: `transform .35s ${motion}`,
+          "& svg": { fontSize: "18px !important" },
+          ".MuiButton-root:hover &": { transform: "translate(2px,-1px)" },
+        },
+        sizeSmall: { padding: "9px 17px", fontSize: ".8rem" },
+        sizeLarge: { padding: "13px 22px", fontSize: ".92rem" },
+        outlined: {
+          borderColor: brand.lineStrong,
+          "&:hover": { borderColor: brand.blue, backgroundColor: brand.blue50_2 },
+        },
+      },
+    },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "50%",
+          minWidth: 44,
+          minHeight: 44,
+          transition: `background-color .3s ${motion}, transform .3s ${motion}`,
+          "&:hover": { backgroundColor: brand.blue75 },
+          "&:active": { transform: "scale(.96)" },
+        },
+      },
+    },
+    MuiCard: {
+      defaultProps: { elevation: 0 },
+      styleOverrides: {
+        root: {
+          border: `1px solid ${brand.blue800A06}`,
+          backgroundColor: brand.white,
+          borderRadius: 6,
+          transition: `transform .45s ${motion}, box-shadow .45s ${motion}`,
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        outlined: { borderColor: brand.blue800A08, borderRadius: 6 },
+        elevation1: { boxShadow: `0 12px 50px ${brand.blue825A06}` },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: { borderRadius: 999, fontWeight: 550, fontSize: ".75rem" },
+        label: { paddingInline: 12 },
+      },
+    },
+    MuiAccordion: {
+      defaultProps: { disableGutters: true, elevation: 0, square: true },
+      styleOverrides: {
+        root: {
+          backgroundColor: "transparent",
+          borderBottom: `1px solid ${brand.line}`,
+          "&::before": { display: "none" },
+        },
+      },
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: { paddingInline: 0, minHeight: 80 },
+        content: { margin: "22px 0", gap: 20, alignItems: "center" },
+      },
+    },
     MuiAccordionDetails: { styleOverrides: { root: { padding: "0 0 26px" } } },
     // Every text field, select and autocomplete shares this look (owner, 2026-11-24): the label sits
     // above the field instead of floating inside its border, and the field is a soft, rounded box
@@ -95,22 +205,41 @@ export const pepLabTheme = createTheme({
       defaultProps: { notched: false },
       styleOverrides: {
         root: {
-          borderRadius: 12, backgroundColor: brand.mintWash,
+          borderRadius: 12,
+          backgroundColor: brand.mintWash,
           transition: `box-shadow .2s ${motion}, background-color .2s ${motion}`,
-          "& .MuiOutlinedInput-notchedOutline": { top: 0, borderColor: brand.line, transition: `border-color .2s ${motion}`, "& legend": { display: "none" } },
+          "& .MuiOutlinedInput-notchedOutline": {
+            top: 0,
+            borderColor: brand.line,
+            transition: `border-color .2s ${motion}`,
+            "& legend": { display: "none" },
+          },
           "&:hover:not(.Mui-disabled):not(.Mui-focused)": { backgroundColor: brand.white },
-          "&:hover:not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: brand.lineStrong },
-          "&.Mui-focused": { backgroundColor: brand.white, boxShadow: `0 0 0 4px ${alpha(brand.blue, .14)}` },
-          "&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: brand.blue, borderWidth: 1.5 },
+          "&:hover:not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline": {
+            borderColor: brand.lineStrong,
+          },
+          "&.Mui-focused": { backgroundColor: brand.white, boxShadow: `0 0 0 4px ${alpha(brand.blue, 0.14)}` },
+          "&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline": {
+            borderColor: brand.blue,
+            borderWidth: 1.5,
+          },
           "&.Mui-error .MuiOutlinedInput-notchedOutline": { borderColor: brand.red600 },
-          "&.Mui-error.Mui-focused": { boxShadow: `0 0 0 4px ${alpha(brand.red600, .12)}` },
-          "&.Mui-disabled": { backgroundColor: brand.mintLight, "& .MuiOutlinedInput-notchedOutline": { borderColor: brand.line } },
+          "&.Mui-error.Mui-focused": { boxShadow: `0 0 0 4px ${alpha(brand.red600, 0.12)}` },
+          "&.Mui-disabled": {
+            backgroundColor: brand.mintLight,
+            "& .MuiOutlinedInput-notchedOutline": { borderColor: brand.line },
+          },
           "& input:-webkit-autofill": autofill,
           "& input:-webkit-autofill:hover": autofill,
           "& input:-webkit-autofill:focus": autofill,
           "& input:autofill": autofill,
         },
-        input: { padding: "14px 16px", fontSize: "1rem", "&::placeholder": { color: brand.muted, opacity: .8 }, ".MuiInputBase-sizeSmall &": { padding: "10px 14px" } },
+        input: {
+          padding: "14px 16px",
+          fontSize: "1rem",
+          "&::placeholder": { color: brand.muted, opacity: 0.8 },
+          ".MuiInputBase-sizeSmall &": { padding: "10px 14px" },
+        },
         multiline: { padding: "14px 16px", "& textarea": { padding: 0 } },
         adornedStart: { paddingLeft: 14, "& .MuiInputAdornment-root": { color: brand.ink } },
         adornedEnd: { paddingRight: 10 },
@@ -121,9 +250,16 @@ export const pepLabTheme = createTheme({
       defaultProps: { shrink: true },
       styleOverrides: {
         root: {
-          position: "relative", transform: "none", maxWidth: "100%", marginBottom: 7,
-          whiteSpace: "normal", overflow: "visible",
-          fontSize: ".86rem", fontWeight: 600, lineHeight: 1.4, color: brand.ink,
+          position: "relative",
+          transform: "none",
+          maxWidth: "100%",
+          marginBottom: 7,
+          whiteSpace: "normal",
+          overflow: "visible",
+          fontSize: ".86rem",
+          fontWeight: 600,
+          lineHeight: 1.4,
+          color: brand.ink,
           "&.Mui-focused": { color: brand.ink },
           "&.Mui-error": { color: brand.ink },
           "&.Mui-disabled": { color: brand.muted },
@@ -131,18 +267,64 @@ export const pepLabTheme = createTheme({
         asterisk: { color: brand.muted, fontWeight: 400 },
       },
     },
-    MuiFormHelperText: { styleOverrides: { root: { margin: "7px 2px 0", fontSize: ".8rem", lineHeight: 1.45, color: brand.muted, "&.Mui-error": { color: brand.red600, fontWeight: 500 } } } },
-    MuiAutocomplete: { styleOverrides: { root: { "& .MuiOutlinedInput-root": { paddingTop: 6, paddingBottom: 6 } }, paper: { borderRadius: 8, marginTop: 4, boxShadow: `0 12px 40px ${brand.blue825A12}`, border: `1px solid ${brand.line}` }, option: { minHeight: 44 }, noOptions: { color: brand.muted } } },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          margin: "7px 2px 0",
+          fontSize: ".8rem",
+          lineHeight: 1.45,
+          color: brand.muted,
+          "&.Mui-error": { color: brand.red600, fontWeight: 500 },
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: { "& .MuiOutlinedInput-root": { paddingTop: 6, paddingBottom: 6 } },
+        paper: {
+          borderRadius: 8,
+          marginTop: 4,
+          boxShadow: `0 12px 40px ${brand.blue825A12}`,
+          border: `1px solid ${brand.line}`,
+        },
+        option: { minHeight: 44 },
+        noOptions: { color: brand.muted },
+      },
+    },
     MuiTextField: { defaultProps: { fullWidth: true } },
     MuiAppBar: { defaultProps: { elevation: 0, color: "inherit" } },
-    MuiTab: { styleOverrides: { root: { textTransform: "none", fontWeight: 600, fontSize: ".95rem", minHeight: 58, paddingInline: 4, marginRight: 24, minWidth: 0 } } },
-    MuiTabs: { styleOverrides: { root: { borderBottom: `1px solid ${brand.line}` }, indicator: { backgroundColor: brand.blue, height: 2 } } },
-    MuiStepIcon: { styleOverrides: { root: { "&.Mui-active": { color: brand.navy }, "&.Mui-completed": { color: brand.teal } } } },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          fontWeight: 600,
+          fontSize: ".95rem",
+          minHeight: 58,
+          paddingInline: 4,
+          marginRight: 24,
+          minWidth: 0,
+        },
+      },
+    },
+    MuiTabs: {
+      styleOverrides: {
+        root: { borderBottom: `1px solid ${brand.line}` },
+        indicator: { backgroundColor: brand.blue, height: 2 },
+      },
+    },
+    MuiStepIcon: {
+      styleOverrides: { root: { "&.Mui-active": { color: brand.navy }, "&.Mui-completed": { color: brand.teal } } },
+    },
     MuiDrawer: { styleOverrides: { paper: { backgroundColor: brand.paper, overscrollBehavior: "contain" } } },
     MuiDialog: { styleOverrides: { paper: { borderRadius: 24, overscrollBehavior: "contain" } } },
     MuiTooltip: { styleOverrides: { tooltip: { backgroundColor: brand.navy, fontSize: ".75rem", borderRadius: 8 } } },
     MuiLink: { defaultProps: { underline: "hover" }, styleOverrides: { root: { fontWeight: 550 } } },
-    MuiTableCell: { styleOverrides: { root: { fontVariantNumeric: "tabular-nums", borderBottomColor: brand.line, padding: "18px 16px" }, head: { fontWeight: 650, backgroundColor: brand.blue50_3 } } },
+    MuiTableCell: {
+      styleOverrides: {
+        root: { fontVariantNumeric: "tabular-nums", borderBottomColor: brand.line, padding: "18px 16px" },
+        head: { fontWeight: 650, backgroundColor: brand.blue50_3 },
+      },
+    },
     MuiAlert: { styleOverrides: { root: { borderRadius: 5 } } },
   },
 })

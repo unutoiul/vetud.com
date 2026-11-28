@@ -2,11 +2,22 @@
 
 import { useEffect, useState } from "react"
 import { sdk } from "@/lib/medusa/sdk"
-import type { ForumMemberPage, ForumThread, OwnForumProfile, OwnForumStats, ReputationRules } from "@/lib/community/types"
+import type {
+  ForumMemberPage,
+  ForumThread,
+  OwnForumProfile,
+  OwnForumStats,
+  ReputationRules,
+} from "@/lib/community/types"
 import { useAccount } from "../account/AccountProvider"
 import { DEFAULT_RULES } from "./reputation"
 
-type MeResponse = { profile: OwnForumProfile | null; suggested_name: string; stats?: OwnForumStats | null; reputation?: ReputationRules }
+type MeResponse = {
+  profile: OwnForumProfile | null
+  suggested_name: string
+  stats?: OwnForumStats | null
+  reputation?: ReputationRules
+}
 
 export type OwnProfileState = {
   loading: boolean
@@ -20,7 +31,15 @@ export type OwnProfileState = {
   threads: ForumThread[]
 }
 
-const EMPTY: OwnProfileState = { loading: true, failed: false, profile: null, suggested: "", stats: null, rules: DEFAULT_RULES, threads: [] }
+const EMPTY: OwnProfileState = {
+  loading: true,
+  failed: false,
+  profile: null,
+  suggested: "",
+  stats: null,
+  rules: DEFAULT_RULES,
+  threads: [],
+}
 
 /** Loads the profile, the member's numbers and their latest discussions. Never throws. */
 async function fetchOwnProfile(): Promise<Omit<OwnProfileState, "loading">> {
@@ -29,11 +48,20 @@ async function fetchOwnProfile(): Promise<Omit<OwnProfileState, "loading">> {
     let threads: ForumThread[] = []
     let stats: Partial<OwnForumStats> | null = me.stats ?? null
     if (me.profile?.handle) {
-      const page = await sdk.client.fetch<ForumMemberPage>(`/store/forum/members/${encodeURIComponent(me.profile.handle)}`, { cache: "no-store" }).catch(() => null)
+      const page = await sdk.client
+        .fetch<ForumMemberPage>(`/store/forum/members/${encodeURIComponent(me.profile.handle)}`, { cache: "no-store" })
+        .catch(() => null)
       threads = page?.threads ?? []
       if (!stats && page) stats = { threads: page.totals.threads, replies: page.totals.replies }
     }
-    return { failed: false, profile: me.profile, suggested: me.suggested_name, stats, rules: me.reputation ?? DEFAULT_RULES, threads }
+    return {
+      failed: false,
+      profile: me.profile,
+      suggested: me.suggested_name,
+      stats,
+      rules: me.reputation ?? DEFAULT_RULES,
+      threads,
+    }
   } catch {
     return { ...EMPTY, failed: true }
   }
@@ -49,8 +77,12 @@ export function useOwnProfile() {
   useEffect(() => {
     if (accountLoading || !customerId) return
     let cancelled = false
-    void fetchOwnProfile().then((loaded) => { if (!cancelled) setState({ ...loaded, loading: false, customerId }) })
-    return () => { cancelled = true }
+    void fetchOwnProfile().then((loaded) => {
+      if (!cancelled) setState({ ...loaded, loading: false, customerId })
+    })
+    return () => {
+      cancelled = true
+    }
   }, [accountLoading, customerId])
 
   const current = customerId && state.customerId === customerId ? state : EMPTY

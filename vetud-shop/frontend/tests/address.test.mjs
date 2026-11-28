@@ -15,16 +15,40 @@ function load(file) {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true },
   }).outputText
   const testModule = { exports: {} }
-  new Function("require", "module", "exports", compiled)(specifier => {
-    if (!specifier.startsWith(".") && !specifier.startsWith("@/")) return require(specifier)
-    const target = specifier.startsWith("@/") ? path.join(sourceRoot, specifier.slice(2)) : path.resolve(path.dirname(file), specifier)
-    return load(path.extname(target) ? target : `${target}.ts`)
-  }, testModule, testModule.exports)
+  new Function("require", "module", "exports", compiled)(
+    (specifier) => {
+      if (!specifier.startsWith(".") && !specifier.startsWith("@/")) return require(specifier)
+      const target = specifier.startsWith("@/")
+        ? path.join(sourceRoot, specifier.slice(2))
+        : path.resolve(path.dirname(file), specifier)
+      return load(path.extname(target) ? target : `${target}.ts`)
+    },
+    testModule,
+    testModule.exports,
+  )
   return testModule.exports
 }
 
-const { EMPTY_ADDRESS, toAddressValues, formatAddressLines, changeAddressCountry, validateAddress, normalizeAddress, addressRepairFields, sameAddress } = load(path.join(sourceRoot, "lib/address.ts"))
-const address = overrides => ({ ...EMPTY_ADDRESS, first_name: "Alex", last_name: "Taylor", address_1: "20 Example Road", city: "London", postal_code: "SW6 5HQ", country_code: "gb", ...overrides })
+const {
+  EMPTY_ADDRESS,
+  toAddressValues,
+  formatAddressLines,
+  changeAddressCountry,
+  validateAddress,
+  normalizeAddress,
+  addressRepairFields,
+  sameAddress,
+} = load(path.join(sourceRoot, "lib/address.ts"))
+const address = (overrides) => ({
+  ...EMPTY_ADDRESS,
+  first_name: "Alex",
+  last_name: "Taylor",
+  address_1: "20 Example Road",
+  city: "London",
+  postal_code: "SW6 5HQ",
+  country_code: "gb",
+  ...overrides,
+})
 
 test("legacy autofill duplicates and state placeholders are cleaned without guessing a country", () => {
   const saved = address({ address_2: " 20  EXAMPLE Road ", province: "[Select state]", country_code: "US" })

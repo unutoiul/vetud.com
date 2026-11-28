@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { PlusIcon as AddIcon } from "@/components/brand/Icon"
 import Accordion from "@mui/material/Accordion"
 import AccordionDetails from "@mui/material/AccordionDetails"
@@ -58,7 +57,9 @@ export default function StandardsAccordion({ steps = STANDARD_STEPS }: { steps?:
           onChange={(_, isOpen) => setExpanded(isOpen ? index : false)}
         >
           <AccordionSummary
-            expandIcon={<AddIcon sx={{ color: "brand.blue", transition: "transform .3s cubic-bezier(.22,.68,0,1.05)" }} />}
+            expandIcon={
+              <AddIcon sx={{ color: "brand.blue", transition: "transform .3s cubic-bezier(.22,.68,0,1.05)" }} />
+            }
             sx={{ "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": { transform: "rotate(45deg)" } }}
           >
             <Icon name={stepIcons[index] ?? "shield"} sx={{ color: "brand.blue", fontSize: 28, flexShrink: 0 }} />

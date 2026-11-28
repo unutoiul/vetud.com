@@ -5,10 +5,6 @@ import { unpublishHumanUseProductsWorkflow } from "../workflows/unpublish-human-
  * Sets the pen kits and nasal sprays to draft so the storefront only lists research materials.
  * Reversible in Admin (Products > the product > Status > Published).
  */
-export default async function vetudUnpublishHumanUseProducts({
-  container,
-}: {
-  container: MedusaContainer
-}) {
+export default async function vetudUnpublishHumanUseProducts({ container }: { container: MedusaContainer }) {
   await unpublishHumanUseProductsWorkflow(container).run({ input: {} })
 }

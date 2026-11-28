@@ -76,9 +76,24 @@ function ProductCard({ product }: { product: Product }) {
         type="button"
         onClick={() => setPreviewOpen(true)}
         aria-label={format(t.enlargeAria, { product: text.fullName })}
-        style={{ position: "relative", display: "block", width: "100%", aspectRatio: "16 / 11", background: colors.white, border: 0, padding: 0, cursor: "zoom-in" }}
+        style={{
+          position: "relative",
+          display: "block",
+          width: "100%",
+          aspectRatio: "16 / 11",
+          background: colors.white,
+          border: 0,
+          padding: 0,
+          cursor: "zoom-in",
+        }}
       >
-        <NextImage src={product.gallery[shown]} alt={text.gallery[shown]?.alt ?? ""} fill sizes="(max-width: 768px) 100vw, 560px" style={{ objectFit: "contain" }} />
+        <NextImage
+          src={product.gallery[shown]}
+          alt={text.gallery[shown]?.alt ?? ""}
+          fill
+          sizes="(max-width: 768px) 100vw, 560px"
+          style={{ objectFit: "contain" }}
+        />
         <span
           style={{
             position: "absolute",
@@ -121,7 +136,13 @@ function ProductCard({ product }: { product: Product }) {
               border: `2px solid ${shown === index ? colors.navy : colors.line}`,
             }}
           >
-            <NextImage src={src} alt={format(t.thumbAlt, { label: text.gallery[index]?.label ?? "" })} fill sizes="112px" style={{ objectFit: "cover" }} />
+            <NextImage
+              src={src}
+              alt={format(t.thumbAlt, { label: text.gallery[index]?.label ?? "" })}
+              fill
+              sizes="112px"
+              style={{ objectFit: "cover" }}
+            />
             <span
               style={{
                 position: "absolute",
@@ -144,13 +165,36 @@ function ProductCard({ product }: { product: Product }) {
 
       <Flex vertical style={{ padding: "24px clamp(20px, 3vw, 36px) 32px", flex: 1 }}>
         <Flex align="center" gap={8} wrap>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: colors.success }}>
-            <span aria-hidden style={{ width: 8, height: 8, borderRadius: 999, background: colors.success, boxShadow: `0 0 0 3px ${colors.successWash}` }} />
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 13,
+              fontWeight: 600,
+              color: colors.success,
+            }}
+          >
+            <span
+              aria-hidden
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: 999,
+                background: colors.success,
+                boxShadow: `0 0 0 3px ${colors.successWash}`,
+              }}
+            />
             {t.inStock}
           </span>
-          <span style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.12em", color: colors.muted }}>{product.code}</span>
+          <span style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.12em", color: colors.muted }}>
+            {product.code}
+          </span>
         </Flex>
-        <Typography.Title level={3} style={{ fontFamily: fonts.display, fontWeight: 500, fontSize: 34, color: colors.navy, margin: "12px 0 4px" }}>
+        <Typography.Title
+          level={3}
+          style={{ fontFamily: fonts.display, fontWeight: 500, fontSize: 34, color: colors.navy, margin: "12px 0 4px" }}
+        >
           {product.name}
           {product.label && (
             <span
@@ -171,9 +215,24 @@ function ProductCard({ product }: { product: Product }) {
               {product.label}
             </span>
           )}
-          <span style={{ display: "block", fontSize: 15, fontFamily: fonts.body, fontWeight: 500, color: colors.tealDeep, marginTop: 6 }}>{text.tagline}</span>
+          <span
+            style={{
+              display: "block",
+              fontSize: 15,
+              fontFamily: fonts.body,
+              fontWeight: 500,
+              color: colors.tealDeep,
+              marginTop: 6,
+            }}
+          >
+            {text.tagline}
+          </span>
         </Typography.Title>
-        <Typography.Paragraph style={{ color: colors.muted, fontSize: 15, lineHeight: 1.6, margin: "10px 0 18px", minHeight: "4.8em" }}>{text.description}</Typography.Paragraph>
+        <Typography.Paragraph
+          style={{ color: colors.muted, fontSize: 15, lineHeight: 1.6, margin: "10px 0 18px", minHeight: "4.8em" }}
+        >
+          {text.description}
+        </Typography.Paragraph>
 
         <Segmented<Strength>
           block
@@ -206,7 +265,9 @@ function ProductCard({ product }: { product: Product }) {
                 </span>
               </div>
             )}
-            <span style={{ fontFamily: fonts.display, fontSize: 56, lineHeight: 1, color: colors.navy, fontWeight: 500 }}>
+            <span
+              style={{ fontFamily: fonts.display, fontSize: 56, lineHeight: 1, color: colors.navy, fontWeight: 500 }}
+            >
               {money(sale)}
             </span>
           </div>
@@ -214,7 +275,10 @@ function ProductCard({ product }: { product: Product }) {
         </Flex>
         <div style={{ minHeight: 26 }}>
           {strength === "40mg" ? (
-            <Tag variant="filled" style={{ margin: 0, fontWeight: 600, color: colors.tealDeep, background: colors.aquaLight }}>
+            <Tag
+              variant="filled"
+              style={{ margin: 0, fontWeight: 600, color: colors.tealDeep, background: colors.aquaLight }}
+            >
               {format(t.bestValue, { percent: bulkSaving })}
             </Tag>
           ) : (
@@ -231,7 +295,10 @@ function ProductCard({ product }: { product: Product }) {
               {feature}
             </span>
           ))}
-          <Typography.Link onClick={openPromo} style={{ fontSize: 14, color: colors.sale, fontWeight: 600, display: "flex", gap: 10 }}>
+          <Typography.Link
+            onClick={openPromo}
+            style={{ fontSize: 14, color: colors.sale, fontWeight: 600, display: "flex", gap: 10 }}
+          >
             <GiftFilled style={{ marginTop: 3 }} />
             {format(t.subscriberCode, { percent: OFFER.subscriberPercent })}
           </Typography.Link>
@@ -258,7 +325,12 @@ export default function Products() {
   const t = m.productsSection
   // "The two most-wanted pens." then the offer: "Half price." at exactly 50%, "NN% off." otherwise,
   // nothing when there's no sale, so the heading always follows OFFER.salePercent.
-  const offer = OFFER.salePercent === 50 ? t.titleHalf : OFFER.salePercent > 0 ? format(t.titleOff, { percent: OFFER.salePercent }) : ""
+  const offer =
+    OFFER.salePercent === 50
+      ? t.titleHalf
+      : OFFER.salePercent > 0
+        ? format(t.titleOff, { percent: OFFER.salePercent })
+        : ""
   return (
     <Section id="products" background={colors.paper}>
       <SectionHeading

@@ -1,9 +1,5 @@
 import type { CreateNotificationDTO } from "@medusajs/framework/types"
-import {
-  createWorkflow,
-  transform,
-  WorkflowResponse,
-} from "@medusajs/framework/workflows-sdk"
+import { createWorkflow, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { useQueryGraphStep } from "@medusajs/medusa/core-flows"
 import { emailSettings, ORDER_EMAIL_FIELDS, toPlain } from "../lib/notifications"
 import { EmailTemplates } from "../modules/resend/templates"
@@ -11,7 +7,13 @@ import { sendNotificationStep } from "./steps/send-notification"
 import { paymentNotice } from "../lib/payment-notice"
 
 type WorkflowInput = { id: string }
-const ORDER_PLACED_FIELDS = [...ORDER_EMAIL_FIELDS, "payment_collections.payments.provider_id", "payment_collections.payments.data", "payment_collections.payments.captured_at", "payment_collections.payment_sessions.provider_id"]
+const ORDER_PLACED_FIELDS = [
+  ...ORDER_EMAIL_FIELDS,
+  "payment_collections.payments.provider_id",
+  "payment_collections.payments.data",
+  "payment_collections.payments.captured_at",
+  "payment_collections.payment_sessions.provider_id",
+]
 
 /**
  * Emails payment-method-appropriate confirmation and fulfillment instructions
@@ -71,5 +73,5 @@ export const sendOrderPlacedNotificationsWorkflow = createWorkflow(
     const sent = sendNotificationStep(notifications)
 
     return new WorkflowResponse(sent)
-  }
+  },
 )

@@ -126,7 +126,12 @@ export const theme: ThemeConfig = {
       colorPrimaryActive: colors.tealPress,
     },
     Card: { borderRadiusLG: 20 },
-    Segmented: { itemSelectedBg: colors.tealDeep, itemSelectedColor: colors.white, trackBg: colors.aquaLight, trackPadding: 4 },
+    Segmented: {
+      itemSelectedBg: colors.tealDeep,
+      itemSelectedColor: colors.white,
+      trackBg: colors.aquaLight,
+      trackPadding: 4,
+    },
     Collapse: { headerBg: colors.white, contentBg: colors.white },
     Modal: { borderRadiusLG: 20 },
     Form: { itemMarginBottom: 16, verticalLabelPadding: "0 0 4px" },
@@ -135,7 +140,13 @@ export const theme: ThemeConfig = {
     // Country lists: a light aqua row for the chosen country instead of antd's grey.
     // Text fields at 16px: phones (iOS Safari) zoom the whole page into any field smaller than that
     // when it's tapped, and the page stays zoomed. The country lists' search box is the Select's.
-    Select: { fontSize: 16, optionSelectedBg: colors.aquaLight, optionSelectedColor: colors.navy, optionActiveBg: colors.aquaWash, optionSelectedFontWeight: 600 },
+    Select: {
+      fontSize: 16,
+      optionSelectedBg: colors.aquaLight,
+      optionSelectedColor: colors.navy,
+      optionActiveBg: colors.aquaWash,
+      optionSelectedFontWeight: 600,
+    },
     Input: { fontSize: 16 },
     InputNumber: { fontSize: 16 },
   },

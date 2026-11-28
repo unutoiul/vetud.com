@@ -1,8 +1,32 @@
 import type { PriceListStatus } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, MedusaError, Modules } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, when, type WorkflowData, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
-import { batchPriceListPricesWorkflow, createPriceListsWorkflow, deletePriceListsWorkflow, updatePriceListsWorkflow } from "@medusajs/medusa/core-flows"
-import { isSaleExcluded, MAX_PERCENT_OFF, MIN_PERCENT_OFF, planSalePrices, readSaleSettings, SALE_METADATA_KEY, saleDescription, type PriceRow, type SalePricePlan, type VariantPrices } from "../lib/storewide-sale"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  when,
+  type WorkflowData,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
+import {
+  batchPriceListPricesWorkflow,
+  createPriceListsWorkflow,
+  deletePriceListsWorkflow,
+  updatePriceListsWorkflow,
+} from "@medusajs/medusa/core-flows"
+import {
+  isSaleExcluded,
+  MAX_PERCENT_OFF,
+  MIN_PERCENT_OFF,
+  planSalePrices,
+  readSaleSettings,
+  SALE_METADATA_KEY,
+  saleDescription,
+  type PriceRow,
+  type SalePricePlan,
+  type VariantPrices,
+} from "../lib/storewide-sale"
 
 type SaleFields = {
   title: string
@@ -20,7 +44,10 @@ type StoredSale = SaleFields & { id: string; metadata: Record<string, unknown> |
 function validateSale(sale: SaleFields) {
   if (!sale.title.trim()) throw new MedusaError(MedusaError.Types.INVALID_DATA, "Give the sale a name.")
   if (!Number.isInteger(sale.percent_off) || sale.percent_off < MIN_PERCENT_OFF || sale.percent_off > MAX_PERCENT_OFF) {
-    throw new MedusaError(MedusaError.Types.INVALID_DATA, `The discount must be a whole number from ${MIN_PERCENT_OFF} to ${MAX_PERCENT_OFF}%.`)
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      `The discount must be a whole number from ${MIN_PERCENT_OFF} to ${MAX_PERCENT_OFF}%.`,
+    )
   }
   if (sale.starts_at && sale.ends_at && new Date(sale.ends_at) <= new Date(sale.starts_at)) {
     throw new MedusaError(MedusaError.Types.INVALID_DATA, "The sale must end after it starts.")
@@ -33,39 +60,33 @@ const PRICE_FIELDS = ["id", "amount", "currency_code", "price_list_id", "min_qua
 const PAGE = 2000
 
 /** Loads a price list that Admin > Sales manages; any other price list is refused. */
-const getStorewideSaleStep = createStep(
-  "get-storewide-sale",
-  async (input: { id: string }, { container }) => {
-    const query = container.resolve(ContainerRegistrationKeys.QUERY)
-    const { data } = await query.graph({
-      entity: "price_list",
-      fields: ["id", "title", "status", "starts_at", "ends_at", "metadata"],
-      filters: { id: input.id },
-    })
-    const list = data[0]
-    const settings = list ? readSaleSettings(list.metadata) : null
-    if (!list || !settings) throw new MedusaError(MedusaError.Types.NOT_FOUND, `Sale ${input.id} was not found.`)
-    const sale: StoredSale = {
-      id: list.id,
-      title: list.title,
-      percent_off: settings.percent_off,
-      starts_at: toIso(list.starts_at),
-      ends_at: toIso(list.ends_at),
-      status: list.status as PriceListStatus,
-      metadata: (list.metadata ?? null) as Record<string, unknown> | null,
-    }
-    return new StepResponse(sale)
+const getStorewideSaleStep = createStep("get-storewide-sale", async (input: { id: string }, { container }) => {
+  const query = container.resolve(ContainerRegistrationKeys.QUERY)
+  const { data } = await query.graph({
+    entity: "price_list",
+    fields: ["id", "title", "status", "starts_at", "ends_at", "metadata"],
+    filters: { id: input.id },
+  })
+  const list = data[0]
+  const settings = list ? readSaleSettings(list.metadata) : null
+  if (!list || !settings) throw new MedusaError(MedusaError.Types.NOT_FOUND, `Sale ${input.id} was not found.`)
+  const sale: StoredSale = {
+    id: list.id,
+    title: list.title,
+    percent_off: settings.percent_off,
+    starts_at: toIso(list.starts_at),
+    ends_at: toIso(list.ends_at),
+    status: list.status as PriceListStatus,
+    metadata: (list.metadata ?? null) as Record<string, unknown> | null,
   }
-)
+  return new StepResponse(sale)
+})
 
 /** Checks the new values (merged with the stored ones when editing) before anything is written. */
-const validateStorewideSaleStep = createStep(
-  "validate-storewide-sale",
-  async (input: SaleFields) => {
-    validateSale(input)
-    return new StepResponse(input)
-  }
-)
+const validateStorewideSaleStep = createStep("validate-storewide-sale", async (input: SaleFields) => {
+  validateSale(input)
+  return new StepResponse(input)
+})
 
 /** Works out the sale price of every variant in every currency, and what to change in the price list. */
 const planStorewideSalePricesStep = createStep(
@@ -92,13 +113,18 @@ const planStorewideSalePricesStep = createStep(
         if (page.length < PAGE) break
       }
     }
-    const variants: VariantPrices[] = (data as unknown as (VariantPrices & { price_set?: { id?: string } | null; product?: { metadata?: Record<string, unknown> | null } | null })[]).map((variant) => ({
+    const variants: VariantPrices[] = (
+      data as unknown as (VariantPrices & {
+        price_set?: { id?: string } | null
+        product?: { metadata?: Record<string, unknown> | null } | null
+      })[]
+    ).map((variant) => ({
       id: variant.id,
       excluded: isSaleExcluded(variant.product?.metadata),
       price_set: { prices: [...(variant.price_set?.prices ?? []), ...(listed.get(variant.price_set?.id ?? "") ?? [])] },
     }))
     return new StepResponse(planSalePrices(variants, input.price_list_id, input.percent_off))
-  }
+  },
 )
 
 /** Creates a sale: a "sale" price list with every variant's price less the percentage. */
@@ -106,27 +132,37 @@ export const createStorewideSaleWorkflow = createWorkflow(
   "create-storewide-sale",
   function (input: CreateStorewideSaleInput) {
     const sale = validateStorewideSaleStep(input)
-    const plan = planStorewideSalePricesStep(transform({ sale }, ({ sale }) => ({ price_list_id: null, percent_off: sale.percent_off })))
+    const plan = planStorewideSalePricesStep(
+      transform({ sale }, ({ sale }) => ({ price_list_id: null, percent_off: sale.percent_off })),
+    )
     const created = createPriceListsWorkflow.runAsStep({
       input: transform({ sale, plan }, ({ sale, plan }) => ({
-        price_lists_data: [{
-          title: sale.title.trim(),
-          description: saleDescription(sale.percent_off),
-          starts_at: sale.starts_at,
-          ends_at: sale.ends_at,
-          status: sale.status,
-          metadata: { [SALE_METADATA_KEY]: { percent_off: sale.percent_off } },
-          prices: plan.create,
-        }],
+        price_lists_data: [
+          {
+            title: sale.title.trim(),
+            description: saleDescription(sale.percent_off),
+            starts_at: sale.starts_at,
+            ends_at: sale.ends_at,
+            status: sale.status,
+            metadata: { [SALE_METADATA_KEY]: { percent_off: sale.percent_off } },
+            prices: plan.create,
+          },
+        ],
       })),
     })
-    return new WorkflowResponse(transform({ created, plan }, ({ created, plan }) => ({ id: created[0].id, prices: plan.create.length })))
-  }
+    return new WorkflowResponse(
+      transform({ created, plan }, ({ created, plan }) => ({ id: created[0].id, prices: plan.create.length })),
+    )
+  },
 )
 
 /** Applies the price changes a plan lists; nothing runs when the prices are already right. */
 function applyPlan(priceListId: WorkflowData<string>, plan: WorkflowData<SalePricePlan>) {
-  return when("storewide-sale-prices-changed", { plan }, ({ plan }) => plan.create.length + plan.update.length + plan.delete.length > 0).then(() => {
+  return when(
+    "storewide-sale-prices-changed",
+    { plan },
+    ({ plan }) => plan.create.length + plan.update.length + plan.delete.length > 0,
+  ).then(() => {
     batchPriceListPricesWorkflow.runAsStep({
       input: transform({ priceListId, plan }, ({ priceListId, plan }) => ({
         data: { id: priceListId, create: plan.create, update: plan.update, delete: plan.delete },
@@ -153,33 +189,56 @@ export const updateStorewideSaleWorkflow = createWorkflow(
     const sale = validateStorewideSaleStep(merged)
     updatePriceListsWorkflow.runAsStep({
       input: transform({ stored, sale }, ({ stored, sale }) => ({
-        price_lists_data: [{
-          id: stored.id,
-          title: sale.title.trim(),
-          description: saleDescription(sale.percent_off),
-          starts_at: sale.starts_at,
-          ends_at: sale.ends_at,
-          status: sale.status,
-          metadata: { ...(stored.metadata ?? {}), [SALE_METADATA_KEY]: { percent_off: sale.percent_off } },
-        }],
+        price_lists_data: [
+          {
+            id: stored.id,
+            title: sale.title.trim(),
+            description: saleDescription(sale.percent_off),
+            starts_at: sale.starts_at,
+            ends_at: sale.ends_at,
+            status: sale.status,
+            metadata: { ...(stored.metadata ?? {}), [SALE_METADATA_KEY]: { percent_off: sale.percent_off } },
+          },
+        ],
       })),
     })
-    const plan = planStorewideSalePricesStep(transform({ stored, sale }, ({ stored, sale }) => ({ price_list_id: stored.id, percent_off: sale.percent_off })))
-    applyPlan(transform({ stored }, ({ stored }) => stored.id), plan)
-    return new WorkflowResponse(transform({ stored, plan }, ({ stored, plan }) => ({ id: stored.id, created: plan.create.length, updated: plan.update.length, deleted: plan.delete.length })))
-  }
+    const plan = planStorewideSalePricesStep(
+      transform({ stored, sale }, ({ stored, sale }) => ({ price_list_id: stored.id, percent_off: sale.percent_off })),
+    )
+    applyPlan(
+      transform({ stored }, ({ stored }) => stored.id),
+      plan,
+    )
+    return new WorkflowResponse(
+      transform({ stored, plan }, ({ stored, plan }) => ({
+        id: stored.id,
+        created: plan.create.length,
+        updated: plan.update.length,
+        deleted: plan.delete.length,
+      })),
+    )
+  },
 )
 
 /** Recalculates a sale's prices from the current regular prices (run on a schedule). */
-export const syncStorewideSaleWorkflow = createWorkflow(
-  "sync-storewide-sale",
-  function (input: { id: string }) {
-    const stored = getStorewideSaleStep(input)
-    const plan = planStorewideSalePricesStep(transform({ stored }, ({ stored }) => ({ price_list_id: stored.id, percent_off: stored.percent_off })))
-    applyPlan(transform({ stored }, ({ stored }) => stored.id), plan)
-    return new WorkflowResponse(transform({ stored, plan }, ({ stored, plan }) => ({ id: stored.id, created: plan.create.length, updated: plan.update.length, deleted: plan.delete.length })))
-  }
-)
+export const syncStorewideSaleWorkflow = createWorkflow("sync-storewide-sale", function (input: { id: string }) {
+  const stored = getStorewideSaleStep(input)
+  const plan = planStorewideSalePricesStep(
+    transform({ stored }, ({ stored }) => ({ price_list_id: stored.id, percent_off: stored.percent_off })),
+  )
+  applyPlan(
+    transform({ stored }, ({ stored }) => stored.id),
+    plan,
+  )
+  return new WorkflowResponse(
+    transform({ stored, plan }, ({ stored, plan }) => ({
+      id: stored.id,
+      created: plan.create.length,
+      updated: plan.update.length,
+      deleted: plan.delete.length,
+    })),
+  )
+})
 
 /**
  * Removes a sale's prices for good. Medusa's soft delete takes about 20 ms a price (a minute or
@@ -194,22 +253,26 @@ const removeStorewideSalePricesStep = createStep(
     const pricing = container.resolve(Modules.PRICING)
     let removed = 0
     for (;;) {
-      const { data } = await query.graph({ entity: "price", fields: ["id"], filters: { price_list_id: input.id }, pagination: { skip: 0, take: PAGE } })
+      const { data } = await query.graph({
+        entity: "price",
+        fields: ["id"],
+        filters: { price_list_id: input.id },
+        pagination: { skip: 0, take: PAGE },
+      })
       if (!data.length) break
       await pricing.removePrices(data.map((price) => price.id))
       removed += data.length
     }
     return new StepResponse(removed)
-  }
+  },
 )
 
 /** Deletes a sale and its prices; the regular prices apply again straight away. */
-export const deleteStorewideSaleWorkflow = createWorkflow(
-  "delete-storewide-sale",
-  function (input: { id: string }) {
-    const stored = getStorewideSaleStep(input)
-    const removed = removeStorewideSalePricesStep(transform({ stored }, ({ stored }) => ({ id: stored.id })))
-    deletePriceListsWorkflow.runAsStep({ input: transform({ stored }, ({ stored }) => ({ ids: [stored.id] })) })
-    return new WorkflowResponse(transform({ stored, removed }, ({ stored, removed }) => ({ id: stored.id, prices: removed })))
-  }
-)
+export const deleteStorewideSaleWorkflow = createWorkflow("delete-storewide-sale", function (input: { id: string }) {
+  const stored = getStorewideSaleStep(input)
+  const removed = removeStorewideSalePricesStep(transform({ stored }, ({ stored }) => ({ id: stored.id })))
+  deletePriceListsWorkflow.runAsStep({ input: transform({ stored }, ({ stored }) => ({ ids: [stored.id] })) })
+  return new WorkflowResponse(
+    transform({ stored, removed }, ({ stored, removed }) => ({ id: stored.id, prices: removed })),
+  )
+})

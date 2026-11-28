@@ -134,13 +134,34 @@ export const PRICE_LISTS = {
   EUR: { currency: "EUR", prices: { tz2: { "20mg": 339, "40mg": 509 }, retatrutide: { "20mg": 419, "40mg": 589 } } },
   GBP: { currency: "GBP", prices: { tz2: { "20mg": 299, "40mg": 439 }, retatrutide: { "20mg": 369, "40mg": 509 } } },
   CHF: { currency: "CHF", prices: { tz2: { "20mg": 319, "40mg": 469 }, retatrutide: { "20mg": 389, "40mg": 549 } } },
-  SEK: { currency: "SEK", prices: { tz2: { "20mg": 3790, "40mg": 5590 }, retatrutide: { "20mg": 4590, "40mg": 6490 } } },
-  NOK: { currency: "NOK", prices: { tz2: { "20mg": 3990, "40mg": 5990 }, retatrutide: { "20mg": 4890, "40mg": 6990 } } },
-  DKK: { currency: "DKK", prices: { tz2: { "20mg": 2590, "40mg": 3790 }, retatrutide: { "20mg": 3090, "40mg": 4390 } } },
-  PLN: { currency: "PLN", prices: { tz2: { "20mg": 1459, "40mg": 2149 }, retatrutide: { "20mg": 1789, "40mg": 2519 } } },
-  CZK: { currency: "CZK", prices: { tz2: { "20mg": 8390, "40mg": 12390 }, retatrutide: { "20mg": 10290, "40mg": 14490 } } },
-  HUF: { currency: "HUF", prices: { tz2: { "20mg": 132990, "40mg": 196990 }, retatrutide: { "20mg": 162990, "40mg": 229990 } } },
-  RON: { currency: "RON", prices: { tz2: { "20mg": 1739, "40mg": 2579 }, retatrutide: { "20mg": 2139, "40mg": 2999 } } },
+  SEK: {
+    currency: "SEK",
+    prices: { tz2: { "20mg": 3790, "40mg": 5590 }, retatrutide: { "20mg": 4590, "40mg": 6490 } },
+  },
+  NOK: {
+    currency: "NOK",
+    prices: { tz2: { "20mg": 3990, "40mg": 5990 }, retatrutide: { "20mg": 4890, "40mg": 6990 } },
+  },
+  DKK: {
+    currency: "DKK",
+    prices: { tz2: { "20mg": 2590, "40mg": 3790 }, retatrutide: { "20mg": 3090, "40mg": 4390 } },
+  },
+  PLN: {
+    currency: "PLN",
+    prices: { tz2: { "20mg": 1459, "40mg": 2149 }, retatrutide: { "20mg": 1789, "40mg": 2519 } },
+  },
+  CZK: {
+    currency: "CZK",
+    prices: { tz2: { "20mg": 8390, "40mg": 12390 }, retatrutide: { "20mg": 10290, "40mg": 14490 } },
+  },
+  HUF: {
+    currency: "HUF",
+    prices: { tz2: { "20mg": 132990, "40mg": 196990 }, retatrutide: { "20mg": 162990, "40mg": 229990 } },
+  },
+  RON: {
+    currency: "RON",
+    prices: { tz2: { "20mg": 1739, "40mg": 2579 }, retatrutide: { "20mg": 2139, "40mg": 2999 } },
+  },
 } as const satisfies Record<string, PriceList>
 
 export type PriceListId = keyof typeof PRICE_LISTS
@@ -150,7 +171,8 @@ export const MAX_QUANTITY = 10
 export const strengthLabel = (strength: Strength) => strength.replace("mg", " mg")
 
 /** The most a buyer can save with the offer and the subscriber code together (50% then 10% = 55%). */
-export const bestCombinedPercent = () => Math.round(100 - ((100 - OFFER.salePercent) * (100 - OFFER.subscriberPercent)) / 100)
+export const bestCombinedPercent = () =>
+  Math.round(100 - ((100 - OFFER.salePercent) * (100 - OFFER.subscriberPercent)) / 100)
 
 export type ContactKey = keyof typeof CONTACTS
 
@@ -158,11 +180,26 @@ export function contactLinks() {
   const links: { key: ContactKey; label: string; value: string; href: string }[] = []
   const digits = (value: string) => value.replace(/\D/g, "")
   const telegram = CONTACTS.telegram.trim()
-  if (telegram.startsWith("+")) links.push({ key: "telegram", label: "Telegram", value: telegram, href: `https://t.me/+${digits(telegram)}` })
-  else if (telegram) links.push({ key: "telegram", label: "Telegram", value: `@${telegram.replace(/^@/, "")}`, href: `https://t.me/${telegram.replace(/^@/, "")}` })
+  if (telegram.startsWith("+"))
+    links.push({ key: "telegram", label: "Telegram", value: telegram, href: `https://t.me/+${digits(telegram)}` })
+  else if (telegram)
+    links.push({
+      key: "telegram",
+      label: "Telegram",
+      value: `@${telegram.replace(/^@/, "")}`,
+      href: `https://t.me/${telegram.replace(/^@/, "")}`,
+    })
   const whatsapp = CONTACTS.whatsapp.trim()
-  if (whatsapp) links.push({ key: "whatsapp", label: "WhatsApp", value: whatsapp.startsWith("+") ? whatsapp : `+${whatsapp}`, href: `https://wa.me/${digits(whatsapp)}` })
-  if (CONTACTS.line) links.push({ key: "line", label: "LINE", value: CONTACTS.line, href: `https://line.me/ti/p/~${CONTACTS.line}` })
-  if (CONTACTS.email) links.push({ key: "email", label: "Email", value: CONTACTS.email, href: `mailto:${CONTACTS.email}` })
+  if (whatsapp)
+    links.push({
+      key: "whatsapp",
+      label: "WhatsApp",
+      value: whatsapp.startsWith("+") ? whatsapp : `+${whatsapp}`,
+      href: `https://wa.me/${digits(whatsapp)}`,
+    })
+  if (CONTACTS.line)
+    links.push({ key: "line", label: "LINE", value: CONTACTS.line, href: `https://line.me/ti/p/~${CONTACTS.line}` })
+  if (CONTACTS.email)
+    links.push({ key: "email", label: "Email", value: CONTACTS.email, href: `mailto:${CONTACTS.email}` })
   return links
 }

@@ -16,9 +16,16 @@ const buildEmailListSignupAlertStep = createStep(
     const { ownerEmail } = emailSettings()
     if (!ownerEmail) return new StepResponse([] as CreateNotificationDTO[])
     const service = container.resolve<EmailListModuleService>(EMAIL_LIST_MODULE)
-    const [, confirmedCount] = await service.listAndCountEmailSubscribers({ status: "confirmed" }, { select: ["id"], take: 1 })
+    const [, confirmedCount] = await service.listAndCountEmailSubscribers(
+      { status: "confirmed" },
+      { select: ["id"], take: 1 },
+    )
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
-    const { data: members } = await query.graph({ entity: "customer", fields: ["id"], filters: { email: input.email, has_account: true } })
+    const { data: members } = await query.graph({
+      entity: "customer",
+      fields: ["id"],
+      filters: { email: input.email, has_account: true },
+    })
     const data: EmailListSignupAlertData = {
       email: input.email,
       locale: input.locale,
@@ -38,7 +45,7 @@ const buildEmailListSignupAlertStep = createStep(
       idempotency_key: `email-list-signup-alert:${input.id}:${input.confirmed_at}`,
     }
     return new StepResponse([notification])
-  }
+  },
 )
 
 /** Emails the owner when someone confirms their email-list sign-up. */
@@ -47,5 +54,5 @@ export const sendEmailListSignupAlertWorkflow = createWorkflow(
   function (input: EmailListConfirmedEvent) {
     const notifications = buildEmailListSignupAlertStep(input)
     return new WorkflowResponse(sendNotificationStep(notifications))
-  }
+  },
 )

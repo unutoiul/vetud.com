@@ -9,9 +9,9 @@ import Section from "@/components/common/Section"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  title: "Confirming payment",
-  robots: { index: false },
-})
+    title: "Confirming payment",
+    robots: { index: false },
+  })
 }
 
 export default function MakePayReturnPage() {

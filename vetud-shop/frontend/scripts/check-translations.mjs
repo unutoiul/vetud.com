@@ -12,7 +12,10 @@ import { CATALOG_FILE, collectInventory, contentLanguages, ROOT } from "./conten
 
 const MESSAGES = join(ROOT, "src", "i18n", "messages")
 const CONTENT = join(ROOT, "src", "i18n", "content")
-const flatten = (value, prefix = "") => Object.entries(value).flatMap(([key, item]) => (item && typeof item === "object" ? flatten(item, `${prefix}${key}.`) : [[`${prefix}${key}`, item]]))
+const flatten = (value, prefix = "") =>
+  Object.entries(value).flatMap(([key, item]) =>
+    item && typeof item === "object" ? flatten(item, `${prefix}${key}.`) : [[`${prefix}${key}`, item]],
+  )
 const readJson = (path) => JSON.parse(readFileSync(path, "utf8"))
 
 /** The arguments and tags of an ICU message. */
@@ -36,7 +39,10 @@ for (const file of readdirSync(MESSAGES).filter((name) => name.endsWith(".json")
   const problems = []
   for (const [key, source] of english) {
     const text = messages.get(key)
-    if (typeof text !== "string" || !text.trim()) { problems.push(`${key}: missing`); continue }
+    if (typeof text !== "string" || !text.trim()) {
+      problems.push(`${key}: missing`)
+      continue
+    }
     try {
       if (signature(text) !== signature(source)) problems.push(`${key}: arguments differ from the English`)
     } catch (error) {
@@ -52,18 +58,26 @@ for (const file of readdirSync(MESSAGES).filter((name) => name.endsWith(".json")
 if (!failed) console.log(`Menu text: all ${english.size} keys present in every language.`)
 
 const inventory = await collectInventory()
-const clientKeys = [...inventory].filter(([, entry]) => entry.client).map(([key]) => key).sort()
+const clientKeys = [...inventory]
+  .filter(([, entry]) => entry.client)
+  .map(([key]) => key)
+  .sort()
 writeFileSync(join(CONTENT, "client-keys.json"), `${JSON.stringify(clientKeys)}\n`)
 
 // Languages with a page-text file; src/i18n/page-language.ts tags the rest as English ("en-DE").
-writeFileSync(join(CONTENT, "languages.json"), `${JSON.stringify(contentLanguages().filter((language) => existsSync(join(CONTENT, `${language}.json`))))}
-`)
+writeFileSync(
+  join(CONTENT, "languages.json"),
+  `${JSON.stringify(contentLanguages().filter((language) => existsSync(join(CONTENT, `${language}.json`))))}
+`,
+)
 
 const isCatalog = (entry) => [...entry.files].every((file) => file.startsWith(CATALOG_FILE))
 for (const language of contentLanguages()) {
   const path = join(CONTENT, `${language}.json`)
   if (!existsSync(path)) {
-    console.warn(`${language}: no page-text translations yet; pages show English. Run \`npm run translate -- --lang ${language}\`.`)
+    console.warn(
+      `${language}: no page-text translations yet; pages show English. Run \`npm run translate -- --lang ${language}\`.`,
+    )
     continue
   }
   const { translations } = readJson(path)
@@ -73,10 +87,15 @@ for (const language of contentLanguages()) {
   if (pageText.length) {
     failed = true
     console.error(`${language}: ${pageText.length} of ${inventory.size} page texts have no translation:`)
-    for (const [, entry] of pageText.slice(0, 20)) console.error(`  ${[...entry.files][0]}: ${entry.text.slice(0, 100)}`)
-    console.error(`Run \`npm run translate -- --lang ${language}\` (or translate them in src/i18n/content/${language}.json).`)
+    for (const [, entry] of pageText.slice(0, 20))
+      console.error(`  ${[...entry.files][0]}: ${entry.text.slice(0, 100)}`)
+    console.error(
+      `Run \`npm run translate -- --lang ${language}\` (or translate them in src/i18n/content/${language}.json).`,
+    )
   } else {
-    console.log(`${language}: all page texts translated${catalog ? `; ${catalog} catalog texts still in English (run \`npm run translate\`)` : ""}`)
+    console.log(
+      `${language}: all page texts translated${catalog ? `; ${catalog} catalog texts still in English (run \`npm run translate\`)` : ""}`,
+    )
   }
 }
 process.exitCode = failed ? 1 : 0

@@ -4,7 +4,8 @@ type ProductPhotography = { aspectRatio: string; images: ProductImage[] }
 
 export const PEN_EXPLAINER_IMAGE = "/images/products/dual-chamber-pen.webp"
 export const REUSABLE_PEN_IMAGE = "/images/products/reusable-dual-chamber-pen.webp"
-const REUSABLE_PEN_ALT = "The reusable VETUD dual-chamber pen, labelled: graduated holder, freeze-dried peptide, diluent and reusable pen body"
+const REUSABLE_PEN_ALT =
+  "The reusable VETUD dual-chamber pen, labelled: graduated holder, freeze-dried peptide, diluent and reusable pen body"
 
 /**
  * Products whose own pen kit box is photographed, closed and open (product handle → photo name).
@@ -41,22 +42,71 @@ const GENERIC_OPEN_BOX = "/images/products/generic-open.webp"
 const formatPhotos = (handle: string, title: string) => {
   const named = Object.hasOwn(PEN_KIT_BOXES, handle) ? PEN_KIT_BOXES[handle] : undefined
   const spray = NASAL_SPRAYS.has(handle)
-    ? { url: `/images/products/${handle}-front.webp`, alt: `${title} 10 ml nasal spray: the VETUD box and the spray bottle`, label: "Nasal spray", format: "Nasal spray" }
+    ? {
+        url: `/images/products/${handle}-front.webp`,
+        alt: `${title} 10 ml nasal spray: the VETUD box and the spray bottle`,
+        label: "Nasal spray",
+        format: "Nasal spray",
+      }
     : undefined
   const openBox = named
-    ? { url: `/images/products/${named}-open.webp`, alt: `${title} pen kit, open box with the reusable pen, 12 needles and the instruction booklet`, label: "Open pen kit", format: "Pen kit box" }
-    : NO_PEN_KIT.has(handle) || spray ? undefined
-    : { url: GENERIC_OPEN_BOX, alt: "VETUD pen kit, open box with the reusable pen, 12 needles and the instruction booklet", label: "Open pen kit", format: "Pen kit box" }
+    ? {
+        url: `/images/products/${named}-open.webp`,
+        alt: `${title} pen kit, open box with the reusable pen, 12 needles and the instruction booklet`,
+        label: "Open pen kit",
+        format: "Pen kit box",
+      }
+    : NO_PEN_KIT.has(handle) || spray
+      ? undefined
+      : {
+          url: GENERIC_OPEN_BOX,
+          alt: "VETUD pen kit, open box with the reusable pen, 12 needles and the instruction booklet",
+          label: "Open pen kit",
+          format: "Pen kit box",
+        }
   return {
-    pen: { url: `/images/products/${handle}-pen.webp`, alt: `${title} dual-chamber vial: powder and BAC water in separate chambers`, label: "Dual-chamber vial", format: "Dual-chamber vial" },
-    box: spray ?? (named ? { url: `/images/products/${named}-closed.webp`, alt: `${title} pen kit, closed VETUD box`, label: "Pen kit box", format: "Pen kit box" }
-      : NO_PEN_KIT.has(handle) ? undefined
-      : { url: GENERIC_CLOSED_BOX, alt: "VETUD Peptide Series pen kit, closed box: 1 reusable pen, 12 disposable needles and 1 instruction booklet", label: "Pen kit box", format: "Pen kit box" }),
+    pen: {
+      url: `/images/products/${handle}-pen.webp`,
+      alt: `${title} dual-chamber vial: powder and BAC water in separate chambers`,
+      label: "Dual-chamber vial",
+      format: "Dual-chamber vial",
+    },
+    box:
+      spray ??
+      (named
+        ? {
+            url: `/images/products/${named}-closed.webp`,
+            alt: `${title} pen kit, closed VETUD box`,
+            label: "Pen kit box",
+            format: "Pen kit box",
+          }
+        : NO_PEN_KIT.has(handle)
+          ? undefined
+          : {
+              url: GENERIC_CLOSED_BOX,
+              alt: "VETUD Peptide Series pen kit, closed box: 1 reusable pen, 12 disposable needles and 1 instruction booklet",
+              label: "Pen kit box",
+              format: "Pen kit box",
+            }),
     openBox,
-    vial: { url: `/images/products/${handle}-vial.webp`, alt: `${title} research vial with VETUD label`, label: "Vial", format: "Vial" },
-    reusable: { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT, label: "Reusable pen", format: openBox || spray ? undefined : "Pen kit box" },
+    vial: {
+      url: `/images/products/${handle}-vial.webp`,
+      alt: `${title} research vial with VETUD label`,
+      label: "Vial",
+      format: "Vial",
+    },
+    reusable: {
+      url: REUSABLE_PEN_IMAGE,
+      alt: REUSABLE_PEN_ALT,
+      label: "Reusable pen",
+      format: openBox || spray ? undefined : "Pen kit box",
+    },
     /** The photo that stands for the boxed format: the open pen kit shows what's inside; the nasal spray its box and bottle. */
-    kit: spray ? { url: spray.url, alt: spray.alt } : openBox ? { url: openBox.url, alt: openBox.alt } : { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT },
+    kit: spray
+      ? { url: spray.url, alt: spray.alt }
+      : openBox
+        ? { url: openBox.url, alt: openBox.alt }
+        : { url: REUSABLE_PEN_IMAGE, alt: REUSABLE_PEN_ALT },
   }
 }
 
@@ -64,7 +114,13 @@ export type FormatPhotos = ReturnType<typeof formatPhotos>
 
 const formatPhotography = (handle: string, title: string): ProductPhotography => {
   const { pen, box, openBox, vial, reusable } = formatPhotos(handle, title)
-  return { aspectRatio: "1 / 1", images: handle === "decapeptide-12" ? [vial] : [pen, vial, ...(box ? [box] : []), ...(openBox ? [openBox] : []), reusable] }
+  return {
+    aspectRatio: "1 / 1",
+    images:
+      handle === "decapeptide-12"
+        ? [vial]
+        : [pen, vial, ...(box ? [box] : []), ...(openBox ? [openBox] : []), reusable],
+  }
 }
 
 /** The products sold as a dual-chamber vial, a vial and (most of them) a pen kit box (prepare-dual-chamber-images.mjs makes the photos). */
@@ -104,24 +160,46 @@ const FORMAT_PRODUCTS: Record<string, string> = {
 const SUPPLY_PHOTOGRAPHY: Record<string, ProductPhotography> = {
   "anua-azelaic-acid-10-hyaluron-serum": {
     aspectRatio: "1 / 1",
-    images: [{ url: "/images/products/anua-azelaic-acid-10-hyaluron-serum.webp", alt: "Anua Azelaic Acid 10 + Hyaluron Redness Soothing Serum, 30 ml green dropper bottle", label: "Serum" }],
+    images: [
+      {
+        url: "/images/products/anua-azelaic-acid-10-hyaluron-serum.webp",
+        alt: "Anua Azelaic Acid 10 + Hyaluron Redness Soothing Serum, 30 ml green dropper bottle",
+        label: "Serum",
+      },
+    ],
   },
   "anua-niacinamide-10-txa-4-serum": {
     aspectRatio: "1 / 1",
-    images: [{ url: "/images/products/anua-niacinamide-10-txa-4-serum.webp", alt: "Anua Niacinamide 10 + TXA 4 Serum, 30 ml pink dropper bottle", label: "Serum" }],
+    images: [
+      {
+        url: "/images/products/anua-niacinamide-10-txa-4-serum.webp",
+        alt: "Anua Niacinamide 10 + TXA 4 Serum, 30 ml pink dropper bottle",
+        label: "Serum",
+      },
+    ],
   },
   "u-100-syringes": {
     aspectRatio: "1 / 1",
     images: [
-      { url: "/images/products/u-100-syringes-box.webp", alt: "Open VETUD box of 10 U-100 insulin syringes", label: "Box of 10" },
-      { url: "/images/products/u-100-syringes-single.webp", alt: "One VETUD U-100 insulin syringe with its orange needle cap", label: "Syringe" },
+      {
+        url: "/images/products/u-100-syringes-box.webp",
+        alt: "Open VETUD box of 10 U-100 insulin syringes",
+        label: "Box of 10",
+      },
+      {
+        url: "/images/products/u-100-syringes-single.webp",
+        alt: "One VETUD U-100 insulin syringe with its orange needle cap",
+        label: "Syringe",
+      },
     ],
   },
 }
 
 /** The approved white-background photography, shared by every storefront surface. */
 const photography: Record<string, ProductPhotography> = {
-  ...Object.fromEntries(Object.entries(FORMAT_PRODUCTS).map(([handle, title]) => [handle, formatPhotography(handle, title)])),
+  ...Object.fromEntries(
+    Object.entries(FORMAT_PRODUCTS).map(([handle, title]) => [handle, formatPhotography(handle, title)]),
+  ),
   ...SUPPLY_PHOTOGRAPHY,
 }
 
@@ -139,8 +217,10 @@ export function getProductImages(product: {
   thumbnail?: string | null
   images?: { url: string }[] | null
 }): ProductImage[] {
-  return getProductPhotography(product.handle)?.images
-    ?? (product.images?.length ? product.images : product.thumbnail ? [{ url: product.thumbnail }] : [])
+  return (
+    getProductPhotography(product.handle)?.images ??
+    (product.images?.length ? product.images : product.thumbnail ? [{ url: product.thumbnail }] : [])
+  )
 }
 
 /**
@@ -151,5 +231,7 @@ export function getProductThumbnail(handle?: string | null, fallback?: string | 
   const images = getProductPhotography(handle)?.images
   if (!images) return fallback
   if (variantTitle === undefined) return images[0].url
-  return images.find((image) => image.format && variantTitle?.startsWith(image.format))?.url ?? fallback ?? images[0].url
+  return (
+    images.find((image) => image.format && variantTitle?.startsWith(image.format))?.url ?? fallback ?? images[0].url
+  )
 }

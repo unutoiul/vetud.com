@@ -10,7 +10,7 @@ const inventory = await collectInventory()
 
 const cell = (value) => `"${String(value).replace(/"/g, '""')}"`
 const rows = [...inventory.values()].sort((a, b) => [...a.files][0].localeCompare([...b.files][0]))
-const lines = [[ "Where", "English", language.toUpperCase(), "Reviewer notes" ].map(cell).join(",")]
+const lines = [["Where", "English", language.toUpperCase(), "Reviewer notes"].map(cell).join(",")]
 for (const [key, entry] of [...inventory].sort(([, a], [, b]) => [...a.files][0].localeCompare([...b.files][0]))) {
   lines.push([[...entry.files][0], entry.text, translations[key] ?? "", ""].map(cell).join(","))
 }

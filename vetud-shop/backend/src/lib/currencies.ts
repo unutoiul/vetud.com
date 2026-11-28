@@ -9,8 +9,27 @@ export const BASE_CURRENCY = "usd"
 
 /** Eurozone members as of 2026 (Bulgaria joined on 1 January 2026). */
 export const EUROZONE_COUNTRIES = [
-  "at", "be", "bg", "cy", "de", "ee", "es", "fi", "fr", "gr", "hr",
-  "ie", "it", "lt", "lu", "lv", "mt", "nl", "pt", "si", "sk",
+  "at",
+  "be",
+  "bg",
+  "cy",
+  "de",
+  "ee",
+  "es",
+  "fi",
+  "fr",
+  "gr",
+  "hr",
+  "ie",
+  "it",
+  "lt",
+  "lu",
+  "lv",
+  "mt",
+  "nl",
+  "pt",
+  "si",
+  "sk",
 ]
 
 export type ConvertedMarket = { currency: string; region: string; countries: string[] }
@@ -31,7 +50,10 @@ export const CONVERTED_MARKETS: ConvertedMarket[] = [
 
 /** Decimal places Intl uses for the currency (2 for EUR, 0 for JPY). */
 export function currencyDigits(currencyCode: string) {
-  return new Intl.NumberFormat("en", { style: "currency", currency: currencyCode.toUpperCase() }).resolvedOptions().maximumFractionDigits ?? 2
+  return (
+    new Intl.NumberFormat("en", { style: "currency", currency: currencyCode.toUpperCase() }).resolvedOptions()
+      .maximumFractionDigits ?? 2
+  )
 }
 
 /** Rounds to the currency's smallest unit: 68.6 USD stays 68.60, 8514.7 JPY becomes 8515. */
@@ -62,8 +84,13 @@ export async function getExchangeRates(): Promise<Record<string, number>> {
       const response = await fetch(url, { signal: AbortSignal.timeout(10_000) })
       if (!response.ok) throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, `HTTP ${response.status}`)
       const rates = ((await response.json()) as Record<string, unknown>)[BASE_CURRENCY]
-      if (!rates || typeof rates !== "object") throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, "no rates in the response")
-      const clean = Object.fromEntries(Object.entries(rates).filter((entry): entry is [string, number] => typeof entry[1] === "number" && entry[1] > 0))
+      if (!rates || typeof rates !== "object")
+        throw new MedusaError(MedusaError.Types.UNEXPECTED_STATE, "no rates in the response")
+      const clean = Object.fromEntries(
+        Object.entries(rates).filter(
+          (entry): entry is [string, number] => typeof entry[1] === "number" && entry[1] > 0,
+        ),
+      )
       cachedRates = { rates: clean, fetchedAt: Date.now() }
       return clean
     } catch (error) {

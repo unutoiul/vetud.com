@@ -19,10 +19,10 @@ import { brand } from "@/theme/tokens"
 export async function generateMetadata(): Promise<Metadata> {
   const { language } = await getPageLocalization()
   return localizeMetadata({
-  title: "Contact",
-  alternates: { canonical: articleUrl("/contact", language), languages: articleLanguages("/contact") },
-  description: "Questions about a guide or the community? Write to the VETUD team.",
-})
+    title: "Contact",
+    alternates: { canonical: articleUrl("/contact", language), languages: articleLanguages("/contact") },
+    description: "Questions about a guide or the community? Write to the VETUD team.",
+  })
 }
 
 export default async function ContactPage() {
@@ -43,8 +43,12 @@ export default async function ContactPage() {
       <Section tone="white">
         <Grid container spacing={{ xs: 5, md: 8 }}>
           <Grid size={{ xs: 12, md: 7.5 }}>
-            <Typography variant="h4" component="h2" sx={{ mb: 1 }}>{t("write")}</Typography>
-            <Typography sx={{ color: "text.secondary", mb: 3 }}>{ct("Tell us which guide or thread you mean so we can help you quickly.")}</Typography>
+            <Typography variant="h4" component="h2" sx={{ mb: 1 }}>
+              {t("write")}
+            </Typography>
+            <Typography sx={{ color: "text.secondary", mb: 3 }}>
+              {ct("Tell us which guide or thread you mean so we can help you quickly.")}
+            </Typography>
             <Suspense fallback={<Skeleton variant="rounded" height={420} />}>
               <ContactForm />
             </Suspense>
@@ -52,7 +56,11 @@ export default async function ContactPage() {
           <Grid size={{ xs: 12, md: 4.5 }}>
             <Stack spacing={2}>
               {details.map(({ icon: Icon, title, body }) => (
-                <Paper key={title} variant="outlined" sx={{ p: 3, display: "flex", gap: 2, bgcolor: brand.slate25, borderRadius: 3 }}>
+                <Paper
+                  key={title}
+                  variant="outlined"
+                  sx={{ p: 3, display: "flex", gap: 2, bgcolor: brand.slate25, borderRadius: 3 }}
+                >
                   <Icon sx={{ color: "secondary.main", mt: "2px", flexShrink: 0 }} />
                   <div style={{ minWidth: 0, overflowWrap: "anywhere" }}>
                     <Typography sx={{ fontWeight: 700 }}>{ct(title)}</Typography>

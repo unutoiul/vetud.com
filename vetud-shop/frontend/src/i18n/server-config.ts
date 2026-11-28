@@ -28,10 +28,18 @@ export async function getCountryI18n(country: string) {
 }
 
 const CLIENT_KEYS = new Set<string>(clientKeys)
-const clientOnly = <T,>(record: Record<string, T>) => Object.fromEntries(Object.entries(record).filter(([key]) => CLIENT_KEYS.has(key)))
+const clientOnly = <T>(record: Record<string, T>) =>
+  Object.fromEntries(Object.entries(record).filter(([key]) => CLIENT_KEYS.has(key)))
 
 /** What the browser receives: menus and the text client components show, not whole guides or legal pages. */
 export async function getClientI18n(country: string) {
   const full = await getCountryI18n(country)
-  return { ...full, messages: { ...full.messages, Content: clientOnly(full.messages.Content), ContentTemplates: clientOnly(full.messages.ContentTemplates) } }
+  return {
+    ...full,
+    messages: {
+      ...full.messages,
+      Content: clientOnly(full.messages.Content),
+      ContentTemplates: clientOnly(full.messages.ContentTemplates),
+    },
+  }
 }

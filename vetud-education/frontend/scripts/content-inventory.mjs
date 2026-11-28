@@ -22,7 +22,8 @@ export function contentKey(value) {
   return `s${(a >>> 0).toString(16).padStart(8, "0")}${(b >>> 0).toString(16).padStart(8, "0")}`
 }
 
-const isProse = (text) => /[A-Za-z]/.test(text) && (/\s/.test(text.trim()) || /^[A-Z]/.test(text)) && !/^(https?:|\/|#|mailto:)/.test(text)
+const isProse = (text) =>
+  /[A-Za-z]/.test(text) && (/\s/.test(text.trim()) || /^[A-Z]/.test(text)) && !/^(https?:|\/|#|mailto:)/.test(text)
 
 /** Which long-form fields stay on the server. Everything else may be needed by client components. */
 const CLIENT_FIELDS = {
@@ -32,17 +33,51 @@ const CLIENT_FIELDS = {
   "content/legal.ts": new Set(),
 }
 /** Styles, URLs and errors written as template strings. */
-const NOT_SENTENCES = /solid|rgba|calc\(|translate|rotate|ease|scale\(|gradient|transition|transform|\bpx\b|SameSite|sitemap|store\/|images\/|Search index|failed|\\n/
+const NOT_SENTENCES =
+  /solid|rgba|calc\(|translate|rotate|ease|scale\(|gradient|transition|transform|\bpx\b|SameSite|sitemap|store\/|images\/|Search index|failed|\\n/
 /** Patterns too short for the sentence rule above to recognise. */
-const SHORT_PATTERNS = ["{v0} | VETUD Learn", "Evidence: {v0}", "Read and watch: {v0}", "All {v0} guides", "about {v0}", "Placebo, {v0}"]
+const SHORT_PATTERNS = [
+  "{v0} | VETUD Learn",
+  "Evidence: {v0}",
+  "Read and watch: {v0}",
+  "All {v0} guides",
+  "about {v0}",
+  "Placebo, {v0}",
+]
 /** Settings that are addresses and keys, not page text. */
 const ADDRESS_EXPORTS = new Set(["SHOP_NAME", "SHOP_URL", "BASE_URL", "MEDUSA_BACKEND_URL", "MEDUSA_PUBLISHABLE_KEY"])
-const SKIPPED_FIELDS = new Set(["slug", "id", "url", "src", "href", "date", "art", "icon", "peptides", "category", "status", "pubchem", "tone"])
+const SKIPPED_FIELDS = new Set([
+  "slug",
+  "id",
+  "url",
+  "src",
+  "href",
+  "date",
+  "art",
+  "icon",
+  "peptides",
+  "category",
+  "status",
+  "pubchem",
+  "tone",
+])
 const MODULES = [
-  "content/learn/peptides.ts", "content/learn/articles.ts", "content/learn/peptide-articles.ts", "content/learn/categories.ts",
-  "content/learn/videos.ts", "content/learn/video-resources.ts", "content/learn/illustrations.ts", "content/learn/editorial-covers.ts",
-  "content/learn/emerging-weight-research.ts", "content/learn/weight-loss-trials.ts", "content/learn/search-titles.ts", "content/learn/planned-peptides.ts", "content/legal.ts",
-  "lib/community/topics.ts", "lib/community/format.ts", "lib/config.ts",
+  "content/learn/peptides.ts",
+  "content/learn/articles.ts",
+  "content/learn/peptide-articles.ts",
+  "content/learn/categories.ts",
+  "content/learn/videos.ts",
+  "content/learn/video-resources.ts",
+  "content/learn/illustrations.ts",
+  "content/learn/editorial-covers.ts",
+  "content/learn/emerging-weight-research.ts",
+  "content/learn/weight-loss-trials.ts",
+  "content/learn/search-titles.ts",
+  "content/learn/planned-peptides.ts",
+  "content/legal.ts",
+  "lib/community/topics.ts",
+  "lib/community/format.ts",
+  "lib/config.ts",
 ]
 
 function sourceFiles(folder) {
@@ -100,12 +135,14 @@ export async function collectInventory() {
         }
       }
     }
-    for (const [name, value] of Object.entries(exports)) if (typeof value !== "function" && !ADDRESS_EXPORTS.has(name)) walk(value, undefined)
+    for (const [name, value] of Object.entries(exports))
+      if (typeof value !== "function" && !ADDRESS_EXPORTS.has(name)) walk(value, undefined)
   }
 
   for (const pattern of SHORT_PATTERNS) add(pattern, "i18n/content.ts", true)
   // The community page counts threads by kind, with the noun chosen at run time.
-  for (const noun of ["question", "discussion"]) add(`{count, plural, one {# ${noun}} other {# ${noun}s}}`, "app/[lang]/community/page.tsx", true)
+  for (const noun of ["question", "discussion"])
+    add(`{count, plural, one {# ${noun}} other {# ${noun}s}}`, "app/[lang]/community/page.tsx", true)
 
   for (const path of sourceFiles(SRC)) {
     const file = relative(SRC, path).split(sep).join("/")
@@ -116,7 +153,8 @@ export async function collectInventory() {
         let index = 0
         const pattern = match[1].replace(/\$\{[^}]*\}/g, () => `{v${index++}}`)
         const words = pattern.replace(/\{v\d+\}/g, " ").trim()
-        if (/^[A-Z{]/.test(pattern) && /[a-z]{2,}[ ,:][ a-z]*[a-z]{2,}/.test(words) && !NOT_SENTENCES.test(words)) add(pattern, file, true)
+        if (/^[A-Z{]/.test(pattern) && /[a-z]{2,}[ ,:][ a-z]*[a-z]{2,}/.test(words) && !NOT_SENTENCES.test(words))
+          add(pattern, file, true)
       }
     }
     if (file.startsWith("content/") || file === "i18n/content.ts") continue
@@ -124,16 +162,26 @@ export async function collectInventory() {
       const literals = literalsInCall(code, match.index + match[0].length - 1)
       if (match[1] === "count") {
         // ct.count(n, "reply", "replies"), or two of each when the noun is chosen at run time.
-        const pairs = literals.length === 4 ? [[literals[0], literals[2]], [literals[1], literals[3]]] : [[literals[0], literals[1] ?? `${literals[0]}s`]]
-        for (const [singular, plural] of pairs) if (singular) add(`{count, plural, one {# ${singular}} other {# ${plural}}}`, file, true)
+        const pairs =
+          literals.length === 4
+            ? [
+                [literals[0], literals[2]],
+                [literals[1], literals[3]],
+              ]
+            : [[literals[0], literals[1] ?? `${literals[0]}s`]]
+        for (const [singular, plural] of pairs)
+          if (singular) add(`{count, plural, one {# ${singular}} other {# ${plural}}}`, file, true)
       } else {
         for (const literal of literals) add(literal, file, true)
       }
     }
-    for (const match of code.matchAll(/\b(?:label|title|name|description|summary|heading|eyebrow|blurb|explain):\s*"((?:[^"\\]|\\.)*)"/g)) {
+    for (const match of code.matchAll(
+      /\b(?:label|title|name|description|summary|heading|eyebrow|blurb|explain):\s*"((?:[^"\\]|\\.)*)"/g,
+    )) {
       if (/^[A-Z]/.test(match[1])) add(unescape(match[1]), file, true)
     }
-    for (const match of code.matchAll(/\bexport const [A-Z_]+ = "((?:[^"\\]|\\.)*)"/g)) add(unescape(match[1]), file, true)
+    for (const match of code.matchAll(/\bexport const [A-Z_]+ = "((?:[^"\\]|\\.)*)"/g))
+      add(unescape(match[1]), file, true)
     // Sentences kept in local lists and passed to ct() later, such as the community guidelines.
     if (!file.startsWith("theme/") && !file.startsWith("i18n/")) {
       for (const match of code.matchAll(/"((?:\d+\.\s+)?[A-Z][^"\\\n{}]*\s[^"\\\n{}]*)"/g)) {

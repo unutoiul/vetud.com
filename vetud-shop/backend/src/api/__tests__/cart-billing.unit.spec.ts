@@ -6,7 +6,11 @@ describe("delivery-only checkout", () => {
   it("ignores separate billing from legacy clients before and after native validation", () => {
     const shipping = { address_1: "Delivery street", country_code: "gb" }
     const req = {
-      body: { email: "test@example.test", shipping_address: shipping, billing_address: { address_1: "Old billing street" } },
+      body: {
+        email: "test@example.test",
+        shipping_address: shipping,
+        billing_address: { address_1: "Old billing street" },
+      },
       validatedBody: { shipping_address: shipping, billing_address: "caaddr_legacy" },
     } as unknown as MedusaRequest
     const next = jest.fn()
@@ -26,12 +30,16 @@ describe("delivery-only checkout", () => {
 
   it("accepts a delivery address without storing a legacy billing payload", () => {
     const shipping = { address_1: "Delivery street", country_code: "gb", phone: "+447700900123" }
-    expect(StoreSetCartDeliveryAddressSchema.parse({ shipping_address: shipping, billing_address: shipping })).toEqual({ shipping_address: shipping })
+    expect(StoreSetCartDeliveryAddressSchema.parse({ shipping_address: shipping, billing_address: shipping })).toEqual({
+      shipping_address: shipping,
+    })
   })
 
   it("requires a phone number for delivery", () => {
     const shipping = { address_1: "Delivery street", country_code: "gb" }
     expect(StoreSetCartDeliveryAddressSchema.safeParse({ shipping_address: shipping }).success).toBe(false)
-    expect(StoreSetCartDeliveryAddressSchema.safeParse({ shipping_address: { ...shipping, phone: "  " } }).success).toBe(false)
+    expect(
+      StoreSetCartDeliveryAddressSchema.safeParse({ shipping_address: { ...shipping, phone: "  " } }).success,
+    ).toBe(false)
   })
 })

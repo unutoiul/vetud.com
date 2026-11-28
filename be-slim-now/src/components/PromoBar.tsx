@@ -29,7 +29,9 @@ export default function PromoBar() {
       <TagFilled style={{ color: colors.green, marginRight: 8 }} />
       <span style={{ fontFamily: fonts.display, fontSize: 15, letterSpacing: "0.02em" }}>
         {m.offer.saleLabel}:{" "}
-        <strong style={{ color: colors.limeLight, fontWeight: 700 }}>{format(m.promoBar.sale, { percent: OFFER.salePercent })}</strong>
+        <strong style={{ color: colors.limeLight, fontWeight: 700 }}>
+          {format(m.promoBar.sale, { percent: OFFER.salePercent })}
+        </strong>
       </span>
       <span style={{ opacity: 0.45, margin: "0 12px" }}>|</span>
       <button

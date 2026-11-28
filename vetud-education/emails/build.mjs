@@ -67,13 +67,20 @@ export function buildAll() {
     const html = layout({ lang, preheader: meta.preheader, rows })
     const text = plainText(readFileSync(path.join(ROOT, "templates", `${name}.txt`), "utf8"), lang)
     const problems = []
-    const used = new Set([...`${html}${text}${meta.subject}`.matchAll(/\{\{\{\s*([A-Z0-9_]+)\s*\}\}\}/g)].map((m) => m[1]))
-    for (const variable of used) if (!meta.variables.includes(variable)) problems.push(`uses {{{${variable}}}}, which the template doesn't declare`)
+    const used = new Set(
+      [...`${html}${text}${meta.subject}`.matchAll(/\{\{\{\s*([A-Z0-9_]+)\s*\}\}\}/g)].map((m) => m[1]),
+    )
+    for (const variable of used)
+      if (!meta.variables.includes(variable))
+        problems.push(`uses {{{${variable}}}}, which the template doesn't declare`)
     // The education site never links to the shop; only the logo image comes from pep.company.
-    for (const [, href] of html.matchAll(/href="([^"]+)"/g)) if (/pep\.company/i.test(href)) problems.push(`links to the shop: ${href}`)
+    for (const [, href] of html.matchAll(/href="([^"]+)"/g))
+      if (/pep\.company/i.test(href)) problems.push(`links to the shop: ${href}`)
     if (/pep\.company/i.test(text)) problems.push("the text version mentions the shop")
-    for (const [, src] of html.matchAll(/<img[^>]+src="([^"]+)"/g)) if (src !== LOGO_URL) problems.push(`image other than the logo: ${src}`)
-    if (Buffer.byteLength(html) > MAX_BYTES) problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
+    for (const [, src] of html.matchAll(/<img[^>]+src="([^"]+)"/g))
+      if (src !== LOGO_URL) problems.push(`image other than the logo: ${src}`)
+    if (Buffer.byteLength(html) > MAX_BYTES)
+      problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
     if (problems.length) throw new Error(`${name}: ${problems.join("; ")}`)
     return { name, id: meta.id, subject: meta.subject, html, text }
   })

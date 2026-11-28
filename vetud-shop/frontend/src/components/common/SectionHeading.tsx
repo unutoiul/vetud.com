@@ -31,7 +31,10 @@ export default function SectionHeading({
       sx={{ justifyContent: "space-between", alignItems: { md: "flex-end" }, mb: { xs: 4, md: 6 } }}
     >
       <Box sx={{ maxWidth: 820 }}>
-        <Typography variant="eyebrow" sx={{ color: light ? "brand.onNavyMuted" : "brand.blue", letterSpacing: ".06em" }}>
+        <Typography
+          variant="eyebrow"
+          sx={{ color: light ? "brand.onNavyMuted" : "brand.blue", letterSpacing: ".06em" }}
+        >
           {ct(eyebrow)}
         </Typography>
         <Typography
@@ -42,16 +45,14 @@ export default function SectionHeading({
           {ct(title)}
         </Typography>
         {description ? (
-          <Typography sx={{ mt: 2, maxWidth: 640, color: light ? "brand.onNavyMuted" : "text.secondary", lineHeight: 1.8 }}>
+          <Typography
+            sx={{ mt: 2, maxWidth: 640, color: light ? "brand.onNavyMuted" : "text.secondary", lineHeight: 1.8 }}
+          >
             {ct(description)}
           </Typography>
         ) : null}
       </Box>
-      {action ? (
-        <Box sx={{ flexShrink: 0, pb: { md: 0.5 } }}>
-          {ct(action)}
-        </Box>
-      ) : null}
+      {action ? <Box sx={{ flexShrink: 0, pb: { md: 0.5 } }}>{ct(action)}</Box> : null}
     </Stack>
   )
 }

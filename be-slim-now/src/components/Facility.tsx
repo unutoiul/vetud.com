@@ -61,8 +61,18 @@ function PhotoTile({
         font: "inherit",
       }}
     >
-      <NextImage src={photo.src} alt={photo.alt} fill sizes={sizes} quality={85} style={{ objectFit: "cover", objectPosition: photo.position }} />
-      <div aria-hidden style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "62%", background: gradients.artFade }} />
+      <NextImage
+        src={photo.src}
+        alt={photo.alt}
+        fill
+        sizes={sizes}
+        quality={85}
+        style={{ objectFit: "cover", objectPosition: photo.position }}
+      />
+      <div
+        aria-hidden
+        style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "62%", background: gradients.artFade }}
+      />
       <span
         style={{
           position: "absolute",
@@ -84,8 +94,27 @@ function PhotoTile({
         <ZoomInOutlined /> {t.enlarge}
       </span>
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "clamp(18px, 2.4vw, 28px)" }}>
-        <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: colors.tealBright }}>{photo.eyebrow}</div>
-        <div style={{ fontFamily: fonts.display, fontSize: "clamp(22px, 2.2vw, 28px)", fontWeight: 500, color: colors.white, lineHeight: 1.2, margin: "6px 0 4px" }}>
+        <div
+          style={{
+            fontFamily: fonts.mono,
+            fontSize: 11,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            color: colors.tealBright,
+          }}
+        >
+          {photo.eyebrow}
+        </div>
+        <div
+          style={{
+            fontFamily: fonts.display,
+            fontSize: "clamp(22px, 2.2vw, 28px)",
+            fontWeight: 500,
+            color: colors.white,
+            lineHeight: 1.2,
+            margin: "6px 0 4px",
+          }}
+        >
           {photo.title}
         </div>
         <div style={{ fontSize: 14, lineHeight: 1.5, color: colors.onNavyMuted, maxWidth: 440 }}>{photo.text}</div>
@@ -104,15 +133,17 @@ export default function Facility() {
 
   return (
     <Section id="facility" background={colors.aquaWash}>
-      <SectionHeading
-        eyebrow={t.eyebrow}
-        title={t.title}
-        subtitle={t.subtitle}
-      />
+      <SectionHeading eyebrow={t.eyebrow} title={t.title} subtitle={t.subtitle} />
       <div
         style={
           wide
-            ? { display: "grid", gridTemplateColumns: "7fr 5fr", gridTemplateRows: "1fr 1fr", gap: 20, height: "clamp(480px, 48vw, 600px)" }
+            ? {
+                display: "grid",
+                gridTemplateColumns: "7fr 5fr",
+                gridTemplateRows: "1fr 1fr",
+                gap: 20,
+                height: "clamp(480px, 48vw, 600px)",
+              }
             : { display: "grid", gridTemplateColumns: "1fr", gap: 16 }
         }
       >
@@ -123,13 +154,20 @@ export default function Facility() {
             onOpen={() => setOpen(index)}
             inGrid={wide}
             gridRow={wide && index === 0 ? "1 / 3" : undefined}
-            sizes={wide ? (index === 0 ? "(max-width: 1200px) 58vw, 680px" : "(max-width: 1200px) 42vw, 480px") : "100vw"}
+            sizes={
+              wide ? (index === 0 ? "(max-width: 1200px) 58vw, 680px" : "(max-width: 1200px) 42vw, 480px") : "100vw"
+            }
           />
         ))}
       </div>
       <AntImage.PreviewGroup
         items={photos.map((photo) => ({ src: photo.src, alt: photo.alt }))}
-        preview={{ open: open !== null, current: open ?? 0, onOpenChange: (next) => !next && setOpen(null), onChange: (current) => setOpen(current) }}
+        preview={{
+          open: open !== null,
+          current: open ?? 0,
+          onOpenChange: (next) => !next && setOpen(null),
+          onChange: (current) => setOpen(current),
+        }}
       />
     </Section>
   )

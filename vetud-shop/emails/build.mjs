@@ -10,7 +10,8 @@ export const SHOP_URL = "https://www.pep.company"
 /** Rendered from frontend/public/brand/vetud-logo.svg; mail apps don't show SVG. Served by the storefront. */
 export const LOGO_URL = `${SHOP_URL}/brand/email/vetud-peptide-series-logo.png`
 const FONT = "Manrope,'Helvetica Neue',Arial,Helvetica,sans-serif"
-const RESEARCH_USE = "VETUD products are sold for laboratory research use only. Not for human or veterinary use. This email does not provide medical advice."
+const RESEARCH_USE =
+  "VETUD products are sold for laboratory research use only. Not for human or veterinary use. This email does not provide medical advice."
 /** Gmail clips messages above 102 KB. */
 const MAX_BYTES = 100 * 1024
 
@@ -62,11 +63,17 @@ export function buildAll() {
     const html = layout({ preheader: meta.preheader, rows })
     const text = plainText(readFileSync(path.join(ROOT, "templates", `${name}.txt`), "utf8"))
     const problems = []
-    const used = new Set([...`${html}${text}${meta.subject}`.matchAll(/\{\{\{\s*([A-Z0-9_]+)\s*\}\}\}/g)].map((m) => m[1]))
-    for (const variable of used) if (!meta.variables.includes(variable)) problems.push(`uses {{{${variable}}}}, which the Resend template doesn't declare`)
+    const used = new Set(
+      [...`${html}${text}${meta.subject}`.matchAll(/\{\{\{\s*([A-Z0-9_]+)\s*\}\}\}/g)].map((m) => m[1]),
+    )
+    for (const variable of used)
+      if (!meta.variables.includes(variable))
+        problems.push(`uses {{{${variable}}}}, which the Resend template doesn't declare`)
     if (/vetud\.com/i.test(html + text)) problems.push("links to vetud.com, the education site")
-    for (const [, src] of html.matchAll(/<img[^>]+src="([^"]+)"/g)) if (!src.startsWith(`${SHOP_URL}/`)) problems.push(`image outside ${SHOP_URL}: ${src}`)
-    if (Buffer.byteLength(html) > MAX_BYTES) problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
+    for (const [, src] of html.matchAll(/<img[^>]+src="([^"]+)"/g))
+      if (!src.startsWith(`${SHOP_URL}/`)) problems.push(`image outside ${SHOP_URL}: ${src}`)
+    if (Buffer.byteLength(html) > MAX_BYTES)
+      problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
     if (problems.length) throw new Error(`${name}: ${problems.join("; ")}`)
     return { name, id: meta.id, subject: meta.subject, html, text }
   })

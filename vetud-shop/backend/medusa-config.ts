@@ -149,12 +149,10 @@ if (REDIS_URL) {
             options: { redisUrl: process.env.LOCKING_REDIS_URL || REDIS_URL },
           },
           // MakePay serialises OAuth token refresh and payment effects with a Postgres lock.
-          ...(MAKEPAY_ENABLED
-            ? [{ resolve: "@medusajs/medusa/locking-postgres", id: "makepay-postgres" }]
-            : []),
+          ...(MAKEPAY_ENABLED ? [{ resolve: "@medusajs/medusa/locking-postgres", id: "makepay-postgres" }] : []),
         ],
       },
-    }
+    },
   )
 } else if (MAKEPAY_ENABLED) {
   modules.push({
@@ -178,8 +176,10 @@ const paymentProviders: ModuleConfig[] = []
 const paygate = getPaygateConfig()
 // Checkout and settlement use the same configured wallets and callback secret.
 if (paygate.enabled) {
-  if (paygate.cardWallet) paymentProviders.push({ resolve: "./src/modules/paygate", id: "card", options: { ...paygate, mode: "card" } })
-  if (Object.keys(paygate.wallets).length) paymentProviders.push({ resolve: "./src/modules/paygate", id: "crypto", options: { ...paygate, mode: "crypto" } })
+  if (paygate.cardWallet)
+    paymentProviders.push({ resolve: "./src/modules/paygate", id: "card", options: { ...paygate, mode: "card" } })
+  if (Object.keys(paygate.wallets).length)
+    paymentProviders.push({ resolve: "./src/modules/paygate", id: "crypto", options: { ...paygate, mode: "crypto" } })
 }
 const nmi = getNmiConfig()
 if (nmi.enabled) {
@@ -218,10 +218,7 @@ module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
     redisUrl: REDIS_URL,
-    workerMode: (process.env.MEDUSA_WORKER_MODE || "shared") as
-      | "shared"
-      | "worker"
-      | "server",
+    workerMode: (process.env.MEDUSA_WORKER_MODE || "shared") as "shared" | "worker" | "server",
     http: {
       storeCors: process.env.STORE_CORS!,
       adminCors: process.env.ADMIN_CORS!,
@@ -243,9 +240,7 @@ module.exports = defineConfig({
       resolve: "@rokmohar/medusa-plugin-meilisearch",
       options: {},
     },
-    ...(MAKEPAY_ENABLED
-      ? [{ resolve: "@makecrypto/medusa-plugin-makepay", options: makePayOptions }]
-      : []),
+    ...(MAKEPAY_ENABLED ? [{ resolve: "@makecrypto/medusa-plugin-makepay", options: makePayOptions }] : []),
   ],
   modules,
 })

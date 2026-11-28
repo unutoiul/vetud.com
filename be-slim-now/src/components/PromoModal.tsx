@@ -120,14 +120,49 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
       closeIcon={<CloseOutlined style={{ color: colors.onNavy, fontSize: 16 }} />}
     >
       {/* Night header with the glass ribbons */}
-      <div style={{ position: "relative", background: gradients.night, height: screens.sm ? 210 : 180, overflow: "hidden" }}>
-        <Image src={PRODUCTS.retatrutide.art} alt="" fill sizes="520px" style={{ objectFit: "cover", objectPosition: "center 55%" }} />
+      <div
+        style={{
+          position: "relative",
+          background: gradients.night,
+          height: screens.sm ? 210 : 180,
+          overflow: "hidden",
+        }}
+      >
+        <Image
+          src={PRODUCTS.retatrutide.art}
+          alt=""
+          fill
+          sizes="520px"
+          style={{ objectFit: "cover", objectPosition: "center 55%" }}
+        />
         <div aria-hidden style={{ position: "absolute", inset: 0, background: gradients.nightScrim }} />
-        <Flex vertical align="center" justify="center" style={{ position: "relative", height: "100%", textAlign: "center", padding: "0 24px" }}>
-          <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase", color: colors.limeLight }}>
+        <Flex
+          vertical
+          align="center"
+          justify="center"
+          style={{ position: "relative", height: "100%", textAlign: "center", padding: "0 24px" }}
+        >
+          <div
+            style={{
+              fontFamily: fonts.mono,
+              fontSize: 11,
+              letterSpacing: "0.24em",
+              textTransform: "uppercase",
+              color: colors.limeLight,
+            }}
+          >
             {code ? t.eyebrowReady : t.eyebrow}
           </div>
-          <div style={{ fontFamily: fonts.display, fontWeight: 300, fontSize: screens.sm ? 58 : 46, lineHeight: 1, color: colors.white, marginTop: 10 }}>
+          <div
+            style={{
+              fontFamily: fonts.display,
+              fontWeight: 300,
+              fontSize: screens.sm ? 58 : 46,
+              lineHeight: 1,
+              color: colors.white,
+              marginTop: 10,
+            }}
+          >
             {headlineBefore}
             <span
               style={{
@@ -171,8 +206,27 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
                 cursor: "pointer",
               }}
             >
-              <span style={{ fontFamily: fonts.mono, fontSize: 26, fontWeight: 500, letterSpacing: "0.2em", color: colors.navy }}>{code}</span>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: colors.sale }}>
+              <span
+                style={{
+                  fontFamily: fonts.mono,
+                  fontSize: 26,
+                  fontWeight: 500,
+                  letterSpacing: "0.2em",
+                  color: colors.navy,
+                }}
+              >
+                {code}
+              </span>
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: colors.sale,
+                }}
+              >
                 {copied ? <CheckOutlined /> : <CopyOutlined />}
                 {copied ? t.copied : t.copy}
               </span>
@@ -198,19 +252,37 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
               align="center"
               justify="space-between"
               gap={12}
-              style={{ padding: "12px 16px", borderRadius: 14, background: colors.aquaWash, border: `1px solid ${colors.line}`, marginBottom: 22 }}
+              style={{
+                padding: "12px 16px",
+                borderRadius: 14,
+                background: colors.aquaWash,
+                border: `1px solid ${colors.line}`,
+                marginBottom: 22,
+              }}
             >
               <div style={{ fontSize: 13, color: colors.muted, lineHeight: 1.4 }}>
-                <div style={{ color: colors.navyInk, fontWeight: 600 }}>{format(t.exampleTitle, { product: PRODUCTS.retatrutide.name })}</div>
+                <div style={{ color: colors.navyInk, fontWeight: 600 }}>
+                  {format(t.exampleTitle, { product: PRODUCTS.retatrutide.name })}
+                </div>
                 {t.exampleNote}
               </div>
               <div style={{ textAlign: "right", whiteSpace: "nowrap" }}>
-                <span style={{ color: colors.muted, textDecoration: "line-through", fontSize: 14, marginRight: 8 }}>{money(example.regular)}</span>
-                <span style={{ fontFamily: fonts.display, fontSize: 26, fontWeight: 600, color: colors.navy }}>{money(example.total)}</span>
+                <span style={{ color: colors.muted, textDecoration: "line-through", fontSize: 14, marginRight: 8 }}>
+                  {money(example.regular)}
+                </span>
+                <span style={{ fontFamily: fonts.display, fontSize: 26, fontWeight: 600, color: colors.navy }}>
+                  {money(example.total)}
+                </span>
               </div>
             </Flex>
 
-            <Form form={form} layout="vertical" requiredMark={false} onFinish={submit} onFinishFailed={() => setLive(true)}>
+            <Form
+              form={form}
+              layout="vertical"
+              requiredMark={false}
+              onFinish={submit}
+              onFinishFailed={() => setLive(true)}
+            >
               <Form.Item
                 name="email"
                 label={<span style={{ fontWeight: 600 }}>{t.emailLabel}</span>}
@@ -231,7 +303,10 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
                       <QuestionCircleFilled style={{ color: colors.warning }} />
                       <span>
                         {typoBefore}
-                        <Typography.Link onClick={acceptSuggestion} style={{ fontWeight: 600, textDecoration: "underline" }}>
+                        <Typography.Link
+                          onClick={acceptSuggestion}
+                          style={{ fontWeight: 600, textDecoration: "underline" }}
+                        >
                           {suggestion}
                         </Typography.Link>
                         {typoAfter}
@@ -260,11 +335,21 @@ export default function PromoModal({ open, onClose }: { open: boolean; onClose: 
               <Form.Item name="website" hidden>
                 <Input tabIndex={-1} autoComplete="off" />
               </Form.Item>
-              <Button type="primary" htmlType="submit" size="large" block loading={sending} icon={<LockOutlined />} style={{ height: 54, fontSize: 16 }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                block
+                loading={sending}
+                icon={<LockOutlined />}
+                style={{ height: 54, fontSize: 16 }}
+              >
                 {format(t.reveal, { percent: OFFER.subscriberPercent })}
               </Button>
             </Form>
-            <Typography.Paragraph style={{ color: colors.muted, fontSize: 12, margin: "14px 0 0", textAlign: "center" }}>
+            <Typography.Paragraph
+              style={{ color: colors.muted, fontSize: 12, margin: "14px 0 0", textAlign: "center" }}
+            >
               {t.consent}
             </Typography.Paragraph>
             <Flex justify="center">

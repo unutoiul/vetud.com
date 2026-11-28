@@ -15,7 +15,14 @@ export const LANGUAGES: readonly Language[] = ["en"]
 export const DEFAULT_LANGUAGE: Language = "en"
 export const LANGUAGE_COOKIE = "vetud_language"
 export const LANGUAGE_NAMES: Record<Language, string> = {
-  en: "English", es: "Español", pt: "Português", fr: "Français", de: "Deutsch", it: "Italiano", nl: "Nederlands", pl: "Polski",
+  en: "English",
+  es: "Español",
+  pt: "Português",
+  fr: "Français",
+  de: "Deutsch",
+  it: "Italiano",
+  nl: "Nederlands",
+  pl: "Polski",
 }
 
 export const isLanguage = (value: string | undefined): value is Language => LANGUAGES.includes(value as Language)

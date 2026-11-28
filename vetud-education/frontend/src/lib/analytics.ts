@@ -14,7 +14,11 @@ export const CLARITY_HOSTS = ["www.vetud.com", "vetud.com"]
 export function cookielessAnalytics() {
   try {
     const zone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? ""
-    return /^Europe\//.test(zone) || /^Atlantic\/(Reykjavik|Faroe|Canary|Madeira|Azores)$/.test(zone) || /^Asia\/(Nicosia|Famagusta)$/.test(zone)
+    return (
+      /^Europe\//.test(zone) ||
+      /^Atlantic\/(Reykjavik|Faroe|Canary|Madeira|Azores)$/.test(zone) ||
+      /^Asia\/(Nicosia|Famagusta)$/.test(zone)
+    )
   } catch {
     return true
   }

@@ -8,6 +8,26 @@ import { brand } from "@/theme/tokens"
  */
 export default function CountryFlag({ code, width = 20 }: { code: string; width?: number }) {
   const height = Math.round((width * 2) / 3)
-  return <Box component="img" src={`/flags/${code.toLowerCase()}.svg`} alt="" aria-hidden width={width} height={height} loading="lazy" decoding="async"
-    sx={{ display: "inline-block", flexShrink: 0, width, height, objectFit: "cover", borderRadius: "2px", boxShadow: `0 0 0 1px ${brand.navyA14}`, verticalAlign: "middle" }} />
+  return (
+    <Box
+      component="img"
+      src={`/flags/${code.toLowerCase()}.svg`}
+      alt=""
+      aria-hidden
+      width={width}
+      height={height}
+      loading="lazy"
+      decoding="async"
+      sx={{
+        display: "inline-block",
+        flexShrink: 0,
+        width,
+        height,
+        objectFit: "cover",
+        borderRadius: "2px",
+        boxShadow: `0 0 0 1px ${brand.navyA14}`,
+        verticalAlign: "middle",
+      }}
+    />
+  )
 }

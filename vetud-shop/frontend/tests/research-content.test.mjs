@@ -16,17 +16,29 @@ test("every charted result names who was studied and links one of its profile's 
     for (const result of peptide.results ?? []) {
       const where = `${peptide.slug}: ${result.title}`
       assert.ok(WHO.has(result.who), `${where} needs a valid "who"`)
-      assert.ok(Number.isInteger(result.source) && peptide.sources[result.source], `${where} points at a missing source`)
+      assert.ok(
+        Number.isInteger(result.source) && peptide.sources[result.source],
+        `${where} points at a missing source`,
+      )
       assert.ok(result.study.trim(), `${where} needs a study description`)
       assert.ok(result.bars?.length || result.finding, `${where} needs bars or a finding`)
-      for (const bar of result.bars ?? []) assert.ok(Number.isFinite(bar.value) && bar.value >= 0 && bar.label.trim(), `${where} has an invalid bar`)
+      for (const bar of result.bars ?? [])
+        assert.ok(Number.isFinite(bar.value) && bar.value >= 0 && bar.label.trim(), `${where} has an invalid bar`)
     }
   }
 })
 
 test("results and unknowns never mention doses", () => {
   for (const peptide of PEPTIDES) {
-    const texts = [...(peptide.results ?? []).flatMap((result) => [result.title, result.study, result.finding ?? "", ...(result.bars ?? []).map((bar) => bar.label)]), ...(peptide.unknowns ?? [])]
+    const texts = [
+      ...(peptide.results ?? []).flatMap((result) => [
+        result.title,
+        result.study,
+        result.finding ?? "",
+        ...(result.bars ?? []).map((bar) => bar.label),
+      ]),
+      ...(peptide.unknowns ?? []),
+    ]
     for (const text of texts) assert.doesNotMatch(text, DOSE, `${peptide.slug}: "${text}"`)
   }
 })

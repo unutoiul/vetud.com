@@ -12,18 +12,31 @@ const importContentBundleStep = createStep(
     const bundle = previous
       ? await service.updateContentBundles({ id: previous.id, ...data })
       : await service.createContentBundles(data)
-    return new StepResponse({ id: bundle.id, locale: bundle.locale, entry_count: bundle.entry_count }, { id: bundle.id, previous })
+    return new StepResponse(
+      { id: bundle.id, locale: bundle.locale, entry_count: bundle.entry_count },
+      { id: bundle.id, previous },
+    )
   },
   async (saved, { container }) => {
     if (!saved) return
     const service = container.resolve<LocalizedContentModuleService>(LOCALIZED_CONTENT_MODULE)
     if (saved.previous) {
-      const { id, locale, source_hash, sources, translations, public_translations, entry_count, review } = saved.previous
-      await service.updateContentBundles({ id, locale, source_hash, sources, translations, public_translations, entry_count, review })
+      const { id, locale, source_hash, sources, translations, public_translations, entry_count, review } =
+        saved.previous
+      await service.updateContentBundles({
+        id,
+        locale,
+        source_hash,
+        sources,
+        translations,
+        public_translations,
+        entry_count,
+        review,
+      })
     } else {
       await service.deleteContentBundles(saved.id)
     }
-  }
+  },
 )
 
 export const importLocalizedContentWorkflow = createWorkflow(
@@ -31,5 +44,5 @@ export const importLocalizedContentWorkflow = createWorkflow(
   function (input: ReviewedContentInput) {
     const imported = importContentBundleStep(input)
     return new WorkflowResponse(imported)
-  }
+  },
 )

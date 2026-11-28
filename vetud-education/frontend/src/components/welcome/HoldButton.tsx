@@ -3,7 +3,16 @@
 import Box from "@mui/material/Box"
 import Button, { type ButtonProps } from "@mui/material/Button"
 import { keyframes, type SxProps, type Theme } from "@mui/material/styles"
-import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react"
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type MouseEvent,
+  type PointerEvent,
+} from "react"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
 /** How long a splash button has to be held before it acts (owner: 2 seconds, 2026-11-25). */
@@ -43,7 +52,16 @@ type HoldButtonProps = Omit<ButtonProps, "onClick" | "href" | "type" | "endIcon"
  * keyboard (hold Space or Enter). An assistive-technology click starts the same three-second
  * countdown, since it may not produce pointer or keyboard press events.
  */
-export default function HoldButton({ onConfirm, fill, hint = "full", counterSx, children, disabled, sx, ...props }: HoldButtonProps) {
+export default function HoldButton({
+  onConfirm,
+  fill,
+  hint = "full",
+  counterSx,
+  children,
+  disabled,
+  sx,
+  ...props
+}: HoldButtonProps) {
   const ct = useContentTranslator()
   const hintId = useId()
   const [holding, setHolding] = useState(false)
@@ -96,7 +114,9 @@ export default function HoldButton({ onConfirm, fill, hint = "full", counterSx, 
   }, [stopTimers])
 
   useEffect(() => {
-    const cancelWhenHidden = () => { if (document.hidden) release() }
+    const cancelWhenHidden = () => {
+      if (document.hidden) release()
+    }
     window.addEventListener("blur", release)
     document.addEventListener("visibilitychange", cancelWhenHidden)
     return () => {
@@ -153,36 +173,58 @@ export default function HoldButton({ onConfirm, fill, hint = "full", counterSx, 
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
-      <Box aria-hidden component="span" sx={{
-        position: "absolute",
-        inset: 0,
-        zIndex: -1,
-        bgcolor: fill,
-        transformOrigin: "left center",
-        transform: holding && !disabled ? "scaleX(1)" : "scaleX(0)",
-        transition: holding && !disabled ? `transform ${HOLD_MS}ms linear` : "transform .25s ease-out",
-        pointerEvents: "none",
-      }} />
+      <Box
+        aria-hidden
+        component="span"
+        sx={{
+          position: "absolute",
+          inset: 0,
+          zIndex: -1,
+          bgcolor: fill,
+          transformOrigin: "left center",
+          transform: holding && !disabled ? "scaleX(1)" : "scaleX(0)",
+          transition: holding && !disabled ? `transform ${HOLD_MS}ms linear` : "transform .25s ease-out",
+          pointerEvents: "none",
+        }}
+      />
       {children}
-      <Box aria-hidden component="span" sx={[{
-        ml: 1.25,
-        minWidth: hint === "full" && !holding ? "auto" : "2.4em",
-        px: .9,
-        py: .15,
-        border: "1px solid currentColor",
-        borderRadius: 999,
-        fontSize: 11,
-        fontWeight: 700,
-        lineHeight: 1.6,
-        letterSpacing: ".02em",
-        textAlign: "center",
-        whiteSpace: "nowrap",
-        fontVariantNumeric: "tabular-nums",
-        opacity: holding ? 1 : .75,
-      }, ...(Array.isArray(counterSx) ? counterSx : [counterSx])]}>
+      <Box
+        aria-hidden
+        component="span"
+        sx={[
+          {
+            ml: 1.25,
+            minWidth: hint === "full" && !holding ? "auto" : "2.4em",
+            px: 0.9,
+            py: 0.15,
+            border: "1px solid currentColor",
+            borderRadius: 999,
+            fontSize: 11,
+            fontWeight: 700,
+            lineHeight: 1.6,
+            letterSpacing: ".02em",
+            textAlign: "center",
+            whiteSpace: "nowrap",
+            fontVariantNumeric: "tabular-nums",
+            opacity: holding ? 1 : 0.75,
+          },
+          ...(Array.isArray(counterSx) ? counterSx : [counterSx]),
+        ]}
+      >
         {holding ? `${left}s` : hint === "full" ? ct.template("Hold {v0}s", { v0: SECONDS }) : `${SECONDS}s`}
       </Box>
-      <Box component="span" id={hintId} sx={{ position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}>
+      <Box
+        component="span"
+        id={hintId}
+        sx={{
+          position: "absolute",
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
+          clip: "rect(0 0 0 0)",
+          whiteSpace: "nowrap",
+        }}
+      >
         {ct.template("Press and hold for {v0} seconds", { v0: SECONDS })}
       </Box>
     </Button>

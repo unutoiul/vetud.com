@@ -10,7 +10,10 @@ export async function POST(req: AuthenticatedMedusaRequest, res: MedusaResponse)
   if (!files.length) throw new MedusaError(MedusaError.Types.INVALID_DATA, "Choose a photo to upload.")
 
   const { result } = await uploadForumImagesWorkflow(req.scope).run({
-    input: { customer_id: req.auth_context.actor_id, files: files.map(file => ({ content: file.buffer.toString("base64") })) },
+    input: {
+      customer_id: req.auth_context.actor_id,
+      files: files.map((file) => ({ content: file.buffer.toString("base64") })),
+    },
   })
 
   res.setHeader("Cache-Control", "private, no-store")

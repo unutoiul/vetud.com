@@ -8,16 +8,22 @@ export function nmiOrderGuard(action: "fulfillment" | "shipment") {
     try {
       await guardNmiPaymentWorkflow(req.scope).run({ input: { action, order_id: req.params.id } })
       next()
-    } catch (error) { next(error) }
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
 export async function nmiCaptureGuard(req: MedusaRequest, _res: MedusaResponse, next: MedusaNextFunction) {
   try {
     const body = (req.validatedBody ?? req.body) as { amount?: unknown } | undefined
-    await guardNmiPaymentWorkflow(req.scope).run({ input: { action: "capture", payment_id: req.params.id, amount: body?.amount } })
+    await guardNmiPaymentWorkflow(req.scope).run({
+      input: { action: "capture", payment_id: req.params.id, amount: body?.amount },
+    })
     next()
-  } catch (error) { next(error) }
+  } catch (error) {
+    next(error)
+  }
 }
 
 export async function nmiWebhookGuard(req: MedusaRequest, _res: MedusaResponse, next: MedusaNextFunction) {
@@ -29,7 +35,9 @@ export async function nmiWebhookGuard(req: MedusaRequest, _res: MedusaResponse, 
       },
     })
     next()
-  } catch (error) { next(error) }
+  } catch (error) {
+    next(error)
+  }
 }
 
 // Spread these into the existing defineMiddlewares({ routes: [...] }). Medusa

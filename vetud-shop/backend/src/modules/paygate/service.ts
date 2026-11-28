@@ -1,9 +1,24 @@
 import type {
-  InitiatePaymentInput, InitiatePaymentOutput, UpdatePaymentInput, UpdatePaymentOutput,
-  AuthorizePaymentInput, AuthorizePaymentOutput, CapturePaymentInput, CapturePaymentOutput,
-  CancelPaymentInput, CancelPaymentOutput, DeletePaymentInput, DeletePaymentOutput,
-  RefundPaymentInput, RefundPaymentOutput, RetrievePaymentInput, RetrievePaymentOutput,
-  GetPaymentStatusInput, GetPaymentStatusOutput, ProviderWebhookPayload, WebhookActionResult,
+  InitiatePaymentInput,
+  InitiatePaymentOutput,
+  UpdatePaymentInput,
+  UpdatePaymentOutput,
+  AuthorizePaymentInput,
+  AuthorizePaymentOutput,
+  CapturePaymentInput,
+  CapturePaymentOutput,
+  CancelPaymentInput,
+  CancelPaymentOutput,
+  DeletePaymentInput,
+  DeletePaymentOutput,
+  RefundPaymentInput,
+  RefundPaymentOutput,
+  RetrievePaymentInput,
+  RetrievePaymentOutput,
+  GetPaymentStatusInput,
+  GetPaymentStatusOutput,
+  ProviderWebhookPayload,
+  WebhookActionResult,
 } from "@medusajs/framework/types"
 import { AbstractPaymentProvider, BigNumber } from "@medusajs/framework/utils"
 import { randomUUID } from "node:crypto"
@@ -29,24 +44,35 @@ export default class PaygateProvider extends AbstractPaymentProvider<Options> {
     const sessionId = input.context?.idempotency_key
     const cartId = input.data?.cart_id
     const email = input.data?.email
-    if (!sessionId || typeof cartId !== "string" || typeof email !== "string") paygateError("Start PayGate from an authenticated checkout.")
+    if (!sessionId || typeof cartId !== "string" || typeof email !== "string")
+      paygateError("Start PayGate from an authenticated checkout.")
     const amount = new BigNumber(input.amount).bigNumber!.toFixed()
     if (!decimal(amount).gt(0)) paygateError("PayGate requires a positive order total.")
     const currency = input.currency_code.toUpperCase()
     const expected = await this.client.card.convertToUsd(amount, currency)
     if (!decimal(expected.value).gt(0)) paygateError("PayGate could not quote this currency.")
     const reference = `${sessionId}.${randomUUID()}`
-    const callback = new CallbackToken(this.settings.secret).callbackUrl(this.settings.callbackUrl, { reference, session: sessionId })
+    const callback = new CallbackToken(this.settings.secret).callbackUrl(this.settings.callbackUrl, {
+      reference,
+      session: sessionId,
+    })
     let checkoutUrl: string
     let depositAddress = ""
     if (this.settings.mode === "card") {
       const providers = await this.client.card.providers()
-      const eligible = await Promise.all(providers.filter(provider => provider.active).map(async provider => {
-        if (!provider.minimumAmount || !provider.minimumCurrency) return false
-        const minimum = await this.client.card.convertToUsd(provider.minimumAmount, provider.minimumCurrency)
-        return decimal(expected.value).gte(decimal(minimum.value))
-      }))
-      if (!eligible.some(Boolean)) paygateError("This order is below the available card providers' minimum or card checkout is temporarily unavailable.")
+      const eligible = await Promise.all(
+        providers
+          .filter((provider) => provider.active)
+          .map(async (provider) => {
+            if (!provider.minimumAmount || !provider.minimumCurrency) return false
+            const minimum = await this.client.card.convertToUsd(provider.minimumAmount, provider.minimumCurrency)
+            return decimal(expected.value).gte(decimal(minimum.value))
+          }),
+      )
+      if (!eligible.some(Boolean))
+        paygateError(
+          "This order is below the available card providers' minimum or card checkout is temporarily unavailable.",
+        )
       const wallet = await this.client.card.createWallet(this.settings.cardWallet, callback)
       depositAddress = wallet.polygonAddressIn
       if (!/^0x[\da-f]{40}$/i.test(depositAddress)) paygateError("PayGate returned an invalid deposit address.")
@@ -56,18 +82,35 @@ export default class PaygateProvider extends AbstractPaymentProvider<Options> {
       checkoutUrl = this.client.crypto.hostedPaymentUrl(wallet, { addFees: true })
     }
     const state: PaygateState = {
-      session_id: sessionId, reference, cart_id: cartId, mode: this.settings.mode,
-      amount, currency, expected_usd: decimal(expected.value).toFixed(),
+      session_id: sessionId,
+      reference,
+      cart_id: cartId,
+      mode: this.settings.mode,
+      amount,
+      currency,
+      expected_usd: decimal(expected.value).toFixed(),
       min_net_ratio: this.settings.mode === "card" ? this.settings.cardMinNetRatio : "1",
-      payout_wallets: this.settings.mode === "card" ? [this.settings.cardWallet] : Object.values(this.settings.wallets).filter((value): value is string => !!value),
-      deposit_address: depositAddress, checkout_url: checkoutUrl, redirect_token: new CallbackToken(this.settings.secret).sign(`redirect:${reference}`), receipts: [], settled: false, canceled: false, review: "",
+      payout_wallets:
+        this.settings.mode === "card"
+          ? [this.settings.cardWallet]
+          : Object.values(this.settings.wallets).filter((value): value is string => !!value),
+      deposit_address: depositAddress,
+      checkout_url: checkoutUrl,
+      redirect_token: new CallbackToken(this.settings.secret).sign(`redirect:${reference}`),
+      receipts: [],
+      settled: false,
+      canceled: false,
+      review: "",
     }
     return { id: reference, status: "pending", data: { paygate: sealPaygate(state, this.settings.secret) } }
   }
 
   async updatePayment(input: UpdatePaymentInput): Promise<UpdatePaymentOutput> {
     const state = readPaygate(input.data, this.settings.secret)
-    if (!decimal(state.amount).eq(new BigNumber(input.amount).bigNumber!) || state.currency !== input.currency_code.toUpperCase()) {
+    if (
+      !decimal(state.amount).eq(new BigNumber(input.amount).bigNumber!) ||
+      state.currency !== input.currency_code.toUpperCase()
+    ) {
       paygateError("Your order total changed. Choose PayGate again to create a new payment link.")
     }
     return { data: input.data, status: state.settled ? "captured" : "pending_authorization" }
@@ -81,12 +124,15 @@ export default class PaygateProvider extends AbstractPaymentProvider<Options> {
 
   async capturePayment(input: CapturePaymentInput): Promise<CapturePaymentOutput> {
     const state = readPaygate(input.data, this.settings.secret)
-    if (!state.settled || state.canceled || state.review) paygateError("A verified full PayGate settlement is required before capture.")
+    if (!state.settled || state.canceled || state.review)
+      paygateError("A verified full PayGate settlement is required before capture.")
     return { data: input.data }
   }
 
   async refundPayment(_input: RefundPaymentInput): Promise<RefundPaymentOutput> {
-    paygateError("PayGate payouts cannot be reversed through this API. Arrange and verify the refund separately; no funds were sent by Medusa.")
+    paygateError(
+      "PayGate payouts cannot be reversed through this API. Arrange and verify the refund separately; no funds were sent by Medusa.",
+    )
   }
 
   async cancelPayment(input: CancelPaymentInput): Promise<CancelPaymentOutput> {
@@ -109,7 +155,10 @@ export default class PaygateProvider extends AbstractPaymentProvider<Options> {
 
   async getPaymentStatus(input: GetPaymentStatusInput): Promise<GetPaymentStatusOutput> {
     const state = readPaygate(input.data, this.settings.secret)
-    return { data: input.data, status: state.canceled ? "canceled" : state.settled ? "captured" : "pending_authorization" }
+    return {
+      data: input.data,
+      status: state.canceled ? "canceled" : state.settled ? "captured" : "pending_authorization",
+    }
   }
 
   // PayGate sends signed GET callbacks to /paygate/callback, not Medusa's POST webhook endpoint.

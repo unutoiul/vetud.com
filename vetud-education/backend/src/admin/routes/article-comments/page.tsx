@@ -32,7 +32,9 @@ const ArticleCommentsPage = () => {
   const load = useCallback(async () => {
     setLoading(true)
     try {
-      const data = await adminFetch<{ comments: AdminArticleComment[]; count: number }>(`/admin/article-comments?limit=${PAGE_SIZE}&offset=${offset}`)
+      const data = await adminFetch<{ comments: AdminArticleComment[]; count: number }>(
+        `/admin/article-comments?limit=${PAGE_SIZE}&offset=${offset}`,
+      )
       setComments(data.comments)
       setCount(data.count)
     } catch {
@@ -42,7 +44,9 @@ const ArticleCommentsPage = () => {
     }
   }, [offset])
 
-  useEffect(() => { void load() }, [load])
+  useEffect(() => {
+    void load()
+  }, [load])
 
   const remove = async (comment: AdminArticleComment) => {
     const confirmed = await prompt({
@@ -66,7 +70,8 @@ const ArticleCommentsPage = () => {
       <div className="px-6 py-4">
         <Heading level="h2">Article comments</Heading>
         <Text size="small" className="text-ui-fg-subtle">
-          Comments from signed-in customers on news articles, newest first. They appear on the site as soon as they are posted; delete any that break the rules (for example, doses or medical advice).
+          Comments from signed-in customers on news articles, newest first. They appear on the site as soon as they are
+          posted; delete any that break the rules (for example, doses or medical advice).
         </Text>
       </div>
       <Table>
@@ -80,18 +85,29 @@ const ArticleCommentsPage = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {comments.map(comment => (
+          {comments.map((comment) => (
             <Table.Row key={comment.id} className="align-top">
               <Table.Cell className="whitespace-nowrap">{new Date(comment.created_at).toLocaleString()}</Table.Cell>
               <Table.Cell>
-                <a className="text-ui-fg-interactive" href={`${STOREFRONT_URL}/news/${comment.article_slug}#comments`} target="_blank" rel="noreferrer">{comment.article_slug}</a>
+                <a
+                  className="text-ui-fg-interactive"
+                  href={`${STOREFRONT_URL}/news/${comment.article_slug}#comments`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {comment.article_slug}
+                </a>
               </Table.Cell>
               <Table.Cell>
-                <a className="text-ui-fg-interactive" href={`/app/customers/${comment.customer_id}`}>{comment.author_name}</a>
+                <a className="text-ui-fg-interactive" href={`/app/customers/${comment.customer_id}`}>
+                  {comment.author_name}
+                </a>
               </Table.Cell>
               <Table.Cell className="max-w-[480px] whitespace-pre-wrap break-words py-3">{comment.body}</Table.Cell>
               <Table.Cell>
-                <Button size="small" variant="danger" onClick={() => void remove(comment)}>Delete</Button>
+                <Button size="small" variant="danger" onClick={() => void remove(comment)}>
+                  Delete
+                </Button>
               </Table.Cell>
             </Table.Row>
           ))}
@@ -105,8 +121,8 @@ const ArticleCommentsPage = () => {
         pageCount={Math.max(1, Math.ceil(count / PAGE_SIZE))}
         canPreviousPage={offset > 0}
         canNextPage={offset + PAGE_SIZE < count}
-        previousPage={() => setOffset(value => Math.max(0, value - PAGE_SIZE))}
-        nextPage={() => setOffset(value => value + PAGE_SIZE)}
+        previousPage={() => setOffset((value) => Math.max(0, value - PAGE_SIZE))}
+        nextPage={() => setOffset((value) => value + PAGE_SIZE)}
       />
     </Container>
   )

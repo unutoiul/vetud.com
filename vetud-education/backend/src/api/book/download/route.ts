@@ -12,7 +12,11 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
   res.setHeader("X-Robots-Tag", "noindex")
   const sessionId = typeof req.query.session_id === "string" ? req.query.session_id.trim() : ""
   if (!(await paidBookSession(sessionId))) {
-    res.status(403).json({ message: "This download link isn't valid. Use the link from your email, or contact us at contact@vetud.com." })
+    res
+      .status(403)
+      .json({
+        message: "This download link isn't valid. Use the link from your email, or contact us at contact@vetud.com.",
+      })
     return
   }
   const hosted = hostedBookUrl()
@@ -22,7 +26,11 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
   }
   const path = bookPdfPath()
   if (!path) {
-    res.status(503).json({ message: "The book isn't available right now. Please write to contact@vetud.com and we'll send it to you." })
+    res
+      .status(503)
+      .json({
+        message: "The book isn't available right now. Please write to contact@vetud.com and we'll send it to you.",
+      })
     return
   }
   const { size } = await stat(path)

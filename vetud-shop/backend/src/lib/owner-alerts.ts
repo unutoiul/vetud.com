@@ -20,7 +20,10 @@ export type NewsletterSubscribedEvent = {
  * group, so sending the pop-up again doesn't alert the owner twice. Someone who unsubscribed and
  * signs up again counts as new.
  */
-export function isNewNewsletterSignup(previous: { marketing_consent?: unknown } | null | undefined, wasInGroup: boolean) {
+export function isNewNewsletterSignup(
+  previous: { marketing_consent?: unknown } | null | undefined,
+  wasInGroup: boolean,
+) {
   return !(previous?.marketing_consent === true && wasInGroup)
 }
 

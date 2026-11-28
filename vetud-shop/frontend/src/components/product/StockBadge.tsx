@@ -8,28 +8,30 @@ import Icon from "@/components/brand/Icon"
 export default function StockBadge({ inStock }: { inStock: boolean }) {
   const t = useTranslations("Common")
 
-  return <Box
-    component="span"
-    data-stock-status={inStock ? "available" : "sold-out"}
-    sx={{
-      display: "inline-flex",
-      alignItems: "center",
-      gap: .75,
-      flexShrink: 0,
-      minHeight: 34,
-      px: 1.25,
-      py: .5,
-      boxSizing: "border-box",
-      borderRadius: "5px",
-      bgcolor: inStock ? "success.main" : "error.main",
-      color: inStock ? "success.contrastText" : "error.contrastText",
-      fontSize: 13,
-      fontWeight: 700,
-      lineHeight: 1.4,
-      whiteSpace: "nowrap",
-    }}
-  >
-    <Icon name={inStock ? "checkCircle" : "close"} sx={{ fontSize: 17 }} />
-    {t(inStock ? "available" : "soldOut")}
-  </Box>
+  return (
+    <Box
+      component="span"
+      data-stock-status={inStock ? "available" : "sold-out"}
+      sx={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 0.75,
+        flexShrink: 0,
+        minHeight: 34,
+        px: 1.25,
+        py: 0.5,
+        boxSizing: "border-box",
+        borderRadius: "5px",
+        bgcolor: inStock ? "success.main" : "error.main",
+        color: inStock ? "success.contrastText" : "error.contrastText",
+        fontSize: 13,
+        fontWeight: 700,
+        lineHeight: 1.4,
+        whiteSpace: "nowrap",
+      }}
+    >
+      <Icon name={inStock ? "checkCircle" : "close"} sx={{ fontSize: 17 }} />
+      {t(inStock ? "available" : "soldOut")}
+    </Box>
+  )
 }

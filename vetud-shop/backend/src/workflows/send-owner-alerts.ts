@@ -1,8 +1,19 @@
 import type { CreateNotificationDTO } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import { emailSettings } from "../lib/notifications"
-import { guestCheckoutAlertKey, isGuestCheckout, type GuestCartRow, type NewsletterSubscribedEvent } from "../lib/owner-alerts"
+import {
+  guestCheckoutAlertKey,
+  isGuestCheckout,
+  type GuestCartRow,
+  type NewsletterSubscribedEvent,
+} from "../lib/owner-alerts"
 import type { GuestCheckoutAlertData, NewsletterSignupAlertData } from "../modules/resend/owner-alerts"
 import { EmailTemplates } from "../modules/resend/templates"
 import { sendNotificationStep } from "./steps/send-notification"
@@ -34,14 +45,22 @@ export const sendNewsletterSignupAlertWorkflow = createWorkflow(
       return [notification]
     })
     return new WorkflowResponse(sendNotificationStep(notifications))
-  }
+  },
 )
 
 type CartRow = Omit<GuestCartRow, "items"> & {
   created_at: string | Date
   currency_code: string
   region?: { name?: string | null } | null
-  items?: { title?: string | null; product_title?: string | null; variant_title?: string | null; quantity?: number | string | null; unit_price?: number | string | null }[] | null
+  items?:
+    | {
+        title?: string | null
+        product_title?: string | null
+        variant_title?: string | null
+        quantity?: number | string | null
+        unit_price?: number | string | null
+      }[]
+    | null
 }
 
 /**
@@ -57,8 +76,19 @@ const buildGuestCheckoutAlertStep = createStep(
     const { data: carts } = await query.graph({
       entity: "cart",
       fields: [
-        "id", "email", "created_at", "completed_at", "currency_code", "region.name", "customer.has_account",
-        "items.id", "items.title", "items.product_title", "items.variant_title", "items.quantity", "items.unit_price",
+        "id",
+        "email",
+        "created_at",
+        "completed_at",
+        "currency_code",
+        "region.name",
+        "customer.has_account",
+        "items.id",
+        "items.title",
+        "items.product_title",
+        "items.variant_title",
+        "items.quantity",
+        "items.unit_price",
       ],
       filters: { id: input.id },
     })
@@ -68,10 +98,18 @@ const buildGuestCheckoutAlertStep = createStep(
     const email = cart.email.trim().toLowerCase()
     const key = guestCheckoutAlertKey(cart.id, email)
     // Checked here as well as by the Notification Module, so a failed send isn't retried on every cart change.
-    const { data: sent } = await query.graph({ entity: "notification", fields: ["id"], filters: { idempotency_key: key } })
+    const { data: sent } = await query.graph({
+      entity: "notification",
+      fields: ["id"],
+      filters: { idempotency_key: key },
+    })
     if (sent.length) return new StepResponse([] as CreateNotificationDTO[])
 
-    const { data: members } = await query.graph({ entity: "customer", fields: ["id"], filters: { email, has_account: true } })
+    const { data: members } = await query.graph({
+      entity: "customer",
+      fields: ["id"],
+      filters: { email, has_account: true },
+    })
     const data: GuestCheckoutAlertData = {
       email,
       currency_code: cart.currency_code,
@@ -96,7 +134,7 @@ const buildGuestCheckoutAlertStep = createStep(
       idempotency_key: key,
     }
     return new StepResponse([notification])
-  }
+  },
 )
 
 /** Emails the owner once when a guest (not signed in) gives their email at checkout. */
@@ -105,5 +143,5 @@ export const sendGuestCheckoutAlertWorkflow = createWorkflow(
   function (input: { id: string }) {
     const notifications = buildGuestCheckoutAlertStep(input)
     return new WorkflowResponse(sendNotificationStep(notifications))
-  }
+  },
 )

@@ -1,10 +1,24 @@
 import type { CreateNotificationDTO, MedusaContainer } from "@medusajs/framework/types"
 import { MedusaError, Modules } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  when,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import { emitEventStep } from "@medusajs/medusa/core-flows"
 import { emailSettings } from "../lib/notifications"
 import { isNewNewsletterSignup, NEWSLETTER_SUBSCRIBED_EVENT, type NewsletterSubscribedEvent } from "../lib/owner-alerts"
-import { CONSENT_TEXT, CONSENT_VERSION, getActiveOffer, isValidUnsubscribeToken, NEWSLETTER_GROUP, unsubscribeToken } from "../lib/newsletter"
+import {
+  CONSENT_TEXT,
+  CONSENT_VERSION,
+  getActiveOffer,
+  isValidUnsubscribeToken,
+  NEWSLETTER_GROUP,
+  unsubscribeToken,
+} from "../lib/newsletter"
 import { EmailTemplates } from "../modules/resend/templates"
 import { sendNotificationStep } from "./steps/send-notification"
 
@@ -13,9 +27,12 @@ type SubscribeInput = { email: string; country_code?: string }
 /** Don't email the same address more often than this, however often the form is sent. */
 const RESEND_AFTER_MS = 10 * 60 * 1000
 
-const findNewsletterOfferStep = createStep("find-newsletter-offer", async (_input: Record<string, never>, { container }) => {
-  return new StepResponse(await getActiveOffer(container))
-})
+const findNewsletterOfferStep = createStep(
+  "find-newsletter-offer",
+  async (_input: Record<string, never>, { container }) => {
+    return new StepResponse(await getActiveOffer(container))
+  },
+)
 
 async function newsletterGroupId(container: MedusaContainer) {
   const customers = container.resolve(Modules.CUSTOMER)
@@ -64,7 +81,13 @@ const upsertNewsletterSubscriberStep = createStep(
         isNew: isNewNewsletterSignup(existing?.metadata, alreadyInGroup),
         subscribedAt: now.toISOString(),
       },
-      { customerId: customer.id, created: !existing, previousMetadata: existing?.metadata ?? null, groupId, addedToGroup: !alreadyInGroup }
+      {
+        customerId: customer.id,
+        created: !existing,
+        previousMetadata: existing?.metadata ?? null,
+        groupId,
+        addedToGroup: !alreadyInGroup,
+      },
     )
   },
   async (previous, { container }) => {
@@ -75,20 +98,21 @@ const upsertNewsletterSubscriberStep = createStep(
       return
     }
     await customers.updateCustomers(previous.customerId, { metadata: previous.previousMetadata ?? {} })
-    if (previous.addedToGroup) await customers.removeCustomerFromGroup({ customer_id: previous.customerId, customer_group_id: previous.groupId })
-  }
+    if (previous.addedToGroup)
+      await customers.removeCustomerFromGroup({ customer_id: previous.customerId, customer_group_id: previous.groupId })
+  },
 )
 
 /**
  * Signs up an email for offers and sends the current pop-up code, if there is one. A new sign-up
  * also emits newsletter.subscribed, which emails the owner (subscribers/newsletter-subscribed.ts).
  */
-export const subscribeNewsletterWorkflow = createWorkflow(
-  "subscribe-newsletter",
-  (input: SubscribeInput) => {
-    const offer = findNewsletterOfferStep({})
-    const subscriber = upsertNewsletterSubscriberStep(input)
-    const notifications = transform({ offer, subscriber, input }, ({ offer: current, subscriber: person, input: data }) => {
+export const subscribeNewsletterWorkflow = createWorkflow("subscribe-newsletter", (input: SubscribeInput) => {
+  const offer = findNewsletterOfferStep({})
+  const subscriber = upsertNewsletterSubscriberStep(input)
+  const notifications = transform(
+    { offer, subscriber, input },
+    ({ offer: current, subscriber: person, input: data }) => {
       if (!person.sendEmail) return [] as CreateNotificationDTO[]
       const { storefrontUrl } = emailSettings()
       const country = data.country_code && /^[a-z]{2}$/.test(data.country_code) ? `/${data.country_code}` : ""
@@ -105,27 +129,29 @@ export const subscribeNewsletterWorkflow = createWorkflow(
         trigger_type: "newsletter.subscribed",
       }
       return [notification]
-    })
-    sendNotificationStep(notifications)
+    },
+  )
+  sendNotificationStep(notifications)
 
-    const signup = transform({ offer, subscriber, input }, ({ offer: current, subscriber: person, input: data }): NewsletterSubscribedEvent | null =>
+  const signup = transform(
+    { offer, subscriber, input },
+    ({ offer: current, subscriber: person, input: data }): NewsletterSubscribedEvent | null =>
       person.isNew
         ? {
             customer_id: person.customerId,
             email: person.email,
             country_code: data.country_code ?? null,
             has_account: person.hasAccount,
-            offer_code: person.sendEmail ? current?.code ?? null : null,
+            offer_code: person.sendEmail ? (current?.code ?? null) : null,
             subscribed_at: person.subscribedAt,
           }
-        : null
-    )
-    when("newsletter-signup-is-new", { signup }, ({ signup: event }) => event !== null).then(() => {
-      emitEventStep({ eventName: NEWSLETTER_SUBSCRIBED_EVENT, data: signup as unknown as NewsletterSubscribedEvent })
-    })
-    return new WorkflowResponse({ success: true })
-  }
-)
+        : null,
+  )
+  when("newsletter-signup-is-new", { signup }, ({ signup: event }) => event !== null).then(() => {
+    emitEventStep({ eventName: NEWSLETTER_SUBSCRIBED_EVENT, data: signup as unknown as NewsletterSubscribedEvent })
+  })
+  return new WorkflowResponse({ success: true })
+})
 
 /** Withdraws consent for every customer with this email and removes them from the Newsletter group. */
 const unsubscribeNewsletterStep = createStep(
@@ -133,21 +159,30 @@ const unsubscribeNewsletterStep = createStep(
   async (input: { email: string; token: string }, { container }) => {
     const email = input.email.trim().toLowerCase()
     if (!isValidUnsubscribeToken(email, input.token)) {
-      throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "This unsubscribe link isn't valid. Please use the link from your latest email.")
+      throw new MedusaError(
+        MedusaError.Types.NOT_ALLOWED,
+        "This unsubscribe link isn't valid. Please use the link from your latest email.",
+      )
     }
     const customers = container.resolve(Modules.CUSTOMER)
     const [group] = await customers.listCustomerGroups({ name: NEWSLETTER_GROUP })
     for (const customer of await customers.listCustomers({ email }, { relations: ["groups"] })) {
-      await customers.updateCustomers(customer.id, { metadata: { ...(customer.metadata ?? {}), marketing_consent: false, marketing_unsubscribed_at: new Date().toISOString() } })
+      await customers.updateCustomers(customer.id, {
+        metadata: {
+          ...(customer.metadata ?? {}),
+          marketing_consent: false,
+          marketing_unsubscribed_at: new Date().toISOString(),
+        },
+      })
       if (group && customer.groups?.some((item) => item.id === group.id)) {
         await customers.removeCustomerFromGroup({ customer_id: customer.id, customer_group_id: group.id })
       }
     }
     return new StepResponse({ success: true })
-  }
+  },
 )
 
 export const unsubscribeNewsletterWorkflow = createWorkflow(
   "unsubscribe-newsletter",
-  (input: { email: string; token: string }) => new WorkflowResponse(unsubscribeNewsletterStep(input))
+  (input: { email: string; token: string }) => new WorkflowResponse(unsubscribeNewsletterStep(input)),
 )

@@ -99,7 +99,11 @@ export type ForumStats = {
   topics?: Record<string, { threads: number; last_activity_at: string | null }>
 }
 
-export type ForumMemberPage = { member: ForumMember; totals: { threads: number; replies: number }; threads: ForumThread[] }
+export type ForumMemberPage = {
+  member: ForumMember
+  totals: { threads: number; replies: number }
+  threads: ForumThread[]
+}
 
 export type ThreadFilters = {
   kind?: ThreadKind

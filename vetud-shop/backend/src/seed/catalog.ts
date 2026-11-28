@@ -75,7 +75,7 @@ function peptide(
   index: number,
   accent: string,
   prices: { small: number; large: number },
-  featured = false
+  featured = false,
 ): SeedProduct {
   const number = String(index).padStart(2, "0")
   return {

@@ -5,5 +5,15 @@ import { getActiveOffer } from "../../../../lib/newsletter"
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const offer = await getActiveOffer(req.scope)
   res.setHeader("Cache-Control", "public, max-age=60")
-  res.json({ offer: offer ? { id: offer.promotion_id, headline: offer.headline, description: offer.description, discount: offer.discount, ends_at: offer.ends_at } : null })
+  res.json({
+    offer: offer
+      ? {
+          id: offer.promotion_id,
+          headline: offer.headline,
+          description: offer.description,
+          discount: offer.discount,
+          ends_at: offer.ends_at,
+        }
+      : null,
+  })
 }

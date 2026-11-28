@@ -50,10 +50,7 @@ export const NASAL_SPRAYS = [
       "The 10 ml label describes the amount of liquid in the bottle, not the amount of peptide. " +
       `Ingredient information: ${ingredients} The peptide concentration and total peptide content are not yet confirmed. ` +
       `Supplied for laboratory research only; not for human or veterinary use.\n\n${PRODUCT_CARE_DESCRIPTION}`,
-    images: [
-      `vetud_${product.handle}_landscape_01.png`,
-      `vetud_${product.handle}_landscape_02.png`,
-    ],
+    images: [`vetud_${product.handle}_landscape_01.png`, `vetud_${product.handle}_landscape_02.png`],
     metadata: {
       code: product.code,
       accent: product.accent,

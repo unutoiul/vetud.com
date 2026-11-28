@@ -19,10 +19,18 @@ export async function getLanguageI18n(language: Language) {
 }
 
 const CLIENT_KEYS = new Set<string>(clientKeys)
-const clientOnly = <T,>(record: Record<string, T>) => Object.fromEntries(Object.entries(record).filter(([key]) => CLIENT_KEYS.has(key)))
+const clientOnly = <T>(record: Record<string, T>) =>
+  Object.fromEntries(Object.entries(record).filter(([key]) => CLIENT_KEYS.has(key)))
 
 /** What the browser receives: the menus and the text client components show, not whole guides. */
 export async function getClientI18n(language: Language) {
   const full = await getLanguageI18n(language)
-  return { ...full, messages: { ...full.messages, Content: clientOnly(full.messages.Content), ContentTemplates: clientOnly(full.messages.ContentTemplates) } }
+  return {
+    ...full,
+    messages: {
+      ...full.messages,
+      Content: clientOnly(full.messages.Content),
+      ContentTemplates: clientOnly(full.messages.ContentTemplates),
+    },
+  }
 }

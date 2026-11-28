@@ -15,7 +15,12 @@ import {
 import { accountRoutes } from "./account-middlewares"
 import { forumRoutes } from "./forum-middlewares"
 import { StoreSignInCodeSchema } from "./store/sign-in-code/validators"
-import { StoreBookCheckoutSchema, StoreBookOfferQuery, StoreBookOrderQuery, StoreBookRequestSchema } from "./store/book/validators"
+import {
+  StoreBookCheckoutSchema,
+  StoreBookOfferQuery,
+  StoreBookOrderQuery,
+  StoreBookRequestSchema,
+} from "./store/book/validators"
 
 export default defineMiddlewares({
   routes: [

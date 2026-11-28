@@ -1,13 +1,20 @@
 import assert from "node:assert/strict"
 import { test } from "node:test"
 import { productMerchandising, merchandisingPriority } from "../src/lib/product-merchandising.ts"
-import { PRODUCT_MERCHANDISING, withMerchandisingDefaults, withExpandedMerchandising } from "../../backend/src/lib/product-merchandising.ts"
+import {
+  PRODUCT_MERCHANDISING,
+  withMerchandisingDefaults,
+  withExpandedMerchandising,
+} from "../../backend/src/lib/product-merchandising.ts"
 
 test("labels are independent and false metadata cannot accidentally enable a badge", () => {
   for (const veryPopular of [false, true]) {
     for (const bestSeller of [false, true]) {
       for (const asText of [false, true]) {
-        const metadata = { very_popular: asText ? String(veryPopular) : veryPopular, best_seller: asText ? String(bestSeller) : bestSeller }
+        const metadata = {
+          very_popular: asText ? String(veryPopular) : veryPopular,
+          best_seller: asText ? String(bestSeller) : bestSeller,
+        }
         assert.deepEqual(productMerchandising({ metadata }), { veryPopular, bestSeller })
       }
     }

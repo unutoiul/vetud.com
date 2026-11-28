@@ -30,8 +30,38 @@ export type Consent = "granted" | "denied"
 
 /** Where analytics cookies need a yes first: the EEA, the UK and Switzerland (Google's region list). */
 export const CONSENT_REGIONS = [
-  "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT",
-  "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH",
+  "AT",
+  "BE",
+  "BG",
+  "HR",
+  "CY",
+  "CZ",
+  "DK",
+  "EE",
+  "FI",
+  "FR",
+  "DE",
+  "GR",
+  "HU",
+  "IE",
+  "IT",
+  "LV",
+  "LT",
+  "LU",
+  "MT",
+  "NL",
+  "PL",
+  "PT",
+  "RO",
+  "SK",
+  "SI",
+  "ES",
+  "SE",
+  "IS",
+  "LI",
+  "NO",
+  "GB",
+  "CH",
 ]
 
 /**
@@ -41,7 +71,11 @@ export const CONSENT_REGIONS = [
 export function europeanTimeZone(): boolean {
   try {
     const zone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? ""
-    return /^Europe\//.test(zone) || /^Atlantic\/(Reykjavik|Faroe|Canary|Madeira|Azores)$/.test(zone) || /^Asia\/(Nicosia|Famagusta)$/.test(zone)
+    return (
+      /^Europe\//.test(zone) ||
+      /^Atlantic\/(Reykjavik|Faroe|Canary|Madeira|Azores)$/.test(zone) ||
+      /^Asia\/(Nicosia|Famagusta)$/.test(zone)
+    )
   } catch {
     return false
   }

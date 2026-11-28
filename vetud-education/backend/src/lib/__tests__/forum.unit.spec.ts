@@ -1,7 +1,15 @@
 import { containsDose, containsLink, screenPost } from "../forum/moderation"
 import { publicAuthor, publicPost, type PostRecord, type ProfileRecord } from "../forum/public"
 import { computeReputation, levelFor, nextLevelFor, PARTICIPATION_CAP } from "../forum/reputation"
-import { DISPLAY_NAME_PATTERN, excerptOf, handleFor, isReservedHandle, normalizeBody, slugify, suggestedDisplayName } from "../forum/text"
+import {
+  DISPLAY_NAME_PATTERN,
+  excerptOf,
+  handleFor,
+  isReservedHandle,
+  normalizeBody,
+  slugify,
+  suggestedDisplayName,
+} from "../forum/text"
 
 describe("forum moderation", () => {
   it("finds dose amounts in the usual spellings", () => {
@@ -11,7 +19,15 @@ describe("forum moderation", () => {
   })
 
   it("leaves body measurements and ordinary numbers alone", () => {
-    for (const text of ["Down from 92 kg to 86 kg", "waist 96 cm", "week 12", "slept 7.5 h", "lost 4 lb", "Lot VTD01-2609A", "mgmt meeting"]) {
+    for (const text of [
+      "Down from 92 kg to 86 kg",
+      "waist 96 cm",
+      "week 12",
+      "slept 7.5 h",
+      "lost 4 lb",
+      "Lot VTD01-2609A",
+      "mgmt meeting",
+    ]) {
       expect(containsDose(text)).toBe(false)
     }
   })
@@ -47,9 +63,13 @@ describe("forum reputation", () => {
 
   it("counts taking part, up to a cap, so higher levels need helpful votes and best answers", () => {
     expect(computeReputation({ helpfulVotes: 0, bestAnswers: 0, removedPosts: 0, replies: 4, threads: 3 })).toBe(10)
-    expect(computeReputation({ helpfulVotes: 0, bestAnswers: 0, removedPosts: 0, replies: 500, threads: 50 })).toBe(PARTICIPATION_CAP)
+    expect(computeReputation({ helpfulVotes: 0, bestAnswers: 0, removedPosts: 0, replies: 500, threads: 50 })).toBe(
+      PARTICIPATION_CAP,
+    )
     expect(levelFor(PARTICIPATION_CAP).id).toBe("contributor")
-    expect(computeReputation({ helpfulVotes: 30, bestAnswers: 0, removedPosts: 0, replies: 500 })).toBe(60 + PARTICIPATION_CAP)
+    expect(computeReputation({ helpfulVotes: 30, bestAnswers: 0, removedPosts: 0, replies: 500 })).toBe(
+      60 + PARTICIPATION_CAP,
+    )
   })
 
   it("maps reputation to levels", () => {
@@ -89,12 +109,28 @@ describe("forum text", () => {
 
 describe("forum public projections", () => {
   const profile: ProfileRecord = {
-    id: "fprof_1", customer_id: "cus_1", display_name: "Dr Ana", handle: "dr-ana", role: "expert",
-    credentials: "MD, endocrinology", bio: null, reputation: 120, status: "active", created_at: "2026-11-01",
+    id: "fprof_1",
+    customer_id: "cus_1",
+    display_name: "Dr Ana",
+    handle: "dr-ana",
+    role: "expert",
+    credentials: "MD, endocrinology",
+    bio: null,
+    reputation: 120,
+    status: "active",
+    created_at: "2026-11-01",
   }
   const post: PostRecord = {
-    id: "fpost_1", thread_id: "fthr_1", author_id: "fprof_1", body: "Hello", is_opening: false,
-    status: "pending", hold_reason: "link", helpful_count: 0, edited_at: null, created_at: "2026-11-02",
+    id: "fpost_1",
+    thread_id: "fthr_1",
+    author_id: "fprof_1",
+    body: "Hello",
+    is_opening: false,
+    status: "pending",
+    hold_reason: "link",
+    helpful_count: 0,
+    edited_at: null,
+    created_at: "2026-11-02",
   }
 
   it("never exposes the customer and shows moderation details only to the author", () => {
@@ -102,8 +138,16 @@ describe("forum public projections", () => {
     const forOthers = publicPost(post, { authors, viewer: null })
     expect(JSON.stringify(forOthers)).not.toContain("cus_1")
     expect(forOthers).not.toHaveProperty("status")
-    expect(forOthers.author).toMatchObject({ display_name: "Dr Ana", credentials: "MD, endocrinology", level_id: "trusted" })
-    expect(publicPost(post, { authors, viewer: profile })).toMatchObject({ mine: true, status: "pending", hold_reason: "link" })
+    expect(forOthers.author).toMatchObject({
+      display_name: "Dr Ana",
+      credentials: "MD, endocrinology",
+      level_id: "trusted",
+    })
+    expect(publicPost(post, { authors, viewer: profile })).toMatchObject({
+      mine: true,
+      status: "pending",
+      hold_reason: "link",
+    })
   })
 
   it("hides credentials unless the member is an expert, and covers deleted profiles", () => {

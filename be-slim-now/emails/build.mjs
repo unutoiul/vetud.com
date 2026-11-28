@@ -63,12 +63,18 @@ export function buildAll() {
     const html = layout({ preheader: meta.preheader, rows })
     const text = plainText(readFileSync(path.join(ROOT, "templates", `${name}.txt`), "utf8"))
     const problems = []
-    const used = new Set([...`${html}${text}${meta.subject}`.matchAll(/\{\{\{\s*([A-Z0-9_]+)\s*\}\}\}/g)].map((m) => m[1]))
-    for (const variable of used) if (!meta.variables.includes(variable)) problems.push(`uses {{{${variable}}}}, which the Resend template doesn't declare`)
-    for (const variable of meta.variables) if (!used.has(variable)) problems.push(`declares ${variable} but never uses it`)
+    const used = new Set(
+      [...`${html}${text}${meta.subject}`.matchAll(/\{\{\{\s*([A-Z0-9_]+)\s*\}\}\}/g)].map((m) => m[1]),
+    )
+    for (const variable of used)
+      if (!meta.variables.includes(variable))
+        problems.push(`uses {{{${variable}}}}, which the Resend template doesn't declare`)
+    for (const variable of meta.variables)
+      if (!used.has(variable)) problems.push(`declares ${variable} but never uses it`)
     if (meta.variables.includes("EMAIL")) problems.push("EMAIL is a reserved Resend variable name")
     if (meta.name.length > 50) problems.push("Resend template names are 50 characters at most")
-    if (Buffer.byteLength(html) > MAX_BYTES) problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
+    if (Buffer.byteLength(html) > MAX_BYTES)
+      problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
     if (problems.length) throw new Error(`${name}: ${problems.join("; ")}`)
     return { name, id: meta.id, subject: meta.subject, html, text }
   })

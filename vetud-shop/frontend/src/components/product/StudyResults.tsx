@@ -9,20 +9,61 @@ const WHO = { people: "In people", animals: "In animals", cells: "In cells", rev
 const COMPOUND = brand.blue
 const COMPARISON = brand.slate400_2
 
-const shown = (bar: { value: number; display?: string }, unit = "", locale = "en-US") => bar.display ?? (unit === "%" ? new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 3 }).format(bar.value / 100) : `${bar.value.toLocaleString(locale)}${unit}`)
+const shown = (bar: { value: number; display?: string }, unit = "", locale = "en-US") =>
+  bar.display ??
+  (unit === "%"
+    ? new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 3 }).format(bar.value / 100)
+    : `${bar.value.toLocaleString(locale)}${unit}`)
 
 function Bars({ result }: { result: StudyResult }) {
   const ct = useContentTranslator()
   const bars = result.bars ?? []
   const max = Math.max(...bars.map((bar) => bar.value)) * 1.08
   return (
-    <Box sx={{ display: "grid", gridTemplateColumns: "minmax(96px, max-content) 1fr", columnGap: 1.5, rowGap: .75, alignItems: "center" }}>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "minmax(96px, max-content) 1fr",
+        columnGap: 1.5,
+        rowGap: 0.75,
+        alignItems: "center",
+      }}
+    >
       {bars.map((bar, index) => (
         <Box key={bar.label} sx={{ display: "contents" }}>
-          <Typography sx={{ fontSize: 13, fontWeight: index === 0 ? 650 : 500, color: index === 0 ? "text.primary" : "text.secondary" }}>{ct(bar.label)}</Typography>
+          <Typography
+            sx={{
+              fontSize: 13,
+              fontWeight: index === 0 ? 650 : 500,
+              color: index === 0 ? "text.primary" : "text.secondary",
+            }}
+          >
+            {ct(bar.label)}
+          </Typography>
           <Box sx={{ display: "flex", alignItems: "center", minWidth: 0 }}>
-            <Box aria-hidden sx={{ height: 16, width: `${Math.max(2, (bar.value / max) * 100)}%`, bgcolor: index === 0 ? COMPOUND : COMPARISON, borderRadius: "0 4px 4px 0", flexShrink: 0, maxWidth: "calc(100% - 64px)" }} />
-            <Typography component="span" sx={{ ml: 1, fontSize: 13, fontWeight: index === 0 ? 700 : 500, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>{ct(shown(bar, result.unit, ct.locale))}</Typography>
+            <Box
+              aria-hidden
+              sx={{
+                height: 16,
+                width: `${Math.max(2, (bar.value / max) * 100)}%`,
+                bgcolor: index === 0 ? COMPOUND : COMPARISON,
+                borderRadius: "0 4px 4px 0",
+                flexShrink: 0,
+                maxWidth: "calc(100% - 64px)",
+              }}
+            />
+            <Typography
+              component="span"
+              sx={{
+                ml: 1,
+                fontSize: 13,
+                fontWeight: index === 0 ? 700 : 500,
+                fontVariantNumeric: "tabular-nums",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {ct(shown(bar, result.unit, ct.locale))}
+            </Typography>
           </Box>
         </Box>
       ))}
@@ -35,31 +76,128 @@ function Bars({ result }: { result: StudyResult }) {
  * isn't, and a sentence when there's nothing to chart. Each says who was studied and links its
  * source. `framing` sits on top (on product pages: these are not results of the research material).
  */
-export default function StudyResults({ results, sources, framing }: { results: StudyResult[]; sources: Source[]; framing?: string }) {
+export default function StudyResults({
+  results,
+  sources,
+  framing,
+}: {
+  results: StudyResult[]
+  sources: Source[]
+  framing?: string
+}) {
   const ct = useContentTranslator()
   return (
     <Box sx={{ maxWidth: 800 }}>
-      {framing ? <Typography sx={{ fontSize: 13.5, lineHeight: 1.7, color: "text.secondary", mb: 2 }}>{ct(framing)}</Typography> : null}
+      {framing ? (
+        <Typography sx={{ fontSize: 13.5, lineHeight: 1.7, color: "text.secondary", mb: 2 }}>{ct(framing)}</Typography>
+      ) : null}
       <Box sx={{ display: "grid", gap: 2 }}>
         {results.map((result) => {
           const source = sources[result.source]
           const bars = result.bars ?? []
-          const description = bars.length ? ct.template("{v0}: {v1}", { v0: ct(result.title), v1: bars.map((bar) => `${ct(bar.label)} ${ct(shown(bar, result.unit, ct.locale))}`).join(", ") }, { translateValues: false }) + (result.lowerIsBetter ? ` (${ct("Lower is better")})` : "") : ct(result.title)
+          const description = bars.length
+            ? ct.template(
+                "{v0}: {v1}",
+                {
+                  v0: ct(result.title),
+                  v1: bars.map((bar) => `${ct(bar.label)} ${ct(shown(bar, result.unit, ct.locale))}`).join(", "),
+                },
+                { translateValues: false },
+              ) + (result.lowerIsBetter ? ` (${ct("Lower is better")})` : "")
+            : ct(result.title)
           return (
-            <Box component="figure" key={result.title} aria-label={ct(description)} sx={{ m: 0, p: { xs: 2, md: 2.5 }, border: "1px solid", borderColor: "divider", borderRadius: "8px", bgcolor: brand.white }}>
+            <Box
+              component="figure"
+              key={result.title}
+              aria-label={ct(description)}
+              sx={{
+                m: 0,
+                p: { xs: 2, md: 2.5 },
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: "8px",
+                bgcolor: brand.white,
+              }}
+            >
               <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1, mb: 1 }}>
-                <Box component="span" sx={{ px: 1, py: .25, borderRadius: 999, fontSize: 11.5, fontWeight: 650, bgcolor: result.who === "people" ? brand.blue50_4 : result.who === "review" ? brand.slate50_4 : brand.orange75, color: result.who === "people" ? brand.blue675 : result.who === "review" ? brand.slate650 : brand.orange750 }}>{ct(WHO[result.who])}</Box>
-                {result.lowerIsBetter ? <Typography component="span" sx={{ fontSize: 12, color: "text.secondary" }}>{ct("Lower is better")}</Typography> : null}
+                <Box
+                  component="span"
+                  sx={{
+                    px: 1,
+                    py: 0.25,
+                    borderRadius: 999,
+                    fontSize: 11.5,
+                    fontWeight: 650,
+                    bgcolor:
+                      result.who === "people"
+                        ? brand.blue50_4
+                        : result.who === "review"
+                          ? brand.slate50_4
+                          : brand.orange75,
+                    color:
+                      result.who === "people"
+                        ? brand.blue675
+                        : result.who === "review"
+                          ? brand.slate650
+                          : brand.orange750,
+                  }}
+                >
+                  {ct(WHO[result.who])}
+                </Box>
+                {result.lowerIsBetter ? (
+                  <Typography component="span" sx={{ fontSize: 12, color: "text.secondary" }}>
+                    {ct("Lower is better")}
+                  </Typography>
+                ) : null}
               </Box>
-              <Typography component="figcaption" sx={{ fontSize: 15.5, fontWeight: 650, lineHeight: 1.4 }}>{ct(result.title)}</Typography>
-              <Typography sx={{ fontSize: 13, color: "text.secondary", lineHeight: 1.6, mt: .25, mb: bars.length || result.finding ? 1.5 : 0 }}>{ct(result.study)}</Typography>
-              {bars.length > 1 ? <Bars result={result} /> : bars.length === 1 ? (
-                <Typography sx={{ fontSize: { xs: 30, md: 34 }, fontWeight: 650, letterSpacing: "-.02em", color: COMPOUND, lineHeight: 1.1, fontVariantNumeric: "tabular-nums" }}>{ct(shown(bars[0], result.unit, ct.locale))}</Typography>
+              <Typography component="figcaption" sx={{ fontSize: 15.5, fontWeight: 650, lineHeight: 1.4 }}>
+                {ct(result.title)}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: 13,
+                  color: "text.secondary",
+                  lineHeight: 1.6,
+                  mt: 0.25,
+                  mb: bars.length || result.finding ? 1.5 : 0,
+                }}
+              >
+                {ct(result.study)}
+              </Typography>
+              {bars.length > 1 ? (
+                <Bars result={result} />
+              ) : bars.length === 1 ? (
+                <Typography
+                  sx={{
+                    fontSize: { xs: 30, md: 34 },
+                    fontWeight: 650,
+                    letterSpacing: "-.02em",
+                    color: COMPOUND,
+                    lineHeight: 1.1,
+                    fontVariantNumeric: "tabular-nums",
+                  }}
+                >
+                  {ct(shown(bars[0], result.unit, ct.locale))}
+                </Typography>
               ) : null}
-              {result.finding ? <Typography sx={{ fontSize: 14, lineHeight: 1.7, mt: bars.length ? 1.25 : 0 }}>{ct(result.finding)}</Typography> : null}
+              {result.finding ? (
+                <Typography sx={{ fontSize: 14, lineHeight: 1.7, mt: bars.length ? 1.25 : 0 }}>
+                  {ct(result.finding)}
+                </Typography>
+              ) : null}
               {source ? (
                 <Typography sx={{ fontSize: 12, mt: 1.25, color: "text.secondary" }}>
-                  {ct("Source:")} <Box component="a" href={source.url} target="_blank" rel="noopener noreferrer" sx={{ color: "brand.blue" }}>{ct(source.title)}</Box> · {ct(source.detail)}
+                  {ct("Source:")}{" "}
+                  <Box
+                    component="a"
+                    href={source.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ color: "brand.blue" }}
+                  >
+                    {ct(source.title)}
+                  </Box>{" "}
+                  · {ct(source.detail)}
                 </Typography>
               ) : null}
             </Box>

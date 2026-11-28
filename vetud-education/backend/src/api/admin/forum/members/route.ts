@@ -8,7 +8,7 @@ export async function GET(req: AuthenticatedMedusaRequest<unknown, AdminForumMem
   const { q, role, offset, limit } = req.validatedQuery
   const filters: Record<string, unknown> = {}
   if (role) filters.role = role
-  if (q) filters.display_name = { $ilike: `%${q.replace(/[\\%_]/g, character => `\\${character}`)}%` }
+  if (q) filters.display_name = { $ilike: `%${q.replace(/[\\%_]/g, (character) => `\\${character}`)}%` }
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const { data, metadata } = await query.graph({

@@ -1,10 +1,5 @@
 import type { CreateNotificationDTO } from "@medusajs/framework/types"
-import {
-  createStep,
-  createWorkflow,
-  StepResponse,
-  WorkflowResponse,
-} from "@medusajs/framework/workflows-sdk"
+import { createStep, createWorkflow, StepResponse, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { emailSettings } from "../lib/notifications"
 import { EmailTemplates } from "../modules/resend/templates"
 import { sendNotificationStep } from "./steps/send-notification"
@@ -23,9 +18,7 @@ const buildPasswordResetNotificationStep = createStep(
     const { storefrontUrl, adminUrl } = emailSettings()
     const query = new URLSearchParams({ token: input.token, email: input.email }).toString()
     const country =
-      typeof input.country_code === "string" && /^[a-z]{2}$/.test(input.country_code)
-        ? `/${input.country_code}`
-        : ""
+      typeof input.country_code === "string" && /^[a-z]{2}$/.test(input.country_code) ? `/${input.country_code}` : ""
     // Admin users reset in Medusa Admin; customers on the storefront.
     const resetUrl =
       input.actor_type === "user"
@@ -41,7 +34,7 @@ const buildPasswordResetNotificationStep = createStep(
     }
 
     return new StepResponse([notification])
-  }
+  },
 )
 
 /** Emails a one-time password reset link to a customer or admin user. */
@@ -52,5 +45,5 @@ export const sendPasswordResetEmailWorkflow = createWorkflow(
     sendNotificationStep(notifications)
 
     return new WorkflowResponse({ success: true })
-  }
+  },
 )

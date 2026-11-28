@@ -7,8 +7,11 @@ import { memberIdsForEmail } from "../../lib/checkout-email"
 type LinkedOrder = { order_id: string; previous_customer_id: string | null }
 
 type OrderCreatedHook = (
-  handler: (input: { order_id: string; cart_id: string }, context: { container: MedusaContainer }) => Promise<StepResponse<LinkedOrder | null, LinkedOrder | null>>,
-  compensate: (change: LinkedOrder | null, context: { container: MedusaContainer }) => Promise<void>
+  handler: (
+    input: { order_id: string; cart_id: string },
+    context: { container: MedusaContainer },
+  ) => Promise<StepResponse<LinkedOrder | null, LinkedOrder | null>>,
+  compensate: (change: LinkedOrder | null, context: { container: MedusaContainer }) => Promise<void>,
 ) => void
 
 // Medusa runs `orderCreated` once the order exists, for every payment method, but its types only
@@ -29,7 +32,14 @@ orderCreated(
         fields: ["id", "email", "customer_id", "customer.has_account"],
         filters: { id: order_id },
       })
-      const order = data[0] as { id: string; email?: string | null; customer_id?: string | null; customer?: { has_account?: boolean | null } | null } | undefined
+      const order = data[0] as
+        | {
+            id: string
+            email?: string | null
+            customer_id?: string | null
+            customer?: { has_account?: boolean | null } | null
+          }
+        | undefined
       // Only guest orders: a signed-in member's order already sits in their account.
       if (!order?.email || order.customer?.has_account !== false) return new StepResponse(null, null)
       const members = await memberIdsForEmail(query, order.email)
@@ -38,12 +48,14 @@ orderCreated(
       const change: LinkedOrder = { order_id: order.id, previous_customer_id: order.customer_id ?? null }
       return new StepResponse(change, change)
     } catch (error) {
-      container.resolve(ContainerRegistrationKeys.LOGGER).warn(`Couldn't file order ${order_id} in the member's account: ${(error as Error).message}`)
+      container
+        .resolve(ContainerRegistrationKeys.LOGGER)
+        .warn(`Couldn't file order ${order_id} in the member's account: ${(error as Error).message}`)
       return new StepResponse(null, null)
     }
   },
   async (change, { container }) => {
     if (!change?.previous_customer_id) return
     await container.resolve(Modules.ORDER).updateOrders(change.order_id, { customer_id: change.previous_customer_id })
-  }
+  },
 )

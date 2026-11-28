@@ -17,15 +17,36 @@ export default async function PeptideCommunity({ peptide }: { peptide: PeptidePr
   const threads = await listForumThreads({ peptides: [peptide.slug], limit: 3 }).catch(() => null)
 
   if (!threads?.threads.length) {
-    return <Box sx={{ p: { xs: 2.5, md: 3 }, bgcolor: "brand.mintWash", borderRadius: "10px" }}>
-      <Typography sx={{ fontSize: 16, lineHeight: 1.75, color: "brand.navySoft" }}>{ct.rich("No community threads about {v0} yet. Ask a question or start a discussion, and verified experts and other members can answer.", { v0: ct(peptide.name) }, {  })}</Typography>
-      <ButtonLink href={`/community/new?kind=question&peptide=${peptide.slug}`} variant="contained" sx={{ mt: 2 }}>{act("askAbout")} {ct(peptide.name)}</ButtonLink>
-    </Box>
+    return (
+      <Box sx={{ p: { xs: 2.5, md: 3 }, bgcolor: "brand.mintWash", borderRadius: "10px" }}>
+        <Typography sx={{ fontSize: 16, lineHeight: 1.75, color: "brand.navySoft" }}>
+          {ct.rich(
+            "No community threads about {v0} yet. Ask a question or start a discussion, and verified experts and other members can answer.",
+            { v0: ct(peptide.name) },
+            {},
+          )}
+        </Typography>
+        <ButtonLink href={`/community/new?kind=question&peptide=${peptide.slug}`} variant="contained" sx={{ mt: 2 }}>
+          {act("askAbout")} {ct(peptide.name)}
+        </ButtonLink>
+      </Box>
+    )
   }
-  return <Box>
-    {threads.threads.map(thread => <ThreadCard key={thread.id} thread={thread} />)}
-    <AppLink href={`/community?peptide=${peptide.slug}`} sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}>
-      {ct(threads.count > threads.threads.length ? act("threadsAbout", { count: threads.count, peptide: ct(peptide.name) }) : act("discussPeptide", { peptide: ct(peptide.name) }))}
-    </AppLink>
-  </Box>
+  return (
+    <Box>
+      {threads.threads.map((thread) => (
+        <ThreadCard key={thread.id} thread={thread} />
+      ))}
+      <AppLink
+        href={`/community?peptide=${peptide.slug}`}
+        sx={{ display: "inline-flex", alignItems: "center", minHeight: 44, fontSize: 15 }}
+      >
+        {ct(
+          threads.count > threads.threads.length
+            ? act("threadsAbout", { count: threads.count, peptide: ct(peptide.name) })
+            : act("discussPeptide", { peptide: ct(peptide.name) }),
+        )}
+      </AppLink>
+    </Box>
+  )
 }

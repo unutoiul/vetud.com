@@ -12,12 +12,25 @@ import { deleteTestOrdersWorkflow } from "../workflows/delete-test-orders"
  */
 const DEFAULT_KEEP = "janaroncesvalles16@gmail.com"
 
-type OrderRow = { id: string; display_id?: number | null; email?: string | null; created_at: string | Date; total?: unknown; currency_code?: string | null; status?: string | null }
+type OrderRow = {
+  id: string
+  display_id?: number | null
+  email?: string | null
+  created_at: string | Date
+  total?: unknown
+  currency_code?: string | null
+  status?: string | null
+}
 
 export default async function deleteTestOrders({ container }: ExecArgs) {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
-  const keep = new Set((process.env.KEEP_EMAILS || DEFAULT_KEEP).split(",").map((email) => email.trim().toLowerCase()).filter(Boolean))
+  const keep = new Set(
+    (process.env.KEEP_EMAILS || DEFAULT_KEEP)
+      .split(",")
+      .map((email) => email.trim().toLowerCase())
+      .filter(Boolean),
+  )
   const apply = process.env.CONFIRM === "yes"
 
   const { data } = await query.graph({
@@ -31,18 +44,24 @@ export default async function deleteTestOrders({ container }: ExecArgs) {
   const kept = orders.filter((order) => keep.has((order.email ?? "").trim().toLowerCase()))
   const remove = orders.filter((order) => !kept.includes(order))
 
-  logger.info(`Keeping ${kept.length} order(s) for ${[...keep].join(", ")}:\n${kept.map(line).join("\n") || "  (none)"}`)
+  logger.info(
+    `Keeping ${kept.length} order(s) for ${[...keep].join(", ")}:\n${kept.map(line).join("\n") || "  (none)"}`,
+  )
   // A typo in the email would otherwise delete every order.
   if (apply && !kept.length) {
     logger.warn(`No order found for ${[...keep].join(", ")}. Stopping without deleting anything; check the email.`)
     return
   }
-  logger.info(`${apply ? "Deleting" : "Would delete"} ${remove.length} order(s):\n${remove.map(line).join("\n") || "  (none)"}`)
+  logger.info(
+    `${apply ? "Deleting" : "Would delete"} ${remove.length} order(s):\n${remove.map(line).join("\n") || "  (none)"}`,
+  )
 
   if (!apply) {
     logger.info("Preview only, nothing changed. Run again with CONFIRM=yes to delete these orders.")
     return
   }
-  const { result } = await deleteTestOrdersWorkflow(container).run({ input: { order_ids: remove.map((order) => order.id) } })
+  const { result } = await deleteTestOrdersWorkflow(container).run({
+    input: { order_ids: remove.map((order) => order.id) },
+  })
   logger.info(`Done: ${result.deleted} order(s) deleted; ${kept.length} kept.`)
 }

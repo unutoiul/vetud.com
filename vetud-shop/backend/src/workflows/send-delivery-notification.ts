@@ -1,9 +1,5 @@
 import type { CreateNotificationDTO } from "@medusajs/framework/types"
-import {
-  createWorkflow,
-  transform,
-  WorkflowResponse,
-} from "@medusajs/framework/workflows-sdk"
+import { createWorkflow, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { useQueryGraphStep } from "@medusajs/medusa/core-flows"
 import { emailSettings, ORDER_EMAIL_FIELDS, toPlain } from "../lib/notifications"
 import { EmailTemplates } from "../modules/resend/templates"
@@ -56,5 +52,5 @@ export const sendDeliveryNotificationWorkflow = createWorkflow(
     const sent = sendNotificationStep(notifications)
 
     return new WorkflowResponse(sent)
-  }
+  },
 )

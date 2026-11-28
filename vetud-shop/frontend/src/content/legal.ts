@@ -68,9 +68,7 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: "7. Returns, refunds and chargebacks",
-        paragraphs: [
-          "Our Returns policy, Refund policy and Chargeback policy form part of these terms.",
-        ],
+        paragraphs: ["Our Returns policy, Refund policy and Chargeback policy form part of these terms."],
       },
       {
         heading: "8. Product information",
@@ -86,7 +84,9 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: "10. Governing law",
-        paragraphs: ["These terms are governed by the laws of England and Wales. The courts of England and Wales have jurisdiction."],
+        paragraphs: [
+          "These terms are governed by the laws of England and Wales. The courts of England and Wales have jurisdiction.",
+        ],
       },
     ],
   },
@@ -120,7 +120,9 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: "Retention",
-        paragraphs: ["Order records are kept for 6 years for accounting and tax purposes. Contact messages are kept for 30 days."],
+        paragraphs: [
+          "Order records are kept for 6 years for accounting and tax purposes. Contact messages are kept for 30 days.",
+        ],
       },
       {
         heading: "Your rights",
@@ -168,7 +170,9 @@ export const LEGAL_DOCUMENTS: LegalDocument[] = [
       },
       {
         heading: "Customs and duties",
-        paragraphs: ["International shipments may be subject to import duties and taxes, which are the recipient's responsibility. You are responsible for knowing the import rules for research materials in your country."],
+        paragraphs: [
+          "International shipments may be subject to import duties and taxes, which are the recipient's responsibility. You are responsible for knowing the import rules for research materials in your country.",
+        ],
       },
       {
         heading: "Address accuracy",

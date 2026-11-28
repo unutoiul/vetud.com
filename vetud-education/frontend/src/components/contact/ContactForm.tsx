@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { SendIcon as SendOutlinedIcon } from "@/components/brand/Icon"
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
@@ -54,7 +53,9 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
     setShowErrors(true)
     if (!valid) {
       const field = Object.keys(errors).find((key) => errors[key as keyof typeof errors])
-      const input = field ? event.currentTarget.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${field}"]`) : null
+      const input = field
+        ? event.currentTarget.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${field}"]`)
+        : null
       input?.focus()
       return
     }
@@ -93,13 +94,18 @@ function ContactFormInner({ initialSubject }: { initialSubject: string }) {
           <TextField label={t("name")} required {...bind("name")} slotProps={{ htmlInput: { autoComplete: "name" } }} />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
-          <TextField label={common("email")} type="email" required {...bind("email")} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
+          <TextField
+            label={common("email")}
+            type="email"
+            required
+            {...bind("email")}
+            slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }}
+          />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
           <TextField label={t("subject")} {...bind("subject")} autoComplete="off" />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-        </Grid>
+        <Grid size={{ xs: 12, sm: 6 }}></Grid>
         <Grid size={12}>
           <TextField label={t("message")} required multiline minRows={6} {...bind("message")} autoComplete="off" />
         </Grid>

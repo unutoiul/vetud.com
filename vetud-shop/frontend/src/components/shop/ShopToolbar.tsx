@@ -4,7 +4,6 @@ import { useContentTranslator } from "@/i18n/use-content-translator"
 import { translateAction } from "@/i18n/actions"
 import { useTranslations } from "next-intl"
 
-
 import { CloseIcon, SearchIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -58,7 +57,14 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
 
   return (
     <Stack spacing={2} sx={{ mb: 3 }} data-shop-toolbar>
-      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "minmax(0, 1fr) 208px" }, alignItems: "end", gap: 2 }}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "minmax(0, 1fr)", sm: "minmax(0, 1fr) 208px" },
+          alignItems: "end",
+          gap: 2,
+        }}
+      >
         <Stack
           component="form"
           method="get"
@@ -71,16 +77,20 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
             navigate({ query: search.trim() || undefined })
           }}
         >
-          {selectedCategories.map(handle => <input key={handle} type="hidden" name="category" value={handle} />)}
+          {selectedCategories.map((handle) => (
+            <input key={handle} type="hidden" name="category" value={handle} />
+          ))}
           {sort !== "relevance" ? <input type="hidden" name="sort" value={sort} /> : null}
-          <Typography component="label" htmlFor="catalog-search" sx={controlLabel}>{act("searchProducts")}</Typography>
+          <Typography component="label" htmlFor="catalog-search" sx={controlLabel}>
+            {act("searchProducts")}
+          </Typography>
           <TextField
             id="catalog-search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder={act("nameCodeLot")}
             size="small"
-            sx={{ "& .MuiOutlinedInput-root": { ...controlStyles, pr: .25 } }}
+            sx={{ "& .MuiOutlinedInput-root": { ...controlStyles, pr: 0.25 } }}
             slotProps={{
               htmlInput: { name: "q", type: "search", autoComplete: "off", spellCheck: false, enterKeyHint: "search" },
               input: {
@@ -90,8 +100,22 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
                   </InputAdornment>
                 ),
                 endAdornment: (
-                  <InputAdornment position="end" sx={{ ml: .5 }}>
-                    <Button type="submit" variant="contained" disableElevation sx={{ minWidth: 72, height: 44, minHeight: 44, px: 1.5, py: 0, fontSize: 13, transform: "none", "&:hover, &:active": { transform: "none" } }}>
+                  <InputAdornment position="end" sx={{ ml: 0.5 }}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      disableElevation
+                      sx={{
+                        minWidth: 72,
+                        height: 44,
+                        minHeight: 44,
+                        px: 1.5,
+                        py: 0,
+                        fontSize: 13,
+                        transform: "none",
+                        "&:hover, &:active": { transform: "none" },
+                      }}
+                    >
                       {act("search")}
                     </Button>
                   </InputAdornment>
@@ -101,7 +125,9 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
           />
         </Stack>
         <FormControl size="small" sx={{ minWidth: 0 }}>
-          <Typography component="span" id="catalog-sort-label" sx={controlLabel}>{act("sortBy")}</Typography>
+          <Typography component="span" id="catalog-sort-label" sx={controlLabel}>
+            {act("sortBy")}
+          </Typography>
           <Select
             id="catalog-sort"
             labelId="catalog-sort-label"
@@ -119,38 +145,87 @@ export default function ShopToolbar({ categories, selectedCategories, sort, quer
         </FormControl>
       </Box>
 
-      <Stack direction="row" sx={{ minHeight: 40, alignItems: "center", justifyContent: "space-between", gap: 2, pb: 1.5, borderBottom: "1px solid", borderColor: "divider" }}>
-        <Typography variant="body2" sx={{ color: "text.secondary", fontSize: 13, fontVariantNumeric: "tabular-nums" }} aria-live="polite" aria-atomic="true">
+      <Stack
+        direction="row"
+        sx={{
+          minHeight: 40,
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 2,
+          pb: 1.5,
+          borderBottom: "1px solid",
+          borderColor: "divider",
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{ color: "text.secondary", fontSize: 13, fontVariantNumeric: "tabular-nums" }}
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {ct(count)} {ct(count === 1 ? "product" : "products")}
         </Typography>
-        {selectedCategories.length || query ? <Button size="small" onClick={() => { setSearch(""); navigate({ query: undefined, categories: [] }) }} sx={{ minHeight: 44, px: 1, py: .5 }}>{act("clearFilters")}</Button> : null}
+        {selectedCategories.length || query ? (
+          <Button
+            size="small"
+            onClick={() => {
+              setSearch("")
+              navigate({ query: undefined, categories: [] })
+            }}
+            sx={{ minHeight: 44, px: 1, py: 0.5 }}
+          >
+            {act("clearFilters")}
+          </Button>
+        ) : null}
       </Stack>
 
-      {selectedCategories.length || query ? <Stack direction="row" spacing={1} useFlexGap sx={{ flexWrap: "wrap", alignItems: "center" }} role="group" aria-label={act("activeFilters")}>
-        {selectedCategories.map(handle => (
-          <Chip
-            key={handle}
-            label={translateAction(act, categories.find(category => category.handle === handle)?.name ?? act("unknownCategory"))}
-            variant="outlined"
-            onDelete={() => navigate({ categories: selectedCategories.filter(item => item !== handle) })}
-            deleteIcon={<CloseIcon />}
-            sx={{ height: "auto", minHeight: 44, maxWidth: "100%", "& .MuiChip-label": { whiteSpace: "normal", py: 1 } }}
-          />
-        ))}
-        {query ? (
-          <Chip
-            label={act("searchFilter", { query })}
-            onDelete={() => {
-              setSearch("")
-              navigate({ query: undefined })
-            }}
-            deleteIcon={<CloseIcon />}
-            color="secondary"
-            variant="outlined"
-            sx={{ height: "auto", minHeight: 44, maxWidth: "100%", "& .MuiChip-label": { whiteSpace: "normal", py: 1 } }}
-          />
-        ) : null}
-      </Stack> : null}
+      {selectedCategories.length || query ? (
+        <Stack
+          direction="row"
+          spacing={1}
+          useFlexGap
+          sx={{ flexWrap: "wrap", alignItems: "center" }}
+          role="group"
+          aria-label={act("activeFilters")}
+        >
+          {selectedCategories.map((handle) => (
+            <Chip
+              key={handle}
+              label={translateAction(
+                act,
+                categories.find((category) => category.handle === handle)?.name ?? act("unknownCategory"),
+              )}
+              variant="outlined"
+              onDelete={() => navigate({ categories: selectedCategories.filter((item) => item !== handle) })}
+              deleteIcon={<CloseIcon />}
+              sx={{
+                height: "auto",
+                minHeight: 44,
+                maxWidth: "100%",
+                "& .MuiChip-label": { whiteSpace: "normal", py: 1 },
+              }}
+            />
+          ))}
+          {query ? (
+            <Chip
+              label={act("searchFilter", { query })}
+              onDelete={() => {
+                setSearch("")
+                navigate({ query: undefined })
+              }}
+              deleteIcon={<CloseIcon />}
+              color="secondary"
+              variant="outlined"
+              sx={{
+                height: "auto",
+                minHeight: 44,
+                maxWidth: "100%",
+                "& .MuiChip-label": { whiteSpace: "normal", py: 1 },
+              }}
+            />
+          ) : null}
+        </Stack>
+      ) : null}
     </Stack>
   )
 }

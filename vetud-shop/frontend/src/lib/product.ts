@@ -88,7 +88,7 @@ function str(value: unknown): string | undefined {
 }
 
 export function readProductMeta(
-  product: Pick<HttpTypes.StoreProduct, "metadata" | "categories" | "title">
+  product: Pick<HttpTypes.StoreProduct, "metadata" | "categories" | "title">,
 ): ProductMeta {
   const metadata = (product.metadata ?? {}) as Record<string, unknown>
   const categoryHandles = (product.categories ?? []).map((category) => category.handle)
@@ -103,12 +103,16 @@ export function readProductMeta(
     accent: /^#[0-9a-f]{6}$/i.test(String(metadata.accent)) ? String(metadata.accent) : DEFAULT_ACCENT,
     purity: str(metadata.purity),
     testing: str(metadata.testing),
-    imageAspectRatio: ["4 / 3", "4 / 5", "1 / 1"].includes(String(metadata.image_aspect_ratio)) ? String(metadata.image_aspect_ratio) : undefined,
+    imageAspectRatio: ["4 / 3", "4 / 5", "1 / 1"].includes(String(metadata.image_aspect_ratio))
+      ? String(metadata.image_aspect_ratio)
+      : undefined,
     form: str(metadata.form),
     storage: str(metadata.storage),
     stability: str(metadata.stability),
     handling: str(metadata.handling),
-    features: Array.isArray(metadata.features) ? metadata.features.filter((value): value is string => typeof value === "string" && Boolean(value.trim())) : [],
+    features: Array.isArray(metadata.features)
+      ? metadata.features.filter((value): value is string => typeof value === "string" && Boolean(value.trim()))
+      : [],
     ingredients: str(metadata.ingredients),
     volume: str(metadata.volume),
     concentration: str(metadata.concentration),
@@ -122,7 +126,7 @@ export function readProductMeta(
 export function sortedVariants(product: HttpTypes.StoreProduct): HttpTypes.StoreProductVariant[] {
   const price = (variant: HttpTypes.StoreProductVariant) => variant.calculated_price?.calculated_amount ?? 0
   return [...(product.variants ?? [])].sort(
-    (a, b) => (a.variant_rank ?? 0) - (b.variant_rank ?? 0) || price(a) - price(b)
+    (a, b) => (a.variant_rank ?? 0) - (b.variant_rank ?? 0) || price(a) - price(b),
   )
 }
 
@@ -173,7 +177,7 @@ export function isProductInStock(product: HttpTypes.StoreProduct) {
 /** Shared by the purchase panel and search data so both describe the same option. */
 export function initialProductVariant(product: HttpTypes.StoreProduct) {
   const variants = sortedVariants(product)
-  return variants.find(variant => isVariantInStock(variant)) ?? variants[0]
+  return variants.find((variant) => isVariantInStock(variant)) ?? variants[0]
 }
 
 export function sortProducts(products: HttpTypes.StoreProduct[], sort: ProductSort) {
@@ -188,7 +192,10 @@ export function sortProducts(products: HttpTypes.StoreProduct[], sort: ProductSo
       return sorted.sort((a, b) => a.title.localeCompare(b.title, "en", { numeric: true }))
     case "relevance":
       // Store-selected labels lead; public prominence then breaks ties.
-      return sorted.sort((a, b) => merchandisingPriority(b) - merchandisingPriority(a) || popularity(b) - popularity(a) || featuredOrder(a, b))
+      return sorted.sort(
+        (a, b) =>
+          merchandisingPriority(b) - merchandisingPriority(a) || popularity(b) - popularity(a) || featuredOrder(a, b),
+      )
     default:
       return sorted.sort(featuredOrder)
   }
@@ -196,6 +203,8 @@ export function sortProducts(products: HttpTypes.StoreProduct[], sort: ProductSo
 
 /** Branded materials lead the collection, then product code order; all other entries are kept. */
 function featuredOrder(a: HttpTypes.StoreProduct, b: HttpTypes.StoreProduct) {
-  return Number(b.metadata?.brand === "VETUD") - Number(a.metadata?.brand === "VETUD") ||
+  return (
+    Number(b.metadata?.brand === "VETUD") - Number(a.metadata?.brand === "VETUD") ||
     readProductMeta(a).code.localeCompare(readProductMeta(b).code, "en", { numeric: true })
+  )
 }

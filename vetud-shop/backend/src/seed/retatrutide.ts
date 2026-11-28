@@ -72,7 +72,10 @@ export async function replaceSeriesOneWithRetatrutide(container: MedusaContainer
     filters: { id: option.id },
   })
   const valueIds = new Map(
-    ((refreshed[0] as { values?: { id: string; value: string }[] }).values ?? []).map((value) => [value.value, value.id])
+    ((refreshed[0] as { values?: { id: string; value: string }[] }).values ?? []).map((value) => [
+      value.value,
+      value.id,
+    ]),
   )
 
   const sku = (amount: string) => `${RETATRUTIDE.metadata.code}-${amount.replace(/\s+/g, "").toUpperCase()}`
@@ -141,7 +144,5 @@ export async function replaceSeriesOneWithRetatrutide(container: MedusaContainer
     logger.warn(`Retatrutide: price conversion failed (${(error as Error).message}).`)
   }
 
-  logger.info(
-    `Retatrutide: created${imageUrl ? " with its photo" : ""}; "${OLD_HANDLE}" set to draft.`
-  )
+  logger.info(`Retatrutide: created${imageUrl ? " with its photo" : ""}; "${OLD_HANDLE}" set to draft.`)
 }

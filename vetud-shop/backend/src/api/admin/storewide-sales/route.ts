@@ -16,16 +16,18 @@ export async function GET(req: AuthenticatedMedusaRequest, res: MedusaResponse) 
   const sales = data.flatMap((list) => {
     const settings = readSaleSettings(list.metadata)
     if (!settings) return []
-    return [{
-      id: list.id,
-      title: list.title,
-      percent_off: settings.percent_off,
-      status: list.status,
-      starts_at: list.starts_at,
-      ends_at: list.ends_at,
-      created_at: list.created_at,
-      state: saleState(list),
-    }]
+    return [
+      {
+        id: list.id,
+        title: list.title,
+        percent_off: settings.percent_off,
+        status: list.status,
+        starts_at: list.starts_at,
+        ends_at: list.ends_at,
+        created_at: list.created_at,
+        state: saleState(list),
+      },
+    ]
   })
   res.json({ sales })
 }

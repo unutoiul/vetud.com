@@ -12,7 +12,7 @@ export default async function setupProductMerchandising({ container }: ExecArgs)
     fields: ["id", "handle", "metadata"],
     filters: { handle: Object.keys(PRODUCT_MERCHANDISING) },
   })
-  const updates = products.flatMap(product => {
+  const updates = products.flatMap((product) => {
     const previous = product.metadata ?? {}
     const metadata = withMerchandisingDefaults(product.handle, previous)
     if (previous.very_popular === metadata.very_popular && previous.best_seller === metadata.best_seller) return []

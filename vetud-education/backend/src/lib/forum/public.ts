@@ -52,24 +52,68 @@ export type ImageRecord = { id: string; post_id?: string | null; url: string }
 export type PublicImage = { id: string; url: string }
 
 export const THREAD_FIELDS = [
-  "id", "author_id", "kind", "title", "slug", "excerpt", "topic", "peptide_slug",
-  "status", "hold_reason", "pinned", "locked", "accepted_post_id", "reply_count", "helpful_count",
-  "last_activity_at", "created_at",
+  "id",
+  "author_id",
+  "kind",
+  "title",
+  "slug",
+  "excerpt",
+  "topic",
+  "peptide_slug",
+  "status",
+  "hold_reason",
+  "pinned",
+  "locked",
+  "accepted_post_id",
+  "reply_count",
+  "helpful_count",
+  "last_activity_at",
+  "created_at",
 ]
-export const POST_FIELDS = ["id", "thread_id", "author_id", "body", "is_opening", "status", "hold_reason", "helpful_count", "edited_at", "created_at"]
-export const PROFILE_FIELDS = ["id", "customer_id", "display_name", "handle", "role", "credentials", "bio", "reputation", "status", "created_at"]
+export const POST_FIELDS = [
+  "id",
+  "thread_id",
+  "author_id",
+  "body",
+  "is_opening",
+  "status",
+  "hold_reason",
+  "helpful_count",
+  "edited_at",
+  "created_at",
+]
+export const PROFILE_FIELDS = [
+  "id",
+  "customer_id",
+  "display_name",
+  "handle",
+  "role",
+  "credentials",
+  "bio",
+  "reputation",
+  "status",
+  "created_at",
+]
 
 /** What a post shows about its author. Never the customer ID, email or full name. */
 export function publicAuthor(profile?: ProfileRecord | null) {
   if (!profile) {
-    return { handle: null, display_name: "Former member", role: "member" as const, credentials: null, level: "Newcomer", level_id: "newcomer", reputation: 0 }
+    return {
+      handle: null,
+      display_name: "Former member",
+      role: "member" as const,
+      credentials: null,
+      level: "Newcomer",
+      level_id: "newcomer",
+      reputation: 0,
+    }
   }
   const level = levelFor(profile.reputation)
   return {
     handle: profile.handle,
     display_name: profile.display_name,
     role: profile.role,
-    credentials: profile.role === "expert" ? profile.credentials ?? null : null,
+    credentials: profile.role === "expert" ? (profile.credentials ?? null) : null,
     level: level.name,
     level_id: level.id,
     reputation: profile.reputation,
@@ -80,7 +124,11 @@ export function publicMember(profile: ProfileRecord) {
   return { ...publicAuthor(profile), bio: profile.bio ?? null, joined_at: profile.created_at }
 }
 
-type Context = { authors: Map<string, ProfileRecord>; viewer?: ProfileRecord | null; images?: Map<string, PublicImage[]> }
+type Context = {
+  authors: Map<string, ProfileRecord>
+  viewer?: ProfileRecord | null
+  images?: Map<string, PublicImage[]>
+}
 
 /** Moderation details are only shown to the author, who sees why their own post is waiting. */
 function moderation(record: { status: string; hold_reason?: string | null }, mine: boolean) {

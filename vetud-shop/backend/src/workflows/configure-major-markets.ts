@@ -20,7 +20,10 @@ const configureMajorMarketsStep = createStep(
   async (_input: Record<string, never>, { container }) => {
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
     const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
-    const { data: rows } = await query.graph({ entity: "region", fields: ["id", "name", "currency_code", "metadata", "countries.iso_2"] })
+    const { data: rows } = await query.graph({
+      entity: "region",
+      fields: ["id", "name", "currency_code", "metadata", "countries.iso_2"],
+    })
     const regions = rows as Region[]
     const euro = regions.find((region) => region.currency_code === "eur" && region.countries?.length)
     if (!euro || !regions.some((region) => region.currency_code === BASE_CURRENCY))
@@ -29,18 +32,34 @@ const configureMajorMarketsStep = createStep(
       for (const code of market.countries) {
         const owner = regions.find((region) => codesOf(region).includes(code))
         if (owner && owner.currency_code !== market.currency)
-          throw new MedusaError(MedusaError.Types.INVALID_DATA, `${code.toUpperCase()} is assigned to another currency; review its market before changing it.`)
+          throw new MedusaError(
+            MedusaError.Types.INVALID_DATA,
+            `${code.toUpperCase()} is assigned to another currency; review its market before changing it.`,
+          )
       }
     }
 
-    const { data: stores } = await query.graph({ entity: "store", fields: ["id", "supported_currencies.currency_code"] })
+    const { data: stores } = await query.graph({
+      entity: "store",
+      fields: ["id", "supported_currencies.currency_code"],
+    })
     const store = stores[0]
     if (!store) throw new MedusaError(MedusaError.Types.NOT_FOUND, "Missing store.")
-    const supported = (store.supported_currencies ?? []).flatMap((currency) => (currency?.currency_code ? [currency.currency_code] : []))
+    const supported = (store.supported_currencies ?? []).flatMap((currency) =>
+      currency?.currency_code ? [currency.currency_code] : [],
+    )
     const codes = [...new Set([...supported, ...MAJOR_CURRENCIES])]
     if (codes.length !== supported.length) {
       await updateStoresWorkflow(container).run({
-        input: { selector: { id: store.id }, update: { supported_currencies: codes.map((currency_code) => ({ currency_code, is_default: currency_code === BASE_CURRENCY })) } },
+        input: {
+          selector: { id: store.id },
+          update: {
+            supported_currencies: codes.map((currency_code) => ({
+              currency_code,
+              is_default: currency_code === BASE_CURRENCY,
+            })),
+          },
+        },
       })
     }
 
@@ -50,24 +69,48 @@ const configureMajorMarketsStep = createStep(
       const current = codesOf(region)
       const remaining = current.filter((code) => !european.has(code))
       if (remaining.length !== current.length)
-        await updateRegionsWorkflow(container).run({ input: { selector: { id: region.id }, update: { countries: remaining } } })
+        await updateRegionsWorkflow(container).run({
+          input: { selector: { id: region.id }, update: { countries: remaining } },
+        })
     }
     const euroCountries = [...new Set([...codesOf(euro), ...EUROPEAN_EUR_COUNTRIES])]
-    if (euroCountries.length !== euro.countries?.length || euro.metadata?.major_market_revision !== MAJOR_MARKET_REVISION) {
+    if (
+      euroCountries.length !== euro.countries?.length ||
+      euro.metadata?.major_market_revision !== MAJOR_MARKET_REVISION
+    ) {
       await updateRegionsWorkflow(container).run({
-        input: { selector: { id: euro.id }, update: { name: "Europe", countries: euroCountries, metadata: { ...euro.metadata, major_market_revision: MAJOR_MARKET_REVISION } } },
+        input: {
+          selector: { id: euro.id },
+          update: {
+            name: "Europe",
+            countries: euroCountries,
+            metadata: { ...euro.metadata, major_market_revision: MAJOR_MARKET_REVISION },
+          },
+        },
       })
     }
     for (const market of WORLD_MARKETS) {
       const existing = regions.find((region) => region.currency_code === market.currency)
       if (!existing) {
         await createRegionsWorkflow(container).run({
-          input: { regions: [{ name: market.name, currency_code: market.currency, countries: market.countries, payment_providers: ["pp_system_default"], metadata: { major_market_revision: MAJOR_MARKET_REVISION } }] },
+          input: {
+            regions: [
+              {
+                name: market.name,
+                currency_code: market.currency,
+                countries: market.countries,
+                payment_providers: ["pp_system_default"],
+                metadata: { major_market_revision: MAJOR_MARKET_REVISION },
+              },
+            ],
+          },
         })
       } else {
         const countries = [...new Set([...codesOf(existing), ...market.countries])]
         if (countries.length !== codesOf(existing).length)
-          await updateRegionsWorkflow(container).run({ input: { selector: { id: existing.id }, update: { countries } } })
+          await updateRegionsWorkflow(container).run({
+            input: { selector: { id: existing.id }, update: { countries } },
+          })
       }
     }
 

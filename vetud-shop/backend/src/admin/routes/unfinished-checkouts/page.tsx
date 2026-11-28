@@ -57,14 +57,16 @@ const RANGES = [
 // The dashboard is served by the backend, so the admin session cookie authenticates these calls.
 async function adminFetch<T>(path: string): Promise<T> {
   const response = await fetch(path, { credentials: "include", headers: { "Content-Type": "application/json" } })
-  const body = await response.json().catch(() => null) as { message?: string } | null
+  const body = (await response.json().catch(() => null)) as { message?: string } | null
   if (!response.ok) throw new Error(body?.message ?? `Request failed (${response.status})`)
   return body as T
 }
 
 function money(value: number, currency: string | null) {
   try {
-    return new Intl.NumberFormat(undefined, { style: "currency", currency: (currency || "usd").toUpperCase() }).format(value)
+    return new Intl.NumberFormat(undefined, { style: "currency", currency: (currency || "usd").toUpperCase() }).format(
+      value,
+    )
   } catch {
     return `${value.toFixed(2)} ${(currency || "").toUpperCase()}`
   }
@@ -87,9 +89,15 @@ const UnfinishedCheckoutsPage = () => {
   useEffect(() => {
     let cancelled = false
     adminFetch<Report>(`/admin/unfinished-checkouts?days=${days}`)
-      .then((data) => { if (!cancelled) setReport(data) })
-      .catch((error: Error) => { if (!cancelled) setFailure({ days, message: error.message }) })
-    return () => { cancelled = true }
+      .then((data) => {
+        if (!cancelled) setReport(data)
+      })
+      .catch((error: Error) => {
+        if (!cancelled) setFailure({ days, message: error.message })
+      })
+    return () => {
+      cancelled = true
+    }
   }, [days])
 
   const current = report?.days === days ? report : null
@@ -102,12 +110,18 @@ const UnfinishedCheckoutsPage = () => {
         <div>
           <Heading level="h1">Unfinished checkouts</Heading>
           <Text size="small" className="text-ui-fg-subtle mt-1 max-w-2xl">
-            Shoppers who added products but didn't place the order. Each checkout step is saved as they complete it, so you can see where they stopped.
+            Shoppers who added products but didn't place the order. Each checkout step is saved as they complete it, so
+            you can see where they stopped.
           </Text>
         </div>
         <div className="flex gap-2">
           {RANGES.map((range) => (
-            <Button key={range.days} size="small" variant={range.days === days ? "primary" : "secondary"} onClick={() => setDays(range.days)}>
+            <Button
+              key={range.days}
+              size="small"
+              variant={range.days === days ? "primary" : "secondary"}
+              onClick={() => setDays(range.days)}
+            >
               {range.label}
             </Button>
           ))}
@@ -119,16 +133,26 @@ const UnfinishedCheckoutsPage = () => {
           const count = current?.funnel[step] ?? 0
           return (
             <div key={step} className="rounded-lg border border-ui-border-base p-3">
-              <Text size="xsmall" className="text-ui-fg-subtle">{STEP_LABELS[step]}</Text>
-              <Text size="xlarge" weight="plus">{current ? count : "…"}</Text>
-              <Text size="xsmall" className="text-ui-fg-muted">{current && started ? `${Math.round((count / started) * 100)}% of carts` : " "}</Text>
+              <Text size="xsmall" className="text-ui-fg-subtle">
+                {STEP_LABELS[step]}
+              </Text>
+              <Text size="xlarge" weight="plus">
+                {current ? count : "…"}
+              </Text>
+              <Text size="xsmall" className="text-ui-fg-muted">
+                {current && started ? `${Math.round((count / started) * 100)}% of carts` : " "}
+              </Text>
             </div>
           )
         })}
       </div>
 
       <div className="px-6 py-4">
-        {error ? <Text className="text-ui-fg-error">{error}</Text> : !current ? <Text className="text-ui-fg-subtle">Loading…</Text> : !current.checkouts.length ? (
+        {error ? (
+          <Text className="text-ui-fg-error">{error}</Text>
+        ) : !current ? (
+          <Text className="text-ui-fg-subtle">Loading…</Text>
+        ) : !current.checkouts.length ? (
           <Text className="text-ui-fg-subtle">No unfinished checkouts in this period.</Text>
         ) : (
           <>
@@ -146,20 +170,44 @@ const UnfinishedCheckoutsPage = () => {
               <Table.Body>
                 {current.checkouts.map((checkout) => (
                   <Table.Row key={checkout.id}>
-                    <Table.Cell title={new Date(checkout.last_activity_at).toLocaleString()}>{ago(checkout.last_activity_at)}</Table.Cell>
+                    <Table.Cell title={new Date(checkout.last_activity_at).toLocaleString()}>
+                      {ago(checkout.last_activity_at)}
+                    </Table.Cell>
                     <Table.Cell>
                       <div className="flex flex-col">
                         <span>{checkout.name ?? (checkout.email ? "" : "Unknown")}</span>
-                        {checkout.email ? <a className="text-ui-fg-interactive" href={`mailto:${checkout.email}`}>{checkout.email}</a> : <span className="text-ui-fg-muted">No email yet</span>}
-                        {checkout.email ? <span><Badge size="2xsmall" color={checkout.member ? "green" : "grey"}>{checkout.member ? "Member" : "Guest"}</Badge></span> : null}
+                        {checkout.email ? (
+                          <a className="text-ui-fg-interactive" href={`mailto:${checkout.email}`}>
+                            {checkout.email}
+                          </a>
+                        ) : (
+                          <span className="text-ui-fg-muted">No email yet</span>
+                        )}
+                        {checkout.email ? (
+                          <span>
+                            <Badge size="2xsmall" color={checkout.member ? "green" : "grey"}>
+                              {checkout.member ? "Member" : "Guest"}
+                            </Badge>
+                          </span>
+                        ) : null}
                       </div>
                     </Table.Cell>
                     <Table.Cell>
-                      <Badge size="xsmall" color={STEP_COLORS[checkout.step]}>{STEP_LABELS[checkout.step]}</Badge>
-                      {checkout.payment ? <Text size="xsmall" className="text-ui-fg-subtle mt-1">{PAYMENT_NAMES[checkout.payment] ?? checkout.payment}</Text> : null}
+                      <Badge size="xsmall" color={STEP_COLORS[checkout.step]}>
+                        {STEP_LABELS[checkout.step]}
+                      </Badge>
+                      {checkout.payment ? (
+                        <Text size="xsmall" className="text-ui-fg-subtle mt-1">
+                          {PAYMENT_NAMES[checkout.payment] ?? checkout.payment}
+                        </Text>
+                      ) : null}
                     </Table.Cell>
                     <Table.Cell>
-                      {checkout.items.map((item, index) => <Text key={index} size="small">{item.quantity} × {item.title}</Text>)}
+                      {checkout.items.map((item, index) => (
+                        <Text key={index} size="small">
+                          {item.quantity} × {item.title}
+                        </Text>
+                      ))}
                     </Table.Cell>
                     <Table.Cell className="text-right">{money(checkout.value, checkout.currency_code)}</Table.Cell>
                     <Table.Cell>{checkout.place ?? "—"}</Table.Cell>
@@ -167,7 +215,11 @@ const UnfinishedCheckoutsPage = () => {
                 ))}
               </Table.Body>
             </Table>
-            {current.truncated ? <Text size="small" className="text-ui-fg-subtle mt-3">Showing the most recent 1,000 carts. Choose a shorter period to see everything.</Text> : null}
+            {current.truncated ? (
+              <Text size="small" className="text-ui-fg-subtle mt-3">
+                Showing the most recent 1,000 carts. Choose a shorter period to see everything.
+              </Text>
+            ) : null}
           </>
         )}
       </div>

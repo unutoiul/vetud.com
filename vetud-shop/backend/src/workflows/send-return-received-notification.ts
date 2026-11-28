@@ -1,9 +1,5 @@
 import type { CreateNotificationDTO } from "@medusajs/framework/types"
-import {
-  createWorkflow,
-  transform,
-  WorkflowResponse,
-} from "@medusajs/framework/workflows-sdk"
+import { createWorkflow, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { useQueryGraphStep } from "@medusajs/medusa/core-flows"
 import { emailSettings, ORDER_EMAIL_FIELDS, toPlain } from "../lib/notifications"
 import { EmailTemplates } from "../modules/resend/templates"
@@ -14,11 +10,13 @@ type WorkflowInput = { order_id: string; return_id: string }
 type ReturnRow = {
   id: string
   refund_amount?: number | string | null
-  items?: ({
-    quantity: number | string
-    received_quantity?: number | string | null
-    item?: { title?: string | null; product_title?: string | null; variant_title?: string | null } | null
-  } | null)[] | null
+  items?:
+    | ({
+        quantity: number | string
+        received_quantity?: number | string | null
+        item?: { title?: string | null; product_title?: string | null; variant_title?: string | null } | null
+      } | null)[]
+    | null
 }
 
 /** Emails the customer that their returned items arrived and were checked in. */
@@ -55,7 +53,8 @@ export const sendReturnReceivedNotificationWorkflow = createWorkflow(
       const items = (orderReturn.items ?? [])
         .filter((row) => row !== null)
         .map((row) => ({
-          title: [row.item?.product_title ?? row.item?.title, row.item?.variant_title].filter(Boolean).join(" · ") || "Item",
+          title:
+            [row.item?.product_title ?? row.item?.title, row.item?.variant_title].filter(Boolean).join(" · ") || "Item",
           quantity: Number(row.received_quantity) || row.quantity,
         }))
 
@@ -80,5 +79,5 @@ export const sendReturnReceivedNotificationWorkflow = createWorkflow(
     const sent = sendNotificationStep(notifications)
 
     return new WorkflowResponse(sent)
-  }
+  },
 )

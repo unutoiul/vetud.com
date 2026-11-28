@@ -1,11 +1,46 @@
 "use client"
 
-import { CheckCircleFilled, GiftFilled, LockOutlined, MailOutlined, SafetyCertificateOutlined, ThunderboltOutlined } from "@ant-design/icons"
-import { App, Button, Col, Divider, Flex, Form, Grid, Input, InputNumber, Modal, Result, Row, Segmented, Select, Space, Typography } from "antd"
+import {
+  CheckCircleFilled,
+  GiftFilled,
+  LockOutlined,
+  MailOutlined,
+  SafetyCertificateOutlined,
+  ThunderboltOutlined,
+} from "@ant-design/icons"
+import {
+  App,
+  Button,
+  Col,
+  Divider,
+  Flex,
+  Form,
+  Grid,
+  Input,
+  InputNumber,
+  Modal,
+  Result,
+  Row,
+  Segmented,
+  Select,
+  Space,
+  Typography,
+} from "antd"
 import Image from "next/image"
 import { useCallback, useEffect, useState } from "react"
 import { isMarket, type CountryCode } from "@/config/markets"
-import { MAX_QUANTITY, OFFER, PRODUCT_IDS, PRODUCTS, SITE, STRENGTHS, contactLinks, strengthLabel, type ProductId, type Strength } from "@/config/site"
+import {
+  MAX_QUANTITY,
+  OFFER,
+  PRODUCT_IDS,
+  PRODUCTS,
+  SITE,
+  STRENGTHS,
+  contactLinks,
+  strengthLabel,
+  type ProductId,
+  type Strength,
+} from "@/config/site"
 import { format, rich } from "@/i18n/format"
 import { countryName, internationalPhone } from "@/lib/countries"
 import { EMAIL_PATTERN, LIMITS, PHONE_PATTERN, orderTotal, type ContactApp } from "@/lib/order"
@@ -50,7 +85,9 @@ export default function OrderModal({
   const { message } = App.useApp()
   const screens = Grid.useBreakpoint()
   const [submitting, setSubmitting] = useState(false)
-  const [done, setDone] = useState<{ orderNumber: string; email: string; total: number; country: CountryCode } | null>(null)
+  const [done, setDone] = useState<{ orderNumber: string; email: string; total: number; country: CountryCode } | null>(
+    null,
+  )
   const { promoCode, openPromo } = useOrder()
   // null = untouched: the visitor's saved subscriber code (if any) is shown and applied.
   const [codeInput, setCodeInput] = useState<string | null>(null)
@@ -80,7 +117,11 @@ export default function OrderModal({
       if (!code) return
       setCheckingCode(true)
       try {
-        const res = await fetch("/api/promo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ code }) })
+        const res = await fetch("/api/promo", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ code }),
+        })
         const data = (await res.json().catch(() => ({}))) as { valid?: boolean }
         if (data.valid) {
           setManualCode(code)
@@ -97,7 +138,6 @@ export default function OrderModal({
     },
     [message, t.codeApplied, t.codeInvalid, t.codeCheckFailed],
   )
-
 
   // Each time the form opens, start from the pen the visitor clicked.
   useEffect(() => {
@@ -122,12 +162,24 @@ export default function OrderModal({
       const res = await fetch("/api/order", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ ...all, phone: internationalPhone(all.phone ?? ""), quantity: submittedQuantity, promoCode: appliedCode ?? "" }),
+        body: JSON.stringify({
+          ...all,
+          phone: internationalPhone(all.phone ?? ""),
+          quantity: submittedQuantity,
+          promoCode: appliedCode ?? "",
+        }),
       })
-      const data = (await res.json().catch(() => ({}))) as { orderNumber?: string; total?: number; error?: string; fields?: Record<string, string> }
+      const data = (await res.json().catch(() => ({}))) as {
+        orderNumber?: string
+        total?: number
+        error?: string
+        fields?: Record<string, string>
+      }
       if (!res.ok || !data.orderNumber) {
         if (data.fields) {
-          form.setFields(Object.entries(data.fields).map(([name, error]) => ({ name: name as keyof FormValues, errors: [error] })))
+          form.setFields(
+            Object.entries(data.fields).map(([name, error]) => ({ name: name as keyof FormValues, errors: [error] })),
+          )
         }
         message.error(data.error || t.genericError)
         return
@@ -169,10 +221,18 @@ export default function OrderModal({
         <div style={{ padding: "48px clamp(20px, 5vw, 56px)" }}>
           <Result
             icon={<CheckCircleFilled style={{ color: colors.success }} />}
-            title={<span style={{ fontFamily: fonts.display, fontSize: 30, color: colors.navy }}>{format(t.doneTitle, { orderNumber: done.orderNumber })}</span>}
+            title={
+              <span style={{ fontFamily: fonts.display, fontSize: 30, color: colors.navy }}>
+                {format(t.doneTitle, { orderNumber: done.orderNumber })}
+              </span>
+            }
             subTitle={
               <span style={{ fontSize: 16, lineHeight: 1.6 }}>
-                {rich(t.doneText, { email: done.email, total: formatPrice(done.total, done.country) }, { b: (text) => <strong>{text}</strong> })}
+                {rich(
+                  t.doneText,
+                  { email: done.email, total: formatPrice(done.total, done.country) },
+                  { b: (text) => <strong>{text}</strong> },
+                )}
                 <br />
                 {t.doneSpam}
               </span>
@@ -203,23 +263,62 @@ export default function OrderModal({
           layout="vertical"
           requiredMark={false}
           onFinish={submit}
-          initialValues={{ product: initial.product, strength: initial.strength, quantity: 1, contactApp: "whatsapp", country: visitorCountry }}
+          initialValues={{
+            product: initial.product,
+            strength: initial.strength,
+            quantity: 1,
+            contactApp: "whatsapp",
+            country: visitorCountry,
+          }}
           scrollToFirstError
         >
           <Row>
             {/* Left: the pen, the strength and the total */}
-            <Col xs={24} md={10} style={{ background: colors.aquaWash, borderRight: screens.md ? `1px solid ${colors.line}` : undefined }}>
+            <Col
+              xs={24}
+              md={10}
+              style={{ background: colors.aquaWash, borderRight: screens.md ? `1px solid ${colors.line}` : undefined }}
+            >
               <div style={{ padding: "28px clamp(20px, 3vw, 32px)" }}>
-                <div style={{ fontFamily: fonts.mono, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: colors.tealDeep }}>
+                <div
+                  style={{
+                    fontFamily: fonts.mono,
+                    fontSize: 11,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: colors.tealDeep,
+                  }}
+                >
                   {t.yourOrder}
                 </div>
                 <Flex align="center" gap={16} style={{ margin: "16px 0 20px" }}>
-                  <div style={{ width: 88, height: 88, position: "relative", flex: "none", borderRadius: 14, background: colors.white, border: `1px solid ${colors.line}` }}>
-                    <Image src={selected.image} alt={m.products[product].fullName} fill sizes="88px" style={{ objectFit: "contain", padding: 4 }} />
+                  <div
+                    style={{
+                      width: 88,
+                      height: 88,
+                      position: "relative",
+                      flex: "none",
+                      borderRadius: 14,
+                      background: colors.white,
+                      border: `1px solid ${colors.line}`,
+                    }}
+                  >
+                    <Image
+                      src={selected.image}
+                      alt={m.products[product].fullName}
+                      fill
+                      sizes="88px"
+                      style={{ objectFit: "contain", padding: 4 }}
+                    />
                   </div>
                   <div>
-                    <div style={{ fontFamily: fonts.display, fontSize: 22, color: colors.navy, lineHeight: 1.2 }}>{selected.name}</div>
-                    <div style={{ color: colors.muted, fontSize: 13 }}>{selected.label ? `${selected.label} · ` : ""}{m.products[product].tagline}</div>
+                    <div style={{ fontFamily: fonts.display, fontSize: 22, color: colors.navy, lineHeight: 1.2 }}>
+                      {selected.name}
+                    </div>
+                    <div style={{ color: colors.muted, fontSize: 13 }}>
+                      {selected.label ? `${selected.label} · ` : ""}
+                      {m.products[product].tagline}
+                    </div>
                   </div>
                 </Flex>
 
@@ -228,7 +327,10 @@ export default function OrderModal({
                   name="country"
                   label={
                     <span>
-                      {t.shipTo} <span style={{ color: colors.muted, fontWeight: 400 }}>{format(t.pricesIn, { currency: currencyOf(priceCountry) })}</span>
+                      {t.shipTo}{" "}
+                      <span style={{ color: colors.muted, fontWeight: 400 }}>
+                        {format(t.pricesIn, { currency: currencyOf(priceCountry) })}
+                      </span>
                     </span>
                   }
                   rules={[{ required: true, message: t.chooseCountryError }]}
@@ -242,7 +344,9 @@ export default function OrderModal({
                       typeof value === "string" && value ? (
                         <span style={{ display: "flex", alignItems: "center", gap: 10, height: "100%" }}>
                           <CountryFlag code={value} />
-                          <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>{countryName(value)}</span>
+                          <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" }}>
+                            {countryName(value)}
+                          </span>
                         </span>
                       ) : null
                     }
@@ -262,7 +366,10 @@ export default function OrderModal({
                 <Form.Item name="strength" label={t.strength} style={{ marginBottom: 16 }}>
                   <Segmented
                     block
-                    options={STRENGTHS.map((value) => ({ value, label: `${strengthLabel(value)} · ${money(priceOf(product, value, priceCountry).sale)}` }))}
+                    options={STRENGTHS.map((value) => ({
+                      value,
+                      label: `${strengthLabel(value)} · ${money(priceOf(product, value, priceCountry).sale)}`,
+                    }))}
                   />
                 </Form.Item>
                 <Form.Item name="quantity" label={t.quantity} style={{ marginBottom: 20 }}>
@@ -285,7 +392,11 @@ export default function OrderModal({
                       maxLength={LIMITS.promoCode}
                       style={{ textTransform: "uppercase" }}
                     />
-                    <Button onClick={() => applyCode(inputValue)} loading={checkingCode} disabled={!inputValue.trim() || !!appliedCode}>
+                    <Button
+                      onClick={() => applyCode(inputValue)}
+                      loading={checkingCode}
+                      disabled={!inputValue.trim() || !!appliedCode}
+                    >
                       {appliedCode ? t.applied : t.apply}
                     </Button>
                   </Space.Compact>
@@ -299,31 +410,29 @@ export default function OrderModal({
                 <Divider style={{ margin: "16px 0" }} />
                 <Flex vertical gap={6} style={{ fontSize: 14 }}>
                   <Flex justify="space-between" style={{ color: colors.muted }}>
-                    <span>
-                      {format(t.regularLine, { quantity: safeQuantity, price: money(amounts.regular) })}
+                    <span>{format(t.regularLine, { quantity: safeQuantity, price: money(amounts.regular) })}</span>
+                    <span style={{ textDecoration: amounts.saved ? "line-through" : undefined }}>
+                      {money(amounts.regularTotal)}
                     </span>
-                    <span style={{ textDecoration: amounts.saved ? "line-through" : undefined }}>{money(amounts.regularTotal)}</span>
                   </Flex>
                   {OFFER.salePercent > 0 && (
                     <Flex justify="space-between" style={{ color: colors.sale, fontWeight: 600 }}>
-                      <span>
-                        {format(t.saleLine, { saleLabel: m.offer.saleLabel, percent: OFFER.salePercent })}
-                      </span>
+                      <span>{format(t.saleLine, { saleLabel: m.offer.saleLabel, percent: OFFER.salePercent })}</span>
                       <span>−{money(amounts.regularTotal - amounts.subtotal)}</span>
                     </Flex>
                   )}
                   {appliedCode && (
                     <Flex justify="space-between" style={{ color: colors.success, fontWeight: 600 }}>
-                      <span>
-                        {format(t.codeLine, { code: appliedCode, percent: OFFER.subscriberPercent })}
-                      </span>
+                      <span>{format(t.codeLine, { code: appliedCode, percent: OFFER.subscriberPercent })}</span>
                       <span>−{money(amounts.codeDiscount)}</span>
                     </Flex>
                   )}
                 </Flex>
                 <Flex justify="space-between" align="baseline" style={{ marginTop: 10 }}>
                   <span style={{ fontWeight: 600 }}>{t.total}</span>
-                  <span style={{ fontFamily: fonts.display, fontSize: 36, color: colors.navy, fontWeight: 600 }}>{money(total)}</span>
+                  <span style={{ fontFamily: fonts.display, fontSize: 36, color: colors.navy, fontWeight: 600 }}>
+                    {money(total)}
+                  </span>
                 </Flex>
                 <Flex justify="flex-end">
                   {amounts.saved > 0 && (
@@ -343,7 +452,16 @@ export default function OrderModal({
                   )}
                 </Flex>
 
-                <Flex vertical gap={8} style={{ marginTop: 20, fontSize: 13, color: colors.navyInk, display: screens.md ? undefined : "none" }}>
+                <Flex
+                  vertical
+                  gap={8}
+                  style={{
+                    marginTop: 20,
+                    fontSize: 13,
+                    color: colors.navyInk,
+                    display: screens.md ? undefined : "none",
+                  }}
+                >
                   {[SafetyCertificateOutlined, ThunderboltOutlined, MailOutlined].map((Icon, index) => (
                     <span key={index}>
                       <Icon style={{ color: colors.teal, marginRight: 8 }} />
@@ -357,19 +475,30 @@ export default function OrderModal({
             {/* Right: who and where */}
             <Col xs={24} md={14}>
               <div style={{ padding: "28px clamp(20px, 3vw, 32px) 24px" }}>
-                <Typography.Title level={3} style={{ fontFamily: fonts.display, fontWeight: 400, color: colors.navy, margin: "0 0 4px" }}>
+                <Typography.Title
+                  level={3}
+                  style={{ fontFamily: fonts.display, fontWeight: 400, color: colors.navy, margin: "0 0 4px" }}
+                >
                   {t.title}
                 </Typography.Title>
                 <Typography.Paragraph style={{ color: colors.muted, marginBottom: 20 }}>
                   {t.subtitle}
                 </Typography.Paragraph>
 
-                <Form.Item name="name" label={t.fullName} rules={[{ required: true, min: 2, message: t.fullNameError }]}>
+                <Form.Item
+                  name="name"
+                  label={t.fullName}
+                  rules={[{ required: true, min: 2, message: t.fullNameError }]}
+                >
                   <Input autoComplete="name" maxLength={LIMITS.name} />
                 </Form.Item>
                 <Row gutter={12}>
                   <Col xs={24} sm={12}>
-                    <Form.Item name="email" label={t.email} rules={[{ required: true, pattern: EMAIL_PATTERN, message: t.emailError }]}>
+                    <Form.Item
+                      name="email"
+                      label={t.email}
+                      rules={[{ required: true, pattern: EMAIL_PATTERN, message: t.emailError }]}
+                    >
                       <Input type="email" autoComplete="email" inputMode="email" maxLength={LIMITS.email} />
                     </Form.Item>
                   </Col>
@@ -379,12 +508,21 @@ export default function OrderModal({
                       label={t.phone}
                       rules={[{ required: true, pattern: PHONE_PATTERN, message: t.phoneError }]}
                     >
-                      <PhoneField country={shipTo} placeholder={t.phonePlaceholder} codeLabel={t.phoneCode} maxLength={LIMITS.phone} />
+                      <PhoneField
+                        country={shipTo}
+                        placeholder={t.phonePlaceholder}
+                        codeLabel={t.phoneCode}
+                        maxLength={LIMITS.phone}
+                      />
                     </Form.Item>
                   </Col>
                 </Row>
 
-                <Form.Item name="address" label={t.address} rules={[{ required: true, min: 4, message: t.addressError }]}>
+                <Form.Item
+                  name="address"
+                  label={t.address}
+                  rules={[{ required: true, min: 4, message: t.addressError }]}
+                >
                   <Input autoComplete="street-address" maxLength={LIMITS.address} />
                 </Form.Item>
                 <Row gutter={12}>
@@ -394,7 +532,11 @@ export default function OrderModal({
                     </Form.Item>
                   </Col>
                   <Col xs={10}>
-                    <Form.Item name="postalCode" label={t.postalCode} rules={[{ required: true, message: t.postalCodeError }]}>
+                    <Form.Item
+                      name="postalCode"
+                      label={t.postalCode}
+                      rules={[{ required: true, message: t.postalCodeError }]}
+                    >
                       <Input autoComplete="postal-code" maxLength={LIMITS.postalCode} />
                     </Form.Item>
                   </Col>
@@ -408,10 +550,20 @@ export default function OrderModal({
                   <Input tabIndex={-1} autoComplete="off" />
                 </Form.Item>
 
-                <Button type="primary" htmlType="submit" size="large" block loading={submitting} icon={<LockOutlined />} style={{ height: 56, fontSize: 17 }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  size="large"
+                  block
+                  loading={submitting}
+                  icon={<LockOutlined />}
+                  style={{ height: 56, fontSize: 17 }}
+                >
                   {format(t.placeOrder, { price: money(total) })}
                 </Button>
-                <Typography.Paragraph style={{ color: colors.muted, fontSize: 12, textAlign: "center", margin: "12px 0 0" }}>
+                <Typography.Paragraph
+                  style={{ color: colors.muted, fontSize: 12, textAlign: "center", margin: "12px 0 0" }}
+                >
                   {format(t.confirmationNote, { email: SITE.email })}
                 </Typography.Paragraph>
               </div>

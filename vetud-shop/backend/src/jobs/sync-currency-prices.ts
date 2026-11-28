@@ -11,7 +11,9 @@ export default async function syncCurrencyPricesJob(container: MedusaContainer) 
   try {
     await syncCurrencyPrices(container)
   } catch (error) {
-    container.resolve(ContainerRegistrationKeys.LOGGER).error(`Currency prices not updated: ${(error as Error).message}`)
+    container
+      .resolve(ContainerRegistrationKeys.LOGGER)
+      .error(`Currency prices not updated: ${(error as Error).message}`)
   }
 }
 

@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { TruckIcon as LocalShippingOutlinedIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
 import LinearProgress from "@mui/material/LinearProgress"
@@ -15,13 +14,7 @@ import { useStore } from "../store/StoreProvider"
  * read from the visitor's region, so it changes without a release. Shown in the cart, on product
  * pages and in the checkout summary.
  */
-export default function FreeShippingProgress({
-  itemTotal,
-  currencyCode,
-}: {
-  itemTotal: number
-  currencyCode: string
-}) {
+export default function FreeShippingProgress({ itemTotal, currencyCode }: { itemTotal: number; currencyCode: string }) {
   const ct = useContentTranslator()
   const money = useMoney()
   const { region } = useStore()
@@ -38,11 +31,13 @@ export default function FreeShippingProgress({
       <Stack direction="row" spacing={1} sx={{ alignItems: "center", mb: 1 }}>
         <LocalShippingOutlinedIcon fontSize="small" sx={{ color: "secondary.main" }} />
         <Typography variant="body2" sx={{ fontWeight: 600 }} aria-live="polite">
-          {ct(remaining <= 0
-            ? "Your order ships free (standard)"
-            : itemTotal > 0
-            ? `${money(remaining, currencyCode)} away from free standard shipping`
-            : `Free standard shipping on orders over ${money(threshold, currencyCode, { whole: true })}`)}
+          {ct(
+            remaining <= 0
+              ? "Your order ships free (standard)"
+              : itemTotal > 0
+                ? `${money(remaining, currencyCode)} away from free standard shipping`
+                : `Free standard shipping on orders over ${money(threshold, currencyCode, { whole: true })}`,
+          )}
         </Typography>
       </Stack>
       <LinearProgress

@@ -7,7 +7,12 @@ import { bookHandledInBrowser } from "../book/book"
 import WelcomeSplash, { type WelcomeOffer } from "./WelcomeSplash"
 import EntrySplash from "./EntrySplash"
 import { entryVisitor, rememberEntryVisitor, type EntryVisitor } from "./entry-session"
-import { closeWelcomeForVisit, dismissWelcomeForSession, startWelcomeForSession, welcomeClosedForVisit } from "./session"
+import {
+  closeWelcomeForVisit,
+  dismissWelcomeForSession,
+  startWelcomeForSession,
+  welcomeClosedForVisit,
+} from "./session"
 
 // Pages opened from an email link or a payment, where a full-screen sign-up would get in the way.
 const QUIET_PATHS = /^\/[^/]+\/(newsletter|book)(\/|$)/
@@ -17,7 +22,7 @@ const QUIET_PATHS = /^\/[^/]+\/(newsletter|book)(\/|$)/
  * $4.99 PDF book instead: email first, then payment on the page that email links to. Set back to "newsletter" to bring the newsletter back.
  */
 const OFFER: WelcomeOffer = "book"
-const alreadyDone = () => OFFER === "book" ? bookHandledInBrowser() : subscribedInBrowser()
+const alreadyDone = () => (OFFER === "book" ? bookHandledInBrowser() : subscribedInBrowser())
 
 /**
  * Offer the email list once per visit, thirty seconds after entry (owner, 2026-11-27: it used to
@@ -35,7 +40,7 @@ export default function WelcomeExperience() {
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      setCooldownUntil(value => Math.max(value, startWelcomeForSession()))
+      setCooldownUntil((value) => Math.max(value, startWelcomeForSession()))
       setSubscribed(alreadyDone())
       setClosed(welcomeClosedForVisit())
       setVisitor(entryVisitor())
@@ -46,8 +51,8 @@ export default function WelcomeExperience() {
   useEffect(() => {
     const refresh = () => {
       // Check again before reopening, including signups completed in another tab.
-      setSubscribed(value => value === null ? null : value || alreadyDone())
-      setCooldownUntil(value => value > Date.now() ? value : 0)
+      setSubscribed((value) => (value === null ? null : value || alreadyDone()))
+      setCooldownUntil((value) => (value > Date.now() ? value : 0))
     }
     const timer = cooldownUntil ? window.setTimeout(refresh, Math.max(0, cooldownUntil - Date.now())) : undefined
     window.addEventListener("focus", refresh)
@@ -65,27 +70,32 @@ export default function WelcomeExperience() {
   // After signing up, the thank-you stays until it is closed, and the splash doesn't return.
   const open = !!visitor && cooldownUntil === 0 && (thanking || (asking && !closed))
 
-  return <>
-    <EntrySplash open={visitor === null} onEnter={() => {
-      const accepted = rememberEntryVisitor(true)
-      if (!accepted) return
-      // Let the visitor enter the actual site before offering the existing newsletter splash.
-      setCooldownUntil(dismissWelcomeForSession())
-      setVisitor(accepted)
-    }} />
-    <WelcomeSplash
-      open={open}
-      offer={OFFER}
-      onDismiss={() => {
-        closeWelcomeForVisit()
-        setClosed(true)
-        setThanking(false)
-      }}
-      onSubscribed={() => {
-        dismissWelcomeForSession()
-        setSubscribed(true)
-        setThanking(true)
-      }}
-    />
-  </>
+  return (
+    <>
+      <EntrySplash
+        open={visitor === null}
+        onEnter={() => {
+          const accepted = rememberEntryVisitor(true)
+          if (!accepted) return
+          // Let the visitor enter the actual site before offering the existing newsletter splash.
+          setCooldownUntil(dismissWelcomeForSession())
+          setVisitor(accepted)
+        }}
+      />
+      <WelcomeSplash
+        open={open}
+        offer={OFFER}
+        onDismiss={() => {
+          closeWelcomeForVisit()
+          setClosed(true)
+          setThanking(false)
+        }}
+        onSubscribed={() => {
+          dismissWelcomeForSession()
+          setSubscribed(true)
+          setThanking(true)
+        }}
+      />
+    </>
+  )
 }

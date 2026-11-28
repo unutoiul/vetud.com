@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import type { HttpTypes } from "@medusajs/types"
 import { TrashIcon as DeleteOutlinedIcon } from "@/components/brand/Icon"
 import Box from "@mui/material/Box"
@@ -67,7 +66,12 @@ export default function CartLineItem({ item, currencyCode, readOnly, onNavigate 
               component={LocalizedNextLink}
               href={`/products/${item.product_handle}`}
               onClick={onNavigate}
-              sx={{ fontWeight: 600, textDecoration: "none", overflowWrap: "anywhere", "&:hover": { color: "secondary.main" } }}
+              sx={{
+                fontWeight: 600,
+                textDecoration: "none",
+                overflowWrap: "anywhere",
+                "&:hover": { color: "secondary.main" },
+              }}
             >
               {ct(item.product_title)}
             </Typography>

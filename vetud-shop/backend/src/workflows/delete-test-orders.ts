@@ -15,7 +15,7 @@ const softDeleteOrdersStep = createStep(
   async (ids, { container }) => {
     if (!ids?.length) return
     await container.resolve(Modules.ORDER).restoreOrders(ids)
-  }
+  },
 )
 
 export const deleteTestOrdersWorkflow = createWorkflow("delete-test-orders", function (input: { order_ids: string[] }) {

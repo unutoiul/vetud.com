@@ -1,10 +1,5 @@
 import type { CreateNotificationDTO } from "@medusajs/framework/types"
-import {
-  createStep,
-  createWorkflow,
-  StepResponse,
-  WorkflowResponse,
-} from "@medusajs/framework/workflows-sdk"
+import { createStep, createWorkflow, StepResponse, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import { emailSettings } from "../lib/notifications"
 import { EmailTemplates } from "../modules/resend/templates"
 import { sendNotificationStep } from "./steps/send-notification"
@@ -38,7 +33,7 @@ const buildPasswordResetNotificationStep = createStep(
     }
 
     return new StepResponse([notification])
-  }
+  },
 )
 
 /** Emails a one-time password reset link to a member or admin user. */
@@ -49,5 +44,5 @@ export const sendPasswordResetEmailWorkflow = createWorkflow(
     sendNotificationStep(notifications)
 
     return new WorkflowResponse({ success: true })
-  }
+  },
 )

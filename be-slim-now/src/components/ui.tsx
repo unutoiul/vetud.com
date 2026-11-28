@@ -6,7 +6,9 @@ import { colors, fonts } from "@/theme/tokens"
 
 /** Page width and side gutters shared by every section. */
 export function Container({ children, style }: { children: ReactNode; style?: CSSProperties }) {
-  return <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(16px, 4vw, 32px)", ...style }}>{children}</div>
+  return (
+    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(16px, 4vw, 32px)", ...style }}>{children}</div>
+  )
 }
 
 /** Space above and below every section's content (two of these sit between neighbouring sections). */
@@ -33,7 +35,10 @@ export function Section({
   style?: CSSProperties
 }) {
   return (
-    <section id={id} style={{ padding: SECTION_PADDING, ...(joined && { paddingTop: JOINED_TOP }), background, ...style }}>
+    <section
+      id={id}
+      style={{ padding: SECTION_PADDING, ...(joined && { paddingTop: JOINED_TOP }), background, ...style }}
+    >
       <Container>{children}</Container>
     </section>
   )
@@ -70,7 +75,13 @@ export function SectionHeading({
   inverse?: boolean
 }) {
   return (
-    <div style={{ textAlign: align, maxWidth: align === "center" ? 720 : undefined, margin: align === "center" ? "0 auto clamp(32px, 4vw, 48px)" : "0 0 32px" }}>
+    <div
+      style={{
+        textAlign: align,
+        maxWidth: align === "center" ? 720 : undefined,
+        margin: align === "center" ? "0 auto clamp(32px, 4vw, 48px)" : "0 0 32px",
+      }}
+    >
       {eyebrow && <Eyebrow color={inverse ? colors.onNavyMuted : colors.tealDeep}>{eyebrow}</Eyebrow>}
       <Typography.Title
         level={2}
@@ -88,7 +99,9 @@ export function SectionHeading({
       </Typography.Title>
       <AccentRule align={align} />
       {subtitle && (
-        <Typography.Paragraph style={{ fontSize: 17, lineHeight: 1.65, color: inverse ? colors.onNavyMuted : colors.muted, margin: 0 }}>
+        <Typography.Paragraph
+          style={{ fontSize: 17, lineHeight: 1.65, color: inverse ? colors.onNavyMuted : colors.muted, margin: 0 }}
+        >
           {subtitle}
         </Typography.Paragraph>
       )}

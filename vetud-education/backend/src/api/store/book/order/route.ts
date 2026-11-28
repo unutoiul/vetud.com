@@ -6,5 +6,9 @@ import type { StoreBookOrderQueryType } from "../validators"
 export async function GET(req: MedusaRequest<unknown, StoreBookOrderQueryType>, res: MedusaResponse) {
   const session = await paidBookSession(req.validatedQuery.session_id)
   res.setHeader("Cache-Control", "private, no-store")
-  res.json(session ? { paid: true, email: session.customer_details?.email ?? session.customer_email ?? null } : { paid: false, email: null })
+  res.json(
+    session
+      ? { paid: true, email: session.customer_details?.email ?? session.customer_email ?? null }
+      : { paid: false, email: null },
+  )
 }

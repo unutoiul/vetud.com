@@ -14,22 +14,30 @@ export async function executeCustomerCartTransfer(input: Input, container: Medus
   // The native workflow's own cart lock starts AFTER its validation hook, so a
   // hook alone cannot prevent two customers claiming the same guest cart.
   return await locking.execute(`customer-cart:${input.cart_id}`, async () => {
-    const { data: carts } = await query.graph({
-      entity: "cart",
-      fields: ["id", "customer_id", "customer.has_account"],
-      filters: { id: input.cart_id },
-    }, { throwIfKeyNotFound: true })
+    const { data: carts } = await query.graph(
+      {
+        entity: "cart",
+        fields: ["id", "customer_id", "customer.has_account"],
+        filters: { id: input.cart_id },
+      },
+      { throwIfKeyNotFound: true },
+    )
     validateCartOwnership(carts[0], input.customer_id)
-    await transferCartCustomerWorkflow(container).run({ input: {
-      id: input.cart_id,
-      customer_id: input.customer_id,
-      additional_data: input.additional_data,
-    } })
-    const { data } = await query.graph({
-      entity: "cart",
-      fields: input.fields,
-      filters: { id: input.cart_id },
-    }, { throwIfKeyNotFound: true })
+    await transferCartCustomerWorkflow(container).run({
+      input: {
+        id: input.cart_id,
+        customer_id: input.customer_id,
+        additional_data: input.additional_data,
+      },
+    })
+    const { data } = await query.graph(
+      {
+        entity: "cart",
+        fields: input.fields,
+        filters: { id: input.cart_id },
+      },
+      { throwIfKeyNotFound: true },
+    )
     return data[0]
   })
 }

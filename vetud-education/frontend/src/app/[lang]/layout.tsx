@@ -28,7 +28,9 @@ export async function generateMetadata(): Promise<Metadata> {
     description: SITE.description,
     openGraph: { siteName: SITE.name, type: "website" },
     // Meta Business > Brand safety > Domains, "meta tag" method: paste only the content="…" value.
-    ...(process.env.FACEBOOK_DOMAIN_VERIFICATION ? { verification: { other: { "facebook-domain-verification": process.env.FACEBOOK_DOMAIN_VERIFICATION } } } : {}),
+    ...(process.env.FACEBOOK_DOMAIN_VERIFICATION
+      ? { verification: { other: { "facebook-domain-verification": process.env.FACEBOOK_DOMAIN_VERIFICATION } } }
+      : {}),
   })
 }
 
@@ -49,7 +51,9 @@ export default async function LanguageLayout({ children }: LayoutProps<"/[lang]"
     <html lang={i18n.locale}>
       <head>
         {/* The fonts are declared through MUI (theme/fonts.ts); fetch the first ones before the styles ask. */}
-        {preloadFonts.map((href) => <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />)}
+        {preloadFonts.map((href) => (
+          <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />
+        ))}
       </head>
       <body>
         <NextIntlClientProvider {...i18n}>

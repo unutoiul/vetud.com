@@ -12,9 +12,7 @@ const baseTransform = createDefaultTransform(GRAPH_FIELDS)
 
 function readMetadata(entity: Record<string, unknown>): Record<string, unknown> {
   const metadata = entity.metadata
-  return metadata && typeof metadata === "object"
-    ? (metadata as Record<string, unknown>)
-    : {}
+  return metadata && typeof metadata === "object" ? (metadata as Record<string, unknown>) : {}
 }
 
 function readLotNumbers(metadata: Record<string, unknown>): string[] {
@@ -30,12 +28,7 @@ export default defineProductSearchIndex({
   fields: search.define({
     ...productSearchSchema(),
     code: search.text().searchable({ weight: 5 }).retrievable(),
-    lot_numbers: search
-      .keyword()
-      .array()
-      .searchable({ weight: 4 })
-      .filterable()
-      .retrievable(),
+    lot_numbers: search.keyword().array().searchable({ weight: 4 }).filterable().retrievable(),
   }),
   graph_fields: ["metadata"],
   transform: (entity, context) => {

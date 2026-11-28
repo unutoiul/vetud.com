@@ -23,5 +23,8 @@ export function validateCartOwner(cart: CartForOwnerCheck, customerId: string | 
   if (!customerId) {
     throw new MedusaError(MedusaError.Types.UNAUTHORIZED, "Sign in to your account to place this order.")
   }
-  throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "This cart does not belong to your account. Return to checkout and try again.")
+  throw new MedusaError(
+    MedusaError.Types.NOT_ALLOWED,
+    "This cart does not belong to your account. Return to checkout and try again.",
+  )
 }

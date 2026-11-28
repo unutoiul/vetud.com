@@ -13,12 +13,14 @@ export const StoreBookRequestSchema = z.object({
 })
 
 /** The book's page: pay with the token from the email link, or with an address typed on the page. */
-export const StoreBookCheckoutSchema = z.object({
-  token: z.string().trim().max(600).optional(),
-  email: Email.optional(),
-  locale: z.enum(LIST_LOCALES).default("en"),
-  website: z.string().max(0).optional(),
-}).refine((body) => body.token || body.email, { message: "An email address is needed." })
+export const StoreBookCheckoutSchema = z
+  .object({
+    token: z.string().trim().max(600).optional(),
+    email: Email.optional(),
+    locale: z.enum(LIST_LOCALES).default("en"),
+    website: z.string().max(0).optional(),
+  })
+  .refine((body) => body.token || body.email, { message: "An email address is needed." })
 
 export const StoreBookOfferQuery = z.object({
   token: z.string().trim().max(600),

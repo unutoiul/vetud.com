@@ -61,8 +61,7 @@ export function nmiAmount(value: unknown): string {
   }
   try {
     const amount = new BigNumber(value as BigNumberInput).bigNumber
-    if (!amount || !amount.isFinite() || !amount.isPositive() || amount.isZero() ||
-      (amount.decimalPlaces() ?? 3) > 2) {
+    if (!amount || !amount.isFinite() || !amount.isPositive() || amount.isZero() || (amount.decimalPlaces() ?? 3) > 2) {
       return nmiError("NMI amount is missing or invalid.")
     }
     return amount.toFixed(2)
@@ -74,12 +73,16 @@ export function nmiAmount(value: unknown): string {
 /** Read the provider's authenticated authorization, never browser method flags. */
 export function readNmiPaymentIdentity(
   data: Record<string, unknown> | null | undefined,
-  securityKey = process.env.NMI_SECURITY_KEY
+  securityKey = process.env.NMI_SECURITY_KEY,
 ): NmiPaymentIdentity {
   const encoded = data?.nmi_state
   const signature = data?.nmi_signature
-  if (!securityKey || typeof encoded !== "string" || typeof signature !== "string" ||
-    !/^[a-f0-9]{64}$/.test(signature)) {
+  if (
+    !securityKey ||
+    typeof encoded !== "string" ||
+    typeof signature !== "string" ||
+    !/^[a-f0-9]{64}$/.test(signature)
+  ) {
     return nmiError("NMI payment identity is unverified; reconcile before proceeding.")
   }
   const expected = createHmac("sha256", securityKey).update(`vetud-nmi-v1:${encoded}`).digest("hex")
@@ -87,12 +90,20 @@ export function readNmiPaymentIdentity(
     return nmiError("NMI payment identity is unverified; reconcile before proceeding.")
   }
   let state: NmiPaymentIdentity & { phase: string }
-  try { state = JSON.parse(encoded) } catch {
+  try {
+    state = JSON.parse(encoded)
+  } catch {
     return nmiError("NMI payment identity is invalid.")
   }
-  if (!state || state.phase !== "payment" || !/^payses_[a-zA-Z0-9_-]+$/.test(state.session_id) ||
-    typeof state.transactionid !== "string" || !/^[a-zA-Z0-9_-]{1,128}$/.test(state.transactionid) ||
-    !["ach", "card"].includes(state.payment_method) || !/^[a-z]{3}$/.test(state.currency_code)) {
+  if (
+    !state ||
+    state.phase !== "payment" ||
+    !/^payses_[a-zA-Z0-9_-]+$/.test(state.session_id) ||
+    typeof state.transactionid !== "string" ||
+    !/^[a-zA-Z0-9_-]{1,128}$/.test(state.transactionid) ||
+    !["ach", "card"].includes(state.payment_method) ||
+    !/^[a-z]{3}$/.test(state.currency_code)
+  ) {
     return nmiError("NMI payment identity is invalid.")
   }
   nmiAmount(state.amount)
@@ -101,26 +112,37 @@ export function readNmiPaymentIdentity(
 
 export function assertNmiPaymentIdentity(payment: NmiSettlementPayment, state: NmiPaymentIdentity): void {
   const sessionId = payment.payment_session_id ?? payment.payment_session?.id
-  if (payment.provider_id !== NMI_PROVIDER_ID || !sessionId || sessionId !== state.session_id ||
-    nmiAmount(payment.amount) !== nmiAmount(state.amount) || payment.currency_code !== state.currency_code) {
+  if (
+    payment.provider_id !== NMI_PROVIDER_ID ||
+    !sessionId ||
+    sessionId !== state.session_id ||
+    nmiAmount(payment.amount) !== nmiAmount(state.amount) ||
+    payment.currency_code !== state.currency_code
+  ) {
     nmiError("NMI payment identity does not match its payment record.")
   }
 }
 
 /** Only payment METADATA is authoritative. Session/browser data cannot release a hold. */
-export function getNmiSettlement(
-  payment: NmiSettlementPayment,
-  state: NmiPaymentIdentity
-): NmiSettlement | undefined {
+export function getNmiSettlement(payment: NmiSettlementPayment, state: NmiPaymentIdentity): NmiSettlement | undefined {
   assertNmiPaymentIdentity(payment, state)
   const record = payment.metadata?.[NMI_SETTLEMENT_METADATA_KEY] as NmiSettlement | undefined
   if (record === undefined || record === null) return undefined
-  if (record.version !== 1 || record.source !== "nmi-hmac-v1" || record.payment_id !== payment.id ||
-    record.provider_id !== NMI_PROVIDER_ID || record.session_id !== state.session_id ||
-    record.transaction_id !== state.transactionid || record.amount !== nmiAmount(state.amount) ||
-    record.currency_code !== state.currency_code || !["settled", "returned", "late_returned"].includes(record.status) ||
-    record.hold !== (record.status !== "settled") || record.reconciliation_required !== record.hold ||
-    typeof record.capture_recorded !== "boolean" || !/^[a-f0-9]{64}$/.test(record.event_id)) {
+  if (
+    record.version !== 1 ||
+    record.source !== "nmi-hmac-v1" ||
+    record.payment_id !== payment.id ||
+    record.provider_id !== NMI_PROVIDER_ID ||
+    record.session_id !== state.session_id ||
+    record.transaction_id !== state.transactionid ||
+    record.amount !== nmiAmount(state.amount) ||
+    record.currency_code !== state.currency_code ||
+    !["settled", "returned", "late_returned"].includes(record.status) ||
+    record.hold !== (record.status !== "settled") ||
+    record.reconciliation_required !== record.hold ||
+    typeof record.capture_recorded !== "boolean" ||
+    !/^[a-f0-9]{64}$/.test(record.event_id)
+  ) {
     return nmiError("NMI settlement metadata is inconsistent; reconciliation is required.")
   }
   return record

@@ -9,18 +9,30 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "trials",
     evidence: "large-trials",
     headline: "Survodutide puts the liver in the picture",
-    oneLiner: "What can a liver biopsy tell us that a bathroom scale can’t? Survodutide researchers used both to study a drug that carries two hormone signals.",
-    whatItIs: "Survodutide is an investigational peptide being studied for obesity and for MASH, a condition in which fat buildup accompanies liver inflammation and injury. A person can lose weight while an important question remains open. What happened to the liver tissue itself?",
-    howItWorks: "Survodutide activates receptors for GLP-1 and glucagon. The first signal helps regulate appetite. The second acts on the liver, which stores and releases fuel. A biopsy lets researchers examine inflammation and scarring directly.",
+    oneLiner:
+      "What can a liver biopsy tell us that a bathroom scale can’t? Survodutide researchers used both to study a drug that carries two hormone signals.",
+    whatItIs:
+      "Survodutide is an investigational peptide being studied for obesity and for MASH, a condition in which fat buildup accompanies liver inflammation and injury. A person can lose weight while an important question remains open. What happened to the liver tissue itself?",
+    howItWorks:
+      "Survodutide activates receptors for GLP-1 and glucagon. The first signal helps regulate appetite. The second acts on the liver, which stores and releases fuel. A biopsy lets researchers examine inflammation and scarring directly.",
     findings: [
       "In a 48-week phase 2 trial, MASH improved without worse scarring in 47%, 62% and 43% of participants across three survodutide groups, compared with 14% on placebo. Improvement on that measure can occur even when existing scars remain.",
       "A separate phase 3 study, SYNCHRONIZE-CVOT, met its cardiovascular safety objective. Whether people avoid liver failure over the long term is a different question that the biopsy study could not settle.",
     ],
     risks: ["Nausea, diarrhea and vomiting were more frequent with survodutide than with placebo in the liver trial."],
-    statusNote: "Survodutide is in clinical development for metabolic disease. The liver and cardiovascular trials answer different questions about the same investigational drug.",
+    statusNote:
+      "Survodutide is in clinical development for metabolic disease. The liver and cardiovascular trials answer different questions about the same investigational drug.",
     sources: [
-      { title: "Liver biopsy results in the phase 2 MASH trial", detail: "New England Journal of Medicine · 2024", url: "https://pubmed.ncbi.nlm.nih.gov/38847460/" },
-      { title: "Cardiovascular outcomes in SYNCHRONIZE-CVOT", detail: "The Lancet · 2026", url: "https://pubmed.ncbi.nlm.nih.gov/43003106/" },
+      {
+        title: "Liver biopsy results in the phase 2 MASH trial",
+        detail: "New England Journal of Medicine · 2024",
+        url: "https://pubmed.ncbi.nlm.nih.gov/38847460/",
+      },
+      {
+        title: "Cardiovascular outcomes in SYNCHRONIZE-CVOT",
+        detail: "The Lancet · 2026",
+        url: "https://pubmed.ncbi.nlm.nih.gov/43003106/",
+      },
     ],
   },
   {
@@ -31,18 +43,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "approved-elsewhere",
     evidence: "approved",
     headline: "Mazdutide and the two signals behind GLORY-1",
-    oneLiner: "Two hormone receptors, three study groups and 48 weeks on the scale. Inside the Chinese trial that helped bring mazdutide into clinical care.",
-    whatItIs: "Mazdutide is modeled on oxyntomodulin, a hormone released by the intestine after eating. Its design brings two familiar pieces of metabolic biology together in a single molecule.",
-    howItWorks: "GLP-1 receptor activity helps regulate appetite and insulin release. Glucagon receptors help the liver manage fuel. The GLORY-1 trial measured what the combined signal meant for people living with overweight or obesity.",
+    oneLiner:
+      "Two hormone receptors, three study groups and 48 weeks on the scale. Inside the Chinese trial that helped bring mazdutide into clinical care.",
+    whatItIs:
+      "Mazdutide is modeled on oxyntomodulin, a hormone released by the intestine after eating. Its design brings two familiar pieces of metabolic biology together in a single molecule.",
+    howItWorks:
+      "GLP-1 receptor activity helps regulate appetite and insulin release. Glucagon receptors help the liver manage fuel. The GLORY-1 trial measured what the combined signal meant for people living with overweight or obesity.",
     findings: [
       "In GLORY-1, 610 adults in China were assigned at random to one of two mazdutide groups or placebo. By week 48, average body weight had fallen by 11.0% and 14.0% in the active groups and risen by 0.3% with placebo.",
       "Individual results varied. In the group with the largest average loss, 49.5% of participants lost at least 15% of their starting weight. The study had no comparison arm taking another weight-management medicine.",
     ],
-    risks: ["Digestive side effects were the most frequent adverse events in GLORY-1. The 48-week trial gives a limited view of less common or longer-term effects."],
-    statusNote: "China authorized mazdutide for chronic weight management in eligible adults in 2025. That decision applies to the Chinese product and its local indications.",
+    risks: [
+      "Digestive side effects were the most frequent adverse events in GLORY-1. The 48-week trial gives a limited view of less common or longer-term effects.",
+    ],
+    statusNote:
+      "China authorized mazdutide for chronic weight management in eligible adults in 2025. That decision applies to the Chinese product and its local indications.",
     sources: [
-      { title: "GLORY-1 results in Chinese adults with overweight or obesity", detail: "New England Journal of Medicine · 2025", url: "https://www.nejm.org/doi/abs/10.1056/NEJMoa2411528" },
-      { title: "Announcement of Chinese authorization for weight management", detail: "Innovent Biologics · HKEX · 2025", url: "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0627/2025062700759.pdf" },
+      {
+        title: "GLORY-1 results in Chinese adults with overweight or obesity",
+        detail: "New England Journal of Medicine · 2025",
+        url: "https://www.nejm.org/doi/abs/10.1056/NEJMoa2411528",
+      },
+      {
+        title: "Announcement of Chinese authorization for weight management",
+        detail: "Innovent Biologics · HKEX · 2025",
+        url: "https://www.hkexnews.hk/listedco/listconews/sehk/2025/0627/2025062700759.pdf",
+      },
     ],
   },
   {
@@ -53,19 +79,37 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "approved",
     evidence: "approved",
     headline: "How a desert lizard led to exenatide",
-    oneLiner: "A clue in Gila monster venom helped change diabetes medicine. Follow exendin-4 from a 1992 lab discovery to a trial involving nearly 15,000 people.",
-    whatItIs: "Researchers studying the Gila monster identified a peptide called exendin-4. Exenatide is its synthetic counterpart. A molecule from a desert lizard turned out to fit a receptor humans use to coordinate the response to food.",
-    howItWorks: "When blood glucose rises, activating the GLP-1 receptor helps the pancreas release insulin. Exenatide also slows stomach emptying. Together, these effects can soften the rise in blood sugar after a meal.",
+    oneLiner:
+      "A clue in Gila monster venom helped change diabetes medicine. Follow exendin-4 from a 1992 lab discovery to a trial involving nearly 15,000 people.",
+    whatItIs:
+      "Researchers studying the Gila monster identified a peptide called exendin-4. Exenatide is its synthetic counterpart. A molecule from a desert lizard turned out to fit a receptor humans use to coordinate the response to food.",
+    howItWorks:
+      "When blood glucose rises, activating the GLP-1 receptor helps the pancreas release insulin. Exenatide also slows stomach emptying. Together, these effects can soften the rise in blood sugar after a meal.",
     findings: [
       "EXSCEL followed 14,752 people with type 2 diabetes. A major cardiovascular event occurred in 11.4% of participants assigned to extended-release exenatide and 12.2% assigned to placebo.",
       "Those figures met the trial’s cardiovascular safety criterion. The difference was too small to establish that exenatide prevented more events, an important distinction when reading results across the GLP-1 family.",
     ],
-    risks: ["Nausea is common. The US label also warns about acute pancreatitis and kidney injury, including cases associated with fluid loss from vomiting or diarrhea."],
-    statusNote: "Exenatide has US approval for improving blood sugar control in type 2 diabetes. Its immediate-release and extended-release formulations have separate labels.",
+    risks: [
+      "Nausea is common. The US label also warns about acute pancreatitis and kidney injury, including cases associated with fluid loss from vomiting or diarrhea.",
+    ],
+    statusNote:
+      "Exenatide has US approval for improving blood sugar control in type 2 diabetes. Its immediate-release and extended-release formulations have separate labels.",
     sources: [
-      { title: "The original discovery of exendin-4 in Gila monster venom", detail: "Journal of Biological Chemistry · 1992", url: "https://pubmed.ncbi.nlm.nih.gov/1313797/" },
-      { title: "EXSCEL cardiovascular outcomes with extended-release exenatide", detail: "New England Journal of Medicine · 2017", url: "https://www.nejm.org/doi/full/10.1056/NEJMoa1612917" },
-      { title: "Byetta prescribing information", detail: "FDA · 2024", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/021773s049lbl.pdf" },
+      {
+        title: "The original discovery of exendin-4 in Gila monster venom",
+        detail: "Journal of Biological Chemistry · 1992",
+        url: "https://pubmed.ncbi.nlm.nih.gov/1313797/",
+      },
+      {
+        title: "EXSCEL cardiovascular outcomes with extended-release exenatide",
+        detail: "New England Journal of Medicine · 2017",
+        url: "https://www.nejm.org/doi/full/10.1056/NEJMoa1612917",
+      },
+      {
+        title: "Byetta prescribing information",
+        detail: "FDA · 2024",
+        url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2024/021773s049lbl.pdf",
+      },
     ],
   },
   {
@@ -76,18 +120,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "approved",
     evidence: "approved",
     headline: "Dulaglutide takes the long view of heart health",
-    oneLiner: "A blood sugar test takes minutes. Finding out whether a diabetes medicine changes the odds of a heart attack or stroke took more than five years.",
-    whatItIs: "Dulaglutide, sold as Trulicity, pairs a GLP-1-like signal with part of an antibody. The antibody fragment gives the molecule staying power in circulation, so its action lasts far longer than the natural gut hormone.",
-    howItWorks: "The signal helps the pancreas release insulin when glucose is high and reduces glucagon release. Researchers then looked beyond glucose readings to events people experience in daily life, including heart attacks and strokes.",
+    oneLiner:
+      "A blood sugar test takes minutes. Finding out whether a diabetes medicine changes the odds of a heart attack or stroke took more than five years.",
+    whatItIs:
+      "Dulaglutide, sold as Trulicity, pairs a GLP-1-like signal with part of an antibody. The antibody fragment gives the molecule staying power in circulation, so its action lasts far longer than the natural gut hormone.",
+    howItWorks:
+      "The signal helps the pancreas release insulin when glucose is high and reduces glucagon release. Researchers then looked beyond glucose readings to events people experience in daily life, including heart attacks and strokes.",
     findings: [
       "REWIND enrolled 9,901 adults with type 2 diabetes. Over a median 5.4 years, cardiovascular death, nonfatal heart attack or nonfatal stroke occurred in 12.0% on dulaglutide and 13.4% on placebo.",
       "That is a difference of 1.4 percentage points across the follow-up period. Participants had either established cardiovascular disease or risk factors, which matters when applying the result to another population.",
     ],
-    risks: ["Digestive symptoms are common. The US label carries a boxed warning about thyroid C-cell tumors in rodents and lists contraindications for certain thyroid cancer histories."],
-    statusNote: "US indications include glucose control in type 2 diabetes and lowering the risk of major cardiovascular events in adults with type 2 diabetes who meet the cardiovascular risk criteria.",
+    risks: [
+      "Digestive symptoms are common. The US label carries a boxed warning about thyroid C-cell tumors in rodents and lists contraindications for certain thyroid cancer histories.",
+    ],
+    statusNote:
+      "US indications include glucose control in type 2 diabetes and lowering the risk of major cardiovascular events in adults with type 2 diabetes who meet the cardiovascular risk criteria.",
     sources: [
-      { title: "REWIND cardiovascular outcomes in type 2 diabetes", detail: "The Lancet · 2019", url: "https://pubmed.ncbi.nlm.nih.gov/31189511/" },
-      { title: "Trulicity prescribing information", detail: "FDA · 2026", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/125469s065lbl.pdf" },
+      {
+        title: "REWIND cardiovascular outcomes in type 2 diabetes",
+        detail: "The Lancet · 2019",
+        url: "https://pubmed.ncbi.nlm.nih.gov/31189511/",
+      },
+      {
+        title: "Trulicity prescribing information",
+        detail: "FDA · 2026",
+        url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/125469s065lbl.pdf",
+      },
     ],
   },
   {
@@ -98,18 +156,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "approved",
     evidence: "approved",
     headline: "Setmelanotide and the biology of relentless hunger",
-    oneLiner: "What happens when the brain misses a fullness signal? A rare group of disorders gave researchers a precise place to look and a way to ask patients about hunger itself.",
-    whatItIs: "The hypothalamus helps the brain interpret energy needs. Genetic changes or injury to this region can disrupt appetite regulation. For some people, persistent hunger starts early and shapes nearly every meal.",
-    howItWorks: "Setmelanotide activates the melanocortin-4 receptor, or MC4R. In certain conditions, this gives an appetite-regulating circuit a signal it would otherwise struggle to receive. The cause of the disruption helps determine who may benefit.",
+    oneLiner:
+      "What happens when the brain misses a fullness signal? A rare group of disorders gave researchers a precise place to look and a way to ask patients about hunger itself.",
+    whatItIs:
+      "The hypothalamus helps the brain interpret energy needs. Genetic changes or injury to this region can disrupt appetite regulation. For some people, persistent hunger starts early and shapes nearly every meal.",
+    howItWorks:
+      "Setmelanotide activates the melanocortin-4 receptor, or MC4R. In certain conditions, this gives an appetite-regulating circuit a signal it would otherwise struggle to receive. The cause of the disruption helps determine who may benefit.",
     findings: [
       "In two small phase 3 studies, 8 of 10 participants in the POMC group and 5 of 11 in the LEPR group lost at least 10% of their starting weight after roughly a year.",
       "Participants also scored their hunger. Improvements in a subset of responders offered a window into daily experience, although these small, selected groups cannot represent everyone living with obesity.",
     ],
-    risks: ["Skin darkening and injection-site reactions were common in the original trials. The US label also describes risks including depression and suicidal thoughts."],
-    statusNote: "The US label covers specific POMC, PCSK1 or LEPR deficiencies and Bardet-Biedl syndrome from age two, and acquired hypothalamic obesity from age four. Each indication has its own eligibility criteria.",
+    risks: [
+      "Skin darkening and injection-site reactions were common in the original trials. The US label also describes risks including depression and suicidal thoughts.",
+    ],
+    statusNote:
+      "The US label covers specific POMC, PCSK1 or LEPR deficiencies and Bardet-Biedl syndrome from age two, and acquired hypothalamic obesity from age four. Each indication has its own eligibility criteria.",
     sources: [
-      { title: "MC4R activation in POMC and LEPR deficiency", detail: "The Lancet Diabetes & Endocrinology · 2020", url: "https://pubmed.ncbi.nlm.nih.gov/33137293/" },
-      { title: "Imcivree indications and prescribing information", detail: "FDA · 2026", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/213793s009lbl.pdf" },
+      {
+        title: "MC4R activation in POMC and LEPR deficiency",
+        detail: "The Lancet Diabetes & Endocrinology · 2020",
+        url: "https://pubmed.ncbi.nlm.nih.gov/33137293/",
+      },
+      {
+        title: "Imcivree indications and prescribing information",
+        detail: "FDA · 2026",
+        url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2026/213793s009lbl.pdf",
+      },
     ],
   },
   {
@@ -120,18 +192,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "early",
     evidence: "animals",
     headline: "Adipotide follows the blood supply to fat",
-    oneLiner: "Fat tissue depends on a network of tiny blood vessels. An experiment in monkeys asked what happens when that supply is interrupted, and uncovered a problem in the kidneys.",
-    whatItIs: "Adipotide grew out of a different way of thinking about obesity. Researchers treated white fat as a living organ with a blood supply of its own. Their experimental compound was designed to recognize features of the vessels that support it.",
-    howItWorks: "The proposed effect begins in the cells lining those small vessels. When some of those cells die, neighboring fat tissue loses support. That mechanism also raises a practical safety question about which other tissues encounter the compound.",
+    oneLiner:
+      "Fat tissue depends on a network of tiny blood vessels. An experiment in monkeys asked what happens when that supply is interrupted, and uncovered a problem in the kidneys.",
+    whatItIs:
+      "Adipotide grew out of a different way of thinking about obesity. Researchers treated white fat as a living organ with a blood supply of its own. Their experimental compound was designed to recognize features of the vessels that support it.",
+    howItWorks:
+      "The proposed effect begins in the cells lining those small vessels. When some of those cells die, neighboring fat tissue loses support. That mechanism also raises a practical safety question about which other tissues encounter the compound.",
     findings: [
       "In obese monkeys, the researchers observed weight loss, reduced abdominal fat on imaging and improved measures of insulin sensitivity. Examining the kidneys added an important finding that the weight measurements alone would have missed.",
       "A first-in-human study enrolled patients with obesity and metastatic prostate cancer. The registry lists the study as terminated, with no results posted. It offers no estimate of weight loss for people seeking obesity treatment.",
     ],
-    risks: ["Investigators found injury to kidney tubules in monkeys. They observed recovery in some measures after exposure ended, but the experiment cannot establish kidney safety in humans."],
-    statusNote: "Adipotide remains experimental. The published weight-loss findings discussed here come from nonhuman primates.",
+    risks: [
+      "Investigators found injury to kidney tubules in monkeys. They observed recovery in some measures after exposure ended, but the experiment cannot establish kidney safety in humans.",
+    ],
+    statusNote:
+      "Adipotide remains experimental. The published weight-loss findings discussed here come from nonhuman primates.",
     sources: [
-      { title: "Targeting blood vessels in white fat in obese monkeys", detail: "Science Translational Medicine · 2011", url: "https://pubmed.ncbi.nlm.nih.gov/22072637/" },
-      { title: "First-in-human study of prohibitin-targeting peptide 1", detail: "ClinicalTrials.gov · NCT01262664", url: "https://clinicaltrials.gov/study/NCT01262664" },
+      {
+        title: "Targeting blood vessels in white fat in obese monkeys",
+        detail: "Science Translational Medicine · 2011",
+        url: "https://pubmed.ncbi.nlm.nih.gov/22072637/",
+      },
+      {
+        title: "First-in-human study of prohibitin-targeting peptide 1",
+        detail: "ClinicalTrials.gov · NCT01262664",
+        url: "https://clinicaltrials.gov/study/NCT01262664",
+      },
     ],
   },
   {
@@ -142,18 +228,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "cosmetic",
     evidence: "small-human",
     headline: "Matrixyl puts a moisturizer to a split-face test",
-    oneLiner: "One face, two moisturizers. A clever study design put a popular skin-care peptide to a more demanding test than a before-and-after photograph.",
-    whatItIs: "Original Matrixyl is palmitoyl pentapeptide-4, a short peptide linked to a fatty chain. Matrixyl also appears in the names of later ingredient blends. Checking the exact ingredient is the first step in matching a claim on a jar to a published study.",
-    howItWorks: "The peptide portion resembles a fragment of collagen, one of the proteins that gives skin its structure. This inspired the idea that the fragment might act as a signal. Whether a formula visibly changes skin texture needs a test on skin.",
+    oneLiner:
+      "One face, two moisturizers. A clever study design put a popular skin-care peptide to a more demanding test than a before-and-after photograph.",
+    whatItIs:
+      "Original Matrixyl is palmitoyl pentapeptide-4, a short peptide linked to a fatty chain. Matrixyl also appears in the names of later ingredient blends. Checking the exact ingredient is the first step in matching a claim on a jar to a published study.",
+    howItWorks:
+      "The peptide portion resembles a fragment of collagen, one of the proteins that gives skin its structure. This inspired the idea that the fragment might act as a signal. Whether a formula visibly changes skin texture needs a test on skin.",
     findings: [
       "In a 12-week study, 93 women used a moisturizer containing the peptide on one side of the face and the same base on the other. Random assignment of sides helped account for differences between participants.",
       "The investigators reported greater improvement in fine lines and wrinkles on the peptide-treated side. The study evaluated one formulation in women aged 35 to 55. A different cream, skin type or time frame may yield a different result.",
     ],
-    risks: ["The tested moisturizer was well tolerated. The study cannot predict sensitivity to the fragrance, preservatives or other ingredients in a different finished product."],
-    statusNote: "Original Matrixyl is a topical cosmetic ingredient. The trial assessed the appearance of photoaged skin.",
+    risks: [
+      "The tested moisturizer was well tolerated. The study cannot predict sensitivity to the fragrance, preservatives or other ingredients in a different finished product.",
+    ],
+    statusNote:
+      "Original Matrixyl is a topical cosmetic ingredient. The trial assessed the appearance of photoaged skin.",
     sources: [
-      { title: "Split-face study of a palmitoyl pentapeptide moisturizer", detail: "International Journal of Cosmetic Science · 2005", url: "https://pubmed.ncbi.nlm.nih.gov/18492182/" },
-      { title: "How the FDA classifies wrinkle-treatment claims", detail: "FDA", url: "https://www.fda.gov/cosmetics/cosmetic-products/wrinkle-treatments-and-other-anti-aging-products" },
+      {
+        title: "Split-face study of a palmitoyl pentapeptide moisturizer",
+        detail: "International Journal of Cosmetic Science · 2005",
+        url: "https://pubmed.ncbi.nlm.nih.gov/18492182/",
+      },
+      {
+        title: "How the FDA classifies wrinkle-treatment claims",
+        detail: "FDA",
+        url: "https://www.fda.gov/cosmetics/cosmetic-products/wrinkle-treatments-and-other-anti-aging-products",
+      },
     ],
   },
   {
@@ -163,18 +263,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     category: "skin",
     status: "cosmetic",
     headline: "SNAP-8 and the crease left by a smile",
-    oneLiner: "A smile folds the skin in a familiar place. SNAP-8 takes that everyday observation as the starting point for a cosmetic ingredient and a surprisingly tricky measurement problem.",
-    whatItIs: "SNAP-8 is the trade name for a topical ingredient containing acetyl octapeptide-3. Its eight-amino-acid peptide is distinct from acetyl hexapeptide-8, often sold as Argireline. A similar name on a bottle can lead a reader to the wrong study.",
-    howItWorks: "The supplier links the ingredient to expression lines, the folds that appear as facial muscles move. A cream also hydrates the surface. To tease those effects apart, researchers would need to compare the finished formula with an otherwise identical base.",
+    oneLiner:
+      "A smile folds the skin in a familiar place. SNAP-8 takes that everyday observation as the starting point for a cosmetic ingredient and a surprisingly tricky measurement problem.",
+    whatItIs:
+      "SNAP-8 is the trade name for a topical ingredient containing acetyl octapeptide-3. Its eight-amino-acid peptide is distinct from acetyl hexapeptide-8, often sold as Argireline. A similar name on a bottle can lead a reader to the wrong study.",
+    howItWorks:
+      "The supplier links the ingredient to expression lines, the folds that appear as facial muscles move. A cream also hydrates the surface. To tease those effects apart, researchers would need to compare the finished formula with an otherwise identical base.",
     findings: [
       "The cited product page describes the intended cosmetic effect. It does not provide enough information about group sizes, a control cream or blinded grading to estimate how much difference SNAP-8 itself makes.",
       "A useful detail in any wrinkle study is whether participants were photographed at rest or while smiling. Depth under movement and visibility at rest answer different questions about a line.",
     ],
-    risks: ["The supplier describes a topical cosmetic. Its information provides no basis for injectable use or for predicting the tolerability of every serum that carries the name."],
-    statusNote: "SNAP-8 is marketed for the appearance of expression lines. Cosmetic claims and drug indications have different requirements in the United States.",
+    risks: [
+      "The supplier describes a topical cosmetic. Its information provides no basis for injectable use or for predicting the tolerability of every serum that carries the name.",
+    ],
+    statusNote:
+      "SNAP-8 is marketed for the appearance of expression lines. Cosmetic claims and drug indications have different requirements in the United States.",
     sources: [
-      { title: "SNAP-8 peptide solution ingredient description", detail: "Lubrizol", url: "https://www.lubrizol.com/solutions/products/beauty/detail-pages/snap-8-peptide-solution-c" },
-      { title: "How the FDA classifies wrinkle-treatment claims", detail: "FDA", url: "https://www.fda.gov/cosmetics/cosmetic-products/wrinkle-treatments-and-other-anti-aging-products" },
+      {
+        title: "SNAP-8 peptide solution ingredient description",
+        detail: "Lubrizol",
+        url: "https://www.lubrizol.com/solutions/products/beauty/detail-pages/snap-8-peptide-solution-c",
+      },
+      {
+        title: "How the FDA classifies wrinkle-treatment claims",
+        detail: "FDA",
+        url: "https://www.fda.gov/cosmetics/cosmetic-products/wrinkle-treatments-and-other-anti-aging-products",
+      },
     ],
   },
   {
@@ -184,18 +298,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     category: "growth",
     status: "early",
     headline: "PEG-MGF and the missing link in a muscle-growth claim",
-    oneLiner: "A post-exercise muscle biopsy helped make mechano growth factor famous. To understand PEG-MGF, start with what the biopsy actually measured.",
-    whatItIs: "MGF is a name associated with one version of the instructions a muscle cell can produce from the IGF-1 gene. PEG-MGF refers to a separate manufactured material in which a peptide is linked to polyethylene glycol, a polymer.",
-    howItWorks: "A cell can edit the RNA copied from a gene in several ways. That gives scientists different messages to count in a tissue sample. Adding a polymer to a manufactured peptide changes the material again, including how it may behave in the body.",
+    oneLiner:
+      "A post-exercise muscle biopsy helped make mechano growth factor famous. To understand PEG-MGF, start with what the biopsy actually measured.",
+    whatItIs:
+      "MGF is a name associated with one version of the instructions a muscle cell can produce from the IGF-1 gene. PEG-MGF refers to a separate manufactured material in which a peptide is linked to polyethylene glycol, a polymer.",
+    howItWorks:
+      "A cell can edit the RNA copied from a gene in several ways. That gives scientists different messages to count in a tissue sample. Adding a polymer to a manufactured peptide changes the material again, including how it may behave in the body.",
     findings: [
       "In an exercise study, researchers compared IGF-1 RNA variants in muscle from younger and older men after resistance exercise. They observed an increase in the MGF-related message in younger participants.",
       "No participant received PEG-MGF in that experiment. The FDA’s safety review says it identified no human exposure data for drug products containing PEG-MGF. A reliable estimate of strength or recovery benefits is therefore unavailable.",
     ],
-    risks: ["The FDA flags the possibility of immune reactions to compounded PEG-MGF and difficulties characterizing peptide impurities. The frequency and severity of adverse effects in people remain unknown."],
-    statusNote: "PEG-MGF is an experimental compound. Evidence about the body’s response to training cannot establish a treatment indication for this material.",
+    risks: [
+      "The FDA flags the possibility of immune reactions to compounded PEG-MGF and difficulties characterizing peptide impurities. The frequency and severity of adverse effects in people remain unknown.",
+    ],
+    statusNote:
+      "PEG-MGF is an experimental compound. Evidence about the body’s response to training cannot establish a treatment indication for this material.",
     sources: [
-      { title: "IGF-1 RNA variants in human muscle after exercise", detail: "The Journal of Physiology · 2003", url: "https://pubmed.ncbi.nlm.nih.gov/12562960/" },
-      { title: "FDA assessment of substances used in compounding", detail: "FDA", url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks" },
+      {
+        title: "IGF-1 RNA variants in human muscle after exercise",
+        detail: "The Journal of Physiology · 2003",
+        url: "https://pubmed.ncbi.nlm.nih.gov/12562960/",
+      },
+      {
+        title: "FDA assessment of substances used in compounding",
+        detail: "FDA",
+        url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      },
     ],
   },
   {
@@ -206,18 +334,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "approved-elsewhere",
     evidence: "small-human",
     headline: "GHRP-2 asks the pituitary a question",
-    oneLiner: "Can the pituitary release growth hormone when prompted? In Japan, that question gave pralmorelin a diagnostic role. A meal experiment revealed another side to the same signal.",
-    whatItIs: "GHRP-2, also called pralmorelin, is a synthetic peptide that stimulates growth hormone release. A clinician can use a stimulation test to explore how much hormone the pituitary is capable of releasing under controlled conditions.",
-    howItWorks: "The peptide acts at the receptor used by ghrelin, a hormone involved in appetite as well as growth hormone release. That dual role led researchers to look beyond the blood sample and record what volunteers actually ate.",
+    oneLiner:
+      "Can the pituitary release growth hormone when prompted? In Japan, that question gave pralmorelin a diagnostic role. A meal experiment revealed another side to the same signal.",
+    whatItIs:
+      "GHRP-2, also called pralmorelin, is a synthetic peptide that stimulates growth hormone release. A clinician can use a stimulation test to explore how much hormone the pituitary is capable of releasing under controlled conditions.",
+    howItWorks:
+      "The peptide acts at the receptor used by ghrelin, a hormone involved in appetite as well as growth hormone release. That dual role led researchers to look beyond the blood sample and record what volunteers actually ate.",
     findings: [
       "In a small crossover study, healthy men ate more during a buffet meal after GHRP-2 than after saline. The same participants experienced both conditions, making each person his own comparison.",
       "A single meal measures an immediate behavioral response. It tells us little about appetite months later, muscle strength or the long-term consequences of repeatedly stimulating the receptor.",
     ],
-    risks: ["The Japanese label describes reactions including flushing and an uncomfortable feeling in the stomach. A monitored diagnostic test gives limited information about the risks of repeated exposure."],
-    statusNote: "Japan lists pralmorelin as a diagnostic agent for growth hormone deficiency. That indication concerns a pituitary function test.",
+    risks: [
+      "The Japanese label describes reactions including flushing and an uncomfortable feeling in the stomach. A monitored diagnostic test gives limited information about the risks of repeated exposure.",
+    ],
+    statusNote:
+      "Japan lists pralmorelin as a diagnostic agent for growth hormone deficiency. That indication concerns a pituitary function test.",
     sources: [
-      { title: "GHRP-2 and food intake in healthy men", detail: "Journal of Clinical Endocrinology & Metabolism · 2005", url: "https://pubmed.ncbi.nlm.nih.gov/15699539/" },
-      { title: "Japanese prescribing information for diagnostic pralmorelin", detail: "PMDA · 2025", url: "https://www.pmda.go.jp/PmdaSearch/iyakuDetail/ResultDataSetPDF/200022_7223407D2023_1_01" },
+      {
+        title: "GHRP-2 and food intake in healthy men",
+        detail: "Journal of Clinical Endocrinology & Metabolism · 2005",
+        url: "https://pubmed.ncbi.nlm.nih.gov/15699539/",
+      },
+      {
+        title: "Japanese prescribing information for diagnostic pralmorelin",
+        detail: "PMDA · 2025",
+        url: "https://www.pmda.go.jp/PmdaSearch/iyakuDetail/ResultDataSetPDF/200022_7223407D2023_1_01",
+      },
     ],
   },
   {
@@ -228,18 +370,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "trials",
     evidence: "small-human",
     headline: "GHRP-6 and the story inside a hormone spike",
-    oneLiner: "A blood sample taken at just the right moment can catch the pituitary in action. An early GHRP-6 experiment showed how two signals could amplify one another.",
-    whatItIs: "GHRP-6 is a synthetic chain of six amino acids. Endocrinologists studied it as a probe for the system that releases growth hormone in pulses. A rise in blood concentration is a direct way to see that system respond.",
-    howItWorks: "GHRP-6 activates the ghrelin receptor. Another signal, growth hormone-releasing hormone (GHRH), uses a different receptor. Both can prompt the pituitary to release growth hormone, which makes their interaction interesting to researchers.",
+    oneLiner:
+      "A blood sample taken at just the right moment can catch the pituitary in action. An early GHRP-6 experiment showed how two signals could amplify one another.",
+    whatItIs:
+      "GHRP-6 is a synthetic chain of six amino acids. Endocrinologists studied it as a probe for the system that releases growth hormone in pulses. A rise in blood concentration is a direct way to see that system respond.",
+    howItWorks:
+      "GHRP-6 activates the ghrelin receptor. Another signal, growth hormone-releasing hormone (GHRH), uses a different receptor. Both can prompt the pituitary to release growth hormone, which makes their interaction interesting to researchers.",
     findings: [
       "A study in 18 healthy men recorded a rapid rise in blood growth hormone after the synthetic peptide. The response to both signals together exceeded what researchers expected from their separate effects.",
       "The investigators measured hormone concentrations over a short window. They did not track improvements in strength, recovery from injury or athletic performance. Those outcomes require different experiments.",
     ],
-    risks: ["The FDA flags possible effects on cortisol and blood sugar, as well as immune reactions associated with some compounded preparations."],
-    statusNote: "GHRP-6 has been tested in human physiology studies. No US indication for muscle gain or sports recovery has been established.",
+    risks: [
+      "The FDA flags possible effects on cortisol and blood sugar, as well as immune reactions associated with some compounded preparations.",
+    ],
+    statusNote:
+      "GHRP-6 has been tested in human physiology studies. No US indication for muscle gain or sports recovery has been established.",
     sources: [
-      { title: "Growth hormone responses to two pituitary signals in healthy men", detail: "Journal of Clinical Endocrinology & Metabolism · 1990", url: "https://pubmed.ncbi.nlm.nih.gov/2108187/" },
-      { title: "FDA assessment of substances used in compounding", detail: "FDA", url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks" },
+      {
+        title: "Growth hormone responses to two pituitary signals in healthy men",
+        detail: "Journal of Clinical Endocrinology & Metabolism · 1990",
+        url: "https://pubmed.ncbi.nlm.nih.gov/2108187/",
+      },
+      {
+        title: "FDA assessment of substances used in compounding",
+        detail: "FDA",
+        url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      },
     ],
   },
   {
@@ -250,18 +406,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "trials",
     evidence: "small-human",
     headline: "Hexarelin and the pulse that changed on repeat",
-    oneLiner: "The first hormone pulse looked impressive. The next was smaller. Six volunteers helped researchers see why a single peak can tell an incomplete story.",
-    whatItIs: "Hexarelin, also called examorelin, belongs to a family of synthetic peptides that stimulate growth hormone release. It gave researchers a way to ask whether the pituitary responds in the same way to a familiar signal the second time around.",
-    howItWorks: "Hexarelin acts through the growth hormone secretagogue receptor, also known as the ghrelin receptor. The hormone detected afterward comes from the participant’s own pituitary. Its release depends in part on what has just happened in the signaling system.",
+    oneLiner:
+      "The first hormone pulse looked impressive. The next was smaller. Six volunteers helped researchers see why a single peak can tell an incomplete story.",
+    whatItIs:
+      "Hexarelin, also called examorelin, belongs to a family of synthetic peptides that stimulate growth hormone release. It gave researchers a way to ask whether the pituitary responds in the same way to a familiar signal the second time around.",
+    howItWorks:
+      "Hexarelin acts through the growth hormone secretagogue receptor, also known as the ghrelin receptor. The hormone detected afterward comes from the participant’s own pituitary. Its release depends in part on what has just happened in the signaling system.",
     findings: [
       "In a study of six healthy adults, the second exposure to hexarelin produced a smaller growth hormone response than the first. A comparison with GHRH helped investigators explore how the two signals differed.",
       "The changing pulse was itself the finding. A blood curve over a few hours cannot tell us what happens to muscle function or daily energy over months.",
     ],
-    risks: ["A separate human study documented changes in ACTH and cortisol, hormones involved in the stress response. Long-term safety cannot be inferred from these brief endocrine tests."],
-    statusNote: "Hexarelin is an investigational peptide. The cited human studies examined hormone responses under controlled conditions.",
+    risks: [
+      "A separate human study documented changes in ACTH and cortisol, hormones involved in the stress response. Long-term safety cannot be inferred from these brief endocrine tests.",
+    ],
+    statusNote:
+      "Hexarelin is an investigational peptide. The cited human studies examined hormone responses under controlled conditions.",
     sources: [
-      { title: "Growth hormone response to repeated hexarelin in adults", detail: "Journal of Endocrinological Investigation · 1995", url: "https://pubmed.ncbi.nlm.nih.gov/8719303/" },
-      { title: "ACTH and cortisol responses to hexarelin", detail: "Journal of Clinical Endocrinology & Metabolism · 1997", url: "https://pubmed.ncbi.nlm.nih.gov/9253314/" },
+      {
+        title: "Growth hormone response to repeated hexarelin in adults",
+        detail: "Journal of Endocrinological Investigation · 1995",
+        url: "https://pubmed.ncbi.nlm.nih.gov/8719303/",
+      },
+      {
+        title: "ACTH and cortisol responses to hexarelin",
+        detail: "Journal of Clinical Endocrinology & Metabolism · 1997",
+        url: "https://pubmed.ncbi.nlm.nih.gov/9253314/",
+      },
     ],
   },
   {
@@ -271,18 +441,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     category: "focus",
     status: "early",
     headline: "Dihexa and the paper that changed the story",
-    oneLiner: "A striking claim about memory traveled further than its correction. Reading Dihexa’s publication record means following the trail all the way to the retraction notice.",
-    whatItIs: "Dihexa is an experimental compound derived from research on angiotensin IV. Scientists explored whether related molecules could influence connections between nerve cells, a question with obvious appeal for anyone interested in memory.",
-    howItWorks: "One proposed explanation involved a growth signal called HGF and its receptor, MET. A widely cited paper connecting this pathway to changes in nerve-cell connections was retracted in 2025. The pathway should therefore be presented as a hypothesis.",
+    oneLiner:
+      "A striking claim about memory traveled further than its correction. Reading Dihexa’s publication record means following the trail all the way to the retraction notice.",
+    whatItIs:
+      "Dihexa is an experimental compound derived from research on angiotensin IV. Scientists explored whether related molecules could influence connections between nerve cells, a question with obvious appeal for anyone interested in memory.",
+    howItWorks:
+      "One proposed explanation involved a growth signal called HGF and its receptor, MET. A widely cited paper connecting this pathway to changes in nerve-cell connections was retracted in 2025. The pathway should therefore be presented as a hypothesis.",
     findings: [
       "A retraction changes how a finding can be used. Repeating a diagram from the original paper does not independently confirm that Dihexa changes synapses, much less that it improves a person’s memory.",
       "In its review of dihexa acetate, the FDA reported that it could identify no human exposure data for drug products containing the compound. There is no reliable clinical effect size to quote for cognition.",
     ],
-    risks: ["Without adequate human safety data, the likelihood of adverse effects, interactions and long-term harm is unknown."],
-    statusNote: "Dihexa has no established clinical indication for cognitive enhancement or dementia. Its proposed mechanism and its human safety are separate unresolved questions.",
+    risks: [
+      "Without adequate human safety data, the likelihood of adverse effects, interactions and long-term harm is unknown.",
+    ],
+    statusNote:
+      "Dihexa has no established clinical indication for cognitive enhancement or dementia. Its proposed mechanism and its human safety are separate unresolved questions.",
     sources: [
-      { title: "Retraction of the HGF/MET mechanism paper", detail: "Journal of Pharmacology and Experimental Therapeutics · 2025", url: "https://pubmed.ncbi.nlm.nih.gov/40312093/" },
-      { title: "FDA assessment of substances used in compounding", detail: "FDA", url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks" },
+      {
+        title: "Retraction of the HGF/MET mechanism paper",
+        detail: "Journal of Pharmacology and Experimental Therapeutics · 2025",
+        url: "https://pubmed.ncbi.nlm.nih.gov/40312093/",
+      },
+      {
+        title: "FDA assessment of substances used in compounding",
+        detail: "FDA",
+        url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      },
     ],
   },
   {
@@ -293,19 +477,37 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "supplement",
     evidence: "small-human",
     headline: "Glutathione and the art of measuring an antioxidant",
-    oneLiner: "Three amino acids make a molecule cells recycle every day. What changes when people take it as a supplement? Two controlled trials tell an unexpectedly different story.",
-    whatItIs: "Glutathione, or GSH, is made from glutamate, cysteine and glycine. It helps cells handle chemically reactive by-products of metabolism. A blood test can measure glutathione, but which part of the blood is sampled and when it is taken both matter.",
-    howItWorks: "Glutathione can give up electrons while helping enzymes neutralize peroxides. Cells can then recycle its oxidized form. Researchers can measure the size of this pool or look downstream for signs of oxidative stress. Each measurement answers a different question.",
+    oneLiner:
+      "Three amino acids make a molecule cells recycle every day. What changes when people take it as a supplement? Two controlled trials tell an unexpectedly different story.",
+    whatItIs:
+      "Glutathione, or GSH, is made from glutamate, cysteine and glycine. It helps cells handle chemically reactive by-products of metabolism. A blood test can measure glutathione, but which part of the blood is sampled and when it is taken both matter.",
+    howItWorks:
+      "Glutathione can give up electrons while helping enzymes neutralize peroxides. Cells can then recycle its oxidized form. Researchers can measure the size of this pool or look downstream for signs of oxidative stress. Each measurement answers a different question.",
     findings: [
       "A six-month randomized trial in 54 healthy adults found increases in glutathione in several samples during oral supplementation. Levels generally returned toward baseline after supplementation ended.",
       "A separate four-week trial found no significant change in its oxidative-stress measures. Neither trial determined whether participants lived longer or developed fewer diseases.",
     ],
-    risks: ["Route and product quality matter. In 2026 the FDA reported adverse events after compounded intravenous products made with supplement-grade glutathione, including reactions consistent with endotoxin exposure."],
-    statusNote: "Glutathione occurs naturally and is sold in oral supplements. The evidence discussed here concerns body stores and specific blood or urine measurements in healthy adults.",
+    risks: [
+      "Route and product quality matter. In 2026 the FDA reported adverse events after compounded intravenous products made with supplement-grade glutathione, including reactions consistent with endotoxin exposure.",
+    ],
+    statusNote:
+      "Glutathione occurs naturally and is sold in oral supplements. The evidence discussed here concerns body stores and specific blood or urine measurements in healthy adults.",
     sources: [
-      { title: "Six-month trial of oral glutathione and body stores", detail: "European Journal of Nutrition · 2015", url: "https://pubmed.ncbi.nlm.nih.gov/24791752/" },
-      { title: "Four-week trial of oral glutathione and oxidative stress markers", detail: "Journal of Alternative and Complementary Medicine · 2011", url: "https://pubmed.ncbi.nlm.nih.gov/21875351/" },
-      { title: "FDA investigation of adverse events after intravenous glutathione", detail: "FDA · 2026", url: "https://www.fda.gov/drugs/human-drug-compounding/fda-reminds-compounders-not-use-dietary-supplement-grade-glutathione-injectables" },
+      {
+        title: "Six-month trial of oral glutathione and body stores",
+        detail: "European Journal of Nutrition · 2015",
+        url: "https://pubmed.ncbi.nlm.nih.gov/24791752/",
+      },
+      {
+        title: "Four-week trial of oral glutathione and oxidative stress markers",
+        detail: "Journal of Alternative and Complementary Medicine · 2011",
+        url: "https://pubmed.ncbi.nlm.nih.gov/21875351/",
+      },
+      {
+        title: "FDA investigation of adverse events after intravenous glutathione",
+        detail: "FDA · 2026",
+        url: "https://www.fda.gov/drugs/human-drug-compounding/fda-reminds-compounders-not-use-dietary-supplement-grade-glutathione-injectables",
+      },
     ],
   },
   {
@@ -316,19 +518,37 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "early",
     evidence: "animals",
     headline: "Humanin carries a message from the mitochondrion",
-    oneLiner: "Mitochondria have their own DNA. Hidden within it is the information for a tiny peptide that led researchers from stressed nerve cells to the families of centenarians.",
-    whatItIs: "Humanin is a short mitochondria-derived peptide. It drew attention when researchers found it could help cultured nerve cells survive particular insults used to model aspects of Alzheimer’s disease.",
-    howItWorks: "Cells have a regulated process for shutting themselves down when damaged. Experimental work suggests humanin can interfere with proteins involved in that decision. Keeping a cell alive in a dish is an observable event. Preserving memory in a person is a much larger question.",
+    oneLiner:
+      "Mitochondria have their own DNA. Hidden within it is the information for a tiny peptide that led researchers from stressed nerve cells to the families of centenarians.",
+    whatItIs:
+      "Humanin is a short mitochondria-derived peptide. It drew attention when researchers found it could help cultured nerve cells survive particular insults used to model aspects of Alzheimer’s disease.",
+    howItWorks:
+      "Cells have a regulated process for shutting themselves down when damaged. Experimental work suggests humanin can interfere with proteins involved in that decision. Keeping a cell alive in a dish is an observable event. Preserving memory in a person is a much larger question.",
     findings: [
       "Researchers observed protection against selected forms of stress in cultured neurons. The result depended on the model and the kind of insult the cells faced.",
       "A later study compared humanin across species and found higher circulating levels in offspring of centenarians than in a comparison group. A family association cannot tell us whether taking humanin would extend life.",
     ],
-    risks: ["The human observations concern a peptide the body produces. They cannot establish the safety of exposing people to a manufactured preparation or reveal its long-term effects."],
-    statusNote: "Humanin remains a research subject in cellular stress and aging. The cited studies establish no treatment for Alzheimer’s disease or human aging.",
+    risks: [
+      "The human observations concern a peptide the body produces. They cannot establish the safety of exposing people to a manufactured preparation or reveal its long-term effects.",
+    ],
+    statusNote:
+      "Humanin remains a research subject in cellular stress and aging. The cited studies establish no treatment for Alzheimer’s disease or human aging.",
     sources: [
-      { title: "Humanin and neuronal survival in experimental models", detail: "Journal of Neuroscience · 2001", url: "https://pubmed.ncbi.nlm.nih.gov/11717357/" },
-      { title: "Humanin interactions with proteins involved in cell death", detail: "Journal of Biological Chemistry · 2005", url: "https://pubmed.ncbi.nlm.nih.gov/15661737/" },
-      { title: "Humanin, aging models and families of centenarians", detail: "Aging · 2020", url: "https://pubmed.ncbi.nlm.nih.gov/32575074/" },
+      {
+        title: "Humanin and neuronal survival in experimental models",
+        detail: "Journal of Neuroscience · 2001",
+        url: "https://pubmed.ncbi.nlm.nih.gov/11717357/",
+      },
+      {
+        title: "Humanin interactions with proteins involved in cell death",
+        detail: "Journal of Biological Chemistry · 2005",
+        url: "https://pubmed.ncbi.nlm.nih.gov/15661737/",
+      },
+      {
+        title: "Humanin, aging models and families of centenarians",
+        detail: "Aging · 2020",
+        url: "https://pubmed.ncbi.nlm.nih.gov/32575074/",
+      },
     ],
   },
   {
@@ -339,18 +559,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "early",
     evidence: "animals",
     headline: "FOXO4-DRI and the cells that stay behind",
-    oneLiner: "Some cells stop dividing yet linger in a tissue. A mouse experiment asked what would happen if researchers could selectively remove a share of them.",
-    whatItIs: "These cells are called senescent. They can release signals that affect their neighbors, which makes them of interest in aging research. FOXO4-DRI is an experimental peptide designed to study one of the mechanisms that helps certain senescent cells survive.",
-    howItWorks: "The original research focused on two proteins, FOXO4 and p53. Disrupting their interaction in experimental cells could shift the balance toward programmed cell death. Researchers then asked whether changes in cell survival would translate into changes in tissues.",
+    oneLiner:
+      "Some cells stop dividing yet linger in a tissue. A mouse experiment asked what would happen if researchers could selectively remove a share of them.",
+    whatItIs:
+      "These cells are called senescent. They can release signals that affect their neighbors, which makes them of interest in aging research. FOXO4-DRI is an experimental peptide designed to study one of the mechanisms that helps certain senescent cells survive.",
+    howItWorks:
+      "The original research focused on two proteins, FOXO4 and p53. Disrupting their interaction in experimental cells could shift the balance toward programmed cell death. Researchers then asked whether changes in cell survival would translate into changes in tissues.",
     findings: [
       "A 2017 study reported improvements in measures of physical fitness, coat density and kidney function in aging mouse models. These findings drew attention because the team measured changes in the animals themselves as well as in individual cells.",
       "A later study in aged male mice examined cells in the testes and sperm production. Both experiments concern particular tissues and animal models. Neither tested human longevity.",
     ],
-    risks: ["Which human cells would be affected, how selectively and with what lasting consequences remain open questions. Animal observations do not quantify those risks for people."],
-    statusNote: "FOXO4-DRI is a preclinical research compound. Its mouse studies do not establish a human anti-aging indication.",
+    risks: [
+      "Which human cells would be affected, how selectively and with what lasting consequences remain open questions. Animal observations do not quantify those risks for people.",
+    ],
+    statusNote:
+      "FOXO4-DRI is a preclinical research compound. Its mouse studies do not establish a human anti-aging indication.",
     sources: [
-      { title: "Targeting senescent cells in aging mouse models", detail: "Cell · 2017", url: "https://pubmed.ncbi.nlm.nih.gov/28340339/" },
-      { title: "FOXO4-DRI and reproductive tissue in aged mice", detail: "Experimental Gerontology · 2024", url: "https://pubmed.ncbi.nlm.nih.gov/39025385/" },
+      {
+        title: "Targeting senescent cells in aging mouse models",
+        detail: "Cell · 2017",
+        url: "https://pubmed.ncbi.nlm.nih.gov/28340339/",
+      },
+      {
+        title: "FOXO4-DRI and reproductive tissue in aged mice",
+        detail: "Experimental Gerontology · 2024",
+        url: "https://pubmed.ncbi.nlm.nih.gov/39025385/",
+      },
     ],
   },
   {
@@ -361,18 +595,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "approved",
     evidence: "approved",
     headline: "Gonadorelin shows why hormone timing matters",
-    oneLiner: "In reproductive biology, timing carries information. A fertility clinic’s 25-year record shows what can happen when a missing hormonal rhythm is restored.",
-    whatItIs: "Gonadorelin is the medicinal form of gonadotropin-releasing hormone, or GnRH. The hypothalamus normally releases it in pulses. If those pulses are disrupted, the ovaries may stop receiving the signals needed for ovulation.",
-    howItWorks: "Each pulse tells the pituitary to release reproductive hormones, including LH and FSH. In selected patients with hypothalamic amenorrhea, a specialist can use pulsatile GnRH to reproduce that rhythm while monitoring ovarian response.",
+    oneLiner:
+      "In reproductive biology, timing carries information. A fertility clinic’s 25-year record shows what can happen when a missing hormonal rhythm is restored.",
+    whatItIs:
+      "Gonadorelin is the medicinal form of gonadotropin-releasing hormone, or GnRH. The hypothalamus normally releases it in pulses. If those pulses are disrupted, the ovaries may stop receiving the signals needed for ovulation.",
+    howItWorks:
+      "Each pulse tells the pituitary to release reproductive hormones, including LH and FSH. In selected patients with hypothalamic amenorrhea, a specialist can use pulsatile GnRH to reproduce that rhythm while monitoring ovarian response.",
     findings: [
       "A Swiss clinic reviewed 212 cycles in 66 patients with functional hypothalamic amenorrhea. Ovulation occurred in 96% of cycles. Across 82 courses of treatment, 65.9% resulted in a live birth.",
       "A treatment course could span several cycles. That distinction explains why the live-birth figure should not be read as the chance from a single cycle. The study was a retrospective review at one center.",
     ],
-    risks: ["Multiple pregnancy is possible. One twin pregnancy occurred in the cohort. The Canadian monograph describes clinical and ultrasound monitoring of the ovarian response."],
-    statusNote: "Canada’s Lutrepulse monograph describes gonadorelin for ovulation induction in selected patients with hypothalamic amenorrhea. The cause of infertility matters to that indication.",
+    risks: [
+      "Multiple pregnancy is possible. One twin pregnancy occurred in the cohort. The Canadian monograph describes clinical and ultrasound monitoring of the ovarian response.",
+    ],
+    statusNote:
+      "Canada’s Lutrepulse monograph describes gonadorelin for ovulation induction in selected patients with hypothalamic amenorrhea. The cause of infertility matters to that indication.",
     sources: [
-      { title: "Pulsatile GnRH in a 25-year fertility clinic cohort", detail: "Journal of Assisted Reproduction and Genetics · 2022", url: "https://pubmed.ncbi.nlm.nih.gov/36378460/" },
-      { title: "Canadian product monograph for Lutrepulse", detail: "Ferring Canada", url: "https://ferring.ca/media/1018/lutrepulse-pm-control-no-187199-32-mg-en_17may2016.pdf" },
+      {
+        title: "Pulsatile GnRH in a 25-year fertility clinic cohort",
+        detail: "Journal of Assisted Reproduction and Genetics · 2022",
+        url: "https://pubmed.ncbi.nlm.nih.gov/36378460/",
+      },
+      {
+        title: "Canadian product monograph for Lutrepulse",
+        detail: "Ferring Canada",
+        url: "https://ferring.ca/media/1018/lutrepulse-pm-control-no-187199-32-mg-en_17may2016.pdf",
+      },
     ],
   },
   {
@@ -383,18 +631,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "trials",
     evidence: "small-human",
     headline: "LL-37 meets the test of a stubborn wound",
-    oneLiner: "Skin already makes this defense peptide. Could adding it to standard wound care help a chronic leg ulcer close? A blinded trial put that appealing idea to the test.",
-    whatItIs: "LL-37 is a naturally occurring fragment of human cathelicidin, part of the body’s first line of defense. Beyond its interactions with microbes, researchers have studied its role in the signals that coordinate tissue repair.",
-    howItWorks: "A wound has to rebuild a continuous layer of skin. Signals between immune and skin cells help shape that process. A venous leg ulcer also has an underlying circulation problem, which is why the clinical study included compression treatment in every group.",
+    oneLiner:
+      "Skin already makes this defense peptide. Could adding it to standard wound care help a chronic leg ulcer close? A blinded trial put that appealing idea to the test.",
+    whatItIs:
+      "LL-37 is a naturally occurring fragment of human cathelicidin, part of the body’s first line of defense. Beyond its interactions with microbes, researchers have studied its role in the signals that coordinate tissue repair.",
+    howItWorks:
+      "A wound has to rebuild a continuous layer of skin. Signals between immune and skin cells help shape that process. A venous leg ulcer also has an underlying circulation problem, which is why the clinical study included compression treatment in every group.",
     findings: [
       "HEAL LL-37 enrolled 148 people with hard-to-heal venous leg ulcers. Adding topical LL-37 to compression did not significantly improve healing in the full study population compared with placebo plus compression.",
       "Researchers later saw a possible signal among people with larger ulcers. Because that subgroup analysis was performed after the main analysis, it offers a question for another trial rather than a reliable prediction for an individual wound.",
     ],
-    risks: ["The clinical study evaluated a topical formulation. The FDA identifies possible immune reactions and peptide impurities as concerns for certain compounded LL-37 preparations and routes."],
-    statusNote: "LL-37 has been studied as an investigational wound treatment. The controlled trial did not establish an overall healing benefit for venous leg ulcers.",
+    risks: [
+      "The clinical study evaluated a topical formulation. The FDA identifies possible immune reactions and peptide impurities as concerns for certain compounded LL-37 preparations and routes.",
+    ],
+    statusNote:
+      "LL-37 has been studied as an investigational wound treatment. The controlled trial did not establish an overall healing benefit for venous leg ulcers.",
     sources: [
-      { title: "HEAL LL-37 randomized trial in venous leg ulcers", detail: "Wound Repair and Regeneration · 2021", url: "https://pubmed.ncbi.nlm.nih.gov/34687253/" },
-      { title: "FDA assessment of substances used in compounding", detail: "FDA", url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks" },
+      {
+        title: "HEAL LL-37 randomized trial in venous leg ulcers",
+        detail: "Wound Repair and Regeneration · 2021",
+        url: "https://pubmed.ncbi.nlm.nih.gov/34687253/",
+      },
+      {
+        title: "FDA assessment of substances used in compounding",
+        detail: "FDA",
+        url: "https://www.fda.gov/drugs/human-drug-compounding/certain-bulk-drug-substances-use-compounding-may-present-significant-safety-risks",
+      },
     ],
   },
   {
@@ -405,19 +667,37 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "approved-elsewhere",
     evidence: "small-human",
     headline: "Thymalin begins with a gland and a mixture",
-    oneLiner: "The thymus helps educate immune cells. An extract from that gland inspired decades of research, and one deceptively simple question. Which part of the mixture does what?",
-    whatItIs: "Thymalin is a preparation of peptides extracted from calf thymus. A product made from a tissue extract can contain several components. Its name is easily confused with thymosin alpha-1, a separate, defined peptide with its own research history.",
-    howItWorks: "T cells mature in the thymus. That made thymic extracts an intriguing subject for studies of immune regulation. A change in the number of circulating immune cells gives one clue, but rarely identifies which component caused it or whether a patient feels better.",
+    oneLiner:
+      "The thymus helps educate immune cells. An extract from that gland inspired decades of research, and one deceptively simple question. Which part of the mixture does what?",
+    whatItIs:
+      "Thymalin is a preparation of peptides extracted from calf thymus. A product made from a tissue extract can contain several components. Its name is easily confused with thymosin alpha-1, a separate, defined peptide with its own research history.",
+    howItWorks:
+      "T cells mature in the thymus. That made thymic extracts an intriguing subject for studies of immune regulation. A change in the number of circulating immune cells gives one clue, but rarely identifies which component caused it or whether a patient feels better.",
     findings: [
       "A report followed 266 older adults over six to eight years and described outcomes across several groups receiving thymic or pineal preparations. Differences in products and groups complicate efforts to isolate the effect of Thymalin.",
       "A separate clinical study examined Thymalin and immune measures in older patients hospitalized with severe COVID-19. Findings in these patients cannot establish protection from infection or longer life in healthy adults.",
     ],
-    risks: ["The Russian product information lists allergic reactions. The available studies cannot reliably estimate uncommon adverse effects or show that products from other sources are interchangeable."],
-    statusNote: "Thymalin has product labeling in Russia for specified immune-related conditions. Those indications do not establish a general longevity benefit.",
+    risks: [
+      "The Russian product information lists allergic reactions. The available studies cannot reliably estimate uncommon adverse effects or show that products from other sources are interchangeable.",
+    ],
+    statusNote:
+      "Thymalin has product labeling in Russia for specified immune-related conditions. Those indications do not establish a general longevity benefit.",
     sources: [
-      { title: "Follow-up of older adults receiving thymic and pineal preparations", detail: "Neuro Endocrinology Letters · 2003", url: "https://pubmed.ncbi.nlm.nih.gov/14523363/" },
-      { title: "Immune measures in hospitalized patients with severe COVID-19", detail: "Advances in Gerontology · 2021", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8654498/" },
-      { title: "Russian product information for Thymalin", detail: "Samson-Med", url: "https://samsonmed.ru/wp-content/uploads/dlm_uploads/2019/02/%D0%98%D0%9C%D0%9F_%D0%A2%D0%B8%D0%BC%D0%B0%D0%BB%D0%B8%D0%BDR.pdf" },
+      {
+        title: "Follow-up of older adults receiving thymic and pineal preparations",
+        detail: "Neuro Endocrinology Letters · 2003",
+        url: "https://pubmed.ncbi.nlm.nih.gov/14523363/",
+      },
+      {
+        title: "Immune measures in hospitalized patients with severe COVID-19",
+        detail: "Advances in Gerontology · 2021",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8654498/",
+      },
+      {
+        title: "Russian product information for Thymalin",
+        detail: "Samson-Med",
+        url: "https://samsonmed.ru/wp-content/uploads/dlm_uploads/2019/02/%D0%98%D0%9C%D0%9F_%D0%A2%D0%B8%D0%BC%D0%B0%D0%BB%D0%B8%D0%BDR.pdf",
+      },
     ],
   },
   {
@@ -428,18 +708,32 @@ export const RESEARCH_GUIDES: PeptideProfile[] = [
     status: "approved",
     evidence: "approved",
     headline: "Pramlintide brings insulin’s mealtime partner into view",
-    oneLiner: "Insulin shares its cue with another hormone. Meet amylin, and the medicine that helped researchers see how much the timing of a meal matters to blood sugar.",
-    whatItIs: "When pancreatic beta cells release insulin after a meal, they also release amylin. Pramlintide is a synthetic analogue of amylin. Its clinical story begins with what happens to glucose in the hours immediately after eating.",
-    howItWorks: "Pramlintide slows the movement of food out of the stomach, reduces the rise in glucagon after eating and promotes fullness. Slower delivery of nutrients can change the height and timing of the glucose peak after a meal.",
+    oneLiner:
+      "Insulin shares its cue with another hormone. Meet amylin, and the medicine that helped researchers see how much the timing of a meal matters to blood sugar.",
+    whatItIs:
+      "When pancreatic beta cells release insulin after a meal, they also release amylin. Pramlintide is a synthetic analogue of amylin. Its clinical story begins with what happens to glucose in the hours immediately after eating.",
+    howItWorks:
+      "Pramlintide slows the movement of food out of the stomach, reduces the rise in glucagon after eating and promotes fullness. Slower delivery of nutrients can change the height and timing of the glucose peak after a meal.",
     findings: [
       "A 29-week trial randomly assigned 296 people with type 1 diabetes on intensive insulin therapy to pramlintide or placebo. The rise in glucose after meals was smaller with pramlintide.",
       "Average HbA1c, which reflects blood sugar over several months, fell by about half a percentage point in both groups. Looking at the meal curve alongside HbA1c reveals a difference that the longer-term average alone would conceal.",
     ],
-    risks: ["The US label carries a boxed warning for severe hypoglycemia when used with insulin, especially in type 1 diabetes. Nausea was also more frequent in the pramlintide group."],
-    statusNote: "The FDA approved pramlintide as an adjunct for people with type 1 or type 2 diabetes using mealtime insulin who have not reached their glucose targets despite optimized insulin therapy.",
+    risks: [
+      "The US label carries a boxed warning for severe hypoglycemia when used with insulin, especially in type 1 diabetes. Nausea was also more frequent in the pramlintide group.",
+    ],
+    statusNote:
+      "The FDA approved pramlintide as an adjunct for people with type 1 or type 2 diabetes using mealtime insulin who have not reached their glucose targets despite optimized insulin therapy.",
     sources: [
-      { title: "Mealtime glucose and HbA1c in a randomized type 1 diabetes trial", detail: "Diabetes Care · 2006", url: "https://pubmed.ncbi.nlm.nih.gov/17003291/" },
-      { title: "Symlin prescribing information and boxed warning", detail: "FDA · 2019", url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/021332s028lbl.pdf" },
+      {
+        title: "Mealtime glucose and HbA1c in a randomized type 1 diabetes trial",
+        detail: "Diabetes Care · 2006",
+        url: "https://pubmed.ncbi.nlm.nih.gov/17003291/",
+      },
+      {
+        title: "Symlin prescribing information and boxed warning",
+        detail: "FDA · 2019",
+        url: "https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/021332s028lbl.pdf",
+      },
     ],
   },
 ]

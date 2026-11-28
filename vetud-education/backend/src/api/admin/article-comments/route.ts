@@ -3,7 +3,10 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import type { AdminArticleCommentsQueryType } from "./validators"
 
 /** Every article's comments, newest first, for moderation in Admin > Article comments. */
-export async function GET(req: AuthenticatedMedusaRequest<unknown, AdminArticleCommentsQueryType>, res: MedusaResponse) {
+export async function GET(
+  req: AuthenticatedMedusaRequest<unknown, AdminArticleCommentsQueryType>,
+  res: MedusaResponse,
+) {
   const { article, offset, limit } = req.validatedQuery
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
   const { data, metadata } = await query.graph({

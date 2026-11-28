@@ -12,7 +12,11 @@ export type SetFreeShippingInput = {
 type RulePrice = { price_set_id: string; currency_code: string; value: number }
 type Snapshot = { prices: RulePrice[]; thresholds: { region_id: string; value: unknown }[] }
 
-type PriceWithRules = { id: string; currency_code: string; price_rules?: { attribute: string; value: string | number }[] | null }
+type PriceWithRules = {
+  id: string
+  currency_code: string
+  price_rules?: { attribute: string; value: string | number }[] | null
+}
 
 /** The Standard shipping options' price sets, with their prices and price rules. */
 async function standardPriceSets(container: MedusaContainer) {
@@ -21,32 +25,51 @@ async function standardPriceSets(container: MedusaContainer) {
     query.graph({ entity: "shipping_option", fields: ["id", "type.code"] }),
     query.graph({ entity: "shipping_option_price_set", fields: ["shipping_option_id", "price_set_id"] }),
   ])
-  const standard = new Set(options.filter((option) => option.type?.code === FREE_SHIPPING_OPTION_TYPE).map((option) => option.id))
-  const ids = (links as { shipping_option_id: string; price_set_id: string }[]).filter((link) => standard.has(link.shipping_option_id)).map((link) => link.price_set_id)
+  const standard = new Set(
+    options.filter((option) => option.type?.code === FREE_SHIPPING_OPTION_TYPE).map((option) => option.id),
+  )
+  const ids = (links as { shipping_option_id: string; price_set_id: string }[])
+    .filter((link) => standard.has(link.shipping_option_id))
+    .map((link) => link.price_set_id)
   if (!ids.length) return []
-  return await container.resolve(Modules.PRICING).listPriceSets({ id: ids }, { relations: ["prices", "prices.price_rules"] })
+  return await container
+    .resolve(Modules.PRICING)
+    .listPriceSets({ id: ids }, { relations: ["prices", "prices.price_rules"] })
 }
 
-const isFreeOverPrice = (price: PriceWithRules) => (price.price_rules ?? []).some((rule) => rule.attribute === "item_total")
+const isFreeOverPrice = (price: PriceWithRules) =>
+  (price.price_rules ?? []).some((rule) => rule.attribute === "item_total")
 
 /** Replaces every "free over X" Standard price with the given thresholds (per currency). */
 async function applyFreeOverPrices(container: MedusaContainer, thresholds: Record<string, number>) {
   const pricing = container.resolve(Modules.PRICING)
   const sets = await standardPriceSets(container)
-  const old = sets.flatMap((set) => ((set.prices ?? []) as PriceWithRules[]).filter(isFreeOverPrice).map((price) => price.id))
+  const old = sets.flatMap((set) =>
+    ((set.prices ?? []) as PriceWithRules[]).filter(isFreeOverPrice).map((price) => price.id),
+  )
   const add: PricingTypes.AddPricesDTO[] = sets.flatMap((set) => {
     // A Standard option is free only in the currencies it already charges in.
-    const charged = new Set(((set.prices ?? []) as PriceWithRules[]).filter((price) => !(price.price_rules ?? []).length).map((price) => price.currency_code.toLowerCase()))
-    const prices = Object.entries(thresholds).filter(([currency]) => charged.has(currency)).map(([currency_code, value]) => ({
-      currency_code,
-      amount: 0,
-      rules: { item_total: [{ operator: "gte" as const, value }] },
-    }))
+    const charged = new Set(
+      ((set.prices ?? []) as PriceWithRules[])
+        .filter((price) => !(price.price_rules ?? []).length)
+        .map((price) => price.currency_code.toLowerCase()),
+    )
+    const prices = Object.entries(thresholds)
+      .filter(([currency]) => charged.has(currency))
+      .map(([currency_code, value]) => ({
+        currency_code,
+        amount: 0,
+        rules: { item_total: [{ operator: "gte" as const, value }] },
+      }))
     return prices.length ? [{ priceSetId: set.id, prices }] : []
   })
   if (old.length) await pricing.removePrices(old)
   if (add.length) await pricing.addPrices(add)
-  return { removed: old.length, added: add.reduce((total, entry) => total + entry.prices.length, 0), options: sets.length }
+  return {
+    removed: old.length,
+    added: add.reduce((total, entry) => total + entry.prices.length, 0),
+    options: sets.length,
+  }
 }
 
 /**
@@ -65,20 +88,31 @@ export const setFreeShippingStep = createStep(
     }
 
     const snapshot: Snapshot = {
-      prices: sets.flatMap((set) => ((set.prices ?? []) as PriceWithRules[]).filter(isFreeOverPrice).map((price) => ({
-        price_set_id: set.id,
-        currency_code: price.currency_code,
-        value: Number(price.price_rules!.find((rule) => rule.attribute === "item_total")!.value),
-      }))),
+      prices: sets.flatMap((set) =>
+        ((set.prices ?? []) as PriceWithRules[]).filter(isFreeOverPrice).map((price) => ({
+          price_set_id: set.id,
+          currency_code: price.currency_code,
+          value: Number(price.price_rules!.find((rule) => rule.attribute === "item_total")!.value),
+        })),
+      ),
       thresholds: regions.map((region) => ({ region_id: region.id, value: region.metadata?.free_shipping_threshold })),
     }
 
     // Only currencies Standard shipping is sold in: elsewhere the site would promise a free shipping
     // that checkout can't apply.
-    const charged = new Set(sets.flatMap((set) => ((set.prices ?? []) as PriceWithRules[]).filter((price) => !(price.price_rules ?? []).length).map((price) => price.currency_code.toLowerCase())))
+    const charged = new Set(
+      sets.flatMap((set) =>
+        ((set.prices ?? []) as PriceWithRules[])
+          .filter((price) => !(price.price_rules ?? []).length)
+          .map((price) => price.currency_code.toLowerCase()),
+      ),
+    )
     const currencies = regions.map((region) => region.currency_code.toLowerCase()).filter((code) => charged.has(code))
     const needsRates = input.amount_usd !== null && currencies.some((code) => code !== BASE_CURRENCY)
-    const thresholds = input.amount_usd === null ? {} : freeShippingThresholds(input.amount_usd, currencies, needsRates ? await getExchangeRates() : {})
+    const thresholds =
+      input.amount_usd === null
+        ? {}
+        : freeShippingThresholds(input.amount_usd, currencies, needsRates ? await getExchangeRates() : {})
 
     const prices = await applyFreeOverPrices(container, thresholds)
     const updated: { region: string; currency_code: string; threshold: number | null }[] = []
@@ -94,21 +128,32 @@ export const setFreeShippingStep = createStep(
     if (!snapshot) return
     const pricing = container.resolve(Modules.PRICING)
     const sets = await standardPriceSets(container)
-    const current = sets.flatMap((set) => ((set.prices ?? []) as PriceWithRules[]).filter(isFreeOverPrice).map((price) => price.id))
+    const current = sets.flatMap((set) =>
+      ((set.prices ?? []) as PriceWithRules[]).filter(isFreeOverPrice).map((price) => price.id),
+    )
     if (current.length) await pricing.removePrices(current)
     const bySet = new Map<string, RulePrice[]>()
-    for (const price of snapshot.prices) bySet.set(price.price_set_id, [...(bySet.get(price.price_set_id) ?? []), price])
+    for (const price of snapshot.prices)
+      bySet.set(price.price_set_id, [...(bySet.get(price.price_set_id) ?? []), price])
     if (bySet.size) {
-      await pricing.addPrices([...bySet].map(([priceSetId, prices]) => ({
-        priceSetId,
-        prices: prices.map((price) => ({ currency_code: price.currency_code, amount: 0, rules: { item_total: [{ operator: "gte" as const, value: price.value }] } })),
-      })))
+      await pricing.addPrices(
+        [...bySet].map(([priceSetId, prices]) => ({
+          priceSetId,
+          prices: prices.map((price) => ({
+            currency_code: price.currency_code,
+            amount: 0,
+            rules: { item_total: [{ operator: "gte" as const, value: price.value }] },
+          })),
+        })),
+      )
     }
     const regionModule = container.resolve(Modules.REGION)
     for (const { region_id, value } of snapshot.thresholds) {
-      await regionModule.updateRegions(region_id, { metadata: { free_shipping_threshold: typeof value === "number" ? value : "" } })
+      await regionModule.updateRegions(region_id, {
+        metadata: { free_shipping_threshold: typeof value === "number" ? value : "" },
+      })
     }
-  }
+  },
 )
 
 export const setFreeShippingWorkflow = createWorkflow("set-free-shipping", function (input: SetFreeShippingInput) {
@@ -117,7 +162,9 @@ export const setFreeShippingWorkflow = createWorkflow("set-free-shipping", funct
 
 /** What Admin shows: each region's threshold and whether its currency really ships free from it. */
 export async function readFreeShipping(container: MedusaContainer) {
-  const regions = await container.resolve(Modules.REGION).listRegions({}, { select: ["id", "name", "currency_code", "metadata"] })
+  const regions = await container
+    .resolve(Modules.REGION)
+    .listRegions({}, { select: ["id", "name", "currency_code", "metadata"] })
   const sets = await standardPriceSets(container)
   const freeOver = new Map<string, Set<number>>()
   for (const set of sets) {
@@ -128,12 +175,14 @@ export async function readFreeShipping(container: MedusaContainer) {
       freeOver.set(currency, new Set([...(freeOver.get(currency) ?? []), Number(rule.value)]))
     }
   }
-  const usd = regions.find((region) => region.currency_code.toLowerCase() === BASE_CURRENCY)?.metadata?.free_shipping_threshold
+  const usd = regions.find((region) => region.currency_code.toLowerCase() === BASE_CURRENCY)?.metadata
+    ?.free_shipping_threshold
   return {
     amount_usd: typeof usd === "number" ? usd : null,
     standard_options: sets.length,
     regions: regions.map((region) => {
-      const threshold = typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : null
+      const threshold =
+        typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : null
       const rules = [...(freeOver.get(region.currency_code.toLowerCase()) ?? [])]
       return {
         name: region.name,

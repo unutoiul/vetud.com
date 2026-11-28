@@ -31,7 +31,10 @@ function sameTokens(source, target) {
   const b = protectedTokens(target)
   const problems = []
   for (const field of Object.keys(a)) {
-    if (JSON.stringify(a[field]) !== JSON.stringify(b[field])) problems.push(`${field} changed: English has ${JSON.stringify(a[field])}, translation has ${JSON.stringify(b[field])}`)
+    if (JSON.stringify(a[field]) !== JSON.stringify(b[field]))
+      problems.push(
+        `${field} changed: English has ${JSON.stringify(a[field])}, translation has ${JSON.stringify(b[field])}`,
+      )
   }
   return problems
 }
@@ -64,8 +67,10 @@ function icuShape(text) {
   const tags = new Set()
   const walk = (nodes) => {
     for (const node of nodes) {
-      if (node.type === TYPE.tag) { tags.add(node.value); walk(node.children) }
-      else if ([TYPE.argument, TYPE.number, TYPE.date, TYPE.time].includes(node.type)) names.add(node.value)
+      if (node.type === TYPE.tag) {
+        tags.add(node.value)
+        walk(node.children)
+      } else if ([TYPE.argument, TYPE.number, TYPE.date, TYPE.time].includes(node.type)) names.add(node.value)
       else if (node.type === TYPE.plural || node.type === TYPE.select) {
         names.add(node.value)
         for (const option of Object.values(node.options)) walk(option.value)
@@ -94,7 +99,8 @@ function icuProblems(source, target) {
  * Long English prose returned unchanged. Not a rejection, because study titles and citations rightly
  * stay in English; the review pass and the run's summary point these out.
  */
-export const keptInEnglish = (source, target) => target.trim() === source.trim() && source.split(/\s+/).length >= 6 && (source.match(ENGLISH_WORDS)?.length ?? 0) >= 2
+export const keptInEnglish = (source, target) =>
+  target.trim() === source.trim() && source.split(/\s+/).length >= 6 && (source.match(ENGLISH_WORDS)?.length ?? 0) >= 2
 
 /** Page text passed through ct(). */
 export function checkContent(source, target, keepAsWritten = []) {
@@ -105,7 +111,9 @@ export function checkContent(source, target, keepAsWritten = []) {
 
 /** A next-intl message (ICU syntax). */
 export function checkMessage(source, target, keepAsWritten = []) {
-  const problems = common(source, target, keepAsWritten).filter((problem) => !problem.startsWith("placeholders changed"))
+  const problems = common(source, target, keepAsWritten).filter(
+    (problem) => !problem.startsWith("placeholders changed"),
+  )
   problems.push(...icuProblems(source, target))
   return problems
 }

@@ -12,7 +12,8 @@ export const POPUP_CAMPAIGN_PREFIX = "popup-"
  * What the visitor agreed to by entering their email and pressing the sign-up button (there is no
  * tick box), stored with their consent. Change the version when the wording changes.
  */
-export const CONSENT_TEXT = "Signed up with the VETUD newsletter form to get offers and news by email. Free to join; unsubscribe whenever you like."
+export const CONSENT_TEXT =
+  "Signed up with the VETUD newsletter form to get offers and news by email. Free to join; unsubscribe whenever you like."
 export const CONSENT_VERSION = "2026-11-24"
 
 export type NewsletterOffer = {
@@ -30,7 +31,13 @@ type PromotionRow = {
   code?: string | null
   is_automatic?: boolean | null
   application_method?: { type?: string | null; value?: number | null; currency_code?: string | null } | null
-  campaign?: { name?: string | null; description?: string | null; campaign_identifier?: string | null; starts_at?: Date | string | null; ends_at?: Date | string | null } | null
+  campaign?: {
+    name?: string | null
+    description?: string | null
+    campaign_identifier?: string | null
+    starts_at?: Date | string | null
+    ends_at?: Date | string | null
+  } | null
 }
 
 const iso = (value?: Date | string | null) => (value ? new Date(value).toISOString() : null)
@@ -49,21 +56,34 @@ export async function getActiveOffer(container: MedusaContainer): Promise<Newsle
   const { data } = await query.graph({
     entity: "promotion",
     fields: [
-      "id", "code", "is_automatic",
-      "application_method.type", "application_method.value", "application_method.currency_code",
-      "campaign.name", "campaign.description", "campaign.campaign_identifier", "campaign.starts_at", "campaign.ends_at",
+      "id",
+      "code",
+      "is_automatic",
+      "application_method.type",
+      "application_method.value",
+      "application_method.currency_code",
+      "campaign.name",
+      "campaign.description",
+      "campaign.campaign_identifier",
+      "campaign.starts_at",
+      "campaign.ends_at",
     ],
     filters: { status: "active" },
   })
   const now = Date.now()
   const candidates = (data as PromotionRow[]).filter((promotion) => {
     const campaign = promotion.campaign
-    if (!promotion.code || promotion.is_automatic || !campaign?.campaign_identifier?.startsWith(POPUP_CAMPAIGN_PREFIX)) return false
+    if (!promotion.code || promotion.is_automatic || !campaign?.campaign_identifier?.startsWith(POPUP_CAMPAIGN_PREFIX))
+      return false
     const starts = campaign.starts_at ? new Date(campaign.starts_at).getTime() : -Infinity
     const ends = campaign.ends_at ? new Date(campaign.ends_at).getTime() : Infinity
     return starts <= now && now < ends
   })
-  candidates.sort((a, b) => (a.campaign?.ends_at ? new Date(a.campaign.ends_at).getTime() : Infinity) - (b.campaign?.ends_at ? new Date(b.campaign.ends_at).getTime() : Infinity))
+  candidates.sort(
+    (a, b) =>
+      (a.campaign?.ends_at ? new Date(a.campaign.ends_at).getTime() : Infinity) -
+      (b.campaign?.ends_at ? new Date(b.campaign.ends_at).getTime() : Infinity),
+  )
   const promotion = candidates[0]
   if (!promotion?.code || !promotion.campaign) return null
   return {

@@ -26,9 +26,15 @@ export function orderNumber(order: Pick<CustomerOrder, "id" | "display_id" | "cu
 
 export function paymentLabel(status: string) {
   const labels: Record<string, string> = {
-    not_paid: "Awaiting payment", awaiting: "Awaiting payment", authorized: "Payment authorized",
-    partially_authorized: "Partially authorized", captured: "Paid", partially_captured: "Partially paid",
-    partially_refunded: "Partially refunded", refunded: "Refunded", canceled: "Payment canceled",
+    not_paid: "Awaiting payment",
+    awaiting: "Awaiting payment",
+    authorized: "Payment authorized",
+    partially_authorized: "Partially authorized",
+    captured: "Paid",
+    partially_captured: "Partially paid",
+    partially_refunded: "Partially refunded",
+    refunded: "Refunded",
+    canceled: "Payment canceled",
     requires_action: "Payment needs attention",
   }
   return labels[status] ?? "Payment processing"
@@ -45,20 +51,30 @@ export function orderPaymentLabel(order: Pick<CustomerOrder, "payment_status" | 
 
 export function orderPaymentNotice(order: Pick<CustomerOrder, "payment_summary">) {
   switch (order.payment_summary?.review) {
-    case "pending_settlement": return "Your bank debit is processing. Unshipped items stay on hold until settlement is confirmed. No separate transfer is needed."
-    case "returned": return "Your bank payment was returned and needs review. Any unshipped items are on hold. Contact us before paying again; tracking for an already dispatched parcel remains available below."
-    case "requires_review": return "We need to verify this payment. Please contact us before submitting another payment."
-    case "canceled": return "This payment was canceled. Contact us if you still want to proceed with the order."
-    default: return null
+    case "pending_settlement":
+      return "Your bank debit is processing. Unshipped items stay on hold until settlement is confirmed. No separate transfer is needed."
+    case "returned":
+      return "Your bank payment was returned and needs review. Any unshipped items are on hold. Contact us before paying again; tracking for an already dispatched parcel remains available below."
+    case "requires_review":
+      return "We need to verify this payment. Please contact us before submitting another payment."
+    case "canceled":
+      return "This payment was canceled. Contact us if you still want to proceed with the order."
+    default:
+      return null
   }
 }
 
 export function deliveryLabel(order: Pick<CustomerOrder, "status" | "fulfillment_status">) {
   if (order.status === "canceled") return "Order canceled"
   const labels: Record<string, string> = {
-    not_fulfilled: "Processing", partially_fulfilled: "Partially packed", fulfilled: "Packed",
-    partially_shipped: "Partially shipped", shipped: "Shipped", partially_delivered: "Partially delivered",
-    delivered: "Delivered", canceled: "Shipment canceled",
+    not_fulfilled: "Processing",
+    partially_fulfilled: "Partially packed",
+    fulfilled: "Packed",
+    partially_shipped: "Partially shipped",
+    shipped: "Shipped",
+    partially_delivered: "Partially delivered",
+    delivered: "Delivered",
+    canceled: "Shipment canceled",
   }
   return labels[order.fulfillment_status] ?? "Processing"
 }

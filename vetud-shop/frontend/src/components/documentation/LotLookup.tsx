@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { useTranslations } from "next-intl"
 
 import type { HttpTypes } from "@medusajs/types"
@@ -27,14 +26,13 @@ type Match = { product: HttpTypes.StoreProduct; lot: ProductLot }
 
 /** Finds products whose documented lots include an exact (case-insensitive) match. */
 async function findLot(lot: string): Promise<Match[]> {
-  const { products } = await sdk.client.fetch<{ products: HttpTypes.StoreProduct[] }>(
-    "/store/meilisearch/products",
-    { query: { query: lot, limit: 10, fields: "id,title,handle,thumbnail,+metadata,*categories" } }
-  )
+  const { products } = await sdk.client.fetch<{ products: HttpTypes.StoreProduct[] }>("/store/meilisearch/products", {
+    query: { query: lot, limit: 10, fields: "id,title,handle,thumbnail,+metadata,*categories" },
+  })
   return products.flatMap((product) =>
     parseLots(product.metadata?.lots)
       .filter((entry) => entry.lot.toUpperCase() === lot)
-      .map((entry) => ({ product, lot: entry }))
+      .map((entry) => ({ product, lot: entry })),
   )
 }
 
@@ -113,11 +111,17 @@ export default function LotLookup() {
       </Stack>
 
       <Box aria-live="polite" sx={{ mt: 3 }}>
-        {failed ? <Alert severity="error">{ct("Lookup is unavailable right now. Please try again shortly.")}</Alert> : null}
+        {failed ? (
+          <Alert severity="error">{ct("Lookup is unavailable right now. Please try again shortly.")}</Alert>
+        ) : null}
         {!failed && searched && !loading && !matches.length ? (
           <Alert severity="info">
-            {ct("No documented lot matches")} <strong>{ct(searched)}</strong>{ct(". Check the label for typos, or")}{" "}
-            <AppLink href={`/contact?subject=${encodeURIComponent(`Lot enquiry: ${searched}`)}`}>{act("contact")}</AppLink> {ct("with a photo of the label.")}
+            {ct("No documented lot matches")} <strong>{ct(searched)}</strong>
+            {ct(". Check the label for typos, or")}{" "}
+            <AppLink href={`/contact?subject=${encodeURIComponent(`Lot enquiry: ${searched}`)}`}>
+              {act("contact")}
+            </AppLink>{" "}
+            {ct("with a photo of the label.")}
           </Alert>
         ) : null}
         <Grid container spacing={2}>
@@ -125,7 +129,17 @@ export default function LotLookup() {
             const meta = readProductMeta(product)
             return (
               <Grid key={`${product.id}-${lot.lot}`} size={{ xs: 12, md: 8 }}>
-                <Paper variant="outlined" sx={{ p: 3, display: "flex", gap: 2.5, alignItems: "center", bgcolor: brand.slate25, borderRadius: 3 }}>
+                <Paper
+                  variant="outlined"
+                  sx={{
+                    p: 3,
+                    display: "flex",
+                    gap: 2.5,
+                    alignItems: "center",
+                    bgcolor: brand.slate25,
+                    borderRadius: 3,
+                  }}
+                >
                   <Box sx={{ width: 120, flexShrink: 0, display: { xs: "none", sm: "block" } }}>
                     <ProductThumb image={product.thumbnail} handle={product.handle} meta={meta} sizes="120px" />
                   </Box>
@@ -134,19 +148,33 @@ export default function LotLookup() {
                       <VerifiedOutlinedIcon fontSize="small" />
                       <Typography variant="eyebrow">{ct("Documented lot")}</Typography>
                     </Stack>
-                    <Typography sx={{ fontFamily: "var(--font-dm-mono), monospace", fontSize: 20, fontWeight: 500, mt: 0.5 }}>
+                    <Typography
+                      sx={{ fontFamily: "var(--font-dm-mono), monospace", fontSize: 20, fontWeight: 500, mt: 0.5 }}
+                    >
                       {lot.lot}
                     </Typography>
                     <Typography sx={{ mt: 0.5 }}>
                       <AppLink href={`/products/${product.handle}`}>{ct(product.title)}</AppLink> · {ct(meta.code)}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>{ct.rich("Batch {v0} · Purity {v1} · {v2}", { v0: ct(lot.date ?? "—"), v1: ct(lot.purity ?? "—"), v2: lot.coaUrl ? (
-                        <a href={lot.coaUrl} target="_blank" rel="noopener">
-                          {act("downloadCoa")}
-                        </a>
-                      ) : (
-                        <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>{act("requestCoa")}</AppLink>
-                      ) }, {  })}</Typography>
+                    <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
+                      {ct.rich(
+                        "Batch {v0} · Purity {v1} · {v2}",
+                        {
+                          v0: ct(lot.date ?? "—"),
+                          v1: ct(lot.purity ?? "—"),
+                          v2: lot.coaUrl ? (
+                            <a href={lot.coaUrl} target="_blank" rel="noopener">
+                              {act("downloadCoa")}
+                            </a>
+                          ) : (
+                            <AppLink href={`/contact?subject=${encodeURIComponent(`COA request: ${lot.lot}`)}`}>
+                              {act("requestCoa")}
+                            </AppLink>
+                          ),
+                        },
+                        {},
+                      )}
+                    </Typography>
                   </Box>
                 </Paper>
               </Grid>

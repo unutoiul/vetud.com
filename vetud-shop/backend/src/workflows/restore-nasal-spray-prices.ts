@@ -1,8 +1,5 @@
 import type { UpdateProductVariantWorkflowInputDTO } from "@medusajs/framework/types"
-import {
-  ContainerRegistrationKeys,
-  MedusaError,
-} from "@medusajs/framework/utils"
+import { ContainerRegistrationKeys, MedusaError } from "@medusajs/framework/utils"
 import {
   createStep,
   createWorkflow,
@@ -11,10 +8,7 @@ import {
   when,
   WorkflowResponse,
 } from "@medusajs/framework/workflows-sdk"
-import {
-  updateProductsWorkflow,
-  updateProductVariantsWorkflow,
-} from "@medusajs/medusa/core-flows"
+import { updateProductsWorkflow, updateProductVariantsWorkflow } from "@medusajs/medusa/core-flows"
 import { NASAL_SPRAYS } from "../seed/research-nasal-sprays"
 import { PREMIUM_PRICE_REVISION } from "../seed/premium-product-prices"
 
@@ -43,40 +37,30 @@ const prepareNasalPricesStep = createStep(
   "prepare-nasal-prices",
   async (_input: Record<string, never>, { container }) => {
     const handles = NASAL_SPRAYS.map((product) => product.handle)
-    const { data } = await container
-      .resolve(ContainerRegistrationKeys.QUERY)
-      .graph({
-        entity: "product",
-        fields: [
-          "id",
-          "handle",
-          "metadata",
-          "variants.id",
-          "variants.price_set.prices.*",
-          "variants.price_set.prices.price_rules.*",
-        ],
-        filters: { handle: handles },
-      })
+    const { data } = await container.resolve(ContainerRegistrationKeys.QUERY).graph({
+      entity: "product",
+      fields: [
+        "id",
+        "handle",
+        "metadata",
+        "variants.id",
+        "variants.price_set.prices.*",
+        "variants.price_set.prices.price_rules.*",
+      ],
+      filters: { handle: handles },
+    })
     const products: { id: string; metadata: Record<string, unknown> }[] = []
     const variants: UpdateProductVariantWorkflowInputDTO[] = []
     for (const handle of handles) {
-      const product = (data as unknown as ProductRow[]).find(
-        (item) => item.handle === handle,
-      )
-      if (!product)
-        throw new MedusaError(
-          MedusaError.Types.NOT_FOUND,
-          `Missing nasal spray: ${handle}`,
-        )
+      const product = (data as unknown as ProductRow[]).find((item) => item.handle === handle)
+      if (!product) throw new MedusaError(MedusaError.Types.NOT_FOUND, `Missing nasal spray: ${handle}`)
       if (product.metadata?.nasal_pricing_revision === REVISION) continue
       if (
         product.metadata?.retail_pricing_revision === PREMIUM_PRICE_REVISION &&
         product.metadata?.retail_pricing_multiplier === 2
       ) {
         for (const variant of product.variants ?? []) {
-          const retail = (variant.price_set?.prices ?? []).filter(
-            (price) => !price.price_list_id,
-          )
+          const retail = (variant.price_set?.prices ?? []).filter((price) => !price.price_list_id)
           if (
             !retail.length ||
             retail.some(
@@ -122,22 +106,14 @@ export const restoreNasalSprayPricesWorkflow = createWorkflow(
   "restore-nasal-spray-prices",
   (input: Record<string, never>) => {
     const prepared = prepareNasalPricesStep(input)
-    const updated = when(
-      "has-nasal-price-restorations",
-      prepared,
-      (data) => data.variants.length > 0,
-    ).then(() =>
+    const updated = when("has-nasal-price-restorations", prepared, (data) => data.variants.length > 0).then(() =>
       updateProductVariantsWorkflow.runAsStep({
         input: transform(prepared, (data) => ({
           product_variants: data.variants,
         })),
       }),
     )
-    when(
-      "has-nasal-price-metadata",
-      prepared,
-      (data) => data.products.length > 0,
-    ).then(() =>
+    when("has-nasal-price-metadata", prepared, (data) => data.products.length > 0).then(() =>
       updateProductsWorkflow.runAsStep({
         input: transform({ prepared, updated }, ({ prepared: data }) => ({
           products: data.products,

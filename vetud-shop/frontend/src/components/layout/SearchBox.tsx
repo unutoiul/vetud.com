@@ -17,13 +17,20 @@ import Typography from "@mui/material/Typography"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState, type ReactNode, type Ref } from "react"
 import { sdk } from "@/lib/medusa/sdk"
-import { EMPTY_PRODUCT_MENU, looksLikeLot, toMenuProduct, type MenuProduct, type ProductMenuData } from "@/lib/product-menu"
+import {
+  EMPTY_PRODUCT_MENU,
+  looksLikeLot,
+  toMenuProduct,
+  type MenuProduct,
+  type ProductMenuData,
+} from "@/lib/product-menu"
 import { loadSearchIndex, rank } from "@/lib/site-search"
 import { useStore } from "../store/StoreProvider"
 import { MenuProductRow } from "./ProductMenu"
 import { brand } from "@/theme/tokens"
 
-const SEARCH_FIELDS = "id,title,subtitle,handle,thumbnail,+metadata,*categories,*options,*variants.options,*variants.calculated_price"
+const SEARCH_FIELDS =
+  "id,title,subtitle,handle,thumbnail,+metadata,*categories,*options,*variants.options,*variants.calculated_price"
 /** Results per search, and suggestions before anything is typed. */
 const RESULTS = 6
 const SUGGESTIONS = 6
@@ -46,18 +53,35 @@ type SearchBoxProps = {
 
 /** The results of the inline search, in the page flow. */
 function InlineResults({ open, children, className, role }: PopperProps) {
-  return open ? <Box className={className} role={role} sx={{ width: "100%", mt: 1.5 }}>{children as ReactNode}</Box> : null
+  return open ? (
+    <Box className={className} role={role} sx={{ width: "100%", mt: 1.5 }}>
+      {children as ReactNode}
+    </Box>
+  ) : null
 }
 
-const productResult = (product: MenuProduct, group: string): Result =>
-  ({ kind: "product", group, key: `p-${product.id}`, label: product.title, href: `/products/${product.handle}`, product })
+const productResult = (product: MenuProduct, group: string): Result => ({
+  kind: "product",
+  group,
+  key: `p-${product.id}`,
+  label: product.title,
+  href: `/products/${product.handle}`,
+  product,
+})
 
 /**
  * Product search. Before typing it suggests products and categories. While typing it shows matches
  * from the catalog at once (in the reader's language, by name, code or handle), then adds
  * Meilisearch's matches. A lot number offers the lot lookup, and the last row opens all results.
  */
-export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inline, catalog = EMPTY_PRODUCT_MENU }: SearchBoxProps) {
+export default function SearchBox({
+  autoFocus,
+  inputRef,
+  onNavigate,
+  dense,
+  inline,
+  catalog = EMPTY_PRODUCT_MENU,
+}: SearchBoxProps) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const router = useRouter()
@@ -73,18 +97,38 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
   const suggestions: Result[] = [
     ...catalog.products.slice(0, SUGGESTIONS).map((product) => productResult(product, "Popular products")),
     ...catalog.categories.map((category): Result => ({
-      kind: "link", group: "Browse by category", key: `c-${category.handle}`, label: translateAction(act, category.name),
-      href: `/shop?category=${encodeURIComponent(category.handle)}`, icon: "sliders", detail: ct.template("{v0} products", { v0: category.count }),
+      kind: "link",
+      group: "Browse by category",
+      key: `c-${category.handle}`,
+      label: translateAction(act, category.name),
+      href: `/shop?category=${encodeURIComponent(category.handle)}`,
+      icon: "sliders",
+      detail: ct.template("{v0} products", { v0: category.count }),
     })),
   ]
 
   const resultsFor = (query: string, products: MenuProduct[]): Result[] => [
-    ...(looksLikeLot(query) ? [{
-      kind: "link", group: "Lot documentation", key: "lot", label: `${act("lotLookup")} ${query.trim().toUpperCase()}`,
-      href: `/documentation?lot=${encodeURIComponent(query.trim().toUpperCase())}`, icon: "document",
-    } satisfies Result] : []),
+    ...(looksLikeLot(query)
+      ? [
+          {
+            kind: "link",
+            group: "Lot documentation",
+            key: "lot",
+            label: `${act("lotLookup")} ${query.trim().toUpperCase()}`,
+            href: `/documentation?lot=${encodeURIComponent(query.trim().toUpperCase())}`,
+            icon: "document",
+          } satisfies Result,
+        ]
+      : []),
     ...products.slice(0, RESULTS).map((product) => productResult(product, "Products")),
-    { kind: "link", group: "Products", key: "all", label: ct.template("See all results for “{v0}”", { v0: query.trim() }), href: `/shop?q=${encodeURIComponent(query.trim())}`, icon: "search" },
+    {
+      kind: "link",
+      group: "Products",
+      key: "all",
+      label: ct.template("See all results for “{v0}”", { v0: query.trim() }),
+      href: `/shop?q=${encodeURIComponent(query.trim())}`,
+      icon: "search",
+    },
   ]
 
   // Instant matches from the catalog, then the debounced full search; stale responses are dropped.
@@ -98,18 +142,36 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
       setLoading(false)
       return
     }
-    const instant = rank(catalog.products, query, (product) => [ct(product.title), [product.code, product.handle, ct(product.subtitle)], [product.title, product.subtitle]], RESULTS)
+    const instant = rank(
+      catalog.products,
+      query,
+      (product) => [
+        ct(product.title),
+        [product.code, product.handle, ct(product.subtitle)],
+        [product.title, product.subtitle],
+      ],
+      RESULTS,
+    )
     setOptions(resultsFor(query, instant))
     setLoading(true)
     timer.current = window.setTimeout(async () => {
       // Each source can fail on its own; the others still show.
       const [searchProducts, index] = await Promise.all([
-        sdk.client.fetch<{ products: HttpTypes.StoreProduct[] }>("/store/meilisearch/products", { query: { query, limit: RESULTS, region_id: region.id, fields: SEARCH_FIELDS } })
-          .then((result) => result.products).catch(() => []),
+        sdk.client
+          .fetch<{ products: HttpTypes.StoreProduct[] }>("/store/meilisearch/products", {
+            query: { query, limit: RESULTS, region_id: region.id, fields: SEARCH_FIELDS },
+          })
+          .then((result) => result.products)
+          .catch(() => []),
         loadSearchIndex().catch(() => ({ products: [] })),
       ])
       if (requestId !== latest.current) return
-      const translatedMatches = rank(index.products ?? [], query, product => [ct(product.title), [ct(product.description)], [product.title, product.description]], RESULTS)
+      const translatedMatches = rank(
+        index.products ?? [],
+        query,
+        (product) => [ct(product.title), [ct(product.description)], [product.title, product.description]],
+        RESULTS,
+      )
       const known = new Map(catalog.products.map((product) => [product.id, product]))
       const found = new Map<string, MenuProduct>()
       for (const product of instant) found.set(product.id, product)
@@ -117,14 +179,17 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
         const entry = known.get(product.id) ?? toMenuProduct(product)
         if (entry) found.set(entry.id, entry)
       }
-      const missingIds = translatedMatches.map(product => product.id).filter(id => !found.has(id))
+      const missingIds = translatedMatches.map((product) => product.id).filter((id) => !found.has(id))
       for (const id of missingIds) {
         const entry = known.get(id)
         if (entry) found.set(id, entry)
       }
-      const unknownIds = missingIds.filter(id => !found.has(id))
+      const unknownIds = missingIds.filter((id) => !found.has(id))
       if (unknownIds.length) {
-        const extra = await sdk.store.product.list({ id: unknownIds, region_id: region.id, fields: SEARCH_FIELDS, limit: RESULTS }).then(result => result.products).catch(() => [])
+        const extra = await sdk.store.product
+          .list({ id: unknownIds, region_id: region.id, fields: SEARCH_FIELDS, limit: RESULTS })
+          .then((result) => result.products)
+          .catch(() => [])
         if (requestId !== latest.current) return
         for (const product of extra) {
           const entry = toMenuProduct(product)
@@ -171,19 +236,59 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
       slots={inline ? { popper: InlineResults } : undefined}
       slotProps={{
         listbox: { sx: { maxHeight: inline ? "min(58vh, 560px)" : "min(60vh, 520px)", py: inline ? 0 : 1 } },
-        paper: inline ? { elevation: 0, sx: { boxShadow: "none", border: "1px solid", borderColor: "divider", borderRadius: "10px" } } : undefined,
+        paper: inline
+          ? {
+              elevation: 0,
+              sx: { boxShadow: "none", border: "1px solid", borderColor: "divider", borderRadius: "10px" },
+            }
+          : undefined,
       }}
       renderGroup={(params) => (
         <Box component="li" key={params.key} sx={{ listStyle: "none" }}>
-          <Typography component="div" sx={{ position: "sticky", top: inline ? 0 : -8, zIndex: 1, px: 2, py: 1, bgcolor: brand.white, fontSize: 11, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: "brand.blue", borderTop: "1px solid", borderColor: "divider" }}>{ct(translateAction(act, params.group))}</Typography>
-          <Box component="ul" sx={{ p: 0 }}>{params.children}</Box>
+          <Typography
+            component="div"
+            sx={{
+              position: "sticky",
+              top: inline ? 0 : -8,
+              zIndex: 1,
+              px: 2,
+              py: 1,
+              bgcolor: brand.white,
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: ".08em",
+              textTransform: "uppercase",
+              color: "brand.blue",
+              borderTop: "1px solid",
+              borderColor: "divider",
+            }}
+          >
+            {ct(translateAction(act, params.group))}
+          </Typography>
+          <Box component="ul" sx={{ p: 0 }}>
+            {params.children}
+          </Box>
         </Box>
       )}
       renderOption={(props, option) => {
         const { key, ...rest } = props as typeof props & { key: string }
         return (
-          <Box component="li" key={key} {...rest} sx={{ gap: 1.5, alignItems: "center !important", py: "8px !important", minHeight: option.kind === "product" ? 64 : 52 }}>
-            {option.kind === "product" ? <MenuProductRow product={option.product} /> : <LinkRow icon={option.icon} label={option.label} detail={option.detail} />}
+          <Box
+            component="li"
+            key={key}
+            {...rest}
+            sx={{
+              gap: 1.5,
+              alignItems: "center !important",
+              py: "8px !important",
+              minHeight: option.kind === "product" ? 64 : 52,
+            }}
+          >
+            {option.kind === "product" ? (
+              <MenuProductRow product={option.product} />
+            ) : (
+              <LinkRow icon={option.icon} label={option.label} detail={option.detail} />
+            )}
           </Box>
         )
       }}
@@ -229,13 +334,33 @@ export default function SearchBox({ autoFocus, inputRef, onNavigate, dense, inli
 
 function LinkRow({ icon, label, detail }: { icon: IconName; label: string; detail?: string }) {
   const ct = useContentTranslator()
-  return <>
-    <Box aria-hidden sx={{ display: "grid", placeItems: "center", width: 48, height: 36, flexShrink: 0, borderRadius: "8px", bgcolor: "brand.mintWash", color: "brand.blue" }}>
-      <Icon name={icon} sx={{ fontSize: 20 }} />
-    </Box>
-    <Box sx={{ flex: 1, minWidth: 0 }}>
-      <Typography component="span" sx={{ display: "block", fontWeight: 600, fontSize: 14, lineHeight: 1.4 }} noWrap>{ct(label)}</Typography>
-      {detail ? <Typography component="span" sx={{ display: "block", fontSize: 12, color: "text.secondary" }}>{ct(detail)}</Typography> : null}
-    </Box>
-  </>
+  return (
+    <>
+      <Box
+        aria-hidden
+        sx={{
+          display: "grid",
+          placeItems: "center",
+          width: 48,
+          height: 36,
+          flexShrink: 0,
+          borderRadius: "8px",
+          bgcolor: "brand.mintWash",
+          color: "brand.blue",
+        }}
+      >
+        <Icon name={icon} sx={{ fontSize: 20 }} />
+      </Box>
+      <Box sx={{ flex: 1, minWidth: 0 }}>
+        <Typography component="span" sx={{ display: "block", fontWeight: 600, fontSize: 14, lineHeight: 1.4 }} noWrap>
+          {ct(label)}
+        </Typography>
+        {detail ? (
+          <Typography component="span" sx={{ display: "block", fontSize: 12, color: "text.secondary" }}>
+            {ct(detail)}
+          </Typography>
+        ) : null}
+      </Box>
+    </>
+  )
 }

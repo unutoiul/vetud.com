@@ -6,7 +6,5 @@ export default async function pricePremiumProducts({ container }: ExecArgs) {
   const { result } = await pricePremiumProductsWorkflow(container).run({
     input: {},
   })
-  container
-    .resolve(ContainerRegistrationKeys.LOGGER)
-    .info(`Premium retail prices: ${JSON.stringify(result)}`)
+  container.resolve(ContainerRegistrationKeys.LOGGER).info(`Premium retail prices: ${JSON.stringify(result)}`)
 }

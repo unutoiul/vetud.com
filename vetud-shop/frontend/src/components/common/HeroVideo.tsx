@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { useTranslations } from "next-intl"
 
 import Box from "@mui/material/Box"
@@ -30,21 +29,62 @@ export default function HeroVideo({ src, poster }: HeroVideoSource) {
     element.play().catch(() => {})
   }, [])
 
-  return <Box sx={{ position: { xs: "relative", md: "absolute" }, inset: { md: 0 }, aspectRatio: { xs: "12 / 5", sm: "3 / 1", md: "auto" }, overflow: "hidden" }}>
-    <Box component="video" ref={video} muted loop playsInline preload="metadata" poster={poster} aria-hidden tabIndex={-1}
-      onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)}
+  return (
+    <Box
       sx={{
-        position: "absolute", display: "block", maxWidth: "none",
-        // Small screens crop to the subject on the right; wider ones keep the whole height and
-        // let the video's own pale left side run under the text.
-        inset: { xs: 0, md: "0 0 0 auto" }, width: { xs: "100%", md: "auto" }, height: "100%", aspectRatio: { md: "1920 / 500" },
-        objectFit: "cover", objectPosition: "right center",
-      }}>
-      <source src={src} type="video/mp4" />
+        position: { xs: "relative", md: "absolute" },
+        inset: { md: 0 },
+        aspectRatio: { xs: "12 / 5", sm: "3 / 1", md: "auto" },
+        overflow: "hidden",
+      }}
+    >
+      <Box
+        component="video"
+        ref={video}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster={poster}
+        aria-hidden
+        tabIndex={-1}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        sx={{
+          position: "absolute",
+          display: "block",
+          maxWidth: "none",
+          // Small screens crop to the subject on the right; wider ones keep the whole height and
+          // let the video's own pale left side run under the text.
+          inset: { xs: 0, md: "0 0 0 auto" },
+          width: { xs: "100%", md: "auto" },
+          height: "100%",
+          aspectRatio: { md: "1920 / 500" },
+          objectFit: "cover",
+          objectPosition: "right center",
+        }}
+      >
+        <source src={src} type="video/mp4" />
+      </Box>
+      <IconButton
+        onClick={() => (playing ? video.current?.pause() : video.current?.play())}
+        aria-label={ct(playing ? act("pauseVideo") : act("playVideo"))}
+        sx={{
+          position: "absolute",
+          zIndex: 2,
+          right: { xs: 12, md: 20 },
+          bottom: { xs: 12, md: 20 },
+          width: 36,
+          height: 36,
+          color: "brand.navy",
+          bgcolor: brand.whiteA82,
+          border: "1px solid",
+          borderColor: "divider",
+          "&:hover": { bgcolor: brand.white },
+        }}
+      >
+        <Icon name={playing ? "pause" : "play"} sx={{ fontSize: 16 }} />
+      </IconButton>
     </Box>
-    <IconButton onClick={() => (playing ? video.current?.pause() : video.current?.play())} aria-label={ct(playing ? act("pauseVideo") : act("playVideo"))}
-      sx={{ position: "absolute", zIndex: 2, right: { xs: 12, md: 20 }, bottom: { xs: 12, md: 20 }, width: 36, height: 36, color: "brand.navy", bgcolor: brand.whiteA82, border: "1px solid", borderColor: "divider", "&:hover": { bgcolor: brand.white } }}>
-      <Icon name={playing ? "pause" : "play"} sx={{ fontSize: 16 }} />
-    </IconButton>
-  </Box>
+  )
 }

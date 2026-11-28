@@ -1,9 +1,23 @@
 import type { ForumTopic } from "../../lib/forum/topics"
 import { MedusaError } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import { screenPost } from "../../lib/forum/moderation"
 import { excerptOf, normalizeBody, normalizeTitle, slugify } from "../../lib/forum/text"
-import { activeProfile, assertNotTooSoon, attachImages, claimableImages, forumService, recountForumReputationStep, releaseImages } from "./shared"
+import {
+  activeProfile,
+  assertNotTooSoon,
+  attachImages,
+  claimableImages,
+  forumService,
+  recountForumReputationStep,
+  releaseImages,
+} from "./shared"
 
 export type ThreadKind = "discussion" | "question"
 
@@ -42,13 +56,22 @@ const prepareForumThreadStep = createStep(
   async (input: CreateForumThreadInput, { container }) => {
     const service = forumService(container)
     const profile = await activeProfile(service, input.customer_id)
-    const [latest] = await service.listForumThreads({ author_id: profile.id }, { take: 1, order: { created_at: "DESC" }, withDeleted: true })
-    assertNotTooSoon(latest, THREAD_INTERVAL_MS, "You're starting threads too quickly. Please wait a couple of minutes and try again.")
+    const [latest] = await service.listForumThreads(
+      { author_id: profile.id },
+      { take: 1, order: { created_at: "DESC" }, withDeleted: true },
+    )
+    assertNotTooSoon(
+      latest,
+      THREAD_INTERVAL_MS,
+      "You're starting threads too quickly. Please wait a couple of minutes and try again.",
+    )
 
     const title = normalizeTitle(input.title)
     const body = normalizeBody(input.body)
-    if (title.length < 8) throw new MedusaError(MedusaError.Types.INVALID_DATA, "Please give your thread a clearer title.")
-    if (body.length < 20) throw new MedusaError(MedusaError.Types.INVALID_DATA, "Please write a little more, so others can help.")
+    if (title.length < 8)
+      throw new MedusaError(MedusaError.Types.INVALID_DATA, "Please give your thread a clearer title.")
+    if (body.length < 20)
+      throw new MedusaError(MedusaError.Types.INVALID_DATA, "Please write a little more, so others can help.")
 
     const imageIds = await claimableImages(service, profile.id, input.images)
     const hold = screenPost([title, body], profile, imageIds.length)
@@ -69,7 +92,7 @@ const prepareForumThreadStep = createStep(
       image_ids: imageIds,
     }
     return new StepResponse(prepared)
-  }
+  },
 )
 
 const createForumThreadStep = createStep(
@@ -94,7 +117,7 @@ const createForumThreadStep = createStep(
     await releaseImages(service, created.image_ids)
     await service.deleteForumPosts(created.post_id)
     await service.deleteForumThreads(created.thread_id)
-  }
+  },
 )
 
 /**
@@ -109,5 +132,5 @@ export const createForumThreadWorkflow = createWorkflow(
     // Published threads count toward the author's reputation (see lib/forum/reputation.ts).
     recountForumReputationStep({ profile_ids: transform({ created }, ({ created }) => [created.post.author_id]) })
     return new WorkflowResponse(created)
-  }
+  },
 )

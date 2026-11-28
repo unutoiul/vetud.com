@@ -1,4 +1,10 @@
-import { checkSignInCode, issueSignInCode, normalizeEmail, secondsUntilResend, SIGN_IN_CODE_MAX_ATTEMPTS } from "../sign-in-code"
+import {
+  checkSignInCode,
+  issueSignInCode,
+  normalizeEmail,
+  secondsUntilResend,
+  SIGN_IN_CODE_MAX_ATTEMPTS,
+} from "../sign-in-code"
 
 describe("sign-in codes", () => {
   const now = new Date("2026-11-19T10:00:00.000Z")

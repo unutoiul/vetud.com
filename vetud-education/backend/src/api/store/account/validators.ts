@@ -6,10 +6,12 @@ const Email = z.string().trim().toLowerCase().email().max(254)
 export const StoreEmailChangeCodeSchema = z.object({ email: Email }).strict()
 
 /** Step 2: the code from that email confirms the change. */
-export const StoreChangeEmailSchema = z.object({
-  email: Email,
-  code: z.string().trim().min(6).max(12),
-}).strict()
+export const StoreChangeEmailSchema = z
+  .object({
+    email: Email,
+    code: z.string().trim().min(6).max(12),
+  })
+  .strict()
 
 export type StoreEmailChangeCodeBody = z.infer<typeof StoreEmailChangeCodeSchema>
 export type StoreChangeEmailBody = z.infer<typeof StoreChangeEmailSchema>

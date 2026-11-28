@@ -1,5 +1,10 @@
 import { formatCurrency } from "../../lib/currencies"
-import { guestCheckoutAlert, newsletterSignupAlert, type GuestCheckoutAlertData, type NewsletterSignupAlertData } from "./owner-alerts"
+import {
+  guestCheckoutAlert,
+  newsletterSignupAlert,
+  type GuestCheckoutAlertData,
+  type NewsletterSignupAlertData,
+} from "./owner-alerts"
 
 /**
  * Every shop email is a published Resend template. Their sources and shared layout are in
@@ -56,13 +61,15 @@ type EmailOrder = {
   tax_total?: Amount
   discount_total?: Amount
   total?: Amount
-  items?: {
-    title?: string | null
-    product_title?: string | null
-    variant_title?: string | null
-    quantity: number | string
-    total?: Amount
-  }[] | null
+  items?:
+    | {
+        title?: string | null
+        product_title?: string | null
+        variant_title?: string | null
+        quantity: number | string
+        total?: Amount
+      }[]
+    | null
   shipping_address?: EmailAddress | null
   shipping_methods?: { name?: string | null }[] | null
 }
@@ -116,7 +123,11 @@ function orderNumber(order: Pick<EmailOrder, "id" | "display_id">) {
 }
 
 function dateTime(value: string) {
-  return new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(new Date(value)) + " UTC"
+  return (
+    new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(
+      new Date(value),
+    ) + " UTC"
+  )
 }
 
 /** The order summary block shared by the order emails. Multi-line values use line breaks. */
@@ -138,7 +149,9 @@ function orderVariables(order: EmailOrder) {
         address.address_2,
         [address.postal_code, address.city, address.province].filter(Boolean).join(" "),
         address.country_code?.toUpperCase(),
-      ].filter(Boolean).join("\n")
+      ]
+        .filter(Boolean)
+        .join("\n")
     : ""
 
   return {
@@ -165,21 +178,27 @@ type Builder = (data: Data) => {
 }
 
 const builders: Record<string, Builder> = {
-  [EmailTemplates.NEWSLETTER_SIGNUP_ADMIN]: (data) => newsletterSignupAlert(data as unknown as NewsletterSignupAlertData),
+  [EmailTemplates.NEWSLETTER_SIGNUP_ADMIN]: (data) =>
+    newsletterSignupAlert(data as unknown as NewsletterSignupAlertData),
   [EmailTemplates.GUEST_CHECKOUT_ADMIN]: (data) => guestCheckoutAlert(data as unknown as GuestCheckoutAlertData),
   [EmailTemplates.ORDER_PLACED]: (data) => ({
     variables: {
       ...orderVariables(data.order),
       NAME_SUFFIX: data.order.shipping_address?.first_name ? `, ${data.order.shipping_address.first_name}` : "",
-      PAYMENT_SUMMARY: data.payment_summary ?? "We have received your order and reserved the stock. It ships as soon as your payment is confirmed.",
-      PAYMENT_DETAILS: data.manual_payment === false
-        ? "No further payment step is needed by email."
-        : [
-            `Amount due: ${money(data.order.total, data.order.currency_code)}`,
-            `Payment reference: ${orderNumber(data.order)}`,
-            data.payment_instructions,
-            data.bank_details?.split(" | ").join("\n"),
-          ].filter(Boolean).join("\n"),
+      PAYMENT_SUMMARY:
+        data.payment_summary ??
+        "We have received your order and reserved the stock. It ships as soon as your payment is confirmed.",
+      PAYMENT_DETAILS:
+        data.manual_payment === false
+          ? "No further payment step is needed by email."
+          : [
+              `Amount due: ${money(data.order.total, data.order.currency_code)}`,
+              `Payment reference: ${orderNumber(data.order)}`,
+              data.payment_instructions,
+              data.bank_details?.split(" | ").join("\n"),
+            ]
+              .filter(Boolean)
+              .join("\n"),
       STOREFRONT_URL: data.storefront_url,
     },
   }),
@@ -187,7 +206,8 @@ const builders: Record<string, Builder> = {
     variables: {
       ...orderVariables(data.order),
       CUSTOMER_EMAIL: data.order.email ?? "A customer",
-      ADMIN_ACTION: data.admin_payment_action ?? "Check the selected payment method and confirm payment before shipping.",
+      ADMIN_ACTION:
+        data.admin_payment_action ?? "Check the selected payment method and confirm payment before shipping.",
       ADMIN_ORDER_URL: `${data.admin_url}/app/orders/${data.order.id}`,
     },
   }),
@@ -196,7 +216,9 @@ const builders: Record<string, Builder> = {
     return {
       variables: {
         ...orderVariables(data.order),
-        TRACKING: labels.map((label) => label.tracking_number || label.tracking_url).join("\n") || "Tracking details will follow.",
+        TRACKING:
+          labels.map((label) => label.tracking_number || label.tracking_url).join("\n") ||
+          "Tracking details will follow.",
         TRACK_URL: labels.find((label) => label.tracking_url)?.tracking_url ?? `${data.storefront_url}/tracking`,
         STOREFRONT_URL: data.storefront_url,
       },
@@ -278,9 +300,10 @@ const builders: Record<string, Builder> = {
       variables: {
         ORDER_NUMBER: orderNumber(data.order),
         RETURN_ITEMS: data.items.map((item) => `${item.title} × ${item.quantity}`).join("\n"),
-        REFUND_LINE: refund > 0
-          ? `Refund due: ${money(refund, data.order.currency_code)}. We'll email you when it's issued.`
-          : "We'll be in touch if anything else is needed.",
+        REFUND_LINE:
+          refund > 0
+            ? `Refund due: ${money(refund, data.order.currency_code)}. We'll email you when it's issued.`
+            : "We'll be in touch if anything else is needed.",
         STOREFRONT_URL: data.storefront_url,
       },
     }

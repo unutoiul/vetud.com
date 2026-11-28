@@ -19,7 +19,9 @@ export default function NotFound() {
           {ct("This sequence is not on file.")}
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          {ct("The page you were looking for has moved or never existed. Try the catalog, or search by product name, code or lot number.")}
+          {ct(
+            "The page you were looking for has moved or never existed. Try the catalog, or search by product name, code or lot number.",
+          )}
         </Typography>
         <Stack direction="row" spacing={1.5}>
           <ButtonLink href="/shop" variant="contained" endIcon={<NorthEastIcon />}>

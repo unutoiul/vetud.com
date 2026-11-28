@@ -4,31 +4,31 @@ import { EDITORIAL_COVERS } from "./editorial-covers"
 export type LearnIllustration = { src: string; alt: string }
 
 export const RESEARCH_GUIDE_ILLUSTRATIONS: Record<string, LearnIllustration> = {
-  "survodutide": {
+  survodutide: {
     src: "/images/learn/illustrations/vetud-learn-survodutide.webp",
     alt: "An amber liver sculpture between blue and gold threads.",
   },
-  "mazdutide": {
+  mazdutide: {
     src: "/images/learn/illustrations/vetud-learn-mazdutide.webp",
     alt: "Teal and vermilion glass ribbons cross above an oval base.",
   },
-  "exenatide": {
+  exenatide: {
     src: "/images/learn/illustrations/vetud-learn-exenatide.webp",
     alt: "A natural-history model of a Gila monster with orange and black scales.",
   },
-  "dulaglutide": {
+  dulaglutide: {
     src: "/images/learn/illustrations/vetud-learn-dulaglutide.webp",
     alt: "An ivory Y-shaped sculpture with blue and amber curls on its upper arms.",
   },
-  "setmelanotide": {
+  setmelanotide: {
     src: "/images/learn/illustrations/vetud-learn-setmelanotide.webp",
     alt: "A layered brain model with a colored point near the hypothalamus.",
   },
-  "adipotide": {
+  adipotide: {
     src: "/images/learn/illustrations/vetud-learn-adipotide.webp",
     alt: "Red vessels branch through rounded lobules in an amber tissue model.",
   },
-  "matrixyl": {
+  matrixyl: {
     src: "/images/learn/illustrations/vetud-learn-matrixyl.webp",
     alt: "Pink and ivory cords interwoven beneath a single copper strand.",
   },
@@ -48,19 +48,19 @@ export const RESEARCH_GUIDE_ILLUSTRATIONS: Record<string, LearnIllustration> = {
     src: "/images/learn/illustrations/vetud-learn-ghrp-6.webp",
     alt: "An amber stomach sculpture suspended above a green pulse trace.",
   },
-  "hexarelin": {
+  hexarelin: {
     src: "/images/learn/illustrations/vetud-learn-hexarelin.webp",
     alt: "Amber beads sit below a blue plaque bearing a pulse trace.",
   },
-  "dihexa": {
+  dihexa: {
     src: "/images/learn/illustrations/vetud-learn-dihexa.webp",
     alt: "Gold and blue branching neuron models facing each other.",
   },
-  "glutathione": {
+  glutathione: {
     src: "/images/learn/illustrations/vetud-learn-glutathione.webp",
     alt: "Three glass spheres in green, amber and blue on a reflective dish.",
   },
-  "humanin": {
+  humanin: {
     src: "/images/learn/illustrations/vetud-learn-humanin.webp",
     alt: "An open purple mitochondrion reveals layers of folded orange membrane.",
   },
@@ -68,7 +68,7 @@ export const RESEARCH_GUIDE_ILLUSTRATIONS: Record<string, LearnIllustration> = {
     src: "/images/learn/illustrations/vetud-learn-foxo4-dri.webp",
     alt: "A teal cell model with two interlocking bands inside a violet nucleus.",
   },
-  "gonadorelin": {
+  gonadorelin: {
     src: "/images/learn/illustrations/vetud-learn-gonadorelin.webp",
     alt: "A brass metronome above a row of evenly spaced blue pulses.",
   },
@@ -76,11 +76,11 @@ export const RESEARCH_GUIDE_ILLUSTRATIONS: Record<string, LearnIllustration> = {
     src: "/images/learn/illustrations/vetud-learn-ll-37.webp",
     alt: "A teal ribbon at the surface of a layered pink skin model.",
   },
-  "thymalin": {
+  thymalin: {
     src: "/images/learn/illustrations/vetud-learn-thymalin.webp",
     alt: "Two lobes of a pink glass thymus on a dark base.",
   },
-  "pramlintide": {
+  pramlintide: {
     src: "/images/learn/illustrations/vetud-learn-pramlintide.webp",
     alt: "An islet of amber and blue glass cells releases two streams of beads.",
   },
@@ -89,173 +89,173 @@ export const RESEARCH_GUIDE_ILLUSTRATIONS: Record<string, LearnIllustration> = {
 const ILLUSTRATIONS: Record<string, LearnIllustration> = {
   ...RESEARCH_GUIDE_ILLUSTRATIONS,
   "ptt-a": {
-    "src": "/images/learn/illustrations/vetud-learn-ptt-a.webp",
-    "alt": "Conceptual illustration of PTT-A: four hormone signals under investigation."
+    src: "/images/learn/illustrations/vetud-learn-ptt-a.webp",
+    alt: "Conceptual illustration of PTT-A: four hormone signals under investigation.",
   },
-  "semaglutide": {
-    "src": "/images/learn/illustrations/vetud-learn-semaglutide.webp",
-    "alt": "Conceptual illustration of Semaglutide: gut and brain signalling related to fullness."
+  semaglutide: {
+    src: "/images/learn/illustrations/vetud-learn-semaglutide.webp",
+    alt: "Conceptual illustration of Semaglutide: gut and brain signalling related to fullness.",
   },
   "cbl-514": {
-    "src": "/images/learn/illustrations/vetud-learn-cbl-514.webp",
-    "alt": "Conceptual illustration of CBL-514: research into targeted fat-cell removal."
+    src: "/images/learn/illustrations/vetud-learn-cbl-514.webp",
+    alt: "Conceptual illustration of CBL-514: research into targeted fat-cell removal.",
   },
-  "tirzepatide": {
-    "src": "/images/learn/illustrations/vetud-learn-tirzepatide.webp",
-    "alt": "Conceptual illustration of Tirzepatide: two gut-hormone signals."
+  tirzepatide: {
+    src: "/images/learn/illustrations/vetud-learn-tirzepatide.webp",
+    alt: "Conceptual illustration of Tirzepatide: two gut-hormone signals.",
   },
-  "retatrutide": {
-    "src": "/images/learn/illustrations/vetud-learn-retatrutide.webp",
-    "alt": "Conceptual illustration of Retatrutide: appetite and energy-use research."
+  retatrutide: {
+    src: "/images/learn/illustrations/vetud-learn-retatrutide.webp",
+    alt: "Conceptual illustration of Retatrutide: appetite and energy-use research.",
   },
-  "liraglutide": {
-    "src": "/images/learn/illustrations/vetud-learn-liraglutide.webp",
-    "alt": "Conceptual illustration of Liraglutide: understanding the fullness signal."
+  liraglutide: {
+    src: "/images/learn/illustrations/vetud-learn-liraglutide.webp",
+    alt: "Conceptual illustration of Liraglutide: understanding the fullness signal.",
   },
-  "cagrilintide": {
-    "src": "/images/learn/illustrations/vetud-learn-cagrilintide.webp",
-    "alt": "Conceptual illustration of Cagrilintide: amylin and the feeling of fullness."
+  cagrilintide: {
+    src: "/images/learn/illustrations/vetud-learn-cagrilintide.webp",
+    alt: "Conceptual illustration of Cagrilintide: amylin and the feeling of fullness.",
   },
   "aod-9604": {
-    "src": "/images/learn/illustrations/vetud-learn-aod-9604.webp",
-    "alt": "Conceptual illustration of AOD-9604: growth-hormone fragment and fat metabolism research."
+    src: "/images/learn/illustrations/vetud-learn-aod-9604.webp",
+    alt: "Conceptual illustration of AOD-9604: growth-hormone fragment and fat metabolism research.",
   },
-  "argireline": {
-    "src": "/images/learn/illustrations/vetud-learn-argireline.webp",
-    "alt": "Conceptual illustration of Argireline and SNAP-8: cosmetic peptides and expression lines."
+  argireline: {
+    src: "/images/learn/illustrations/vetud-learn-argireline.webp",
+    alt: "Conceptual illustration of Argireline and SNAP-8: cosmetic peptides and expression lines.",
   },
   "ghk-cu": {
-    "src": "/images/learn/illustrations/vetud-learn-ghk-cu.webp",
-    "alt": "Conceptual illustration of GHK-Cu: copper peptides and skin research."
+    src: "/images/learn/illustrations/vetud-learn-ghk-cu.webp",
+    alt: "Conceptual illustration of GHK-Cu: copper peptides and skin research.",
   },
-  "melanotan": {
-    "src": "/images/learn/illustrations/vetud-learn-melanotan.webp",
-    "alt": "Conceptual illustration of Melanotan I and II: understanding skin pigmentation."
+  melanotan: {
+    src: "/images/learn/illustrations/vetud-learn-melanotan.webp",
+    alt: "Conceptual illustration of Melanotan I and II: understanding skin pigmentation.",
   },
   "bpc-157": {
-    "src": "/images/learn/illustrations/vetud-learn-bpc-157.webp",
-    "alt": "Conceptual illustration of BPC-157: tissue-repair research."
+    src: "/images/learn/illustrations/vetud-learn-bpc-157.webp",
+    alt: "Conceptual illustration of BPC-157: tissue-repair research.",
   },
   "tb-500": {
-    "src": "/images/learn/illustrations/vetud-learn-tb-500.webp",
-    "alt": "Conceptual illustration of TB-500: cell movement and tissue-repair research."
+    src: "/images/learn/illustrations/vetud-learn-tb-500.webp",
+    alt: "Conceptual illustration of TB-500: cell movement and tissue-repair research.",
   },
-  "kpv": {
-    "src": "/images/learn/illustrations/vetud-learn-kpv.webp",
-    "alt": "Conceptual illustration of KPV: research into inflammation in the gut."
+  kpv: {
+    src: "/images/learn/illustrations/vetud-learn-kpv.webp",
+    alt: "Conceptual illustration of KPV: research into inflammation in the gut.",
   },
   "ara-290": {
-    "src": "/images/learn/illustrations/vetud-learn-ara-290.webp",
-    "alt": "Conceptual illustration of ARA-290: small nerve fibres under investigation."
+    src: "/images/learn/illustrations/vetud-learn-ara-290.webp",
+    alt: "Conceptual illustration of ARA-290: small nerve fibres under investigation.",
   },
   "mots-c": {
-    "src": "/images/learn/illustrations/vetud-learn-mots-c.webp",
-    "alt": "Conceptual illustration of MOTS-c: mitochondrial signals and metabolism."
+    src: "/images/learn/illustrations/vetud-learn-mots-c.webp",
+    alt: "Conceptual illustration of MOTS-c: mitochondrial signals and metabolism.",
   },
-  "nad": {
-    "src": "/images/learn/illustrations/vetud-learn-nad.webp",
-    "alt": "Conceptual illustration of NAD+: a helper molecule for cellular energy."
+  nad: {
+    src: "/images/learn/illustrations/vetud-learn-nad.webp",
+    alt: "Conceptual illustration of NAD+: a helper molecule for cellular energy.",
   },
   "ss-31": {
-    "src": "/images/learn/illustrations/vetud-learn-ss-31.webp",
-    "alt": "Conceptual illustration of SS-31: working at the mitochondrial membrane."
+    src: "/images/learn/illustrations/vetud-learn-ss-31.webp",
+    alt: "Conceptual illustration of SS-31: working at the mitochondrial membrane.",
   },
   "slu-pp-332": {
-    "src": "/images/learn/illustrations/vetud-learn-slu-pp-332.webp",
-    "alt": "Conceptual illustration of SLU-PP-332: exercise-pathway research in mice."
+    src: "/images/learn/illustrations/vetud-learn-slu-pp-332.webp",
+    alt: "Conceptual illustration of SLU-PP-332: exercise-pathway research in mice.",
   },
   "5-amino-1mq": {
-    "src": "/images/learn/illustrations/vetud-learn-5-amino-1mq.webp",
-    "alt": "Conceptual illustration of 5-Amino-1MQ: nnmt and fat-cell metabolism research."
+    src: "/images/learn/illustrations/vetud-learn-5-amino-1mq.webp",
+    alt: "Conceptual illustration of 5-Amino-1MQ: nnmt and fat-cell metabolism research.",
   },
-  "ipamorelin": {
-    "src": "/images/learn/illustrations/vetud-learn-ipamorelin.webp",
-    "alt": "Conceptual illustration of Ipamorelin: research into growth-hormone release."
+  ipamorelin: {
+    src: "/images/learn/illustrations/vetud-learn-ipamorelin.webp",
+    alt: "Conceptual illustration of Ipamorelin: research into growth-hormone release.",
   },
-  "tesamorelin": {
-    "src": "/images/learn/illustrations/vetud-learn-tesamorelin.webp",
-    "alt": "Conceptual illustration of Tesamorelin: understanding visceral-fat research."
+  tesamorelin: {
+    src: "/images/learn/illustrations/vetud-learn-tesamorelin.webp",
+    alt: "Conceptual illustration of Tesamorelin: understanding visceral-fat research.",
   },
-  "sermorelin": {
-    "src": "/images/learn/illustrations/vetud-learn-sermorelin.webp",
-    "alt": "Conceptual illustration of Sermorelin: growth-hormone signalling research."
+  sermorelin: {
+    src: "/images/learn/illustrations/vetud-learn-sermorelin.webp",
+    alt: "Conceptual illustration of Sermorelin: growth-hormone signalling research.",
   },
   "cjc-1295": {
-    "src": "/images/learn/illustrations/vetud-learn-cjc-1295.webp",
-    "alt": "Conceptual illustration of CJC-1295: a longer-lasting growth-hormone signal."
+    src: "/images/learn/illustrations/vetud-learn-cjc-1295.webp",
+    alt: "Conceptual illustration of CJC-1295: a longer-lasting growth-hormone signal.",
   },
-  "semax": {
-    "src": "/images/learn/illustrations/vetud-learn-semax.webp",
-    "alt": "Conceptual illustration of Semax: brain-signalling research."
+  semax: {
+    src: "/images/learn/illustrations/vetud-learn-semax.webp",
+    alt: "Conceptual illustration of Semax: brain-signalling research.",
   },
-  "hgh": {
-    "src": "/images/learn/illustrations/vetud-learn-hgh.webp",
-    "alt": "Conceptual illustration of Human growth hormone: the body’s growth-hormone system."
+  hgh: {
+    src: "/images/learn/illustrations/vetud-learn-hgh.webp",
+    alt: "Conceptual illustration of Human growth hormone: the body’s growth-hormone system.",
   },
   "igf-1-lr3": {
-    "src": "/images/learn/illustrations/vetud-learn-igf-1-lr3.webp",
-    "alt": "Conceptual illustration of IGF-1 LR3: growth signals studied in the laboratory."
+    src: "/images/learn/illustrations/vetud-learn-igf-1-lr3.webp",
+    alt: "Conceptual illustration of IGF-1 LR3: growth signals studied in the laboratory.",
   },
-  "selank": {
-    "src": "/images/learn/illustrations/vetud-learn-selank.webp",
-    "alt": "Conceptual illustration of Selank: anxiety-related signalling research."
+  selank: {
+    src: "/images/learn/illustrations/vetud-learn-selank.webp",
+    alt: "Conceptual illustration of Selank: anxiety-related signalling research.",
   },
-  "dsip": {
-    "src": "/images/learn/illustrations/vetud-learn-dsip.webp",
-    "alt": "Conceptual illustration of DSIP: the unresolved science of sleep."
+  dsip: {
+    src: "/images/learn/illustrations/vetud-learn-dsip.webp",
+    alt: "Conceptual illustration of DSIP: the unresolved science of sleep.",
   },
-  "epitalon": {
-    "src": "/images/learn/illustrations/vetud-learn-epitalon.webp",
-    "alt": "Conceptual illustration of Epitalon: telomeres under the microscope."
+  epitalon: {
+    src: "/images/learn/illustrations/vetud-learn-epitalon.webp",
+    alt: "Conceptual illustration of Epitalon: telomeres under the microscope.",
   },
   "pt-141": {
-    "src": "/images/learn/illustrations/vetud-learn-pt-141.webp",
-    "alt": "Conceptual illustration of PT-141: research into desire signalling."
+    src: "/images/learn/illustrations/vetud-learn-pt-141.webp",
+    alt: "Conceptual illustration of PT-141: research into desire signalling.",
   },
-  "hcg": {
-    "src": "/images/learn/illustrations/vetud-learn-hcg.webp",
-    "alt": "Conceptual illustration of hCG: the hormone signal used in fertility care."
+  hcg: {
+    src: "/images/learn/illustrations/vetud-learn-hcg.webp",
+    alt: "Conceptual illustration of hCG: the hormone signal used in fertility care.",
   },
-  "kisspeptin": {
-    "src": "/images/learn/illustrations/vetud-learn-kisspeptin.webp",
-    "alt": "Conceptual illustration of Kisspeptin: research into reproductive signalling."
+  kisspeptin: {
+    src: "/images/learn/illustrations/vetud-learn-kisspeptin.webp",
+    alt: "Conceptual illustration of Kisspeptin: research into reproductive signalling.",
   },
-  "fsh": {
-    "src": "/images/learn/illustrations/vetud-learn-fsh.webp",
-    "alt": "Conceptual illustration of FSH: follicle development in fertility care."
+  fsh: {
+    src: "/images/learn/illustrations/vetud-learn-fsh.webp",
+    alt: "Conceptual illustration of FSH: follicle development in fertility care.",
   },
   "thymosin-alpha-1": {
-    "src": "/images/learn/illustrations/vetud-learn-thymosin-alpha-1.webp",
-    "alt": "Conceptual illustration of Thymosin alpha-1: understanding immune-cell signalling."
+    src: "/images/learn/illustrations/vetud-learn-thymosin-alpha-1.webp",
+    alt: "Conceptual illustration of Thymosin alpha-1: understanding immune-cell signalling.",
   },
-  "vip": {
-    "src": "/images/learn/illustrations/vetud-learn-vip.webp",
-    "alt": "Conceptual illustration of VIP: blood vessels, lungs and signalling research."
+  vip: {
+    src: "/images/learn/illustrations/vetud-learn-vip.webp",
+    alt: "Conceptual illustration of VIP: blood vessels, lungs and signalling research.",
   },
-  "insulin": {
-    "src": "/images/learn/illustrations/vetud-learn-insulin.webp",
-    "alt": "Conceptual illustration of Insulin: glucose entering muscle and fat cells."
+  insulin: {
+    src: "/images/learn/illustrations/vetud-learn-insulin.webp",
+    alt: "Conceptual illustration of Insulin: glucose entering muscle and fat cells.",
   },
-  "oxytocin": {
-    "src": "/images/learn/illustrations/vetud-learn-oxytocin.webp",
-    "alt": "Conceptual illustration of Oxytocin: a hormone central to childbirth."
+  oxytocin: {
+    src: "/images/learn/illustrations/vetud-learn-oxytocin.webp",
+    alt: "Conceptual illustration of Oxytocin: a hormone central to childbirth.",
   },
-  "octreotide": {
-    "src": "/images/learn/illustrations/vetud-learn-octreotide.webp",
-    "alt": "Conceptual illustration of Octreotide: a brake on excess hormone signals."
+  octreotide: {
+    src: "/images/learn/illustrations/vetud-learn-octreotide.webp",
+    alt: "Conceptual illustration of Octreotide: a brake on excess hormone signals.",
   },
   "rlx-201": {
-    "src": "/images/learn/illustrations/vetud-learn-rlx-201.webp",
-    "alt": "Conceptual illustration of RLX-201: skin firmness and cell-signalling research."
+    src: "/images/learn/illustrations/vetud-learn-rlx-201.webp",
+    alt: "Conceptual illustration of RLX-201: skin firmness and cell-signalling research.",
   },
-  "teriparatide": {
-    "src": "/images/learn/illustrations/vetud-learn-teriparatide.webp",
-    "alt": "Conceptual illustration of Teriparatide: supporting bone-building cells."
+  teriparatide: {
+    src: "/images/learn/illustrations/vetud-learn-teriparatide.webp",
+    alt: "Conceptual illustration of Teriparatide: supporting bone-building cells.",
   },
   "ahk-cu": {
-    "src": "/images/learn/illustrations/vetud-learn-ahk-cu.webp",
-    "alt": "Conceptual illustration of AHK-Cu: copper-peptide hair-follicle research."
-  }
+    src: "/images/learn/illustrations/vetud-learn-ahk-cu.webp",
+    alt: "Conceptual illustration of AHK-Cu: copper-peptide hair-follicle research.",
+  },
 }
 
 const ARTICLE_IMAGES: Record<string, string> = {
@@ -282,7 +282,7 @@ const ARTICLE_IMAGES: Record<string, string> = {
   "copper-peptides-hair-growth": "ahk-cu",
   "ara-290-cibinetide-small-nerve-fibers": "ara-290",
   "dsip-sleep-peptide-riddle": "dsip",
-  "cagrisema-vs-zepbound": "cagrilintide"
+  "cagrisema-vs-zepbound": "cagrilintide",
 }
 
 export function getLearnIllustration(slug: string): LearnIllustration | undefined {

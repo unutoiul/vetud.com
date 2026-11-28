@@ -10,7 +10,13 @@ export async function POST(req: AuthenticatedMedusaRequest<StoreEditForumPostBod
     input: { customer_id: req.auth_context.actor_id, post_id: req.params.id, body: req.validatedBody.body },
   })
   const viewer = await viewerProfile(req.scope, req.auth_context.actor_id)
-  res.json({ post: publicPost(result, { authors: await loadProfiles(req.scope, [result.author_id]), viewer, images: await loadImages(req.scope, [result.id]) }) })
+  res.json({
+    post: publicPost(result, {
+      authors: await loadProfiles(req.scope, [result.author_id]),
+      viewer,
+      images: await loadImages(req.scope, [result.id]),
+    }),
+  })
 }
 
 /** Deletes the member's own post; deleting the opening post deletes the thread. */

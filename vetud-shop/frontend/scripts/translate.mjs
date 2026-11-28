@@ -30,12 +30,33 @@ const SOURCE_LANGUAGE = "en"
 const SOURCE_MESSAGES = "en-US"
 /** Each shop language. The menus in src/i18n/messages are already translated, so page text follows their form of address. */
 const SAME_ADDRESS = "the same form of address as the existing menu text below"
-const LANGUAGE_STYLE = Object.fromEntries(Object.entries({
-  bg: "Bulgarian", cs: "Czech", da: "Danish", de: "German", el: "Greek", es: "Spanish (Spain)", et: "Estonian",
-  fi: "Finnish", fr: "French", hr: "Croatian", hu: "Hungarian", is: "Icelandic", it: "Italian", lt: "Lithuanian",
-  lv: "Latvian", nb: "Norwegian Bokmål", nl: "Dutch", pl: "Polish", pt: "European Portuguese", ro: "Romanian",
-  sk: "Slovak", sl: "Slovenian", sv: "Swedish",
-}).map(([code, name]) => [code, { name, address: SAME_ADDRESS }]))
+const LANGUAGE_STYLE = Object.fromEntries(
+  Object.entries({
+    bg: "Bulgarian",
+    cs: "Czech",
+    da: "Danish",
+    de: "German",
+    el: "Greek",
+    es: "Spanish (Spain)",
+    et: "Estonian",
+    fi: "Finnish",
+    fr: "French",
+    hr: "Croatian",
+    hu: "Hungarian",
+    is: "Icelandic",
+    it: "Italian",
+    lt: "Lithuanian",
+    lv: "Latvian",
+    nb: "Norwegian Bokmål",
+    nl: "Dutch",
+    pl: "Polish",
+    pt: "European Portuguese",
+    ro: "Romanian",
+    sk: "Slovak",
+    sl: "Slovenian",
+    sv: "Swedish",
+  }).map(([code, name]) => [code, { name, address: SAME_ADDRESS }]),
+)
 
 // ---- Settings ----------------------------------------------------------------------------------
 
@@ -53,7 +74,10 @@ const GLOSSARY = JSON.parse(readFileSync(join(ROOT, "scripts", "translation-glos
 
 const args = process.argv.slice(2)
 const flag = (name) => args.includes(`--${name}`)
-const option = (name) => { const index = args.indexOf(`--${name}`); return index >= 0 ? args[index + 1] : undefined }
+const option = (name) => {
+  const index = args.indexOf(`--${name}`)
+  return index >= 0 ? args[index + 1] : undefined
+}
 const DRY_RUN = flag("dry-run")
 if (!DRY_RUN && !process.env.ANTHROPIC_API_KEY) {
   console.error(`No Anthropic API key found.
@@ -71,13 +95,17 @@ const DIRECT = flag("direct")
 const REVIEW = !flag("no-review")
 const ONLY = option("only")
 const languages = (option("lang")?.split(",") ?? preparedLanguages()).filter((language) => language !== SOURCE_LANGUAGE)
-for (const language of languages) if (!LANGUAGE_STYLE[language]) throw new Error(`Add "${language}" to LANGUAGE_STYLE in scripts/translate.mjs first.`)
+for (const language of languages)
+  if (!LANGUAGE_STYLE[language]) throw new Error(`Add "${language}" to LANGUAGE_STYLE in scripts/translate.mjs first.`)
 
 // ---- Reading and writing the files ------------------------------------------------------------
 
 const readJson = (path, fallback) => (existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : fallback)
 const writeJson = (path, value) => writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`)
-const flatten = (value, prefix = "") => Object.entries(value).flatMap(([key, item]) => (item && typeof item === "object" ? flatten(item, `${prefix}${key}.`) : [[`${prefix}${key}`, item]]))
+const flatten = (value, prefix = "") =>
+  Object.entries(value).flatMap(([key, item]) =>
+    item && typeof item === "object" ? flatten(item, `${prefix}${key}.`) : [[`${prefix}${key}`, item]],
+  )
 /** The English file's shape and order, filled from `values`; keys the English no longer has are dropped. */
 function rebuild(english, values, prefix = "") {
   const result = {}
@@ -99,10 +127,12 @@ function missingWork(language, inventory, kind) {
   const work = []
   if (kind === "message") {
     const existing = Object.fromEntries(flatten(readJson(join(MESSAGES, `${language}.json`), {})))
-    for (const [key, text] of englishMessageList) if (!existing[key]?.trim()) work.push({ key, kind, where: `menu text ${key}`, text })
+    for (const [key, text] of englishMessageList)
+      if (!existing[key]?.trim()) work.push({ key, kind, where: `menu text ${key}`, text })
   } else {
     const { translations = {} } = readJson(join(CONTENT, `${language}.json`), {})
-    for (const [key, entry] of inventory) if (!translations[key]?.trim()) work.push({ key, kind, where: [...entry.files][0], text: entry.text })
+    for (const [key, entry] of inventory)
+      if (!translations[key]?.trim()) work.push({ key, kind, where: [...entry.files][0], text: entry.text })
   }
   return work
 }
@@ -125,7 +155,11 @@ function save(language, accepted, inventory, kind) {
     translations[key] = target
     if (/\{v\d+\}/.test(entry.text)) templates[key] = { source: entry.text, target }
   }
-  if (Object.keys(translations).length) writeJson(join(CONTENT, `${language}.json`), { translations: sortKeys(translations), templates: sortKeys(templates) })
+  if (Object.keys(translations).length)
+    writeJson(join(CONTENT, `${language}.json`), {
+      translations: sortKeys(translations),
+      templates: sortKeys(templates),
+    })
 }
 
 // ---- Prompts -----------------------------------------------------------------------------------
@@ -133,7 +167,9 @@ function save(language, accepted, inventory, kind) {
 function systemPrompt(language) {
   const style = LANGUAGE_STYLE[language]
   const plural = new Intl.PluralRules(language).resolvedOptions().pluralCategories.join(", ")
-  const reference = existsSync(join(MESSAGES, `${language}.json`)) ? readFileSync(join(MESSAGES, `${language}.json`), "utf8") : ""
+  const reference = existsSync(join(MESSAGES, `${language}.json`))
+    ? readFileSync(join(MESSAGES, `${language}.json`), "utf8")
+    : ""
   return `You translate the website text of ${SITE}
 
 Translate from English into ${style.name}. People read these pages to understand what research says, so \
@@ -157,27 +193,56 @@ ${GLOSSARY.notes.map((note) => `   - ${note}`).join("\n")}
 8. Each item says where it appears. Items from the same file belong together: use the same words for \
 the same things throughout.
 
-Return every id you were given exactly once.${reference ? `
+Return every id you were given exactly once.${
+    reference
+      ? `
 
 The site's existing ${style.name} menu text, for consistent wording:
-${reference}` : ""}`
+${reference}`
+      : ""
+  }`
 }
 
 const TRANSLATION_SCHEMA = {
   type: "object",
-  properties: { items: { type: "array", items: { type: "object", properties: { id: { type: "string" }, text: { type: "string" } }, required: ["id", "text"], additionalProperties: false } } },
+  properties: {
+    items: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: { id: { type: "string" }, text: { type: "string" } },
+        required: ["id", "text"],
+        additionalProperties: false,
+      },
+    },
+  },
   required: ["items"],
   additionalProperties: false,
 }
 const REVIEW_SCHEMA = {
   type: "object",
-  properties: { items: { type: "array", items: { type: "object", properties: { id: { type: "string" }, ok: { type: "boolean" }, text: { type: "string" } }, required: ["id", "ok", "text"], additionalProperties: false } } },
+  properties: {
+    items: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: { id: { type: "string" }, ok: { type: "boolean" }, text: { type: "string" } },
+        required: ["id", "ok", "text"],
+        additionalProperties: false,
+      },
+    },
+  },
   required: ["items"],
   additionalProperties: false,
 }
 
 function translateRequest(language, group, retry = false) {
-  const items = group.map((item, index) => ({ id: `i${index}`, where: item.where, text: item.text, ...(retry ? { previous_attempt: item.target, problems: item.problems } : {}) }))
+  const items = group.map((item, index) => ({
+    id: `i${index}`,
+    where: item.where,
+    text: item.text,
+    ...(retry ? { previous_attempt: item.target, problems: item.problems } : {}),
+  }))
   const intro = retry
     ? "These translations were rejected by an automatic check. Translate each item again and fix the problems listed."
     : "Translate the text of each item."
@@ -185,8 +250,17 @@ function translateRequest(language, group, retry = false) {
 }
 
 function reviewRequest(language, group) {
-  const items = group.map((item, index) => ({ id: `i${index}`, where: item.where, english: item.text, translation: item.target }))
-  return params(language, `Check each translation against the English. It must say the same thing, follow the rules above and read naturally to a native speaker. If it does, return ok true and an empty text. If it doesn't, return ok false and the full corrected translation.\n\n${JSON.stringify(items, null, 1)}`, REVIEW_SCHEMA)
+  const items = group.map((item, index) => ({
+    id: `i${index}`,
+    where: item.where,
+    english: item.text,
+    translation: item.target,
+  }))
+  return params(
+    language,
+    `Check each translation against the English. It must say the same thing, follow the rules above and read naturally to a native speaker. If it does, return ok true and an empty text. If it doesn't, return ok false and the full corrected translation.\n\n${JSON.stringify(items, null, 1)}`,
+    REVIEW_SCHEMA,
+  )
 }
 
 function params(language, user, schema) {
@@ -227,7 +301,14 @@ function readReply(message) {
   if (message.stop_reason === "refusal") return { problem: "refusal" }
   if (message.stop_reason === "max_tokens") return { problem: "too long" }
   try {
-    return { items: JSON.parse(message.content.filter((block) => block.type === "text").map((block) => block.text).join("")).items }
+    return {
+      items: JSON.parse(
+        message.content
+          .filter((block) => block.type === "text")
+          .map((block) => block.text)
+          .join(""),
+      ).items,
+    }
   } catch {
     return { problem: "unreadable reply" }
   }
@@ -235,7 +316,9 @@ function readReply(message) {
 
 async function direct(request) {
   // Outside batches, a declined request is retried on another model by the API itself.
-  const message = await api().beta.messages.stream({ ...request, betas: [FALLBACK_BETA], fallbacks: "default" }).finalMessage()
+  const message = await api()
+    .beta.messages.stream({ ...request, betas: [FALLBACK_BETA], fallbacks: "default" })
+    .finalMessage()
   return readReply(message)
 }
 
@@ -248,7 +331,11 @@ async function run(label, requests) {
     const worker = async () => {
       while (next < requests.length) {
         const request = requests[next++]
-        try { replies.set(request.id, await direct(request.params)) } catch (error) { replies.set(request.id, { problem: error.message }) }
+        try {
+          replies.set(request.id, await direct(request.params))
+        } catch (error) {
+          replies.set(request.id, { problem: error.message })
+        }
         process.stdout.write(`\r${label}: ${replies.size}/${requests.length}`)
       }
     }
@@ -264,7 +351,9 @@ async function run(label, requests) {
   const fingerprint = createHash("sha256").update(JSON.stringify(requests)).digest("hex")
   let batchId = state[fingerprint]
   if (!batchId) {
-    const batch = await api().messages.batches.create({ requests: requests.map(({ id, params }) => ({ custom_id: id, params })) })
+    const batch = await api().messages.batches.create({
+      requests: requests.map(({ id, params }) => ({ custom_id: id, params })),
+    })
     batchId = batch.id
     writeJson(statePath, { ...state, [fingerprint]: batchId })
     console.log(`${label}: sent batch ${batchId} (${requests.length} requests)`)
@@ -273,18 +362,27 @@ async function run(label, requests) {
   for (;;) {
     const batch = await api().messages.batches.retrieve(batchId)
     const counts = batch.request_counts
-    process.stdout.write(`\r${label}: ${counts.succeeded + counts.errored + counts.expired + counts.canceled}/${requests.length} done, ${counts.processing} in progress   `)
+    process.stdout.write(
+      `\r${label}: ${counts.succeeded + counts.errored + counts.expired + counts.canceled}/${requests.length} done, ${counts.processing} in progress   `,
+    )
     if (batch.processing_status === "ended") break
     await new Promise((resolve) => setTimeout(resolve, 30_000))
   }
   process.stdout.write("\n")
   for await (const result of await api().messages.batches.results(batchId)) {
-    replies.set(result.custom_id, result.result.type === "succeeded" ? readReply(result.result.message) : { problem: result.result.type })
+    replies.set(
+      result.custom_id,
+      result.result.type === "succeeded" ? readReply(result.result.message) : { problem: result.result.type },
+    )
   }
   // A refused, cut-off or failed request is tried once more on its own (outside the batch).
   const again = requests.filter((request) => replies.get(request.id)?.problem)
   for (const request of again) {
-    try { replies.set(request.id, await direct(request.params)) } catch (error) { replies.set(request.id, { problem: error.message }) }
+    try {
+      replies.set(request.id, await direct(request.params))
+    } catch (error) {
+      replies.set(request.id, { problem: error.message })
+    }
   }
   return replies
 }
@@ -307,7 +405,10 @@ function apply(plan, replies, { review = false } = {}) {
       if (review) {
         if (!entry || entry.ok || !entry.text.trim()) return
         // A correction replaces the first translation only if it passes the checks too.
-        if (!check(item, entry.text).length) { item.target = entry.text; item.corrected = true }
+        if (!check(item, entry.text).length) {
+          item.target = entry.text
+          item.corrected = true
+        }
         return
       }
       item.target = entry?.text
@@ -327,7 +428,10 @@ function estimate(work) {
   const reviewInput = input + characters / 3
   const reviewOutput = output * 0.4
   const factor = DIRECT ? 1 : 0.5
-  const dollars = ((input + (REVIEW ? reviewInput : 0)) * PRICE.input + (output + (REVIEW ? reviewOutput : 0)) * PRICE.output) / 1e6 * factor
+  const dollars =
+    (((input + (REVIEW ? reviewInput : 0)) * PRICE.input + (output + (REVIEW ? reviewOutput : 0)) * PRICE.output) /
+      1e6) *
+    factor
   return { characters, requests, dollars }
 }
 
@@ -338,23 +442,52 @@ const inventory = KINDS.includes("content") ? await collectInventory() : new Map
 async function translateKind(kind) {
   const label = kind === "message" ? "menu texts" : "page texts"
   const work = new Map(languages.map((language) => [language, missingWork(language, inventory, kind)]))
-  const plan = [...work].flatMap(([language, items]) => groups(items).map((group, index) => ({ id: `${kind}-${language}-${index}`, language, group })))
+  const plan = [...work].flatMap(([language, items]) =>
+    groups(items).map((group, index) => ({ id: `${kind}-${language}-${index}`, language, group })),
+  )
   if (!plan.length) {
     for (const language of languages) save(language, [], inventory, kind) // still drops entries the site no longer uses
     console.log(`All ${label} are translated.`)
     return 0
   }
 
-  let failed = apply(plan, await run(`Translating ${label}`, plan.map(({ id, language, group }) => ({ id, params: translateRequest(language, group) }))))
+  let failed = apply(
+    plan,
+    await run(
+      `Translating ${label}`,
+      plan.map(({ id, language, group }) => ({ id, params: translateRequest(language, group) })),
+    ),
+  )
   if (failed.length) {
-    const retryPlan = languages.flatMap((language) => groups(failed.filter((item) => work.get(language).includes(item))).map((group, index) => ({ id: `${kind}-${language}-retry-${index}`, language, group })))
-    failed = apply(retryPlan, await run(`Fixing rejected ${label}`, retryPlan.map(({ id, language, group }) => ({ id, params: translateRequest(language, group, true) }))))
+    const retryPlan = languages.flatMap((language) =>
+      groups(failed.filter((item) => work.get(language).includes(item))).map((group, index) => ({
+        id: `${kind}-${language}-retry-${index}`,
+        language,
+        group,
+      })),
+    )
+    failed = apply(
+      retryPlan,
+      await run(
+        `Fixing rejected ${label}`,
+        retryPlan.map(({ id, language, group }) => ({ id, params: translateRequest(language, group, true) })),
+      ),
+    )
   }
 
   const passed = (language) => work.get(language).filter((item) => item.target && !item.problems?.length)
   if (REVIEW) {
-    const reviewPlan = languages.flatMap((language) => groups(passed(language)).map((group, index) => ({ id: `${kind}-${language}-review-${index}`, language, group })))
-    apply(reviewPlan, await run(`Reviewing ${label}`, reviewPlan.map(({ id, language, group }) => ({ id, params: reviewRequest(language, group) }))), { review: true })
+    const reviewPlan = languages.flatMap((language) =>
+      groups(passed(language)).map((group, index) => ({ id: `${kind}-${language}-review-${index}`, language, group })),
+    )
+    apply(
+      reviewPlan,
+      await run(
+        `Reviewing ${label}`,
+        reviewPlan.map(({ id, language, group }) => ({ id, params: reviewRequest(language, group) })),
+      ),
+      { review: true },
+    )
   }
 
   for (const language of languages) {
@@ -364,9 +497,12 @@ async function translateKind(kind) {
     const corrected = accepted.filter((item) => item.corrected).length
     const english = accepted.filter((item) => keptInEnglish(item.text, item.target)).length
     const rejected = work.get(language).length - accepted.length
-    console.log(`${language}: ${accepted.length} ${label} saved${REVIEW ? `, ${corrected} improved by the review` : ""}${english ? `, ${english} left in English (titles and citations?)` : ""}${rejected ? `, ${rejected} rejected` : ""}`)
+    console.log(
+      `${language}: ${accepted.length} ${label} saved${REVIEW ? `, ${corrected} improved by the review` : ""}${english ? `, ${english} left in English (titles and citations?)` : ""}${rejected ? `, ${rejected} rejected` : ""}`,
+    )
   }
-  for (const item of failed.slice(0, 30)) console.log(`  rejected (${item.where}): ${item.text.slice(0, 80)} → ${item.problems.join("; ")}`)
+  for (const item of failed.slice(0, 30))
+    console.log(`  rejected (${item.where}): ${item.text.slice(0, 80)} → ${item.problems.join("; ")}`)
   return failed.length
 }
 
@@ -375,15 +511,20 @@ for (const language of languages) {
   const items = KINDS.flatMap((kind) => missingWork(language, inventory, kind))
   const { characters, requests, dollars } = estimate(items)
   total += dollars
-  console.log(`${language}: ${items.filter((item) => item.kind === "message").length} menu texts, ${items.filter((item) => item.kind === "content").length} page texts (${characters.toLocaleString("en")} characters, ${requests} requests), about $${dollars.toFixed(2)}`)
+  console.log(
+    `${language}: ${items.filter((item) => item.kind === "message").length} menu texts, ${items.filter((item) => item.kind === "content").length} page texts (${characters.toLocaleString("en")} characters, ${requests} requests), about $${dollars.toFixed(2)}`,
+  )
 }
-console.log(`Estimated cost: about $${total.toFixed(2)} (${DIRECT ? "direct" : "batch"}${REVIEW ? ", with review" : ""})`)
+console.log(
+  `Estimated cost: about $${total.toFixed(2)} (${DIRECT ? "direct" : "batch"}${REVIEW ? ", with review" : ""})`,
+)
 if (DRY_RUN) process.exit(0)
 
 let rejected = 0
 for (const kind of KINDS) rejected += await translateKind(kind)
 if (rejected) {
-  console.log(`${rejected} texts were rejected twice. Run \`npm run translate\` again to retry them, or translate them by hand.`)
+  console.log(
+    `${rejected} texts were rejected twice. Run \`npm run translate\` again to retry them, or translate them by hand.`,
+  )
   process.exitCode = 1
 }
-

@@ -13,7 +13,7 @@ export default async function expandProductMerchandising({ container }: ExecArgs
     filters: { handle: Object.keys(PRODUCT_MERCHANDISING) },
   }
   const { data: products } = await query.graph(selection)
-  const updates = products.flatMap(product => {
+  const updates = products.flatMap((product) => {
     const previous = product.metadata ?? {}
     const metadata = withExpandedMerchandising(product.handle, previous)
     return metadata === previous ? [] : [{ id: product.id, metadata }]
@@ -21,7 +21,9 @@ export default async function expandProductMerchandising({ container }: ExecArgs
   if (updates.length) await updateProductsWorkflow(container).run({ input: { products: updates } })
   const { data: saved } = await query.graph(selection)
   for (const product of saved) {
-    logger.info(`${product.handle}: very_popular=${product.metadata?.very_popular}, best_seller=${product.metadata?.best_seller}`)
+    logger.info(
+      `${product.handle}: very_popular=${product.metadata?.very_popular}, best_seller=${product.metadata?.best_seller}`,
+    )
   }
   logger.info(`Expanded product badges: ${updates.length} updated; ${saved.length} selected products found.`)
 }

@@ -31,7 +31,10 @@ export default function ContactFloat() {
           />
         ))}
       </FloatButton.Group>
-      <FloatButton.BackTop style={{ insetInlineEnd: 76, insetBlockEnd: 20, color: colors.navy }} visibilityHeight={900} />
+      <FloatButton.BackTop
+        style={{ insetInlineEnd: 76, insetBlockEnd: 20, color: colors.navy }}
+        visibilityHeight={900}
+      />
     </>
   )
 }

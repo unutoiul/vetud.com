@@ -3,7 +3,14 @@
 import { Button, Flex, Grid } from "antd"
 import { useEffect, useState } from "react"
 import { DEFAULT_COUNTRY } from "@/config/markets"
-import { ANALYTICS_ENABLED, OPEN_CONSENT_EVENT, europeanTimeZone, saveConsent, storedConsent, type Consent } from "@/lib/analytics"
+import {
+  ANALYTICS_ENABLED,
+  OPEN_CONSENT_EVENT,
+  europeanTimeZone,
+  saveConsent,
+  storedConsent,
+  type Consent,
+} from "@/lib/analytics"
 import { colors } from "@/theme/tokens"
 import { useCountry } from "./CountryProvider"
 import { useMessages } from "./MessagesProvider"

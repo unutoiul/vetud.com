@@ -26,4 +26,5 @@ export const SHOP_CATEGORY_MOVES = [
   { product: "selank", from: "cognitive-enhancement-research", to: "sleep-enhancement-research" },
 ] as const
 
-export const shopCategoryDescription = (name: string) => `${name}: research materials grouped by theme for easier browsing. For laboratory research use only.`
+export const shopCategoryDescription = (name: string) =>
+  `${name}: research materials grouped by theme for easier browsing. For laboratory research use only.`

@@ -77,22 +77,32 @@ const hash = (text) => createHash("sha1").update(text).digest("hex").slice(0, 12
 /** Every text in a file by path ("hero.trust.2"); a free-length word list counts as one text. */
 function texts(value, prefix = "", out = new Map()) {
   if (FREE_LENGTH.has(prefix)) out.set(prefix, value.join(" "))
-  else if (value && typeof value === "object") for (const [key, child] of Object.entries(value)) texts(child, prefix ? `${prefix}.${key}` : key, out)
+  else if (value && typeof value === "object")
+    for (const [key, child] of Object.entries(value)) texts(child, prefix ? `${prefix}.${key}` : key, out)
   else out.set(prefix, value)
   return out
 }
 
 /** Same shape as the English: same keys, same list lengths (except the headline word lists). */
 function shapeProblems(english, target, prefix = "") {
-  if (FREE_LENGTH.has(prefix)) return Array.isArray(target) && target.length ? [] : [`${prefix}: must be a list of words`]
+  if (FREE_LENGTH.has(prefix))
+    return Array.isArray(target) && target.length ? [] : [`${prefix}: must be a list of words`]
   if (Array.isArray(english)) {
-    if (!Array.isArray(target) || target.length !== english.length) return [`${prefix}: must be a list of ${english.length}`]
+    if (!Array.isArray(target) || target.length !== english.length)
+      return [`${prefix}: must be a list of ${english.length}`]
     return english.flatMap((item, index) => shapeProblems(item, target[index], `${prefix}.${index}`))
   }
   if (english && typeof english === "object") {
     if (!target || typeof target !== "object") return [`${prefix}: missing`]
-    const extra = Object.keys(target).filter((key) => !(key in english)).map((key) => `${prefix}.${key}: not in us.json`)
-    return [...extra, ...Object.keys(english).flatMap((key) => shapeProblems(english[key], target[key], prefix ? `${prefix}.${key}` : key))]
+    const extra = Object.keys(target)
+      .filter((key) => !(key in english))
+      .map((key) => `${prefix}.${key}: not in us.json`)
+    return [
+      ...extra,
+      ...Object.keys(english).flatMap((key) =>
+        shapeProblems(english[key], target[key], prefix ? `${prefix}.${key}` : key),
+      ),
+    ]
   }
   return typeof target === "string" ? [] : [`${prefix}: missing`]
 }
@@ -125,7 +135,9 @@ function spread(language) {
   for (const country of countries) write(country, translated)
   for (const country of swiss) write(country, JSON.parse(JSON.stringify(translated).replaceAll("ß", "ss")))
   const record = existsSync(RECORD) ? JSON.parse(readFileSync(RECORD, "utf8")) : {}
-  record[language] = Object.fromEntries([...texts(read("us"))].filter(([key]) => !KEEP_ENGLISH.has(key)).map(([key, text]) => [key, hash(text)]))
+  record[language] = Object.fromEntries(
+    [...texts(read("us"))].filter(([key]) => !KEEP_ENGLISH.has(key)).map(([key, text]) => [key, hash(text)]),
+  )
   writeFileSync(RECORD, `${JSON.stringify(record, null, 2)}\n`)
 }
 
@@ -136,8 +148,13 @@ if (args.includes("--stale")) {
   const english = texts(read("us"))
   for (const language of Object.keys(LANGUAGES)) {
     const made = record[language]
-    if (!made) { console.log(`${language}: not translated yet`); continue }
-    const stale = [...english].filter(([key, text]) => !KEEP_ENGLISH.has(key) && made[key] !== hash(text)).map(([key]) => key)
+    if (!made) {
+      console.log(`${language}: not translated yet`)
+      continue
+    }
+    const stale = [...english]
+      .filter(([key, text]) => !KEEP_ENGLISH.has(key) && made[key] !== hash(text))
+      .map(([key]) => key)
     if (stale.length) console.log(`${language}: ${stale.join(", ")}`)
   }
   process.exit(0)
@@ -146,8 +163,12 @@ if (args.includes("--stale")) {
 const onlyCheck = args.includes("--check")
 const fromIndex = args.indexOf("--from")
 const from = fromIndex >= 0 ? args[fromIndex + 1] : undefined
-const languages = onlyCheck ? Object.keys(record) : args.filter((arg, index) => !arg.startsWith("--") && !(fromIndex >= 0 && index === fromIndex + 1))
-for (const language of languages) if (!LANGUAGES[language]) throw new Error(`Unknown language "${language}". Known: ${Object.keys(LANGUAGES).join(", ")}`)
+const languages = onlyCheck
+  ? Object.keys(record)
+  : args.filter((arg, index) => !arg.startsWith("--") && !(fromIndex >= 0 && index === fromIndex + 1))
+for (const language of languages)
+  if (!LANGUAGES[language])
+    throw new Error(`Unknown language "${language}". Known: ${Object.keys(LANGUAGES).join(", ")}`)
 if (!languages.length) {
   console.log("Name the languages to check and copy, e.g. npm run i18n:translations -- de fr")
   process.exit(0)
@@ -166,6 +187,8 @@ for (const language of languages) {
   }
   if (!onlyCheck) spread(language)
   const note = english.length ? ` (left in English: ${english.join(", ")})` : ""
-  console.log(`${language}: ok${onlyCheck ? "" : `, written to ${[...LANGUAGES[language].countries, ...(LANGUAGES[language].swiss ?? [])].join(", ")}`}${note}`)
+  console.log(
+    `${language}: ok${onlyCheck ? "" : `, written to ${[...LANGUAGES[language].countries, ...(LANGUAGES[language].swiss ?? [])].join(", ")}`}${note}`,
+  )
 }
 if (failed) process.exitCode = 1

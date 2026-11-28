@@ -11,11 +11,14 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]">):
   const countryCode = parseStoreSegment((await params).countryCode).country
   const metadata = await storefrontMetadata({
     title: "Research Peptides & Laboratory Materials | VETUD",
-    description: "Browse VETUD research peptides and laboratory materials, with lot documentation, for laboratory research use only.",
-    country: countryCode, path: "",
+    description:
+      "Browse VETUD research peptides and laboratory materials, with lot documentation, for laboratory research use only.",
+    country: countryCode,
+    path: "",
   })
   const url = countryCode === "us" ? BASE_URL : `${BASE_URL}/${countryCode}`
-  return { ...metadata,
+  return {
+    ...metadata,
     alternates: { canonical: url, languages: { ...storefrontLanguages(""), "en-US": BASE_URL, "x-default": BASE_URL } },
     openGraph: { ...metadata.openGraph, url },
   }

@@ -10,7 +10,11 @@ export default function Analytics() {
           <Script id="ga-init" strategy="afterInteractive">
             {gaBootstrap()}
           </Script>
-          <Script id="ga-tag" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+          <Script
+            id="ga-tag"
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+            strategy="afterInteractive"
+          />
         </>
       )}
       {CLARITY_ID && (

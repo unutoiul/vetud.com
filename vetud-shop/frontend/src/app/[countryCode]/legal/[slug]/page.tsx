@@ -25,7 +25,11 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]/leg
   const { slug } = await params
   const document = getLegalDocument(slug)
   if (!document) return { title: ct("Not found") }
-  return { title: ct(document.title), description: ct(document.summary), alternates: await storefrontAlternates(`/legal/${document.slug}`) }
+  return {
+    title: ct(document.title),
+    description: ct(document.summary),
+    alternates: await storefrontAlternates(`/legal/${document.slug}`),
+  }
 }
 
 export default function LegalPage({ params }: PageProps<"/[countryCode]/legal/[slug]">) {
@@ -46,11 +50,28 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
 
   return (
     <>
-      <PageHeader eyebrow={ct.template("Legal · Last updated {v0}", { v0: document.updated })} title={ct(document.title)} description={ct(document.summary)} />
+      <PageHeader
+        eyebrow={ct.template("Legal · Last updated {v0}", { v0: document.updated })}
+        title={ct(document.title)}
+        description={ct(document.summary)}
+      />
       <Section tone="white">
         <Grid container spacing={{ xs: 4, md: 8 }}>
           <Grid size={{ xs: 12, md: 3 }}>
-            <Stack component="nav" aria-label={ct("Legal documents")} spacing={0.5} sx={{ bgcolor: brand.slate25, border: "1px solid", borderColor: "divider", borderRadius: 3, p: 2.5, position: { md: "sticky" }, top: { md: 110 } }}>
+            <Stack
+              component="nav"
+              aria-label={ct("Legal documents")}
+              spacing={0.5}
+              sx={{
+                bgcolor: brand.slate25,
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: 3,
+                p: 2.5,
+                position: { md: "sticky" },
+                top: { md: 110 },
+              }}
+            >
               {LEGAL_DOCUMENTS.map((item) => (
                 <AppLink
                   key={item.slug}
@@ -73,7 +94,11 @@ async function LegalContent({ params }: Pick<PageProps<"/[countryCode]/legal/[sl
           </Grid>
           <Grid size={{ xs: 12, md: 9 }}>
             <Box component="article" sx={{ maxWidth: 760, overflowWrap: "anywhere" }}>
-              {translated && <Alert severity="info" variant="outlined" sx={{ mb: 4 }}>{t("legalTranslationNote")}</Alert>}
+              {translated && (
+                <Alert severity="info" variant="outlined" sx={{ mb: 4 }}>
+                  {t("legalTranslationNote")}
+                </Alert>
+              )}
               {document.sections.map((section) => (
                 <Box key={section.heading} component="section" sx={{ mb: 4 }}>
                   <Typography variant="h5" component="h2" sx={{ mb: 1.5 }}>

@@ -16,7 +16,9 @@ const jpeg = { quality: 80, mozjpeg: true, chromaSubsampling: "4:4:4" }
 
 // The two closed boxes, trimmed to the box and padded on white, 560 wide.
 for (const name of ["tirzepatide", "retatrutide"]) {
-  const trimmed = await sharp(path.join(IMAGES, `${name}-closed.webp`)).trim({ background: "#ffffff", threshold: 12 }).toBuffer()
+  const trimmed = await sharp(path.join(IMAGES, `${name}-closed.webp`))
+    .trim({ background: "#ffffff", threshold: 12 })
+    .toBuffer()
   await sharp(trimmed)
     .resize(520, 270, { fit: "contain", background: "#ffffff" })
     .extend({ top: 20, bottom: 20, left: 20, right: 20, background: "#ffffff" })

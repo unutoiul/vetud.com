@@ -14,23 +14,37 @@ import TrackingForm from "@/components/tracking/TrackingForm"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  alternates: await storefrontAlternates("/tracking"),
-  title: "Tracking",
-  description: "Follow your parcel using the tracking number from your shipping email.",
-})
+    alternates: await storefrontAlternates("/tracking"),
+    title: "Tracking",
+    description: "Follow your parcel using the tracking number from your shipping email.",
+  })
 }
 
 export default function TrackingPage() {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
-  return <>
-    <PageHeader eyebrow={ct("Tracking")} title={ct("Follow your parcel.")} description={ct("Enter the tracking number from your shipping confirmation. Your order number and parcel tracking number are different.")} />
-    <Section tone="white" sx={{ pt: { xs: 4, md: 6 }, pb: { xs: 6, md: 9 } }}>
-      <Stack spacing={2} sx={{ alignItems: "center", textAlign: "center", mb: 5 }}>
-        <Typography>{ct("Ordered with an account? Find all your orders and tracking numbers in one place.")}</Typography>
-        <ButtonLink href="/account/orders" variant="outlined">{act("viewOrders")}</ButtonLink>
-      </Stack>
-      <Suspense fallback={<Skeleton variant="rounded" height={160} />}><TrackingForm /></Suspense>
-    </Section>
-  </>
+  return (
+    <>
+      <PageHeader
+        eyebrow={ct("Tracking")}
+        title={ct("Follow your parcel.")}
+        description={ct(
+          "Enter the tracking number from your shipping confirmation. Your order number and parcel tracking number are different.",
+        )}
+      />
+      <Section tone="white" sx={{ pt: { xs: 4, md: 6 }, pb: { xs: 6, md: 9 } }}>
+        <Stack spacing={2} sx={{ alignItems: "center", textAlign: "center", mb: 5 }}>
+          <Typography>
+            {ct("Ordered with an account? Find all your orders and tracking numbers in one place.")}
+          </Typography>
+          <ButtonLink href="/account/orders" variant="outlined">
+            {act("viewOrders")}
+          </ButtonLink>
+        </Stack>
+        <Suspense fallback={<Skeleton variant="rounded" height={160} />}>
+          <TrackingForm />
+        </Suspense>
+      </Section>
+    </>
+  )
 }

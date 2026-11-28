@@ -16,7 +16,10 @@ function apiKey() {
   if (process.env.RESEND_API_KEY) return process.env.RESEND_API_KEY
   try {
     const env = readFileSync(path.join(ROOT, "..", "backend", ".env"), "utf8")
-    return /^RESEND_API_KEY=(.*)$/m.exec(env)?.[1]?.trim().replace(/^["']|["']$/g, "")
+    return /^RESEND_API_KEY=(.*)$/m
+      .exec(env)?.[1]
+      ?.trim()
+      .replace(/^["']|["']$/g, "")
   } catch {
     return undefined
   }
@@ -62,8 +65,12 @@ for (const email of emails) {
   if (!ok) process.exitCode = 1
 }
 
-const ids = Object.entries(manifest).filter(([, meta]) => meta.id).map(([name, meta]) => `  "${name}": "${meta.id}",`)
-writeFileSync(TEMPLATE_IDS, `import type { EmailTemplate } from "./templates"
+const ids = Object.entries(manifest)
+  .filter(([, meta]) => meta.id)
+  .map(([name, meta]) => `  "${name}": "${meta.id}",`)
+writeFileSync(
+  TEMPLATE_IDS,
+  `import type { EmailTemplate } from "./templates"
 
 /**
  * IDs of the published VETUD shop templates in Resend. Written by vetud-shop/emails/publish.mjs from
@@ -72,4 +79,5 @@ writeFileSync(TEMPLATE_IDS, `import type { EmailTemplate } from "./templates"
 export const RESEND_TEMPLATE_IDS: Partial<Record<EmailTemplate, string>> = {
 ${ids.join("\n")}
 }
-`)
+`,
+)

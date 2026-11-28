@@ -16,7 +16,15 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const live = data
     .flatMap((list) => {
       const settings = readSaleSettings(list.metadata)
-      return settings && saleState(list) === "live" ? [{ title: list.title, percent_off: settings.percent_off, ends_at: list.ends_at ? new Date(list.ends_at).toISOString() : null }] : []
+      return settings && saleState(list) === "live"
+        ? [
+            {
+              title: list.title,
+              percent_off: settings.percent_off,
+              ends_at: list.ends_at ? new Date(list.ends_at).toISOString() : null,
+            },
+          ]
+        : []
     })
     .sort((a, b) => b.percent_off - a.percent_off)
   res.setHeader("Cache-Control", "public, max-age=60")

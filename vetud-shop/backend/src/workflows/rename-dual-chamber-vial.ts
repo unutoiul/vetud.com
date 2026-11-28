@@ -1,6 +1,13 @@
 import type { UpsertProductDTO } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, when, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  when,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import { updateProductsWorkflow, updateProductVariantsWorkflow } from "@medusajs/medusa/core-flows"
 import { boxFormat, DUAL_CHAMBER_PRODUCTS, FORMAT_CONTENTS, FORMATS, PEN_KIT_BOX } from "../seed/dual-chamber-catalog"
 
@@ -26,7 +33,16 @@ const planDualChamberVialRenameStep = createStep(
     const query = container.resolve(ContainerRegistrationKeys.QUERY)
     const { data } = await query.graph({
       entity: "product",
-      fields: ["id", "handle", "metadata", "options.title", "options.values.id", "options.values.value", "variants.id", "variants.title"],
+      fields: [
+        "id",
+        "handle",
+        "metadata",
+        "options.title",
+        "options.values.id",
+        "options.values.value",
+        "variants.id",
+        "variants.title",
+      ],
       filters: { handle: DUAL_CHAMBER_PRODUCTS.map((product) => product.handle) },
     })
     const values: { id: string; value: string }[] = []
@@ -38,7 +54,8 @@ const planDualChamberVialRenameStep = createStep(
       const old = format?.values?.find((value) => value.value === OLD_NAME)
       if (old) values.push({ id: old.id, value: FORMATS.pen })
       for (const variant of row.variants ?? []) {
-        if (variant.title.startsWith(`${OLD_NAME} · `)) variants.push({ id: variant.id, title: variant.title.replace(OLD_NAME, FORMATS.pen) })
+        if (variant.title.startsWith(`${OLD_NAME} · `))
+          variants.push({ id: variant.id, title: variant.title.replace(OLD_NAME, FORMATS.pen) })
       }
       const boxed = !(PEN_KIT_BOX.excluded as readonly string[]).includes(row.handle)
       // Selank and Semax have the nasal spray in place of the pen kit box.
@@ -48,10 +65,16 @@ const planDualChamberVialRenameStep = createStep(
         contents_pen: product.contents?.pen ?? FORMAT_CONTENTS.pen,
         ...(boxed ? { contents_box: box.contents } : {}),
       }
-      if (Object.entries(contents).some(([key, value]) => row.metadata?.[key] !== value)) updates.push({ id: row.id, metadata: { ...(row.metadata ?? {}), ...contents } })
+      if (Object.entries(contents).some(([key, value]) => row.metadata?.[key] !== value))
+        updates.push({ id: row.id, metadata: { ...(row.metadata ?? {}), ...contents } })
     }
-    return new StepResponse({ values, variants, updates, summary: { values: values.length, variants: variants.length, products: updates.length } })
-  }
+    return new StepResponse({
+      values,
+      variants,
+      updates,
+      summary: { values: values.length, variants: variants.length, products: updates.length },
+    })
+  },
 )
 
 /** Renames option values in place (variants keep their links); compensation restores the old names. */
@@ -66,7 +89,7 @@ const renameDualChamberOptionValuesStep = createStep(
     if (!values?.length) return
     const productModule = container.resolve(Modules.PRODUCT)
     for (const value of values) await productModule.updateProductOptionValues(value.id, { value: OLD_NAME })
-  }
+  },
 )
 
 export const renameDualChamberVialWorkflow = createWorkflow(
@@ -75,11 +98,13 @@ export const renameDualChamberVialWorkflow = createWorkflow(
     const plan = planDualChamberVialRenameStep(input)
     renameDualChamberOptionValuesStep(transform(plan, (data) => data.values))
     when("has-renamed-variants", plan, (data) => data.variants.length > 0).then(() => {
-      updateProductVariantsWorkflow.runAsStep({ input: transform(plan, (data) => ({ product_variants: data.variants })) })
+      updateProductVariantsWorkflow.runAsStep({
+        input: transform(plan, (data) => ({ product_variants: data.variants })),
+      })
     })
     when("has-new-contents", plan, (data) => data.updates.length > 0).then(() => {
       updateProductsWorkflow.runAsStep({ input: transform(plan, (data) => ({ products: data.updates })) })
     })
     return new WorkflowResponse(transform(plan, (data) => data.summary))
-  }
+  },
 )

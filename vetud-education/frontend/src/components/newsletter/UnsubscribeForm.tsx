@@ -33,12 +33,29 @@ export default function UnsubscribeForm() {
 
   return (
     <Box sx={{ maxWidth: 560 }}>
-      {status === "done" ? <Alert severity="success" role="status">{t("unsubscribed")}</Alert>
-        : status === "error" ? <Alert severity="warning">{t("unsubscribeError")}</Alert>
-        : <>
-          <Typography sx={{ color: "text.secondary", fontSize: 17, lineHeight: 1.7, overflowWrap: "anywhere" }}>{t("unsubscribeBody", { email })}</Typography>
-          <Button variant="contained" size="large" onClick={() => void unsubscribe()} disabled={status === "sending"} startIcon={status === "sending" ? <CircularProgress size={16} color="inherit" /> : undefined} sx={{ mt: 3 }}>{t("unsubscribeButton")}</Button>
-        </>}
+      {status === "done" ? (
+        <Alert severity="success" role="status">
+          {t("unsubscribed")}
+        </Alert>
+      ) : status === "error" ? (
+        <Alert severity="warning">{t("unsubscribeError")}</Alert>
+      ) : (
+        <>
+          <Typography sx={{ color: "text.secondary", fontSize: 17, lineHeight: 1.7, overflowWrap: "anywhere" }}>
+            {t("unsubscribeBody", { email })}
+          </Typography>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => void unsubscribe()}
+            disabled={status === "sending"}
+            startIcon={status === "sending" ? <CircularProgress size={16} color="inherit" /> : undefined}
+            sx={{ mt: 3 }}
+          >
+            {t("unsubscribeButton")}
+          </Button>
+        </>
+      )}
     </Box>
   )
 }

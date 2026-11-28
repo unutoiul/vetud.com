@@ -21,7 +21,10 @@ function apiKey() {
   ]
   for (const file of files) {
     try {
-      const value = /^RESEND_API_KEY=(.*)$/m.exec(readFileSync(file, "utf8"))?.[1]?.trim().replace(/^["']|["']$/g, "")
+      const value = /^RESEND_API_KEY=(.*)$/m
+        .exec(readFileSync(file, "utf8"))?.[1]
+        ?.trim()
+        .replace(/^["']|["']$/g, "")
       if (value) return value
     } catch {
       // No such file: try the next one.

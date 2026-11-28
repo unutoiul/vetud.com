@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -31,11 +30,16 @@ export default function PromoCodeField() {
     setBusy(true)
     setError(null)
     try {
-      const { cart: updated } = await sdk.store.cart.addPromotions(cart.id, { promo_codes: [wanted] }, { fields: CART_FIELDS })
+      const { cart: updated } = await sdk.store.cart.addPromotions(
+        cart.id,
+        { promo_codes: [wanted] },
+        { fields: CART_FIELDS },
+      )
       if (!isCurrentCart(cart.id)) return
       setCart(updated)
       // Medusa can accept the request but not apply an unknown or ineligible code.
-      if (!(updated.promotions ?? []).some((promotion) => promotion?.code?.toUpperCase() === wanted)) setError(t("invalidCode"))
+      if (!(updated.promotions ?? []).some((promotion) => promotion?.code?.toUpperCase() === wanted))
+        setError(t("invalidCode"))
       else setCode("")
     } catch {
       setError(t("invalidCode"))
@@ -48,7 +52,11 @@ export default function PromoCodeField() {
     setBusy(true)
     setError(null)
     try {
-      const { cart: updated } = await sdk.store.cart.removePromotions(cart.id, { promo_codes: [promoCode] }, { fields: CART_FIELDS })
+      const { cart: updated } = await sdk.store.cart.removePromotions(
+        cart.id,
+        { promo_codes: [promoCode] },
+        { fields: CART_FIELDS },
+      )
       if (isCurrentCart(cart.id)) setCart(updated)
     } catch {
       setError(t("error"))
@@ -60,20 +68,57 @@ export default function PromoCodeField() {
   return (
     <Box>
       <Box component="form" onSubmit={apply} noValidate sx={{ display: "flex", gap: 1 }}>
-        <TextField size="small" label={t("codeLabel")} name="promo_code" value={code} onChange={(event) => setCode(event.target.value)} slotProps={{ htmlInput: { autoComplete: "off", autoCapitalize: "characters", spellCheck: false, maxLength: 40 } }} />
-        <Button type="submit" variant="outlined" disabled={busy || !code.trim()} sx={{ flexShrink: 0, height: 40, py: 0 }}>{ct(busy ? t("applying") : t("apply"))}</Button>
+        <TextField
+          size="small"
+          label={t("codeLabel")}
+          name="promo_code"
+          value={code}
+          onChange={(event) => setCode(event.target.value)}
+          slotProps={{
+            htmlInput: { autoComplete: "off", autoCapitalize: "characters", spellCheck: false, maxLength: 40 },
+          }}
+        />
+        <Button
+          type="submit"
+          variant="outlined"
+          disabled={busy || !code.trim()}
+          sx={{ flexShrink: 0, height: 40, py: 0 }}
+        >
+          {ct(busy ? t("applying") : t("apply"))}
+        </Button>
       </Box>
       {applied.length ? (
-        <Stack spacing={.5} sx={{ mt: 1.5 }}>
+        <Stack spacing={0.5} sx={{ mt: 1.5 }}>
           {applied.map((promoCode) => (
-            <Stack key={promoCode} direction="row" sx={{ alignItems: "center", justifyContent: "space-between", gap: 1 }}>
-              <Chip label={ct(promoCode)} size="small" color="success" variant="outlined" sx={{ fontWeight: 650, letterSpacing: ".04em" }} />
-              <Button size="small" onClick={() => void remove(promoCode)} disabled={busy} aria-label={`${t("remove")} ${promoCode}`}>{t("remove")}</Button>
+            <Stack
+              key={promoCode}
+              direction="row"
+              sx={{ alignItems: "center", justifyContent: "space-between", gap: 1 }}
+            >
+              <Chip
+                label={ct(promoCode)}
+                size="small"
+                color="success"
+                variant="outlined"
+                sx={{ fontWeight: 650, letterSpacing: ".04em" }}
+              />
+              <Button
+                size="small"
+                onClick={() => void remove(promoCode)}
+                disabled={busy}
+                aria-label={`${t("remove")} ${promoCode}`}
+              >
+                {t("remove")}
+              </Button>
             </Stack>
           ))}
         </Stack>
       ) : null}
-      {error ? <Alert severity="warning" sx={{ mt: 1.5 }}>{ct(error)}</Alert> : null}
+      {error ? (
+        <Alert severity="warning" sx={{ mt: 1.5 }}>
+          {ct(error)}
+        </Alert>
+      ) : null}
     </Box>
   )
 }

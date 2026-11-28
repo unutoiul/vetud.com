@@ -20,8 +20,17 @@ function worldRules(code: string): CountryRules {
     // Territories without a calling code of their own: the phone field just starts empty.
   }
   return {
-    locale: "en-US", callingCode, postalLabel: "postal", cityLabel: "city", postalPattern: "^[A-Z0-9][A-Z0-9 -]{1,11}$", postalExample: "",
-    postalBeforeCity: false, numberAfterStreet: false, provinceRequired: false, postalOptional: true, provinceOptional: true,
+    locale: "en-US",
+    callingCode,
+    postalLabel: "postal",
+    cityLabel: "city",
+    postalPattern: "^[A-Z0-9][A-Z0-9 -]{1,11}$",
+    postalExample: "",
+    postalBeforeCity: false,
+    numberAfterStreet: false,
+    provinceRequired: false,
+    postalOptional: true,
+    provinceOptional: true,
   }
 }
 

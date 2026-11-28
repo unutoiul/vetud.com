@@ -30,14 +30,14 @@ import { brand } from "@/theme/tokens"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  metadataBase: new URL(BASE_URL),
-  title: {
-    default: `${SITE.name}: a clearer perspective on peptide science`,
-    template: `%s · ${SITE.name}`,
-  },
-  description: SITE.description,
-  openGraph: { siteName: SITE.name, type: "website" },
-})
+    metadataBase: new URL(BASE_URL),
+    title: {
+      default: `${SITE.name}: a clearer perspective on peptide science`,
+      template: `%s · ${SITE.name}`,
+    },
+    description: SITE.description,
+    openGraph: { siteName: SITE.name, type: "website" },
+  })
 }
 
 export const viewport: Viewport = {
@@ -65,7 +65,9 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
     listDeliveryCountries(),
     // The header's product menu and search suggestions; the site still renders without them.
     Promise.all([listCatalogProducts(region.id), listCategories()])
-      .then(([products, categories]) => buildProductMenu(sortProducts(products, "relevance"), categoryFacets(categories, products)))
+      .then(([products, categories]) =>
+        buildProductMenu(sortProducts(products, "relevance"), categoryFacets(categories, products)),
+      )
       .catch(() => EMPTY_PRODUCT_MENU),
   ])
 
@@ -73,61 +75,63 @@ export default async function CountryLayout({ children }: LayoutProps<"/[country
     <html lang={pageLocale(code)}>
       <head>
         {/* The fonts are declared through MUI (theme/fonts.ts); fetch the first ones before the styles ask. */}
-        {preloadFonts.map((href) => <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />)}
+        {preloadFonts.map((href) => (
+          <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />
+        ))}
       </head>
       <body>
         <NextIntlClientProvider {...i18n}>
-        <ThemeRegistry>
-          <StoreProvider
-            countryCode={code}
-            region={{
-              id: region.id,
-              name: region.name,
-              currencyCode: region.currency_code,
-              freeShippingThreshold:
-                typeof region.metadata?.free_shipping_threshold === "number"
-                  ? region.metadata.free_shipping_threshold
-                  : undefined,
-            }}
-            countries={countries}
-            deliveryCountries={deliveryCountries}
-          >
-            <AccountProvider>
-              <Box
-                component="a"
-                href="#main"
-                sx={{
-                  position: "absolute",
-                  left: 8,
-                  top: -48,
-                  zIndex: 2000,
-                  bgcolor: "brand.navy",
-                  color: brand.white,
-                  px: 2,
-                  py: 1,
-                  borderRadius: 1,
-                  "&:focus": { top: 8 },
-                }}
-              >
-                {act("skipContent")}
-              </Box>
-              <Suspense fallback={null}>
-                <SaleBannerSlot />
-              </Suspense>
-              <Header catalog={catalog} />
-              <Box component="main" id="main" sx={{ minHeight: "60vh" }}>
-                {children}
-              </Box>
-              <Footer country={code} />
-              <CartDrawer />
-              <SplashPreload />
-              <ClarityAnalytics country={code} />
-              <Suspense fallback={null}>
-                <WelcomeExperience />
-              </Suspense>
-            </AccountProvider>
-          </StoreProvider>
-        </ThemeRegistry>
+          <ThemeRegistry>
+            <StoreProvider
+              countryCode={code}
+              region={{
+                id: region.id,
+                name: region.name,
+                currencyCode: region.currency_code,
+                freeShippingThreshold:
+                  typeof region.metadata?.free_shipping_threshold === "number"
+                    ? region.metadata.free_shipping_threshold
+                    : undefined,
+              }}
+              countries={countries}
+              deliveryCountries={deliveryCountries}
+            >
+              <AccountProvider>
+                <Box
+                  component="a"
+                  href="#main"
+                  sx={{
+                    position: "absolute",
+                    left: 8,
+                    top: -48,
+                    zIndex: 2000,
+                    bgcolor: "brand.navy",
+                    color: brand.white,
+                    px: 2,
+                    py: 1,
+                    borderRadius: 1,
+                    "&:focus": { top: 8 },
+                  }}
+                >
+                  {act("skipContent")}
+                </Box>
+                <Suspense fallback={null}>
+                  <SaleBannerSlot />
+                </Suspense>
+                <Header catalog={catalog} />
+                <Box component="main" id="main" sx={{ minHeight: "60vh" }}>
+                  {children}
+                </Box>
+                <Footer country={code} />
+                <CartDrawer />
+                <SplashPreload />
+                <ClarityAnalytics country={code} />
+                <Suspense fallback={null}>
+                  <WelcomeExperience />
+                </Suspense>
+              </AccountProvider>
+            </StoreProvider>
+          </ThemeRegistry>
         </NextIntlClientProvider>
       </body>
     </html>

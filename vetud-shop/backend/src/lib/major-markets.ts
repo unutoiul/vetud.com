@@ -18,8 +18,4 @@ export const WORLD_MARKETS = [
   { currency: "aed", name: "United Arab Emirates", countries: ["ae"] },
 ]
 
-export const MAJOR_CURRENCIES = [
-  "eur",
-  "usd",
-  ...WORLD_MARKETS.map((market) => market.currency),
-]
+export const MAJOR_CURRENCIES = ["eur", "usd", ...WORLD_MARKETS.map((market) => market.currency)]

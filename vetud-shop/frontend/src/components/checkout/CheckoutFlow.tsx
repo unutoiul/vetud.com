@@ -1,13 +1,22 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import type { HttpTypes } from "@medusajs/types"
 import { useLocale, useTranslations } from "next-intl"
 import { translateAction } from "@/i18n/actions"
 import { getCountryRules } from "@/i18n/config"
-import { normalizeAddress, formatAddressLines, sameAddress, inferAddressCountry, changeAddressCountry } from "@/lib/address"
-import Icon, { type IconName, LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
+import {
+  normalizeAddress,
+  formatAddressLines,
+  sameAddress,
+  inferAddressCountry,
+  changeAddressCountry,
+} from "@/lib/address"
+import Icon, {
+  type IconName,
+  LockIcon as LockOutlinedIcon,
+  ArrowUpRightIcon as NorthEastIcon,
+} from "@/components/brand/Icon"
 import Accordion from "@mui/material/Accordion"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import AccordionSummary from "@mui/material/AccordionSummary"
@@ -46,24 +55,33 @@ import AddressFields, { toAddressValues, validateAddress, type AddressValues } f
 import CheckoutOrderSummary from "./CheckoutOrderSummary"
 import { brand } from "@/theme/tokens"
 
-const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), { ssr: false, loading: () => <Skeleton variant="rounded" height={240} /> })
+const NmiPaymentForm = dynamic(() => import("./NmiPaymentForm"), {
+  ssr: false,
+  loading: () => <Skeleton variant="rounded" height={240} />,
+})
 
 /** Display labels are translated without changing payment provider identifiers. */
-const PAYMENT_LABELS: Record<string, { title: string; titleKey?: "payBank" | "payCrypto"; description: string; icon?: IconName }> = {
+const PAYMENT_LABELS: Record<
+  string,
+  { title: string; titleKey?: "payBank" | "payCrypto"; description: string; icon?: IconName }
+> = {
   [PAYGATE_CARD]: {
     icon: "card",
     title: "Credit / debit card · PayGate",
-    description: "Place your order, then complete payment on PayGate's secure checkout. Any provider fees are shown before you pay.",
+    description:
+      "Place your order, then complete payment on PayGate's secure checkout. Any provider fees are shown before you pay.",
   },
   [PAYGATE_CRYPTO]: {
     icon: "coin",
     title: "Cryptocurrency · PayGate",
-    description: "Place your order, then choose a supported cryptocurrency on PayGate. Network fees are shown before you pay.",
+    description:
+      "Place your order, then choose a supported cryptocurrency on PayGate. Network fees are shown before you pay.",
   },
   [NMI_PROVIDER_ID]: {
     icon: "card",
     title: "Credit / debit card or eligible bank account",
-    description: "Enter payment details securely below. Cards are authorized now and captured when ready to ship. Bank debit is available only when enabled and must settle before shipment.",
+    description:
+      "Enter payment details securely below. Cards are authorized now and captured when ready to ship. Bank debit is available only when enabled and must settle before shipment.",
   },
   pp_system_default: {
     icon: "bank",
@@ -134,7 +152,9 @@ function errorMessage(error: unknown) {
 }
 
 function countryName(code: string | null | undefined, locale: string) {
-  return code && /^[a-z]{2}$/i.test(code) ? new Intl.DisplayNames([locale], { type: "region" }).of(code.toUpperCase()) ?? code.toUpperCase() : ""
+  return code && /^[a-z]{2}$/i.test(code)
+    ? (new Intl.DisplayNames([locale], { type: "region" }).of(code.toUpperCase()) ?? code.toUpperCase())
+    : ""
 }
 
 type OptionType = { code?: string | null; description?: string | null }
@@ -148,7 +168,7 @@ function deliveryDays(description?: string | null) {
 
 function addBusinessDays(from: Date, days: number) {
   const date = new Date(from)
-  for (let left = days; left > 0; ) {
+  for (let left = days; left > 0;) {
     date.setDate(date.getDate() + 1)
     if (date.getDay() !== 0 && date.getDay() !== 6) left -= 1
   }
@@ -189,7 +209,11 @@ function selectableSx(selected: boolean) {
 }
 
 export default function CheckoutFlow() {
-  return <Suspense fallback={<Skeleton variant="rounded" height={420} />}><CheckoutContent /></Suspense>
+  return (
+    <Suspense fallback={<Skeleton variant="rounded" height={420} />}>
+      <CheckoutContent />
+    </Suspense>
+  )
 }
 
 function CheckoutContent() {
@@ -227,19 +251,33 @@ function CheckoutContent() {
 
   // Guests order with just an email (owner request 2026-11-17); members are signed in.
   // Signing in part-way through starts the form afresh for the member.
-  return <Checkout key={customer?.id ?? "guest"} cart={cart} customer={customer ?? null} onCompleted={setCompletedOrderId} />
+  return (
+    <Checkout key={customer?.id ?? "guest"} cart={cart} customer={customer ?? null} onCompleted={setCompletedOrderId} />
+  )
 }
 
-function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; customer: HttpTypes.StoreCustomer | null; onCompleted: (orderId: string) => void }) {
+function Checkout({
+  cart,
+  customer,
+  onCompleted,
+}: {
+  cart: HttpTypes.StoreCart
+  customer: HttpTypes.StoreCustomer | null
+  onCompleted: (orderId: string) => void
+}) {
   const ct = useContentTranslator()
   const act = useTranslations("Actions")
   const t = useTranslations("Checkout")
   const locale = useLocale()
   const money = useMoney()
   const router = useRouter()
-  const { setCart, clearCart, linkCustomerCart, restartCart, isCurrentCart, deliveryCountries, countryCode } = useStore()
+  const { setCart, clearCart, linkCustomerCart, restartCart, isCurrentCart, deliveryCountries, countryCode } =
+    useStore()
   // Delivery goes anywhere in the world, not only to the countries the site is set up for.
-  const countries = useMemo(() => deliveryCountries.map((code) => ({ code, name: code.toUpperCase() })), [deliveryCountries])
+  const countries = useMemo(
+    () => deliveryCountries.map((code) => ({ code, name: code.toUpperCase() })),
+    [deliveryCountries],
+  )
   const { createAddress, updateAddress, captureSession } = useAccount()
   const [busy, setBusy] = useState(false)
   const [addressEditing, setAddressEditing] = useState(false)
@@ -247,11 +285,18 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const [error, setError] = useState<string | null>(null)
   const errorRef = useRef<HTMLDivElement>(null)
   // Each list remembers what it was loaded for, so a stale list is never shown or acted on.
-  const [loadedOptions, setLoadedOptions] = useState<{ key: string; list: HttpTypes.StoreCartShippingOption[] } | null>(null)
-  const [loadedProviders, setLoadedProviders] = useState<{ key: string; list: HttpTypes.StorePaymentProvider[] } | null>(null)
+  const [loadedOptions, setLoadedOptions] = useState<{ key: string; list: HttpTypes.StoreCartShippingOption[] } | null>(
+    null,
+  )
+  const [loadedProviders, setLoadedProviders] = useState<{
+    key: string
+    list: HttpTypes.StorePaymentProvider[]
+  } | null>(null)
   const sessions = cart.payment_collection?.payment_sessions ?? []
   // The customer's own pick first, then the one the shop chose for an order link, then this browser's last.
-  const [wantedProvider, setWantedProvider] = useState(() => sessions[0]?.provider_id || orderLinkPayment(cart) || rememberedPayment())
+  const [wantedProvider, setWantedProvider] = useState(
+    () => sessions[0]?.provider_id || orderLinkPayment(cart) || rememberedPayment(),
+  )
   const attempted = useRef({ delivery: "", payment: "" })
 
   // A member's cart is linked to their account first; a guest's cart is just refreshed.
@@ -264,7 +309,12 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
 
   const currency = cart.currency_code
   const address = cart.shipping_address
-  const hasAddress = Boolean(cart.email && address?.address_1 && countries.some(country => country.code === address.country_code?.toLowerCase()) && !Object.keys(validateAddress(toAddressValues(address))).length)
+  const hasAddress = Boolean(
+    cart.email &&
+    address?.address_1 &&
+    countries.some((country) => country.code === address.country_code?.toLowerCase()) &&
+    !Object.keys(validateAddress(toAddressValues(address))).length,
+  )
   const method = cart.shipping_methods?.[0]
   const hasDelivery = hasAddress && Boolean(method)
   const addressKey = [address?.country_code, address?.postal_code, address?.address_1].join("|")
@@ -309,8 +359,12 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
     ])
       .then(([{ payment_providers }, config, paygate]) => {
         if (cancelled) return
-        setLoadedProviders({ key: providersKey, list: payment_providers.filter((provider) =>
-          isOfferedPaymentProvider(provider.id, { nmi: config, paygate, currency: cart.currency_code })) })
+        setLoadedProviders({
+          key: providersKey,
+          list: payment_providers.filter((provider) =>
+            isOfferedPaymentProvider(provider.id, { nmi: config, paygate, currency: cart.currency_code }),
+          ),
+        })
       })
       .catch((err) => {
         if (cancelled) return
@@ -358,11 +412,12 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
 
   // A guest's first step: the email the confirmation goes to, and all a guest needs to order (owner,
   // 2026-11-20), even an email a member account uses. Saving it also marks the checkout as started.
-  const saveContact = (email: string) => guard(async (assertCurrent) => {
-    const saved = await postContact(cart.id, email)
-    assertCurrent()
-    setCart(saved)
-  })
+  const saveContact = (email: string) =>
+    guard(async (assertCurrent) => {
+      const saved = await postContact(cart.id, email)
+      assertCurrent()
+      setCart(saved)
+    })
 
   // A basket that belongs to a member account (saved by an older checkout) needs that member signed
   // in. The email is all a guest needs, so the basket moves to a new guest cart with the same items
@@ -388,18 +443,28 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         assertCurrent()
       }
       // Any country we sell to, in the currency the shopper chose: the cart keeps its currency.
-      const { cart: updated } = await sdk.client.fetch<{ cart: HttpTypes.StoreCart }>(`/store/carts/${cart.id}/delivery-address`, {
-        method: "POST",
-        body: addresses,
-        query: { fields: CART_FIELDS },
-      })
+      const { cart: updated } = await sdk.client.fetch<{ cart: HttpTypes.StoreCart }>(
+        `/store/carts/${cart.id}/delivery-address`,
+        {
+          method: "POST",
+          body: addresses,
+          query: { fields: CART_FIELDS },
+        },
+      )
       assertCurrent()
       setCart(updated)
       if (saveToAccount && customer) {
         const first = !customer.addresses?.length
         const saving = savedAddressId
-          ? updateAddress(savedAddressId, { ...body.shipping_address, ...(makeDefault ? { is_default_shipping: true } : {}) })
-          : createAddress({ ...body.shipping_address, address_name: body.shipping_address.address_1, ...(first || makeDefault ? { is_default_shipping: true } : {}) })
+          ? updateAddress(savedAddressId, {
+              ...body.shipping_address,
+              ...(makeDefault ? { is_default_shipping: true } : {}),
+            })
+          : createAddress({
+              ...body.shipping_address,
+              address_name: body.shipping_address.address_1,
+              ...(first || makeDefault ? { is_default_shipping: true } : {}),
+            })
         // A correction we made ourselves never holds up the order: the order already has the address.
         if (quiet) void saving.catch(() => undefined)
         else {
@@ -411,7 +476,11 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
 
   const chooseDelivery = (optionId: string) =>
     guard(async (assertCurrent) => {
-      const { cart: updated } = await sdk.store.cart.addShippingMethod(cart.id, { option_id: optionId }, { fields: CART_FIELDS })
+      const { cart: updated } = await sdk.store.cart.addShippingMethod(
+        cart.id,
+        { option_id: optionId },
+        { fields: CART_FIELDS },
+      )
       assertCurrent()
       setCart(updated)
     })
@@ -419,11 +488,14 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const preparePayment = async (providerId: string, assertCurrent: () => void) => {
     const checkoutCart = await syncCart()
     assertCurrent()
-    const existing = checkoutCart.payment_collection?.payment_sessions?.find((session) => session.provider_id === providerId)
+    const existing = checkoutCart.payment_collection?.payment_sessions?.find(
+      (session) => session.provider_id === providerId,
+    )
     if (needsFreshSession(providerId) || !existing) {
       await sdk.store.payment.initiatePaymentSession(checkoutCart, {
         provider_id: providerId,
-        data: providerId === MAKEPAY_PROVIDER_ID && checkoutCart.email ? { customer_email: checkoutCart.email } : undefined,
+        data:
+          providerId === MAKEPAY_PROVIDER_ID && checkoutCart.email ? { customer_email: checkoutCart.email } : undefined,
       })
       assertCurrent()
     }
@@ -447,7 +519,9 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   }
 
   // Preselect the cheapest delivery once the destination is known; the shopper can still switch.
-  const cheapest = options?.length ? options.reduce((best, option) => (Number(option.amount) < Number(best.amount) ? option : best)) : null
+  const cheapest = options?.length
+    ? options.reduce((best, option) => (Number(option.amount) < Number(best.amount) ? option : best))
+    : null
   useEffect(() => {
     if (!hasAddress || method || !cheapest || busyRef.current) return
     const key = `${cart.id}:${addressKey}`
@@ -467,12 +541,16 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const placeOrder = (nmiToken?: NmiToken) =>
     guard(async (assertCurrent) => {
       // A hosted payment page is opened now, for exactly this total.
-      let checkoutCart = preparedOnPay(chosenProvider) ? await preparePayment(chosenProvider, assertCurrent) : await syncCart()
+      let checkoutCart = preparedOnPay(chosenProvider)
+        ? await preparePayment(chosenProvider, assertCurrent)
+        : await syncCart()
       assertCurrent()
       if (Number(checkoutCart.total) !== Number(cart.total)) {
         throw new Error("Your account pricing has been applied. Please review the updated total before paying.")
       }
-      const isNmi = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === NMI_PROVIDER_ID)
+      const isNmi = checkoutCart.payment_collection?.payment_sessions?.some(
+        (session) => session.provider_id === NMI_PROVIDER_ID,
+      )
       if (isNmi || nmiToken) {
         if (!isNmi || !nmiToken || nmiCartFingerprint(checkoutCart) !== nmiCartFingerprint(cart)) {
           setCart(checkoutCart)
@@ -491,7 +569,9 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
         checkoutCart = refreshed
       }
       // Validate hosted redirects before reserving the order, then open the payment page.
-      const isMakePay = checkoutCart.payment_collection?.payment_sessions?.some((session) => session.provider_id === MAKEPAY_PROVIDER_ID)
+      const isMakePay = checkoutCart.payment_collection?.payment_sessions?.some(
+        (session) => session.provider_id === MAKEPAY_PROVIDER_ID,
+      )
       const redirect = isMakePay ? readMakePayRedirect(checkoutCart) : null
       const paygateRedirect = isPaygate(chosenProvider) ? readPaygateRedirect(checkoutCart) : null
       const result = await sdk.store.cart.complete(checkoutCart.id)
@@ -535,18 +615,44 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
   const place = address?.country_code
     ? [address.city, countryName(address.country_code, locale)].filter(Boolean).join(", ")
     : ""
-  const summaryProps = { cart, place: hasAddress ? place : "", arrival: selectedOption ? arrivalWindow(optionType(selectedOption)?.description, locale) : null }
+  const summaryProps = {
+    cart,
+    place: hasAddress ? place : "",
+    arrival: selectedOption ? arrivalWindow(optionType(selectedOption)?.description, locale) : null,
+  }
 
   return (
     <Grid container spacing={{ xs: 3, md: 6 }}>
       <Grid size={{ xs: 12, md: 7 }}>
         {/* On small screens the summary sidebar would sit below the form, so the total stays visible up top. */}
-        <Accordion disableGutters sx={{ display: { md: "none" }, mb: 3, px: 2, bgcolor: "background.paper", border: "1px solid", borderColor: "divider", borderRadius: 3, boxShadow: "none", "&::before": { display: "none" } }}>
-          <AccordionSummary expandIcon={<Icon name="chevronDown" />} aria-controls="checkout-summary-content" id="checkout-summary-header" sx={{ minHeight: 64, "& .MuiAccordionSummary-content": { my: 2 } }}>
+        <Accordion
+          disableGutters
+          sx={{
+            display: { md: "none" },
+            mb: 3,
+            px: 2,
+            bgcolor: "background.paper",
+            border: "1px solid",
+            borderColor: "divider",
+            borderRadius: 3,
+            boxShadow: "none",
+            "&::before": { display: "none" },
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<Icon name="chevronDown" />}
+            aria-controls="checkout-summary-content"
+            id="checkout-summary-header"
+            sx={{ minHeight: 64, "& .MuiAccordionSummary-content": { my: 2 } }}
+          >
             <Typography sx={{ fontWeight: 600, flex: 1 }}>{t("summary")}</Typography>
-            <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{ct(money(Number(cart.total ?? 0), currency))}</Typography>
+            <Typography sx={{ fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>
+              {ct(money(Number(cart.total ?? 0), currency))}
+            </Typography>
           </AccordionSummary>
-          <AccordionDetails sx={{ px: 0 }}><CheckoutOrderSummary {...summaryProps} compact /></AccordionDetails>
+          <AccordionDetails sx={{ px: 0 }}>
+            <CheckoutOrderSummary {...summaryProps} compact />
+          </AccordionDetails>
         </Accordion>
 
         <Box sx={{ mb: 3 }}>
@@ -554,7 +660,9 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
             {customer?.first_name ? t("greeting", { name: customer.first_name }) : t("greetingPlain")}
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
-            {customer ? t("greetingHelp") : ct("Add your email and delivery details, then choose how to pay. No account needed.")}
+            {customer
+              ? t("greetingHelp")
+              : ct("Add your email and delivery details, then choose how to pay. No account needed.")}
           </Typography>
         </Box>
 
@@ -571,15 +679,31 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
             cart={cart}
             customer={customer}
             countries={countries}
-            defaultCountry={countries.some((country) => country.code === countryCode) ? countryCode : countries[0]?.code ?? ""}
+            defaultCountry={
+              countries.some((country) => country.code === countryCode) ? countryCode : (countries[0]?.code ?? "")
+            }
             busy={busy}
             step={customer ? 1 : 2}
             locked={!customer && !cart.email}
             onSubmit={saveAddress}
             onEditingChange={setAddressEditing}
           />
-          <DeliverySection cart={cart} options={hasAddress ? options : null} locked={!hasAddress || addressEditing} place={place} busy={busy} step={customer ? 2 : 3} onSelect={chooseDelivery} />
-          <Step index={customer ? 3 : 4} title={t("payment")} done={false} locked={!hasDelivery || addressEditing} lockedHint={addressEditing ? ct("Save or cancel your address changes to continue.") : t("paymentLocked")}>
+          <DeliverySection
+            cart={cart}
+            options={hasAddress ? options : null}
+            locked={!hasAddress || addressEditing}
+            place={place}
+            busy={busy}
+            step={customer ? 2 : 3}
+            onSelect={chooseDelivery}
+          />
+          <Step
+            index={customer ? 3 : 4}
+            title={t("payment")}
+            done={false}
+            locked={!hasDelivery || addressEditing}
+            lockedHint={addressEditing ? ct("Save or cancel your address changes to continue.") : t("paymentLocked")}
+          >
             {providers === null ? (
               <Stack spacing={1.25}>
                 <Skeleton variant="rounded" height={64} />
@@ -587,18 +711,29 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
               </Stack>
             ) : providers.length ? (
               <>
-                <RadioGroup name="payment_method" value={chosenProvider} onChange={(event) => choosePayment(event.target.value)} aria-label={t("payment")}>
+                <RadioGroup
+                  name="payment_method"
+                  value={chosenProvider}
+                  onChange={(event) => choosePayment(event.target.value)}
+                  aria-label={t("payment")}
+                >
                   <Stack spacing={1.25}>
                     {providers.map((provider) => {
                       const label = PAYMENT_LABELS[provider.id] ?? { title: provider.id, description: "" }
                       const selected = chosenProvider === provider.id
                       return (
-                        <Box key={provider.id} component="label" sx={{ ...selectableSx(selected), alignItems: "flex-start" }}>
+                        <Box
+                          key={provider.id}
+                          component="label"
+                          sx={{ ...selectableSx(selected), alignItems: "flex-start" }}
+                        >
                           <Radio value={provider.id} disabled={busy} sx={{ mt: -0.25 }} />
                           <Box sx={{ flex: 1, py: 0.75 }}>
                             <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                               <Icon name={label.icon ?? "lock"} fontSize="small" sx={{ color: "secondary.main" }} />
-                              <Typography sx={{ fontWeight: 600 }}>{ct(label.titleKey ? t(label.titleKey) : translateAction(act, label.title))}</Typography>
+                              <Typography sx={{ fontWeight: 600 }}>
+                                {ct(label.titleKey ? t(label.titleKey) : translateAction(act, label.title))}
+                              </Typography>
                             </Stack>
                             {selected && label.description ? (
                               <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
@@ -613,7 +748,16 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
                 </RadioGroup>
                 {chosenProvider ? (
                   activeSession || preparedOnPay(chosenProvider) ? (
-                    <PayPanel cart={cart} provider={chosenProvider} busy={busy} onRefresh={() => void startPayment(chosenProvider)} onPlaceOrder={() => void placeOrder()} onNmiToken={async (token) => { await placeOrder(token) }} />
+                    <PayPanel
+                      cart={cart}
+                      provider={chosenProvider}
+                      busy={busy}
+                      onRefresh={() => void startPayment(chosenProvider)}
+                      onPlaceOrder={() => void placeOrder()}
+                      onNmiToken={async (token) => {
+                        await placeOrder(token)
+                      }}
+                    />
                   ) : (
                     <Stack direction="row" spacing={1.5} sx={{ mt: 3, alignItems: "center", color: "text.secondary" }}>
                       {busy ? <CircularProgress size={18} color="secondary" /> : null}
@@ -635,7 +779,10 @@ function Checkout({ cart, customer, onCompleted }: { cart: HttpTypes.StoreCart; 
       </Grid>
 
       <Grid size={{ xs: 12, md: 5 }} sx={{ display: { xs: "none", md: "block" } }}>
-        <Paper variant="outlined" sx={{ p: 3, bgcolor: "background.paper", borderRadius: 3, position: "sticky", top: 110 }}>
+        <Paper
+          variant="outlined"
+          sx={{ p: 3, bgcolor: "background.paper", borderRadius: 3, position: "sticky", top: 110 }}
+        >
           <CheckoutOrderSummary {...summaryProps} />
         </Paper>
       </Grid>
@@ -663,7 +810,12 @@ function Step({
 }) {
   const ct = useContentTranslator()
   return (
-    <Paper component="section" variant="outlined" aria-label={ct(title)} sx={{ p: { xs: 2.5, sm: 3.5 }, borderRadius: 3, bgcolor: locked ? "brand.paper" : brand.white }}>
+    <Paper
+      component="section"
+      variant="outlined"
+      aria-label={ct(title)}
+      sx={{ p: { xs: 2.5, sm: 3.5 }, borderRadius: 3, bgcolor: locked ? "brand.paper" : brand.white }}
+    >
       <Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
         <Box
           aria-hidden
@@ -682,7 +834,11 @@ function Step({
         >
           {done ? <Icon name="check" sx={{ fontSize: 16 }} /> : index}
         </Box>
-        <Typography variant="h6" component="h2" sx={{ flex: 1, fontWeight: 600, color: locked ? "text.secondary" : "text.primary" }}>
+        <Typography
+          variant="h6"
+          component="h2"
+          sx={{ flex: 1, fontWeight: 600, color: locked ? "text.secondary" : "text.primary" }}
+        >
           {ct(title)}
         </Typography>
         {ct(action)}
@@ -707,7 +863,11 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  * 2026-11-20). No account or code is needed, even for an email a member account uses: that order is
  * filed in the account. Signing in instead is optional and brings back saved addresses.
  */
-function ContactSection({ cart, busy, onSubmit }: {
+function ContactSection({
+  cart,
+  busy,
+  onSubmit,
+}: {
   cart: HttpTypes.StoreCart
   busy: boolean
   onSubmit: (email: string) => Promise<boolean>
@@ -727,51 +887,84 @@ function ContactSection({ cart, busy, onSubmit }: {
       return
     }
     setInvalid(false)
-    if (value === cart.email || await onSubmit(value)) setEditing(false)
+    if (value === cart.email || (await onSubmit(value))) setEditing(false)
   }
 
   const signInToggle = (
-    <Button type="button" onClick={() => setSigningIn((open) => !open)} aria-expanded={signingIn} sx={{ minHeight: 44, whiteSpace: "nowrap" }}>
+    <Button
+      type="button"
+      onClick={() => setSigningIn((open) => !open)}
+      aria-expanded={signingIn}
+      sx={{ minHeight: 44, whiteSpace: "nowrap" }}
+    >
       {ct(signingIn ? "Continue as a guest instead" : "Have an account? Sign in")}
     </Button>
   )
 
-  return <Step index={1} title={ct("Contact")} done={Boolean(cart.email) && !editing && !signingIn} locked={false}>
-    {editing ? (
-      <Box component="form" onSubmit={submit} noValidate>
-        <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
-          {ct("No account needed. We'll send your order confirmation and updates to this email, and you can create an account after ordering.")}
-        </Typography>
-        <TextField
-          label={act("email")}
-          type="email"
-          required
-          fullWidth
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          error={invalid}
-          helperText={invalid ? ct("Enter a valid email address.") : undefined}
-          slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false, inputMode: "email" } }}
-        />
-        <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: 2, alignItems: { sm: "center" } }}>
-          <Button type="submit" variant="contained" size="large" disabled={busy} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined}>{ct("Continue as a guest")}</Button>
-          {signInToggle}
+  return (
+    <Step index={1} title={ct("Contact")} done={Boolean(cart.email) && !editing && !signingIn} locked={false}>
+      {editing ? (
+        <Box component="form" onSubmit={submit} noValidate>
+          <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
+            {ct(
+              "No account needed. We'll send your order confirmation and updates to this email, and you can create an account after ordering.",
+            )}
+          </Typography>
+          <TextField
+            label={act("email")}
+            type="email"
+            required
+            fullWidth
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            error={invalid}
+            helperText={invalid ? ct("Enter a valid email address.") : undefined}
+            slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false, inputMode: "email" } }}
+          />
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: 2, alignItems: { sm: "center" } }}>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              disabled={busy}
+              startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined}
+            >
+              {ct("Continue as a guest")}
+            </Button>
+            {signInToggle}
+          </Stack>
+        </Box>
+      ) : (
+        // The email gets its own line: a long address used to squeeze the buttons beside it.
+        <Stack spacing={1.5}>
+          <Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>
+            {ct("Ordering as a guest:")}{" "}
+            <Box component="strong" sx={{ fontWeight: 650 }}>
+              {cart.email}
+            </Box>
+          </Typography>
+          <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: "wrap", alignItems: "center" }}>
+            <Button
+              type="button"
+              size="small"
+              variant="outlined"
+              disabled={busy}
+              onClick={() => setEditing(true)}
+              sx={{ minHeight: 44, whiteSpace: "nowrap" }}
+            >
+              {ct("Change")}
+            </Button>
+            {signInToggle}
+          </Stack>
         </Stack>
-      </Box>
-    ) : (
-      // The email gets its own line: a long address used to squeeze the buttons beside it.
-      <Stack spacing={1.5}>
-        <Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>
-          {ct("Ordering as a guest:")} <Box component="strong" sx={{ fontWeight: 650 }}>{cart.email}</Box>
-        </Typography>
-        <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: "wrap", alignItems: "center" }}>
-          <Button type="button" size="small" variant="outlined" disabled={busy} onClick={() => setEditing(true)} sx={{ minHeight: 44, whiteSpace: "nowrap" }}>{ct("Change")}</Button>
-          {signInToggle}
-        </Stack>
-      </Stack>
-    )}
-    {signingIn ? <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}><AuthPanel context="checkout" initialEmail={EMAIL_PATTERN.test(email.trim()) ? email.trim() : undefined} /></Box> : null}
-  </Step>
+      )}
+      {signingIn ? (
+        <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
+          <AuthPanel context="checkout" initialEmail={EMAIL_PATTERN.test(email.trim()) ? email.trim() : undefined} />
+        </Box>
+      ) : null}
+    </Step>
+  )
 }
 
 type AddressBody = {
@@ -784,7 +977,17 @@ type AddressBody = {
   quiet?: boolean
 }
 
-function AddressSection({ cart, customer, countries, defaultCountry, busy, step, locked, onSubmit, onEditingChange }: {
+function AddressSection({
+  cart,
+  customer,
+  countries,
+  defaultCountry,
+  busy,
+  step,
+  locked,
+  onSubmit,
+  onEditingChange,
+}: {
   cart: HttpTypes.StoreCart
   /** Null for a guest: no saved addresses, nothing saved to an account. */
   customer: HttpTypes.StoreCustomer | null
@@ -802,14 +1005,18 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, step,
   const locale = useLocale()
   const account = useAccount()
   const savedAddresses = customer?.addresses ?? []
-  const defaultAddress = savedAddresses.find(address => address.id === customer?.default_shipping_address_id)
-    ?? savedAddresses.find(address => address.is_default_shipping)
+  const defaultAddress =
+    savedAddresses.find((address) => address.id === customer?.default_shipping_address_id) ??
+    savedAddresses.find((address) => address.is_default_shipping)
   const preferred = defaultAddress ?? savedAddresses[0]
   const current = cart.shipping_address?.address_1 ? cart.shipping_address : null
   const email = cart.email || customer?.email || ""
   const withProfile = (address?: Parameters<typeof toAddressValues>[0]): AddressValues => {
     const values = toAddressValues(address)
-    const country = inferAddressCountry(values, countries.map(option => option.code))
+    const country = inferAddressCountry(
+      values,
+      countries.map((option) => option.code),
+    )
     return {
       ...changeAddressCountry(values, country || values.country_code || defaultCountry),
       first_name: values.first_name || customer?.first_name || "",
@@ -818,14 +1025,25 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, step,
     }
   }
   const errorsFor = (values: AddressValues) => {
-    const errors = validateAddress(values, (key, args) => ta(key, args), ta(getCountryRules(values.country_code).postalLabel as "postal" | "zip" | "postcode"))
-    if (!countries.some(country => country.code === values.country_code)) errors.country_code = ta("unsupportedCountry")
+    const errors = validateAddress(
+      values,
+      (key, args) => ta(key, args),
+      ta(getCountryRules(values.country_code).postalLabel as "postal" | "zip" | "postcode"),
+    )
+    if (!countries.some((country) => country.code === values.country_code))
+      errors.country_code = ta("unsupportedCountry")
     return errors
   }
   const initialSource = current ?? preferred
   const [shipping, setShipping] = useState(() => withProfile(initialSource))
-  const [selectedId, setSelectedId] = useState(() => savedAddresses.find(address => sameAddress(withProfile(address), shipping))?.id ?? (current ? "current" : "new"))
-  const [mode, setMode] = useState<"summary" | "choose" | "edit" | "new">(() => !initialSource ? "new" : Object.keys(errorsFor(shipping)).length ? "edit" : "summary")
+  const [selectedId, setSelectedId] = useState(
+    () =>
+      savedAddresses.find((address) => sameAddress(withProfile(address), shipping))?.id ??
+      (current ? "current" : "new"),
+  )
+  const [mode, setMode] = useState<"summary" | "choose" | "edit" | "new">(() =>
+    !initialSource ? "new" : Object.keys(errorsFor(shipping)).length ? "edit" : "summary",
+  )
   const [showErrors, setShowErrors] = useState(Boolean(initialSource))
   const [saveToAccount, setSaveToAccount] = useState(Boolean(customer))
   const [makeDefault, setMakeDefault] = useState(false)
@@ -833,19 +1051,27 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, step,
   const autoApplied = useRef(false)
   const shippingErrors = errorsFor(shipping)
   const valid = Object.keys(shippingErrors).length === 0
-  const selectedSaved = savedAddresses.find(address => address.id === selectedId)
+  const selectedSaved = savedAddresses.find((address) => address.id === selectedId)
   const editingDefault = Boolean(selectedSaved && selectedSaved.id === defaultAddress?.id)
-  const matchingSaved = savedAddresses.find(address => sameAddress(withProfile(address), shipping))
+  const matchingSaved = savedAddresses.find((address) => sameAddress(withProfile(address), shipping))
   const isDefault = Boolean(matchingSaved && matchingSaved.id === defaultAddress?.id)
   const isApplied = Boolean(current && cart.email && valid && sameAddress(shipping, current))
   const disabled = busy || account.pending
   const isEditor = mode === "edit" || mode === "new"
 
-  useEffect(() => { onEditingChange(mode !== "summary") }, [mode, onEditingChange])
+  useEffect(() => {
+    onEditingChange(mode !== "summary")
+  }, [mode, onEditingChange])
 
   const bodyFor = (persist = false): AddressBody => ({
-    email, shipping_address: normalizeAddress(shipping), saveToAccount: persist,
-    ...(selectedSaved ? { savedAddressId: selectedSaved.id } : matchingSaved ? { savedAddressId: matchingSaved.id } : {}),
+    email,
+    shipping_address: normalizeAddress(shipping),
+    saveToAccount: persist,
+    ...(selectedSaved
+      ? { savedAddressId: selectedSaved.id }
+      : matchingSaved
+        ? { savedAddressId: matchingSaved.id }
+        : {}),
     ...(persist && (makeDefault || !defaultAddress) ? { makeDefault: true } : {}),
   })
 
@@ -860,7 +1086,9 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, step,
     const source = current ?? preferred
     const values = withProfile(source)
     setShipping(values)
-    setSelectedId(savedAddresses.find(address => sameAddress(withProfile(address), values))?.id ?? (current ? "current" : "new"))
+    setSelectedId(
+      savedAddresses.find((address) => sameAddress(withProfile(address), values))?.id ?? (current ? "current" : "new"),
+    )
     setShowErrors(false)
     setMode(!source ? "new" : Object.keys(errorsFor(values)).length ? "edit" : "summary")
     setDefaultError(false)
@@ -873,7 +1101,7 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, step,
   }
   const pick = (id: string) => {
     setSelectedId(id)
-    setShipping(withProfile(id === "current" ? current : savedAddresses.find(address => address.id === id)))
+    setShipping(withProfile(id === "current" ? current : savedAddresses.find((address) => address.id === id)))
     setDefaultError(false)
   }
   const edit = () => {
@@ -894,92 +1122,326 @@ function AddressSection({ cart, customer, countries, defaultCountry, busy, step,
     setMode("new")
   }
   const applyAddress = async () => {
-    if (!valid) { setShowErrors(true); setMode("edit"); return }
+    if (!valid) {
+      setShowErrors(true)
+      setMode("edit")
+      return
+    }
     if (await onSubmit(bodyFor())) setMode("summary")
   }
   const setDefault = async () => {
     if (!matchingSaved || disabled) return
     setDefaultError(false)
-    try { await account.updateAddress(matchingSaved.id, { is_default_shipping: true }) }
-    catch { setDefaultError(true) }
+    try {
+      await account.updateAddress(matchingSaved.id, { is_default_shipping: true })
+    } catch {
+      setDefaultError(true)
+    }
   }
-  const lines = (values: Parameters<typeof formatAddressLines>[0]) => [...formatAddressLines(values).slice(0, -1), countryName(values.country_code, locale)].filter(Boolean)
-  const addressPreview = <Box sx={{ p: { xs: 2, sm: 2.5 }, border: 1, borderColor: "divider", borderRadius: 2, bgcolor: "brand.paper", overflowWrap: "anywhere" }}>
-    <Stack direction="row" useFlexGap spacing={1} sx={{ alignItems: "center", flexWrap: "wrap", mb: 1 }}>
-      <Typography variant="body2" sx={{ fontWeight: 650 }}>{ct("Deliver to")}</Typography>
-      {isDefault ? <Chip size="small" label={t("defaultAddress")} color="secondary" /> : null}
-    </Stack>
-    {lines(shipping).map((line, index) => <Typography key={index} variant="body2" sx={{ fontWeight: index === 0 ? 650 : 400, color: index === 0 ? "text.primary" : "text.secondary" }}>{line}</Typography>)}
-  </Box>
-
-  return <Step index={step} title={t("shipping")} done={mode === "summary" && isApplied} locked={locked} lockedHint={ct("Add your email above first.")}>
-    {defaultError ? <Alert severity="error" sx={{ mb: 2 }}>{ct("Couldn't change the default address. Please try again.")}</Alert> : null}
-    {mode === "summary" ? <Stack spacing={1.5}>
-      {addressPreview}
-      <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: "wrap" }}>
-        <Button type="button" variant="outlined" size="small" disabled={disabled} onClick={edit} sx={{ minHeight: 44 }}>{ct("Edit address")}</Button>
-        {savedAddresses.length > (matchingSaved ? 1 : 0) ? <Button type="button" size="small" disabled={disabled} onClick={choose} sx={{ minHeight: 44 }}>{ct("Choose saved address")}</Button> : null}
-        <Button type="button" size="small" disabled={disabled} onClick={add} startIcon={<Icon name="plus" />} sx={{ minHeight: 44 }}>{t("addAddress")}</Button>
-        {matchingSaved && !isDefault ? <Button type="button" size="small" disabled={disabled} onClick={() => void setDefault()} sx={{ minHeight: 44 }}>{ct("Make default")}</Button> : null}
+  const lines = (values: Parameters<typeof formatAddressLines>[0]) =>
+    [...formatAddressLines(values).slice(0, -1), countryName(values.country_code, locale)].filter(Boolean)
+  const addressPreview = (
+    <Box
+      sx={{
+        p: { xs: 2, sm: 2.5 },
+        border: 1,
+        borderColor: "divider",
+        borderRadius: 2,
+        bgcolor: "brand.paper",
+        overflowWrap: "anywhere",
+      }}
+    >
+      <Stack direction="row" useFlexGap spacing={1} sx={{ alignItems: "center", flexWrap: "wrap", mb: 1 }}>
+        <Typography variant="body2" sx={{ fontWeight: 650 }}>
+          {ct("Deliver to")}
+        </Typography>
+        {isDefault ? <Chip size="small" label={t("defaultAddress")} color="secondary" /> : null}
       </Stack>
-      {isDefault ? <Typography variant="caption" color="text.secondary" role="status">{ct("Your default address is used automatically for future orders.")}</Typography> : null}
-      <Typography variant="caption" sx={{ color: "text.secondary", overflowWrap: "anywhere" }}>{t("confirmationTo", { email })}</Typography>
-      {!isApplied ? <Button type="button" variant="contained" size="large" disabled={disabled} onClick={() => void applyAddress()} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined} sx={{ alignSelf: { sm: "flex-start" } }}>{t("useAddress")}</Button> : null}
-    </Stack> : null}
+      {lines(shipping).map((line, index) => (
+        <Typography
+          key={index}
+          variant="body2"
+          sx={{ fontWeight: index === 0 ? 650 : 400, color: index === 0 ? "text.primary" : "text.secondary" }}
+        >
+          {line}
+        </Typography>
+      ))}
+    </Box>
+  )
 
-    {mode === "choose" ? <Stack spacing={2}>
-      <Typography variant="body2" color="text.secondary">{ct("Choose where to deliver this order. Your default stays the same unless you change it.")}</Typography>
-      <RadioGroup name="saved_address" value={selectedId} onChange={event => pick(event.target.value)} aria-label={t("savedAddress")}>
-        <Stack spacing={1.25}>
-          {savedAddresses.map(address => <Box key={address.id} component="label" sx={{ ...selectableSx(selectedId === address.id), alignItems: "start", cursor: disabled ? "default" : "pointer", overflowWrap: "anywhere" }}>
-            <Radio value={address.id} disabled={disabled} sx={{ minHeight: 44, minWidth: 44 }} />
-            <Box sx={{ py: 0.75, minWidth: 0 }}>
-              <Stack direction="row" useFlexGap spacing={1} sx={{ alignItems: "center", flexWrap: "wrap", mb: 0.5 }}>
-                <Typography variant="body2" sx={{ fontWeight: 650 }}>{address.address_name || [address.first_name, address.last_name].filter(Boolean).join(" ")}</Typography>
-                {address.id === defaultAddress?.id ? <Chip size="small" label={t("defaultAddress")} color="secondary" /> : null}
-              </Stack>
-              {lines(address).map((line, index) => <Typography key={index} variant="body2" color="text.secondary">{line}</Typography>)}
-            </Box>
-          </Box>)}
-          {current && !savedAddresses.some(address => sameAddress(withProfile(address), current)) ? <Box component="label" sx={selectableSx(selectedId === "current")}>
-            <Radio value="current" disabled={disabled} />
-            <Box><Typography variant="body2" sx={{ fontWeight: 650 }}>{ct("Current order address")}</Typography>{lines(current).map((line, index) => <Typography key={index} variant="body2" color="text.secondary">{line}</Typography>)}</Box>
-          </Box> : null}
+  return (
+    <Step
+      index={step}
+      title={t("shipping")}
+      done={mode === "summary" && isApplied}
+      locked={locked}
+      lockedHint={ct("Add your email above first.")}
+    >
+      {defaultError ? (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {ct("Couldn't change the default address. Please try again.")}
+        </Alert>
+      ) : null}
+      {mode === "summary" ? (
+        <Stack spacing={1.5}>
+          {addressPreview}
+          <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: "wrap" }}>
+            <Button
+              type="button"
+              variant="outlined"
+              size="small"
+              disabled={disabled}
+              onClick={edit}
+              sx={{ minHeight: 44 }}
+            >
+              {ct("Edit address")}
+            </Button>
+            {savedAddresses.length > (matchingSaved ? 1 : 0) ? (
+              <Button type="button" size="small" disabled={disabled} onClick={choose} sx={{ minHeight: 44 }}>
+                {ct("Choose saved address")}
+              </Button>
+            ) : null}
+            <Button
+              type="button"
+              size="small"
+              disabled={disabled}
+              onClick={add}
+              startIcon={<Icon name="plus" />}
+              sx={{ minHeight: 44 }}
+            >
+              {t("addAddress")}
+            </Button>
+            {matchingSaved && !isDefault ? (
+              <Button
+                type="button"
+                size="small"
+                disabled={disabled}
+                onClick={() => void setDefault()}
+                sx={{ minHeight: 44 }}
+              >
+                {ct("Make default")}
+              </Button>
+            ) : null}
+          </Stack>
+          {isDefault ? (
+            <Typography variant="caption" color="text.secondary" role="status">
+              {ct("Your default address is used automatically for future orders.")}
+            </Typography>
+          ) : null}
+          <Typography variant="caption" sx={{ color: "text.secondary", overflowWrap: "anywhere" }}>
+            {t("confirmationTo", { email })}
+          </Typography>
+          {!isApplied ? (
+            <Button
+              type="button"
+              variant="contained"
+              size="large"
+              disabled={disabled}
+              onClick={() => void applyAddress()}
+              startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined}
+              sx={{ alignSelf: { sm: "flex-start" } }}
+            >
+              {t("useAddress")}
+            </Button>
+          ) : null}
         </Stack>
-      </RadioGroup>
-      <Button type="button" variant="outlined" size="large" fullWidth disabled={disabled} onClick={add} startIcon={<Icon name="plus" />} sx={{ minHeight: 56 }}>{t("addAddress")}</Button>
-      <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "minmax(0, 1.2fr) minmax(0, 1.4fr) minmax(0, 0.7fr)" }, gap: 1 }}>
-        <Button type="button" variant="contained" disabled={disabled} onClick={() => void applyAddress()} sx={{ minHeight: 48, minWidth: 0, px: 1.5 }}>{t("useAddress")}</Button>
-        <Button type="button" variant="outlined" disabled={disabled} onClick={edit} sx={{ minHeight: 48, minWidth: 0, px: 1.5 }}>{ct("Edit selected address")}</Button>
-        <Button type="button" disabled={disabled} onClick={restore} sx={{ minHeight: 48, minWidth: 0, px: 1.5 }}>{t("cancel")}</Button>
-      </Box>
-    </Stack> : null}
+      ) : null}
 
-    {isEditor ? <Box component="form" noValidate onSubmit={event => {
-      event.preventDefault()
-      if (disabled) return
-      setShowErrors(true)
-      if (!valid) {
-        event.currentTarget.querySelector<HTMLElement>(`[id="shipping-${Object.keys(shippingErrors)[0]}"]`)?.focus()
-        return
-      }
-      void onSubmit(bodyFor(saveToAccount)).then(ok => { if (ok) setMode("summary") })
-    }}>
-      <Box component="fieldset" disabled={disabled} inert={disabled} sx={{ border: 0, p: 0, m: 0, minWidth: 0 }}>
-        <Typography component="legend" sx={{ p: 0, mb: 1, fontWeight: 650 }}>{ct(mode === "new" ? "Add a shipping address" : "Edit shipping address")}</Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>{ct("Enter your delivery details below. You can type the full address yourself or choose a street suggestion.")}</Typography>
-        <AddressFields prefix="shipping" values={shipping} errors={showErrors ? shippingErrors : {}} countries={countries} onChange={setShipping} showAutofillHint={false} disabled={disabled} />
-        {customer ? <Stack sx={{ mt: 1.5 }}>
-          <FormControlLabel control={<Checkbox checked={saveToAccount} onChange={event => { setSaveToAccount(event.target.checked); if (!event.target.checked) setMakeDefault(false) }} />} label={selectedSaved ? ct("Update this saved address") : t("save")} />
-          {saveToAccount ? !defaultAddress || editingDefault ? <Typography variant="caption" color="text.secondary" sx={{ pl: 4 }}>{ct("This will be your default address for future orders.")}</Typography> : <FormControlLabel control={<Checkbox checked={makeDefault} onChange={event => setMakeDefault(event.target.checked)} />} label={ct("Use as my default address for future orders")} /> : null}
-        </Stack> : null}
-      </Box>
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: 2 }}>
-        <Button type="submit" variant="contained" size="large" disabled={disabled} startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined}>{t("continue")}</Button>
-        {initialSource || savedAddresses.length ? <Button type="button" disabled={disabled} onClick={restore}>{t("cancel")}</Button> : null}
-      </Stack>
-    </Box> : null}
-  </Step>
+      {mode === "choose" ? (
+        <Stack spacing={2}>
+          <Typography variant="body2" color="text.secondary">
+            {ct("Choose where to deliver this order. Your default stays the same unless you change it.")}
+          </Typography>
+          <RadioGroup
+            name="saved_address"
+            value={selectedId}
+            onChange={(event) => pick(event.target.value)}
+            aria-label={t("savedAddress")}
+          >
+            <Stack spacing={1.25}>
+              {savedAddresses.map((address) => (
+                <Box
+                  key={address.id}
+                  component="label"
+                  sx={{
+                    ...selectableSx(selectedId === address.id),
+                    alignItems: "start",
+                    cursor: disabled ? "default" : "pointer",
+                    overflowWrap: "anywhere",
+                  }}
+                >
+                  <Radio value={address.id} disabled={disabled} sx={{ minHeight: 44, minWidth: 44 }} />
+                  <Box sx={{ py: 0.75, minWidth: 0 }}>
+                    <Stack
+                      direction="row"
+                      useFlexGap
+                      spacing={1}
+                      sx={{ alignItems: "center", flexWrap: "wrap", mb: 0.5 }}
+                    >
+                      <Typography variant="body2" sx={{ fontWeight: 650 }}>
+                        {address.address_name || [address.first_name, address.last_name].filter(Boolean).join(" ")}
+                      </Typography>
+                      {address.id === defaultAddress?.id ? (
+                        <Chip size="small" label={t("defaultAddress")} color="secondary" />
+                      ) : null}
+                    </Stack>
+                    {lines(address).map((line, index) => (
+                      <Typography key={index} variant="body2" color="text.secondary">
+                        {line}
+                      </Typography>
+                    ))}
+                  </Box>
+                </Box>
+              ))}
+              {current && !savedAddresses.some((address) => sameAddress(withProfile(address), current)) ? (
+                <Box component="label" sx={selectableSx(selectedId === "current")}>
+                  <Radio value="current" disabled={disabled} />
+                  <Box>
+                    <Typography variant="body2" sx={{ fontWeight: 650 }}>
+                      {ct("Current order address")}
+                    </Typography>
+                    {lines(current).map((line, index) => (
+                      <Typography key={index} variant="body2" color="text.secondary">
+                        {line}
+                      </Typography>
+                    ))}
+                  </Box>
+                </Box>
+              ) : null}
+            </Stack>
+          </RadioGroup>
+          <Button
+            type="button"
+            variant="outlined"
+            size="large"
+            fullWidth
+            disabled={disabled}
+            onClick={add}
+            startIcon={<Icon name="plus" />}
+            sx={{ minHeight: 56 }}
+          >
+            {t("addAddress")}
+          </Button>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr", sm: "minmax(0, 1.2fr) minmax(0, 1.4fr) minmax(0, 0.7fr)" },
+              gap: 1,
+            }}
+          >
+            <Button
+              type="button"
+              variant="contained"
+              disabled={disabled}
+              onClick={() => void applyAddress()}
+              sx={{ minHeight: 48, minWidth: 0, px: 1.5 }}
+            >
+              {t("useAddress")}
+            </Button>
+            <Button
+              type="button"
+              variant="outlined"
+              disabled={disabled}
+              onClick={edit}
+              sx={{ minHeight: 48, minWidth: 0, px: 1.5 }}
+            >
+              {ct("Edit selected address")}
+            </Button>
+            <Button type="button" disabled={disabled} onClick={restore} sx={{ minHeight: 48, minWidth: 0, px: 1.5 }}>
+              {t("cancel")}
+            </Button>
+          </Box>
+        </Stack>
+      ) : null}
+
+      {isEditor ? (
+        <Box
+          component="form"
+          noValidate
+          onSubmit={(event) => {
+            event.preventDefault()
+            if (disabled) return
+            setShowErrors(true)
+            if (!valid) {
+              event.currentTarget
+                .querySelector<HTMLElement>(`[id="shipping-${Object.keys(shippingErrors)[0]}"]`)
+                ?.focus()
+              return
+            }
+            void onSubmit(bodyFor(saveToAccount)).then((ok) => {
+              if (ok) setMode("summary")
+            })
+          }}
+        >
+          <Box component="fieldset" disabled={disabled} inert={disabled} sx={{ border: 0, p: 0, m: 0, minWidth: 0 }}>
+            <Typography component="legend" sx={{ p: 0, mb: 1, fontWeight: 650 }}>
+              {ct(mode === "new" ? "Add a shipping address" : "Edit shipping address")}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
+              {ct(
+                "Enter your delivery details below. You can type the full address yourself or choose a street suggestion.",
+              )}
+            </Typography>
+            <AddressFields
+              prefix="shipping"
+              values={shipping}
+              errors={showErrors ? shippingErrors : {}}
+              countries={countries}
+              onChange={setShipping}
+              showAutofillHint={false}
+              disabled={disabled}
+            />
+            {customer ? (
+              <Stack sx={{ mt: 1.5 }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={saveToAccount}
+                      onChange={(event) => {
+                        setSaveToAccount(event.target.checked)
+                        if (!event.target.checked) setMakeDefault(false)
+                      }}
+                    />
+                  }
+                  label={selectedSaved ? ct("Update this saved address") : t("save")}
+                />
+                {saveToAccount ? (
+                  !defaultAddress || editingDefault ? (
+                    <Typography variant="caption" color="text.secondary" sx={{ pl: 4 }}>
+                      {ct("This will be your default address for future orders.")}
+                    </Typography>
+                  ) : (
+                    <FormControlLabel
+                      control={
+                        <Checkbox checked={makeDefault} onChange={(event) => setMakeDefault(event.target.checked)} />
+                      }
+                      label={ct("Use as my default address for future orders")}
+                    />
+                  )
+                ) : null}
+              </Stack>
+            ) : null}
+          </Box>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: 2 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              disabled={disabled}
+              startIcon={busy ? <CircularProgress size={16} color="inherit" /> : undefined}
+            >
+              {t("continue")}
+            </Button>
+            {initialSource || savedAddresses.length ? (
+              <Button type="button" disabled={disabled} onClick={restore}>
+                {t("cancel")}
+              </Button>
+            ) : null}
+          </Stack>
+        </Box>
+      ) : null}
+    </Step>
+  )
 }
 
 function DeliverySection({
@@ -1023,7 +1485,12 @@ function DeliverySection({
           <Skeleton variant="rounded" height={68} />
         </Stack>
       ) : options.length ? (
-        <RadioGroup name="delivery_method" value={selected} onChange={(event) => onSelect(event.target.value)} aria-label={t("delivery")}>
+        <RadioGroup
+          name="delivery_method"
+          value={selected}
+          onChange={(event) => onSelect(event.target.value)}
+          aria-label={t("delivery")}
+        >
           <Stack spacing={1.25}>
             {options.map((option) => {
               const amount = Number(option.amount)
@@ -1031,12 +1498,18 @@ function DeliverySection({
               const arrival = arrivalWindow(description, locale)
               const tracked = /tracked/i.test(description ?? "")
               return (
-                <Box key={option.id} component="label" sx={{ ...selectableSx(selected === option.id), gridTemplateColumns: "auto minmax(0, 1fr) auto" }}>
+                <Box
+                  key={option.id}
+                  component="label"
+                  sx={{ ...selectableSx(selected === option.id), gridTemplateColumns: "auto minmax(0, 1fr) auto" }}
+                >
                   <Radio value={option.id} disabled={busy} />
                   <Box sx={{ flex: 1, minWidth: 0, py: 0.5 }}>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", flexWrap: "wrap" }}>
                       <Typography sx={{ fontWeight: 600 }}>{ct(name(option))}</Typography>
-                      {tracked ? <Chip label={t("tracked")} size="small" sx={{ height: 20, fontSize: 11, fontWeight: 600 }} /> : null}
+                      {tracked ? (
+                        <Chip label={t("tracked")} size="small" sx={{ height: 20, fontSize: 11, fontWeight: 600 }} />
+                      ) : null}
                     </Stack>
                     <Typography variant="body2" sx={{ color: "text.secondary" }}>
                       {ct(arrival ? t("arrives", { date: arrival }) : description)}
@@ -1081,8 +1554,18 @@ function PayPanel({
   return (
     <Box sx={{ mt: 3, pt: 3, borderTop: "1px solid", borderColor: "divider" }}>
       {provider === NMI_PROVIDER_ID ? (
-        nmiSession ? <NmiPaymentForm key={`${nmiSession.id}:${nmiCartFingerprint(cart)}`} session={nmiSession} busy={busy} onToken={onNmiToken} />
-          : <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>{ct("Your secure payment session needs refreshing.")}</Alert>
+        nmiSession ? (
+          <NmiPaymentForm
+            key={`${nmiSession.id}:${nmiCartFingerprint(cart)}`}
+            session={nmiSession}
+            busy={busy}
+            onToken={onNmiToken}
+          />
+        ) : (
+          <Alert severity="warning" action={<Button onClick={onRefresh}>{act("refresh")}</Button>}>
+            {ct("Your secure payment session needs refreshing.")}
+          </Alert>
+        )
       ) : (
         <Button
           variant="contained"
@@ -1096,13 +1579,15 @@ function PayPanel({
         </Button>
       )}
       <Typography variant="body2" sx={{ color: "text.secondary", mt: 2, fontSize: 13 }}>
-        {ct(provider === NMI_PROVIDER_ID
-          ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
-          : isPaygate(provider)
-          ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Continue to PayGate to pay. You can resume an unpaid payment from your order history. We ship after payment is verified."
-          : provider === MAKEPAY_PROVIDER_ID
-          ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to MakePay to complete your payment; we ship as soon as it is confirmed."
-          : "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will receive payment instructions by email; we ship as soon as payment is received.")}
+        {ct(
+          provider === NMI_PROVIDER_ID
+            ? "By authorizing payment and placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Cards are captured when ready to dispatch. Bank debits must settle before dispatch."
+            : isPaygate(provider)
+              ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. Continue to PayGate to pay. You can resume an unpaid payment from your order history. We ship after payment is verified."
+              : provider === MAKEPAY_PROVIDER_ID
+                ? "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will be taken to MakePay to complete your payment; we ship as soon as it is confirmed."
+                : "By placing your order you agree to our terms of sale and confirm the products are for laboratory research use only. You will receive payment instructions by email; we ship as soon as payment is received.",
+        )}
       </Typography>
     </Box>
   )

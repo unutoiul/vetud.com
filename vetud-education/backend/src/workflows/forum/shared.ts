@@ -22,7 +22,10 @@ export async function activeProfile(service: ForumModuleService, customerId: str
     throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "Choose your community name before taking part.")
   }
   if (profile.status !== "active") {
-    throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "Your community account can't post right now. Contact us if you think this is a mistake.")
+    throw new MedusaError(
+      MedusaError.Types.NOT_ALLOWED,
+      "Your community account can't post right now. Contact us if you think this is a mistake.",
+    )
   }
   return profile
 }
@@ -51,7 +54,10 @@ export async function claimableImages(service: ForumModuleService, profileId: st
   }
   const images = await service.listForumImages({ id: wanted, author_id: profileId, post_id: null })
   if (images.length !== wanted.length) {
-    throw new MedusaError(MedusaError.Types.INVALID_DATA, "One of your photos is no longer available. Please add it again.")
+    throw new MedusaError(
+      MedusaError.Types.INVALID_DATA,
+      "One of your photos is no longer available. Please add it again.",
+    )
   }
   return wanted
 }
@@ -66,7 +72,11 @@ export async function releaseImages(service: ForumModuleService, ids: string[]) 
 }
 
 /** One action per interval, counted from the member's latest record (deleted ones too). */
-export function assertNotTooSoon(latest: { created_at: Date | string } | undefined, intervalMs: number, message: string) {
+export function assertNotTooSoon(
+  latest: { created_at: Date | string } | undefined,
+  intervalMs: number,
+  message: string,
+) {
   if (latest && Date.now() - new Date(latest.created_at).getTime() < intervalMs) {
     throw new MedusaError(MedusaError.Types.NOT_ALLOWED, message)
   }
@@ -87,7 +97,7 @@ export const recountForumThreadsStep = createStep(
       if (!thread) continue
       const [latest, replyCount] = await service.listAndCountForumPosts(
         { thread_id: id, is_opening: false, status: "published" },
-        { take: 1, order: { created_at: "DESC" } }
+        { take: 1, order: { created_at: "DESC" } },
       )
       const [opening] = await service.listForumPosts({ thread_id: id, is_opening: true }, { take: 1 })
       await service.updateForumThreads({
@@ -98,7 +108,7 @@ export const recountForumThreadsStep = createStep(
       })
     }
     return new StepResponse(undefined)
-  }
+  },
 )
 
 /** Recounts reputation from the members' votes, best answers, removed posts and published posts. */
@@ -107,8 +117,11 @@ export const recountForumReputationStep = createStep(
   async (input: { profile_ids: (string | null | undefined)[] }, { container }) => {
     const service = forumService(container)
     for (const id of unique(input.profile_ids)) {
-      const published = await service.listForumPosts({ author_id: id, status: "published" }, { select: ["id", "helpful_count", "is_opening"] })
-      const postIds = published.map(post => post.id)
+      const published = await service.listForumPosts(
+        { author_id: id, status: "published" },
+        { select: ["id", "helpful_count", "is_opening"] },
+      )
+      const postIds = published.map((post) => post.id)
       const [, bestAnswers] = postIds.length
         ? await service.listAndCountForumThreads({ accepted_post_id: postIds, status: "published" }, { take: 1 })
         : [[], 0]
@@ -119,13 +132,13 @@ export const recountForumReputationStep = createStep(
           helpfulVotes: published.reduce((total, post) => total + (post.helpful_count ?? 0), 0),
           bestAnswers,
           removedPosts,
-          replies: published.filter(post => !post.is_opening).length,
-          threads: published.filter(post => post.is_opening).length,
+          replies: published.filter((post) => !post.is_opening).length,
+          threads: published.filter((post) => post.is_opening).length,
         }),
       })
     }
     return new StepResponse(undefined)
-  }
+  },
 )
 
 /** Recounts a post's helpful votes. */

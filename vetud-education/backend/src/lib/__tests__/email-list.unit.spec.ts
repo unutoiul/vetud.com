@@ -1,12 +1,22 @@
-import { confirmToken, isValidConfirmToken, isValidUnsubscribeToken, normalizeEmail, unsubscribeToken } from "../email-list"
+import {
+  confirmToken,
+  isValidConfirmToken,
+  isValidUnsubscribeToken,
+  normalizeEmail,
+  unsubscribeToken,
+} from "../email-list"
 
 describe("email list links", () => {
   const previous = process.env.JWT_SECRET
   const now = 1_800_000_000_000
   const expires = now + 60_000
 
-  beforeAll(() => { process.env.JWT_SECRET = "test-secret" })
-  afterAll(() => { process.env.JWT_SECRET = previous })
+  beforeAll(() => {
+    process.env.JWT_SECRET = "test-secret"
+  })
+  afterAll(() => {
+    process.env.JWT_SECRET = previous
+  })
 
   it("accepts a confirmation link until it expires, whatever the email's case", () => {
     const token = confirmToken("Reader@Example.com ", expires)

@@ -1,5 +1,8 @@
 import {
-  assertNmiPaymentIdentity, getNmiSettlement, NMI_PROVIDER_ID, readNmiPaymentIdentity,
+  assertNmiPaymentIdentity,
+  getNmiSettlement,
+  NMI_PROVIDER_ID,
+  readNmiPaymentIdentity,
   type NmiSettlementPayment,
 } from "./nmi-settlement"
 
@@ -14,11 +17,17 @@ export type CustomerPaymentReference = { id: string; provider_id: string }
 /** Public display hints only. Never return gateway data, signatures or metadata. */
 export function customerPaymentSummary(
   references: CustomerPaymentReference[],
-  payments: NmiSettlementPayment[]
+  payments: NmiSettlementPayment[],
 ): CustomerPaymentSummary {
   const nmi = references.filter((payment) => payment.provider_id === NMI_PROVIDER_ID)
   if (!nmi.length) {
-    return { method: !references.length ? "unknown" : references.every((payment) => payment.provider_id === "pp_system_default") ? "manual" : "online" }
+    return {
+      method: !references.length
+        ? "unknown"
+        : references.every((payment) => payment.provider_id === "pp_system_default")
+          ? "manual"
+          : "online",
+    }
   }
 
   const summaries = nmi.map((reference): CustomerPaymentSummary => {
@@ -32,11 +41,15 @@ export function customerPaymentSummary(
         const settlement = getNmiSettlement(payment, state)
         if (settlement?.hold) return { method, review: "returned" }
         if (state.canceled || payment.canceled_at) return { method, review: "canceled" }
-        if (settlement?.status === "settled" && settlement.capture_recorded && payment.captured_at && state.captured) return { method }
+        if (settlement?.status === "settled" && settlement.capture_recorded && payment.captured_at && state.captured)
+          return { method }
         return { method, review: payment.captured_at || state.captured ? "requires_review" : "pending_settlement" }
       }
       if (state.canceled || payment.canceled_at) return { method, review: "canceled" }
-      return { method, ...(Boolean(state.captured) !== Boolean(payment.captured_at) ? { review: "requires_review" as const } : {}) }
+      return {
+        method,
+        ...(Boolean(state.captured) !== Boolean(payment.captured_at) ? { review: "requires_review" as const } : {}),
+      }
     } catch {
       // Missing keys, unverified state or inconsistent settlement must not show
       // a reassuring "Paid" label. This does not mutate/reconcile the payment.

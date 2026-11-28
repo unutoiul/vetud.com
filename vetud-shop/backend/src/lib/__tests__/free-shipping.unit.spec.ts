@@ -11,7 +11,12 @@ describe("free shipping thresholds", () => {
   })
 
   it("keeps the dollar amount as set and converts the others", () => {
-    expect(freeShippingThresholds(250, ["USD", "eur", "gbp", "huf"], { eur: 0.86, gbp: 0.76, huf: 336.8 })).toEqual({ usd: 250, eur: 215, gbp: 190, huf: 84_000 })
+    expect(freeShippingThresholds(250, ["USD", "eur", "gbp", "huf"], { eur: 0.86, gbp: 0.76, huf: 336.8 })).toEqual({
+      usd: 250,
+      eur: 215,
+      gbp: 190,
+      huf: 84_000,
+    })
   })
 
   it("leaves out a currency with no exchange rate", () => {

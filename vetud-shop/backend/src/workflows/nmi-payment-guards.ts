@@ -2,13 +2,14 @@ import type { MedusaContainer } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 import { createStep, createWorkflow, StepResponse, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
 import {
-  assertNmiManualCaptureAllowed, assertNmiPaymentCanFulfill, nmiError,
+  assertNmiManualCaptureAllowed,
+  assertNmiPaymentCanFulfill,
+  nmiError,
   NMI_PROVIDER_ID,
 } from "../lib/nmi-settlement"
 
 export type NmiPaymentGuardInput =
-  | { action: "capture"; payment_id: string; amount?: unknown }
-  | { action: "fulfillment" | "shipment"; order_id: string }
+  { action: "capture"; payment_id: string; amount?: unknown } | { action: "fulfillment" | "shipment"; order_id: string }
 
 type OrderPayments = {
   id: string
@@ -29,21 +30,31 @@ export async function executeNmiPaymentGuard(input: NmiPaymentGuardInput, contai
   }
   if (!input.order_id) nmiError("Missing order identity for NMI fulfillment validation.")
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
-  const { data } = await query.graph({
-    entity: "order",
-    fields: [
-      "id", "payment_collections.payments.id", "payment_collections.payments.provider_id",
-      "payment_collections.payment_sessions.id", "payment_collections.payment_sessions.provider_id",
-      "payment_collections.payment_sessions.status",
-    ],
-    filters: { id: input.order_id },
-  }, { throwIfKeyNotFound: true })
+  const { data } = await query.graph(
+    {
+      entity: "order",
+      fields: [
+        "id",
+        "payment_collections.payments.id",
+        "payment_collections.payments.provider_id",
+        "payment_collections.payment_sessions.id",
+        "payment_collections.payment_sessions.provider_id",
+        "payment_collections.payment_sessions.status",
+      ],
+      filters: { id: input.order_id },
+    },
+    { throwIfKeyNotFound: true },
+  )
   const order = data[0] as OrderPayments | undefined
   if (!order || order.id !== input.order_id) nmiError("Order was not found for NMI fulfillment validation.")
   for (const collection of order.payment_collections ?? []) {
     const paymentRows = collection.payments ?? []
-    if (!paymentRows.length && collection.payment_sessions?.some((session) =>
-      session.provider_id === NMI_PROVIDER_ID && !["canceled", "error"].includes(session.status))) {
+    if (
+      !paymentRows.length &&
+      collection.payment_sessions?.some(
+        (session) => session.provider_id === NMI_PROVIDER_ID && !["canceled", "error"].includes(session.status),
+      )
+    ) {
       nmiError("The NMI payment is not authorized; fulfillment and shipment are on hold.")
     }
     for (const row of paymentRows) {

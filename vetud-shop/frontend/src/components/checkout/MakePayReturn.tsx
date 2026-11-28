@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { useTranslations } from "next-intl"
 
 import Alert from "@mui/material/Alert"
@@ -68,7 +67,9 @@ export default function MakePayReturn() {
     const schedule = (attempt: number) => {
       if (attempt >= MAX_ATTEMPTS) {
         setOutcome("info")
-        setMessage("Your payment is still pending. You can safely close this page; we'll email you once it's confirmed.")
+        setMessage(
+          "Your payment is still pending. You can safely close this page; we'll email you once it's confirmed.",
+        )
         return
       }
       timer = window.setTimeout(() => void poll(attempt), retryDelay(attempt))
@@ -107,7 +108,7 @@ export default function MakePayReturn() {
             return
           }
           window.location.replace(
-            `/${encodeURIComponent(country)}/order/confirmed?id=${encodeURIComponent(orderId)}&paid=1`
+            `/${encodeURIComponent(country)}/order/confirmed?id=${encodeURIComponent(orderId)}&paid=1`,
           )
           return
         }

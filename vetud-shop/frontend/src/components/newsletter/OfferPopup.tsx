@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import Alert from "@mui/material/Alert"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -37,7 +36,10 @@ const offerKey = (id: string) => `vetud_offer_${id}`
 function subscribed(id: string) {
   try {
     // Older sign-ups were recorded per offer.
-    return window.localStorage.getItem(SUBSCRIBED_KEY) === "subscribed" || window.localStorage.getItem(offerKey(id)) === "subscribed"
+    return (
+      window.localStorage.getItem(SUBSCRIBED_KEY) === "subscribed" ||
+      window.localStorage.getItem(offerKey(id)) === "subscribed"
+    )
   } catch {
     return false
   }
@@ -54,7 +56,7 @@ function closedThisVisit(id: string) {
 
 function remember(storage: "local" | "session", key: string, value: string) {
   try {
-    (storage === "local" ? window.localStorage : window.sessionStorage).setItem(key, value)
+    ;(storage === "local" ? window.localStorage : window.sessionStorage).setItem(key, value)
   } catch {
     // Without storage the pop-up may show again sooner; nothing else depends on it.
   }
@@ -76,10 +78,35 @@ function Countdown({ endsAt }: { endsAt: string }) {
     [Math.floor(left / 1000) % 60, t("seconds")],
   ] as const
   return (
-    <Box role="timer" aria-label={`${t("endsIn")} ${parts.map(([value, label]) => `${value} ${label}`).join(", ")}`} sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1 }}>
+    <Box
+      role="timer"
+      aria-label={`${t("endsIn")} ${parts.map(([value, label]) => `${value} ${label}`).join(", ")}`}
+      sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1 }}
+    >
       {parts.map(([value, label]) => (
-        <Box key={label} aria-hidden sx={{ textAlign: "center", py: 1.25, borderRadius: "10px", border: "1px solid", borderColor: "divider", bgcolor: "brand.mintWash" }}>
-          <Typography sx={{ fontSize: 24, fontWeight: 700, color: "brand.navy", lineHeight: 1.2, fontVariantNumeric: "tabular-nums" }}>{ct(String(value).padStart(2, "0"))}</Typography>
+        <Box
+          key={label}
+          aria-hidden
+          sx={{
+            textAlign: "center",
+            py: 1.25,
+            borderRadius: "10px",
+            border: "1px solid",
+            borderColor: "divider",
+            bgcolor: "brand.mintWash",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: 24,
+              fontWeight: 700,
+              color: "brand.navy",
+              lineHeight: 1.2,
+              fontVariantNumeric: "tabular-nums",
+            }}
+          >
+            {ct(String(value).padStart(2, "0"))}
+          </Typography>
           <Typography sx={{ fontSize: 11, color: "text.secondary", fontWeight: 600 }}>{ct(label)}</Typography>
         </Box>
       ))}
@@ -113,8 +140,17 @@ export default function OfferPopup({ enabled = true }: { enabled?: boolean }) {
     let cancelled = false
     const timer = window.setTimeout(async () => {
       try {
-        const { offer: current } = await sdk.client.fetch<{ offer: Offer | null }>("/store/newsletter/offer", { method: "GET" })
-        if (cancelled || !current || subscribed(current.id) || closedThisVisit(current.id) || (current.ends_at && new Date(current.ends_at).getTime() <= Date.now())) return
+        const { offer: current } = await sdk.client.fetch<{ offer: Offer | null }>("/store/newsletter/offer", {
+          method: "GET",
+        })
+        if (
+          cancelled ||
+          !current ||
+          subscribed(current.id) ||
+          closedThisVisit(current.id) ||
+          (current.ends_at && new Date(current.ends_at).getTime() <= Date.now())
+        )
+          return
         setOffer(current)
         setOpen(true)
       } catch {
@@ -148,40 +184,151 @@ export default function OfferPopup({ enabled = true }: { enabled?: boolean }) {
   }
 
   return (
-    <Dialog open={open && enabled} onClose={close} maxWidth="xs" fullWidth aria-labelledby="offer-title" slotProps={{ paper: { sx: { borderRadius: "20px", overflow: "hidden", m: 2, maxHeight: "calc(100% - 32px)" } } }}>
+    <Dialog
+      open={open && enabled}
+      onClose={close}
+      maxWidth="xs"
+      fullWidth
+      aria-labelledby="offer-title"
+      slotProps={{ paper: { sx: { borderRadius: "20px", overflow: "hidden", m: 2, maxHeight: "calc(100% - 32px)" } } }}
+    >
       <Box sx={{ position: "relative", height: 132, bgcolor: "brand.navy" }}>
-        <Image src="/images/vetud-alpine-landscape.webp" alt="" fill sizes="440px" style={{ objectFit: "cover", objectPosition: "center 80%", opacity: .55 }} />
-        <Box sx={{ position: "absolute", inset: 0, background: `linear-gradient(0deg, ${brand.navyA85}, ${brand.navyA15})` }} />
-        <IconButton aria-label={t("close")} onClick={close} sx={{ position: "absolute", top: 10, right: 10, color: brand.white, bgcolor: brand.blue875A45, "&:hover": { bgcolor: brand.blue875A70 } }}><Icon name="close" /></IconButton>
-        <Typography sx={{ position: "absolute", left: 24, bottom: 16, px: 1.5, py: .5, borderRadius: 999, bgcolor: brand.whiteA16, color: brand.white, fontSize: 12, fontWeight: 700, letterSpacing: ".06em" }}>{ct(offer.headline || t("label"))}</Typography>
+        <Image
+          src="/images/vetud-alpine-landscape.webp"
+          alt=""
+          fill
+          sizes="440px"
+          style={{ objectFit: "cover", objectPosition: "center 80%", opacity: 0.55 }}
+        />
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            background: `linear-gradient(0deg, ${brand.navyA85}, ${brand.navyA15})`,
+          }}
+        />
+        <IconButton
+          aria-label={t("close")}
+          onClick={close}
+          sx={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            color: brand.white,
+            bgcolor: brand.blue875A45,
+            "&:hover": { bgcolor: brand.blue875A70 },
+          }}
+        >
+          <Icon name="close" />
+        </IconButton>
+        <Typography
+          sx={{
+            position: "absolute",
+            left: 24,
+            bottom: 16,
+            px: 1.5,
+            py: 0.5,
+            borderRadius: 999,
+            bgcolor: brand.whiteA16,
+            color: brand.white,
+            fontSize: 12,
+            fontWeight: 700,
+            letterSpacing: ".06em",
+          }}
+        >
+          {ct(offer.headline || t("label"))}
+        </Typography>
       </Box>
 
       <Box sx={{ p: { xs: 2.5, sm: 3 }, overflowY: "auto" }}>
         {status === "sent" ? (
           <Box role="status" sx={{ textAlign: "center", py: 2 }}>
             <Icon name="mail" sx={{ fontSize: 40, color: "brand.blue" }} />
-            <Typography id="offer-title" component="h2" sx={{ mt: 1.5, fontSize: 24, fontWeight: 700, letterSpacing: "-.02em" }}>{t("successTitle")}</Typography>
-            <Typography sx={{ mt: 1, color: "text.secondary", lineHeight: 1.7 }}>{t("successBody", { discount: offer.discount, email: email.trim() })}</Typography>
-            <Button variant="contained" onClick={close} sx={{ mt: 3 }}>{t("close")}</Button>
+            <Typography
+              id="offer-title"
+              component="h2"
+              sx={{ mt: 1.5, fontSize: 24, fontWeight: 700, letterSpacing: "-.02em" }}
+            >
+              {t("successTitle")}
+            </Typography>
+            <Typography sx={{ mt: 1, color: "text.secondary", lineHeight: 1.7 }}>
+              {t("successBody", { discount: offer.discount, email: email.trim() })}
+            </Typography>
+            <Button variant="contained" onClick={close} sx={{ mt: 3 }}>
+              {t("close")}
+            </Button>
           </Box>
         ) : (
           <Box component="form" onSubmit={submit} noValidate>
-            <Typography id="offer-title" component="h2" sx={{ fontSize: { xs: 26, sm: 30 }, fontWeight: 700, letterSpacing: "-.03em", lineHeight: 1.15 }}>{t("cta", { discount: offer.discount })}</Typography>
-            {offer.description ? <Typography sx={{ mt: 1, color: "text.secondary", lineHeight: 1.65 }}>{ct(offer.description)}</Typography> : null}
-            {offer.ends_at ? <Box sx={{ mt: 2.5 }}><Typography sx={{ fontSize: 13, fontWeight: 650, color: "text.secondary", mb: 1 }}>{t("endsIn")}</Typography><Countdown endsAt={offer.ends_at} /></Box> : null}
-            <TextField sx={{ mt: 2.5 }} label={t("email")} type="email" name="email" required value={email} onChange={(event) => setEmail(event.target.value)} error={showErrors && Boolean(emailError)} helperText={ct(showErrors ? emailError : undefined)} slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }} />
+            <Typography
+              id="offer-title"
+              component="h2"
+              sx={{ fontSize: { xs: 26, sm: 30 }, fontWeight: 700, letterSpacing: "-.03em", lineHeight: 1.15 }}
+            >
+              {t("cta", { discount: offer.discount })}
+            </Typography>
+            {offer.description ? (
+              <Typography sx={{ mt: 1, color: "text.secondary", lineHeight: 1.65 }}>{ct(offer.description)}</Typography>
+            ) : null}
+            {offer.ends_at ? (
+              <Box sx={{ mt: 2.5 }}>
+                <Typography sx={{ fontSize: 13, fontWeight: 650, color: "text.secondary", mb: 1 }}>
+                  {t("endsIn")}
+                </Typography>
+                <Countdown endsAt={offer.ends_at} />
+              </Box>
+            ) : null}
+            <TextField
+              sx={{ mt: 2.5 }}
+              label={t("email")}
+              type="email"
+              name="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              error={showErrors && Boolean(emailError)}
+              helperText={ct(showErrors ? emailError : undefined)}
+              slotProps={{ htmlInput: { autoComplete: "email", spellCheck: false } }}
+            />
             {/* Honeypot: hidden from people, filled by bots. */}
             <Box aria-hidden sx={{ position: "absolute", left: -9999, width: 1, height: 1, overflow: "hidden" }}>
-              <input type="text" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={(event) => setWebsite(event.target.value)} />
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(event) => setWebsite(event.target.value)}
+              />
             </Box>
-            {status === "error" ? <Alert severity="error" sx={{ mt: 1.5 }}>{t("error")}</Alert> : null}
-            <Button type="submit" variant="contained" size="large" fullWidth disabled={status === "sending"} startIcon={status === "sending" ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" />} sx={{ mt: 2.5, minHeight: 52 }}>
+            {status === "error" ? (
+              <Alert severity="error" sx={{ mt: 1.5 }}>
+                {t("error")}
+              </Alert>
+            ) : null}
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              fullWidth
+              disabled={status === "sending"}
+              startIcon={status === "sending" ? <CircularProgress size={16} color="inherit" /> : <Icon name="mail" />}
+              sx={{ mt: 2.5, minHeight: 52 }}
+            >
               {ct(status === "sending" ? t("sending") : t("cta", { discount: offer.discount }))}
             </Button>
-            <Typography variant="body2" sx={{ mt: 1.25, textAlign: "center", fontSize: 12.5, lineHeight: 1.6, color: "text.secondary" }}>
-              {ct("Free to join. Unsubscribe whenever you like.")} <Link href={localize("/legal/privacy")} target="_blank" rel="noopener">{t("privacy")}</Link>
+            <Typography
+              variant="body2"
+              sx={{ mt: 1.25, textAlign: "center", fontSize: 12.5, lineHeight: 1.6, color: "text.secondary" }}
+            >
+              {ct("Free to join. Unsubscribe whenever you like.")}{" "}
+              <Link href={localize("/legal/privacy")} target="_blank" rel="noopener">
+                {t("privacy")}
+              </Link>
             </Typography>
-            <Button onClick={close} fullWidth sx={{ mt: 1, color: "text.secondary" }}>{t("noThanks")}</Button>
+            <Button onClick={close} fullWidth sx={{ mt: 1, color: "text.secondary" }}>
+              {t("noThanks")}
+            </Button>
           </Box>
         )}
       </Box>

@@ -12,6 +12,6 @@ export const bookPanelSx: SxProps<Theme> = {
   borderRadius: { xs: "20px", md: "28px" },
   color: "brand.onNavy",
   bgcolor: "brand.navyDeep",
-  backgroundImage: `radial-gradient(ellipse at 18% 50%, ${alpha(brand.blue, .42)}, transparent 65%)`,
-  border: `1px solid ${alpha(brand.cyan, .22)}`,
+  backgroundImage: `radial-gradient(ellipse at 18% 50%, ${alpha(brand.blue, 0.42)}, transparent 65%)`,
+  border: `1px solid ${alpha(brand.cyan, 0.22)}`,
 }

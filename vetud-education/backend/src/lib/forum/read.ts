@@ -34,13 +34,17 @@ export type ThreadFilters = {
 
 const queryOf = (container: MedusaContainer) => container.resolve(ContainerRegistrationKeys.QUERY)
 const unique = (ids: (string | null | undefined)[]) => [...new Set(ids.filter((id): id is string => Boolean(id)))]
-const escapeLike = (text: string) => text.replace(/[\\%_]/g, character => `\\${character}`)
+const escapeLike = (text: string) => text.replace(/[\\%_]/g, (character) => `\\${character}`)
 
 export async function loadProfiles(container: MedusaContainer, ids: (string | null | undefined)[]) {
   const wanted = unique(ids)
   if (!wanted.length) return new Map<string, ProfileRecord>()
-  const { data } = await queryOf(container).graph({ entity: "forum_profile", fields: PROFILE_FIELDS, filters: { id: wanted } })
-  return new Map((data as ProfileRecord[]).map(profile => [profile.id, profile]))
+  const { data } = await queryOf(container).graph({
+    entity: "forum_profile",
+    fields: PROFILE_FIELDS,
+    filters: { id: wanted },
+  })
+  return new Map((data as ProfileRecord[]).map((profile) => [profile.id, profile]))
 }
 
 /** Each post's photos, oldest upload first. */
@@ -63,12 +67,20 @@ export async function loadImages(container: MedusaContainer, postIds: (string | 
 
 export async function viewerProfile(container: MedusaContainer, customerId?: string | null) {
   if (!customerId) return null
-  const { data } = await queryOf(container).graph({ entity: "forum_profile", fields: PROFILE_FIELDS, filters: { customer_id: customerId } })
+  const { data } = await queryOf(container).graph({
+    entity: "forum_profile",
+    fields: PROFILE_FIELDS,
+    filters: { customer_id: customerId },
+  })
   return (data[0] as ProfileRecord | undefined) ?? null
 }
 
 async function profileByHandle(container: MedusaContainer, handle: string) {
-  const { data } = await queryOf(container).graph({ entity: "forum_profile", fields: PROFILE_FIELDS, filters: { handle } })
+  const { data } = await queryOf(container).graph({
+    entity: "forum_profile",
+    fields: PROFILE_FIELDS,
+    filters: { handle },
+  })
   return (data[0] as ProfileRecord | undefined) ?? null
 }
 
@@ -88,11 +100,12 @@ export async function listThreads(container: MedusaContainer, filters: ThreadFil
     if (!author) return { threads: [], count: 0 }
     where.author_id = author.id
   }
-  const order = filters.sort === "top"
-    ? { helpful_count: "DESC", reply_count: "DESC", created_at: "DESC" }
-    : filters.sort === "unanswered"
-      ? { created_at: "DESC" }
-      : { pinned: "DESC", last_activity_at: "DESC" }
+  const order =
+    filters.sort === "top"
+      ? { helpful_count: "DESC", reply_count: "DESC", created_at: "DESC" }
+      : filters.sort === "unanswered"
+        ? { created_at: "DESC" }
+        : { pinned: "DESC", last_activity_at: "DESC" }
 
   const { data, metadata } = await queryOf(container).graph({
     entity: "forum_thread",
@@ -101,15 +114,26 @@ export async function listThreads(container: MedusaContainer, filters: ThreadFil
     pagination: { skip: filters.offset, take: filters.limit, order },
   })
   const threads = data as ThreadRecord[]
-  const authors = await loadProfiles(container, threads.map(thread => thread.author_id))
-  return { threads: threads.map(thread => publicThread(thread, { authors, viewer })), count: metadata?.count ?? threads.length }
+  const authors = await loadProfiles(
+    container,
+    threads.map((thread) => thread.author_id),
+  )
+  return {
+    threads: threads.map((thread) => publicThread(thread, { authors, viewer })),
+    count: metadata?.count ?? threads.length,
+  }
 }
 
 /**
  * One thread with its opening post, a page of replies (oldest first) and the accepted answer. Threads and replies waiting for review are only returned to
  * their author.
  */
-export async function threadDetail(container: MedusaContainer, id: string, viewer: ProfileRecord | null, page: { offset: number; limit: number }) {
+export async function threadDetail(
+  container: MedusaContainer,
+  id: string,
+  viewer: ProfileRecord | null,
+  page: { offset: number; limit: number },
+) {
   const query = queryOf(container)
   const { data: threads } = await query.graph({ entity: "forum_thread", fields: THREAD_FIELDS, filters: { id } })
   const thread = threads[0] as ThreadRecord | undefined
@@ -133,18 +157,28 @@ export async function threadDetail(container: MedusaContainer, id: string, viewe
   if (!opening) return null
 
   const posts = replies as PostRecord[]
-  let accepted: PostRecord | undefined = posts.find(post => post.id === thread.accepted_post_id)
+  let accepted: PostRecord | undefined = posts.find((post) => post.id === thread.accepted_post_id)
   if (thread.accepted_post_id && !accepted) {
-    const { data } = await query.graph({ entity: "forum_post", fields: POST_FIELDS, filters: { id: thread.accepted_post_id, status: "published" } })
+    const { data } = await query.graph({
+      entity: "forum_post",
+      fields: POST_FIELDS,
+      filters: { id: thread.accepted_post_id, status: "published" },
+    })
     accepted = data[0] as PostRecord | undefined
   }
 
-  const shownIds = unique([opening.id, ...posts.map(post => post.id), accepted?.id])
+  const shownIds = unique([opening.id, ...posts.map((post) => post.id), accepted?.id])
   const [authors, voted, images] = await Promise.all([
-    loadProfiles(container, [thread.author_id, opening.author_id, accepted?.author_id, ...posts.map(post => post.author_id)]),
+    loadProfiles(container, [
+      thread.author_id,
+      opening.author_id,
+      accepted?.author_id,
+      ...posts.map((post) => post.author_id),
+    ]),
     viewer
-      ? query.graph({ entity: "forum_vote", fields: ["post_id"], filters: { profile_id: viewer.id, post_id: shownIds } })
-        .then(({ data }) => new Set((data as { post_id: string }[]).map(vote => vote.post_id)))
+      ? query
+          .graph({ entity: "forum_vote", fields: ["post_id"], filters: { profile_id: viewer.id, post_id: shownIds } })
+          .then(({ data }) => new Set((data as { post_id: string }[]).map((vote) => vote.post_id)))
       : Promise.resolve(new Set<string>()),
     loadImages(container, shownIds),
   ])
@@ -153,7 +187,7 @@ export async function threadDetail(container: MedusaContainer, id: string, viewe
   return {
     thread: publicThread(thread, context),
     opening: publicPost(opening, context),
-    posts: posts.map(post => publicPost(post, context)),
+    posts: posts.map((post) => publicPost(post, context)),
     accepted: accepted ? publicPost(accepted, context) : null,
     count: metadata?.count ?? posts.length,
     offset: page.offset,
@@ -166,7 +200,12 @@ export async function threadDetail(container: MedusaContainer, id: string, viewe
 }
 
 async function count(container: MedusaContainer, entity: string, filters: Record<string, unknown>) {
-  const { metadata, data } = await queryOf(container).graph({ entity, fields: ["id"], filters, pagination: { skip: 0, take: 1 } })
+  const { metadata, data } = await queryOf(container).graph({
+    entity,
+    fields: ["id"],
+    filters,
+    pagination: { skip: 0, take: 1 },
+  })
   return metadata?.count ?? data.length
 }
 
@@ -182,12 +221,19 @@ export async function forumStats(container: MedusaContainer) {
 
 /** Threads and latest activity per topic, for the topic cards. */
 async function topicStats(container: MedusaContainer) {
-  const { data } = await queryOf(container).graph({ entity: "forum_thread", fields: ["topic", "last_activity_at"], filters: { status: "published" } })
+  const { data } = await queryOf(container).graph({
+    entity: "forum_thread",
+    fields: ["topic", "last_activity_at"],
+    filters: { status: "published" },
+  })
   const topics: Record<string, { threads: number; last_activity_at: string | null }> = {}
   for (const thread of data as { topic: string; last_activity_at: string | Date }[]) {
     const entry = topics[thread.topic] ?? { threads: 0, last_activity_at: null }
     const at = new Date(thread.last_activity_at).toISOString()
-    topics[thread.topic] = { threads: entry.threads + 1, last_activity_at: !entry.last_activity_at || at > entry.last_activity_at ? at : entry.last_activity_at }
+    topics[thread.topic] = {
+      threads: entry.threads + 1,
+      last_activity_at: !entry.last_activity_at || at > entry.last_activity_at ? at : entry.last_activity_at,
+    }
   }
   return topics
 }
@@ -214,12 +260,12 @@ export async function memberStats(container: MedusaContainer, profile: ProfileRe
     fields: ["id", "helpful_count", "is_opening"],
     filters: { author_id: profile.id, status: "published" },
   })
-  const postIds = published.map(post => post.id as string)
+  const postIds = published.map((post) => post.id as string)
   const [bestAnswers, pending] = await Promise.all([
     postIds.length ? count(container, "forum_thread", { accepted_post_id: postIds, status: "published" }) : 0,
     count(container, "forum_post", { author_id: profile.id, status: "pending" }),
   ])
-  const threads = published.filter(post => post.is_opening).length
+  const threads = published.filter((post) => post.is_opening).length
   const replies = published.length - threads
   const next = nextLevelFor(profile.reputation)
   return {

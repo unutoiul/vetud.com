@@ -33,7 +33,17 @@ export type OrderInput = {
   website?: string
 }
 
-export const LIMITS = { name: 120, email: 254, phone: 32, contactHandle: 80, address: 200, city: 100, postalCode: 20, note: 1000, promoCode: 32 }
+export const LIMITS = {
+  name: 120,
+  email: 254,
+  phone: 32,
+  contactHandle: 80,
+  address: 200,
+  city: 100,
+  postalCode: 20,
+  note: 1000,
+  promoCode: 32,
+}
 
 export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 export const PHONE_PATTERN = /^\+?[\d\s().-]{6,32}$/
@@ -43,7 +53,13 @@ export const PHONE_PATTERN = /^\+?[\d\s().-]{6,32}$/
  * lib/pricing.ts): regular price, the offer price, and the extra subscriber discount when a valid
  * code was given.
  */
-export function orderTotal(product: ProductId, strength: Strength, quantity: number, withCode: boolean, shipTo: string | null | undefined) {
+export function orderTotal(
+  product: ProductId,
+  strength: Strength,
+  quantity: number,
+  withCode: boolean,
+  shipTo: string | null | undefined,
+) {
   const { regular, sale } = priceOf(product, strength, pricingCountry(shipTo))
   const regularTotal = regular * quantity
   const subtotal = sale * quantity
@@ -66,7 +82,8 @@ export function parseOrder(body: unknown): Result {
   const strength = raw.strength as Strength
   if (!STRENGTHS.includes(strength)) errors.strength = "Choose a strength."
   const quantity = Number(raw.quantity)
-  if (!Number.isInteger(quantity) || quantity < 1 || quantity > MAX_QUANTITY) errors.quantity = `Choose 1 to ${MAX_QUANTITY}.`
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > MAX_QUANTITY)
+    errors.quantity = `Choose 1 to ${MAX_QUANTITY}.`
 
   const order: OrderInput = {
     product,

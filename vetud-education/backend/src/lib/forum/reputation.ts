@@ -27,16 +27,16 @@ export type ReputationLevel = (typeof REPUTATION_LEVELS)[number]
 export type ReputationLevelId = ReputationLevel["id"]
 
 export function levelFor(reputation: number): ReputationLevel {
-  return [...REPUTATION_LEVELS].reverse().find(level => reputation >= level.min) ?? REPUTATION_LEVELS[0]
+  return [...REPUTATION_LEVELS].reverse().find((level) => reputation >= level.min) ?? REPUTATION_LEVELS[0]
 }
 
 /** The level after this one, or null at the top. */
 export function nextLevelFor(reputation: number) {
-  return REPUTATION_LEVELS.find(level => level.min > reputation) ?? null
+  return REPUTATION_LEVELS.find((level) => level.min > reputation) ?? null
 }
 
 /** The lowest reputation that may post links without review. */
-export const LINK_LEVEL_MIN = REPUTATION_LEVELS.find(level => level.id === "contributor")!.min
+export const LINK_LEVEL_MIN = REPUTATION_LEVELS.find((level) => level.id === "contributor")!.min
 
 export type ReputationTally = {
   helpfulVotes: number
@@ -48,14 +48,18 @@ export type ReputationTally = {
 
 /** Capped points for published replies and threads. */
 export function participationPoints(tally: Pick<ReputationTally, "replies" | "threads">) {
-  return Math.min(PARTICIPATION_CAP, (tally.replies ?? 0) * REPUTATION_POINTS.reply + (tally.threads ?? 0) * REPUTATION_POINTS.thread)
+  return Math.min(
+    PARTICIPATION_CAP,
+    (tally.replies ?? 0) * REPUTATION_POINTS.reply + (tally.threads ?? 0) * REPUTATION_POINTS.thread,
+  )
 }
 
 /** Reputation is always recounted from these totals, so it can't drift when votes or posts change. */
 export function computeReputation(tally: ReputationTally) {
-  const points = tally.helpfulVotes * REPUTATION_POINTS.helpfulVote
-    + tally.bestAnswers * REPUTATION_POINTS.bestAnswer
-    + tally.removedPosts * REPUTATION_POINTS.removedPost
-    + participationPoints(tally)
+  const points =
+    tally.helpfulVotes * REPUTATION_POINTS.helpfulVote +
+    tally.bestAnswers * REPUTATION_POINTS.bestAnswer +
+    tally.removedPosts * REPUTATION_POINTS.removedPost +
+    participationPoints(tally)
   return Math.max(0, points)
 }

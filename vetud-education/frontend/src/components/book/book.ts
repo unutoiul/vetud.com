@@ -67,7 +67,9 @@ export async function startBookCheckout(input: { token?: string; email?: string;
 
 /** Step 3: whether the payment went through, for the thank-you page. */
 export async function bookOrder(sessionId: string) {
-  const order = await sdk.client.fetch<{ paid: boolean; email: string | null }>("/store/book/order", { query: { session_id: sessionId } })
+  const order = await sdk.client.fetch<{ paid: boolean; email: string | null }>("/store/book/order", {
+    query: { session_id: sessionId },
+  })
   if (order.paid) remember("bought")
   return order
 }

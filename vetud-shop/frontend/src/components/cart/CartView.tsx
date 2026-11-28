@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { useTranslations } from "next-intl"
 
 import { LockIcon as LockOutlinedIcon, ArrowUpRightIcon as NorthEastIcon } from "@/components/brand/Icon"
@@ -41,7 +40,7 @@ export default function CartView() {
   }
 
   const items = [...(cart?.items ?? [])].sort((a, b) =>
-    String(a.created_at ?? "").localeCompare(String(b.created_at ?? ""))
+    String(a.created_at ?? "").localeCompare(String(b.created_at ?? "")),
   )
 
   if (!cart || !items.length) {
@@ -79,16 +78,36 @@ export default function CartView() {
         </ButtonLink>
       </Grid>
       <Grid size={{ xs: 12, md: 4.5 }}>
-        <Paper variant="outlined" sx={{ p: { xs: 3, md: 4 }, bgcolor: brand.slate25, borderRadius: 3, position: { md: "sticky" }, top: { md: 110 } }}>
+        <Paper
+          variant="outlined"
+          sx={{
+            p: { xs: 3, md: 4 },
+            bgcolor: brand.slate25,
+            borderRadius: 3,
+            position: { md: "sticky" },
+            top: { md: 110 },
+          }}
+        >
           <Typography variant="h5" component="h2" sx={{ mb: 2 }}>
             {ct("Order summary")}
           </Typography>
-          <Box sx={{ mb: 2 }}><PromoCodeField /></Box>
+          <Box sx={{ mb: 2 }}>
+            <PromoCodeField />
+          </Box>
           <OrderTotals totals={{ ...cart, currency_code: currency }} shippingKnown={false} />
-          <ButtonLink href="/checkout" variant="contained" size="large" fullWidth startIcon={<LockOutlinedIcon />} sx={{ mt: 3 }}>
+          <ButtonLink
+            href="/checkout"
+            variant="contained"
+            size="large"
+            fullWidth
+            startIcon={<LockOutlinedIcon />}
+            sx={{ mt: 3 }}
+          >
             {act("checkout")}
           </ButtonLink>
-          <Box sx={{ mt: 2.5 }}><AcceptedPaymentMethods regionId={cart.region_id || undefined} currency={currency} /></Box>
+          <Box sx={{ mt: 2.5 }}>
+            <AcceptedPaymentMethods regionId={cart.region_id || undefined} currency={currency} />
+          </Box>
           <Typography variant="body2" sx={{ color: "text.secondary", mt: 2 }}>
             {ct("Choose your payment method at checkout.")}
           </Typography>

@@ -19,7 +19,16 @@ export default function ProductThumb({ image: fallback, handle, meta, sizes }: P
     return <ProductArt code={meta.code} accent={meta.accent} kind={meta.artKind} />
   }
   return (
-    <Box sx={{ position: "relative", width: "100%", aspectRatio: "1 / 1", bgcolor: brand.white, borderRadius: 1, overflow: "hidden" }}>
+    <Box
+      sx={{
+        position: "relative",
+        width: "100%",
+        aspectRatio: "1 / 1",
+        bgcolor: brand.white,
+        borderRadius: 1,
+        overflow: "hidden",
+      }}
+    >
       <Image src={image} alt="" fill loading="lazy" sizes={sizes} style={{ objectFit: "contain" }} />
     </Box>
   )

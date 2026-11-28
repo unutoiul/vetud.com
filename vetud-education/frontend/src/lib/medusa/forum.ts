@@ -8,10 +8,15 @@ import type { ForumMemberPage, ForumStats, ForumThreadDetail, ForumThreadList, T
  * Posting refreshes these through the `revalidateCommunity` Server Action.
  */
 
-const isNotFound = (error: unknown) => Boolean(error && typeof error === "object" && "status" in error && error.status === 404)
+const isNotFound = (error: unknown) =>
+  Boolean(error && typeof error === "object" && "status" in error && error.status === 404)
 
 function threadQuery({ peptides, ...filters }: ThreadFilters) {
-  return Object.fromEntries(Object.entries({ ...filters, peptide: peptides?.length ? peptides.join(",") : undefined }).filter(([, value]) => value !== undefined && value !== ""))
+  return Object.fromEntries(
+    Object.entries({ ...filters, peptide: peptides?.length ? peptides.join(",") : undefined }).filter(
+      ([, value]) => value !== undefined && value !== "",
+    ),
+  )
 }
 
 export async function listForumThreads(filters: ThreadFilters): Promise<ForumThreadList> {
@@ -26,7 +31,9 @@ export async function getForumThread(id: string): Promise<ForumThreadDetail | nu
   cacheLife("minutes")
   cacheTag("forum", `forum-thread:${id}`)
   try {
-    return await sdk.client.fetch<ForumThreadDetail>(`/store/forum/threads/${encodeURIComponent(id)}`, { query: { limit: 100 } })
+    return await sdk.client.fetch<ForumThreadDetail>(`/store/forum/threads/${encodeURIComponent(id)}`, {
+      query: { limit: 100 },
+    })
   } catch (error) {
     if (isNotFound(error)) return null
     throw error
@@ -60,8 +67,10 @@ export async function listForumThreadLinks(limit = 50): Promise<{ id: string; sl
   cacheTag("forum")
   const ids: { id: string; slug: string }[] = []
   for (let offset = 0; offset < limit; offset += 50) {
-    const { threads, count } = await sdk.client.fetch<ForumThreadList>("/store/forum/threads", { query: { offset, limit: Math.min(50, limit - offset) } })
-    ids.push(...threads.map(thread => ({ id: thread.id, slug: thread.slug })))
+    const { threads, count } = await sdk.client.fetch<ForumThreadList>("/store/forum/threads", {
+      query: { offset, limit: Math.min(50, limit - offset) },
+    })
+    ids.push(...threads.map((thread) => ({ id: thread.id, slug: thread.slug })))
     if (offset + 50 >= count) break
   }
   return ids

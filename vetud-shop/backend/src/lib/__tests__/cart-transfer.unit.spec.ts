@@ -13,23 +13,35 @@ it("validates a fresh owner inside the lock before a competing transfer", async 
     execute: jest.fn((_key: string, task: () => Promise<unknown>) => {
       const next = tail.then(async () => {
         locked = true
-        try { return await task() } finally { locked = false }
+        try {
+          return await task()
+        } finally {
+          locked = false
+        }
       })
-      tail = next.then(() => undefined, () => undefined)
+      tail = next.then(
+        () => undefined,
+        () => undefined,
+      )
       return next
     }),
   }
-  const query = { graph: jest.fn(async () => {
-    expect(locked).toBe(true)
-    return { data: [{ id: "cart_test", customer_id: owner, customer: { has_account: Boolean(owner) } }] }
-  }) }
+  const query = {
+    graph: jest.fn(async () => {
+      expect(locked).toBe(true)
+      return { data: [{ id: "cart_test", customer_id: owner, customer: { has_account: Boolean(owner) } }] }
+    }),
+  }
   const run = jest.fn(async ({ input }: { input: { customer_id: string } }) => {
     expect(locked).toBe(true)
     owner = input.customer_id
   })
   const transfer = transferCartCustomerWorkflow as unknown as jest.Mock
   transfer.mockReturnValue({ run })
-  const container = { resolve: (key: string) => key === Modules.LOCKING ? locking : key === ContainerRegistrationKeys.QUERY ? query : null } as unknown as MedusaContainer
+  const container = {
+    resolve: (key: string) =>
+      key === Modules.LOCKING ? locking : key === ContainerRegistrationKeys.QUERY ? query : null,
+  } as unknown as MedusaContainer
 
   const results = await Promise.allSettled([
     executeCustomerCartTransfer({ cart_id: "cart_test", customer_id: "cus_A", fields: ["id"] }, container),
@@ -39,5 +51,7 @@ it("validates a fresh owner inside the lock before a competing transfer", async 
   expect(results[1].status).toBe("rejected")
   expect(owner).toBe("cus_A")
   expect(run).toHaveBeenCalledTimes(1)
-  await expect(executeCustomerCartTransfer({ cart_id: "cart_test", customer_id: "cus_A", fields: ["id"] }, container)).resolves.toBeDefined()
+  await expect(
+    executeCustomerCartTransfer({ cart_id: "cart_test", customer_id: "cus_A", fields: ["id"] }, container),
+  ).resolves.toBeDefined()
 })

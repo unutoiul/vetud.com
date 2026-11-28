@@ -5,11 +5,22 @@
  */
 
 function dateTime(value: string | Date) {
-  return new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(new Date(value)) + " UTC"
+  return (
+    new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeStyle: "short", timeZone: "UTC" }).format(
+      new Date(value),
+    ) + " UTC"
+  )
 }
 
 const LANGUAGES: Record<string, string> = {
-  en: "English", es: "Spanish", pt: "Portuguese", fr: "French", de: "German", it: "Italian", nl: "Dutch", pl: "Polish",
+  en: "English",
+  es: "Spanish",
+  pt: "Portuguese",
+  fr: "French",
+  de: "German",
+  it: "Italian",
+  nl: "Dutch",
+  pl: "Polish",
 }
 
 export type EmailListSignupAlertData = {
@@ -54,12 +65,14 @@ export type BookOwnerAlertData = {
 const BOOK_STEPS: Record<BookAlertStep, { headline: string; summary: string; step: string }> = {
   requested: {
     headline: "Link requested",
-    summary: "Someone entered their email in the vetud.com pop-up. We emailed them the link to the book's page. They haven't paid yet.",
+    summary:
+      "Someone entered their email in the vetud.com pop-up. We emailed them the link to the book's page. They haven't paid yet.",
     step: "1 of 3: asked for the link",
   },
   checkout: {
     headline: "Checkout opened, not paid yet",
-    summary: "Someone opened Stripe's payment page for Peptides Explained. They haven't paid yet; you'll get another email if they do.",
+    summary:
+      "Someone opened Stripe's payment page for Peptides Explained. They haven't paid yet; you'll get another email if they do.",
     step: "2 of 3: checkout opened",
   },
   paid: {
@@ -72,9 +85,10 @@ const BOOK_STEPS: Record<BookAlertStep, { headline: string; summary: string; ste
 /** A step of a book order: link asked for, checkout opened, or paid. */
 export function bookOwnerAlert(data: BookOwnerAlertData) {
   const step = BOOK_STEPS[data.step]
-  const paid = data.step === "paid"
-    ? `Yes${data.amount != null ? `, ${(data.amount / 100).toFixed(2)} ${(data.currency ?? "usd").toUpperCase()}` : ""}`
-    : "Not yet"
+  const paid =
+    data.step === "paid"
+      ? `Yes${data.amount != null ? `, ${(data.amount / 100).toFixed(2)} ${(data.currency ?? "usd").toUpperCase()}` : ""}`
+      : "Not yet"
   return {
     subject: `Book: ${step.headline} (${data.email})`,
     variables: {
@@ -83,7 +97,7 @@ export function bookOwnerAlert(data: BookOwnerAlertData) {
       BUYER_EMAIL: data.email,
       STEP: step.step,
       PAID: paid,
-      LANGUAGE: data.locale ? LANGUAGES[data.locale] ?? data.locale : "Not known",
+      LANGUAGE: data.locale ? (LANGUAGES[data.locale] ?? data.locale) : "Not known",
       WHEN: dateTime(data.at),
       STRIPE_SESSION: data.session_id || "None yet",
     },

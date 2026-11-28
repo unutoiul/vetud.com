@@ -12,20 +12,33 @@ describe("cart customer hook runtime", () => {
 
   it("executes directly without trying to compose a step at runtime", async () => {
     await expect(callback({ cart: {}, input: { customer_id: "cus_A" } })).resolves.toBeInstanceOf(StepResponse)
-    await expect(callback({ cart: { customer_id: "cus_A", customer: { has_account: true } }, input: { customer_id: "cus_A" } })).resolves.toBeInstanceOf(StepResponse)
+    await expect(
+      callback({ cart: { customer_id: "cus_A", customer: { has_account: true } }, input: { customer_id: "cus_A" } }),
+    ).resolves.toBeInstanceOf(StepResponse)
   })
 
   it("rejects a different registered owner at runtime", async () => {
-    await expect(callback({ cart: { customer_id: "cus_B", customer: { has_account: true } }, input: { customer_id: "cus_A" } })).rejects.toThrow("another account")
+    await expect(
+      callback({ cart: { customer_id: "cus_B", customer: { has_account: true } }, input: { customer_id: "cus_A" } }),
+    ).rejects.toThrow("another account")
   })
 
-  it.each([undefined, null, {}, { has_account: undefined }])("fails closed when a linked owner's relation is incomplete (%p)", async (customer) => {
-    await expect(callback({ cart: { customer_id: "cus_B", customer }, input: { customer_id: "cus_A" } })).rejects.toThrow("another account")
-  })
+  it.each([undefined, null, {}, { has_account: undefined }])(
+    "fails closed when a linked owner's relation is incomplete (%p)",
+    async (customer) => {
+      await expect(
+        callback({ cart: { customer_id: "cus_B", customer }, input: { customer_id: "cus_A" } }),
+      ).rejects.toThrow("another account")
+    },
+  )
 
   it("still permits a verified guest and the same owner without a relation", async () => {
-    await expect(callback({ cart: { customer_id: "guest", customer: { has_account: false } }, input: { customer_id: "cus_A" } })).resolves.toBeInstanceOf(StepResponse)
-    await expect(callback({ cart: { customer_id: "cus_A" }, input: { customer_id: "cus_A" } })).resolves.toBeInstanceOf(StepResponse)
+    await expect(
+      callback({ cart: { customer_id: "guest", customer: { has_account: false } }, input: { customer_id: "cus_A" } }),
+    ).resolves.toBeInstanceOf(StepResponse)
+    await expect(callback({ cart: { customer_id: "cus_A" }, input: { customer_id: "cus_A" } })).resolves.toBeInstanceOf(
+      StepResponse,
+    )
   })
 
   it("rejects missing carts and blank caller identities", async () => {

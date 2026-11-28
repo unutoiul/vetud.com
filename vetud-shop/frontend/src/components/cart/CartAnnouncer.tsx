@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import Box from "@mui/material/Box"
 import { useState } from "react"
 import { useStore } from "../store/StoreProvider"
@@ -21,7 +20,20 @@ export default function CartAnnouncer() {
     setSeen(itemCount)
   }
   return (
-    <Box component="span" role="status" sx={{ position: "absolute", top: 0, left: 0, width: 1, height: 1, overflow: "hidden", clipPath: "inset(50%)", whiteSpace: "nowrap" }}>
+    <Box
+      component="span"
+      role="status"
+      sx={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: 1,
+        height: 1,
+        overflow: "hidden",
+        clipPath: "inset(50%)",
+        whiteSpace: "nowrap",
+      }}
+    >
       {ct(message)}
     </Box>
   )

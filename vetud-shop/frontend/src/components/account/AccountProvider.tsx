@@ -1,16 +1,7 @@
 "use client"
 
 import type { HttpTypes } from "@medusajs/types"
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react"
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { CUSTOMER_TOKEN_KEY, sdk } from "@/lib/medusa/sdk"
 import { useStore } from "../store/StoreProvider"
 
@@ -134,39 +125,48 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const run = useCallback(async <T,>(task: (assertCurrent: () => void) => Promise<T>) => {
-    const version = authVersion.current
-    const assertCurrent = captureSession()
-    setPending(true)
-    setError(null)
-    try {
-      return await task(assertCurrent)
-    } catch (error) {
-      if (version === authVersion.current) setError(errorMessage(error))
-      throw error
-    } finally {
-      if (version === authVersion.current) setPending(false)
-    }
-  }, [captureSession])
+  const run = useCallback(
+    async <T,>(task: (assertCurrent: () => void) => Promise<T>) => {
+      const version = authVersion.current
+      const assertCurrent = captureSession()
+      setPending(true)
+      setError(null)
+      try {
+        return await task(assertCurrent)
+      } catch (error) {
+        if (version === authVersion.current) setError(errorMessage(error))
+        throw error
+      } finally {
+        if (version === authVersion.current) setPending(false)
+      }
+    },
+    [captureSession],
+  )
 
   // Customers have no passwords (owner, 2026-11-19): an emailed code signs them in for 30 days.
   const requestCode = useCallback(
     (email: string) =>
       run(async () => {
-        const { sent, resend_after } = await sdk.client.fetch<{ sent: boolean; resend_after: number }>("/store/sign-in-code", {
-          method: "POST",
-          body: { email: email.trim() },
-        })
+        const { sent, resend_after } = await sdk.client.fetch<{ sent: boolean; resend_after: number }>(
+          "/store/sign-in-code",
+          {
+            method: "POST",
+            body: { email: email.trim() },
+          },
+        )
         return { sent, resendAfter: resend_after }
       }),
-    [run]
+    [run],
   )
 
   const verifyCode = useCallback(
     async (email: string, code: string) => {
       authVersion.current += 1
       await run(async (assertCurrent) => {
-        const result = await sdk.auth.login("customer", "email-code", { email: email.trim(), code: code.replace(/D/g, "") })
+        const result = await sdk.auth.login("customer", "email-code", {
+          email: email.trim(),
+          code: code.replace(/D/g, ""),
+        })
         assertCurrent()
         if (!isToken(result)) throw new Error("This sign-in needs another step. Please contact us.")
         // The first sign-in makes the account; the refreshed token then carries it.
@@ -179,7 +179,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
         await refreshCustomer()
       })
     },
-    [refreshCustomer, run]
+    [refreshCustomer, run],
   )
 
   const signOut = useCallback(async () => {
@@ -202,7 +202,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
         setCustomer(response.customer)
       })
     },
-    [run]
+    [run],
   )
 
   const createAddress = useCallback(
@@ -213,7 +213,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
         setCustomer(response.customer)
       })
     },
-    [run]
+    [run],
   )
 
   const updateAddress = useCallback(
@@ -224,7 +224,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
         setCustomer(response.customer)
       })
     },
-    [run]
+    [run],
   )
 
   const deleteAddress = useCallback(
@@ -236,7 +236,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
         else await refreshCustomer()
       })
     },
-    [run, refreshCustomer]
+    [run, refreshCustomer],
   )
 
   const value = useMemo<AccountContextValue>(
@@ -270,7 +270,7 @@ export default function AccountProvider({ children }: { children: ReactNode }) {
       deleteAddress,
       refreshCustomer,
       captureSession,
-    ]
+    ],
   )
 
   return <AccountContext.Provider value={value}>{children}</AccountContext.Provider>

@@ -1,9 +1,5 @@
 import type { MedusaContainer } from "@medusajs/framework/types"
-import {
-  ContainerRegistrationKeys,
-  Modules,
-  ProductStatus,
-} from "@medusajs/framework/utils"
+import { ContainerRegistrationKeys, Modules, ProductStatus } from "@medusajs/framework/utils"
 import {
   createApiKeysWorkflow,
   createCollectionsWorkflow,
@@ -22,14 +18,7 @@ import {
   linkSalesChannelsToStockLocationWorkflow,
   updateStoresWorkflow,
 } from "@medusajs/medusa/core-flows"
-import {
-  AMOUNT_OPTION,
-  CATEGORIES,
-  FEATURED_COLLECTION,
-  PRODUCTS,
-  REGIONS,
-  SHIPPING,
-} from "./catalog"
+import { AMOUNT_OPTION, CATEGORIES, FEATURED_COLLECTION, PRODUCTS, REGIONS, SHIPPING } from "./catalog"
 import { ensureEuropeanMarkets } from "./european-markets"
 import { uploadProductImage } from "./product-images"
 
@@ -248,9 +237,7 @@ export async function seedVetudStore(container: MedusaContainer) {
   } = await createProductOptionsWorkflow(container).run({
     input: { product_options: [AMOUNT_OPTION] },
   })
-  const optionValueIds = new Map(
-    (amountOption.values ?? []).map((value) => [value.value, value.id])
-  )
+  const optionValueIds = new Map((amountOption.values ?? []).map((value) => [value.value, value.id]))
 
   logger.info("Seeding products...")
   const imageUrls = new Map<string, string>()
@@ -286,9 +273,7 @@ export async function seedVetudStore(container: MedusaContainer) {
           sku: `${product.metadata.code}-${variant.amount.replace(/\s+/g, "").toUpperCase()}`,
           manage_inventory: true,
           options: { [AMOUNT_OPTION.title]: variant.amount },
-          prices: [
-            { currency_code: "usd", amount: variant.usd },
-          ],
+          prices: [{ currency_code: "usd", amount: variant.usd }],
         })),
       })),
     },
@@ -300,8 +285,8 @@ export async function seedVetudStore(container: MedusaContainer) {
       product.variants.map((variant) => [
         `${product.metadata.code}-${variant.amount.replace(/\s+/g, "").toUpperCase()}`,
         variant.stock,
-      ])
-    )
+      ]),
+    ),
   )
   const { data: inventoryItems } = await query.graph({
     entity: "inventory_item",
@@ -319,7 +304,7 @@ export async function seedVetudStore(container: MedusaContainer) {
 
   logger.info(
     `Vetud store seeded. Storefront publishable key: ${publishableKey.token} ` +
-      `(regions: ${regions.map((region) => region.name).join(", ")})`
+      `(regions: ${regions.map((region) => region.name).join(", ")})`,
   )
 
   // All eurozone countries plus GBP, CHF, SEK, NOK, DKK, PLN, CZK, HUF, RON and ISK regions.

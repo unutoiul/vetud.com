@@ -16,9 +16,16 @@ const MAX_BYTES = 100 * 1024
 
 function apiKey() {
   if (process.env.RESEND_API_KEY) return process.env.RESEND_API_KEY
-  for (const file of [path.join(ROOT, ".env.local"), path.join(ROOT, ".env"), path.join(ROOT, "..", "vetud-shop", "backend", ".env")]) {
+  for (const file of [
+    path.join(ROOT, ".env.local"),
+    path.join(ROOT, ".env"),
+    path.join(ROOT, "..", "vetud-shop", "backend", ".env"),
+  ]) {
     try {
-      const value = /^RESEND_API_KEY=(.*)$/m.exec(readFileSync(file, "utf8"))?.[1]?.trim().replace(/^["']|["']$/g, "")
+      const value = /^RESEND_API_KEY=(.*)$/m
+        .exec(readFileSync(file, "utf8"))?.[1]
+        ?.trim()
+        .replace(/^["']|["']$/g, "")
       if (value) return value
     } catch {
       // No such file: try the next one.
@@ -35,8 +42,10 @@ if (!campaign) throw new Error(`Name a campaign from campaigns.json: ${Object.ke
 const html = readFileSync(path.join(HERE, `${name}.html`), "utf8")
 const text = readFileSync(path.join(HERE, `${name}.txt`), "utf8")
 const problems = []
-if (Buffer.byteLength(html) > MAX_BYTES) problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
-for (const body of [html, text]) if (!body.includes("{{{RESEND_UNSUBSCRIBE_URL}}}")) problems.push("an unsubscribe link is missing")
+if (Buffer.byteLength(html) > MAX_BYTES)
+  problems.push(`HTML is ${Buffer.byteLength(html)} bytes, over Gmail's clipping limit`)
+for (const body of [html, text])
+  if (!body.includes("{{{RESEND_UNSUBSCRIBE_URL}}}")) problems.push("an unsubscribe link is missing")
 if (problems.length) throw new Error(`${name}: ${problems.join("; ")}`)
 
 // Every picture must be served before the campaign goes out.
@@ -80,5 +89,7 @@ if (campaign.id) {
   writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2) + "\n")
 }
 const live = await resend("GET", `/broadcasts/${campaign.id}`)
-console.log(`${live.status}  ${campaign.name}  ${campaign.id}  (${live.html === html ? "content matches" : "CONTENT DIFFERS"})`)
+console.log(
+  `${live.status}  ${campaign.name}  ${campaign.id}  (${live.html === html ? "content matches" : "CONTENT DIFFERS"})`,
+)
 console.log(`Review it at https://resend.com/broadcasts/${campaign.id}`)

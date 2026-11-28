@@ -25,8 +25,10 @@ export default async function disableFreeShipping({ container }: ExecArgs) {
     : []
   const thresholdPrices = priceSets.flatMap((priceSet) =>
     (priceSet.prices ?? []).filter((price) =>
-      ((price as { price_rules?: { attribute: string }[] }).price_rules ?? []).some((rule) => rule.attribute === "item_total")
-    )
+      ((price as { price_rules?: { attribute: string }[] }).price_rules ?? []).some(
+        (rule) => rule.attribute === "item_total",
+      ),
+    ),
   )
   if (thresholdPrices.length) {
     await pricing.removePrices(thresholdPrices.map((price) => price.id))

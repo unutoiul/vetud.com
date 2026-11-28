@@ -24,7 +24,8 @@ function Bar({ value, tone, height }: { value: number; tone: "medicine" | "place
           width: width(value),
           height: "100%",
           borderRadius: 999,
-          background: tone === "medicine" ? `linear-gradient(90deg, ${colors.tealDeep}, ${colors.navyDeep})` : colors.muted,
+          background:
+            tone === "medicine" ? `linear-gradient(90deg, ${colors.tealDeep}, ${colors.navyDeep})` : colors.muted,
         }}
       />
     </div>
@@ -34,7 +35,15 @@ function Bar({ value, tone, height }: { value: number; tone: "medicine" | "place
 function Legend({ medicine, placebo }: { medicine: string; placebo: string }) {
   const item = (tone: "medicine" | "placebo", label: string) => (
     <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-      <span aria-hidden style={{ width: 22, height: 8, borderRadius: 999, background: tone === "medicine" ? colors.tealDeep : colors.muted }} />
+      <span
+        aria-hidden
+        style={{
+          width: 22,
+          height: 8,
+          borderRadius: 999,
+          background: tone === "medicine" ? colors.tealDeep : colors.muted,
+        }}
+      />
       {label}
     </span>
   )
@@ -61,18 +70,18 @@ export default function TrialChart() {
   return (
     <Section id="trial-chart" background={colors.aquaWash}>
       <SectionHeading eyebrow={m.eyebrow} title={m.title} subtitle={m.subtitle} />
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '40px', margin: '20px 0' }}>
-          <img
-            src="/images/transformation-man.png"
-            alt="Man's transformation"
-            style={{ maxWidth: '300px', borderRadius: '10px', boxShadow: '0px 4px 15px rgba(0,0,0,0.15)' }}
-          />
-          <img
-            src="/images/transformation-woman.png"
-            alt="Woman's transformation"
-            style={{ maxWidth: '300px', borderRadius: '10px', boxShadow: '0px 4px 15px rgba(0,0,0,0.15)' }}
-          />
-        </div>
+      <div style={{ display: "flex", justifyContent: "center", gap: "40px", margin: "20px 0" }}>
+        <img
+          src="/images/transformation-man.png"
+          alt="Man's transformation"
+          style={{ maxWidth: "300px", borderRadius: "10px", boxShadow: "0px 4px 15px rgba(0,0,0,0.15)" }}
+        />
+        <img
+          src="/images/transformation-woman.png"
+          alt="Woman's transformation"
+          style={{ maxWidth: "300px", borderRadius: "10px", boxShadow: "0px 4px 15px rgba(0,0,0,0.15)" }}
+        />
+      </div>
       <FadeUp delay={0.05} y={10}>
         <figure
           style={{
@@ -88,7 +97,15 @@ export default function TrialChart() {
           <Legend medicine={m.medicine} placebo={m.placebo} />
           {/* One grid for every row, so the right-hand column (placebo labels) is as wide as the
               longest label in any language and all the bars and the scale line up. */}
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) max-content", columnGap: 12, alignItems: "center", marginTop: 24 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "minmax(0, 1fr) max-content",
+              columnGap: 12,
+              alignItems: "center",
+              marginTop: 24,
+            }}
+          >
             {TRIAL_DATA.map((trial, index) => {
               const text = m.trials[trial.name]
               return (
@@ -104,7 +121,15 @@ export default function TrialChart() {
                     }}
                   >
                     <div style={{ minWidth: 0 }}>
-                      <div style={{ fontFamily: fonts.display, fontSize: 18, fontWeight: 500, color: colors.navy, lineHeight: 1.3 }}>
+                      <div
+                        style={{
+                          fontFamily: fonts.display,
+                          fontSize: 18,
+                          fontWeight: 500,
+                          color: colors.navy,
+                          lineHeight: 1.3,
+                        }}
+                      >
                         {trial.name}
                         <span
                           style={{
@@ -127,7 +152,16 @@ export default function TrialChart() {
                         {text.dose} · {text.study}
                       </div>
                     </div>
-                    <span style={{ fontFamily: fonts.display, fontSize: wide ? 30 : 24, fontWeight: 500, color: colors.navy, lineHeight: 1, whiteSpace: "nowrap" }}>
+                    <span
+                      style={{
+                        fontFamily: fonts.display,
+                        fontSize: wide ? 30 : 24,
+                        fontWeight: 500,
+                        color: colors.navy,
+                        lineHeight: 1,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
                       {percent(trial.medicine)}
                     </span>
                   </div>
@@ -165,7 +199,16 @@ export default function TrialChart() {
             </div>
             <span />
           </div>
-          <figcaption style={{ marginTop: 24, paddingTop: 18, borderTop: `1px solid ${colors.line}`, fontSize: 12.5, lineHeight: 1.6, color: colors.muted }}>
+          <figcaption
+            style={{
+              marginTop: 24,
+              paddingTop: 18,
+              borderTop: `1px solid ${colors.line}`,
+              fontSize: 12.5,
+              lineHeight: 1.6,
+              color: colors.muted,
+            }}
+          >
             {m.caption}
           </figcaption>
         </figure>

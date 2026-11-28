@@ -1,7 +1,6 @@
 "use client"
 import { useContentTranslator } from "@/i18n/use-content-translator"
 
-
 import { useTranslations } from "next-intl"
 
 import Box from "@mui/material/Box"
@@ -18,7 +17,15 @@ import { normalizeTrackingNumber } from "@/lib/orders"
 
 declare global {
   interface Window {
-    YQV5?: { trackSingle: (input: { YQ_ContainerId: string; YQ_Height: number; YQ_Fc: string; YQ_Lang: string; YQ_Num: string }) => void }
+    YQV5?: {
+      trackSingle: (input: {
+        YQ_ContainerId: string
+        YQ_Height: number
+        YQ_Fc: string
+        YQ_Lang: string
+        YQ_Num: string
+      }) => void
+    }
   }
 }
 
@@ -38,7 +45,13 @@ function ParcelTrackingForm({ initialNumber }: { initialNumber: string }) {
   const showResults = () => {
     try {
       if (!window.YQV5) throw new Error("Tracking is unavailable")
-      window.YQV5.trackSingle({ YQ_ContainerId: "parcel-tracking-results", YQ_Height: 560, YQ_Fc: "0", YQ_Lang: "en", YQ_Num: submitted.current })
+      window.YQV5.trackSingle({
+        YQ_ContainerId: "parcel-tracking-results",
+        YQ_Height: 560,
+        YQ_Fc: "0",
+        YQ_Lang: "en",
+        YQ_Num: submitted.current,
+      })
       setLoading(false)
     } catch {
       setError("Tracking could not load. You can try again or open 17TRACK below.")
@@ -48,7 +61,10 @@ function ParcelTrackingForm({ initialNumber }: { initialNumber: string }) {
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const cleaned = normalizeTrackingNumber(number)
-    if (!cleaned) { setError("Enter a valid parcel tracking number using letters and numbers."); return }
+    if (!cleaned) {
+      setError("Enter a valid parcel tracking number using letters and numbers.")
+      return
+    }
     setError("")
     submitted.current = cleaned
     setRequested(true)
@@ -56,16 +72,66 @@ function ParcelTrackingForm({ initialNumber }: { initialNumber: string }) {
     else setLoading(true)
   }
 
-  return <Box sx={{ maxWidth: 960, mx: "auto" }}>
-    <Box component="form" onSubmit={submit} noValidate sx={{ maxWidth: 660, mx: "auto" }}>
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ alignItems: { sm: "flex-start" } }}>
-        <TextField label={act("trackingNumber")} value={number} onChange={(event) => { setNumber(event.target.value); setError("") }} error={Boolean(error)} helperText={ct(error || "Find this in your shipping confirmation email.")} fullWidth slotProps={{ htmlInput: { maxLength: 50, autoComplete: "off", spellCheck: false } }} />
-        <Button type="submit" variant="contained" disabled={loading} endIcon={<Icon name="arrowRight" />} sx={{ minHeight: 56, flexShrink: 0 }}>{ct(loading ? act("loading") : act("trackParcel"))}</Button>
-      </Stack>
-      <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>{ct("Results are provided by 17TRACK. Your tracking number is sent when you select Track parcel.")}</Typography>
-      <Stack direction="row" sx={{ flexWrap: "wrap", gap: 3, mt: 2.5 }}><AppLink href="https://www.17track.net/en" target="_blank" rel="noopener noreferrer" sx={{ fontSize: 12 }}>{act("open17Track")}</AppLink><AppLink href="/contact" sx={{ fontSize: 12 }}>{act("orderHelp")}</AppLink></Stack>
+  return (
+    <Box sx={{ maxWidth: 960, mx: "auto" }}>
+      <Box component="form" onSubmit={submit} noValidate sx={{ maxWidth: 660, mx: "auto" }}>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ alignItems: { sm: "flex-start" } }}>
+          <TextField
+            label={act("trackingNumber")}
+            value={number}
+            onChange={(event) => {
+              setNumber(event.target.value)
+              setError("")
+            }}
+            error={Boolean(error)}
+            helperText={ct(error || "Find this in your shipping confirmation email.")}
+            fullWidth
+            slotProps={{ htmlInput: { maxLength: 50, autoComplete: "off", spellCheck: false } }}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={loading}
+            endIcon={<Icon name="arrowRight" />}
+            sx={{ minHeight: 56, flexShrink: 0 }}
+          >
+            {ct(loading ? act("loading") : act("trackParcel"))}
+          </Button>
+        </Stack>
+        <Typography sx={{ color: "text.secondary", fontSize: 12, mt: 2 }}>
+          {ct("Results are provided by 17TRACK. Your tracking number is sent when you select Track parcel.")}
+        </Typography>
+        <Stack direction="row" sx={{ flexWrap: "wrap", gap: 3, mt: 2.5 }}>
+          <AppLink href="https://www.17track.net/en" target="_blank" rel="noopener noreferrer" sx={{ fontSize: 12 }}>
+            {act("open17Track")}
+          </AppLink>
+          <AppLink href="/contact" sx={{ fontSize: 12 }}>
+            {act("orderHelp")}
+          </AppLink>
+        </Stack>
+      </Box>
+      {requested && (
+        <Script
+          src="https://www.17track.net/externalcall.js"
+          strategy="afterInteractive"
+          onReady={showResults}
+          onError={() => {
+            setLoading(false)
+            setError("Tracking could not load. Open 17TRACK or contact us for help.")
+          }}
+        />
+      )}
+      <Box
+        id="parcel-tracking-results"
+        aria-label={act("trackingResults")}
+        aria-live="polite"
+        sx={{
+          display: requested ? "block" : "none",
+          mt: 5,
+          minHeight: loading ? 100 : 0,
+          "& iframe": { width: "100%", border: 0 },
+        }}
+      />
     </Box>
-    {requested && <Script src="https://www.17track.net/externalcall.js" strategy="afterInteractive" onReady={showResults} onError={() => { setLoading(false); setError("Tracking could not load. Open 17TRACK or contact us for help.") }} />}
-    <Box id="parcel-tracking-results" aria-label={act("trackingResults")} aria-live="polite" sx={{ display: requested ? "block" : "none", mt: 5, minHeight: loading ? 100 : 0, "& iframe": { width: "100%", border: 0 } }} />
-  </Box>
+  )
 }

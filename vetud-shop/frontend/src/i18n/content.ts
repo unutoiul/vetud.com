@@ -17,25 +17,38 @@ export function contentKey(value: string): string {
 }
 
 /** Raw text, never evaluated as ICU or HTML. Unknown or newly edited content keeps its original. */
-export function createContentTranslator(dictionary: ContentDictionary = {}, locale = "en-US", templates: ContentTemplates = {}) {
+export function createContentTranslator(
+  dictionary: ContentDictionary = {},
+  locale = "en-US",
+  templates: ContentTemplates = {},
+) {
   type Pattern = { pattern: RegExp; names: string[]; target: string; weight: number }
   let patterns: Pattern[] | undefined
   const interpolate = (value: string): string | undefined => {
-    patterns ??= Object.values(templates).flatMap(({ source, target }) => {
-      const names = [...source.matchAll(/\{(v\d+)\}/g)].map(match => match[1])
-      const literal = source.replace(/\{v\d+\}/g, "")
-      if (!names.length || literal.replace(/[^A-Za-z]/g, "").length < 8) return []
-      const parts = source.replace(/\s+/g, " ").trim().split(/\{v\d+\}/g)
-      const escape = (part: string) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-      return [{ pattern: new RegExp(`^${parts.map(escape).join("([\\s\\S]*?)")}$`), names, target, weight: literal.length }]
-    }).sort((a, b) => b.weight - a.weight)
+    patterns ??= Object.values(templates)
+      .flatMap(({ source, target }) => {
+        const names = [...source.matchAll(/\{(v\d+)\}/g)].map((match) => match[1])
+        const literal = source.replace(/\{v\d+\}/g, "")
+        if (!names.length || literal.replace(/[^A-Za-z]/g, "").length < 8) return []
+        const parts = source
+          .replace(/\s+/g, " ")
+          .trim()
+          .split(/\{v\d+\}/g)
+        const escape = (part: string) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+        return [
+          { pattern: new RegExp(`^${parts.map(escape).join("([\\s\\S]*?)")}$`), names, target, weight: literal.length },
+        ]
+      })
+      .sort((a, b) => b.weight - a.weight)
     for (const { pattern, names, target } of patterns) {
       const match = value.replace(/\s+/g, " ").trim().match(pattern)
       if (!match) continue
-      const values = Object.fromEntries(names.map((name, index) => {
-        const captured = match[index + 1]
-        return [name, dictionary[contentKey(captured)] ?? captured]
-      }))
+      const values = Object.fromEntries(
+        names.map((name, index) => {
+          const captured = match[index + 1]
+          return [name, dictionary[contentKey(captured)] ?? captured]
+        }),
+      )
       return target.replace(/\{(v\d+)\}/g, (whole, name: string) => values[name] ?? whole)
     }
   }
@@ -49,7 +62,11 @@ export function createContentTranslator(dictionary: ContentDictionary = {}, loca
   }
   return Object.assign(text, {
     locale,
-    rich(source: string, values: Record<string, ReactNode>, tags: Record<string, (children: ReactNode[]) => ReactNode>) {
+    rich(
+      source: string,
+      values: Record<string, ReactNode>,
+      tags: Record<string, (children: ReactNode[]) => ReactNode>,
+    ) {
       const render = (input: string) => {
         const root: ReactNode[] = []
         const stack: { name: string; nodes: ReactNode[] }[] = [{ name: "", nodes: root }]
@@ -58,7 +75,8 @@ export function createContentTranslator(dictionary: ContentDictionary = {}, loca
           const current = stack[stack.length - 1]
           current.nodes.push(input.slice(last, match.index))
           const token = match[0]
-          if (token.startsWith("{")) current.nodes.push(Object.hasOwn(values, token.slice(1, -1)) ? values[token.slice(1, -1)] : token)
+          if (token.startsWith("{"))
+            current.nodes.push(Object.hasOwn(values, token.slice(1, -1)) ? values[token.slice(1, -1)] : token)
           else if (token.startsWith("</")) {
             const name = token.slice(2, -1)
             if (current.name !== name || !tags[name]) throw new Error("Invalid translated inline markup")
@@ -75,7 +93,11 @@ export function createContentTranslator(dictionary: ContentDictionary = {}, loca
         root.push(input.slice(last))
         return root
       }
-      try { return render(text(source)) } catch { return render(source) }
+      try {
+        return render(text(source))
+      } catch {
+        return render(source)
+      }
     },
     icu(source: string, values: Record<string, string | number>) {
       const formatter = createTranslator({ locale, messages: { message: text(source) } })
@@ -87,9 +109,14 @@ export function createContentTranslator(dictionary: ContentDictionary = {}, loca
       return formatter("message", { count })
     },
     template(source: string, values: Record<string, unknown>, options: { translateValues?: boolean } = {}) {
-      return text(source).replace(/\{(v\d+)\}/g, (whole, key: string) => Object.hasOwn(values, key) ? String(options.translateValues === false ? values[key] : text(values[key])) : whole)
+      return text(source).replace(/\{(v\d+)\}/g, (whole, key: string) =>
+        Object.hasOwn(values, key)
+          ? String(options.translateValues === false ? values[key] : text(values[key]))
+          : whole,
+      )
     },
-    has(source: string) { return Object.hasOwn(dictionary, contentKey(source)) },
+    has(source: string) {
+      return Object.hasOwn(dictionary, contentKey(source))
+    },
   })
 }
-

@@ -2,7 +2,16 @@
 
 import { CheckCircleFilled, GiftFilled, SafetyCertificateFilled, ShoppingOutlined } from "@ant-design/icons"
 import { Button, Col, Flex, Grid, Row, Typography } from "antd"
-import { motion, MotionConfig, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react"
+import {
+  motion,
+  MotionConfig,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "motion/react"
 import Image from "next/image"
 import { Fragment, useRef, type CSSProperties, type PointerEvent } from "react"
 import { MARKETS } from "@/config/markets"
@@ -55,7 +64,16 @@ function PenTag({ id, onClick, delay }: { id: ProductId; onClick: () => void; de
         ...enter("pop", { delay, duration: 0.8, easing: SPRING_CSS }),
       }}
     >
-      <div style={{ fontFamily: fonts.mono, fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: hot ? colors.sale : colors.tealDeep, fontWeight: 600 }}>
+      <div
+        style={{
+          fontFamily: fonts.mono,
+          fontSize: 10,
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          color: hot ? colors.sale : colors.tealDeep,
+          fontWeight: 600,
+        }}
+      >
         {m.products[id].badge}
       </div>
       <div style={{ fontFamily: fonts.display, fontSize: 20, fontWeight: 500, color: colors.navy, lineHeight: 1.2 }}>
@@ -97,7 +115,19 @@ function OfferWords({ delay }: { delay: number }) {
           {after}
         </motion.span>
       </RisingWord>
-      <svg aria-hidden viewBox="0 0 200 16" preserveAspectRatio="none" style={{ position: "absolute", left: "-1%", bottom: "-0.24em", width: "100%", height: "0.22em", overflow: "visible" }}>
+      <svg
+        aria-hidden
+        viewBox="0 0 200 16"
+        preserveAspectRatio="none"
+        style={{
+          position: "absolute",
+          left: "-1%",
+          bottom: "-0.24em",
+          width: "100%",
+          height: "0.22em",
+          overflow: "visible",
+        }}
+      >
         <path
           d="M3 11 C 48 4, 118 2, 197 7"
           pathLength={1}
@@ -142,7 +172,11 @@ function FloatingPen({
         <div
           style={{
             ...layer,
-            ...enter("glide", { delay, duration: 1.3, vars: { "--enter-x": `${from.x}px`, "--enter-y": `${from.y}px`, "--enter-r": `${from.rotate}deg` } }),
+            ...enter("glide", {
+              delay,
+              duration: 1.3,
+              vars: { "--enter-x": `${from.x}px`, "--enter-y": `${from.y}px`, "--enter-r": `${from.rotate}deg` },
+            }),
           }}
         >
           <motion.div
@@ -151,7 +185,14 @@ function FloatingPen({
             animate={reduce ? undefined : { y: [0, float, 0] }}
             transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: delay + 1.3 }}
           >
-            <Image src="/images/vetud-pen.webp" alt={alt} fill priority sizes="(max-width: 768px) 80vw, 480px" style={{ objectFit: "contain" }} />
+            <Image
+              src="/images/vetud-pen.webp"
+              alt={alt}
+              fill
+              priority
+              sizes="(max-width: 768px) 80vw, 480px"
+              style={{ objectFit: "contain" }}
+            />
           </motion.div>
         </div>
       </motion.div>
@@ -162,7 +203,17 @@ function FloatingPen({
 /** A knife and fork: the "less hunger" point. */
 function AppetiteIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
       <path d="M7 3v8M4.5 3v5a2.5 2.5 0 0 0 5 0V3M7 11v10" />
       <path d="M17 21V3c-2 1.2-3 3.6-3 6.5V13h3" />
     </svg>
@@ -195,7 +246,11 @@ function SellingPoints({ delay }: { delay: number }) {
       ? [
           {
             key: "offer",
-            value: <span style={{ ...badge, color: colors.sale }}>{format(m.offerPoint.value, { percent: OFFER.salePercent })}</span>,
+            value: (
+              <span style={{ ...badge, color: colors.sale }}>
+                {format(m.offerPoint.value, { percent: OFFER.salePercent })}
+              </span>
+            ),
             title: m.offerPoint.title,
             text: m.offerPoint.text,
           },
@@ -217,7 +272,17 @@ function SellingPoints({ delay }: { delay: number }) {
       key: "appetite",
       value: (
         <span style={badge}>
-          <span style={{ display: "inline-grid", placeItems: "center", width: 50, height: 50, borderRadius: 999, background: colors.aquaLight, color: colors.tealDeep }}>
+          <span
+            style={{
+              display: "inline-grid",
+              placeItems: "center",
+              width: 50,
+              height: 50,
+              borderRadius: 999,
+              background: colors.aquaLight,
+              color: colors.tealDeep,
+            }}
+          >
             <AppetiteIcon />
           </span>
         </span>
@@ -242,8 +307,12 @@ function SellingPoints({ delay }: { delay: number }) {
           >
             {row.value}
             <div style={{ minWidth: 0 }}>
-              <div style={{ fontWeight: 700, fontSize: screens.sm ? 18 : 16.5, color: colors.navy, lineHeight: 1.3 }}>{row.title}</div>
-              <div style={{ fontSize: screens.sm ? 15 : 14, color: colors.navyInk, lineHeight: 1.45, marginTop: 2 }}>{row.text}</div>
+              <div style={{ fontWeight: 700, fontSize: screens.sm ? 18 : 16.5, color: colors.navy, lineHeight: 1.3 }}>
+                {row.title}
+              </div>
+              <div style={{ fontSize: screens.sm ? 15 : 14, color: colors.navyInk, lineHeight: 1.45, marginTop: 2 }}>
+                {row.text}
+              </div>
             </div>
           </div>
         </FadeUp>
@@ -304,15 +373,33 @@ export default function Hero() {
       >
         {/* VETUD's alpine artwork, faded into the page */}
         <motion.div aria-hidden style={{ position: "absolute", inset: 0, y: artY }}>
-          <div style={{ position: "absolute", inset: 0, opacity: 0.75, ...enter("settle", { duration: 2.4, vars: { "--enter-scale": "1.07" } }) }}>
-            <Image src="/images/alpine.webp" alt="" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center bottom" }} />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              opacity: 0.75,
+              ...enter("settle", { duration: 2.4, vars: { "--enter-scale": "1.07" } }),
+            }}
+          >
+            <Image
+              src="/images/alpine.webp"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              style={{ objectFit: "cover", objectPosition: "center bottom" }}
+            />
           </div>
           <div style={{ position: "absolute", inset: 0, background: gradients.heroSide }} />
           <div style={{ position: "absolute", inset: 0, background: gradients.heroScrim }} />
         </motion.div>
 
         <Container style={{ position: "relative" }}>
-          <Row gutter={[{ xs: 16, md: 48 }, 32]} align="middle" style={{ minHeight: "min(84vh, 780px)", padding: "clamp(32px, 5vw, 64px) 0 clamp(48px, 6vw, 72px)" }}>
+          <Row
+            gutter={[{ xs: 16, md: 48 }, 32]}
+            align="middle"
+            style={{ minHeight: "min(84vh, 780px)", padding: "clamp(32px, 5vw, 64px) 0 clamp(48px, 6vw, 72px)" }}
+          >
             <Col xs={24} md={12}>
               <span
                 style={{
@@ -384,7 +471,9 @@ export default function Hero() {
                 </span>
               </Typography.Title>
 
-              <div style={{ transformOrigin: "0% 50%", ...enter("grow", { delay: afterHeadline - 0.1, duration: 0.8 }) }}>
+              <div
+                style={{ transformOrigin: "0% 50%", ...enter("grow", { delay: afterHeadline - 0.1, duration: 0.8 }) }}
+              >
                 <AccentRule />
               </div>
 
@@ -398,7 +487,14 @@ export default function Hero() {
                       size="large"
                       icon={<ShoppingOutlined />}
                       onClick={() => openOrder()}
-                      style={{ position: "relative", overflow: "hidden", height: 58, padding: "0 30px", fontSize: 18, ...ctaWidth }}
+                      style={{
+                        position: "relative",
+                        overflow: "hidden",
+                        height: 58,
+                        padding: "0 30px",
+                        fontSize: 18,
+                        ...ctaWidth,
+                      }}
                     >
                       {format(m.hero.buyFrom, { price: money(lowestPrice()) })}
                       <Shine delay={2.4} every={4.2} />
@@ -417,7 +513,16 @@ export default function Hero() {
                         </motion.span>
                       }
                       onClick={openPromo}
-                      style={{ height: 58, padding: "0 22px", fontSize: 16, fontWeight: 600, color: colors.navy, borderColor: colors.green, background: colors.white, ...ctaWidth }}
+                      style={{
+                        height: 58,
+                        padding: "0 22px",
+                        fontSize: 16,
+                        fontWeight: 600,
+                        color: colors.navy,
+                        borderColor: colors.green,
+                        background: colors.white,
+                        ...ctaWidth,
+                      }}
                     >
                       {format(m.hero.extraCode, { percent: OFFER.subscriberPercent })}
                     </Button>
@@ -426,10 +531,22 @@ export default function Hero() {
               </FadeUp>
 
               <FadeUp delay={afterHeadline + 0.32} y={8}>
-                <p style={{ display: "flex", alignItems: "flex-start", gap: 8, margin: "16px 0 0", fontSize: 13.5, lineHeight: 1.5, color: colors.muted, maxWidth: 520 }}>
+                <p
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 8,
+                    margin: "16px 0 0",
+                    fontSize: 13.5,
+                    lineHeight: 1.5,
+                    color: colors.muted,
+                    maxWidth: 520,
+                  }}
+                >
                   <SafetyCertificateFilled style={{ color: colors.sale, fontSize: 16, marginTop: 2 }} />
                   <span>
-                    <strong style={{ color: colors.navy }}>{m.hero.guaranteedLabel}</strong> {m.hero.guarantees.join(" · ")}.
+                    <strong style={{ color: colors.navy }}>{m.hero.guaranteedLabel}</strong>{" "}
+                    {m.hero.guarantees.join(" · ")}.
                   </span>
                 </p>
               </FadeUp>
@@ -444,7 +561,11 @@ export default function Hero() {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 8,
-                      ...enter("up", { delay: afterHeadline + 0.45 + index * 0.07, duration: 0.6, vars: { "--enter-y": "8px" } }),
+                      ...enter("up", {
+                        delay: afterHeadline + 0.45 + index * 0.07,
+                        duration: 0.6,
+                        vars: { "--enter-y": "8px" },
+                      }),
                     }}
                   >
                     <CheckCircleFilled style={{ color: colors.teal }} />
@@ -457,8 +578,13 @@ export default function Hero() {
             {/* The two VETUD pens, side by side on the diagonal */}
             <Col xs={24} md={12}>
               <div style={{ position: "relative", aspectRatio: "1 / 0.92", maxWidth: 600, margin: "0 auto" }}>
-                <div aria-hidden style={{ position: "absolute", inset: "-8% -6%", ...enter("bloom", { duration: 1.6 }) }}>
-                  <motion.div style={{ position: "absolute", inset: 0, background: gradients.penGlow, x: glowX, y: glowY }} />
+                <div
+                  aria-hidden
+                  style={{ position: "absolute", inset: "-8% -6%", ...enter("bloom", { duration: 1.6 }) }}
+                >
+                  <motion.div
+                    style={{ position: "absolute", inset: 0, background: gradients.penGlow, x: glowX, y: glowY }}
+                  />
                 </div>
                 <FloatingPen
                   alt={m.products.tz2.penAlt}
@@ -494,7 +620,10 @@ export default function Hero() {
                       transition={{ duration: 2, ease: "easeOut", repeat: Infinity, repeatDelay: 1.6, delay: 2.4 }}
                     />
                     <div style={enter("spin", { delay: 1.25, duration: 1, easing: SPRING_CSS })}>
-                      <motion.div whileHover={{ rotate: -8, scale: 1.06 }} transition={{ type: "spring", stiffness: 260, damping: 14 }}>
+                      <motion.div
+                        whileHover={{ rotate: -8, scale: 1.06 }}
+                        transition={{ type: "spring", stiffness: 260, damping: 14 }}
+                      >
                         <OfferSeal percent={OFFER.salePercent} size="clamp(96px, 10vw, 132px)" />
                       </motion.div>
                     </div>

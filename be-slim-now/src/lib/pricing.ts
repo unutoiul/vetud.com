@@ -43,7 +43,13 @@ export function formatPrice(amount: number, country: CountryCode) {
   let formatter = formatters.get(key)
   if (!formatter) {
     // narrowSymbol: "€" rather than "EUR" in Iceland or Ukraine, "lei" in Romania.
-    formatter = new Intl.NumberFormat(locale, { style: "currency", currency, currencyDisplay: "narrowSymbol", minimumFractionDigits: digits, maximumFractionDigits: digits })
+    formatter = new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency,
+      currencyDisplay: "narrowSymbol",
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
+    })
     formatters.set(key, formatter)
   }
   return formatter.format(amount)

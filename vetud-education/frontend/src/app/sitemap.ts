@@ -10,7 +10,16 @@ import { BASE_URL } from "@/lib/config"
 import { listForumThreadLinks } from "@/lib/medusa/forum"
 import { threadHref } from "@/lib/community/format"
 
-const COLLECTIONS = ["", "/learn", "/news", "/videos", "/community", "/community/guidelines", "/community/apply", "/contact"]
+const COLLECTIONS = [
+  "",
+  "/learn",
+  "/news",
+  "/videos",
+  "/community",
+  "/community/guidelines",
+  "/community/apply",
+  "/contact",
+]
 
 /** A content date as a lastmod: "2026-11-02" and "2026-10" are kept, "11 November 2026" becomes "2026-11-11". */
 function isoDate(value: string | undefined) {
@@ -30,20 +39,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   cacheLife("hours")
 
   const everyLanguage = (path: string, entry: Omit<MetadataRoute.Sitemap[number], "url" | "alternates">) =>
-    LANGUAGES.map((language) => ({ url: articleUrl(path, language), alternates: { languages: articleLanguages(path) }, ...entry }))
+    LANGUAGES.map((language) => ({
+      url: articleUrl(path, language),
+      alternates: { languages: articleLanguages(path) },
+      ...entry,
+    }))
   const dated = (value: string | undefined) => {
     const lastModified = isoDate(value)
     return lastModified ? { lastModified } : {}
   }
 
-  const collections = COLLECTIONS.flatMap((path) => everyLanguage(path, { changeFrequency: "weekly", priority: path ? 0.8 : 1 }))
-  const legal = LEGAL_DOCUMENTS.flatMap((document) => everyLanguage(`/legal/${document.slug}`, { changeFrequency: "monthly", priority: 0.3, ...dated(document.updated) }))
+  const collections = COLLECTIONS.flatMap((path) =>
+    everyLanguage(path, { changeFrequency: "weekly", priority: path ? 0.8 : 1 }),
+  )
+  const legal = LEGAL_DOCUMENTS.flatMap((document) =>
+    everyLanguage(`/legal/${document.slug}`, { changeFrequency: "monthly", priority: 0.3, ...dated(document.updated) }),
+  )
   const editorial = [
     ...PEPTIDES.map((peptide) => ({ path: `/learn/${peptide.slug}`, slug: peptide.slug, date: undefined })),
     ...ARTICLES.map((article) => ({ path: `/news/${article.slug}`, slug: article.slug, date: article.date })),
   ].flatMap(({ path, slug, date }) => {
     const image = getLearnIllustration(slug)
-    return everyLanguage(path, { changeFrequency: "monthly", priority: 0.7, ...dated(date), ...(image ? { images: [`${BASE_URL}${image.src}`] } : {}) })
+    return everyLanguage(path, {
+      changeFrequency: "monthly",
+      priority: 0.7,
+      ...dated(date),
+      ...(image ? { images: [`${BASE_URL}${image.src}`] } : {}),
+    })
   })
 
   let threads: { id: string; slug: string }[] = []
@@ -53,7 +75,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     threads = []
   }
   // Member posts are written in one language, so each thread is listed once.
-  const community = threads.map((thread) => ({ url: articleUrl(threadHref(thread), DEFAULT_LANGUAGE), changeFrequency: "weekly" as const, priority: 0.5 }))
+  const community = threads.map((thread) => ({
+    url: articleUrl(threadHref(thread), DEFAULT_LANGUAGE),
+    changeFrequency: "weekly" as const,
+    priority: 0.5,
+  }))
 
   return [...collections, ...legal, ...editorial, ...community]
 }

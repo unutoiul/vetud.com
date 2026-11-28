@@ -11,7 +11,12 @@ import Icon, { type IconName } from "@/components/brand/Icon"
 import { AppLink, ButtonLink } from "@/components/common/links"
 import PageHeader from "@/components/common/PageHeader"
 import Section from "@/components/common/Section"
-import { getLocalDelivery, LOCAL_DELIVERY_COUNTRIES, type DeliveryValues, type PaymentKind } from "@/content/local-delivery"
+import {
+  getLocalDelivery,
+  LOCAL_DELIVERY_COUNTRIES,
+  type DeliveryValues,
+  type PaymentKind,
+} from "@/content/local-delivery"
 import { SITE } from "@/lib/config"
 import { listOfferedPaymentProviders } from "@/lib/medusa/payment-methods"
 import { getStoreRegion } from "@/lib/medusa/regions"
@@ -44,13 +49,20 @@ async function loadPage(segment: string) {
   const region = await getStoreRegion(country, currency)
   if (!region) return null
   const currencyCode = region.currency_code.toLowerCase()
-  const threshold = typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : null
-  const free = threshold && threshold > 0
-    ? new Intl.NumberFormat(page.locale, { style: "currency", currency: currencyCode.toUpperCase(), maximumFractionDigits: 0 }).format(threshold)
-    : null
+  const threshold =
+    typeof region.metadata?.free_shipping_threshold === "number" ? region.metadata.free_shipping_threshold : null
+  const free =
+    threshold && threshold > 0
+      ? new Intl.NumberFormat(page.locale, {
+          style: "currency",
+          currency: currencyCode.toUpperCase(),
+          maximumFractionDigits: 0,
+        }).format(threshold)
+      : null
   const providers = await listOfferedPaymentProviders(region.id, currencyCode).catch(() => [])
   // One entry per kind of payment: a second card processor is still "card" to the shopper.
-  const methods = providers.flatMap((id) => (page.methods[id] ? [{ id, ...page.methods[id] }] : []))
+  const methods = providers
+    .flatMap((id) => (page.methods[id] ? [{ id, ...page.methods[id] }] : []))
     .filter((method, index, all) => all.findIndex((other) => other.kind === method.kind) === index)
   const values: DeliveryValues = {
     free,
@@ -71,7 +83,14 @@ export async function generateMetadata({ params }: PageProps<"/[countryCode]/del
     title: { absolute: page.metaTitle },
     description,
     alternates: { canonical: url, languages: deliveryLanguages() },
-    openGraph: { type: "website", siteName: "VETUD", title: page.metaTitle, description, url, locale: page.locale.replace("-", "_") },
+    openGraph: {
+      type: "website",
+      siteName: "VETUD",
+      title: page.metaTitle,
+      description,
+      url,
+      locale: page.locale.replace("-", "_"),
+    },
   }
 }
 
@@ -95,7 +114,12 @@ async function DeliveryContent({ params }: Pick<PageProps<"/[countryCode]/delive
 
   const facts: { icon: IconName; label: string; value: string; note: string }[] = [
     { icon: "clock", ...page.facts.time },
-    { icon: "truck", label: page.facts.cost.label, value: values.free ? page.facts.cost.value(values) : page.facts.cost.atCheckout, note: page.facts.cost.note },
+    {
+      icon: "truck",
+      label: page.facts.cost.label,
+      value: values.free ? page.facts.cost.value(values) : page.facts.cost.atCheckout,
+      note: page.facts.cost.note,
+    },
     { icon: "wallet", label: page.facts.payment.label, value: paymentSummary, note: page.facts.payment.note(values) },
     { icon: "globe", ...page.facts.customs },
   ]
@@ -105,11 +129,19 @@ async function DeliveryContent({ params }: Pick<PageProps<"/[countryCode]/delive
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "FAQPage", "@id": `${url}#faq`, url, inLanguage: page.locale,
-        mainEntity: faq.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        url,
+        inLanguage: page.locale,
+        mainEntity: faq.map(({ q, a }) => ({
+          "@type": "Question",
+          name: q,
+          acceptedAnswer: { "@type": "Answer", text: a },
+        })),
       },
       {
-        "@type": "BreadcrumbList", "@id": `${url}#breadcrumbs`,
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumbs`,
         itemListElement: [
           { "@type": "ListItem", position: 1, name: page.breadcrumbHome, item: storefrontUrl(country) },
           { "@type": "ListItem", position: 2, name: page.title, item: url },
@@ -120,7 +152,10 @@ async function DeliveryContent({ params }: Pick<PageProps<"/[countryCode]/delive
 
   return (
     <Box lang={page.locale}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
       <PageHeader eyebrow={page.eyebrow} title={page.title} description={page.intro} />
 
       <Section tone="white">
@@ -129,9 +164,23 @@ async function DeliveryContent({ params }: Pick<PageProps<"/[countryCode]/delive
             <Grid key={fact.label} size={{ xs: 12, sm: 6, lg: 3 }} component="li">
               <Paper variant="outlined" sx={{ height: "100%", p: 3, bgcolor: brand.slate25, borderRadius: 3 }}>
                 <Icon name={fact.icon} sx={{ color: "secondary.main", mb: 1.5 }} />
-                <Typography variant="body2" sx={{ color: "text.secondary", fontWeight: 600 }}>{fact.label}</Typography>
-                <Typography sx={{ mt: 0.5, fontSize: { xs: 20, md: 22 }, fontWeight: 600, lineHeight: 1.3, letterSpacing: "-.02em" }}>{fact.value}</Typography>
-                <Typography variant="body2" sx={{ mt: 1.25, color: "text.secondary", lineHeight: 1.7 }}>{fact.note}</Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary", fontWeight: 600 }}>
+                  {fact.label}
+                </Typography>
+                <Typography
+                  sx={{
+                    mt: 0.5,
+                    fontSize: { xs: 20, md: 22 },
+                    fontWeight: 600,
+                    lineHeight: 1.3,
+                    letterSpacing: "-.02em",
+                  }}
+                >
+                  {fact.value}
+                </Typography>
+                <Typography variant="body2" sx={{ mt: 1.25, color: "text.secondary", lineHeight: 1.7 }}>
+                  {fact.note}
+                </Typography>
               </Paper>
             </Grid>
           ))}
@@ -141,27 +190,51 @@ async function DeliveryContent({ params }: Pick<PageProps<"/[countryCode]/delive
       <Section tone="paper">
         <Grid container spacing={{ xs: 6, md: 8 }}>
           <Grid size={{ xs: 12, md: 5 }}>
-            <Typography variant="h4" component="h2" sx={{ mb: 3 }}>{page.howToPay}</Typography>
+            <Typography variant="h4" component="h2" sx={{ mb: 3 }}>
+              {page.howToPay}
+            </Typography>
             <Stack spacing={2}>
-              {methods.length ? methods.map((method) => (
-                <Paper key={method.id} variant="outlined" sx={{ p: 2.5, display: "flex", gap: 2, borderRadius: 3 }}>
-                  <Icon name={PAYMENT_ICONS[method.kind]} sx={{ color: "secondary.main", mt: "2px", flexShrink: 0 }} />
-                  <Box>
-                    <Typography component="h3" sx={{ fontWeight: 700 }}>{method.name}</Typography>
-                    <Typography variant="body2" sx={{ mt: 0.5, color: "text.secondary", lineHeight: 1.7 }}>{method.text}</Typography>
-                  </Box>
-                </Paper>
-              )) : <Typography sx={{ color: "text.secondary" }}>{page.facts.payment.atCheckout}</Typography>}
+              {methods.length ? (
+                methods.map((method) => (
+                  <Paper key={method.id} variant="outlined" sx={{ p: 2.5, display: "flex", gap: 2, borderRadius: 3 }}>
+                    <Icon
+                      name={PAYMENT_ICONS[method.kind]}
+                      sx={{ color: "secondary.main", mt: "2px", flexShrink: 0 }}
+                    />
+                    <Box>
+                      <Typography component="h3" sx={{ fontWeight: 700 }}>
+                        {method.name}
+                      </Typography>
+                      <Typography variant="body2" sx={{ mt: 0.5, color: "text.secondary", lineHeight: 1.7 }}>
+                        {method.text}
+                      </Typography>
+                    </Box>
+                  </Paper>
+                ))
+              ) : (
+                <Typography sx={{ color: "text.secondary" }}>{page.facts.payment.atCheckout}</Typography>
+              )}
             </Stack>
           </Grid>
 
           <Grid size={{ xs: 12, md: 7 }}>
-            <Typography variant="h4" component="h2" sx={{ mb: 3 }}>{page.faqTitle}</Typography>
-            <Stack component="dl" divider={<Box sx={{ borderTop: "1px solid", borderColor: "divider" }} />} spacing={2.5} sx={{ m: 0 }}>
+            <Typography variant="h4" component="h2" sx={{ mb: 3 }}>
+              {page.faqTitle}
+            </Typography>
+            <Stack
+              component="dl"
+              divider={<Box sx={{ borderTop: "1px solid", borderColor: "divider" }} />}
+              spacing={2.5}
+              sx={{ m: 0 }}
+            >
               {faq.map(({ q, a }) => (
                 <Box key={q}>
-                  <Typography component="dt" sx={{ fontWeight: 700, fontSize: 17 }}>{q}</Typography>
-                  <Typography component="dd" sx={{ m: 0, mt: 1, color: "text.secondary", lineHeight: 1.8 }}>{a}</Typography>
+                  <Typography component="dt" sx={{ fontWeight: 700, fontSize: 17 }}>
+                    {q}
+                  </Typography>
+                  <Typography component="dd" sx={{ m: 0, mt: 1, color: "text.secondary", lineHeight: 1.8 }}>
+                    {a}
+                  </Typography>
                 </Box>
               ))}
             </Stack>
@@ -170,16 +243,28 @@ async function DeliveryContent({ params }: Pick<PageProps<"/[countryCode]/delive
       </Section>
 
       <Section tone="white" tight>
-        <Stack direction={{ xs: "column", md: "row" }} spacing={3} sx={{ alignItems: { md: "center" }, justifyContent: "space-between" }}>
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={3}
+          sx={{ alignItems: { md: "center" }, justifyContent: "space-between" }}
+        >
           <Box>
-            <Typography variant="h4" component="h2">{page.ctaTitle}</Typography>
+            <Typography variant="h4" component="h2">
+              {page.ctaTitle}
+            </Typography>
             <Stack direction="row" spacing={3} sx={{ mt: 1.5, flexWrap: "wrap", rowGap: 1 }}>
               <AppLink href="/legal/shipping">{page.links.shipping}</AppLink>
               <AppLink href="/legal/returns">{page.links.returns}</AppLink>
               <AppLink href="/contact">{page.links.contact}</AppLink>
             </Stack>
           </Box>
-          <ButtonLink href="/shop" variant="contained" size="large" endIcon={<Icon name="arrowRight" />} sx={{ alignSelf: { xs: "flex-start", md: "center" } }}>
+          <ButtonLink
+            href="/shop"
+            variant="contained"
+            size="large"
+            endIcon={<Icon name="arrowRight" />}
+            sx={{ alignSelf: { xs: "flex-start", md: "center" } }}
+          >
             {page.ctaButton}
           </ButtonLink>
         </Stack>

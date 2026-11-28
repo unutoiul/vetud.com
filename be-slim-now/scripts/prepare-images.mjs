@@ -19,7 +19,11 @@ const images = [
   [`${BOXES}/VETUD-Retatrutide-40mg-Closed-Box-White-Background.png`, "retatrutide-closed.webp", 1400],
   [`${BOXES}/VETUD-Retatrutide-40mg-Open-Box.png`, "retatrutide-open.webp", 1400],
   ["assets/VETUD_Dual_Chamber_Video_and_Artwork/VETUD_Dual_Chamber_Pen_Refined.png", "pen-diagram.webp", 1400],
-  ["assets/VETUD_Dual_Chamber_Video_and_Artwork/VETUD_Dual_Chamber_Explainer_poster.png", "explainer-poster.webp", 1600],
+  [
+    "assets/VETUD_Dual_Chamber_Video_and_Artwork/VETUD_Dual_Chamber_Explainer_poster.png",
+    "explainer-poster.webp",
+    1600,
+  ],
   ["vetud-shop/frontend/public/images/vetud-alpine-landscape.webp", "alpine.webp", 1920],
   // The molecules' artwork from the vetud.com hero: glass ribbons (Retatrutide) and the copper/teal loop (Tirzepatide).
   ["vetud-education/frontend/public/images/learn/spotlights/retatrutide.webp", "retatrutide-art.webp", 1440],
@@ -58,7 +62,9 @@ async function load(source, name) {
 }
 
 for (const [source, name, width] of images) {
-  const info = await (await load(path.join(REPO, source), name))
+  const info = await (
+    await load(path.join(REPO, source), name)
+  )
     .resize({ width, withoutEnlargement: true })
     .webp({ quality: 82 })
     .toFile(path.join(OUT, name))
@@ -94,7 +100,11 @@ async function cutOut(input, name, { threshold = 236 } = {}) {
   for (let p = 0; p < w * h; p++) {
     if (!alpha[p]) continue
     const x = p % w
-    const edge = (x > 0 && !alpha[p - 1]) || (x < w - 1 && !alpha[p + 1]) || (p >= w && !alpha[p - w]) || (p < w * (h - 1) && !alpha[p + w])
+    const edge =
+      (x > 0 && !alpha[p - 1]) ||
+      (x < w - 1 && !alpha[p + 1]) ||
+      (p >= w && !alpha[p - w]) ||
+      (p < w * (h - 1) && !alpha[p + w])
     if (edge) data[p * 4 + 3] = 128
   }
   const out = await sharp(data, { raw: { width: w, height: h, channels: 4 } })
@@ -106,7 +116,12 @@ async function cutOut(input, name, { threshold = 236 } = {}) {
 
 // The reusable VETUD pen, taken from its design-study poster (the pen only, without the text and mountains).
 await cutOut(
-  sharp(path.join(REPO, "assets/VETUD_Reusable_Dual_Chamber_Pen_poster.png")).extract({ left: 902, top: 110, width: 918, height: 780 }),
+  sharp(path.join(REPO, "assets/VETUD_Reusable_Dual_Chamber_Pen_poster.png")).extract({
+    left: 902,
+    top: 110,
+    width: 918,
+    height: 780,
+  }),
   "vetud-pen.webp",
   { threshold: 238 },
 )
@@ -119,17 +134,45 @@ await cutOut(
 const PHOTOS = "assets/VETUD_Facility_Photos"
 const facility = [
   // The cleanroom filling line: a little warm, so a touch cooler.
-  { source: "cleanroom-filling-line.jpg", name: "facility-cleanroom.webp", crop: { left: 120, top: 0, width: 1760, height: 1080 }, gains: [0.97, 0.99, 1.04], saturation: 0.88, brightness: 1.03 },
+  {
+    source: "cleanroom-filling-line.jpg",
+    name: "facility-cleanroom.webp",
+    crop: { left: 120, top: 0, width: 1760, height: 1080 },
+    gains: [0.97, 0.99, 1.04],
+    saturation: 0.88,
+    brightness: 1.03,
+  },
   // One cabinet door, from the black frame to its LED strip: blue window light at the top, yellow LED at the side.
-  { source: "cold-storage-shelves.jpg", name: "facility-cold-storage.webp", crop: { left: 385, top: 20, width: 525, height: 789 }, gains: [0.95, 1, 1.02], saturation: 0.7, brightness: 1.04 },
+  {
+    source: "cold-storage-shelves.jpg",
+    name: "facility-cold-storage.webp",
+    crop: { left: 385, top: 20, width: 525, height: 789 },
+    gains: [0.95, 1, 1.02],
+    saturation: 0.7,
+    brightness: 1.04,
+  },
   // The row of cabinets, without the half cabinet on the left and the packing bag on the right.
-  { source: "cold-storage-cabinets.jpg", name: "facility-cabinets.webp", crop: { left: 58, top: 150, width: 970, height: 640 }, gains: [0.98, 1, 1.03], saturation: 0.78, brightness: 1.06 },
+  {
+    source: "cold-storage-cabinets.jpg",
+    name: "facility-cabinets.webp",
+    crop: { left: 58, top: 150, width: 970, height: 640 },
+    gains: [0.98, 1, 1.03],
+    saturation: 0.78,
+    brightness: 1.06,
+  },
 ]
 const vignette = (width, height) =>
   Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><defs><radialGradient id="v" r="75%"><stop offset="55%" stop-opacity="0"/><stop offset="100%" stop-opacity="0.28"/></radialGradient></defs><rect width="100%" height="100%" fill="url(#v)"/></svg>`,
   )
-for (const { source, name, crop, gains: [r, g, b], saturation, brightness } of facility) {
+for (const {
+  source,
+  name,
+  crop,
+  gains: [r, g, b],
+  saturation,
+  brightness,
+} of facility) {
   const graded = await sharp(path.join(REPO, PHOTOS, source))
     .extract(crop)
     .recomb([
@@ -148,7 +191,6 @@ for (const { source, name, crop, gains: [r, g, b], saturation, brightness } of f
     .toFile(path.join(OUT, name))
   console.log(`${name.padEnd(28)} ${info.width}x${info.height} ${(info.size / 1024).toFixed(0)} KB (graded photo)`)
 }
-
 
 mkdirSync(path.join(ROOT, "public", "videos"), { recursive: true })
 copyFileSync(

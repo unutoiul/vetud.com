@@ -26,8 +26,16 @@ export default function Faq() {
             style={{ background: colors.white, borderColor: colors.line }}
             items={m.faq.items.map((item, index) => ({
               key: String(index),
-              label: <span style={{ fontFamily: fonts.display, fontSize: 19, fontWeight: 500, color: colors.navy }}>{item.q}</span>,
-              children: <p style={{ margin: 0, fontSize: 15, lineHeight: 1.7, color: colors.muted }}>{format(item.a, { contacts })}</p>,
+              label: (
+                <span style={{ fontFamily: fonts.display, fontSize: 19, fontWeight: 500, color: colors.navy }}>
+                  {item.q}
+                </span>
+              ),
+              children: (
+                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.7, color: colors.muted }}>
+                  {format(item.a, { contacts })}
+                </p>
+              ),
             }))}
           />
         </Col>

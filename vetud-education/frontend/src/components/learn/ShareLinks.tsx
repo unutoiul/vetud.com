@@ -30,10 +30,37 @@ export default function ShareLinks({ url, title }: { url: string; title: string 
   }
   const buttonSx = { minHeight: 44, textTransform: "none", fontWeight: 600 } as const
 
-  return <Box component="nav" aria-label={ct("Share this page")} sx={{ mt: 3, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1 }}>
-    <Typography component="span" sx={{ fontSize: 14, fontWeight: 700, color: "brand.navy", mr: .5 }}>{ct("Share")}</Typography>
-    {targets.map(target => <Button key={target.label} component="a" href={target.href} target="_blank" rel="noopener noreferrer" variant="outlined" size="small" sx={buttonSx}
-      aria-label={ct.template("Share on {v0} (opens in a new tab)", { v0: target.label }, { translateValues: false })}>{target.label}</Button>)}
-    <Button variant="outlined" size="small" onClick={() => void copy()} sx={buttonSx} aria-live="polite">{ct(copied ? "Link copied" : "Copy link")}</Button>
-  </Box>
+  return (
+    <Box
+      component="nav"
+      aria-label={ct("Share this page")}
+      sx={{ mt: 3, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1 }}
+    >
+      <Typography component="span" sx={{ fontSize: 14, fontWeight: 700, color: "brand.navy", mr: 0.5 }}>
+        {ct("Share")}
+      </Typography>
+      {targets.map((target) => (
+        <Button
+          key={target.label}
+          component="a"
+          href={target.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="outlined"
+          size="small"
+          sx={buttonSx}
+          aria-label={ct.template(
+            "Share on {v0} (opens in a new tab)",
+            { v0: target.label },
+            { translateValues: false },
+          )}
+        >
+          {target.label}
+        </Button>
+      ))}
+      <Button variant="outlined" size="small" onClick={() => void copy()} sx={buttonSx} aria-live="polite">
+        {ct(copied ? "Link copied" : "Copy link")}
+      </Button>
+    </Box>
+  )
 }

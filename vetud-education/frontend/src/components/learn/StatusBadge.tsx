@@ -16,7 +16,24 @@ export default function StatusBadge({ status, size = "medium" }: { status: Statu
   const meta = STATUSES[status]
   const tone = TONES[meta.tone]
   return (
-    <Box component="span" title={ct(meta.explain)} sx={{ display: "inline-flex", alignItems: "center", gap: .75, px: size === "small" ? 1 : 1.25, py: size === "small" ? .25 : .5, borderRadius: 999, bgcolor: tone.bg, color: tone.color, fontSize: size === "small" ? 11.5 : 12.5, fontWeight: 650, lineHeight: 1.5, whiteSpace: "nowrap" }}>
+    <Box
+      component="span"
+      title={ct(meta.explain)}
+      sx={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 0.75,
+        px: size === "small" ? 1 : 1.25,
+        py: size === "small" ? 0.25 : 0.5,
+        borderRadius: 999,
+        bgcolor: tone.bg,
+        color: tone.color,
+        fontSize: size === "small" ? 11.5 : 12.5,
+        fontWeight: 650,
+        lineHeight: 1.5,
+        whiteSpace: "nowrap",
+      }}
+    >
       <Box component="span" aria-hidden sx={{ width: 6, height: 6, borderRadius: "50%", bgcolor: tone.dot }} />
       {ct(meta.label)}
     </Box>

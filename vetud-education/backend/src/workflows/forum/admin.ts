@@ -1,5 +1,11 @@
 import { MedusaError } from "@medusajs/framework/utils"
-import { createStep, createWorkflow, StepResponse, transform, WorkflowResponse } from "@medusajs/framework/workflows-sdk"
+import {
+  createStep,
+  createWorkflow,
+  StepResponse,
+  transform,
+  WorkflowResponse,
+} from "@medusajs/framework/workflows-sdk"
 import type { ProfileRecord, ThreadRecord } from "../../lib/forum/public"
 import { normalizeTitle } from "../../lib/forum/text"
 import { findPost, findThread, forumService, recountForumReputationStep, recountForumThreadsStep } from "./shared"
@@ -7,7 +13,11 @@ import { findPost, findThread, forumService, recountForumReputationStep, recount
 export type ModerationAction = "approve" | "hide" | "remove"
 type ModerateForumPostInput = { post_id: string; action: ModerationAction }
 
-const STATUS_FOR: Record<ModerationAction, "published" | "hidden" | "removed"> = { approve: "published", hide: "hidden", remove: "removed" }
+const STATUS_FOR: Record<ModerationAction, "published" | "hidden" | "removed"> = {
+  approve: "published",
+  hide: "hidden",
+  remove: "removed",
+}
 
 const moderateForumPostStep = createStep(
   "moderate-forum-post",
@@ -23,11 +33,17 @@ const moderateForumPostStep = createStep(
     if (post.is_opening) await service.updateForumThreads({ id: post.thread_id, status, hold_reason: holdReason })
     // Staff have reviewed the post, so its open reports are settled either way.
     const reports = await service.listForumReports({ post_id: post.id, status: "open" }, { select: ["id"] })
-    if (reports.length) await service.updateForumReports(reports.map(report => ({ id: report.id, status: "resolved" as const })))
+    if (reports.length)
+      await service.updateForumReports(reports.map((report) => ({ id: report.id, status: "resolved" as const })))
 
     return new StepResponse(
       { post_id: post.id, thread_id: post.thread_id, author_id: post.author_id, status },
-      { post_id: post.id, thread_id: post.is_opening ? post.thread_id : null, previous, report_ids: reports.map(report => report.id) }
+      {
+        post_id: post.id,
+        thread_id: post.is_opening ? post.thread_id : null,
+        previous,
+        report_ids: reports.map((report) => report.id),
+      },
     )
   },
   async (undo, { container }) => {
@@ -35,8 +51,9 @@ const moderateForumPostStep = createStep(
     const service = forumService(container)
     await service.updateForumPosts({ id: undo.post_id, ...undo.previous })
     if (undo.thread_id) await service.updateForumThreads({ id: undo.thread_id, ...undo.previous })
-    if (undo.report_ids.length) await service.updateForumReports(undo.report_ids.map(id => ({ id, status: "open" as const })))
-  }
+    if (undo.report_ids.length)
+      await service.updateForumReports(undo.report_ids.map((id) => ({ id, status: "open" as const })))
+  },
 )
 
 /** Approves, hides or removes a post from Admin > Community. Removed posts cost the author reputation. */
@@ -47,7 +64,7 @@ export const moderateForumPostWorkflow = createWorkflow(
     recountForumThreadsStep({ thread_ids: transform({ result }, ({ result }) => [result.thread_id]) })
     recountForumReputationStep({ profile_ids: transform({ result }, ({ result }) => [result.author_id]) })
     return new WorkflowResponse(result)
-  }
+  },
 )
 
 type UpdateForumThreadInput = { thread_id: string; pinned?: boolean; locked?: boolean }
@@ -66,7 +83,7 @@ const updateForumThreadStep = createStep(
   async (undo, { container }) => {
     if (!undo) return
     await forumService(container).updateForumThreads({ id: undo.id, ...undo.previous })
-  }
+  },
 )
 
 /** Pins or locks a thread. */
@@ -74,7 +91,7 @@ export const updateForumThreadWorkflow = createWorkflow(
   "update-forum-thread",
   function (input: UpdateForumThreadInput) {
     return new WorkflowResponse(updateForumThreadStep(input))
-  }
+  },
 )
 
 type UpdateForumMemberInput = {
@@ -91,19 +108,34 @@ const updateForumMemberStep = createStep(
     const service = forumService(container)
     const [profile] = await service.listForumProfiles({ id: input.profile_id }, { take: 1 })
     if (!profile) throw new MedusaError(MedusaError.Types.NOT_FOUND, "Member not found.")
-    const credentials = input.credentials === undefined ? profile.credentials ?? null : normalizeTitle(input.credentials ?? "").slice(0, 80) || null
+    const credentials =
+      input.credentials === undefined
+        ? (profile.credentials ?? null)
+        : normalizeTitle(input.credentials ?? "").slice(0, 80) || null
     const role = input.role ?? profile.role
     if (role === "expert" && !credentials) {
-      throw new MedusaError(MedusaError.Types.INVALID_DATA, "Add the expert's credentials (for example, \"MD, endocrinology\"). They appear next to every answer.")
+      throw new MedusaError(
+        MedusaError.Types.INVALID_DATA,
+        'Add the expert\'s credentials (for example, "MD, endocrinology"). They appear next to every answer.',
+      )
     }
-    const previous: MemberFields = { role: profile.role, status: profile.status, credentials: profile.credentials ?? null }
-    const updated = await service.updateForumProfiles({ id: profile.id, role, credentials, status: input.status ?? profile.status })
+    const previous: MemberFields = {
+      role: profile.role,
+      status: profile.status,
+      credentials: profile.credentials ?? null,
+    }
+    const updated = await service.updateForumProfiles({
+      id: profile.id,
+      role,
+      credentials,
+      status: input.status ?? profile.status,
+    })
     return new StepResponse(updated, { id: profile.id, previous })
   },
   async (undo, { container }) => {
     if (!undo) return
     await forumService(container).updateForumProfiles({ id: undo.id, ...undo.previous })
-  }
+  },
 )
 
 /** Sets a member's role (expert or moderator, with credentials) or mutes or bans them. */
@@ -111,5 +143,5 @@ export const updateForumMemberWorkflow = createWorkflow(
   "update-forum-member",
   function (input: UpdateForumMemberInput) {
     return new WorkflowResponse(updateForumMemberStep(input))
-  }
+  },
 )

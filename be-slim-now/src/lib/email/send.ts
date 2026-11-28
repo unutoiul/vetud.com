@@ -20,7 +20,9 @@ type Email = {
 export async function sendTemplate({ template, to, variables, replyTo }: Email) {
   const key = process.env.RESEND_API_KEY
   if (!key) {
-    console.info(`[email:dev] ${template} → ${to}${replyTo ? ` (reply-to ${replyTo})` : ""}\n${JSON.stringify(variables, null, 2)}`)
+    console.info(
+      `[email:dev] ${template} → ${to}${replyTo ? ` (reply-to ${replyTo})` : ""}\n${JSON.stringify(variables, null, 2)}`,
+    )
     return
   }
   const id = RESEND_TEMPLATE_IDS[template]
@@ -46,7 +48,11 @@ export async function saveSubscriber(email: string) {
     return
   }
   const segment = process.env.RESEND_SEGMENT_ID?.trim()
-  const { error } = await resend(key).contacts.create({ email, unsubscribed: false, ...(segment ? { segments: [{ id: segment }] } : {}) })
+  const { error } = await resend(key).contacts.create({
+    email,
+    unsubscribed: false,
+    ...(segment ? { segments: [{ id: segment }] } : {}),
+  })
   if (error && !/exist/i.test(error.message)) throw new Error(`Resend refused contact ${email}: ${error.message}`)
 }
 /** Sends the new-client welcome template (Tirzepatide & Retatrutide pens) to a new client. */

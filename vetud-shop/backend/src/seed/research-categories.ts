@@ -6,14 +6,46 @@ export const BEAUTY_CATEGORY = {
 
 /** Research taxonomy requested by the store owner. Editable in Medusa Admin after setup. */
 export const RESEARCH_CATEGORIES = [
-  { name: "Healing and Regeneration Research", handle: "healing-regeneration-research", description: "Materials for laboratory investigation of tissue repair and regenerative pathways." },
-  { name: "Immunity Enhancement Research", handle: "immunity-enhancement-research", description: "Materials for laboratory investigation of immune signalling and immune-response pathways." },
-  { name: "Longevity and Anti-aging Research", handle: "longevity-anti-aging-research", description: "Materials for laboratory investigation of cellular ageing and longevity-related pathways." },
-  { name: "Reproductive Health Research", handle: "reproductive-health-research", description: "Materials for laboratory investigation of reproductive biology and related signalling pathways." },
-  { name: "Sleep Enhancement Research", handle: "sleep-enhancement-research", description: "Materials for laboratory investigation of sleep regulation and circadian pathways." },
-  { name: "Weight Loss Research", handle: "weight-loss-research", description: "Materials for laboratory investigation of metabolic, appetite and body-weight regulation pathways." },
-  { name: "Cognitive Enhancement Research", handle: "cognitive-enhancement-research", description: "Materials for laboratory investigation of neuronal signalling and cognition-related pathways." },
-  { name: "Muscle Growth Research", handle: "muscle-growth-research", description: "Materials for laboratory investigation of muscle biology and growth-related signalling pathways." },
+  {
+    name: "Healing and Regeneration Research",
+    handle: "healing-regeneration-research",
+    description: "Materials for laboratory investigation of tissue repair and regenerative pathways.",
+  },
+  {
+    name: "Immunity Enhancement Research",
+    handle: "immunity-enhancement-research",
+    description: "Materials for laboratory investigation of immune signalling and immune-response pathways.",
+  },
+  {
+    name: "Longevity and Anti-aging Research",
+    handle: "longevity-anti-aging-research",
+    description: "Materials for laboratory investigation of cellular ageing and longevity-related pathways.",
+  },
+  {
+    name: "Reproductive Health Research",
+    handle: "reproductive-health-research",
+    description: "Materials for laboratory investigation of reproductive biology and related signalling pathways.",
+  },
+  {
+    name: "Sleep Enhancement Research",
+    handle: "sleep-enhancement-research",
+    description: "Materials for laboratory investigation of sleep regulation and circadian pathways.",
+  },
+  {
+    name: "Weight Loss Research",
+    handle: "weight-loss-research",
+    description: "Materials for laboratory investigation of metabolic, appetite and body-weight regulation pathways.",
+  },
+  {
+    name: "Cognitive Enhancement Research",
+    handle: "cognitive-enhancement-research",
+    description: "Materials for laboratory investigation of neuronal signalling and cognition-related pathways.",
+  },
+  {
+    name: "Muscle Growth Research",
+    handle: "muscle-growth-research",
+    description: "Materials for laboratory investigation of muscle biology and growth-related signalling pathways.",
+  },
   BEAUTY_CATEGORY,
 ] as const
 

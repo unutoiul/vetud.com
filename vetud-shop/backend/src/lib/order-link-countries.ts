@@ -21,7 +21,14 @@ export type OrderLinkCountry = {
   payment_providers: string[]
 }
 
-const REGION_FIELDS = ["id", "currency_code", "countries.iso_2", "countries.display_name", "payment_providers.id", "payment_providers.is_enabled"]
+const REGION_FIELDS = [
+  "id",
+  "currency_code",
+  "countries.iso_2",
+  "countries.display_name",
+  "payment_providers.id",
+  "payment_providers.is_enabled",
+]
 
 /**
  * Every country an order link can go to (owner, 2026-11-25): the countries of the shop's regions in
@@ -38,7 +45,9 @@ export async function listOrderLinkCountries(container: MedusaContainer): Promis
   ])
   const regions = regionRows as OrderLinkRegion[]
   const providersOf = (region: OrderLinkRegion) =>
-    (region.payment_providers ?? []).flatMap((provider) => (provider?.id && provider.is_enabled !== false ? [provider.id] : []))
+    (region.payment_providers ?? []).flatMap((provider) =>
+      provider?.id && provider.is_enabled !== false ? [provider.id] : [],
+    )
 
   const result = new Map<string, OrderLinkCountry>()
   for (const region of regions) {
@@ -56,11 +65,20 @@ export async function listOrderLinkCountries(container: MedusaContainer): Promis
     }
   }
 
-  const dollar = regions.find((region) => region.currency_code === BASE_CURRENCY && region.countries?.some((country) => country.iso_2 === "us"))
-    ?? regions.find((region) => region.currency_code === BASE_CURRENCY)
+  const dollar =
+    regions.find(
+      (region) => region.currency_code === BASE_CURRENCY && region.countries?.some((country) => country.iso_2 === "us"),
+    ) ?? regions.find((region) => region.currency_code === BASE_CURRENCY)
   if (dollar) {
-    const storeCountry = dollar.countries?.some((country) => country.iso_2 === "us") ? "us" : (dollar.countries?.[0]?.iso_2 ?? "us")
-    const names = new Map((countryRows as { iso_2?: string | null; display_name?: string | null }[]).map((country) => [country.iso_2?.toLowerCase(), country.display_name]))
+    const storeCountry = dollar.countries?.some((country) => country.iso_2 === "us")
+      ? "us"
+      : (dollar.countries?.[0]?.iso_2 ?? "us")
+    const names = new Map(
+      (countryRows as { iso_2?: string | null; display_name?: string | null }[]).map((country) => [
+        country.iso_2?.toLowerCase(),
+        country.display_name,
+      ]),
+    )
     for (const code of delivered) {
       if (result.has(code)) continue
       result.set(code, {

@@ -7,16 +7,24 @@ import Section from "@/components/common/Section"
 
 export async function generateMetadata(): Promise<Metadata> {
   return localizeMetadata({
-  title: "Your orders & tracking",
-  description: "View your Vetud order history, delivery details and shipment tracking.",
-  robots: { index: false, follow: false },
-})
+    title: "Your orders & tracking",
+    description: "View your Vetud order history, delivery details and shipment tracking.",
+    robots: { index: false, follow: false },
+  })
 }
 
 export default function OrdersRoute() {
   const ct = useContentTranslator()
-  return <>
-    <PageHeader eyebrow={ct("Your account")} title={ct("Every order. Every shipment.")} description={ct("Your order details and delivery updates, together in one place.")} />
-    <Section tone="white" tight data-clarity-mask="True"><AccountPage view="orders" /></Section>
-  </>
+  return (
+    <>
+      <PageHeader
+        eyebrow={ct("Your account")}
+        title={ct("Every order. Every shipment.")}
+        description={ct("Your order details and delivery updates, together in one place.")}
+      />
+      <Section tone="white" tight data-clarity-mask="True">
+        <AccountPage view="orders" />
+      </Section>
+    </>
+  )
 }

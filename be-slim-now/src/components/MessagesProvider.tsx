@@ -12,7 +12,15 @@ const MessagesContext = createContext<Messages | null>(null)
  * when the visitor picks another country in the header (or ships elsewhere in the order form), that
  * country's file loads and every section switches to it.
  */
-export function MessagesProvider({ country, messages, children }: { country: CountryCode; messages: Messages; children: ReactNode }) {
+export function MessagesProvider({
+  country,
+  messages,
+  children,
+}: {
+  country: CountryCode
+  messages: Messages
+  children: ReactNode
+}) {
   const { country: current } = useCountry()
   const [loaded, setLoaded] = useState<{ country: CountryCode; messages: Messages }>({ country, messages })
 

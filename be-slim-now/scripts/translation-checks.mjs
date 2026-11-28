@@ -33,7 +33,9 @@ export function checkTranslation(source, target, keepAsWritten = []) {
   const b = protectedTokens(target)
   for (const field of Object.keys(a)) {
     if (JSON.stringify(a[field]) !== JSON.stringify(b[field])) {
-      problems.push(`${field} changed: English has ${JSON.stringify(a[field])}, translation has ${JSON.stringify(b[field])}`)
+      problems.push(
+        `${field} changed: English has ${JSON.stringify(a[field])}, translation has ${JSON.stringify(b[field])}`,
+      )
     }
   }
   const stack = []

@@ -15,23 +15,26 @@ const VETUD_MARK = "https://www.vetud.com/brand/vetud-mark-square.png"
 export async function POST(req: MedusaRequest<StoreBookCheckoutBody>, res: MedusaResponse) {
   const { token, locale } = req.validatedBody
   const email = token ? readOfferToken(token) : req.validatedBody.email
-  if (!email) throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "This link has expired. Enter your email address to continue.")
+  if (!email)
+    throw new MedusaError(MedusaError.Types.NOT_ALLOWED, "This link has expired. Enter your email address to continue.")
   const site = emailSettings().storefrontUrl
   const back = `${site}/${locale}/book${token ? `?${new URLSearchParams({ t: token })}` : ""}`
   const session = await stripe().checkout.sessions.create({
     mode: "payment",
     customer_email: email,
-    line_items: [{
-      quantity: 1,
-      price_data: {
-        currency: BOOK.currency,
-        unit_amount: BOOK.amount,
-        // Buyers pay $4.99 whatever their country; Stripe takes any sales tax or VAT out of it.
-        tax_behavior: "inclusive",
-        // The product made in the Stripe Dashboard: its name, image and tax code show at checkout.
-        product: BOOK.stripeProduct,
+    line_items: [
+      {
+        quantity: 1,
+        price_data: {
+          currency: BOOK.currency,
+          unit_amount: BOOK.amount,
+          // Buyers pay $4.99 whatever their country; Stripe takes any sales tax or VAT out of it.
+          tax_behavior: "inclusive",
+          // The product made in the Stripe Dashboard: its name, image and tax code show at checkout.
+          product: BOOK.stripeProduct,
+        },
       },
-    }],
+    ],
     // The Stripe account belongs to BlueTrendy Development LTD; the payment page says "Pay VETUD".
     branding_settings: {
       display_name: "VETUD",

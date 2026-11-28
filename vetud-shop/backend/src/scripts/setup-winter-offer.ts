@@ -18,7 +18,8 @@ export const WINTER_SUBSCRIBER_OFFER = {
   campaign: {
     name: "Winter offer",
     campaign_identifier: `${POPUP_CAMPAIGN_PREFIX}winter-2026`,
-    description: "An extra 10% off your order, on top of the 20% winter prices. One code per order; shipping not included.",
+    description:
+      "An extra 10% off your order, on top of the 20% winter prices. One code per order; shipping not included.",
   },
 }
 
@@ -31,32 +32,55 @@ export default async function setupWinterOffer({ container }: ExecArgs) {
   const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
   const query = container.resolve(ContainerRegistrationKeys.QUERY)
 
-  const { data: lists } = await query.graph({ entity: "price_list", fields: ["id", "title", "metadata"], filters: { type: "sale" } })
+  const { data: lists } = await query.graph({
+    entity: "price_list",
+    fields: ["id", "title", "metadata"],
+    filters: { type: "sale" },
+  })
   if (lists.some((list) => list.title === WINTER_SALE.title && readSaleSettings(list.metadata))) {
     logger.info(`Winter offer: the "${WINTER_SALE.title}" sale already exists.`)
   } else {
     const { result } = await createStorewideSaleWorkflow(container).run({
-      input: { title: WINTER_SALE.title, percent_off: WINTER_SALE.percent_off, starts_at: null, ends_at: null, status: "active" },
+      input: {
+        title: WINTER_SALE.title,
+        percent_off: WINTER_SALE.percent_off,
+        starts_at: null,
+        ends_at: null,
+        status: "active",
+      },
     })
     logger.info(`Winter offer: ${WINTER_SALE.percent_off}% sale started with ${result.prices} prices.`)
   }
 
-  const { data: promotions } = await query.graph({ entity: "promotion", fields: ["id"], filters: { code: WINTER_SUBSCRIBER_OFFER.code } })
+  const { data: promotions } = await query.graph({
+    entity: "promotion",
+    fields: ["id"],
+    filters: { code: WINTER_SUBSCRIBER_OFFER.code },
+  })
   if (promotions.length) {
     logger.info(`Winter offer: the ${WINTER_SUBSCRIBER_OFFER.code} code already exists.`)
     return
   }
   await createPromotionsWorkflow(container).run({
     input: {
-      promotionsData: [{
-        code: WINTER_SUBSCRIBER_OFFER.code,
-        type: "standard",
-        status: "active",
-        is_automatic: false,
-        application_method: { type: "percentage", target_type: "order", allocation: "across", value: WINTER_SUBSCRIBER_OFFER.percent_off },
-        campaign: { ...WINTER_SUBSCRIBER_OFFER.campaign, starts_at: new Date(), ends_at: null },
-      }],
+      promotionsData: [
+        {
+          code: WINTER_SUBSCRIBER_OFFER.code,
+          type: "standard",
+          status: "active",
+          is_automatic: false,
+          application_method: {
+            type: "percentage",
+            target_type: "order",
+            allocation: "across",
+            value: WINTER_SUBSCRIBER_OFFER.percent_off,
+          },
+          campaign: { ...WINTER_SUBSCRIBER_OFFER.campaign, starts_at: new Date(), ends_at: null },
+        },
+      ],
     },
   })
-  logger.info(`Winter offer: ${WINTER_SUBSCRIBER_OFFER.code} (${WINTER_SUBSCRIBER_OFFER.percent_off}% for subscribers) created.`)
+  logger.info(
+    `Winter offer: ${WINTER_SUBSCRIBER_OFFER.code} (${WINTER_SUBSCRIBER_OFFER.percent_off}% for subscribers) created.`,
+  )
 }
