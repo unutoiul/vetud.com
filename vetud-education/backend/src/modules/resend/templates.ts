@@ -1,4 +1,4 @@
-import { emailListSignupAlert, type EmailListSignupAlertData } from "./owner-alerts"
+import { bookOwnerAlert, emailListSignupAlert, type BookOwnerAlertData, type EmailListSignupAlertData } from "./owner-alerts"
 
 /**
  * Every education email is a published Resend template, with the VETUD logo, vetud.com links and no
@@ -22,6 +22,10 @@ export const EmailTemplates = {
   BOOK_OFFER: "book-offer",
   /** Sent after a paid Stripe Checkout for the book: how to download it. */
   BOOK_PURCHASE: "book-purchase",
+  /** Sent when someone opens the book's Stripe checkout with an address typed on the page: a link to finish later. */
+  BOOK_CHECKOUT_STARTED: "book-checkout-started",
+  /** The owner's alert for each step of a book order (link asked for, checkout opened, paid). */
+  BOOK_OWNER_ALERT: "book-owner-alert",
 } as const
 
 export type EmailTemplate = (typeof EmailTemplates)[keyof typeof EmailTemplates]
@@ -97,6 +101,8 @@ const builders: Record<string, (data: Data) => Built> = {
   }),
   [EmailTemplates.BOOK_OFFER]: (data) => ({ variables: { BUY_URL: String(data.buy_url) } }),
   [EmailTemplates.BOOK_PURCHASE]: (data) => ({ variables: { DOWNLOAD_URL: String(data.download_url) } }),
+  [EmailTemplates.BOOK_CHECKOUT_STARTED]: (data) => ({ variables: { BUY_URL: String(data.buy_url) } }),
+  [EmailTemplates.BOOK_OWNER_ALERT]: (data) => bookOwnerAlert(data as unknown as BookOwnerAlertData),
   [EmailTemplates.EMAIL_LIST_SIGNUP_ADMIN]: (data) => emailListSignupAlert(data as unknown as EmailListSignupAlertData),
 }
 

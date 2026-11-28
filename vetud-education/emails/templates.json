@@ -122,5 +122,32 @@
       "BUY_URL"
     ],
     "id": "b741e045-a43b-448f-94c7-c6361b6339b4"
+  },
+  "book-checkout-started": {
+    "name": "VETUD Edu · Book checkout started",
+    "alias": "vetud-edu-book-checkout-started",
+    "subject": "Your copy of Peptides Explained is waiting",
+    "preheader": "Already paid? Your download link is on its way. Not yet? Finish your order any time in the next 30 days.",
+    "variables": [
+      "BUY_URL"
+    ],
+    "id": "13a3ae5b-5b36-4bce-8bb3-9dece548d478"
+  },
+  "book-owner-alert": {
+    "name": "VETUD Edu · Book alert (owner)",
+    "alias": "vetud-edu-book-owner-alert",
+    "subject": "Book: {{{HEADLINE}}} ({{{BUYER_EMAIL}}})",
+    "preheader": "{{{SUMMARY}}}",
+    "variables": [
+      "HEADLINE",
+      "SUMMARY",
+      "BUYER_EMAIL",
+      "STEP",
+      "PAID",
+      "LANGUAGE",
+      "WHEN",
+      "STRIPE_SESSION"
+    ],
+    "id": "1a86d303-5096-41c0-9c8c-a394b08c1f6a"
   }
 }

@@ -1,6 +1,7 @@
 import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { MedusaError } from "@medusajs/framework/utils"
-import { BOOK, readOfferToken, stripe } from "../../../../lib/book"
+import { BOOK, offerToken, readOfferToken, stripe } from "../../../../lib/book"
+import { bookCheckoutStartedEmail, bookOwnerAlert, repeatWindow, sendQuietly } from "../../../../lib/book-emails"
 import { emailSettings } from "../../../../lib/notifications"
 import type { StoreBookCheckoutBody } from "../validators"
 
@@ -43,4 +44,14 @@ export async function POST(req: MedusaRequest<StoreBookCheckoutBody>, res: Medus
     cancel_url: back,
   })
   res.json({ url: session.url })
+
+  // After answering, so the visitor goes to Stripe without waiting (owner request 2026-11-28): the owner
+  // hears that a checkout opened, and a visitor who typed their address gets a link to finish later.
+  // Visitors who came from the email link already have that link.
+  const address = email.trim().toLowerCase()
+  const finishUrl = `${site}/${locale}/book?${new URLSearchParams({ t: token || offerToken(address) })}`
+  void sendQuietly(req.scope, [
+    bookOwnerAlert({ step: "checkout", email: address, locale, session_id: session.id }, repeatWindow(address)),
+    token ? null : bookCheckoutStartedEmail(address, finishUrl),
+  ])
 }

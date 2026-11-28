@@ -48,6 +48,17 @@ describe("email-list emails", () => {
     })
   })
 
+  it("tells the owner about an unpaid book checkout", () => {
+    const email = buildEmail(EmailTemplates.BOOK_OWNER_ALERT, { step: "checkout", email: "a@example.com", locale: "en", at: "2026-11-28T02:18:00.000Z", session_id: "cs_live_abc" })
+    expect(email?.subject).toBe("Book: Checkout opened, not paid yet (a@example.com)")
+    expect(email?.variables).toMatchObject({ BUYER_EMAIL: "a@example.com", PAID: "Not yet", STEP: "2 of 3: checkout opened", STRIPE_SESSION: "cs_live_abc", WHEN: "28 November 2026 at 02:18 UTC" })
+  })
+
+  it("tells the owner about a paid book with the amount", () => {
+    const email = buildEmail(EmailTemplates.BOOK_OWNER_ALERT, { step: "paid", email: "a@example.com", at: "2026-11-28T02:18:00.000Z", session_id: "cs_live_abc", amount: 499, currency: "usd" })
+    expect(email?.variables).toMatchObject({ HEADLINE: "Book sold", PAID: "Yes, 4.99 USD", LANGUAGE: "Not known" })
+  })
+
   it("fills the sign-in code template with the code only, never anything else typed", () => {
     expect(buildEmail(EmailTemplates.SIGN_IN_CODE, { code: "12a3456789", minutes: 10, first_name: "<Sam>" })?.variables).toEqual({ CODE: "123456", MINUTES: "10", GREETING: "Hi &#60;Sam&#62;," })
   })

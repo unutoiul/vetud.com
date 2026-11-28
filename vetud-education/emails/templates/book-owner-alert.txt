@@ -1,0 +1,14 @@
+{{{HEADLINE}}}
+
+{{{SUMMARY}}}
+
+Customer:       {{{BUYER_EMAIL}}}
+Step:           {{{STEP}}}
+Paid:           {{{PAID}}}
+Language:       {{{LANGUAGE}}}
+When:           {{{WHEN}}}
+Stripe session: {{{STRIPE_SESSION}}}
+
+The steps are: link requested in the pop-up, checkout opened, then paid. You get one email per step (at most one per customer every 10 minutes for the first two). Paid orders are in Stripe under Payments; search for the session ID.
+
+Sent to the site owner's address (STORE_OWNER_EMAIL). Customers don't receive this email.

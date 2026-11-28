@@ -2,6 +2,7 @@ import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { Modules } from "@medusajs/framework/utils"
 import type Stripe from "stripe"
 import { BOOK, bookDownloadLink, buyerEmail, isPaidBookSession, stripe } from "../../../lib/book"
+import { bookOwnerAlert, sendQuietly } from "../../../lib/book-emails"
 import { EmailTemplates } from "../../../modules/resend/templates"
 
 const EVENTS = new Set(["checkout.session.completed", "checkout.session.async_payment_succeeded"])
@@ -46,6 +47,14 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
         idempotency_key: key,
         provider_data: { idempotency_key: key },
       })
+      await sendQuietly(req.scope, [bookOwnerAlert({
+        step: "paid",
+        email: to,
+        locale: session.metadata?.locale,
+        session_id: session.id,
+        amount: session.amount_total,
+        currency: session.currency,
+      }, session.id)])
     }
   }
   res.json({ received: true })

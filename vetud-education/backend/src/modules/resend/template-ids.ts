@@ -16,4 +16,6 @@ export const RESEND_TEMPLATE_IDS: Partial<Record<EmailTemplate, string>> = {
   "email-change-code": "368d1490-dce7-49fe-a494-ad8556afa70a",
   "book-purchase": "5f20a685-51b5-488c-b559-2b5a6a78c59a",
   "book-offer": "b741e045-a43b-448f-94c7-c6361b6339b4",
+  "book-checkout-started": "13a3ae5b-5b36-4bce-8bb3-9dece548d478",
+  "book-owner-alert": "1a86d303-5096-41c0-9c8c-a394b08c1f6a",
 }
