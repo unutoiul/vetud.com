@@ -195,7 +195,7 @@ export default async function BookFeature() {
             overflow: "hidden",
           }}
         >
-          <BookScene href="/book" alt={ct("View Peptides: The Complete Guide")} />
+          <BookScene />
         </Box>
 
         <Box sx={{ gridArea: "topics", pt: { xs: 3, md: 4 }, borderTop: `1px solid ${alpha(brand.onNavy, 0.14)}` }}>

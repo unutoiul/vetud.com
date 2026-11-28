@@ -157,12 +157,10 @@ export default function BookLanding({ buyBox }: { buyBox: ReactNode }) {
             overflow: "hidden",
             isolation: "isolate",
             borderRadius: "18px",
-            border: "1px solid",
-            borderColor: "brand.slate125",
-            bgcolor: "brand.slate50",
+            bgcolor: "brand.teal850",
           }}
         >
-          <BookScene href="#buy" alt={ct("Get the PDF edition of Peptides: The Complete Guide")} priority />
+          <BookScene priority />
           <Box
             component="figcaption"
             aria-label={ct("The book at a glance")}
@@ -171,19 +169,16 @@ export default function BookLanding({ buyBox }: { buyBox: ReactNode }) {
               gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
               p: "18px 8px",
               textAlign: "center",
-              bgcolor: "brand.slate50",
-              borderTop: "1px solid",
-              borderColor: "brand.slate125",
               "& > span": {
                 display: "grid",
                 gap: "3px",
                 alignContent: "center",
-                color: "brand.slate625",
+                color: "brand.onNavyMuted",
                 fontSize: 13,
                 lineHeight: 1.35,
               },
-              "& > span + span": { borderLeft: "1px solid", borderColor: "brand.slate225" },
-              "& strong": { color: "brand.ink", fontFamily: SERIF, fontWeight: 400, fontSize: 26, lineHeight: 1 },
+              "& > span + span": { borderLeft: "1px solid", borderColor: "brand.whiteA16" },
+              "& strong": { color: "brand.white", fontFamily: SERIF, fontWeight: 400, fontSize: 26, lineHeight: 1 },
               [PHONE]: {
                 p: "9px 4px",
                 "& > span": { gap: "1px", fontSize: 12 },
